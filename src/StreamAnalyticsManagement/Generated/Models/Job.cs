@@ -28,22 +28,10 @@ using Microsoft.WindowsAzure.Common.Internals;
 namespace Microsoft.Azure.Management.StreamAnalytics.Models
 {
     /// <summary>
-    /// The response returned by the job operation.
+    /// The request required by the job operation.
     /// </summary>
-    public partial class JobResponse
+    public partial class Job
     {
-        private string _id;
-        
-        /// <summary>
-        /// Optional. Resource id of the stream analytics job.  The Id property
-        /// is set by the server and readonly on the client side.
-        /// </summary>
-        public string Id
-        {
-            get { return this._id; }
-            set { this._id = value; }
-        }
-        
         private string _location;
         
         /// <summary>
@@ -66,12 +54,12 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
             set { this._name = value; }
         }
         
-        private JobResponseProperties _properties;
+        private JobProperties _properties;
         
         /// <summary>
-        /// Required. The properties of the stream analytics job.
+        /// Required. Job properties.
         /// </summary>
-        public JobResponseProperties Properties
+        public JobProperties Properties
         {
             get { return this._properties; }
             set { this._properties = value; }
@@ -88,23 +76,35 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
             set { this._tags = value; }
         }
         
-        private string _type;
-        
         /// <summary>
-        /// Required. Type of the stream analytics job.
+        /// Initializes a new instance of the Job class.
         /// </summary>
-        public string Type
+        public Job()
         {
-            get { return this._type; }
-            set { this._type = value; }
+            this.Tags = new LazyDictionary<string, string>();
         }
         
         /// <summary>
-        /// Initializes a new instance of the JobResponse class.
+        /// Initializes a new instance of the Job class with required arguments.
         /// </summary>
-        public JobResponse()
+        public Job(string name, string location, JobProperties properties)
+            : this()
         {
-            this.Tags = new LazyDictionary<string, string>();
+            if (name == null)
+            {
+                throw new ArgumentNullException("name");
+            }
+            if (location == null)
+            {
+                throw new ArgumentNullException("location");
+            }
+            if (properties == null)
+            {
+                throw new ArgumentNullException("properties");
+            }
+            this.Name = name;
+            this.Location = location;
+            this.Properties = properties;
         }
     }
 }

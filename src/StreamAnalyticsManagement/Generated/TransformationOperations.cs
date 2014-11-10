@@ -232,35 +232,21 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
-                        TransformationResponse transformationResponseInstance = new TransformationResponse();
-                        result.TransformationResponse = transformationResponseInstance;
-                        
-                        JToken idValue = responseDoc["id"];
-                        if (idValue != null && idValue.Type != JTokenType.Null)
-                        {
-                            string idInstance = ((string)idValue);
-                            transformationResponseInstance.Id = idInstance;
-                        }
-                        
-                        JToken typeValue = responseDoc["type"];
-                        if (typeValue != null && typeValue.Type != JTokenType.Null)
-                        {
-                            string typeInstance = ((string)typeValue);
-                            transformationResponseInstance.Type = typeInstance;
-                        }
+                        Transformation transformationInstance = new Transformation();
+                        result.Transformation = transformationInstance;
                         
                         JToken nameValue = responseDoc["name"];
                         if (nameValue != null && nameValue.Type != JTokenType.Null)
                         {
                             string nameInstance = ((string)nameValue);
-                            transformationResponseInstance.Name = nameInstance;
+                            transformationInstance.Name = nameInstance;
                         }
                         
                         JToken propertiesValue2 = responseDoc["properties"];
                         if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
                         {
                             TransformationProperties propertiesInstance = new TransformationProperties();
-                            transformationResponseInstance.TransformationProperties = propertiesInstance;
+                            transformationInstance.TransformationProperties = propertiesInstance;
                             
                             JToken etagValue = propertiesValue2["etag"];
                             if (etagValue != null && etagValue.Type != JTokenType.Null)
@@ -456,35 +442,21 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
-                        TransformationResponse transformationResponseInstance = new TransformationResponse();
-                        result.TransformationResponse = transformationResponseInstance;
-                        
-                        JToken idValue = responseDoc["id"];
-                        if (idValue != null && idValue.Type != JTokenType.Null)
-                        {
-                            string idInstance = ((string)idValue);
-                            transformationResponseInstance.Id = idInstance;
-                        }
-                        
-                        JToken typeValue = responseDoc["type"];
-                        if (typeValue != null && typeValue.Type != JTokenType.Null)
-                        {
-                            string typeInstance = ((string)typeValue);
-                            transformationResponseInstance.Type = typeInstance;
-                        }
+                        Transformation transformationInstance = new Transformation();
+                        result.Transformation = transformationInstance;
                         
                         JToken nameValue = responseDoc["name"];
                         if (nameValue != null && nameValue.Type != JTokenType.Null)
                         {
                             string nameInstance = ((string)nameValue);
-                            transformationResponseInstance.Name = nameInstance;
+                            transformationInstance.Name = nameInstance;
                         }
                         
                         JToken propertiesValue = responseDoc["properties"];
                         if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                         {
                             TransformationProperties propertiesInstance = new TransformationProperties();
-                            transformationResponseInstance.TransformationProperties = propertiesInstance;
+                            transformationInstance.TransformationProperties = propertiesInstance;
                             
                             JToken etagValue = propertiesValue["etag"];
                             if (etagValue != null && etagValue.Type != JTokenType.Null)
@@ -661,35 +633,21 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
-                        TransformationResponse transformationResponseInstance = new TransformationResponse();
-                        result.TransformationResponse = transformationResponseInstance;
-                        
-                        JToken idValue = responseDoc["id"];
-                        if (idValue != null && idValue.Type != JTokenType.Null)
-                        {
-                            string idInstance = ((string)idValue);
-                            transformationResponseInstance.Id = idInstance;
-                        }
-                        
-                        JToken typeValue = responseDoc["type"];
-                        if (typeValue != null && typeValue.Type != JTokenType.Null)
-                        {
-                            string typeInstance = ((string)typeValue);
-                            transformationResponseInstance.Type = typeInstance;
-                        }
+                        Transformation transformationInstance = new Transformation();
+                        result.Transformation = transformationInstance;
                         
                         JToken nameValue = responseDoc["name"];
                         if (nameValue != null && nameValue.Type != JTokenType.Null)
                         {
                             string nameInstance = ((string)nameValue);
-                            transformationResponseInstance.Name = nameInstance;
+                            transformationInstance.Name = nameInstance;
                         }
                         
                         JToken propertiesValue = responseDoc["properties"];
                         if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                         {
                             TransformationProperties propertiesInstance = new TransformationProperties();
-                            transformationResponseInstance.TransformationProperties = propertiesInstance;
+                            transformationInstance.TransformationProperties = propertiesInstance;
                             
                             JToken etagValue = propertiesValue["etag"];
                             if (etagValue != null && etagValue.Type != JTokenType.Null)
@@ -909,7 +867,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                         if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
                         {
                             TransformationProperties propertiesInstance = new TransformationProperties();
-                            result.TransformationProperties = propertiesInstance;
+                            result.Properties = propertiesInstance;
                             
                             JToken etagValue = propertiesValue2["etag"];
                             if (etagValue != null && etagValue.Type != JTokenType.Null)

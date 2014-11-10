@@ -145,7 +145,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// allowed.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. The URI used as the base for all Service Management
+        /// Optional. The URI used as the base for all Service Management
         /// requests.
         /// </param>
         public StreamAnalyticsManagementClient(SubscriptionCloudCredentials credentials, Uri baseUri)
@@ -223,7 +223,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// allowed.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. The URI used as the base for all Service Management
+        /// Optional. The URI used as the base for all Service Management
         /// requests.
         /// </param>
         /// <param name='httpClient'>

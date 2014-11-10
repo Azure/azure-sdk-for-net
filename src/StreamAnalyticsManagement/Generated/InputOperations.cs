@@ -76,9 +76,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// <param name='jobName'>
         /// Required. The name of the stream analytics job.
         /// </param>
-        /// <param name='parameters'>
-        /// Required. The parameters required to test an input for a stream
-        /// analytics job.
+        /// <param name='inputName'>
+        /// Required. The input name of the stream analytics job.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -86,7 +85,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// <returns>
         /// A standard service response for long running operations.
         /// </returns>
-        public async Task<LongRunningOperationResponse> BeginTestConnectionAsync(string resourceGroupName, string jobName, InputTestConnectionParameters parameters, CancellationToken cancellationToken)
+        public async Task<LongRunningOperationResponse> BeginTestConnectionAsync(string resourceGroupName, string jobName, string inputName, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -97,9 +96,9 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             {
                 throw new ArgumentNullException("jobName");
             }
-            if (parameters == null)
+            if (inputName == null)
             {
-                throw new ArgumentNullException("parameters");
+                throw new ArgumentNullException("inputName");
             }
             
             // Tracing
@@ -111,12 +110,12 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("jobName", jobName);
-                tracingParameters.Add("parameters", parameters);
+                tracingParameters.Add("inputName", inputName);
                 Tracing.Enter(invocationId, this, "BeginTestConnectionAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/Microsoft.StreamAnalytics/streamingjobs/" + jobName.Trim() + "/inputs/" + (parameters.InputName != null ? parameters.InputName.Trim() : "") + "?";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/Microsoft.StreamAnalytics/streamingjobs/" + jobName.Trim() + "/inputs/" + inputName.Trim() + "?";
             url = url + "api-version=2014-10-01-preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -188,11 +187,11 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-                    if (statusCode == HttpStatusCode.NotFound)
+                    if (statusCode == HttpStatusCode.BadRequest)
                     {
                         result.Status = OperationStatus.Failed;
                     }
-                    if (statusCode == HttpStatusCode.BadRequest)
+                    if (statusCode == HttpStatusCode.NotFound)
                     {
                         result.Status = OperationStatus.Failed;
                     }
@@ -578,28 +577,14 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
-                        InputResponse inputResponseInstance = new InputResponse();
-                        result.InputResponse = inputResponseInstance;
-                        
-                        JToken idValue = responseDoc["id"];
-                        if (idValue != null && idValue.Type != JTokenType.Null)
-                        {
-                            string idInstance = ((string)idValue);
-                            inputResponseInstance.Id = idInstance;
-                        }
-                        
-                        JToken typeValue = responseDoc["type"];
-                        if (typeValue != null && typeValue.Type != JTokenType.Null)
-                        {
-                            string typeInstance = ((string)typeValue);
-                            inputResponseInstance.Type = typeInstance;
-                        }
+                        Input inputInstance = new Input();
+                        result.Input = inputInstance;
                         
                         JToken nameValue = responseDoc["name"];
                         if (nameValue != null && nameValue.Type != JTokenType.Null)
                         {
                             string nameInstance = ((string)nameValue);
-                            inputResponseInstance.Name = nameInstance;
+                            inputInstance.Name = nameInstance;
                         }
                         
                         JToken propertiesValue9 = responseDoc["properties"];
@@ -735,7 +720,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                         referenceInputPropertiesInstance.Serialization = avroSerializationInstance;
                                     }
                                 }
-                                inputResponseInstance.InputProperties = referenceInputPropertiesInstance;
+                                inputInstance.InputProperties = referenceInputPropertiesInstance;
                             }
                             if (typeName == "Stream")
                             {
@@ -934,7 +919,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                         streamInputPropertiesInstance.Serialization = avroSerializationInstance2;
                                     }
                                 }
-                                inputResponseInstance.InputProperties = streamInputPropertiesInstance;
+                                inputInstance.InputProperties = streamInputPropertiesInstance;
                             }
                         }
                     }
@@ -1109,28 +1094,14 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
-                        InputResponse inputResponseInstance = new InputResponse();
-                        result.InputResponse = inputResponseInstance;
-                        
-                        JToken idValue = responseDoc["id"];
-                        if (idValue != null && idValue.Type != JTokenType.Null)
-                        {
-                            string idInstance = ((string)idValue);
-                            inputResponseInstance.Id = idInstance;
-                        }
-                        
-                        JToken typeValue = responseDoc["type"];
-                        if (typeValue != null && typeValue.Type != JTokenType.Null)
-                        {
-                            string typeInstance = ((string)typeValue);
-                            inputResponseInstance.Type = typeInstance;
-                        }
+                        Input inputInstance = new Input();
+                        result.Input = inputInstance;
                         
                         JToken nameValue = responseDoc["name"];
                         if (nameValue != null && nameValue.Type != JTokenType.Null)
                         {
                             string nameInstance = ((string)nameValue);
-                            inputResponseInstance.Name = nameInstance;
+                            inputInstance.Name = nameInstance;
                         }
                         
                         JToken propertiesValue = responseDoc["properties"];
@@ -1266,7 +1237,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                         referenceInputPropertiesInstance.Serialization = avroSerializationInstance;
                                     }
                                 }
-                                inputResponseInstance.InputProperties = referenceInputPropertiesInstance;
+                                inputInstance.InputProperties = referenceInputPropertiesInstance;
                             }
                             if (typeName == "Stream")
                             {
@@ -1465,7 +1436,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                         streamInputPropertiesInstance.Serialization = avroSerializationInstance2;
                                     }
                                 }
-                                inputResponseInstance.InputProperties = streamInputPropertiesInstance;
+                                inputInstance.InputProperties = streamInputPropertiesInstance;
                             }
                         }
                     }
@@ -1758,28 +1729,14 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
-                        InputResponse inputResponseInstance = new InputResponse();
-                        result.InputResponse = inputResponseInstance;
-                        
-                        JToken idValue = responseDoc["id"];
-                        if (idValue != null && idValue.Type != JTokenType.Null)
-                        {
-                            string idInstance = ((string)idValue);
-                            inputResponseInstance.Id = idInstance;
-                        }
-                        
-                        JToken typeValue = responseDoc["type"];
-                        if (typeValue != null && typeValue.Type != JTokenType.Null)
-                        {
-                            string typeInstance = ((string)typeValue);
-                            inputResponseInstance.Type = typeInstance;
-                        }
+                        Input inputInstance = new Input();
+                        result.Input = inputInstance;
                         
                         JToken nameValue = responseDoc["name"];
                         if (nameValue != null && nameValue.Type != JTokenType.Null)
                         {
                             string nameInstance = ((string)nameValue);
-                            inputResponseInstance.Name = nameInstance;
+                            inputInstance.Name = nameInstance;
                         }
                         
                         JToken propertiesValue = responseDoc["properties"];
@@ -1915,7 +1872,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                         referenceInputPropertiesInstance.Serialization = avroSerializationInstance;
                                     }
                                 }
-                                inputResponseInstance.InputProperties = referenceInputPropertiesInstance;
+                                inputInstance.InputProperties = referenceInputPropertiesInstance;
                             }
                             if (typeName == "Stream")
                             {
@@ -2114,7 +2071,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                         streamInputPropertiesInstance.Serialization = avroSerializationInstance2;
                                     }
                                 }
-                                inputResponseInstance.InputProperties = streamInputPropertiesInstance;
+                                inputInstance.InputProperties = streamInputPropertiesInstance;
                             }
                         }
                     }
@@ -2263,28 +2220,14 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                         {
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
-                                InputResponse inputResponseInstance = new InputResponse();
-                                result.InputResponses.Add(inputResponseInstance);
-                                
-                                JToken idValue = valueValue["id"];
-                                if (idValue != null && idValue.Type != JTokenType.Null)
-                                {
-                                    string idInstance = ((string)idValue);
-                                    inputResponseInstance.Id = idInstance;
-                                }
-                                
-                                JToken typeValue = valueValue["type"];
-                                if (typeValue != null && typeValue.Type != JTokenType.Null)
-                                {
-                                    string typeInstance = ((string)typeValue);
-                                    inputResponseInstance.Type = typeInstance;
-                                }
+                                Input inputInstance = new Input();
+                                result.Value.Add(inputInstance);
                                 
                                 JToken nameValue = valueValue["name"];
                                 if (nameValue != null && nameValue.Type != JTokenType.Null)
                                 {
                                     string nameInstance = ((string)nameValue);
-                                    inputResponseInstance.Name = nameInstance;
+                                    inputInstance.Name = nameInstance;
                                 }
                                 
                                 JToken propertiesValue = valueValue["properties"];
@@ -2420,7 +2363,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                 referenceInputPropertiesInstance.Serialization = avroSerializationInstance;
                                             }
                                         }
-                                        inputResponseInstance.InputProperties = referenceInputPropertiesInstance;
+                                        inputInstance.InputProperties = referenceInputPropertiesInstance;
                                     }
                                     if (typeName == "Stream")
                                     {
@@ -2619,7 +2562,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                 streamInputPropertiesInstance.Serialization = avroSerializationInstance2;
                                             }
                                         }
-                                        inputResponseInstance.InputProperties = streamInputPropertiesInstance;
+                                        inputInstance.InputProperties = streamInputPropertiesInstance;
                                     }
                                 }
                             }
@@ -2671,9 +2614,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// <param name='jobName'>
         /// Required. The name of the stream analytics job.
         /// </param>
-        /// <param name='parameters'>
-        /// Required. The parameters required to test the connectivity of an
-        /// input for a stream analytics job.
+        /// <param name='inputName'>
+        /// Required. The input name of the stream analytics job.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -2681,7 +2623,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// <returns>
         /// A standard service response for long running operations.
         /// </returns>
-        public async Task<LongRunningOperationResponse> TestConnectionAsync(string resourceGroupName, string jobName, InputTestConnectionParameters parameters, CancellationToken cancellationToken)
+        public async Task<LongRunningOperationResponse> TestConnectionAsync(string resourceGroupName, string jobName, string inputName, CancellationToken cancellationToken)
         {
             StreamAnalyticsManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -2692,7 +2634,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("jobName", jobName);
-                tracingParameters.Add("parameters", parameters);
+                tracingParameters.Add("inputName", inputName);
                 Tracing.Enter(invocationId, this, "TestConnectionAsync", tracingParameters);
             }
             try
@@ -2703,7 +2645,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 }
                 
                 cancellationToken.ThrowIfCancellationRequested();
-                LongRunningOperationResponse response = await client.Input.BeginTestConnectionAsync(resourceGroupName, jobName, parameters, cancellationToken).ConfigureAwait(false);
+                LongRunningOperationResponse response = await client.Input.BeginTestConnectionAsync(resourceGroupName, jobName, inputName, cancellationToken).ConfigureAwait(false);
                 if (response.Status == OperationStatus.Succeeded)
                 {
                     return response;

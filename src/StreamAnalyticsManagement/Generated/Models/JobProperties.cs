@@ -30,14 +30,14 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
     /// <summary>
     /// The properties of the stream analytics job.
     /// </summary>
-    public partial class JobResponseProperties
+    public partial class JobProperties
     {
-        private DateTime _createdDate;
+        private System.DateTime? _createdDate;
         
         /// <summary>
-        /// Required. The created date of the stream analytics job.
+        /// Optional. ReadOnly. The created date of the stream analytics job.
         /// </summary>
-        public DateTime CreatedDate
+        public System.DateTime? CreatedDate
         {
             get { return this._createdDate; }
             set { this._createdDate = value; }
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _etag;
         
         /// <summary>
-        /// Required. Etag of the stream analytics job.
+        /// Optional. ReadOnly. The etag of the stream analytics job.
         /// </summary>
         public string Etag
         {
@@ -77,21 +77,21 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
             set { this._eventsOutOfOrderPolicy = value; }
         }
         
-        private IList<InputResponse> _inputsInResponse;
+        private IList<Input> _inputs;
         
         /// <summary>
-        /// Optional. A list of one or more inputs returned in the response.
+        /// Optional. A list of one or more inputs.
         /// </summary>
-        public IList<InputResponse> InputsInResponse
+        public IList<Input> Inputs
         {
-            get { return this._inputsInResponse; }
-            set { this._inputsInResponse = value; }
+            get { return this._inputs; }
+            set { this._inputs = value; }
         }
         
         private string _jobId;
         
         /// <summary>
-        /// Required. Id of the stream analytics job.
+        /// Optional. ReadOnly. The id of the stream analytics job.
         /// </summary>
         public string JobId
         {
@@ -102,7 +102,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _jobState;
         
         /// <summary>
-        /// Required. The running state of the stream analytics job.
+        /// Optional. ReadOnly. The running state of the stream analytics job.
         /// </summary>
         public string JobState
         {
@@ -110,15 +110,15 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
             set { this._jobState = value; }
         }
         
-        private IList<OutputResponse> _outputsInResponse;
+        private IList<Output> _outputs;
         
         /// <summary>
-        /// Optional. A list of outputs returned in the response.
+        /// Optional. A list of outputs.
         /// </summary>
-        public IList<OutputResponse> OutputsInResponse
+        public IList<Output> Outputs
         {
-            get { return this._outputsInResponse; }
-            set { this._outputsInResponse = value; }
+            get { return this._outputs; }
+            set { this._outputs = value; }
         }
         
         private string _outputStartMode;
@@ -135,7 +135,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private System.DateTime? _outputStartTime;
         
         /// <summary>
-        /// Required. The output start time of the stream analytics job.
+        /// Optional. The output start time of the stream analytics job.
         /// </summary>
         public System.DateTime? OutputStartTime
         {
@@ -146,7 +146,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _provisioningState;
         
         /// <summary>
-        /// Required. The provisioning state of the stream analytics job.
+        /// Optional. ReadOnly. The provisioning state of the stream analytics
+        /// job.
         /// </summary>
         public string ProvisioningState
         {
@@ -168,7 +169,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private Transformation _transformation;
         
         /// <summary>
-        /// Optional. The transformation query.
+        /// Optional. The transformation definition, including the query and
+        /// the streaming unit count.
         /// </summary>
         public Transformation Transformation
         {
@@ -177,12 +179,12 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the JobResponseProperties class.
+        /// Initializes a new instance of the JobProperties class.
         /// </summary>
-        public JobResponseProperties()
+        public JobProperties()
         {
-            this.InputsInResponse = new LazyList<InputResponse>();
-            this.OutputsInResponse = new LazyList<OutputResponse>();
+            this.Inputs = new LazyList<Input>();
+            this.Outputs = new LazyList<Output>();
         }
     }
 }

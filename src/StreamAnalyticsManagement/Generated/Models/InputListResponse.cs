@@ -33,17 +33,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
     /// </summary>
     public partial class InputListResponse : OperationResponse
     {
-        private IList<InputResponse> _inputResponses;
-        
-        /// <summary>
-        /// Optional. The list of the returned Inputs.
-        /// </summary>
-        public IList<InputResponse> InputResponses
-        {
-            get { return this._inputResponses; }
-            set { this._inputResponses = value; }
-        }
-        
         private string _nextLink;
         
         /// <summary>
@@ -56,12 +45,23 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
             set { this._nextLink = value; }
         }
         
+        private IList<Input> _value;
+        
+        /// <summary>
+        /// Optional. The list of the returned Inputs.
+        /// </summary>
+        public IList<Input> Value
+        {
+            get { return this._value; }
+            set { this._value = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the InputListResponse class.
         /// </summary>
         public InputListResponse()
         {
-            this.InputResponses = new LazyList<InputResponse>();
+            this.Value = new LazyList<Input>();
         }
     }
 }

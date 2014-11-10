@@ -45,18 +45,17 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// <param name='jobName'>
         /// Required. The name of the stream analytics job.
         /// </param>
-        /// <param name='parameters'>
-        /// Required. The parameters required to test an input for a stream
-        /// analytics job.
+        /// <param name='inputName'>
+        /// Required. The input name of the stream analytics job.
         /// </param>
         /// <returns>
         /// A standard service response for long running operations.
         /// </returns>
-        public static LongRunningOperationResponse BeginTestConnection(this IInputOperations operations, string resourceGroupName, string jobName, InputTestConnectionParameters parameters)
+        public static LongRunningOperationResponse BeginTestConnection(this IInputOperations operations, string resourceGroupName, string jobName, string inputName)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IInputOperations)s).BeginTestConnectionAsync(resourceGroupName, jobName, parameters);
+                return ((IInputOperations)s).BeginTestConnectionAsync(resourceGroupName, jobName, inputName);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -75,16 +74,15 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// <param name='jobName'>
         /// Required. The name of the stream analytics job.
         /// </param>
-        /// <param name='parameters'>
-        /// Required. The parameters required to test an input for a stream
-        /// analytics job.
+        /// <param name='inputName'>
+        /// Required. The input name of the stream analytics job.
         /// </param>
         /// <returns>
         /// A standard service response for long running operations.
         /// </returns>
-        public static Task<LongRunningOperationResponse> BeginTestConnectionAsync(this IInputOperations operations, string resourceGroupName, string jobName, InputTestConnectionParameters parameters)
+        public static Task<LongRunningOperationResponse> BeginTestConnectionAsync(this IInputOperations operations, string resourceGroupName, string jobName, string inputName)
         {
-            return operations.BeginTestConnectionAsync(resourceGroupName, jobName, parameters, CancellationToken.None);
+            return operations.BeginTestConnectionAsync(resourceGroupName, jobName, inputName, CancellationToken.None);
         }
         
         /// <summary>
@@ -368,18 +366,17 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// <param name='jobName'>
         /// Required. The name of the stream analytics job.
         /// </param>
-        /// <param name='parameters'>
-        /// Required. The parameters required to test the connectivity of an
-        /// input for a stream analytics job.
+        /// <param name='inputName'>
+        /// Required. The input name of the stream analytics job.
         /// </param>
         /// <returns>
         /// A standard service response for long running operations.
         /// </returns>
-        public static LongRunningOperationResponse TestConnection(this IInputOperations operations, string resourceGroupName, string jobName, InputTestConnectionParameters parameters)
+        public static LongRunningOperationResponse TestConnection(this IInputOperations operations, string resourceGroupName, string jobName, string inputName)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IInputOperations)s).TestConnectionAsync(resourceGroupName, jobName, parameters);
+                return ((IInputOperations)s).TestConnectionAsync(resourceGroupName, jobName, inputName);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -397,16 +394,15 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// <param name='jobName'>
         /// Required. The name of the stream analytics job.
         /// </param>
-        /// <param name='parameters'>
-        /// Required. The parameters required to test the connectivity of an
-        /// input for a stream analytics job.
+        /// <param name='inputName'>
+        /// Required. The input name of the stream analytics job.
         /// </param>
         /// <returns>
         /// A standard service response for long running operations.
         /// </returns>
-        public static Task<LongRunningOperationResponse> TestConnectionAsync(this IInputOperations operations, string resourceGroupName, string jobName, InputTestConnectionParameters parameters)
+        public static Task<LongRunningOperationResponse> TestConnectionAsync(this IInputOperations operations, string resourceGroupName, string jobName, string inputName)
         {
-            return operations.TestConnectionAsync(resourceGroupName, jobName, parameters, CancellationToken.None);
+            return operations.TestConnectionAsync(resourceGroupName, jobName, inputName, CancellationToken.None);
         }
         
         /// <summary>

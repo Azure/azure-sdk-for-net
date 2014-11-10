@@ -31,15 +31,15 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
     /// </summary>
     public partial class InputGetResponse : OperationResponse
     {
-        private InputResponse _inputResponse;
+        private Input _input;
         
         /// <summary>
         /// Optional. The input response content.
         /// </summary>
-        public InputResponse InputResponse
+        public Input Input
         {
-            get { return this._inputResponse; }
-            set { this._inputResponse = value; }
+            get { return this._input; }
+            set { this._input = value; }
         }
         
         /// <summary>

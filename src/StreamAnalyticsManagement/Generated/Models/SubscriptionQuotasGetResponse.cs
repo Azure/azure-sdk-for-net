@@ -31,17 +31,17 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
     /// <summary>
     /// The response of the get stream analytics quotas operation.
     /// </summary>
-    public partial class SubscriptionQuotasGetResponse : OperationResponse, IEnumerable<SubscriptionQuotasResponse>
+    public partial class SubscriptionQuotasGetResponse : OperationResponse, IEnumerable<SubscriptionQuotas>
     {
-        private IList<SubscriptionQuotasResponse> _subscriptionQuotasResponses;
+        private IList<SubscriptionQuotas> _value;
         
         /// <summary>
         /// Optional. The subscription quotas response.
         /// </summary>
-        public IList<SubscriptionQuotasResponse> SubscriptionQuotasResponses
+        public IList<SubscriptionQuotas> Value
         {
-            get { return this._subscriptionQuotasResponses; }
-            set { this._subscriptionQuotasResponses = value; }
+            get { return this._value; }
+            set { this._value = value; }
         }
         
         /// <summary>
@@ -50,19 +50,19 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// </summary>
         public SubscriptionQuotasGetResponse()
         {
-            this.SubscriptionQuotasResponses = new LazyList<SubscriptionQuotasResponse>();
+            this.Value = new LazyList<SubscriptionQuotas>();
         }
         
         /// <summary>
-        /// Gets the sequence of SubscriptionQuotasResponses.
+        /// Gets the sequence of Value.
         /// </summary>
-        public IEnumerator<SubscriptionQuotasResponse> GetEnumerator()
+        public IEnumerator<SubscriptionQuotas> GetEnumerator()
         {
-            return this.SubscriptionQuotasResponses.GetEnumerator();
+            return this.Value.GetEnumerator();
         }
         
         /// <summary>
-        /// Gets the sequence of SubscriptionQuotasResponses.
+        /// Gets the sequence of Value.
         /// </summary>
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {

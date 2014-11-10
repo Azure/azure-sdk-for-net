@@ -170,35 +170,21 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                         {
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
-                                SubscriptionQuotasResponse subscriptionQuotasResponseInstance = new SubscriptionQuotasResponse();
-                                result.SubscriptionQuotasResponses.Add(subscriptionQuotasResponseInstance);
-                                
-                                JToken idValue = valueValue["id"];
-                                if (idValue != null && idValue.Type != JTokenType.Null)
-                                {
-                                    string idInstance = ((string)idValue);
-                                    subscriptionQuotasResponseInstance.Id = idInstance;
-                                }
+                                SubscriptionQuotas subscriptionQuotasInstance = new SubscriptionQuotas();
+                                result.Value.Add(subscriptionQuotasInstance);
                                 
                                 JToken nameValue = valueValue["name"];
                                 if (nameValue != null && nameValue.Type != JTokenType.Null)
                                 {
                                     string nameInstance = ((string)nameValue);
-                                    subscriptionQuotasResponseInstance.Name = nameInstance;
-                                }
-                                
-                                JToken typeValue = valueValue["type"];
-                                if (typeValue != null && typeValue.Type != JTokenType.Null)
-                                {
-                                    string typeInstance = ((string)typeValue);
-                                    subscriptionQuotasResponseInstance.Type = typeInstance;
+                                    subscriptionQuotasInstance.Name = nameInstance;
                                 }
                                 
                                 JToken propertiesValue = valueValue["properties"];
                                 if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                 {
                                     SubscriptionQuotasProperties propertiesInstance = new SubscriptionQuotasProperties();
-                                    subscriptionQuotasResponseInstance.SubscriptionQuotasProperties = propertiesInstance;
+                                    subscriptionQuotasInstance.Properties = propertiesInstance;
                                     
                                     JToken maxCountValue = propertiesValue["maxCount"];
                                     if (maxCountValue != null && maxCountValue.Type != JTokenType.Null)

@@ -42,9 +42,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// <param name='jobName'>
         /// The name of the stream analytics job.
         /// </param>
-        /// <param name='parameters'>
-        /// The parameters required to test an output for a stream analytics
-        /// job.
+        /// <param name='outputName'>
+        /// The output Name of the stream analytics job.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -52,7 +51,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// <returns>
         /// A standard service response for long running operations.
         /// </returns>
-        Task<LongRunningOperationResponse> BeginTestConnectionAsync(string resourceGroupName, string jobName, OutputTestConnectionParameters parameters, CancellationToken cancellationToken);
+        Task<LongRunningOperationResponse> BeginTestConnectionAsync(string resourceGroupName, string jobName, string outputName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Create an output for a stream analytics job.
@@ -167,9 +166,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// <param name='jobName'>
         /// The name of the stream analytics job.
         /// </param>
-        /// <param name='parameters'>
-        /// The parameters required to test an output for a stream analytics
-        /// job.
+        /// <param name='outputName'>
+        /// The output Name of the stream analytics job.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -178,7 +176,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> TestConnectionAsync(string resourceGroupName, string jobName, OutputTestConnectionParameters parameters, CancellationToken cancellationToken);
+        Task<OperationResponse> TestConnectionAsync(string resourceGroupName, string jobName, string outputName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Update an output for a stream analytics job.

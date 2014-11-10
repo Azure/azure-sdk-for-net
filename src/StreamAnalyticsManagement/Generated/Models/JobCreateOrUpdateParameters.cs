@@ -44,16 +44,16 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
             set { this._ifNoneMatch = value; }
         }
         
-        private JobRequest _jobRequest;
+        private Job _job;
         
         /// <summary>
-        /// Optional. The definition of the stream analytics job to be created
+        /// Required. The definition of the stream analytics job to be created
         /// or updated.
         /// </summary>
-        public JobRequest JobRequest
+        public Job Job
         {
-            get { return this._jobRequest; }
-            set { this._jobRequest = value; }
+            get { return this._job; }
+            set { this._job = value; }
         }
         
         /// <summary>
@@ -61,6 +61,20 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// </summary>
         public JobCreateOrUpdateParameters()
         {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the JobCreateOrUpdateParameters class
+        /// with required arguments.
+        /// </summary>
+        public JobCreateOrUpdateParameters(Job job)
+            : this()
+        {
+            if (job == null)
+            {
+                throw new ArgumentNullException("job");
+            }
+            this.Job = job;
         }
     }
 }

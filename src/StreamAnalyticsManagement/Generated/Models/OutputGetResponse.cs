@@ -31,15 +31,15 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
     /// </summary>
     public partial class OutputGetResponse : OperationResponse
     {
-        private OutputResponse _outputResponse;
+        private Output _output;
         
         /// <summary>
         /// Optional. The output of the stream analytics job in response.
         /// </summary>
-        public OutputResponse OutputResponse
+        public Output Output
         {
-            get { return this._outputResponse; }
-            set { this._outputResponse = value; }
+            get { return this._output; }
+            set { this._output = value; }
         }
         
         /// <summary>

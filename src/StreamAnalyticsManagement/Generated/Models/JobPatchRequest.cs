@@ -32,15 +32,15 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
     /// </summary>
     public partial class JobPatchRequest
     {
-        private JobRequestProperties _jobPatchRequestProperties;
+        private JobProperties _properties;
         
         /// <summary>
         /// Required. The job properties for patch request.
         /// </summary>
-        public JobRequestProperties JobPatchRequestProperties
+        public JobProperties Properties
         {
-            get { return this._jobPatchRequestProperties; }
-            set { this._jobPatchRequestProperties = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         private IDictionary<string, string> _tags;
@@ -66,14 +66,14 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// Initializes a new instance of the JobPatchRequest class with
         /// required arguments.
         /// </summary>
-        public JobPatchRequest(JobRequestProperties jobPatchRequestProperties)
+        public JobPatchRequest(JobProperties properties)
             : this()
         {
-            if (jobPatchRequestProperties == null)
+            if (properties == null)
             {
-                throw new ArgumentNullException("jobPatchRequestProperties");
+                throw new ArgumentNullException("properties");
             }
-            this.JobPatchRequestProperties = jobPatchRequestProperties;
+            this.Properties = properties;
         }
     }
 }

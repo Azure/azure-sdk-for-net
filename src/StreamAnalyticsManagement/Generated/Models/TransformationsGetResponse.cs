@@ -31,16 +31,16 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
     /// </summary>
     public partial class TransformationsGetResponse : OperationResponse
     {
-        private TransformationResponse _transformationResponse;
+        private Transformation _transformation;
         
         /// <summary>
-        /// Optional. The transformation of the stream analytics job in
+        /// Required. The transformation of the stream analytics job in
         /// response.
         /// </summary>
-        public TransformationResponse TransformationResponse
+        public Transformation Transformation
         {
-            get { return this._transformationResponse; }
-            set { this._transformationResponse = value; }
+            get { return this._transformation; }
+            set { this._transformation = value; }
         }
         
         /// <summary>
@@ -48,6 +48,20 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// </summary>
         public TransformationsGetResponse()
         {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the TransformationsGetResponse class
+        /// with required arguments.
+        /// </summary>
+        public TransformationsGetResponse(Transformation transformation)
+            : this()
+        {
+            if (transformation == null)
+            {
+                throw new ArgumentNullException("transformation");
+            }
+            this.Transformation = transformation;
         }
     }
 }

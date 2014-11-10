@@ -178,9 +178,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// <param name='resourceGroupName'>
         /// Required. The resource group name of the stream analytics job.
         /// </param>
-        /// <param name='jobName'>
-        /// Required. The name of the stream analytics job.
-        /// </param>
         /// <param name='parameters'>
         /// Required. The parameters required to create or update a stream
         /// analytics job.
@@ -188,11 +185,11 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// <returns>
         /// The response of the create stream analytics job operation.
         /// </returns>
-        public static JobCreateOrUpdateResponse CreateOrUpdate(this IJobOperations operations, string resourceGroupName, string jobName, JobCreateOrUpdateParameters parameters)
+        public static JobCreateOrUpdateResponse CreateOrUpdate(this IJobOperations operations, string resourceGroupName, JobCreateOrUpdateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IJobOperations)s).CreateOrUpdateAsync(resourceGroupName, jobName, parameters);
+                return ((IJobOperations)s).CreateOrUpdateAsync(resourceGroupName, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -207,9 +204,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// <param name='resourceGroupName'>
         /// Required. The resource group name of the stream analytics job.
         /// </param>
-        /// <param name='jobName'>
-        /// Required. The name of the stream analytics job.
-        /// </param>
         /// <param name='parameters'>
         /// Required. The parameters required to create or update a stream
         /// analytics job.
@@ -217,9 +211,9 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// <returns>
         /// The response of the create stream analytics job operation.
         /// </returns>
-        public static Task<JobCreateOrUpdateResponse> CreateOrUpdateAsync(this IJobOperations operations, string resourceGroupName, string jobName, JobCreateOrUpdateParameters parameters)
+        public static Task<JobCreateOrUpdateResponse> CreateOrUpdateAsync(this IJobOperations operations, string resourceGroupName, JobCreateOrUpdateParameters parameters)
         {
-            return operations.CreateOrUpdateAsync(resourceGroupName, jobName, parameters, CancellationToken.None);
+            return operations.CreateOrUpdateAsync(resourceGroupName, parameters, CancellationToken.None);
         }
         
         /// <summary>

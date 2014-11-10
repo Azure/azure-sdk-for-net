@@ -45,16 +45,16 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
             set { this._nextLink = value; }
         }
         
-        private IList<OutputResponse> _outputResponses;
+        private IList<Output> _value;
         
         /// <summary>
         /// Optional. The list of the outputs in response. In public preview,
         /// the response only has one output.
         /// </summary>
-        public IList<OutputResponse> OutputResponses
+        public IList<Output> Value
         {
-            get { return this._outputResponses; }
-            set { this._outputResponses = value; }
+            get { return this._value; }
+            set { this._value = value; }
         }
         
         /// <summary>
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// </summary>
         public OutputListResponse()
         {
-            this.OutputResponses = new LazyList<OutputResponse>();
+            this.Value = new LazyList<Output>();
         }
     }
 }

@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private JobPatchRequest _jobPatchRequest;
         
         /// <summary>
-        /// Optional. The definition of the stream analytics job to be patched.
+        /// Required. The definition of the stream analytics job to be patched.
         /// </summary>
         public JobPatchRequest JobPatchRequest
         {
@@ -60,6 +60,20 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// </summary>
         public JobPatchParameters()
         {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the JobPatchParameters class with
+        /// required arguments.
+        /// </summary>
+        public JobPatchParameters(JobPatchRequest jobPatchRequest)
+            : this()
+        {
+            if (jobPatchRequest == null)
+            {
+                throw new ArgumentNullException("jobPatchRequest");
+            }
+            this.JobPatchRequest = jobPatchRequest;
         }
     }
 }

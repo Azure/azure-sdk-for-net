@@ -28,19 +28,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
     /// <summary>
     /// The subscription quptas response.
     /// </summary>
-    public partial class SubscriptionQuotasResponse
+    public partial class SubscriptionQuotas
     {
-        private string _id;
-        
-        /// <summary>
-        /// Required. The id of the subscription quotas response.
-        /// </summary>
-        public string Id
-        {
-            get { return this._id; }
-            set { this._id = value; }
-        }
-        
         private string _name;
         
         /// <summary>
@@ -52,33 +41,41 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
             set { this._name = value; }
         }
         
-        private SubscriptionQuotasProperties _subscriptionQuotasProperties;
+        private SubscriptionQuotasProperties _properties;
         
         /// <summary>
         /// Required. The properties of the subscription quotas response.
         /// </summary>
-        public SubscriptionQuotasProperties SubscriptionQuotasProperties
+        public SubscriptionQuotasProperties Properties
         {
-            get { return this._subscriptionQuotasProperties; }
-            set { this._subscriptionQuotasProperties = value; }
-        }
-        
-        private string _type;
-        
-        /// <summary>
-        /// Required. The type of the subscription quotas response.
-        /// </summary>
-        public string Type
-        {
-            get { return this._type; }
-            set { this._type = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the SubscriptionQuotasResponse class.
+        /// Initializes a new instance of the SubscriptionQuotas class.
         /// </summary>
-        public SubscriptionQuotasResponse()
+        public SubscriptionQuotas()
         {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the SubscriptionQuotas class with
+        /// required arguments.
+        /// </summary>
+        public SubscriptionQuotas(string name, SubscriptionQuotasProperties properties)
+            : this()
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException("name");
+            }
+            if (properties == null)
+            {
+                throw new ArgumentNullException("properties");
+            }
+            this.Name = name;
+            this.Properties = properties;
         }
     }
 }
