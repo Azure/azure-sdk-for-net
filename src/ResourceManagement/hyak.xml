@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Hyak>
+  <Assembly>Microsoft.Azure.Management.Resources.Specification.dll</Assembly>
+  <OutputDirectory>Generated</OutputDirectory>
+
+  <Specification>
+    <Type>Microsoft.Azure.Management.Resources.ResourceManagementClient</Type>
+
+    <Platform>
+      <Flavor>CSharp.Azure</Flavor>
+      <OutputDirectory></OutputDirectory>
+      <BaseNamespace>Microsoft.Azure.Management.Resources</BaseNamespace>
+      <Split>Namespace</Split>
+    </Platform>
+  </Specification>
+
+  <Specification>
+    <Type>Microsoft.Azure.Subscriptions.SubscriptionClient</Type>
+
+    <Platform>
+      <Flavor>CSharp.Azure</Flavor>
+      <OutputDirectory></OutputDirectory>
+      <BaseNamespace>Microsoft.Azure.Subscriptions</BaseNamespace>
+      <Split>Namespace</Split>
+    </Platform>
+  </Specification>
+</Hyak>

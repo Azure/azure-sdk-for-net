@@ -202,7 +202,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 {
                     throw new ArgumentOutOfRangeException("parameters.ProvisioningConfiguration.UserName");
                 }
-                if (parameters.ProvisioningConfiguration.UserPassword != null && parameters.ProvisioningConfiguration.UserPassword.Length < 6 && (parameters.ProvisioningConfiguration.DisableSshPasswordAuthentication == false || parameters.ProvisioningConfiguration.UserPassword.Length != 0))
+                if (parameters.ProvisioningConfiguration.UserPassword != null && parameters.ProvisioningConfiguration.UserPassword.Length < 6)
                 {
                     throw new ArgumentOutOfRangeException("parameters.ProvisioningConfiguration.UserPassword");
                 }
@@ -1182,7 +1182,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     {
                         throw new ArgumentOutOfRangeException("parameters.ConfigurationSets.UserName");
                     }
-                    if (configurationSetsParameterItem.UserPassword != null && configurationSetsParameterItem.UserPassword.Length < 6 && (configurationSetsParameterItem.DisableSshPasswordAuthentication == false || configurationSetsParameterItem.UserPassword.Length != 0))
+                    if (configurationSetsParameterItem.UserPassword != null && configurationSetsParameterItem.UserPassword.Length < 6)
                     {
                         throw new ArgumentOutOfRangeException("parameters.ConfigurationSets.UserPassword");
                     }
@@ -2229,7 +2229,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             {
                                 throw new ArgumentOutOfRangeException("parameters.Roles.ConfigurationSets.UserName");
                             }
-                            if (configurationSetsParameterItem.UserPassword != null && configurationSetsParameterItem.UserPassword.Length < 6 && (configurationSetsParameterItem.DisableSshPasswordAuthentication == false || configurationSetsParameterItem.UserPassword.Length != 0))
+                            if (configurationSetsParameterItem.UserPassword != null && configurationSetsParameterItem.UserPassword.Length < 6)
                             {
                                 throw new ArgumentOutOfRangeException("parameters.Roles.ConfigurationSets.UserPassword");
                             }
@@ -4355,7 +4355,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     {
                         throw new ArgumentOutOfRangeException("parameters.ConfigurationSets.UserName");
                     }
-                    if (configurationSetsParameterItem.UserPassword != null && configurationSetsParameterItem.UserPassword.Length < 6 && (configurationSetsParameterItem.DisableSshPasswordAuthentication == false || configurationSetsParameterItem.UserPassword.Length != 0))
+                    if (configurationSetsParameterItem.UserPassword != null && configurationSetsParameterItem.UserPassword.Length < 6)
                     {
                         throw new ArgumentOutOfRangeException("parameters.ConfigurationSets.UserPassword");
                     }

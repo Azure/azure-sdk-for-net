@@ -188,7 +188,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// Required. TBD.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Gets the URI used as the base for all cloud service
+        /// Optional. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
         public WebSiteExtensionsClient(string siteName, BasicAuthenticationCloudCredentials credentials, Uri baseUri)
@@ -271,7 +271,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// Required. TBD.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Gets the URI used as the base for all cloud service
+        /// Optional. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
         /// <param name='httpClient'>
