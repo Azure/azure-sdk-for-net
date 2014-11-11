@@ -178,10 +178,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-                    if (statusCode == HttpStatusCode.NotFound)
-                    {
-                        result.Status = OperationStatus.Failed;
-                    }
                     if (statusCode == HttpStatusCode.Conflict)
                     {
                         result.Status = OperationStatus.Failed;
@@ -190,11 +186,15 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     {
                         result.Status = OperationStatus.Failed;
                     }
-                    if (statusCode == HttpStatusCode.NoContent)
+                    if (statusCode == HttpStatusCode.NotFound)
+                    {
+                        result.Status = OperationStatus.Failed;
+                    }
+                    if (statusCode == HttpStatusCode.OK)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.NoContent)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
@@ -334,15 +334,15 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
+                    if (statusCode == HttpStatusCode.PreconditionFailed)
+                    {
+                        result.Status = OperationStatus.Failed;
+                    }
                     if (statusCode == HttpStatusCode.Conflict)
                     {
                         result.Status = OperationStatus.Failed;
                     }
                     if (statusCode == HttpStatusCode.NotFound)
-                    {
-                        result.Status = OperationStatus.Failed;
-                    }
-                    if (statusCode == HttpStatusCode.PreconditionFailed)
                     {
                         result.Status = OperationStatus.Failed;
                     }
@@ -486,15 +486,15 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-                    if (statusCode == HttpStatusCode.NotFound)
-                    {
-                        result.Status = OperationStatus.Failed;
-                    }
                     if (statusCode == HttpStatusCode.Conflict)
                     {
                         result.Status = OperationStatus.Failed;
                     }
                     if (statusCode == HttpStatusCode.PreconditionFailed)
+                    {
+                        result.Status = OperationStatus.Failed;
+                    }
+                    if (statusCode == HttpStatusCode.NotFound)
                     {
                         result.Status = OperationStatus.Failed;
                     }
@@ -3917,11 +3917,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 cancellationToken.ThrowIfCancellationRequested();
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                 
-                // Serialize Request
-                string requestContent = parameters.PropertiesToExpand;
-                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
-                
                 // Send Request
                 HttpResponseMessage httpResponse = null;
                 try
@@ -3940,7 +3935,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
