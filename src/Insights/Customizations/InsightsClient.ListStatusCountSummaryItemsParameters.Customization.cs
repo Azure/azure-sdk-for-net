@@ -14,39 +14,45 @@
 //
 
 using System;
-using Microsoft.Azure.Insights.Models;
+using Microsoft.SqlServer.Server;
 using Microsoft.WindowsAzure.Common.OData;
 
 namespace Microsoft.Azure.Insights
 {
     /// <summary>
-    /// The parameters to get the digest events for a subscription
+    /// The parameters to get the events for a subscription
     /// </summary>
-    public class ListDigestEventsParameters
+    public class ListStatusCountItemCollectionParameters
     {
         /// <summary>
         /// Gets or sets the start time
         /// </summary>
-        [FilterParameter("eventTimestamp", "O")]
-        public DateTime EventTimestamp { get; set; }
+        [FilterParameter("startTime", "O")]
+        public DateTime StartTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the event channel
+        /// Gets or sets the end time.
         /// </summary>
-        [FilterParameter("eventChannels")]
-        public EventChannels? EventChannels { get; set; }
+        [FilterParameter("endTime", "O")]
+        public DateTime? EndTime { get; set; }
 
         /// <summary>
         /// Gets or sets the status
         /// </summary>
         [FilterParameter("status")]
         public string Status { get; set; }
+
+        /// <summary>
+        /// Gets or sets the caller
+        /// </summary>
+        [FilterParameter("caller")]
+        public string Caller { get; set; }
     }
 
     /// <summary>
-    /// The parameters to get the digest events for an event source
+    /// The parameters to get the event status count summary for an event source
     /// </summary>
-    public class ListDigestEventsForEventSourceParameters : ListDigestEventsParameters
+    public class ListStatusCountItemCollectionForEventSourceParameters : ListStatusCountItemCollectionParameters
     {
         /// <summary>
         /// Gets or sets the event source
@@ -56,36 +62,36 @@ namespace Microsoft.Azure.Insights
     }
 
     /// <summary>
-    /// The parameters to get the digest events for a resource
+    /// The parameters to get the event status count summary for a resource
     /// </summary>
-    public class ListDigestEventsForResourceParameters : ListDigestEventsParameters
+    public class ListStatusCountItemCollectionForResourceParameters : ListStatusCountItemCollectionParameters
     {
         /// <summary>
-        /// Get or set the resource uri
+        /// Gets or sets the resource uri
         /// </summary>
         [FilterParameter("resourceUri")]
         public string ResourceUri { get; set; }
     }
 
     /// <summary>
-    /// The parameters to get the digest events for a resource group
+    /// The parameters to get the event status count summary for a resource group
     /// </summary>
-    public class ListDigestEventsForResourceGroupParameters : ListDigestEventsParameters
+    public class ListStatusCountItemCollectionForResourceGroupParameters : ListStatusCountItemCollectionParameters
     {
         /// <summary>
-        /// Get or set the resource group name
+        /// Gets or sets the resource group name
         /// </summary>
         [FilterParameter("resourceGroupName")]
         public string ResourceGroupName { get; set; }
     }
 
     /// <summary>
-    /// The parameters to get the digest events for a resource provider
+    /// The parameters to get the event status count summary for a resource provider
     /// </summary>
-    public class ListDigestEventsForResourceProviderParameters : ListDigestEventsParameters
+    public class ListStatusCountItemCollectionForResourceProviderParameters : ListStatusCountItemCollectionParameters
     {
         /// <summary>
-        /// Get or set the resource provider
+        /// Gets or sets the resource provider
         /// </summary>
         [FilterParameter("resourceProvider")]
         public string ResourceProvider { get; set; }
