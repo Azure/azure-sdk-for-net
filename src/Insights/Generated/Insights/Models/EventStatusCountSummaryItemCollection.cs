@@ -27,28 +27,28 @@ using Microsoft.Azure.Insights.Models;
 namespace Microsoft.Azure.Insights.Models
 {
     /// <summary>
-    /// Represents collection of event count summary items.
+    /// Represents collection of event status count summary items.
     /// </summary>
-    public partial class EventCountSummaryItemCollection
+    public partial class EventStatusCountSummaryItemCollection
     {
-        private IList<EventCountSummaryItem> _value;
+        private IList<EventStatusCountSummaryItem> _value;
         
         /// <summary>
-        /// Optional. The event count summary items.
+        /// Optional. The event status count summary items.
         /// </summary>
-        public IList<EventCountSummaryItem> Value
+        public IList<EventStatusCountSummaryItem> Value
         {
             get { return this._value; }
             set { this._value = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the EventCountSummaryItemCollection
-        /// class.
+        /// Initializes a new instance of the
+        /// EventStatusCountSummaryItemCollection class.
         /// </summary>
-        public EventCountSummaryItemCollection()
+        public EventStatusCountSummaryItemCollection()
         {
-            this.Value = new List<EventCountSummaryItem>();
+            this.Value = new List<EventStatusCountSummaryItem>();
         }
     }
 }

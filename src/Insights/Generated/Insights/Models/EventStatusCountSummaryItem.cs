@@ -20,14 +20,16 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Azure.Insights.Models;
 
 namespace Microsoft.Azure.Insights.Models
 {
     /// <summary>
     /// The event count summary item for a single resource.
     /// </summary>
-    public partial class EventCountSummaryItem
+    public partial class EventStatusCountSummaryItem
     {
         private DateTime _eventTime;
         
@@ -38,17 +40,6 @@ namespace Microsoft.Azure.Insights.Models
         {
             get { return this._eventTime; }
             set { this._eventTime = value; }
-        }
-        
-        private int _failedEventsCount;
-        
-        /// <summary>
-        /// Optional. The number of failed events in the time grain.
-        /// </summary>
-        public int FailedEventsCount
-        {
-            get { return this._failedEventsCount; }
-            set { this._failedEventsCount = value; }
         }
         
         private string _id;
@@ -62,15 +53,15 @@ namespace Microsoft.Azure.Insights.Models
             set { this._id = value; }
         }
         
-        private int _successEventsCount;
+        private IList<StatusCount> _statusCounts;
         
         /// <summary>
-        /// Optional. The number of success events in the time grain.
+        /// Optional. The status counts.
         /// </summary>
-        public int SuccessEventsCount
+        public IList<StatusCount> StatusCounts
         {
-            get { return this._successEventsCount; }
-            set { this._successEventsCount = value; }
+            get { return this._statusCounts; }
+            set { this._statusCounts = value; }
         }
         
         private TimeSpan _timeGrain;
@@ -84,22 +75,12 @@ namespace Microsoft.Azure.Insights.Models
             set { this._timeGrain = value; }
         }
         
-        private int _totalEventsCount;
-        
         /// <summary>
-        /// Optional. The total number of events in the time grain.
+        /// Initializes a new instance of the EventStatusCountSummaryItem class.
         /// </summary>
-        public int TotalEventsCount
+        public EventStatusCountSummaryItem()
         {
-            get { return this._totalEventsCount; }
-            set { this._totalEventsCount = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the EventCountSummaryItem class.
-        /// </summary>
-        public EventCountSummaryItem()
-        {
+            this.StatusCounts = new List<StatusCount>();
         }
     }
 }

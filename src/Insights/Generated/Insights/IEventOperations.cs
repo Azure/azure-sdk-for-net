@@ -80,20 +80,6 @@ namespace Microsoft.Azure.Insights
         Task<EventDataListResponse> ListDigestEventsNextAsync(string nextLink, CancellationToken cancellationToken);
         
         /// <summary>
-        /// The count of events in a subscription.
-        /// </summary>
-        /// <param name='filterString'>
-        /// The filter string.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        Task<EventCountSummaryListResponse> ListEventCountSummaryItemsAsync(string filterString, CancellationToken cancellationToken);
-        
-        /// <summary>
         /// The List Event Values operation lists the events.
         /// </summary>
         /// <param name='filterString'>
@@ -124,5 +110,19 @@ namespace Microsoft.Azure.Insights
         /// The List Events operation response.
         /// </returns>
         Task<EventDataListResponse> ListEventsNextAsync(string nextLink, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The status count of events in a subscription.
+        /// </summary>
+        /// <param name='filterString'>
+        /// The filter string.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List event status count summary operation response.
+        /// </returns>
+        Task<EventStatusCountSummaryListResponse> ListEventStatusCountSummaryItemsAsync(string filterString, CancellationToken cancellationToken);
     }
 }

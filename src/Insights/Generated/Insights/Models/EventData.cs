@@ -42,6 +42,17 @@ namespace Microsoft.Azure.Insights.Models
             set { this._authorization = value; }
         }
         
+        private string _caller;
+        
+        /// <summary>
+        /// Optional. Gets or sets the caller
+        /// </summary>
+        public string Caller
+        {
+            get { return this._caller; }
+            set { this._caller = value; }
+        }
+        
         private Dictionary<string, string> _claims;
         
         /// <summary>
@@ -139,6 +150,17 @@ namespace Microsoft.Azure.Insights.Models
         {
             get { return this._httpRequest; }
             set { this._httpRequest = value; }
+        }
+        
+        private string _id;
+        
+        /// <summary>
+        /// Optional. Gets or sets the Id
+        /// </summary>
+        public string Id
+        {
+            get { return this._id; }
+            set { this._id = value; }
         }
         
         private EventLevel _level;

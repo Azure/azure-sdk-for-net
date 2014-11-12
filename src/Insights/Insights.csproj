@@ -15,7 +15,7 @@
   </PropertyGroup>
   <Import Project="..\library.props" />
   <ItemGroup>
-    <Compile Include="Customizations\EventCountSummaryListResponse.Customizations.cs" />
+    <Compile Include="Customizations\EventStatusCountSummaryListResponse.Customizations.cs" />
     <Compile Include="Customizations\IMetricOperations.Customization.cs" />
     <Compile Include="Customizations\InsightsClient.Customization.cs" />
     <Compile Include="Customizations\InsightsClient.GetEventCountSummaryParameters.Customization.cs" />
@@ -33,9 +33,10 @@
     <Compile Include="Customizations\Shoebox\ShoeboxHelper.cs" />
     <Compile Include="Customizations\Shoebox\SizeBoundedCache.cs" />
     <Compile Include="Customizations\Shoebox\TableOperationContextLogger.cs" />
-    <Compile Include="Generated\Insights\Models\EventCountSummaryItem.cs" />
-    <Compile Include="Generated\Insights\Models\EventCountSummaryItemCollection.cs" />
-    <Compile Include="Generated\Insights\Models\EventCountSummaryListResponse.cs" />
+    <Compile Include="Generated\Insights\Models\EventStatusCountSummaryItem.cs" />
+    <Compile Include="Generated\Insights\Models\EventStatusCountSummaryItemCollection.cs" />
+    <Compile Include="Generated\Insights\Models\EventStatusCountSummaryListResponse.cs" />
+    <Compile Include="Generated\Insights\Models\StatusCount.cs" />
     <Compile Include="Generated\Management\Insights\AgentDiagnosticSettingsOperations.cs" />
     <Compile Include="Generated\Management\Insights\AgentDiagnosticSettingsOperationsExtensions.cs" />
     <Compile Include="Generated\Management\Insights\IAgentDiagnosticSettingsOperations.cs" />

@@ -22,31 +22,40 @@
 using System;
 using System.Linq;
 using Microsoft.Azure.Insights.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Insights.Models
 {
     /// <summary>
-    /// The List Events operation response.
+    /// The status count.
     /// </summary>
-    public partial class EventCountSummaryListResponse : OperationResponse
+    public partial class StatusCount
     {
-        private EventCountSummaryItemCollection _eventCountSummaryItemCollection;
+        private int _count;
         
         /// <summary>
-        /// Optional. The retrieved events.
+        /// Optional. The count.
         /// </summary>
-        public EventCountSummaryItemCollection EventCountSummaryItemCollection
+        public int Count
         {
-            get { return this._eventCountSummaryItemCollection; }
-            set { this._eventCountSummaryItemCollection = value; }
+            get { return this._count; }
+            set { this._count = value; }
+        }
+        
+        private LocalizableString _status;
+        
+        /// <summary>
+        /// Optional. The status.
+        /// </summary>
+        public LocalizableString Status
+        {
+            get { return this._status; }
+            set { this._status = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the EventCountSummaryListResponse
-        /// class.
+        /// Initializes a new instance of the StatusCount class.
         /// </summary>
-        public EventCountSummaryListResponse()
+        public StatusCount()
         {
         }
     }
