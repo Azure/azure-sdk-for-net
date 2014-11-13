@@ -46,7 +46,6 @@
     <Compile Include="Generated\Models\BatchAccountUpdateResponse.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="GenerateCode.props">
       <SubType>Designer</SubType>
     </None>

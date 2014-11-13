@@ -209,7 +209,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="Microsoft.WindowsAzure.Management.Compute.nuget.proj">
       <SubType>Designer</SubType>
     </None>

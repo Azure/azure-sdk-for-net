@@ -16,7 +16,6 @@
   </PropertyGroup>
   <Import Project="..\library.props" />
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="GenerateCode.props" />
     <None Include="Microsoft.Azure.Management.Redis.nuget.proj" />
     <None Include="Microsoft.Azure.Management.Redis.nuspec" />

@@ -88,7 +88,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="Microsoft.WindowsAzure.Management.ExpressRoute.nuget.proj" />
     <None Include="Microsoft.WindowsAzure.Management.ExpressRoute.nuspec" />
     <None Include="packages.config" />

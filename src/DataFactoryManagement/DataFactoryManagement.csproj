@@ -172,7 +172,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="GenerateCode.props" />
     <None Include="Microsoft.Azure.Management.DataFactories.nuspec" />
     <None Include="Microsoft.Azure.Management.DataFactories.nuget.proj" />
