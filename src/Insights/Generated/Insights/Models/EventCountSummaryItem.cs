@@ -25,14 +25,14 @@ using System.Linq;
 namespace Microsoft.Azure.Insights.Models
 {
     /// <summary>
-    /// The event count summary.
+    /// The event count summary item for a single resource.
     /// </summary>
-    public partial class CountSummaryItem
+    public partial class EventCountSummaryItem
     {
         private DateTime _eventTime;
         
         /// <summary>
-        /// Optional. The event time.
+        /// Optional. The event summary time.
         /// </summary>
         public DateTime EventTime
         {
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Insights.Models
         private int _failedEventsCount;
         
         /// <summary>
-        /// Optional. The total number of failed events.
+        /// Optional. The number of failed events in the time grain.
         /// </summary>
         public int FailedEventsCount
         {
@@ -51,21 +51,32 @@ namespace Microsoft.Azure.Insights.Models
             set { this._failedEventsCount = value; }
         }
         
-        private int _successEventsCount;
+        private string _id;
         
         /// <summary>
-        /// Optional. The total number of success events.
+        /// Optional. The resource id.
         /// </summary>
-        public int SuccessEventsCount
+        public string Id
         {
-            get { return this._successEventsCount; }
-            set { this._successEventsCount = value; }
+            get { return this._id; }
+            set { this._id = value; }
+        }
+        
+        private TimeSpan _timeGrain;
+        
+        /// <summary>
+        /// Optional. The time grain of the summary item.
+        /// </summary>
+        public TimeSpan TimeGrain
+        {
+            get { return this._timeGrain; }
+            set { this._timeGrain = value; }
         }
         
         private int _totalEventsCount;
         
         /// <summary>
-        /// Optional. The total number of events.
+        /// Optional. The total number of events in the time grain.
         /// </summary>
         public int TotalEventsCount
         {
@@ -74,9 +85,9 @@ namespace Microsoft.Azure.Insights.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the CountSummaryItem class.
+        /// Initializes a new instance of the EventCountSummaryItem class.
         /// </summary>
-        public CountSummaryItem()
+        public EventCountSummaryItem()
         {
         }
     }

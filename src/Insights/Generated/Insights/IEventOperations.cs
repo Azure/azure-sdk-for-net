@@ -33,20 +33,6 @@ namespace Microsoft.Azure.Insights
     public partial interface IEventOperations
     {
         /// <summary>
-        /// The count of events in a subscription.
-        /// </summary>
-        /// <param name='filterString'>
-        /// The filter string.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The event count summary response.
-        /// </returns>
-        Task<EventCountSummaryResponse> GetCountSummaryAsync(string filterString, CancellationToken cancellationToken);
-        
-        /// <summary>
         /// The List Digest Event Values operation lists the digest events.
         /// </summary>
         /// <param name='filterString'>
@@ -78,6 +64,20 @@ namespace Microsoft.Azure.Insights
         /// The List Events operation response.
         /// </returns>
         Task<EventDataListResponse> ListDigestEventsNextAsync(string nextLink, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The count of events in a subscription.
+        /// </summary>
+        /// <param name='filterString'>
+        /// The filter string.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        Task<EventCountSummaryListResponse> ListEventCountSummaryItemsAsync(string filterString, CancellationToken cancellationToken);
         
         /// <summary>
         /// The List Event Values operation lists the events.

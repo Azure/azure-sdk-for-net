@@ -33,6 +33,9 @@
     <Compile Include="Customizations\Shoebox\ShoeboxHelper.cs" />
     <Compile Include="Customizations\Shoebox\SizeBoundedCache.cs" />
     <Compile Include="Customizations\Shoebox\TableOperationContextLogger.cs" />
+    <Compile Include="Generated\Insights\Models\EventCountSummaryItem.cs" />
+    <Compile Include="Generated\Insights\Models\EventCountSummaryItemCollection.cs" />
+    <Compile Include="Generated\Insights\Models\EventCountSummaryListResponse.cs" />
     <Compile Include="Generated\Insights\Models\EventStatusCountSummaryItem.cs" />
     <Compile Include="Generated\Insights\Models\EventStatusCountSummaryItemCollection.cs" />
     <Compile Include="Generated\Insights\Models\EventStatusCountSummaryListResponse.cs" />
@@ -87,9 +90,7 @@
     <Compile Include="Generated\Insights\Models\MetricDefinitionListResponse.cs" />
     <Compile Include="Generated\Insights\UsageMetricsOperations.cs" />
     <Compile Include="Generated\Insights\UsageMetricsOperationsExtensions.cs" />
-    <Compile Include="Generated\Insights\Models\CountSummaryItem.cs" />
     <Compile Include="Generated\Insights\Models\EventChannels.cs" />
-    <Compile Include="Generated\Insights\Models\EventCountSummaryResponse.cs" />
     <Compile Include="Generated\Insights\Models\EventData.cs" />
     <Compile Include="Generated\Insights\Models\EventDataCollection.cs" />
     <Compile Include="Generated\Insights\Models\EventDataListResponse.cs" />
