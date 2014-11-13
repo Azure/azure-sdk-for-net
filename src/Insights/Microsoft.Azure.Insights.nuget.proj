@@ -5,7 +5,7 @@
     Microsoft.Azure.Monitoring
     -->
     <SdkNuGetPackage Include="Microsoft.Azure.Insights">
-      <PackageVersion>2.0.3</PackageVersion>
+      <PackageVersion>2.0.4</PackageVersion>
 
       <Folder>$(MSBuildThisFileDirectory)</Folder>
     </SdkNuGetPackage>
