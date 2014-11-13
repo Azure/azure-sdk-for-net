@@ -2113,7 +2113,7 @@ namespace Microsoft.Azure.Insights
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/providers/microsoft.insights/eventtypes/management/summaryItems?";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/providers/microsoft.insights/eventtypes/management/statusSummaryItems?";
             url = url + "api-version=2014-11-01";
             url = url + "&$filter=" + Uri.EscapeDataString(filterString.Trim());
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
