@@ -97,7 +97,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
     <None Include="GenerateCode.props" />
     <None Include="Microsoft.Azure.Management.RecoveryServices.nuget.proj" />
     <None Include="Microsoft.Azure.Management.RecoveryServices.nuspec" />

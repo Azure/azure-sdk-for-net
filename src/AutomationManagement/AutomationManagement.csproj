@@ -92,9 +92,6 @@
     <Compile Include="Customizations\AutomationManagementClient.Customization.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="GenerateCode.props">
       <SubType>Designer</SubType>
     </None>

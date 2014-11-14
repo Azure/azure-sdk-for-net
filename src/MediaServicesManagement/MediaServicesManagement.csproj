@@ -37,7 +37,6 @@
     <Content Include="hyak.xml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="GenerateCode.props" />
     <None Include="Microsoft.WindowsAzure.Management.MediaServices.nuget.proj" />
     <None Include="Microsoft.WindowsAzure.Management.MediaServices.nuspec" />

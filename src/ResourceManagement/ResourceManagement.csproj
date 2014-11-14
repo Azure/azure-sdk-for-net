@@ -109,7 +109,6 @@
     <Compile Include="ResourceManagementClient.Customization.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="GenerateCode.props" />
     <None Include="Microsoft.Azure.Management.Resources.nuspec" />
     <None Include="Microsoft.Azure.Management.Resources.nuget.proj" />

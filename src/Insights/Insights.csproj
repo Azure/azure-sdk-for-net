@@ -163,9 +163,6 @@
     <Compile Include="Generated\Management\Insights\Models\WindowsEventLog.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="GenerateCode.props" />
     <None Include="Microsoft.Azure.Insights.nuget.proj" />
     <None Include="Microsoft.Azure.Insights.nuspec" />
