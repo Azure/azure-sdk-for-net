@@ -31,6 +31,8 @@
     <Compile Include="Generated\JobCollectionOperationsExtensions.cs" />
     <Compile Include="Generated\JobOperations.cs" />
     <Compile Include="Generated\JobOperationsExtensions.cs" />
+    <Compile Include="Generated\Models\AADOAuthAuthentication.cs" />
+    <Compile Include="Generated\Models\BasicAuthentication.cs" />
     <Compile Include="Generated\Models\ClientCertAuthentication.cs" />
     <Compile Include="Generated\Models\CloudServiceCreateParameters.cs" />
     <Compile Include="Generated\Models\CloudServiceGetResponse.cs" />
@@ -139,6 +141,6 @@
     <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.CloudServices.Specification.1.0.5424.10963-prerelease\tools\Microsoft.WindowsAzure.Management.CloudServices.Specification.dll" DestinationFolder="." />
   </Target>
   <Target Name="CopyMicrosoftWindowsAzureManagementSchedulerSpecification" BeforeTargets="GenerateCodeFromSpecs">
-    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.Scheduler.Specification.1.0.5424.10965-prerelease\tools\Microsoft.WindowsAzure.Management.Scheduler.Specification.dll" DestinationFolder="." />
+    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.Scheduler.Specification.1.0.5429.34185-prerelease\tools\Microsoft.WindowsAzure.Management.Scheduler.Specification.dll" DestinationFolder="." />
   </Target>
 </Project>
