@@ -1,0 +1,1 @@
+﻿{"execute":"\"select * from hivesampletable limit10\""}

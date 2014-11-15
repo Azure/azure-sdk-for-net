@@ -5,7 +5,7 @@
     <CommonSolution>WindowsAzureCommonLibraries.sln</CommonSolution>
     <ManagementLibrariesSolution>WindowsAzureManagementLibraries.sln</ManagementLibrariesSolution>
     <ProductFriendlyName>Microsoft Azure Management Libraries</ProductFriendlyName>
-    <ProductSourceFolder>$(MSBuildThisFileDirectory)src</ProductSourceFolder>
+    <ProductSourceFolder>$(MSBuildThisFileDirectory)src\HDInsight</ProductSourceFolder>
   </PropertyGroup>
 
   <!-- NuGet Packages -->
