@@ -20,6 +20,11 @@
     <DocumentationFile>bin\$(Configuration)\net40\$(AssemblyName).xml</DocumentationFile>
     <AdditionalBinariesFolder>net40\</AdditionalBinariesFolder>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(BuildThirdConfiguration)' == 'true' ">
+    <OutputPath>bin\$(Configuration)\net45\</OutputPath>
+    <DocumentationFile>bin\$(Configuration)\net45\$(AssemblyName).xml</DocumentationFile>
+    <AdditionalBinariesFolder>net45\</AdditionalBinariesFolder>
+  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
@@ -63,27 +68,19 @@
   </PropertyGroup>
   <PropertyGroup>
     <WindowsAzureCurrentConfiguration 
-      Condition=" '$(BuildSecondConfiguration)' != 'true' ">$(WindowsAzureLibraryPrimaryConfiguration)</WindowsAzureCurrentConfiguration>
+      Condition=" '$(BuildSecondConfiguration)' != 'true' And '$(BuildThirdConfiguration)' != 'true' ">$(WindowsAzureLibraryPrimaryConfiguration)</WindowsAzureCurrentConfiguration>
     <WindowsAzureCurrentConfiguration 
       Condition=" '$(BuildSecondConfiguration)' == 'true' ">$(WindowsAzureLibrarySecondaryConfiguration)</WindowsAzureCurrentConfiguration>
+    <WindowsAzureCurrentConfiguration 
+      Condition=" '$(BuildThirdConfiguration)' == 'true' And '$(WindowsAzureLibrarySecondaryConfiguration)' == 'net40' ">net45</WindowsAzureCurrentConfiguration>
+    <WindowsAzureCurrentConfiguration 
+      Condition=" '$(BuildThirdConfiguration)' == 'true' And '$(WindowsAzureLibrarySecondaryConfiguration)' != 'net40' ">$(WindowsAzureLibrarySecondaryConfiguration)</WindowsAzureCurrentConfiguration>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(WindowsAzureCurrentConfiguration)' == 'portable' ">
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Profile102</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(WindowsAzureCurrentConfiguration)' == 'net45' ">
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <TargetFrameworkProfile />
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(WindowsAzureCurrentConfiguration)' == 'net40' ">
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile />
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(WindowsAzureCurrentConfiguration)' == 'windows8' ">
     <FileAlignment>512</FileAlignment>
@@ -96,5 +93,17 @@
   <PropertyGroup Condition=" '$(WindowsAzureCurrentConfiguration)' == 'wpa81' ">
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{C089C8C0-30E0-4E22-80C0-CE093F111A43};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(WindowsAzureCurrentConfiguration)' == 'net40' ">
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(WindowsAzureCurrentConfiguration)' == 'net45' ">
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids />
   </PropertyGroup>
 </Project>
