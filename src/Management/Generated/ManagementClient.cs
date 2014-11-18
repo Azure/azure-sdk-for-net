@@ -187,7 +187,7 @@ namespace Microsoft.WindowsAzure.Management
         /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Gets the URI used as the base for all cloud service
+        /// Optional. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
         public ManagementClient(SubscriptionCloudCredentials credentials, Uri baseUri)
@@ -257,7 +257,7 @@ namespace Microsoft.WindowsAzure.Management
         /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Gets the URI used as the base for all cloud service
+        /// Optional. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
         /// <param name='httpClient'>

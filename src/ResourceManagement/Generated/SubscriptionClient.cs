@@ -124,7 +124,7 @@ namespace Microsoft.Azure.Subscriptions
         /// Required. Credentials used to authenticate requests.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Gets the URI used as the base for all cloud service
+        /// Optional. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
         public SubscriptionClient(CloudCredentials credentials, Uri baseUri)
@@ -187,7 +187,7 @@ namespace Microsoft.Azure.Subscriptions
         /// Required. Credentials used to authenticate requests.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Gets the URI used as the base for all cloud service
+        /// Optional. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
         /// <param name='httpClient'>

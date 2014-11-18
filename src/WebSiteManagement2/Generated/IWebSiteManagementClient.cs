@@ -21,10 +21,7 @@
 
 using System;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.Azure.Management.WebSites;
-using Microsoft.Azure.Management.WebSites.Models;
 using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.WebSites
@@ -83,6 +80,14 @@ namespace Microsoft.Azure.Management.WebSites
         }
         
         /// <summary>
+        /// User source controls operations
+        /// </summary>
+        ISourceControlOperations SourceControls
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Operations for managing the Web Hosting Plans in a resource group.
         /// Web hosting plans (WHPs) represent a set of features and capacity
         /// that you can share across your web sites. Web hosting plans
@@ -109,73 +114,5 @@ namespace Microsoft.Azure.Management.WebSites
         {
             get; 
         }
-        
-        /// <summary>
-        /// Begins deleting a resource group.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        Task<OperationResponse> BeginDeletingResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Creates or updates the resource group.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the operation.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The Create or Update resource group operation response.
-        /// </returns>
-        Task<ResourceGroupCreateOrUpdateResponse> CreateOrUpdateResourceGroupAsync(string resourceGroupName, ResourceGroupCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Gets all resource groups in the subscription.
-        /// </summary>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        Task<OperationResponse> GetResourceGroupsAsync(CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Register the resource provider with a subscription.
-        /// </summary>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        Task<OperationResponse> RegisterResourceProviderAsync(CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Unregister the resource provider with a subscription.
-        /// </summary>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        Task<OperationResponse> UnregisterResourceProviderAsync(CancellationToken cancellationToken);
     }
 }

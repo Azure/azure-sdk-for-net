@@ -173,6 +173,11 @@ namespace Microsoft.Azure.Management.WebSites
                     propertiesValue["numberOfWorkers"] = parameters.WebHostingPlan.Properties.NumberOfWorkers;
                     
                     propertiesValue["workerSize"] = parameters.WebHostingPlan.Properties.WorkerSize.ToString();
+                    
+                    if (parameters.WebHostingPlan.Properties.AdminSiteName != null)
+                    {
+                        propertiesValue["adminSiteName"] = parameters.WebHostingPlan.Properties.AdminSiteName;
+                    }
                 }
                 
                 if (parameters.WebHostingPlan.Id != null)
@@ -279,6 +284,13 @@ namespace Microsoft.Azure.Management.WebSites
                             {
                                 WorkerSizeOptions workerSizeInstance = ((WorkerSizeOptions)Enum.Parse(typeof(WorkerSizeOptions), ((string)workerSizeValue), true));
                                 propertiesInstance.WorkerSize = workerSizeInstance;
+                            }
+                            
+                            JToken adminSiteNameValue = propertiesValue2["adminSiteName"];
+                            if (adminSiteNameValue != null && adminSiteNameValue.Type != JTokenType.Null)
+                            {
+                                string adminSiteNameInstance = ((string)adminSiteNameValue);
+                                propertiesInstance.AdminSiteName = adminSiteNameInstance;
                             }
                         }
                         
@@ -620,6 +632,13 @@ namespace Microsoft.Azure.Management.WebSites
                             {
                                 WorkerSizeOptions workerSizeInstance = ((WorkerSizeOptions)Enum.Parse(typeof(WorkerSizeOptions), ((string)workerSizeValue), true));
                                 propertiesInstance.WorkerSize = workerSizeInstance;
+                            }
+                            
+                            JToken adminSiteNameValue = propertiesValue["adminSiteName"];
+                            if (adminSiteNameValue != null && adminSiteNameValue.Type != JTokenType.Null)
+                            {
+                                string adminSiteNameInstance = ((string)adminSiteNameValue);
+                                propertiesInstance.AdminSiteName = adminSiteNameInstance;
                             }
                         }
                         
@@ -1131,6 +1150,13 @@ namespace Microsoft.Azure.Management.WebSites
                                     {
                                         WorkerSizeOptions workerSizeInstance = ((WorkerSizeOptions)Enum.Parse(typeof(WorkerSizeOptions), ((string)workerSizeValue), true));
                                         propertiesInstance.WorkerSize = workerSizeInstance;
+                                    }
+                                    
+                                    JToken adminSiteNameValue = propertiesValue["adminSiteName"];
+                                    if (adminSiteNameValue != null && adminSiteNameValue.Type != JTokenType.Null)
+                                    {
+                                        string adminSiteNameInstance = ((string)adminSiteNameValue);
+                                        propertiesInstance.AdminSiteName = adminSiteNameInstance;
                                     }
                                 }
                                 

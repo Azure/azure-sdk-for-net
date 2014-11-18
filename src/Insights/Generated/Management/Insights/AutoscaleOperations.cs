@@ -395,7 +395,20 @@ namespace Microsoft.Azure.Management.Insights
                     
                     // Create Result
                     OperationResponse result = null;
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new OperationResponse();
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
+                    
+                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                    {
+                    }
+                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -521,7 +534,20 @@ namespace Microsoft.Azure.Management.Insights
                     
                     // Create Result
                     OperationResponse result = null;
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new OperationResponse();
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
+                    
+                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                    {
+                    }
+                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1776,7 +1802,20 @@ namespace Microsoft.Azure.Management.Insights
                     
                     // Create Result
                     OperationResponse result = null;
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new OperationResponse();
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
+                    
+                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                    {
+                    }
+                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {

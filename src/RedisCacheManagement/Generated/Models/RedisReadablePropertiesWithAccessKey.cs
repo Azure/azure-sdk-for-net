@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// Initializes a new instance of the
         /// RedisReadablePropertiesWithAccessKey class with required arguments.
         /// </summary>
-        public RedisReadablePropertiesWithAccessKey(string redisVersion, Sku sku)
+        public RedisReadablePropertiesWithAccessKey(string redisVersion, Sku sku, bool enableNonSslPort)
             : this()
         {
             if (redisVersion == null)
@@ -66,6 +66,7 @@ namespace Microsoft.Azure.Management.Redis.Models
             }
             this.RedisVersion = redisVersion;
             this.Sku = sku;
+            this.EnableNonSslPort = enableNonSslPort;
         }
     }
 }
