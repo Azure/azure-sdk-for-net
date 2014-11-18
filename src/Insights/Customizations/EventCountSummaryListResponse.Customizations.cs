@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Insights.Models
             return new EventCountSummaryResponse()
             {
                 StartTime = startTime,
-                EndTime = endTime.ToUniversalTime().ToString(CultureInfo.InvariantCulture),
+                EndTime = endTime,
                 EventPropertyName = propertyName,
                 EventPropertyValue = propertyValue,
                 RequestId = this.RequestId,

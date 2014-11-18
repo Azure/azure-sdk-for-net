@@ -1,4 +1,4 @@
-﻿// 
+// 
 // Copyright (c) Microsoft and contributors.  All rights reserved.
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Insights.Models
     public partial class EventCountSummaryResponse : OperationResponse
     {
         private DateTime _endTime;
-
+        
         /// <summary>
         /// Optional. The event summary end time.
         /// </summary>
@@ -43,9 +43,9 @@ namespace Microsoft.Azure.Insights.Models
             get { return this._endTime; }
             set { this._endTime = value; }
         }
-
+        
         private string _eventPropertyName;
-
+        
         /// <summary>
         /// Optional. The event property name.
         /// </summary>
@@ -54,9 +54,9 @@ namespace Microsoft.Azure.Insights.Models
             get { return this._eventPropertyName; }
             set { this._eventPropertyName = value; }
         }
-
+        
         private string _eventPropertyValue;
-
+        
         /// <summary>
         /// Optional. The event property value.
         /// </summary>
@@ -65,9 +65,9 @@ namespace Microsoft.Azure.Insights.Models
             get { return this._eventPropertyValue; }
             set { this._eventPropertyValue = value; }
         }
-
+        
         private DateTime _startTime;
-
+        
         /// <summary>
         /// Optional. The event summary start time.
         /// </summary>
@@ -76,9 +76,9 @@ namespace Microsoft.Azure.Insights.Models
             get { return this._startTime; }
             set { this._startTime = value; }
         }
-
+        
         private IList<CountSummaryItem> _summaryItems;
-
+        
         /// <summary>
         /// Optional. The event summaries.
         /// </summary>
@@ -87,9 +87,9 @@ namespace Microsoft.Azure.Insights.Models
             get { return this._summaryItems; }
             set { this._summaryItems = value; }
         }
-
+        
         private TimeSpan _timeGrain;
-
+        
         /// <summary>
         /// Optional. The event summary time grain.
         /// </summary>
@@ -98,7 +98,7 @@ namespace Microsoft.Azure.Insights.Models
             get { return this._timeGrain; }
             set { this._timeGrain = value; }
         }
-
+        
         /// <summary>
         /// Initializes a new instance of the EventCountSummaryResponse class.
         /// </summary>

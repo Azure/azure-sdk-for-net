@@ -39,7 +39,8 @@ using Newtonsoft.Json.Linq;
 namespace Microsoft.Azure.Management.Insights
 {
     /// <summary>
-    /// Operations for managing monitoring configuration.
+    /// Operations for managing the collection of diagonstics and monitoring
+    /// data.
     /// </summary>
     internal partial class MonitoringConfigurationOperations : IServiceOperations<InsightsManagementClient>, IMonitoringConfigurationOperations
     {
@@ -172,7 +173,7 @@ namespace Microsoft.Azure.Management.Insights
                                 
                                 if (derived.DiagnosticMonitorConfiguration.OverallQuotaInMB != null)
                                 {
-                                    diagnosticMonitorConfigurationValue["overallQuotaInMB"] = derived.DiagnosticMonitorConfiguration.OverallQuotaInMB;
+                                    diagnosticMonitorConfigurationValue["overallQuotaInMB"] = derived.DiagnosticMonitorConfiguration.OverallQuotaInMB.Value;
                                 }
                                 
                                 if (derived.DiagnosticMonitorConfiguration.DiagnosticInfrastructureLogs != null)
@@ -182,7 +183,7 @@ namespace Microsoft.Azure.Management.Insights
                                     
                                     if (derived.DiagnosticMonitorConfiguration.DiagnosticInfrastructureLogs.ScheduledTransferLogLevelFilter != null)
                                     {
-                                        diagnosticInfrastructureLogsValue["scheduledTransferLogLevelFilter"] = derived.DiagnosticMonitorConfiguration.DiagnosticInfrastructureLogs.ScheduledTransferLogLevelFilter.ToString();
+                                        diagnosticInfrastructureLogsValue["scheduledTransferLogLevelFilter"] = derived.DiagnosticMonitorConfiguration.DiagnosticInfrastructureLogs.ScheduledTransferLogLevelFilter.Value.ToString();
                                     }
                                     
                                     diagnosticInfrastructureLogsValue["scheduledTransferPeriod"] = TypeConversion.To8601String(derived.DiagnosticMonitorConfiguration.DiagnosticInfrastructureLogs.ScheduledTransferPeriod);
@@ -200,15 +201,18 @@ namespace Microsoft.Azure.Management.Insights
                                     
                                     if (derived.DiagnosticMonitorConfiguration.Metrics.MetricAggregations != null)
                                     {
-                                        JArray aggregationsArray = new JArray();
-                                        foreach (MetricAggregation aggregationsItem in derived.DiagnosticMonitorConfiguration.Metrics.MetricAggregations)
+                                        if (derived.DiagnosticMonitorConfiguration.Metrics.MetricAggregations is ILazyCollection == false || ((ILazyCollection)derived.DiagnosticMonitorConfiguration.Metrics.MetricAggregations).IsInitialized)
                                         {
-                                            JObject metricsValue2 = new JObject();
-                                            aggregationsArray.Add(metricsValue2);
-                                            
-                                            metricsValue2["scheduledTransferPeriod"] = TypeConversion.To8601String(aggregationsItem.ScheduledTransferPeriod);
+                                            JArray aggregationsArray = new JArray();
+                                            foreach (MetricAggregation aggregationsItem in derived.DiagnosticMonitorConfiguration.Metrics.MetricAggregations)
+                                            {
+                                                JObject metricsValue2 = new JObject();
+                                                aggregationsArray.Add(metricsValue2);
+                                                
+                                                metricsValue2["scheduledTransferPeriod"] = TypeConversion.To8601String(aggregationsItem.ScheduledTransferPeriod);
+                                            }
+                                            metricsValue["aggregations"] = aggregationsArray;
                                         }
-                                        metricsValue["aggregations"] = aggregationsArray;
                                     }
                                 }
                                 
@@ -219,51 +223,54 @@ namespace Microsoft.Azure.Management.Insights
                                     
                                     if (derived.DiagnosticMonitorConfiguration.Directories.DataSources != null)
                                     {
-                                        JArray dataSourcesArray = new JArray();
-                                        foreach (DirectoryConfiguration dataSourcesItem in derived.DiagnosticMonitorConfiguration.Directories.DataSources)
+                                        if (derived.DiagnosticMonitorConfiguration.Directories.DataSources is ILazyCollection == false || ((ILazyCollection)derived.DiagnosticMonitorConfiguration.Directories.DataSources).IsInitialized)
                                         {
-                                            JObject directoryConfigurationValue = new JObject();
-                                            dataSourcesArray.Add(directoryConfigurationValue);
-                                            
-                                            if (dataSourcesItem.ContainerName != null)
+                                            JArray dataSourcesArray = new JArray();
+                                            foreach (DirectoryConfiguration dataSourcesItem in derived.DiagnosticMonitorConfiguration.Directories.DataSources)
                                             {
-                                                directoryConfigurationValue["containerName"] = dataSourcesItem.ContainerName;
-                                            }
-                                            
-                                            if (dataSourcesItem.Path != null)
-                                            {
-                                                JObject pathValue = new JObject();
-                                                directoryConfigurationValue["path"] = pathValue;
-                                                if (dataSourcesItem.Path is DirectoryAbsolute)
+                                                JObject directoryConfigurationValue = new JObject();
+                                                dataSourcesArray.Add(directoryConfigurationValue);
+                                                
+                                                if (dataSourcesItem.ContainerName != null)
                                                 {
-                                                    pathValue["odata.type"] = dataSourcesItem.Path.GetType().FullName;
-                                                    DirectoryAbsolute derived2 = ((DirectoryAbsolute)dataSourcesItem.Path);
-                                                    
-                                                    pathValue["expandEnvironment"] = derived2.ExpandEnvironment;
-                                                    
-                                                    if (derived2.Path != null)
+                                                    directoryConfigurationValue["containerName"] = dataSourcesItem.ContainerName;
+                                                }
+                                                
+                                                if (dataSourcesItem.Path != null)
+                                                {
+                                                    JObject pathValue = new JObject();
+                                                    directoryConfigurationValue["path"] = pathValue;
+                                                    if (dataSourcesItem.Path is DirectoryAbsolute)
                                                     {
-                                                        pathValue["path"] = derived2.Path;
+                                                        pathValue["odata.type"] = dataSourcesItem.Path.GetType().FullName;
+                                                        DirectoryAbsolute derived2 = ((DirectoryAbsolute)dataSourcesItem.Path);
+                                                        
+                                                        pathValue["expandEnvironment"] = derived2.ExpandEnvironment;
+                                                        
+                                                        if (derived2.Path != null)
+                                                        {
+                                                            pathValue["path"] = derived2.Path;
+                                                        }
+                                                    }
+                                                    if (dataSourcesItem.Path is DirectoryLocal)
+                                                    {
+                                                        pathValue["odata.type"] = dataSourcesItem.Path.GetType().FullName;
+                                                        DirectoryLocal derived3 = ((DirectoryLocal)dataSourcesItem.Path);
+                                                        
+                                                        if (derived3.RelativePath != null)
+                                                        {
+                                                            pathValue["relativePath"] = derived3.RelativePath;
+                                                        }
+                                                        
+                                                        if (derived3.Name != null)
+                                                        {
+                                                            pathValue["name"] = derived3.Name;
+                                                        }
                                                     }
                                                 }
-                                                if (dataSourcesItem.Path is DirectoryLocal)
-                                                {
-                                                    pathValue["odata.type"] = dataSourcesItem.Path.GetType().FullName;
-                                                    DirectoryLocal derived3 = ((DirectoryLocal)dataSourcesItem.Path);
-                                                    
-                                                    if (derived3.RelativePath != null)
-                                                    {
-                                                        pathValue["relativePath"] = derived3.RelativePath;
-                                                    }
-                                                    
-                                                    if (derived3.Name != null)
-                                                    {
-                                                        pathValue["name"] = derived3.Name;
-                                                    }
-                                                }
                                             }
+                                            directoriesValue["dataSources"] = dataSourcesArray;
                                         }
-                                        directoriesValue["dataSources"] = dataSourcesArray;
                                     }
                                     
                                     if (derived.DiagnosticMonitorConfiguration.Directories.IISLogs != null)
@@ -286,43 +293,49 @@ namespace Microsoft.Azure.Management.Insights
                                     
                                     if (derived.DiagnosticMonitorConfiguration.PerformanceCounters.Counters != null)
                                     {
-                                        JArray countersArray = new JArray();
-                                        foreach (PerformanceCounterConfiguration countersItem in derived.DiagnosticMonitorConfiguration.PerformanceCounters.Counters)
+                                        if (derived.DiagnosticMonitorConfiguration.PerformanceCounters.Counters is ILazyCollection == false || ((ILazyCollection)derived.DiagnosticMonitorConfiguration.PerformanceCounters.Counters).IsInitialized)
                                         {
-                                            JObject performanceCounterConfigurationValue = new JObject();
-                                            countersArray.Add(performanceCounterConfigurationValue);
-                                            
-                                            if (countersItem.Annotations != null)
+                                            JArray countersArray = new JArray();
+                                            foreach (PerformanceCounterConfiguration countersItem in derived.DiagnosticMonitorConfiguration.PerformanceCounters.Counters)
                                             {
-                                                JArray annotationsArray = new JArray();
-                                                foreach (LocalizedString annotationsItem in countersItem.Annotations)
+                                                JObject performanceCounterConfigurationValue = new JObject();
+                                                countersArray.Add(performanceCounterConfigurationValue);
+                                                
+                                                if (countersItem.Annotations != null)
                                                 {
-                                                    JObject localizedStringValue = new JObject();
-                                                    annotationsArray.Add(localizedStringValue);
-                                                    
-                                                    if (annotationsItem.Value != null)
+                                                    if (countersItem.Annotations is ILazyCollection == false || ((ILazyCollection)countersItem.Annotations).IsInitialized)
                                                     {
-                                                        localizedStringValue["value"] = annotationsItem.Value;
-                                                    }
-                                                    
-                                                    if (annotationsItem.Locale != null)
-                                                    {
-                                                        localizedStringValue["locale"] = annotationsItem.Locale;
+                                                        JArray annotationsArray = new JArray();
+                                                        foreach (LocalizedString annotationsItem in countersItem.Annotations)
+                                                        {
+                                                            JObject localizedStringValue = new JObject();
+                                                            annotationsArray.Add(localizedStringValue);
+                                                            
+                                                            if (annotationsItem.Value != null)
+                                                            {
+                                                                localizedStringValue["value"] = annotationsItem.Value;
+                                                            }
+                                                            
+                                                            if (annotationsItem.Locale != null)
+                                                            {
+                                                                localizedStringValue["locale"] = annotationsItem.Locale;
+                                                            }
+                                                        }
+                                                        performanceCounterConfigurationValue["annotations"] = annotationsArray;
                                                     }
                                                 }
-                                                performanceCounterConfigurationValue["annotations"] = annotationsArray;
+                                                
+                                                if (countersItem.CounterSpecifier != null)
+                                                {
+                                                    performanceCounterConfigurationValue["counterSpecifier"] = countersItem.CounterSpecifier;
+                                                }
+                                                
+                                                performanceCounterConfigurationValue["sampleRate"] = TypeConversion.To8601String(countersItem.SampleRate);
+                                                
+                                                performanceCounterConfigurationValue["unit"] = countersItem.Unit.ToString();
                                             }
-                                            
-                                            if (countersItem.CounterSpecifier != null)
-                                            {
-                                                performanceCounterConfigurationValue["counterSpecifier"] = countersItem.CounterSpecifier;
-                                            }
-                                            
-                                            performanceCounterConfigurationValue["sampleRate"] = TypeConversion.To8601String(countersItem.SampleRate);
-                                            
-                                            performanceCounterConfigurationValue["unit"] = countersItem.Unit.ToString();
+                                            performanceCountersValue["counters"] = countersArray;
                                         }
-                                        performanceCountersValue["counters"] = countersArray;
                                     }
                                     
                                     performanceCountersValue["scheduledTransferPeriod"] = TypeConversion.To8601String(derived.DiagnosticMonitorConfiguration.PerformanceCounters.ScheduledTransferPeriod);
@@ -335,12 +348,15 @@ namespace Microsoft.Azure.Management.Insights
                                     
                                     if (derived.DiagnosticMonitorConfiguration.WindowsEventLog.DataSources != null)
                                     {
-                                        JArray dataSourcesArray2 = new JArray();
-                                        foreach (string dataSourcesItem2 in derived.DiagnosticMonitorConfiguration.WindowsEventLog.DataSources)
+                                        if (derived.DiagnosticMonitorConfiguration.WindowsEventLog.DataSources is ILazyCollection == false || ((ILazyCollection)derived.DiagnosticMonitorConfiguration.WindowsEventLog.DataSources).IsInitialized)
                                         {
-                                            dataSourcesArray2.Add(dataSourcesItem2);
+                                            JArray dataSourcesArray2 = new JArray();
+                                            foreach (string dataSourcesItem2 in derived.DiagnosticMonitorConfiguration.WindowsEventLog.DataSources)
+                                            {
+                                                dataSourcesArray2.Add(dataSourcesItem2);
+                                            }
+                                            windowsEventLogValue["dataSources"] = dataSourcesArray2;
                                         }
-                                        windowsEventLogValue["dataSources"] = dataSourcesArray2;
                                     }
                                     
                                     windowsEventLogValue["scheduledTransferPeriod"] = TypeConversion.To8601String(derived.DiagnosticMonitorConfiguration.WindowsEventLog.ScheduledTransferPeriod);
@@ -353,104 +369,116 @@ namespace Microsoft.Azure.Management.Insights
                                     
                                     if (derived.DiagnosticMonitorConfiguration.EtwProviders.EventSourceProviders != null)
                                     {
-                                        JArray eventSourceProvidersArray = new JArray();
-                                        foreach (EtwProvider eventSourceProvidersItem in derived.DiagnosticMonitorConfiguration.EtwProviders.EventSourceProviders)
+                                        if (derived.DiagnosticMonitorConfiguration.EtwProviders.EventSourceProviders is ILazyCollection == false || ((ILazyCollection)derived.DiagnosticMonitorConfiguration.EtwProviders.EventSourceProviders).IsInitialized)
                                         {
-                                            JObject etwProviderValue = new JObject();
-                                            eventSourceProvidersArray.Add(etwProviderValue);
-                                            
-                                            etwProviderValue["scheduledTransferPeriod"] = TypeConversion.To8601String(eventSourceProvidersItem.ScheduledTransferPeriod);
-                                            
-                                            if (eventSourceProvidersItem.ScheduledTransferLogLevelFilter != null)
+                                            JArray eventSourceProvidersArray = new JArray();
+                                            foreach (EtwProvider eventSourceProvidersItem in derived.DiagnosticMonitorConfiguration.EtwProviders.EventSourceProviders)
                                             {
-                                                etwProviderValue["scheduledTransferLogLevelFilter"] = eventSourceProvidersItem.ScheduledTransferLogLevelFilter.ToString();
-                                            }
-                                            
-                                            if (eventSourceProvidersItem.Provider != null)
-                                            {
-                                                etwProviderValue["provider"] = eventSourceProvidersItem.Provider;
-                                            }
-                                            
-                                            if (eventSourceProvidersItem.ScheduledTransferKeywordFilter != null)
-                                            {
-                                                etwProviderValue["scheduledTransferKeywordFilter"] = eventSourceProvidersItem.ScheduledTransferKeywordFilter;
-                                            }
-                                            
-                                            if (eventSourceProvidersItem.Events != null)
-                                            {
-                                                JArray eventsArray = new JArray();
-                                                foreach (EtwEventConfiguration eventsItem in eventSourceProvidersItem.Events)
+                                                JObject etwProviderValue = new JObject();
+                                                eventSourceProvidersArray.Add(etwProviderValue);
+                                                
+                                                etwProviderValue["scheduledTransferPeriod"] = TypeConversion.To8601String(eventSourceProvidersItem.ScheduledTransferPeriod);
+                                                
+                                                if (eventSourceProvidersItem.ScheduledTransferLogLevelFilter != null)
                                                 {
-                                                    JObject etwEventConfigurationValue = new JObject();
-                                                    eventsArray.Add(etwEventConfigurationValue);
-                                                    
-                                                    etwEventConfigurationValue["eventId"] = eventsItem.EventId;
-                                                    
-                                                    if (eventsItem.Destination != null)
+                                                    etwProviderValue["scheduledTransferLogLevelFilter"] = eventSourceProvidersItem.ScheduledTransferLogLevelFilter.Value.ToString();
+                                                }
+                                                
+                                                if (eventSourceProvidersItem.Provider != null)
+                                                {
+                                                    etwProviderValue["provider"] = eventSourceProvidersItem.Provider;
+                                                }
+                                                
+                                                if (eventSourceProvidersItem.ScheduledTransferKeywordFilter != null)
+                                                {
+                                                    etwProviderValue["scheduledTransferKeywordFilter"] = eventSourceProvidersItem.ScheduledTransferKeywordFilter.Value;
+                                                }
+                                                
+                                                if (eventSourceProvidersItem.Events != null)
+                                                {
+                                                    if (eventSourceProvidersItem.Events is ILazyCollection == false || ((ILazyCollection)eventSourceProvidersItem.Events).IsInitialized)
                                                     {
-                                                        etwEventConfigurationValue["destination"] = eventsItem.Destination;
+                                                        JArray eventsArray = new JArray();
+                                                        foreach (EtwEventConfiguration eventsItem in eventSourceProvidersItem.Events)
+                                                        {
+                                                            JObject etwEventConfigurationValue = new JObject();
+                                                            eventsArray.Add(etwEventConfigurationValue);
+                                                            
+                                                            etwEventConfigurationValue["eventId"] = eventsItem.EventId;
+                                                            
+                                                            if (eventsItem.Destination != null)
+                                                            {
+                                                                etwEventConfigurationValue["destination"] = eventsItem.Destination;
+                                                            }
+                                                        }
+                                                        etwProviderValue["events"] = eventsArray;
                                                     }
                                                 }
-                                                etwProviderValue["events"] = eventsArray;
+                                                
+                                                if (eventSourceProvidersItem.DefaultDestination != null)
+                                                {
+                                                    etwProviderValue["defaultDestination"] = eventSourceProvidersItem.DefaultDestination;
+                                                }
                                             }
-                                            
-                                            if (eventSourceProvidersItem.DefaultDestination != null)
-                                            {
-                                                etwProviderValue["defaultDestination"] = eventSourceProvidersItem.DefaultDestination;
-                                            }
+                                            etwProvidersValue["eventSourceProviders"] = eventSourceProvidersArray;
                                         }
-                                        etwProvidersValue["eventSourceProviders"] = eventSourceProvidersArray;
                                     }
                                     
                                     if (derived.DiagnosticMonitorConfiguration.EtwProviders.ManifestProviders != null)
                                     {
-                                        JArray manifestProvidersArray = new JArray();
-                                        foreach (EtwProvider manifestProvidersItem in derived.DiagnosticMonitorConfiguration.EtwProviders.ManifestProviders)
+                                        if (derived.DiagnosticMonitorConfiguration.EtwProviders.ManifestProviders is ILazyCollection == false || ((ILazyCollection)derived.DiagnosticMonitorConfiguration.EtwProviders.ManifestProviders).IsInitialized)
                                         {
-                                            JObject etwProviderValue2 = new JObject();
-                                            manifestProvidersArray.Add(etwProviderValue2);
-                                            
-                                            etwProviderValue2["scheduledTransferPeriod"] = TypeConversion.To8601String(manifestProvidersItem.ScheduledTransferPeriod);
-                                            
-                                            if (manifestProvidersItem.ScheduledTransferLogLevelFilter != null)
+                                            JArray manifestProvidersArray = new JArray();
+                                            foreach (EtwProvider manifestProvidersItem in derived.DiagnosticMonitorConfiguration.EtwProviders.ManifestProviders)
                                             {
-                                                etwProviderValue2["scheduledTransferLogLevelFilter"] = manifestProvidersItem.ScheduledTransferLogLevelFilter.ToString();
-                                            }
-                                            
-                                            if (manifestProvidersItem.Provider != null)
-                                            {
-                                                etwProviderValue2["provider"] = manifestProvidersItem.Provider;
-                                            }
-                                            
-                                            if (manifestProvidersItem.ScheduledTransferKeywordFilter != null)
-                                            {
-                                                etwProviderValue2["scheduledTransferKeywordFilter"] = manifestProvidersItem.ScheduledTransferKeywordFilter;
-                                            }
-                                            
-                                            if (manifestProvidersItem.Events != null)
-                                            {
-                                                JArray eventsArray2 = new JArray();
-                                                foreach (EtwEventConfiguration eventsItem2 in manifestProvidersItem.Events)
+                                                JObject etwProviderValue2 = new JObject();
+                                                manifestProvidersArray.Add(etwProviderValue2);
+                                                
+                                                etwProviderValue2["scheduledTransferPeriod"] = TypeConversion.To8601String(manifestProvidersItem.ScheduledTransferPeriod);
+                                                
+                                                if (manifestProvidersItem.ScheduledTransferLogLevelFilter != null)
                                                 {
-                                                    JObject etwEventConfigurationValue2 = new JObject();
-                                                    eventsArray2.Add(etwEventConfigurationValue2);
-                                                    
-                                                    etwEventConfigurationValue2["eventId"] = eventsItem2.EventId;
-                                                    
-                                                    if (eventsItem2.Destination != null)
+                                                    etwProviderValue2["scheduledTransferLogLevelFilter"] = manifestProvidersItem.ScheduledTransferLogLevelFilter.Value.ToString();
+                                                }
+                                                
+                                                if (manifestProvidersItem.Provider != null)
+                                                {
+                                                    etwProviderValue2["provider"] = manifestProvidersItem.Provider;
+                                                }
+                                                
+                                                if (manifestProvidersItem.ScheduledTransferKeywordFilter != null)
+                                                {
+                                                    etwProviderValue2["scheduledTransferKeywordFilter"] = manifestProvidersItem.ScheduledTransferKeywordFilter.Value;
+                                                }
+                                                
+                                                if (manifestProvidersItem.Events != null)
+                                                {
+                                                    if (manifestProvidersItem.Events is ILazyCollection == false || ((ILazyCollection)manifestProvidersItem.Events).IsInitialized)
                                                     {
-                                                        etwEventConfigurationValue2["destination"] = eventsItem2.Destination;
+                                                        JArray eventsArray2 = new JArray();
+                                                        foreach (EtwEventConfiguration eventsItem2 in manifestProvidersItem.Events)
+                                                        {
+                                                            JObject etwEventConfigurationValue2 = new JObject();
+                                                            eventsArray2.Add(etwEventConfigurationValue2);
+                                                            
+                                                            etwEventConfigurationValue2["eventId"] = eventsItem2.EventId;
+                                                            
+                                                            if (eventsItem2.Destination != null)
+                                                            {
+                                                                etwEventConfigurationValue2["destination"] = eventsItem2.Destination;
+                                                            }
+                                                        }
+                                                        etwProviderValue2["events"] = eventsArray2;
                                                     }
                                                 }
-                                                etwProviderValue2["events"] = eventsArray2;
+                                                
+                                                if (manifestProvidersItem.DefaultDestination != null)
+                                                {
+                                                    etwProviderValue2["defaultDestination"] = manifestProvidersItem.DefaultDestination;
+                                                }
                                             }
-                                            
-                                            if (manifestProvidersItem.DefaultDestination != null)
-                                            {
-                                                etwProviderValue2["defaultDestination"] = manifestProvidersItem.DefaultDestination;
-                                            }
+                                            etwProvidersValue["manifestProviders"] = manifestProvidersArray;
                                         }
-                                        etwProvidersValue["manifestProviders"] = manifestProvidersArray;
                                     }
                                 }
                                 
@@ -461,12 +489,12 @@ namespace Microsoft.Azure.Management.Insights
                                     
                                     if (derived.DiagnosticMonitorConfiguration.CrashDumps.DirectoryQuotaPercentage != null)
                                     {
-                                        crashDumpsValue["directoryQuotaPercentage"] = derived.DiagnosticMonitorConfiguration.CrashDumps.DirectoryQuotaPercentage;
+                                        crashDumpsValue["directoryQuotaPercentage"] = derived.DiagnosticMonitorConfiguration.CrashDumps.DirectoryQuotaPercentage.Value;
                                     }
                                     
                                     if (derived.DiagnosticMonitorConfiguration.CrashDumps.DumpType != null)
                                     {
-                                        crashDumpsValue["dumpType"] = derived.DiagnosticMonitorConfiguration.CrashDumps.DumpType.ToString();
+                                        crashDumpsValue["dumpType"] = derived.DiagnosticMonitorConfiguration.CrashDumps.DumpType.Value.ToString();
                                     }
                                     
                                     if (derived.DiagnosticMonitorConfiguration.CrashDumps.ContainerName != null)
@@ -476,12 +504,15 @@ namespace Microsoft.Azure.Management.Insights
                                     
                                     if (derived.DiagnosticMonitorConfiguration.CrashDumps.Processes != null)
                                     {
-                                        JArray processesArray = new JArray();
-                                        foreach (string processesItem in derived.DiagnosticMonitorConfiguration.CrashDumps.Processes)
+                                        if (derived.DiagnosticMonitorConfiguration.CrashDumps.Processes is ILazyCollection == false || ((ILazyCollection)derived.DiagnosticMonitorConfiguration.CrashDumps.Processes).IsInitialized)
                                         {
-                                            processesArray.Add(processesItem);
+                                            JArray processesArray = new JArray();
+                                            foreach (string processesItem in derived.DiagnosticMonitorConfiguration.CrashDumps.Processes)
+                                            {
+                                                processesArray.Add(processesItem);
+                                            }
+                                            crashDumpsValue["processes"] = processesArray;
                                         }
-                                        crashDumpsValue["processes"] = processesArray;
                                     }
                                 }
                             }
@@ -509,7 +540,7 @@ namespace Microsoft.Azure.Management.Insights
                 
                 requestContent = requestDoc.ToString(Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -539,7 +570,20 @@ namespace Microsoft.Azure.Management.Insights
                     
                     // Create Result
                     OperationResponse result = null;
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new OperationResponse();
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
+                    
+                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                    {
+                    }
+                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -580,7 +624,7 @@ namespace Microsoft.Azure.Management.Insights
         /// </param>
         /// <returns>
         /// The create or update monitoring setting response. It's marked as
-        /// empty. We only pass it to ensure json error handling
+        /// empty. We only pass it to ensure json error handling.
         /// </returns>
         public async Task<MonitoringConfigurationCreateOrUpdateResponse> CreateOrUpdateStorageConfigurationAsync(string resourceUri, CreateOrUpdateStorageConfigurationParameters parameters, CancellationToken cancellationToken)
         {
@@ -670,26 +714,29 @@ namespace Microsoft.Azure.Management.Insights
                         
                         if (parameters.Properties.MetricConfiguration.MetricAggregations != null)
                         {
-                            JArray aggregationsArray = new JArray();
-                            foreach (StorageMetricAggregation aggregationsItem in parameters.Properties.MetricConfiguration.MetricAggregations)
+                            if (parameters.Properties.MetricConfiguration.MetricAggregations is ILazyCollection == false || ((ILazyCollection)parameters.Properties.MetricConfiguration.MetricAggregations).IsInitialized)
                             {
-                                JObject storageMetricAggregationValue = new JObject();
-                                aggregationsArray.Add(storageMetricAggregationValue);
-                                
-                                storageMetricAggregationValue["scheduledTransferPeriod"] = TypeConversion.To8601String(aggregationsItem.ScheduledTransferPeriod);
-                                
-                                storageMetricAggregationValue["retention"] = TypeConversion.To8601String(aggregationsItem.Retention);
-                                
-                                storageMetricAggregationValue["level"] = aggregationsItem.Level.ToString();
+                                JArray aggregationsArray = new JArray();
+                                foreach (StorageMetricAggregation aggregationsItem in parameters.Properties.MetricConfiguration.MetricAggregations)
+                                {
+                                    JObject storageMetricAggregationValue = new JObject();
+                                    aggregationsArray.Add(storageMetricAggregationValue);
+                                    
+                                    storageMetricAggregationValue["scheduledTransferPeriod"] = TypeConversion.To8601String(aggregationsItem.ScheduledTransferPeriod);
+                                    
+                                    storageMetricAggregationValue["retention"] = TypeConversion.To8601String(aggregationsItem.Retention);
+                                    
+                                    storageMetricAggregationValue["level"] = aggregationsItem.Level.ToString();
+                                }
+                                metricsValue["aggregations"] = aggregationsArray;
                             }
-                            metricsValue["aggregations"] = aggregationsArray;
                         }
                     }
                 }
                 
                 requestContent = requestDoc.ToString(Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -719,7 +766,20 @@ namespace Microsoft.Azure.Management.Insights
                     
                     // Create Result
                     MonitoringConfigurationCreateOrUpdateResponse result = null;
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new MonitoringConfigurationCreateOrUpdateResponse();
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
+                    
+                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                    {
+                    }
+                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1607,7 +1667,7 @@ namespace Microsoft.Azure.Management.Insights
         }
         
         /// <param name='resourceUri'>
-        /// Required. The resource identifier of the configuration.
+        /// Required. The resource identifier for the configuration.
         /// </param>
         /// <param name='parameters'>
         /// Required. Parameters supplied to the operation.
@@ -1712,7 +1772,7 @@ namespace Microsoft.Azure.Management.Insights
                                 
                                 if (derived.DiagnosticMonitorConfiguration.OverallQuotaInMB != null)
                                 {
-                                    diagnosticMonitorConfigurationValue["overallQuotaInMB"] = derived.DiagnosticMonitorConfiguration.OverallQuotaInMB;
+                                    diagnosticMonitorConfigurationValue["overallQuotaInMB"] = derived.DiagnosticMonitorConfiguration.OverallQuotaInMB.Value;
                                 }
                                 
                                 if (derived.DiagnosticMonitorConfiguration.DiagnosticInfrastructureLogs != null)
@@ -1722,7 +1782,7 @@ namespace Microsoft.Azure.Management.Insights
                                     
                                     if (derived.DiagnosticMonitorConfiguration.DiagnosticInfrastructureLogs.ScheduledTransferLogLevelFilter != null)
                                     {
-                                        diagnosticInfrastructureLogsValue["scheduledTransferLogLevelFilter"] = derived.DiagnosticMonitorConfiguration.DiagnosticInfrastructureLogs.ScheduledTransferLogLevelFilter.ToString();
+                                        diagnosticInfrastructureLogsValue["scheduledTransferLogLevelFilter"] = derived.DiagnosticMonitorConfiguration.DiagnosticInfrastructureLogs.ScheduledTransferLogLevelFilter.Value.ToString();
                                     }
                                     
                                     diagnosticInfrastructureLogsValue["scheduledTransferPeriod"] = TypeConversion.To8601String(derived.DiagnosticMonitorConfiguration.DiagnosticInfrastructureLogs.ScheduledTransferPeriod);
@@ -1740,15 +1800,18 @@ namespace Microsoft.Azure.Management.Insights
                                     
                                     if (derived.DiagnosticMonitorConfiguration.Metrics.MetricAggregations != null)
                                     {
-                                        JArray aggregationsArray = new JArray();
-                                        foreach (MetricAggregation aggregationsItem in derived.DiagnosticMonitorConfiguration.Metrics.MetricAggregations)
+                                        if (derived.DiagnosticMonitorConfiguration.Metrics.MetricAggregations is ILazyCollection == false || ((ILazyCollection)derived.DiagnosticMonitorConfiguration.Metrics.MetricAggregations).IsInitialized)
                                         {
-                                            JObject metricsValue2 = new JObject();
-                                            aggregationsArray.Add(metricsValue2);
-                                            
-                                            metricsValue2["scheduledTransferPeriod"] = TypeConversion.To8601String(aggregationsItem.ScheduledTransferPeriod);
+                                            JArray aggregationsArray = new JArray();
+                                            foreach (MetricAggregation aggregationsItem in derived.DiagnosticMonitorConfiguration.Metrics.MetricAggregations)
+                                            {
+                                                JObject metricsValue2 = new JObject();
+                                                aggregationsArray.Add(metricsValue2);
+                                                
+                                                metricsValue2["scheduledTransferPeriod"] = TypeConversion.To8601String(aggregationsItem.ScheduledTransferPeriod);
+                                            }
+                                            metricsValue["aggregations"] = aggregationsArray;
                                         }
-                                        metricsValue["aggregations"] = aggregationsArray;
                                     }
                                 }
                                 
@@ -1759,51 +1822,54 @@ namespace Microsoft.Azure.Management.Insights
                                     
                                     if (derived.DiagnosticMonitorConfiguration.Directories.DataSources != null)
                                     {
-                                        JArray dataSourcesArray = new JArray();
-                                        foreach (DirectoryConfiguration dataSourcesItem in derived.DiagnosticMonitorConfiguration.Directories.DataSources)
+                                        if (derived.DiagnosticMonitorConfiguration.Directories.DataSources is ILazyCollection == false || ((ILazyCollection)derived.DiagnosticMonitorConfiguration.Directories.DataSources).IsInitialized)
                                         {
-                                            JObject directoryConfigurationValue = new JObject();
-                                            dataSourcesArray.Add(directoryConfigurationValue);
-                                            
-                                            if (dataSourcesItem.ContainerName != null)
+                                            JArray dataSourcesArray = new JArray();
+                                            foreach (DirectoryConfiguration dataSourcesItem in derived.DiagnosticMonitorConfiguration.Directories.DataSources)
                                             {
-                                                directoryConfigurationValue["containerName"] = dataSourcesItem.ContainerName;
-                                            }
-                                            
-                                            if (dataSourcesItem.Path != null)
-                                            {
-                                                JObject pathValue = new JObject();
-                                                directoryConfigurationValue["path"] = pathValue;
-                                                if (dataSourcesItem.Path is DirectoryAbsolute)
+                                                JObject directoryConfigurationValue = new JObject();
+                                                dataSourcesArray.Add(directoryConfigurationValue);
+                                                
+                                                if (dataSourcesItem.ContainerName != null)
                                                 {
-                                                    pathValue["odata.type"] = dataSourcesItem.Path.GetType().FullName;
-                                                    DirectoryAbsolute derived2 = ((DirectoryAbsolute)dataSourcesItem.Path);
-                                                    
-                                                    pathValue["expandEnvironment"] = derived2.ExpandEnvironment;
-                                                    
-                                                    if (derived2.Path != null)
+                                                    directoryConfigurationValue["containerName"] = dataSourcesItem.ContainerName;
+                                                }
+                                                
+                                                if (dataSourcesItem.Path != null)
+                                                {
+                                                    JObject pathValue = new JObject();
+                                                    directoryConfigurationValue["path"] = pathValue;
+                                                    if (dataSourcesItem.Path is DirectoryAbsolute)
                                                     {
-                                                        pathValue["path"] = derived2.Path;
+                                                        pathValue["odata.type"] = dataSourcesItem.Path.GetType().FullName;
+                                                        DirectoryAbsolute derived2 = ((DirectoryAbsolute)dataSourcesItem.Path);
+                                                        
+                                                        pathValue["expandEnvironment"] = derived2.ExpandEnvironment;
+                                                        
+                                                        if (derived2.Path != null)
+                                                        {
+                                                            pathValue["path"] = derived2.Path;
+                                                        }
+                                                    }
+                                                    if (dataSourcesItem.Path is DirectoryLocal)
+                                                    {
+                                                        pathValue["odata.type"] = dataSourcesItem.Path.GetType().FullName;
+                                                        DirectoryLocal derived3 = ((DirectoryLocal)dataSourcesItem.Path);
+                                                        
+                                                        if (derived3.RelativePath != null)
+                                                        {
+                                                            pathValue["relativePath"] = derived3.RelativePath;
+                                                        }
+                                                        
+                                                        if (derived3.Name != null)
+                                                        {
+                                                            pathValue["name"] = derived3.Name;
+                                                        }
                                                     }
                                                 }
-                                                if (dataSourcesItem.Path is DirectoryLocal)
-                                                {
-                                                    pathValue["odata.type"] = dataSourcesItem.Path.GetType().FullName;
-                                                    DirectoryLocal derived3 = ((DirectoryLocal)dataSourcesItem.Path);
-                                                    
-                                                    if (derived3.RelativePath != null)
-                                                    {
-                                                        pathValue["relativePath"] = derived3.RelativePath;
-                                                    }
-                                                    
-                                                    if (derived3.Name != null)
-                                                    {
-                                                        pathValue["name"] = derived3.Name;
-                                                    }
-                                                }
                                             }
+                                            directoriesValue["dataSources"] = dataSourcesArray;
                                         }
-                                        directoriesValue["dataSources"] = dataSourcesArray;
                                     }
                                     
                                     if (derived.DiagnosticMonitorConfiguration.Directories.IISLogs != null)
@@ -1826,43 +1892,49 @@ namespace Microsoft.Azure.Management.Insights
                                     
                                     if (derived.DiagnosticMonitorConfiguration.PerformanceCounters.Counters != null)
                                     {
-                                        JArray countersArray = new JArray();
-                                        foreach (PerformanceCounterConfiguration countersItem in derived.DiagnosticMonitorConfiguration.PerformanceCounters.Counters)
+                                        if (derived.DiagnosticMonitorConfiguration.PerformanceCounters.Counters is ILazyCollection == false || ((ILazyCollection)derived.DiagnosticMonitorConfiguration.PerformanceCounters.Counters).IsInitialized)
                                         {
-                                            JObject performanceCounterConfigurationValue = new JObject();
-                                            countersArray.Add(performanceCounterConfigurationValue);
-                                            
-                                            if (countersItem.Annotations != null)
+                                            JArray countersArray = new JArray();
+                                            foreach (PerformanceCounterConfiguration countersItem in derived.DiagnosticMonitorConfiguration.PerformanceCounters.Counters)
                                             {
-                                                JArray annotationsArray = new JArray();
-                                                foreach (LocalizedString annotationsItem in countersItem.Annotations)
+                                                JObject performanceCounterConfigurationValue = new JObject();
+                                                countersArray.Add(performanceCounterConfigurationValue);
+                                                
+                                                if (countersItem.Annotations != null)
                                                 {
-                                                    JObject localizedStringValue = new JObject();
-                                                    annotationsArray.Add(localizedStringValue);
-                                                    
-                                                    if (annotationsItem.Value != null)
+                                                    if (countersItem.Annotations is ILazyCollection == false || ((ILazyCollection)countersItem.Annotations).IsInitialized)
                                                     {
-                                                        localizedStringValue["value"] = annotationsItem.Value;
-                                                    }
-                                                    
-                                                    if (annotationsItem.Locale != null)
-                                                    {
-                                                        localizedStringValue["locale"] = annotationsItem.Locale;
+                                                        JArray annotationsArray = new JArray();
+                                                        foreach (LocalizedString annotationsItem in countersItem.Annotations)
+                                                        {
+                                                            JObject localizedStringValue = new JObject();
+                                                            annotationsArray.Add(localizedStringValue);
+                                                            
+                                                            if (annotationsItem.Value != null)
+                                                            {
+                                                                localizedStringValue["value"] = annotationsItem.Value;
+                                                            }
+                                                            
+                                                            if (annotationsItem.Locale != null)
+                                                            {
+                                                                localizedStringValue["locale"] = annotationsItem.Locale;
+                                                            }
+                                                        }
+                                                        performanceCounterConfigurationValue["annotations"] = annotationsArray;
                                                     }
                                                 }
-                                                performanceCounterConfigurationValue["annotations"] = annotationsArray;
+                                                
+                                                if (countersItem.CounterSpecifier != null)
+                                                {
+                                                    performanceCounterConfigurationValue["counterSpecifier"] = countersItem.CounterSpecifier;
+                                                }
+                                                
+                                                performanceCounterConfigurationValue["sampleRate"] = TypeConversion.To8601String(countersItem.SampleRate);
+                                                
+                                                performanceCounterConfigurationValue["unit"] = countersItem.Unit.ToString();
                                             }
-                                            
-                                            if (countersItem.CounterSpecifier != null)
-                                            {
-                                                performanceCounterConfigurationValue["counterSpecifier"] = countersItem.CounterSpecifier;
-                                            }
-                                            
-                                            performanceCounterConfigurationValue["sampleRate"] = TypeConversion.To8601String(countersItem.SampleRate);
-                                            
-                                            performanceCounterConfigurationValue["unit"] = countersItem.Unit.ToString();
+                                            performanceCountersValue["counters"] = countersArray;
                                         }
-                                        performanceCountersValue["counters"] = countersArray;
                                     }
                                     
                                     performanceCountersValue["scheduledTransferPeriod"] = TypeConversion.To8601String(derived.DiagnosticMonitorConfiguration.PerformanceCounters.ScheduledTransferPeriod);
@@ -1875,12 +1947,15 @@ namespace Microsoft.Azure.Management.Insights
                                     
                                     if (derived.DiagnosticMonitorConfiguration.WindowsEventLog.DataSources != null)
                                     {
-                                        JArray dataSourcesArray2 = new JArray();
-                                        foreach (string dataSourcesItem2 in derived.DiagnosticMonitorConfiguration.WindowsEventLog.DataSources)
+                                        if (derived.DiagnosticMonitorConfiguration.WindowsEventLog.DataSources is ILazyCollection == false || ((ILazyCollection)derived.DiagnosticMonitorConfiguration.WindowsEventLog.DataSources).IsInitialized)
                                         {
-                                            dataSourcesArray2.Add(dataSourcesItem2);
+                                            JArray dataSourcesArray2 = new JArray();
+                                            foreach (string dataSourcesItem2 in derived.DiagnosticMonitorConfiguration.WindowsEventLog.DataSources)
+                                            {
+                                                dataSourcesArray2.Add(dataSourcesItem2);
+                                            }
+                                            windowsEventLogValue["dataSources"] = dataSourcesArray2;
                                         }
-                                        windowsEventLogValue["dataSources"] = dataSourcesArray2;
                                     }
                                     
                                     windowsEventLogValue["scheduledTransferPeriod"] = TypeConversion.To8601String(derived.DiagnosticMonitorConfiguration.WindowsEventLog.ScheduledTransferPeriod);
@@ -1893,104 +1968,116 @@ namespace Microsoft.Azure.Management.Insights
                                     
                                     if (derived.DiagnosticMonitorConfiguration.EtwProviders.EventSourceProviders != null)
                                     {
-                                        JArray eventSourceProvidersArray = new JArray();
-                                        foreach (EtwProvider eventSourceProvidersItem in derived.DiagnosticMonitorConfiguration.EtwProviders.EventSourceProviders)
+                                        if (derived.DiagnosticMonitorConfiguration.EtwProviders.EventSourceProviders is ILazyCollection == false || ((ILazyCollection)derived.DiagnosticMonitorConfiguration.EtwProviders.EventSourceProviders).IsInitialized)
                                         {
-                                            JObject etwProviderValue = new JObject();
-                                            eventSourceProvidersArray.Add(etwProviderValue);
-                                            
-                                            etwProviderValue["scheduledTransferPeriod"] = TypeConversion.To8601String(eventSourceProvidersItem.ScheduledTransferPeriod);
-                                            
-                                            if (eventSourceProvidersItem.ScheduledTransferLogLevelFilter != null)
+                                            JArray eventSourceProvidersArray = new JArray();
+                                            foreach (EtwProvider eventSourceProvidersItem in derived.DiagnosticMonitorConfiguration.EtwProviders.EventSourceProviders)
                                             {
-                                                etwProviderValue["scheduledTransferLogLevelFilter"] = eventSourceProvidersItem.ScheduledTransferLogLevelFilter.ToString();
-                                            }
-                                            
-                                            if (eventSourceProvidersItem.Provider != null)
-                                            {
-                                                etwProviderValue["provider"] = eventSourceProvidersItem.Provider;
-                                            }
-                                            
-                                            if (eventSourceProvidersItem.ScheduledTransferKeywordFilter != null)
-                                            {
-                                                etwProviderValue["scheduledTransferKeywordFilter"] = eventSourceProvidersItem.ScheduledTransferKeywordFilter;
-                                            }
-                                            
-                                            if (eventSourceProvidersItem.Events != null)
-                                            {
-                                                JArray eventsArray = new JArray();
-                                                foreach (EtwEventConfiguration eventsItem in eventSourceProvidersItem.Events)
+                                                JObject etwProviderValue = new JObject();
+                                                eventSourceProvidersArray.Add(etwProviderValue);
+                                                
+                                                etwProviderValue["scheduledTransferPeriod"] = TypeConversion.To8601String(eventSourceProvidersItem.ScheduledTransferPeriod);
+                                                
+                                                if (eventSourceProvidersItem.ScheduledTransferLogLevelFilter != null)
                                                 {
-                                                    JObject etwEventConfigurationValue = new JObject();
-                                                    eventsArray.Add(etwEventConfigurationValue);
-                                                    
-                                                    etwEventConfigurationValue["eventId"] = eventsItem.EventId;
-                                                    
-                                                    if (eventsItem.Destination != null)
+                                                    etwProviderValue["scheduledTransferLogLevelFilter"] = eventSourceProvidersItem.ScheduledTransferLogLevelFilter.Value.ToString();
+                                                }
+                                                
+                                                if (eventSourceProvidersItem.Provider != null)
+                                                {
+                                                    etwProviderValue["provider"] = eventSourceProvidersItem.Provider;
+                                                }
+                                                
+                                                if (eventSourceProvidersItem.ScheduledTransferKeywordFilter != null)
+                                                {
+                                                    etwProviderValue["scheduledTransferKeywordFilter"] = eventSourceProvidersItem.ScheduledTransferKeywordFilter.Value;
+                                                }
+                                                
+                                                if (eventSourceProvidersItem.Events != null)
+                                                {
+                                                    if (eventSourceProvidersItem.Events is ILazyCollection == false || ((ILazyCollection)eventSourceProvidersItem.Events).IsInitialized)
                                                     {
-                                                        etwEventConfigurationValue["destination"] = eventsItem.Destination;
+                                                        JArray eventsArray = new JArray();
+                                                        foreach (EtwEventConfiguration eventsItem in eventSourceProvidersItem.Events)
+                                                        {
+                                                            JObject etwEventConfigurationValue = new JObject();
+                                                            eventsArray.Add(etwEventConfigurationValue);
+                                                            
+                                                            etwEventConfigurationValue["eventId"] = eventsItem.EventId;
+                                                            
+                                                            if (eventsItem.Destination != null)
+                                                            {
+                                                                etwEventConfigurationValue["destination"] = eventsItem.Destination;
+                                                            }
+                                                        }
+                                                        etwProviderValue["events"] = eventsArray;
                                                     }
                                                 }
-                                                etwProviderValue["events"] = eventsArray;
+                                                
+                                                if (eventSourceProvidersItem.DefaultDestination != null)
+                                                {
+                                                    etwProviderValue["defaultDestination"] = eventSourceProvidersItem.DefaultDestination;
+                                                }
                                             }
-                                            
-                                            if (eventSourceProvidersItem.DefaultDestination != null)
-                                            {
-                                                etwProviderValue["defaultDestination"] = eventSourceProvidersItem.DefaultDestination;
-                                            }
+                                            etwProvidersValue["eventSourceProviders"] = eventSourceProvidersArray;
                                         }
-                                        etwProvidersValue["eventSourceProviders"] = eventSourceProvidersArray;
                                     }
                                     
                                     if (derived.DiagnosticMonitorConfiguration.EtwProviders.ManifestProviders != null)
                                     {
-                                        JArray manifestProvidersArray = new JArray();
-                                        foreach (EtwProvider manifestProvidersItem in derived.DiagnosticMonitorConfiguration.EtwProviders.ManifestProviders)
+                                        if (derived.DiagnosticMonitorConfiguration.EtwProviders.ManifestProviders is ILazyCollection == false || ((ILazyCollection)derived.DiagnosticMonitorConfiguration.EtwProviders.ManifestProviders).IsInitialized)
                                         {
-                                            JObject etwProviderValue2 = new JObject();
-                                            manifestProvidersArray.Add(etwProviderValue2);
-                                            
-                                            etwProviderValue2["scheduledTransferPeriod"] = TypeConversion.To8601String(manifestProvidersItem.ScheduledTransferPeriod);
-                                            
-                                            if (manifestProvidersItem.ScheduledTransferLogLevelFilter != null)
+                                            JArray manifestProvidersArray = new JArray();
+                                            foreach (EtwProvider manifestProvidersItem in derived.DiagnosticMonitorConfiguration.EtwProviders.ManifestProviders)
                                             {
-                                                etwProviderValue2["scheduledTransferLogLevelFilter"] = manifestProvidersItem.ScheduledTransferLogLevelFilter.ToString();
-                                            }
-                                            
-                                            if (manifestProvidersItem.Provider != null)
-                                            {
-                                                etwProviderValue2["provider"] = manifestProvidersItem.Provider;
-                                            }
-                                            
-                                            if (manifestProvidersItem.ScheduledTransferKeywordFilter != null)
-                                            {
-                                                etwProviderValue2["scheduledTransferKeywordFilter"] = manifestProvidersItem.ScheduledTransferKeywordFilter;
-                                            }
-                                            
-                                            if (manifestProvidersItem.Events != null)
-                                            {
-                                                JArray eventsArray2 = new JArray();
-                                                foreach (EtwEventConfiguration eventsItem2 in manifestProvidersItem.Events)
+                                                JObject etwProviderValue2 = new JObject();
+                                                manifestProvidersArray.Add(etwProviderValue2);
+                                                
+                                                etwProviderValue2["scheduledTransferPeriod"] = TypeConversion.To8601String(manifestProvidersItem.ScheduledTransferPeriod);
+                                                
+                                                if (manifestProvidersItem.ScheduledTransferLogLevelFilter != null)
                                                 {
-                                                    JObject etwEventConfigurationValue2 = new JObject();
-                                                    eventsArray2.Add(etwEventConfigurationValue2);
-                                                    
-                                                    etwEventConfigurationValue2["eventId"] = eventsItem2.EventId;
-                                                    
-                                                    if (eventsItem2.Destination != null)
+                                                    etwProviderValue2["scheduledTransferLogLevelFilter"] = manifestProvidersItem.ScheduledTransferLogLevelFilter.Value.ToString();
+                                                }
+                                                
+                                                if (manifestProvidersItem.Provider != null)
+                                                {
+                                                    etwProviderValue2["provider"] = manifestProvidersItem.Provider;
+                                                }
+                                                
+                                                if (manifestProvidersItem.ScheduledTransferKeywordFilter != null)
+                                                {
+                                                    etwProviderValue2["scheduledTransferKeywordFilter"] = manifestProvidersItem.ScheduledTransferKeywordFilter.Value;
+                                                }
+                                                
+                                                if (manifestProvidersItem.Events != null)
+                                                {
+                                                    if (manifestProvidersItem.Events is ILazyCollection == false || ((ILazyCollection)manifestProvidersItem.Events).IsInitialized)
                                                     {
-                                                        etwEventConfigurationValue2["destination"] = eventsItem2.Destination;
+                                                        JArray eventsArray2 = new JArray();
+                                                        foreach (EtwEventConfiguration eventsItem2 in manifestProvidersItem.Events)
+                                                        {
+                                                            JObject etwEventConfigurationValue2 = new JObject();
+                                                            eventsArray2.Add(etwEventConfigurationValue2);
+                                                            
+                                                            etwEventConfigurationValue2["eventId"] = eventsItem2.EventId;
+                                                            
+                                                            if (eventsItem2.Destination != null)
+                                                            {
+                                                                etwEventConfigurationValue2["destination"] = eventsItem2.Destination;
+                                                            }
+                                                        }
+                                                        etwProviderValue2["events"] = eventsArray2;
                                                     }
                                                 }
-                                                etwProviderValue2["events"] = eventsArray2;
+                                                
+                                                if (manifestProvidersItem.DefaultDestination != null)
+                                                {
+                                                    etwProviderValue2["defaultDestination"] = manifestProvidersItem.DefaultDestination;
+                                                }
                                             }
-                                            
-                                            if (manifestProvidersItem.DefaultDestination != null)
-                                            {
-                                                etwProviderValue2["defaultDestination"] = manifestProvidersItem.DefaultDestination;
-                                            }
+                                            etwProvidersValue["manifestProviders"] = manifestProvidersArray;
                                         }
-                                        etwProvidersValue["manifestProviders"] = manifestProvidersArray;
                                     }
                                 }
                                 
@@ -2001,12 +2088,12 @@ namespace Microsoft.Azure.Management.Insights
                                     
                                     if (derived.DiagnosticMonitorConfiguration.CrashDumps.DirectoryQuotaPercentage != null)
                                     {
-                                        crashDumpsValue["directoryQuotaPercentage"] = derived.DiagnosticMonitorConfiguration.CrashDumps.DirectoryQuotaPercentage;
+                                        crashDumpsValue["directoryQuotaPercentage"] = derived.DiagnosticMonitorConfiguration.CrashDumps.DirectoryQuotaPercentage.Value;
                                     }
                                     
                                     if (derived.DiagnosticMonitorConfiguration.CrashDumps.DumpType != null)
                                     {
-                                        crashDumpsValue["dumpType"] = derived.DiagnosticMonitorConfiguration.CrashDumps.DumpType.ToString();
+                                        crashDumpsValue["dumpType"] = derived.DiagnosticMonitorConfiguration.CrashDumps.DumpType.Value.ToString();
                                     }
                                     
                                     if (derived.DiagnosticMonitorConfiguration.CrashDumps.ContainerName != null)
@@ -2016,12 +2103,15 @@ namespace Microsoft.Azure.Management.Insights
                                     
                                     if (derived.DiagnosticMonitorConfiguration.CrashDumps.Processes != null)
                                     {
-                                        JArray processesArray = new JArray();
-                                        foreach (string processesItem in derived.DiagnosticMonitorConfiguration.CrashDumps.Processes)
+                                        if (derived.DiagnosticMonitorConfiguration.CrashDumps.Processes is ILazyCollection == false || ((ILazyCollection)derived.DiagnosticMonitorConfiguration.CrashDumps.Processes).IsInitialized)
                                         {
-                                            processesArray.Add(processesItem);
+                                            JArray processesArray = new JArray();
+                                            foreach (string processesItem in derived.DiagnosticMonitorConfiguration.CrashDumps.Processes)
+                                            {
+                                                processesArray.Add(processesItem);
+                                            }
+                                            crashDumpsValue["processes"] = processesArray;
                                         }
-                                        crashDumpsValue["processes"] = processesArray;
                                     }
                                 }
                             }
@@ -2049,7 +2139,7 @@ namespace Microsoft.Azure.Management.Insights
                 
                 requestContent = requestDoc.ToString(Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -2079,7 +2169,20 @@ namespace Microsoft.Azure.Management.Insights
                     
                     // Create Result
                     OperationResponse result = null;
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new OperationResponse();
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
+                    
+                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                    {
+                    }
+                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -2210,26 +2313,29 @@ namespace Microsoft.Azure.Management.Insights
                         
                         if (parameters.Properties.MetricConfiguration.MetricAggregations != null)
                         {
-                            JArray aggregationsArray = new JArray();
-                            foreach (StorageMetricAggregation aggregationsItem in parameters.Properties.MetricConfiguration.MetricAggregations)
+                            if (parameters.Properties.MetricConfiguration.MetricAggregations is ILazyCollection == false || ((ILazyCollection)parameters.Properties.MetricConfiguration.MetricAggregations).IsInitialized)
                             {
-                                JObject storageMetricAggregationValue = new JObject();
-                                aggregationsArray.Add(storageMetricAggregationValue);
-                                
-                                storageMetricAggregationValue["scheduledTransferPeriod"] = TypeConversion.To8601String(aggregationsItem.ScheduledTransferPeriod);
-                                
-                                storageMetricAggregationValue["retention"] = TypeConversion.To8601String(aggregationsItem.Retention);
-                                
-                                storageMetricAggregationValue["level"] = aggregationsItem.Level.ToString();
+                                JArray aggregationsArray = new JArray();
+                                foreach (StorageMetricAggregation aggregationsItem in parameters.Properties.MetricConfiguration.MetricAggregations)
+                                {
+                                    JObject storageMetricAggregationValue = new JObject();
+                                    aggregationsArray.Add(storageMetricAggregationValue);
+                                    
+                                    storageMetricAggregationValue["scheduledTransferPeriod"] = TypeConversion.To8601String(aggregationsItem.ScheduledTransferPeriod);
+                                    
+                                    storageMetricAggregationValue["retention"] = TypeConversion.To8601String(aggregationsItem.Retention);
+                                    
+                                    storageMetricAggregationValue["level"] = aggregationsItem.Level.ToString();
+                                }
+                                metricsValue["aggregations"] = aggregationsArray;
                             }
-                            metricsValue["aggregations"] = aggregationsArray;
                         }
                     }
                 }
                 
                 requestContent = requestDoc.ToString(Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -2259,7 +2365,20 @@ namespace Microsoft.Azure.Management.Insights
                     
                     // Create Result
                     OperationResponse result = null;
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new OperationResponse();
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
+                    
+                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                    {
+                    }
+                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {

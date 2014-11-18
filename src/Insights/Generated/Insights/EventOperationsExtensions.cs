@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Insights
         /// Required. The filter string
         /// </param>
         /// <param name='selectedProperties'>
-        /// Required. The list of property names to be returned. You can save
+        /// Optional. The list of property names to be returned. You can save
         /// bandwith by selecting only the properties you need.
         /// </param>
         /// <returns>
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Insights
         /// Required. The filter string
         /// </param>
         /// <param name='selectedProperties'>
-        /// Required. The list of property names to be returned. You can save
+        /// Optional. The list of property names to be returned. You can save
         /// bandwith by selecting only the properties you need.
         /// </param>
         /// <returns>

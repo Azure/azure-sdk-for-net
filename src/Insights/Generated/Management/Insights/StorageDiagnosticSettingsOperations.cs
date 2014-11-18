@@ -398,26 +398,29 @@ namespace Microsoft.Azure.Management.Insights
                         
                         if (parameters.Properties.MetricDiagnosticSettings.MetricAggregations != null)
                         {
-                            JArray aggregationsArray = new JArray();
-                            foreach (StorageMetricAggregation aggregationsItem in parameters.Properties.MetricDiagnosticSettings.MetricAggregations)
+                            if (parameters.Properties.MetricDiagnosticSettings.MetricAggregations is ILazyCollection == false || ((ILazyCollection)parameters.Properties.MetricDiagnosticSettings.MetricAggregations).IsInitialized)
                             {
-                                JObject storageMetricAggregationValue = new JObject();
-                                aggregationsArray.Add(storageMetricAggregationValue);
-                                
-                                storageMetricAggregationValue["scheduledTransferPeriod"] = TypeConversion.To8601String(aggregationsItem.ScheduledTransferPeriod);
-                                
-                                storageMetricAggregationValue["retention"] = TypeConversion.To8601String(aggregationsItem.Retention);
-                                
-                                storageMetricAggregationValue["level"] = aggregationsItem.Level.ToString();
+                                JArray aggregationsArray = new JArray();
+                                foreach (StorageMetricAggregation aggregationsItem in parameters.Properties.MetricDiagnosticSettings.MetricAggregations)
+                                {
+                                    JObject storageMetricAggregationValue = new JObject();
+                                    aggregationsArray.Add(storageMetricAggregationValue);
+                                    
+                                    storageMetricAggregationValue["scheduledTransferPeriod"] = TypeConversion.To8601String(aggregationsItem.ScheduledTransferPeriod);
+                                    
+                                    storageMetricAggregationValue["retention"] = TypeConversion.To8601String(aggregationsItem.Retention);
+                                    
+                                    storageMetricAggregationValue["level"] = aggregationsItem.Level.ToString();
+                                }
+                                metricsValue["aggregations"] = aggregationsArray;
                             }
-                            metricsValue["aggregations"] = aggregationsArray;
                         }
                     }
                 }
                 
                 requestContent = requestDoc.ToString(Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -447,7 +450,20 @@ namespace Microsoft.Azure.Management.Insights
                     
                     // Create Result
                     EmptyResponse result = null;
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new EmptyResponse();
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
+                    
+                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                    {
+                    }
+                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {

@@ -1,4 +1,4 @@
-// 
+﻿// 
 // Copyright (c) Microsoft and contributors.  All rights reserved.
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Insights.Models
     public partial class ServiceConfigurationGetResponse : OperationResponse
     {
         private string _location;
-        
+
         /// <summary>
         /// Optional. The location of the configuration.
         /// </summary>
@@ -42,9 +42,9 @@ namespace Microsoft.Azure.Management.Insights.Models
             get { return this._location; }
             set { this._location = value; }
         }
-        
+
         private string _name;
-        
+
         /// <summary>
         /// Optional. The name of the configuration.
         /// </summary>
@@ -53,9 +53,9 @@ namespace Microsoft.Azure.Management.Insights.Models
             get { return this._name; }
             set { this._name = value; }
         }
-        
+
         private ServiceDiagnosticSettings _properties;
-        
+
         /// <summary>
         /// Optional. The retrieved configuration.
         /// </summary>
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.Insights.Models
             get { return this._properties; }
             set { this._properties = value; }
         }
-        
+
         /// <summary>
         /// Initializes a new instance of the ServiceConfigurationGetResponse
         /// class.

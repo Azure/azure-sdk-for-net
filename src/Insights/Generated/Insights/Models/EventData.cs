@@ -23,18 +23,21 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Insights.Models;
+using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Insights.Models
 {
     /// <summary>
-    /// The event data class.
+    /// The Azure event log entries are of type EventData
     /// </summary>
     public partial class EventData
     {
         private SenderAuthorization _authorization;
         
         /// <summary>
-        /// Optional. Gets or sets the authorization.
+        /// Optional. Gets or sets the authorization.This is the authorization
+        /// used by the user who has performed the operation that led to this
+        /// event.
         /// </summary>
         public SenderAuthorization Authorization
         {
@@ -53,12 +56,12 @@ namespace Microsoft.Azure.Insights.Models
             set { this._caller = value; }
         }
         
-        private Dictionary<string, string> _claims;
+        private IDictionary<string, string> _claims;
         
         /// <summary>
         /// Optional. Gets or sets the claims
         /// </summary>
-        public Dictionary<string, string> Claims
+        public IDictionary<string, string> Claims
         {
             get { return this._claims; }
             set { this._claims = value; }
@@ -67,7 +70,8 @@ namespace Microsoft.Azure.Insights.Models
         private string _correlationId;
         
         /// <summary>
-        /// Optional. Gets or sets the correlation Id
+        /// Optional. Gets or sets the correlation Id.The correlation Id is
+        /// shared among the events that belong to the same deployment.
         /// </summary>
         public string CorrelationId
         {
@@ -78,7 +82,7 @@ namespace Microsoft.Azure.Insights.Models
         private string _description;
         
         /// <summary>
-        /// Optional. Gets or sets the description
+        /// Optional. Gets or sets the description of the event.
         /// </summary>
         public string Description
         {
@@ -89,7 +93,9 @@ namespace Microsoft.Azure.Insights.Models
         private EventChannels _eventChannels;
         
         /// <summary>
-        /// Optional. Gets or sets the event channels
+        /// Optional. Gets or sets the event channels.The regular event logs,
+        /// that you see in the Azure Management Portals, flow through the
+        /// 'Operation' channel.
         /// </summary>
         public EventChannels EventChannels
         {
@@ -100,7 +106,8 @@ namespace Microsoft.Azure.Insights.Models
         private string _eventDataId;
         
         /// <summary>
-        /// Optional. Gets or sets the event data Id
+        /// Optional. Gets or sets the event data Id.This is a unique
+        /// identifier for an event.
         /// </summary>
         public string EventDataId
         {
@@ -111,7 +118,9 @@ namespace Microsoft.Azure.Insights.Models
         private LocalizableString _eventName;
         
         /// <summary>
-        /// Optional. Gets or sets the event name
+        /// Optional. Gets or sets the event name.This value should not be
+        /// confused with OperationName.For practical purposes, OperationName
+        /// might be more appealing to end users.
         /// </summary>
         public LocalizableString EventName
         {
@@ -122,7 +131,8 @@ namespace Microsoft.Azure.Insights.Models
         private LocalizableString _eventSource;
         
         /// <summary>
-        /// Optional. Gets or sets the event source
+        /// Optional. Gets or sets the event source.This value indicates the
+        /// source that generated the event.
         /// </summary>
         public LocalizableString EventSource
         {
@@ -133,7 +143,7 @@ namespace Microsoft.Azure.Insights.Models
         private DateTime _eventTimestamp;
         
         /// <summary>
-        /// Optional. Gets or sets the time event occured
+        /// Optional. Gets or sets the occurrence time of event
         /// </summary>
         public DateTime EventTimestamp
         {
@@ -144,7 +154,9 @@ namespace Microsoft.Azure.Insights.Models
         private HttpRequestInfo _httpRequest;
         
         /// <summary>
-        /// Optional. Gets or sets the http request info.
+        /// Optional. Gets or sets the HTTP request info.The client IP address
+        /// of the user who initiated the event is captured as part of the
+        /// HTTP request info.
         /// </summary>
         public HttpRequestInfo HttpRequest
         {
@@ -177,7 +189,8 @@ namespace Microsoft.Azure.Insights.Models
         private string _operationId;
         
         /// <summary>
-        /// Optional. Gets or sets the operation id
+        /// Optional. Gets or sets the operation idThis value should not be
+        /// confused with EventName.
         /// </summary>
         public string OperationId
         {
@@ -188,7 +201,7 @@ namespace Microsoft.Azure.Insights.Models
         private LocalizableString _operationName;
         
         /// <summary>
-        /// Optional. Gets or sets the operation name
+        /// Optional. Gets or sets the operation name.
         /// </summary>
         public LocalizableString OperationName
         {
@@ -196,12 +209,12 @@ namespace Microsoft.Azure.Insights.Models
             set { this._operationName = value; }
         }
         
-        private Dictionary<string, string> _properties;
+        private IDictionary<string, string> _properties;
         
         /// <summary>
         /// Optional. Gets or sets the property bag
         /// </summary>
-        public Dictionary<string, string> Properties
+        public IDictionary<string, string> Properties
         {
             get { return this._properties; }
             set { this._properties = value; }
@@ -210,7 +223,9 @@ namespace Microsoft.Azure.Insights.Models
         private string _resourceGroupName;
         
         /// <summary>
-        /// Optional. Gets or sets the resource group name.
+        /// Optional. Gets or sets the resource group name.  (see
+        /// http://msdn.microsoft.com/en-us/library/azure/dn790546.aspx for
+        /// more information)
         /// </summary>
         public string ResourceGroupName
         {
@@ -221,7 +236,9 @@ namespace Microsoft.Azure.Insights.Models
         private LocalizableString _resourceProviderName;
         
         /// <summary>
-        /// Optional. Gets or sets the resource provider name.
+        /// Optional. Gets or sets the resource provider name.  (see
+        /// http://msdn.microsoft.com/en-us/library/azure/dn790572.aspx for
+        /// more information)
         /// </summary>
         public LocalizableString ResourceProviderName
         {
@@ -232,7 +249,9 @@ namespace Microsoft.Azure.Insights.Models
         private string _resourceUri;
         
         /// <summary>
-        /// Optional. Gets or sets the resource uri
+        /// Optional. Gets or sets the resource uri  (see
+        /// http://msdn.microsoft.com/en-us/library/azure/dn790569.aspx for
+        /// more information)
         /// </summary>
         public string ResourceUri
         {
@@ -243,7 +262,8 @@ namespace Microsoft.Azure.Insights.Models
         private LocalizableString _status;
         
         /// <summary>
-        /// Optional. Gets or sets the event status
+        /// Optional. Gets or sets the event status.Some typical values are:
+        /// Started, Succeeded, Failed
         /// </summary>
         public LocalizableString Status
         {
@@ -254,7 +274,10 @@ namespace Microsoft.Azure.Insights.Models
         private DateTime _submissionTimestamp;
         
         /// <summary>
-        /// Optional. Gets or sets the event submission time.
+        /// Optional. Gets or sets the event submission time.This value should
+        /// not be confused eventTimestamp. As there might be a delay between
+        /// the occurence time of the event, and the time that the event is
+        /// submitted to the Azure logging infrastructure.
         /// </summary>
         public DateTime SubmissionTimestamp
         {
@@ -265,7 +288,7 @@ namespace Microsoft.Azure.Insights.Models
         private string _subscriptionId;
         
         /// <summary>
-        /// Optional. Gets or sets the subscription id
+        /// Optional. Gets or sets the Azure subscription Id
         /// </summary>
         public string SubscriptionId
         {
@@ -276,7 +299,8 @@ namespace Microsoft.Azure.Insights.Models
         private LocalizableString _subStatus;
         
         /// <summary>
-        /// Optional. Gets or sets the event sub status
+        /// Optional. Gets or sets the event sub status.Most of the time, when
+        /// included, this captures the HTTP status code.
         /// </summary>
         public LocalizableString SubStatus
         {
@@ -289,8 +313,8 @@ namespace Microsoft.Azure.Insights.Models
         /// </summary>
         public EventData()
         {
-            this.Claims = new Dictionary<string, string>();
-            this.Properties = new Dictionary<string, string>();
+            this.Claims = new LazyDictionary<string, string>();
+            this.Properties = new LazyDictionary<string, string>();
         }
     }
 }

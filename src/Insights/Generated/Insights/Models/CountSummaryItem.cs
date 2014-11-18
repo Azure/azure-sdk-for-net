@@ -1,4 +1,4 @@
-﻿// 
+// 
 // Copyright (c) Microsoft and contributors.  All rights reserved.
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Insights.Models
     public partial class CountSummaryItem
     {
         private DateTime _eventTime;
-
+        
         /// <summary>
         /// Optional. The event time.
         /// </summary>
@@ -39,9 +39,9 @@ namespace Microsoft.Azure.Insights.Models
             get { return this._eventTime; }
             set { this._eventTime = value; }
         }
-
+        
         private int _failedEventsCount;
-
+        
         /// <summary>
         /// Optional. The total number of events with Status == Failed.
         /// </summary>
@@ -50,9 +50,9 @@ namespace Microsoft.Azure.Insights.Models
             get { return this._failedEventsCount; }
             set { this._failedEventsCount = value; }
         }
-
+        
         private int _totalEventsCount;
-
+        
         /// <summary>
         /// Optional. The total number of events.
         /// </summary>
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Insights.Models
             get { return this._totalEventsCount; }
             set { this._totalEventsCount = value; }
         }
-
+        
         /// <summary>
         /// Initializes a new instance of the CountSummaryItem class.
         /// </summary>
