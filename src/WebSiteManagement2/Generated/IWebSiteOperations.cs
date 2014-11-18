@@ -34,6 +34,29 @@ namespace Microsoft.Azure.Management.WebSites
     public partial interface IWebSiteOperations
     {
         /// <summary>
+        /// Backups a site on-demand.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='slotName'>
+        /// The name of the slot.
+        /// </param>
+        /// <param name='backupRequestEnvelope'>
+        /// A backup specification.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The backup record created based on the backup request.
+        /// </returns>
+        Task<WebSiteBackupResponse> BackupAsync(string resourceGroupName, string webSiteName, string slotName, BackupRequestEnvelope backupRequestEnvelope, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// You can create a web site by using a POST request that includes the
         /// name of the web site and other information in the request body.
         /// (see
@@ -42,6 +65,12 @@ namespace Microsoft.Azure.Management.WebSites
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='slotName'>
+        /// The name of the slot.
         /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to the Create Web Site operation.
@@ -52,7 +81,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <returns>
         /// The Create Web Space operation response.
         /// </returns>
-        Task<WebSiteCreateResponse> CreateOrUpdateAsync(string resourceGroupName, WebSiteCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
+        Task<WebSiteCreateResponse> CreateOrUpdateAsync(string resourceGroupName, string webSiteName, string slotName, WebSiteCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// A web site repository is essentially a GIT repository that you can
@@ -70,6 +99,9 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='webSiteName'>
         /// The name of the web site.
         /// </param>
+        /// <param name='slotName'>
+        /// The name of the slot.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -77,7 +109,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> CreateRepositoryAsync(string resourceGroupName, string webSiteName, CancellationToken cancellationToken);
+        Task<OperationResponse> CreateRepositoryAsync(string resourceGroupName, string webSiteName, string slotName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Deletes the web site.
@@ -87,6 +119,9 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         /// <param name='webSiteName'>
         /// The name of the Web Site resource.
+        /// </param>
+        /// <param name='slotName'>
+        /// The name of the slot.
         /// </param>
         /// <param name='parameters'>
         /// The parameters to delete a web site.
@@ -98,7 +133,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> DeleteAsync(string resourceGroupName, string webSiteName, WebSiteDeleteParameters parameters, CancellationToken cancellationToken);
+        Task<OperationResponse> DeleteAsync(string resourceGroupName, string webSiteName, string slotName, WebSiteDeleteParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// A web site repository is essentially a GIT repository that you can
@@ -116,13 +151,68 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='webSiteName'>
         /// The name of the web site.
         /// </param>
+        /// <param name='slotName'>
+        /// The name of the slot.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
         /// The Delete Web Site Repository operation response.
         /// </returns>
-        Task<WebSiteDeleteRepositoryResponse> DeleteRepositoryAsync(string resourceGroupName, string webSiteName, CancellationToken cancellationToken);
+        Task<WebSiteDeleteRepositoryResponse> DeleteRepositoryAsync(string resourceGroupName, string webSiteName, string slotName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Unlink source control from website
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='slotName'>
+        /// The name of the slot.
+        /// </param>
+        /// <param name='repoUrl'>
+        /// The repository url.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<OperationResponse> DeleteSiteSourceControlAsync(string resourceGroupName, string webSiteName, string slotName, string repoUrl, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Scans a backup in a storage account and returns database
+        /// information etc. Should be called before calling Restore to
+        /// discover what parameters are needed for the restore operation.
+        /// KNOWN BUG: This has to be called against an exisingsite, otherwise
+        /// will hit an error about non-existing resource.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='slotName'>
+        /// The name of the slot.
+        /// </param>
+        /// <param name='restoreRequestEnvelope'>
+        /// A restore request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The information gathered about a backup storaged in a storage
+        /// account.
+        /// </returns>
+        Task<WebSiteRestoreDiscoverResponse> DiscoverAsync(string resourceGroupName, string webSiteName, string slotName, RestoreRequestEnvelope restoreRequestEnvelope, CancellationToken cancellationToken);
         
         /// <summary>
         /// You can generate a new random password for publishing a site by
@@ -141,6 +231,9 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='webSiteName'>
         /// The name of the web site.
         /// </param>
+        /// <param name='slotName'>
+        /// The name of the slot.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -148,7 +241,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> GeneratePasswordAsync(string resourceGroupName, string webSiteName, CancellationToken cancellationToken);
+        Task<OperationResponse> GeneratePasswordAsync(string resourceGroupName, string webSiteName, string slotName, CancellationToken cancellationToken);
         
         /// <summary>
         /// You can retrieve details for a web site by issuing an HTTP GET
@@ -162,6 +255,9 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='webSiteName'>
         /// The name of the web site.
         /// </param>
+        /// <param name='slotName'>
+        /// The name of the slot.
+        /// </param>
         /// <param name='parameters'>
         /// Additional parameters.
         /// </param>
@@ -171,7 +267,47 @@ namespace Microsoft.Azure.Management.WebSites
         /// <returns>
         /// The Get Web Site Details operation response.
         /// </returns>
-        Task<WebSiteGetResponse> GetAsync(string resourceGroupName, string webSiteName, WebSiteGetParameters parameters, CancellationToken cancellationToken);
+        Task<WebSiteGetResponse> GetAsync(string resourceGroupName, string webSiteName, string slotName, WebSiteGetParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Restart the web site.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Name of website
+        /// </param>
+        /// <param name='slotName'>
+        /// The name of the slot of the website
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// List of app settings for the website.
+        /// </returns>
+        Task<WebSiteAppSettingsResult> GetAppSettingsAsync(string resourceGroupName, string webSiteName, string slotName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Gets a schedule configuration for site backups.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='slotName'>
+        /// The name of the slot.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Scheduled backup definition.
+        /// </returns>
+        Task<WebSiteGetBackupConfigurationResponse> GetBackupConfigurationAsync(string resourceGroupName, string webSiteName, string slotName, CancellationToken cancellationToken);
         
         /// <summary>
         /// You can retrieve the config settings for a web site by issuing an
@@ -186,6 +322,9 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='webSiteName'>
         /// The name of the web site.
         /// </param>
+        /// <param name='slotName'>
+        /// The name of the slot.
+        /// </param>
         /// <param name='parameters'>
         /// Additional parameters.
         /// </param>
@@ -193,9 +332,29 @@ namespace Microsoft.Azure.Management.WebSites
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Get Web Site Configuration operation response.
+        /// Config for the website.
         /// </returns>
-        Task<WebSiteGetConfigurationResponse> GetConfigurationAsync(string resourceGroupName, string webSiteName, WebSiteGetConfigurationParameters parameters, CancellationToken cancellationToken);
+        Task<WebSiteGetConfigurationResult> GetConfigurationAsync(string resourceGroupName, string webSiteName, string slotName, WebSiteGetConfigurationParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Restart the web site.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Name of website
+        /// </param>
+        /// <param name='slotName'>
+        /// The name of the slot of the web site
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// List of connection strings for the website.
+        /// </returns>
+        Task<WebSiteConnectionStringsResult> GetConnectionStringsAsync(string resourceGroupName, string webSiteName, string slotName, CancellationToken cancellationToken);
         
         /// <summary>
         /// You can retrieve historical usage metrics for a site by issuing an
@@ -209,6 +368,9 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='webSiteName'>
         /// The name of the web site.
         /// </param>
+        /// <param name='slotName'>
+        /// The name of the slot.
+        /// </param>
         /// <param name='parameters'>
         /// The Get Web Site Historical Usage Metrics parameters.
         /// </param>
@@ -218,7 +380,47 @@ namespace Microsoft.Azure.Management.WebSites
         /// <returns>
         /// The Get Web Site Historical Usage Metrics operation response.
         /// </returns>
-        Task<WebSiteGetHistoricalUsageMetricsResponse> GetHistoricalUsageMetricsAsync(string resourceGroupName, string webSiteName, WebSiteGetHistoricalUsageMetricsParameters parameters, CancellationToken cancellationToken);
+        Task<WebSiteGetHistoricalUsageMetricsResponse> GetHistoricalUsageMetricsAsync(string resourceGroupName, string webSiteName, string slotName, WebSiteGetHistoricalUsageMetricsParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Restart the web site.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Name of website
+        /// </param>
+        /// <param name='slotName'>
+        /// The name of the slot of the web site
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// List of metadata for the website.
+        /// </returns>
+        Task<WebSiteMetadataResult> GetMetadataAsync(string resourceGroupName, string webSiteName, string slotName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Get publishing credentials for the web site.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Name of website
+        /// </param>
+        /// <param name='slotName'>
+        /// The name of the slot of the web site.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Publishing credentials for the website.
+        /// </returns>
+        Task<WebSitePublishingCredentialsResult> GetPublishingCredentialsAsync(string resourceGroupName, string webSiteName, string slotName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Retrieve the publish settings information for a web site.  (see
@@ -231,13 +433,16 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='webSiteName'>
         /// The name of the web site.
         /// </param>
+        /// <param name='slotName'>
+        /// The name of the slot.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
         /// The Get Web Site Publish Profile operation response.
         /// </returns>
-        Task<WebSiteGetPublishProfileResponse> GetPublishProfileAsync(string resourceGroupName, string webSiteName, CancellationToken cancellationToken);
+        Task<WebSiteGetPublishProfileResponse> GetPublishProfileAsync(string resourceGroupName, string webSiteName, string slotName, CancellationToken cancellationToken);
         
         /// <summary>
         /// A web site repository is essentially a GIT repository that you can
@@ -255,13 +460,35 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='webSiteName'>
         /// The name of the web site.
         /// </param>
+        /// <param name='slotName'>
+        /// The name of the slot.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
         /// The Get Web Site Repository operation response.
         /// </returns>
-        Task<WebSiteGetRepositoryResponse> GetRepositoryAsync(string resourceGroupName, string webSiteName, CancellationToken cancellationToken);
+        Task<WebSiteGetRepositoryResponse> GetRepositoryAsync(string resourceGroupName, string webSiteName, string slotName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Update list of app settings and connection strings which to be slot
+        /// specific. E.g. settings in staging slots remain in staging after
+        /// swap with production.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the website
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// List of slot specific settings.
+        /// </returns>
+        Task<SlotConfigNamesResult> GetSlotConfigNamesAsync(string resourceGroupName, string webSiteName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Get a web site's current usage metrics. The metrics returned
@@ -278,19 +505,25 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='webSiteName'>
         /// The name of the web site.
         /// </param>
+        /// <param name='slotName'>
+        /// The name of the slot.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
         /// The Get Web Site Usage Metrics operation response.
         /// </returns>
-        Task<WebSiteGetUsageMetricsResponse> GetUsageMetricsAsync(string resourceGroupName, string webSiteName, CancellationToken cancellationToken);
+        Task<WebSiteGetUsageMetricsResponse> GetUsageMetricsAsync(string resourceGroupName, string webSiteName, string slotName, CancellationToken cancellationToken);
         
         /// <summary>
         /// List the Web Sites in a resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
         /// </param>
         /// <param name='parameters'>
         /// Additional parameters.
@@ -301,16 +534,39 @@ namespace Microsoft.Azure.Management.WebSites
         /// <returns>
         /// The List Web Sites operation response.
         /// </returns>
-        Task<WebSiteListResponse> ListAsync(string resourceGroupName, WebSiteListParameters parameters, CancellationToken cancellationToken);
+        Task<WebSiteListResponse> ListAsync(string resourceGroupName, string webSiteName, WebSiteListParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Restart the web site.
+        /// Returns list of all backups which are tracked by the system.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='webSiteName'>
-        /// TBD
+        /// The name of the web site.
+        /// </param>
+        /// <param name='slotName'>
+        /// The name of the slot.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// List of backups for the website.
+        /// </returns>
+        Task<WebSiteGetBackupsResponse> ListBackupsAsync(string resourceGroupName, string webSiteName, string slotName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Restart the web site.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Name of website
+        /// </param>
+        /// <param name='slotName'>
+        /// The name of the slot.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -319,7 +575,124 @@ namespace Microsoft.Azure.Management.WebSites
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> RestartAsync(string resourceGroupName, string webSiteName, CancellationToken cancellationToken);
+        Task<OperationResponse> RestartAsync(string resourceGroupName, string webSiteName, string slotName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Restores a site to either a new site or existing site (Overwrite
+        /// flag has to be set to true for that).
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='slotName'>
+        /// The name of the slot.
+        /// </param>
+        /// <param name='restoreRequestEnvelope'>
+        /// A restore request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Restore operation information.
+        /// </returns>
+        Task<WebSiteRestoreResponse> RestoreAsync(string resourceGroupName, string webSiteName, string slotName, RestoreRequestEnvelope restoreRequestEnvelope, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Restart the web site.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Name of website
+        /// </param>
+        /// <param name='slotName'>
+        /// The name of the slot of the website
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<OperationResponse> StartAsync(string resourceGroupName, string webSiteName, string slotName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Restart the web site.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Name of website
+        /// </param>
+        /// <param name='slotName'>
+        /// The name of the slot of the web site
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<OperationResponse> StopAsync(string resourceGroupName, string webSiteName, string slotName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// You can retrieve the application settings for a web site by issuing
+        /// an HTTP GET request, or update them by using HTTP PUT with a
+        /// request body that contains the settings to be updated.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166985.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site
+        /// </param>
+        /// <param name='slotName'>
+        /// The name of the slot of the website
+        /// </param>
+        /// <param name='parameters'>
+        /// The Update Web Site app settings parameters
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// List of app settings for the website.
+        /// </returns>
+        Task<WebSiteAppSettingsResult> UpdateAppSettingsAsync(string resourceGroupName, string webSiteName, string slotName, WebSiteNameValueParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Updates a backup schedule for a site.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='slotName'>
+        /// The name of the slot.
+        /// </param>
+        /// <param name='backupRequestEnvelope'>
+        /// A backup schedule specification.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<OperationResponse> UpdateBackupConfigurationAsync(string resourceGroupName, string webSiteName, string slotName, BackupRequestEnvelope backupRequestEnvelope, CancellationToken cancellationToken);
         
         /// <summary>
         /// You can retrieve the config settings for a web site by issuing an
@@ -334,6 +707,9 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='webSiteName'>
         /// The name of the web site.
         /// </param>
+        /// <param name='slotName'>
+        /// The name of the slot.
+        /// </param>
         /// <param name='parameters'>
         /// The Update Web Site Configuration parameters.
         /// </param>
@@ -344,6 +720,108 @@ namespace Microsoft.Azure.Management.WebSites
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> UpdateConfigurationAsync(string resourceGroupName, string webSiteName, WebSiteUpdateConfigurationParameters parameters, CancellationToken cancellationToken);
+        Task<OperationResponse> UpdateConfigurationAsync(string resourceGroupName, string webSiteName, string slotName, WebSiteUpdateConfigurationParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// You can retrieve the connection strings for a web site by issuing
+        /// an HTTP GET request, or update them by using HTTP PUT with a
+        /// request body that contains the settings to be updated.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166985.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the website
+        /// </param>
+        /// <param name='slotName'>
+        /// The name of the slot of the website
+        /// </param>
+        /// <param name='parameters'>
+        /// The Update Web Site connection strings parameters
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// List of connection strings for the website.
+        /// </returns>
+        Task<WebSiteConnectionStringsResult> UpdateConnectionStringsAsync(string resourceGroupName, string webSiteName, string slotName, WebSiteUpdateConnectionStringsParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// You can retrieve the metadata for a web site by issuing an HTTP GET
+        /// request, or update them by using HTTP PUT with a request body that
+        /// contains the settings to be updated.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166985.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the website
+        /// </param>
+        /// <param name='slotName'>
+        /// The name of the slot of the website
+        /// </param>
+        /// <param name='parameters'>
+        /// The Update Web Site metadata parameters
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// List of metadata for the website.
+        /// </returns>
+        Task<WebSiteMetadataResult> UpdateMetadataAsync(string resourceGroupName, string webSiteName, string slotName, WebSiteNameValueParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Link source control to website (do not forget to setup the token,
+        /// and if needed token secret, for the specific source control type
+        /// used).
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site
+        /// </param>
+        /// <param name='slotName'>
+        /// The name of the slot of the website
+        /// </param>
+        /// <param name='parameters'>
+        /// The update site source control parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The link site to source control operation response.
+        /// </returns>
+        Task<SiteSourceControlUpdateResponse> UpdateSiteSourceControlAsync(string resourceGroupName, string webSiteName, string slotName, SiteSourceControlUpdateParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Update list of app settings and connection strings which to be slot
+        /// specific. E.g. settings in staging slots remain in staging after
+        /// swap with production.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the website
+        /// </param>
+        /// <param name='parameters'>
+        /// The Update slot configs parameters
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<OperationResponse> UpdateSlotConfigNamesAsync(string resourceGroupName, string webSiteName, SlotConfigNamesUpdateParameters parameters, CancellationToken cancellationToken);
     }
 }

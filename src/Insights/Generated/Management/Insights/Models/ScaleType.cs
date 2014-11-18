@@ -27,22 +27,22 @@ namespace Microsoft.Azure.Management.Insights.Models
     public enum ScaleType
     {
         /// <summary>
-        /// The change size.
+        /// Not available. Change the instance size.
         /// </summary>
         ChangeSize = 0,
         
         /// <summary>
-        /// The change count.
+        /// Change the instance count.
         /// </summary>
         ChangeCount = 1,
         
         /// <summary>
-        /// The percent change count.
+        /// Not available. Change the instance count by a percentage.
         /// </summary>
         PercentChangeCount = 2,
         
         /// <summary>
-        /// The exact count.
+        /// Not available. Set the exact count of instances.
         /// </summary>
         ExactCount = 3,
     }

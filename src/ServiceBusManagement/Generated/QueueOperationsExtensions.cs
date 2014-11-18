@@ -23,6 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Management.ServiceBus;
 using Microsoft.WindowsAzure.Management.ServiceBus.Models;
 
@@ -90,6 +91,60 @@ namespace Microsoft.WindowsAzure
         public static Task<ServiceBusQueueResponse> CreateAsync(this IQueueOperations operations, string namespaceName, ServiceBusQueueCreateParameters queue)
         {
             return operations.CreateAsync(namespaceName, queue, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Deletes an existing queue. This operation will also remove all
+        /// associated state including messages in the queue.  (see
+        /// http://msdn.microsoft.com/en-us/library/hh780747.aspx for more
+        /// information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.ServiceBus.IQueueOperations.
+        /// </param>
+        /// <param name='namespaceName'>
+        /// Required. The namespace name.
+        /// </param>
+        /// <param name='queueName'>
+        /// Required. The queue name.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static OperationResponse Delete(this IQueueOperations operations, string namespaceName, string queueName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IQueueOperations)s).DeleteAsync(namespaceName, queueName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Deletes an existing queue. This operation will also remove all
+        /// associated state including messages in the queue.  (see
+        /// http://msdn.microsoft.com/en-us/library/hh780747.aspx for more
+        /// information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.ServiceBus.IQueueOperations.
+        /// </param>
+        /// <param name='namespaceName'>
+        /// Required. The namespace name.
+        /// </param>
+        /// <param name='queueName'>
+        /// Required. The queue name.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<OperationResponse> DeleteAsync(this IQueueOperations operations, string namespaceName, string queueName)
+        {
+            return operations.DeleteAsync(namespaceName, queueName, CancellationToken.None);
         }
         
         /// <summary>

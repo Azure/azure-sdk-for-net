@@ -17,16 +17,16 @@ using System.Reflection;
 using System.Resources;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Microsoft Azure Gallery Library")]
-[assembly: AssemblyDescription("Provides Microsoft Azure gallery access.")]
+[assembly: AssemblyTitle("Microsoft Azure Insights Library")]
+[assembly: AssemblyDescription("Provides Microsoft Azure Insights operations.")]
 
-[assembly: AssemblyVersion("2.0.0.0")]
+[assembly: AssemblyVersion("0.9.0.0")]
 [assembly: AssemblyFileVersion("2.0.3.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("Microsoft Azure .NET SDK")]
-[assembly: AssemblyCopyright("Copyright © Microsoft Corporation")]
+[assembly: AssemblyProduct("Azure .NET SDK")]
+[assembly: AssemblyCopyright("Copyright (c) Microsoft Corporation")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: NeutralResourcesLanguage("en")]

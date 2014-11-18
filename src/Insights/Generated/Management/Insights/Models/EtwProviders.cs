@@ -23,18 +23,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Management.Insights.Models;
+using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Management.Insights.Models
 {
     /// <summary>
-    /// represents the configuration for etw providers by category.
+    /// Represents the configuration for ETW providers by category.
     /// </summary>
     public partial class EtwProviders
     {
         private IList<EtwProvider> _eventSourceProviders;
         
         /// <summary>
-        /// Optional. list of event source providers.
+        /// Optional. Configures collection of ETW events from EventSource
+        /// providers.
         /// </summary>
         public IList<EtwProvider> EventSourceProviders
         {
@@ -45,7 +47,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private IList<EtwProvider> _manifestProviders;
         
         /// <summary>
-        /// Optional. list of manifest providers.
+        /// Optional. Configures collection of ETW events from ETW Manifest
+        /// providers.
         /// </summary>
         public IList<EtwProvider> ManifestProviders
         {
@@ -58,8 +61,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         /// </summary>
         public EtwProviders()
         {
-            this.EventSourceProviders = new List<EtwProvider>();
-            this.ManifestProviders = new List<EtwProvider>();
+            this.EventSourceProviders = new LazyList<EtwProvider>();
+            this.ManifestProviders = new LazyList<EtwProvider>();
         }
     }
 }

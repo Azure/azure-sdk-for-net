@@ -36,6 +36,26 @@ namespace Microsoft.WindowsAzure.Management.WebSites
     public partial interface IWebSiteOperations
     {
         /// <summary>
+        /// Backups a site on-demand.
+        /// </summary>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='backupRequest'>
+        /// A backup specification.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The backup record created based on the backup request.
+        /// </returns>
+        Task<WebSiteBackupResponse> BackupAsync(string webSpaceName, string webSiteName, BackupRequest backupRequest, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// You can swap a web site from one slot to another slot.
         /// </summary>
         /// <param name='webSpaceName'>
@@ -61,7 +81,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// operation itself. If the long-running operation failed, the
         /// response body includes error information regarding the failure.
         /// </returns>
-        Task<WebSiteOperationStatusResponse> BeginSwapingSlotsAsync(string webSpaceName, string webSiteName, string sourceSlotName, string targetSlotName, CancellationToken cancellationToken);
+        Task<WebSiteOperationStatusResponse> BeginSwappingSlotsAsync(string webSpaceName, string webSiteName, string sourceSlotName, string targetSlotName, CancellationToken cancellationToken);
         
         /// <summary>
         /// You can create a web site by using a POST request that includes the
@@ -156,6 +176,29 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         Task<WebSiteDeleteRepositoryResponse> DeleteRepositoryAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Scans a backup in a storage account and returns database
+        /// information etc. Should be called before calling Restore to
+        /// discover what parameters are needed for the restore operation.
+        /// </summary>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='restoreRequest'>
+        /// A restore request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The information gathered about a backup storaged in a storage
+        /// account.
+        /// </returns>
+        Task<WebSiteRestoreDiscoverResponse> DiscoverAsync(string webSpaceName, string webSiteName, RestoreRequest restoreRequest, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// You can generate a new random password for publishing a site by
         /// issuing an HTTP POST request. Tip: If you want to verify that the
         /// publish password has changed, issue an HTTP GET on /publishxml
@@ -203,6 +246,23 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// The Get Web Site operation response.
         /// </returns>
         Task<WebSiteGetResponse> GetAsync(string webSpaceName, string webSiteName, WebSiteGetParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Gets a schedule configuration for site backups.
+        /// </summary>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Scheduled backup definition.
+        /// </returns>
+        Task<WebSiteGetBackupConfigurationResponse> GetBackupConfigurationAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken);
         
         /// <summary>
         /// You can retrieve the config settings for a web site by issuing an
@@ -310,6 +370,21 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// </returns>
         Task<WebSiteGetRepositoryResponse> GetRepositoryAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken);
         
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<SlotConfigNames> GetSlotConfigNamesAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken);
+        
         /// <summary>
         /// You can retrieve current usage metrics for a site by issuing an
         /// HTTP GET request. The metrics returned include CPU Time, Data In,
@@ -348,6 +423,23 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         Task<WebSiteIsHostnameAvailableResponse> IsHostnameAvailableAsync(string webSiteName, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Returns list of all backups which are tracked by the system.
+        /// </summary>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// List of backups for the website.
+        /// </returns>
+        Task<WebSiteGetBackupsResponse> ListBackupsAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// You can restart a web site by issuing an HTTP POST request.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn236425.aspx
         /// for more information)
@@ -366,6 +458,27 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// request ID.
         /// </returns>
         Task<OperationResponse> RestartAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Restores a site to either a new site or existing site (Overwrite
+        /// flag has to be set to true for that).
+        /// </summary>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='restoreRequest'>
+        /// A restore request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Restore operation information.
+        /// </returns>
+        Task<WebSiteRestoreResponse> RestoreAsync(string webSpaceName, string webSiteName, RestoreRequest restoreRequest, CancellationToken cancellationToken);
         
         /// <summary>
         /// You can swap a web site from one slot to another slot.
@@ -442,6 +555,27 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         Task<WebSiteUpdateResponse> UpdateAsync(string webSpaceName, string webSiteName, WebSiteUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Updates a backup schedule for a site.
+        /// </summary>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='backupRequest'>
+        /// A backup schedule specification.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<OperationResponse> UpdateBackupConfigurationAsync(string webSpaceName, string webSiteName, BackupRequest backupRequest, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// You can update the config settings for a web site by issuing an
         /// HTTP PUT with a request body containing the updated settings.
         /// (see http://msdn.microsoft.com/en-us/library/windowsazure/dn166985.aspx
@@ -464,5 +598,23 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// request ID.
         /// </returns>
         Task<OperationResponse> UpdateConfigurationAsync(string webSpaceName, string webSiteName, WebSiteUpdateConfigurationParameters parameters, CancellationToken cancellationToken);
+        
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='parameters'>
+        /// The parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<OperationResponse> UpdateSlotConfigNamesAsync(string webSpaceName, string webSiteName, SlotConfigNamesUpdate parameters, CancellationToken cancellationToken);
     }
 }

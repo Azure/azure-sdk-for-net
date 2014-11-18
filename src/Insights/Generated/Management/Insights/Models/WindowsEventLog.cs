@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Management.Insights.Models;
+using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Management.Insights.Models
 {
@@ -34,7 +35,10 @@ namespace Microsoft.Azure.Management.Insights.Models
         private IList<string> _dataSources;
         
         /// <summary>
-        /// Optional. list of data sources to collect.
+        /// Optional. The Windows Event logs to collect. A list of XPath
+        /// queries describing the windows events to be collected. For
+        /// example: "System!*[System[(Level &lt;=3)]]". To collect all events
+        /// specify "*".
         /// </summary>
         public IList<string> DataSources
         {
@@ -47,7 +51,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         /// </summary>
         public WindowsEventLog()
         {
-            this.DataSources = new List<string>();
+            this.DataSources = new LazyList<string>();
         }
     }
 }

@@ -23,18 +23,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Insights.Models;
+using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Insights.Models
 {
     /// <summary>
-    /// Details the location of the Metrics and contains the SAS Key.
+    /// Where the data for this metric is stored.
     /// </summary>
     public partial class MetricLocation
     {
         private string _partitionKey;
         
         /// <summary>
-        /// Optional. The partition key.
+        /// Optional. The partition key inside the tables that contains the
+        /// metrics.
         /// </summary>
         public string PartitionKey
         {
@@ -45,7 +47,7 @@ namespace Microsoft.Azure.Insights.Models
         private string _tableEndpoint;
         
         /// <summary>
-        /// Optional. The table endpoint.
+        /// Optional. The REST endpoint of the tables that contains the metrics.
         /// </summary>
         public string TableEndpoint
         {
@@ -56,7 +58,7 @@ namespace Microsoft.Azure.Insights.Models
         private IList<MetricTableInfo> _tableInfo;
         
         /// <summary>
-        /// Optional. The table info.
+        /// Optional. The list of tables that contain the metric data.
         /// </summary>
         public IList<MetricTableInfo> TableInfo
         {
@@ -69,7 +71,7 @@ namespace Microsoft.Azure.Insights.Models
         /// </summary>
         public MetricLocation()
         {
-            this.TableInfo = new List<MetricTableInfo>();
+            this.TableInfo = new LazyList<MetricTableInfo>();
         }
     }
 }

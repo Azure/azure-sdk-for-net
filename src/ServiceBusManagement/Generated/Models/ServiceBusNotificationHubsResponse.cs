@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Management.ServiceBus.Models;
 
 namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
@@ -50,7 +51,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         /// </summary>
         public ServiceBusNotificationHubsResponse()
         {
-            this.NotificationHubs = new List<ServiceBusNotificationHub>();
+            this.NotificationHubs = new LazyList<ServiceBusNotificationHub>();
         }
         
         /// <summary>

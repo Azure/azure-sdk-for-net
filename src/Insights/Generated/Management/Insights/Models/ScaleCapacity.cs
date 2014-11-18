@@ -25,15 +25,16 @@ using System.Linq;
 namespace Microsoft.Azure.Management.Insights.Models
 {
     /// <summary>
-    /// The number of instances that can be used in the scaling action.
+    /// The number of instances that can be used during this profile.
     /// </summary>
     public partial class ScaleCapacity
     {
         private string _default;
         
         /// <summary>
-        /// Optional. The default number of instances that are available for
-        /// the scaling action.
+        /// Optional. The number of instances that will be set if metrics are
+        /// not available for evaluation. The default is only used if the
+        /// current instance count is lower than the default.
         /// </summary>
         public string Default
         {
@@ -44,8 +45,9 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _maximum;
         
         /// <summary>
-        /// Optional. The maximum number of instances that are available for
-        /// the scaling action.
+        /// Optional. The maximum number of instances for the resource. The
+        /// actual maximum number may be limited by the cores that are
+        /// available.
         /// </summary>
         public string Maximum
         {
@@ -56,8 +58,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _minimum;
         
         /// <summary>
-        /// Optional. The minimum number of instances that are available for
-        /// the scaling action.
+        /// Optional. The minimum number of instances for the resource.
         /// </summary>
         public string Minimum
         {

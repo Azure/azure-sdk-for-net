@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private StorageMetricLevel _level;
         
         /// <summary>
-        /// Optional. The level.
+        /// Optional. The level of metrics to collect.
         /// </summary>
         public StorageMetricLevel Level
         {
@@ -44,7 +44,10 @@ namespace Microsoft.Azure.Management.Insights.Models
         private TimeSpan _retention;
         
         /// <summary>
-        /// Optional. The retention. Use multiples of days.
+        /// Optional. Indicates the how long metrics data should be retained
+        /// (must be an even number of days). All data older than this value
+        /// will be deleted. The minimum number of days is 1; the largest
+        /// value is 365 (one year).
         /// </summary>
         public TimeSpan Retention
         {
@@ -55,7 +58,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private TimeSpan _scheduledTransferPeriod;
         
         /// <summary>
-        /// Optional. The aggregation window. Use either one minute or one day.
+        /// Optional. Specifies the time grain (aggregation interval or
+        /// frequency). Must be either one minute or one hour.
         /// </summary>
         public TimeSpan ScheduledTransferPeriod
         {

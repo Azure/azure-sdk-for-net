@@ -23,11 +23,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Management.Insights.Models;
+using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Management.Insights.Models
 {
     /// <summary>
-    /// represents a collection or performance counters and their shared
+    /// Represents a collection or performance counters and their shared
     /// configuration.
     /// </summary>
     public partial class PerformanceCounters : BasicConfiguration
@@ -35,7 +36,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private IList<PerformanceCounterConfiguration> _counters;
         
         /// <summary>
-        /// Optional. list of performance counters.
+        /// Optional. List of performance counters.
         /// </summary>
         public IList<PerformanceCounterConfiguration> Counters
         {
@@ -48,7 +49,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         /// </summary>
         public PerformanceCounters()
         {
-            this.Counters = new List<PerformanceCounterConfiguration>();
+            this.Counters = new LazyList<PerformanceCounterConfiguration>();
         }
     }
 }

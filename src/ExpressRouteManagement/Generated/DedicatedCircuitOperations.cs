@@ -162,7 +162,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -748,7 +748,25 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// </returns>
         public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ExpressRoute.Models.DedicatedCircuitGetResponse> NewAsync(DedicatedCircuitNewParameters parameters, CancellationToken cancellationToken)
         {
-            ExpressRouteManagementClient client = this.Client;
+            // Validate
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            if (parameters.CircuitName == null)
+            {
+                throw new ArgumentNullException("parameters.CircuitName");
+            }
+            if (parameters.Location == null)
+            {
+                throw new ArgumentNullException("parameters.Location");
+            }
+            if (parameters.ServiceProviderName == null)
+            {
+                throw new ArgumentNullException("parameters.ServiceProviderName");
+            }
+            
+            // Tracing
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
@@ -758,46 +776,86 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                 tracingParameters.Add("parameters", parameters);
                 Tracing.Enter(invocationId, this, "NewAsync", tracingParameters);
             }
+            
+            // Construct URL
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/networking/dedicatedcircuits?api-version=1.0";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
             try
             {
-                if (shouldTrace)
-                {
-                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
-                }
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
                 
+                // Set Headers
+                
+                // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
-                ExpressRouteOperationResponse originalResponse = await client.DedicatedCircuits.BeginNewAsync(parameters, cancellationToken).ConfigureAwait(false);
-                cancellationToken.ThrowIfCancellationRequested();
-                ExpressRouteOperationStatusResponse result = await client.GetOperationStatusAsync(originalResponse.OperationId, cancellationToken).ConfigureAwait(false);
-                int delayInSeconds = 30;
-                while (result.Status == ExpressRouteOperationStatus.InProgress)
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
                 {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
                     cancellationToken.ThrowIfCancellationRequested();
-                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    result = await client.GetOperationStatusAsync(originalResponse.OperationId, cancellationToken).ConfigureAwait(false);
-                    delayInSeconds = 10;
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode >= HttpStatusCode.BadRequest)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    DedicatedCircuitGetResponse result = null;
+                    result = new DedicatedCircuitGetResponse();
+                    result.StatusCode = statusCode;
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
                 }
-                
-                if (result.Status == ExpressRouteOperationStatus.Failed)
+                finally
                 {
-                    string exStr = "A new dedicated circuit could not be created due to an internal server error.";
-                    throw new ArgumentException(exStr);
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
                 }
-                cancellationToken.ThrowIfCancellationRequested();
-                DedicatedCircuitGetResponse getResult = await client.DedicatedCircuits.GetAsync(result.Data, cancellationToken).ConfigureAwait(false);
-                if (shouldTrace)
-                {
-                    Tracing.Exit(invocationId, result);
-                }
-                
-                return getResult;
             }
             finally
             {
-                if (client != null && shouldTrace)
+                if (httpRequest != null)
                 {
-                    client.Dispose();
+                    httpRequest.Dispose();
                 }
             }
         }
@@ -826,7 +884,13 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// </returns>
         public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ExpressRoute.Models.ExpressRouteOperationStatusResponse> RemoveAsync(string serviceKey, CancellationToken cancellationToken)
         {
-            ExpressRouteManagementClient client = this.Client;
+            // Validate
+            if (serviceKey == null)
+            {
+                throw new ArgumentNullException("serviceKey");
+            }
+            
+            // Tracing
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
@@ -836,39 +900,86 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                 tracingParameters.Add("serviceKey", serviceKey);
                 Tracing.Enter(invocationId, this, "RemoveAsync", tracingParameters);
             }
+            
+            // Construct URL
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/networking/dedicatedcircuits/" + serviceKey.Trim() + "?api-version=1.0";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
             try
             {
-                if (shouldTrace)
-                {
-                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
-                }
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Delete;
+                httpRequest.RequestUri = new Uri(url);
                 
+                // Set Headers
+                
+                // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
-                ExpressRouteOperationResponse originalResponse = await client.DedicatedCircuits.BeginRemoveAsync(serviceKey, cancellationToken).ConfigureAwait(false);
-                cancellationToken.ThrowIfCancellationRequested();
-                ExpressRouteOperationStatusResponse result = await client.GetOperationStatusAsync(originalResponse.OperationId, cancellationToken).ConfigureAwait(false);
-                int delayInSeconds = 30;
-                while (result.Status == ExpressRouteOperationStatus.InProgress)
-                {
-                    cancellationToken.ThrowIfCancellationRequested();
-                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    result = await client.GetOperationStatusAsync(originalResponse.OperationId, cancellationToken).ConfigureAwait(false);
-                    delayInSeconds = 10;
-                }
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                 
-                if (shouldTrace)
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
                 {
-                    Tracing.Exit(invocationId, result);
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode >= HttpStatusCode.BadRequest)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    ExpressRouteOperationStatusResponse result = null;
+                    result = new ExpressRouteOperationStatusResponse();
+                    result.StatusCode = statusCode;
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
                 }
-                
-                return result;
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
             }
             finally
             {
-                if (client != null && shouldTrace)
+                if (httpRequest != null)
                 {
-                    client.Dispose();
+                    httpRequest.Dispose();
                 }
             }
         }

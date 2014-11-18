@@ -100,6 +100,13 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             set { this._longRunningOperationRetryTimeout = value; }
         }
         
+        private IAuthorizedDedicatedCircuitOperations _authorizedDedicatedCircuits;
+        
+        public virtual IAuthorizedDedicatedCircuitOperations AuthorizedDedicatedCircuits
+        {
+            get { return this._authorizedDedicatedCircuits; }
+        }
+        
         private IBorderGatewayProtocolPeeringOperations _borderGatewayProtocolPeerings;
         
         public virtual IBorderGatewayProtocolPeeringOperations BorderGatewayProtocolPeerings
@@ -112,6 +119,20 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         public virtual ICrossConnectionOperations CrossConnections
         {
             get { return this._crossConnections; }
+        }
+        
+        private IDedicatedCircuitLinkAuthorizationMicrosoftIdOperations _dedicatedCircuitLinkAuthorizationMicrosoftIds;
+        
+        public virtual IDedicatedCircuitLinkAuthorizationMicrosoftIdOperations DedicatedCircuitLinkAuthorizationMicrosoftIds
+        {
+            get { return this._dedicatedCircuitLinkAuthorizationMicrosoftIds; }
+        }
+        
+        private IDedicatedCircuitLinkAuthorizationOperations _dedicatedCircuitLinkAuthorizations;
+        
+        public virtual IDedicatedCircuitLinkAuthorizationOperations DedicatedCircuitLinkAuthorizations
+        {
+            get { return this._dedicatedCircuitLinkAuthorizations; }
         }
         
         private IDedicatedCircuitLinkOperations _dedicatedCircuitLinks;
@@ -142,8 +163,11 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         private ExpressRouteManagementClient()
             : base()
         {
+            this._authorizedDedicatedCircuits = new AuthorizedDedicatedCircuitOperations(this);
             this._borderGatewayProtocolPeerings = new BorderGatewayProtocolPeeringOperations(this);
             this._crossConnections = new CrossConnectionOperations(this);
+            this._dedicatedCircuitLinkAuthorizationMicrosoftIds = new DedicatedCircuitLinkAuthorizationMicrosoftIdOperations(this);
+            this._dedicatedCircuitLinkAuthorizations = new DedicatedCircuitLinkAuthorizationOperations(this);
             this._dedicatedCircuitLinks = new DedicatedCircuitLinkOperations(this);
             this._dedicatedCircuits = new DedicatedCircuitOperations(this);
             this._dedicatedCircuitServiceProviders = new DedicatedCircuitServiceProviderOperations(this);
@@ -163,7 +187,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Gets the URI used as the base for all cloud service
+        /// Optional. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
         public ExpressRouteManagementClient(SubscriptionCloudCredentials credentials, Uri baseUri)
@@ -215,8 +239,11 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         private ExpressRouteManagementClient(HttpClient httpClient)
             : base(httpClient)
         {
+            this._authorizedDedicatedCircuits = new AuthorizedDedicatedCircuitOperations(this);
             this._borderGatewayProtocolPeerings = new BorderGatewayProtocolPeeringOperations(this);
             this._crossConnections = new CrossConnectionOperations(this);
+            this._dedicatedCircuitLinkAuthorizationMicrosoftIds = new DedicatedCircuitLinkAuthorizationMicrosoftIdOperations(this);
+            this._dedicatedCircuitLinkAuthorizations = new DedicatedCircuitLinkAuthorizationOperations(this);
             this._dedicatedCircuitLinks = new DedicatedCircuitLinkOperations(this);
             this._dedicatedCircuits = new DedicatedCircuitOperations(this);
             this._dedicatedCircuitServiceProviders = new DedicatedCircuitServiceProviderOperations(this);
@@ -236,7 +263,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Gets the URI used as the base for all cloud service
+        /// Optional. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
         /// <param name='httpClient'>
@@ -307,6 +334,94 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                 
                 clonedClient.Credentials.InitializeServiceClient(clonedClient);
             }
+        }
+        
+        /// <summary>
+        /// Parse enum values for type BgpPeeringAccessType.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to parse.
+        /// </param>
+        /// <returns>
+        /// The enum value.
+        /// </returns>
+        internal static BgpPeeringAccessType ParseBgpPeeringAccessType(string value)
+        {
+            if ("private".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return BgpPeeringAccessType.Private;
+            }
+            if ("public".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return BgpPeeringAccessType.Public;
+            }
+            throw new ArgumentOutOfRangeException("value");
+        }
+        
+        /// <summary>
+        /// Convert an enum of type BgpPeeringAccessType to a string.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to convert to a string.
+        /// </param>
+        /// <returns>
+        /// The enum value as a string.
+        /// </returns>
+        internal static string BgpPeeringAccessTypeToString(BgpPeeringAccessType value)
+        {
+            if (value == BgpPeeringAccessType.Private)
+            {
+                return "private";
+            }
+            if (value == BgpPeeringAccessType.Public)
+            {
+                return "public";
+            }
+            throw new ArgumentOutOfRangeException("value");
+        }
+        
+        /// <summary>
+        /// Parse enum values for type UpdateCrossConnectionOperation.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to parse.
+        /// </param>
+        /// <returns>
+        /// The enum value.
+        /// </returns>
+        internal static UpdateCrossConnectionOperation ParseUpdateCrossConnectionOperation(string value)
+        {
+            if ("NotifyCrossConnectionProvisioned".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return UpdateCrossConnectionOperation.NotifyCrossConnectionProvisioned;
+            }
+            if ("NotifyCrossConnectionNotProvisioned".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return UpdateCrossConnectionOperation.NotifyCrossConnectionNotProvisioned;
+            }
+            throw new ArgumentOutOfRangeException("value");
+        }
+        
+        /// <summary>
+        /// Convert an enum of type UpdateCrossConnectionOperation to a string.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to convert to a string.
+        /// </param>
+        /// <returns>
+        /// The enum value as a string.
+        /// </returns>
+        internal static string UpdateCrossConnectionOperationToString(UpdateCrossConnectionOperation value)
+        {
+            if (value == UpdateCrossConnectionOperation.NotifyCrossConnectionProvisioned)
+            {
+                return "NotifyCrossConnectionProvisioned";
+            }
+            if (value == UpdateCrossConnectionOperation.NotifyCrossConnectionNotProvisioned)
+            {
+                return "NotifyCrossConnectionNotProvisioned";
+            }
+            throw new ArgumentOutOfRangeException("value");
         }
         
         /// <summary>
@@ -495,94 +610,6 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     httpRequest.Dispose();
                 }
             }
-        }
-        
-        /// <summary>
-        /// Parse enum values for type BgpPeeringAccessType.
-        /// </summary>
-        /// <param name='value'>
-        /// The value to parse.
-        /// </param>
-        /// <returns>
-        /// The enum value.
-        /// </returns>
-        internal static BgpPeeringAccessType ParseBgpPeeringAccessType(string value)
-        {
-            if ("private".Equals(value, StringComparison.OrdinalIgnoreCase))
-            {
-                return BgpPeeringAccessType.Private;
-            }
-            if ("public".Equals(value, StringComparison.OrdinalIgnoreCase))
-            {
-                return BgpPeeringAccessType.Public;
-            }
-            throw new ArgumentOutOfRangeException("value");
-        }
-        
-        /// <summary>
-        /// Convert an enum of type BgpPeeringAccessType to a string.
-        /// </summary>
-        /// <param name='value'>
-        /// The value to convert to a string.
-        /// </param>
-        /// <returns>
-        /// The enum value as a string.
-        /// </returns>
-        internal static string BgpPeeringAccessTypeToString(BgpPeeringAccessType value)
-        {
-            if (value == BgpPeeringAccessType.Private)
-            {
-                return "private";
-            }
-            if (value == BgpPeeringAccessType.Public)
-            {
-                return "public";
-            }
-            throw new ArgumentOutOfRangeException("value");
-        }
-        
-        /// <summary>
-        /// Parse enum values for type UpdateCrossConnectionOperation.
-        /// </summary>
-        /// <param name='value'>
-        /// The value to parse.
-        /// </param>
-        /// <returns>
-        /// The enum value.
-        /// </returns>
-        internal static UpdateCrossConnectionOperation ParseUpdateCrossConnectionOperation(string value)
-        {
-            if ("NotifyCrossConnectionProvisioned".Equals(value, StringComparison.OrdinalIgnoreCase))
-            {
-                return UpdateCrossConnectionOperation.NotifyCrossConnectionProvisioned;
-            }
-            if ("NotifyCrossConnectionNotProvisioned".Equals(value, StringComparison.OrdinalIgnoreCase))
-            {
-                return UpdateCrossConnectionOperation.NotifyCrossConnectionNotProvisioned;
-            }
-            throw new ArgumentOutOfRangeException("value");
-        }
-        
-        /// <summary>
-        /// Convert an enum of type UpdateCrossConnectionOperation to a string.
-        /// </summary>
-        /// <param name='value'>
-        /// The value to convert to a string.
-        /// </param>
-        /// <returns>
-        /// The enum value as a string.
-        /// </returns>
-        internal static string UpdateCrossConnectionOperationToString(UpdateCrossConnectionOperation value)
-        {
-            if (value == UpdateCrossConnectionOperation.NotifyCrossConnectionProvisioned)
-            {
-                return "NotifyCrossConnectionProvisioned";
-            }
-            if (value == UpdateCrossConnectionOperation.NotifyCrossConnectionNotProvisioned)
-            {
-                return "NotifyCrossConnectionNotProvisioned";
-            }
-            throw new ArgumentOutOfRangeException("value");
         }
     }
 }

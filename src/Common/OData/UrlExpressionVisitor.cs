@@ -31,7 +31,7 @@ namespace Microsoft.WindowsAzure.Common.OData
         private PropertyInfo _currentProperty;
 
         /// <summary>
-        /// Visits binary expression like ==, &&, >, etc.
+        /// Visits binary expression like ==, &amp;&amp;, >, etc.
         /// </summary>
         /// <param name="node">Node to visit.</param>
         /// <returns>Original node.</returns>

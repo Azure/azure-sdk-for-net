@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Insights.Models;
 using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Insights.Models
 {
@@ -32,12 +33,12 @@ namespace Microsoft.Azure.Insights.Models
     /// </summary>
     public partial class EventCountSummaryResponse : OperationResponse
     {
-        private string _endTime;
+        private DateTime _endTime;
 
         /// <summary>
         /// Optional. The event summary end time.
         /// </summary>
-        public string EndTime
+        public DateTime EndTime
         {
             get { return this._endTime; }
             set { this._endTime = value; }
@@ -103,7 +104,7 @@ namespace Microsoft.Azure.Insights.Models
         /// </summary>
         public EventCountSummaryResponse()
         {
-            this.SummaryItems = new List<CountSummaryItem>();
+            this.SummaryItems = new LazyList<CountSummaryItem>();
         }
     }
 }

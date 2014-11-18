@@ -25,17 +25,17 @@ namespace Microsoft.Azure
 {
     public static class SubscriptionClientDiscoveryExtensions
     {
-        public static SubscriptionClient CreateCloudServiceManagementClient(this CloudClients clients, CloudCredentials credentials)
+        public static SubscriptionClient CreateSubscriptionClient(this CloudClients clients, CloudCredentials credentials)
         {
             return new SubscriptionClient(credentials);
         }
 
-        public static SubscriptionClient CreateCloudServiceManagementClient(this CloudClients clients, CloudCredentials credentials, Uri baseUri)
+        public static SubscriptionClient CreateSubscriptionClient(this CloudClients clients, CloudCredentials credentials, Uri baseUri)
         {
             return new SubscriptionClient(credentials, baseUri);
         }
 
-        public static SubscriptionClient CreateCloudServiceManagementClient(this CloudClients clients)
+        public static SubscriptionClient CreateSubscriptionClient(this CloudClients clients)
         {
             return ConfigurationHelper.CreateFromSettings<SubscriptionClient>(SubscriptionClient.Create);
         }

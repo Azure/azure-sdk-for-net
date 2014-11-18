@@ -130,7 +130,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();

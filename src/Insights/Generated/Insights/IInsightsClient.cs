@@ -71,7 +71,8 @@ namespace Microsoft.Azure.Insights
         }
         
         /// <summary>
-        /// Operations for event data.
+        /// Microsoft Azure event logs and summaries can be retrieved using
+        /// these operations
         /// </summary>
         IEventOperations EventOperations
         {

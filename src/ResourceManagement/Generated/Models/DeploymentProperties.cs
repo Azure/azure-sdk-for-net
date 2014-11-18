@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Management.Resources.Models
 {
@@ -104,8 +105,8 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         public DeploymentProperties()
         {
-            this.Dependencies = new List<Dependency>();
-            this.Providers = new List<Provider>();
+            this.Dependencies = new LazyList<Dependency>();
+            this.Providers = new LazyList<Provider>();
         }
     }
 }

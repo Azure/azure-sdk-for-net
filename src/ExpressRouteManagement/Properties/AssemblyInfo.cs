@@ -16,15 +16,15 @@
 using System.Reflection;
 using System.Resources;
 
-[assembly: AssemblyTitle("Windows Azure Express Route Management Library")]
+[assembly: AssemblyTitle("Microsoft Azure Express Route Management Library")]
 [assembly: AssemblyDescription("Provides express route management capabilities to developers. Create, delete, list, retrieve dedicated circuits, bgp peerings, dedicated circuit links, and more.")]
 
 [assembly: AssemblyVersion("0.9.0.0")]
-[assembly: AssemblyFileVersion("0.9.1.0")]
+[assembly: AssemblyFileVersion("0.16.2.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("Windows Azure .NET SDK")]
+[assembly: AssemblyProduct("Azure .NET SDK")]
 [assembly: AssemblyCopyright("Copyright (c) Microsoft Corporation")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

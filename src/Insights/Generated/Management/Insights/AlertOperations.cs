@@ -39,7 +39,7 @@ using Newtonsoft.Json.Linq;
 namespace Microsoft.Azure.Management.Insights
 {
     /// <summary>
-    /// Operations for managing the alert rules and incidents.
+    /// Operations for managing alert rules and incidents.
     /// </summary>
     internal partial class AlertOperations : IServiceOperations<InsightsManagementClient>, IAlertOperations
     {
@@ -145,17 +145,20 @@ namespace Microsoft.Azure.Management.Insights
                     ruleCreateOrUpdateParametersValue["location"] = parameters.Location;
                 }
                 
-                JObject tagsDictionary = new JObject();
                 if (parameters.Tags != null)
                 {
-                    foreach (KeyValuePair<string, string> pair in parameters.Tags)
+                    if (parameters.Tags is ILazyCollection == false || ((ILazyCollection)parameters.Tags).IsInitialized)
                     {
-                        string tagsKey = pair.Key;
-                        string tagsValue = pair.Value;
-                        tagsDictionary[tagsKey] = tagsValue;
+                        JObject tagsDictionary = new JObject();
+                        foreach (KeyValuePair<string, string> pair in parameters.Tags)
+                        {
+                            string tagsKey = pair.Key;
+                            string tagsValue = pair.Value;
+                            tagsDictionary[tagsKey] = tagsValue;
+                        }
+                        ruleCreateOrUpdateParametersValue["tags"] = tagsDictionary;
                     }
                 }
-                ruleCreateOrUpdateParametersValue["tags"] = tagsDictionary;
                 
                 if (parameters.Properties != null)
                 {
@@ -278,7 +281,7 @@ namespace Microsoft.Azure.Management.Insights
                             
                             if (derived.TimeAggregation != null)
                             {
-                                conditionValue["timeAggregation"] = derived.TimeAggregation.ToString();
+                                conditionValue["timeAggregation"] = derived.TimeAggregation.Value.ToString();
                             }
                         }
                         if (parameters.Properties.Condition is LocationThresholdRuleCondition)
@@ -496,12 +499,15 @@ namespace Microsoft.Azure.Management.Insights
                             
                             if (derived10.CustomEmails != null)
                             {
-                                JArray customEmailsArray = new JArray();
-                                foreach (string customEmailsItem in derived10.CustomEmails)
+                                if (derived10.CustomEmails is ILazyCollection == false || ((ILazyCollection)derived10.CustomEmails).IsInitialized)
                                 {
-                                    customEmailsArray.Add(customEmailsItem);
+                                    JArray customEmailsArray = new JArray();
+                                    foreach (string customEmailsItem in derived10.CustomEmails)
+                                    {
+                                        customEmailsArray.Add(customEmailsItem);
+                                    }
+                                    actionValue["customEmails"] = customEmailsArray;
                                 }
-                                actionValue["customEmails"] = customEmailsArray;
                             }
                         }
                     }
@@ -511,7 +517,7 @@ namespace Microsoft.Azure.Management.Insights
                 
                 requestContent = requestDoc.ToString(Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -541,7 +547,20 @@ namespace Microsoft.Azure.Management.Insights
                     
                     // Create Result
                     OperationResponse result = null;
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new OperationResponse();
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
+                    
+                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                    {
+                    }
+                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -667,7 +686,20 @@ namespace Microsoft.Azure.Management.Insights
                     
                     // Create Result
                     OperationResponse result = null;
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new OperationResponse();
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
+                    
+                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                    {
+                    }
+                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1733,7 +1765,7 @@ namespace Microsoft.Azure.Management.Insights
         /// Required. The name of the resource group.
         /// </param>
         /// <param name='targetResourceUri'>
-        /// Required. The resource uri of the target of the alert rule.
+        /// Optional. The resource identifier of the target of the alert rule.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -2486,17 +2518,20 @@ namespace Microsoft.Azure.Management.Insights
                     ruleCreateOrUpdateParametersValue["location"] = parameters.Location;
                 }
                 
-                JObject tagsDictionary = new JObject();
                 if (parameters.Tags != null)
                 {
-                    foreach (KeyValuePair<string, string> pair in parameters.Tags)
+                    if (parameters.Tags is ILazyCollection == false || ((ILazyCollection)parameters.Tags).IsInitialized)
                     {
-                        string tagsKey = pair.Key;
-                        string tagsValue = pair.Value;
-                        tagsDictionary[tagsKey] = tagsValue;
+                        JObject tagsDictionary = new JObject();
+                        foreach (KeyValuePair<string, string> pair in parameters.Tags)
+                        {
+                            string tagsKey = pair.Key;
+                            string tagsValue = pair.Value;
+                            tagsDictionary[tagsKey] = tagsValue;
+                        }
+                        ruleCreateOrUpdateParametersValue["tags"] = tagsDictionary;
                     }
                 }
-                ruleCreateOrUpdateParametersValue["tags"] = tagsDictionary;
                 
                 if (parameters.Properties != null)
                 {
@@ -2619,7 +2654,7 @@ namespace Microsoft.Azure.Management.Insights
                             
                             if (derived.TimeAggregation != null)
                             {
-                                conditionValue["timeAggregation"] = derived.TimeAggregation.ToString();
+                                conditionValue["timeAggregation"] = derived.TimeAggregation.Value.ToString();
                             }
                         }
                         if (parameters.Properties.Condition is LocationThresholdRuleCondition)
@@ -2837,12 +2872,15 @@ namespace Microsoft.Azure.Management.Insights
                             
                             if (derived10.CustomEmails != null)
                             {
-                                JArray customEmailsArray = new JArray();
-                                foreach (string customEmailsItem in derived10.CustomEmails)
+                                if (derived10.CustomEmails is ILazyCollection == false || ((ILazyCollection)derived10.CustomEmails).IsInitialized)
                                 {
-                                    customEmailsArray.Add(customEmailsItem);
+                                    JArray customEmailsArray = new JArray();
+                                    foreach (string customEmailsItem in derived10.CustomEmails)
+                                    {
+                                        customEmailsArray.Add(customEmailsItem);
+                                    }
+                                    actionValue["customEmails"] = customEmailsArray;
                                 }
-                                actionValue["customEmails"] = customEmailsArray;
                             }
                         }
                     }
@@ -2852,7 +2890,7 @@ namespace Microsoft.Azure.Management.Insights
                 
                 requestContent = requestDoc.ToString(Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -2882,7 +2920,20 @@ namespace Microsoft.Azure.Management.Insights
                     
                     // Create Result
                     OperationResponse result = null;
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new OperationResponse();
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
+                    
+                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                    {
+                    }
+                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {

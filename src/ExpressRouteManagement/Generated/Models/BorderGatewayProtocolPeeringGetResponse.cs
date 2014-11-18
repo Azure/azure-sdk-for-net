@@ -27,14 +27,14 @@ using Microsoft.WindowsAzure.Management.ExpressRoute.Models;
 namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
 {
     /// <summary>
-    /// The Get Bgp Peering Operation Response.
+    /// The Get Border Gateway Protocol Peering Operation Response.
     /// </summary>
     public partial class BorderGatewayProtocolPeeringGetResponse : OperationResponse
     {
         private AzureBgpPeering _bgpPeering;
         
         /// <summary>
-        /// Optional. Details for the requested Bgp Peering.
+        /// Optional. Details for the requested Border Gateway Protocol Peering.
         /// </summary>
         public AzureBgpPeering BgpPeering
         {

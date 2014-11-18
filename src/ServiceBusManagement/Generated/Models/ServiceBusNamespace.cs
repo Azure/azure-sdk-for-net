@@ -21,6 +21,7 @@
 
 using System;
 using System.Linq;
+using Microsoft.WindowsAzure.Management.ServiceBus.Models;
 
 namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
 {
@@ -40,6 +41,18 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         {
             get { return this._acsManagementEndpoint; }
             set { this._acsManagementEndpoint = value; }
+        }
+        
+        private bool _createACSNamespace;
+        
+        /// <summary>
+        /// Optional. Whether or not ACS authentication is needed for
+        /// ServiceBus.
+        /// </summary>
+        public bool CreateACSNamespace
+        {
+            get { return this._createACSNamespace; }
+            set { this._createACSNamespace = value; }
         }
         
         private DateTime _createdAt;
@@ -73,6 +86,17 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         {
             get { return this._name; }
             set { this._name = value; }
+        }
+        
+        private NamespaceType _namespaceType;
+        
+        /// <summary>
+        /// Optional. Gets or sets the namespace type.
+        /// </summary>
+        public NamespaceType NamespaceType
+        {
+            get { return this._namespaceType; }
+            set { this._namespaceType = value; }
         }
         
         private string _region;

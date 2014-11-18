@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Management.WebSites.Models;
 using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
@@ -49,7 +50,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         public WebSiteGetUsageMetricsResponse()
         {
-            this.UsageMetrics = new List<WebSiteGetUsageMetricsResponse.UsageMetric>();
+            this.UsageMetrics = new LazyList<WebSiteGetUsageMetricsResponse.UsageMetric>();
         }
         
         /// <summary>
@@ -73,19 +74,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         public partial class UsageMetric
         {
-            private WebSiteComputeMode _computeMode;
-            
-            /// <summary>
-            /// Optional. The compute mode of the web site. For web sites in
-            /// Standard Mode, the return value is Dedicated. For web sites in
-            /// Free or Shared mode, the return value is Shared.
-            /// </summary>
-            public WebSiteComputeMode ComputeMode
-            {
-                get { return this._computeMode; }
-                set { this._computeMode = value; }
-            }
-            
             private string _currentValue;
             
             /// <summary>
@@ -159,19 +147,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
             {
                 get { return this._resourceName; }
                 set { this._resourceName = value; }
-            }
-            
-            private WebSiteMode _siteMode;
-            
-            /// <summary>
-            /// Optional. The scaling for the web site. Web sites in Free Mode
-            /// return a value of Limited. Web sites in Shared Mode return a
-            /// value of Basic. Sites in Standard Mode return null.
-            /// </summary>
-            public WebSiteMode SiteMode
-            {
-                get { return this._siteMode; }
-                set { this._siteMode = value; }
             }
             
             private string _unit;

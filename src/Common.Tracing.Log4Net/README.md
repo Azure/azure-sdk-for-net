@@ -1,4 +1,4 @@
-Using Log4Net for Windows Azure SDK:
+Using Log4Net for Microsoft Azure SDK:
 ------------------------------------
 1- Configure the log4net in your app.config/web.config (or your preferred way).
    For more example on the available configurations check [config examples](http://logging.apache.org/log4net/release/config-examples.html)

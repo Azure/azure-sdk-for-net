@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Management.WebSites.Models;
 
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
@@ -49,7 +50,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public WebSiteGetPublishProfileResponse()
         {
-            this.PublishProfiles = new List<WebSiteGetPublishProfileResponse.PublishProfile>();
+            this.PublishProfiles = new LazyList<WebSiteGetPublishProfileResponse.PublishProfile>();
         }
         
         /// <summary>
@@ -288,7 +289,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             /// </summary>
             public PublishProfile()
             {
-                this.Databases = new List<WebSiteGetPublishProfileResponse.Database>();
+                this.Databases = new LazyList<WebSiteGetPublishProfileResponse.Database>();
             }
         }
     }

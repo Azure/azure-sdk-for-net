@@ -22,15 +22,19 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Management.Insights.Models
 {
+    /// <summary>
+    /// The scheduling constraints for when the profile begins.
+    /// </summary>
     public partial class RecurrentSchedule
     {
         private IList<string> _days;
         
         /// <summary>
-        /// Optional.
+        /// Optional. A collection of days that the profile takes effect on.
         /// </summary>
         public IList<string> Days
         {
@@ -41,7 +45,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private IList<int> _hours;
         
         /// <summary>
-        /// Optional.
+        /// Optional. A collection of hours at which the profile takes effect
+        /// at.
         /// </summary>
         public IList<int> Hours
         {
@@ -52,7 +57,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private IList<int> _minutes;
         
         /// <summary>
-        /// Optional.
+        /// Optional. A collection of minutes at which the profile takes effect
+        /// at.
         /// </summary>
         public IList<int> Minutes
         {
@@ -63,7 +69,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _timeZone;
         
         /// <summary>
-        /// Optional.
+        /// Optional. The time zone for the hours of the profile.
         /// </summary>
         public string TimeZone
         {
@@ -76,9 +82,9 @@ namespace Microsoft.Azure.Management.Insights.Models
         /// </summary>
         public RecurrentSchedule()
         {
-            this.Days = new List<string>();
-            this.Hours = new List<int>();
-            this.Minutes = new List<int>();
+            this.Days = new LazyList<string>();
+            this.Hours = new LazyList<int>();
+            this.Minutes = new LazyList<int>();
         }
     }
 }

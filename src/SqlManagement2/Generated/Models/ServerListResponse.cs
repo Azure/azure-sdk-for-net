@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Management.Sql.Models;
 using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
@@ -48,7 +49,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         public ServerListResponse()
         {
-            this._servers = new List<Server>();
+            this.Servers = new LazyList<Server>();
         }
         
         /// <summary>

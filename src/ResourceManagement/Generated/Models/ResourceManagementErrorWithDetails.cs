@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Management.Resources.Models
 {
@@ -45,7 +46,7 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         public ResourceManagementErrorWithDetails()
         {
-            this.Details = new List<ResourceManagementError>();
+            this.Details = new LazyList<ResourceManagementError>();
         }
         
         /// <summary>

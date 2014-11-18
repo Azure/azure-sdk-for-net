@@ -17,15 +17,15 @@ using System.Reflection;
 using System.Resources;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Windows Azure SQL Server Management Library")]
-[assembly: AssemblyDescription("Provides management functionality for Windows Azure SQL in the cloud.")]
+[assembly: AssemblyTitle("Microsoft Azure SQL Server Management Library")]
+[assembly: AssemblyDescription("Provides management functionality for Microsoft Azure SQL in the cloud.")]
 
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.2.0.0")]
+[assembly: AssemblyVersion("3.0.0.0")]
+[assembly: AssemblyFileVersion("3.1.2.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("Windows Azure .NET SDK")]
+[assembly: AssemblyProduct("Azure .NET SDK")]
 [assembly: AssemblyCopyright("Copyright (c) Microsoft Corporation")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

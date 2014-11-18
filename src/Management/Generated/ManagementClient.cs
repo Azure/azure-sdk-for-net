@@ -172,7 +172,7 @@ namespace Microsoft.WindowsAzure.Management
             this._managementCertificates = new ManagementCertificateOperations(this);
             this._roleSizes = new RoleSizeOperations(this);
             this._subscriptions = new SubscriptionOperations(this);
-            this._apiVersion = "2014-05-01";
+            this._apiVersion = "2014-10-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -187,7 +187,7 @@ namespace Microsoft.WindowsAzure.Management
         /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Gets the URI used as the base for all cloud service
+        /// Optional. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
         public ManagementClient(SubscriptionCloudCredentials credentials, Uri baseUri)
@@ -242,7 +242,7 @@ namespace Microsoft.WindowsAzure.Management
             this._managementCertificates = new ManagementCertificateOperations(this);
             this._roleSizes = new RoleSizeOperations(this);
             this._subscriptions = new SubscriptionOperations(this);
-            this._apiVersion = "2014-05-01";
+            this._apiVersion = "2014-10-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -257,7 +257,7 @@ namespace Microsoft.WindowsAzure.Management
         /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Gets the URI used as the base for all cloud service
+        /// Optional. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
         /// <param name='httpClient'>
@@ -399,7 +399,7 @@ namespace Microsoft.WindowsAzure.Management
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();

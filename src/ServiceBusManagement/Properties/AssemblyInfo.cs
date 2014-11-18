@@ -17,15 +17,15 @@ using System.Reflection;
 using System.Resources;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Windows Azure Service Bus Management Library")]
-[assembly: AssemblyDescription("Provides core REST functionality for managing Windows Azure Service Bus.")]
+[assembly: AssemblyTitle("Microsoft Azure Service Bus Management Library")]
+[assembly: AssemblyDescription("Provides core REST functionality for managing Microsoft Azure Service Bus.")]
 
 [assembly: AssemblyVersion("0.9.0.0")]
-[assembly: AssemblyFileVersion("0.10.1.0")]
+[assembly: AssemblyFileVersion("0.15.2.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("Windows Azure .NET SDK")]
+[assembly: AssemblyProduct("Azure .NET SDK")]
 [assembly: AssemblyCopyright("Copyright (c) Microsoft Corporation")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

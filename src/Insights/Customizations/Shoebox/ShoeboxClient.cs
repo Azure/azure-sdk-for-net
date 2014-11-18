@@ -262,3 +262,4 @@ namespace Microsoft.Azure.Insights
         }
     }
 }
+

@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Management.WebSites.Models;
 
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
@@ -32,6 +33,17 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
     /// </summary>
     public partial class WebSiteGetConfigurationResponse : OperationResponse
     {
+        private bool? _alwaysOn;
+        
+        /// <summary>
+        /// Optional. Indicates if site's Always On feature is enabled.
+        /// </summary>
+        public bool? AlwaysOn
+        {
+            get { return this._alwaysOn; }
+            set { this._alwaysOn = value; }
+        }
+        
         private IDictionary<string, string> _appSettings;
         
         /// <summary>
@@ -42,6 +54,18 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         {
             get { return this._appSettings; }
             set { this._appSettings = value; }
+        }
+        
+        private string _autoSwapSlotName;
+        
+        /// <summary>
+        /// Optional. Gets the slot name to swap with after successful
+        /// deployment.
+        /// </summary>
+        public string AutoSwapSlotName
+        {
+            get { return this._autoSwapSlotName; }
+            set { this._autoSwapSlotName = value; }
         }
         
         private IList<WebSiteGetConfigurationResponse.ConnectionStringInfo> _connectionStrings;
@@ -115,6 +139,43 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         {
             get { return this._httpLoggingEnabled; }
             set { this._httpLoggingEnabled = value; }
+        }
+        
+        private string _javaContainer;
+        
+        /// <summary>
+        /// Optional. The web site Java Container. Supported values are TOMCAT,
+        /// JETTY
+        /// </summary>
+        public string JavaContainer
+        {
+            get { return this._javaContainer; }
+            set { this._javaContainer = value; }
+        }
+        
+        private string _javaContainerVersion;
+        
+        /// <summary>
+        /// Optional. The web site Java Container Version. Supported values are
+        /// 7.0.50 if Java Container is TOMCAT and 9.1.0.20131115 if Java
+        /// Container is JETTY
+        /// </summary>
+        public string JavaContainerVersion
+        {
+            get { return this._javaContainerVersion; }
+            set { this._javaContainerVersion = value; }
+        }
+        
+        private string _javaVersion;
+        
+        /// <summary>
+        /// Optional. The web site JDK version. Supported values are an empty
+        /// string (an empty string disables Java), 1.7.0_51
+        /// </summary>
+        public string JavaVersion
+        {
+            get { return this._javaVersion; }
+            set { this._javaVersion = value; }
         }
         
         private int? _logsDirectorySizeLimit;
@@ -257,6 +318,17 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             set { this._requestTracingExpirationTime = value; }
         }
         
+        private IList<RoutingRule> _routingRules;
+        
+        /// <summary>
+        /// Optional. List of routing rules for the website.
+        /// </summary>
+        public IList<RoutingRule> RoutingRules
+        {
+            get { return this._routingRules; }
+            set { this._routingRules = value; }
+        }
+        
         private string _scmType;
         
         /// <summary>
@@ -298,11 +370,12 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public WebSiteGetConfigurationResponse()
         {
-            this.AppSettings = new Dictionary<string, string>();
-            this.ConnectionStrings = new List<WebSiteGetConfigurationResponse.ConnectionStringInfo>();
-            this.DefaultDocuments = new List<string>();
-            this.HandlerMappings = new List<WebSiteGetConfigurationResponse.HandlerMapping>();
-            this.Metadata = new Dictionary<string, string>();
+            this.AppSettings = new LazyDictionary<string, string>();
+            this.ConnectionStrings = new LazyList<WebSiteGetConfigurationResponse.ConnectionStringInfo>();
+            this.DefaultDocuments = new LazyList<string>();
+            this.HandlerMappings = new LazyList<WebSiteGetConfigurationResponse.HandlerMapping>();
+            this.Metadata = new LazyDictionary<string, string>();
+            this.RoutingRules = new LazyList<RoutingRule>();
         }
         
         /// <summary>
@@ -332,13 +405,13 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
                 set { this._name = value; }
             }
             
-            private string _type;
+            private ConnectionStringType _type;
             
             /// <summary>
             /// Optional. The type of the connection string (for example,
             /// "MySQL").
             /// </summary>
-            public string Type
+            public ConnectionStringType Type
             {
                 get { return this._type; }
                 set { this._type = value; }

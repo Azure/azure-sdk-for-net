@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Management.WebSites.Models;
 
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
@@ -31,6 +32,17 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
     /// </summary>
     public partial class WebSiteUpdateConfigurationParameters
     {
+        private bool? _alwaysOn;
+        
+        /// <summary>
+        /// Optional. Indicates if site's Always On feature enabled.
+        /// </summary>
+        public bool? AlwaysOn
+        {
+            get { return this._alwaysOn; }
+            set { this._alwaysOn = value; }
+        }
+        
         private IDictionary<string, string> _appSettings;
         
         /// <summary>
@@ -43,10 +55,22 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             set { this._appSettings = value; }
         }
         
+        private string _autoSwapSlotName;
+        
+        /// <summary>
+        /// Optional. Sets the slot name to swap with after successful
+        /// deployment.
+        /// </summary>
+        public string AutoSwapSlotName
+        {
+            get { return this._autoSwapSlotName; }
+            set { this._autoSwapSlotName = value; }
+        }
+        
         private IList<WebSiteUpdateConfigurationParameters.ConnectionStringInfo> _connectionStrings;
         
         /// <summary>
-        /// Optional. Connection strings for database and other external
+        /// Optional. The connection strings for database and other external
         /// resources.
         /// </summary>
         public IList<WebSiteUpdateConfigurationParameters.ConnectionStringInfo> ConnectionStrings
@@ -58,10 +82,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private IList<string> _defaultDocuments;
         
         /// <summary>
-        /// Optional. Elements that list, in order of preference, the name of
-        /// the file that a web site returns when the web site's domain name
-        /// is requested by itself. For example, if the default document for
-        /// http://contoso.com is default.htm, the page
+        /// Optional. One or more string elements that list, in order of
+        /// preference, the name of the file that a web site returns when the
+        /// web site's domain name is requested by itself. For example, if the
+        /// default document for http://contoso.com is default.htm, the page
         /// http://www.contoso.com/default.htm is returned when the browser is
         /// pointed to http://www.contoso.com.
         /// </summary>
@@ -74,7 +98,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private bool? _detailedErrorLoggingEnabled;
         
         /// <summary>
-        /// Optional. Indicated if detailed error logging is enabled.
+        /// Optional. Indicates if detailed error logging is enabled.
         /// </summary>
         public bool? DetailedErrorLoggingEnabled
         {
@@ -114,6 +138,43 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         {
             get { return this._httpLoggingEnabled; }
             set { this._httpLoggingEnabled = value; }
+        }
+        
+        private string _javaContainer;
+        
+        /// <summary>
+        /// Optional. The web site Java Container. Supported values are TOMCAT,
+        /// JETTY
+        /// </summary>
+        public string JavaContainer
+        {
+            get { return this._javaContainer; }
+            set { this._javaContainer = value; }
+        }
+        
+        private string _javaContainerVersion;
+        
+        /// <summary>
+        /// Optional. The web site Java Container Version. Supported values are
+        /// 7.0.50 if Java Container is TOMCAT and 9.1.0.20131115 if Java
+        /// Container is JETTY
+        /// </summary>
+        public string JavaContainerVersion
+        {
+            get { return this._javaContainerVersion; }
+            set { this._javaContainerVersion = value; }
+        }
+        
+        private string _javaVersion;
+        
+        /// <summary>
+        /// Optional. The web site JDK version. Supported values are an empty
+        /// string (an empty string disables Java), 1.7.0_51
+        /// </summary>
+        public string JavaVersion
+        {
+            get { return this._javaVersion; }
+            set { this._javaVersion = value; }
         }
         
         private int? _logsDirectorySizeLimit;
@@ -165,9 +226,9 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         
         /// <summary>
         /// Optional. The number of web workers allotted to the web site. If
-        /// the site mode is Free, this value is 1. If the site mode is
-        /// Shared, this value can range from 1 through 6. If the site mode is
-        /// Standard, this value can range from 1 through 10.
+        /// the web site mode is Free, this value is 1. If the web site mode
+        /// is Shared, this value can range from 1 through 6. If the web site
+        /// mode is Standard, this value can range from 1 through 10.
         /// </summary>
         public int? NumberOfWorkers
         {
@@ -178,38 +239,13 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private string _phpVersion;
         
         /// <summary>
-        /// Optional. The web site's PHP version. Supported values are an empty
+        /// Optional. The web site PHP version. Supported values are an empty
         /// string (an empty string disables PHP), 5.3, and 5.4.
         /// </summary>
         public string PhpVersion
         {
             get { return this._phpVersion; }
             set { this._phpVersion = value; }
-        }
-        
-        private string _publishingPassword;
-        
-        /// <summary>
-        /// Optional. Hash value of the password used for publishing the web
-        /// site.
-        /// </summary>
-        public string PublishingPassword
-        {
-            get { return this._publishingPassword; }
-            set { this._publishingPassword = value; }
-        }
-        
-        private string _publishingUserName;
-        
-        /// <summary>
-        /// Optional. The user name used for publishing the web site. This is
-        /// normally a dollar sign prepended to the web site name (for
-        /// example, "$contoso").
-        /// </summary>
-        public string PublishingUserName
-        {
-            get { return this._publishingUserName; }
-            set { this._publishingUserName = value; }
         }
         
         private bool? _remoteDebuggingEnabled;
@@ -256,6 +292,17 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             set { this._requestTracingExpirationTime = value; }
         }
         
+        private IList<RoutingRule> _routingRules;
+        
+        /// <summary>
+        /// Optional. List of routing rules for the website.
+        /// </summary>
+        public IList<RoutingRule> RoutingRules
+        {
+            get { return this._routingRules; }
+            set { this._routingRules = value; }
+        }
+        
         private string _scmType;
         
         /// <summary>
@@ -297,16 +344,16 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public WebSiteUpdateConfigurationParameters()
         {
-            this.AppSettings = new Dictionary<string, string>();
-            this.ConnectionStrings = new List<WebSiteUpdateConfigurationParameters.ConnectionStringInfo>();
-            this.DefaultDocuments = new List<string>();
-            this.HandlerMappings = new List<WebSiteUpdateConfigurationParameters.HandlerMapping>();
-            this.Metadata = new Dictionary<string, string>();
+            this.AppSettings = new LazyDictionary<string, string>();
+            this.ConnectionStrings = new LazyList<WebSiteUpdateConfigurationParameters.ConnectionStringInfo>();
+            this.DefaultDocuments = new LazyList<string>();
+            this.HandlerMappings = new LazyList<WebSiteUpdateConfigurationParameters.HandlerMapping>();
+            this.Metadata = new LazyDictionary<string, string>();
+            this.RoutingRules = new LazyList<RoutingRule>();
         }
         
         /// <summary>
-        /// Connection string information for database and other external
-        /// resources.
+        /// Connection string for database and other external resources.
         /// </summary>
         public partial class ConnectionStringInfo
         {
@@ -332,13 +379,13 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
                 set { this._name = value; }
             }
             
-            private string _type;
+            private ConnectionStringType _type;
             
             /// <summary>
             /// Optional. The type of the connection string (for example,
             /// "MySQL").
             /// </summary>
-            public string Type
+            public ConnectionStringType Type
             {
                 get { return this._type; }
                 set { this._type = value; }

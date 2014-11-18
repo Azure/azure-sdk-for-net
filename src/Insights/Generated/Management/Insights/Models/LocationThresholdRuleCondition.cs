@@ -26,14 +26,14 @@ using Microsoft.Azure.Management.Insights.Models;
 namespace Microsoft.Azure.Management.Insights.Models
 {
     /// <summary>
-    /// A location threshold rule condition.
+    /// A rule condition based on a certain number of locations failing.
     /// </summary>
     public partial class LocationThresholdRuleCondition : RuleCondition
     {
         private RuleDataSource _dataSource;
         
         /// <summary>
-        /// Optional. Condition data source.
+        /// Optional. The resource from which the rule collects its data.
         /// </summary>
         public RuleDataSource DataSource
         {
@@ -44,7 +44,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private int _failedLocationCount;
         
         /// <summary>
-        /// Optional. Failed location count.
+        /// Optional. The number of locations that must fail to activate the
+        /// alert.
         /// </summary>
         public int FailedLocationCount
         {
@@ -55,8 +56,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private TimeSpan _windowSize;
         
         /// <summary>
-        /// Optional. The time period over which the alert rule is evaluated.
-        /// Condition window size depends on the metric.
+        /// Optional. The period of time that is used to monitor alert activity
+        /// based on the threshold. Must be between 5 minutes and 1 day.
         /// </summary>
         public TimeSpan WindowSize
         {

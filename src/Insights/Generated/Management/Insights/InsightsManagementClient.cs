@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Management.Insights
         private IAlertOperations _alertOperations;
         
         /// <summary>
-        /// Operations for managing the alert rules and incidents.
+        /// Operations for managing alert rules and incidents.
         /// </summary>
         public virtual IAlertOperations AlertOperations
         {
@@ -107,7 +107,7 @@ namespace Microsoft.Azure.Management.Insights
         private IAutoscaleOperations _autoscaleOperations;
         
         /// <summary>
-        /// Operations for managing the autoscale.
+        /// Operations for managing autoscale.
         /// </summary>
         public virtual IAutoscaleOperations AutoscaleOperations
         {
@@ -117,7 +117,8 @@ namespace Microsoft.Azure.Management.Insights
         private IMonitoringConfigurationOperations _monitoringConfigurationOperations;
         
         /// <summary>
-        /// Operations for managing monitoring configuration.
+        /// Operations for managing the collection of diagonstics and
+        /// monitoring data.
         /// </summary>
         public virtual IMonitoringConfigurationOperations MonitoringConfigurationOperations
         {
@@ -171,7 +172,7 @@ namespace Microsoft.Azure.Management.Insights
         /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Gets the URI used as the base for all cloud service
+        /// Optional. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
         public InsightsManagementClient(SubscriptionCloudCredentials credentials, Uri baseUri)
@@ -242,7 +243,7 @@ namespace Microsoft.Azure.Management.Insights
         /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Gets the URI used as the base for all cloud service
+        /// Optional. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
         /// <param name='httpClient'>

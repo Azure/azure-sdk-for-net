@@ -123,7 +123,11 @@ namespace Microsoft.Azure.Insights
         /// Reference to the Microsoft.Azure.Insights.IEventOperations.
         /// </param>
         /// <param name='filterString'>
-        /// Required. The filter string.
+        /// Required. The filter string should be generated using
+        /// Microsoft.WindowsAzure.Common.OData.FilterStringHere is an
+        /// example:var filterString =
+        /// FilterString.Generate<GetCountSummaryParameters> (p =>
+        /// (p.StartTime == startTime) && p.EndTime == endTime);
         /// </param>
         /// <returns>
         /// The List Events operation response.
@@ -144,7 +148,11 @@ namespace Microsoft.Azure.Insights
         /// Reference to the Microsoft.Azure.Insights.IEventOperations.
         /// </param>
         /// <param name='filterString'>
-        /// Required. The filter string.
+        /// Required. The filter string should be generated using
+        /// Microsoft.WindowsAzure.Common.OData.FilterStringHere is an
+        /// example:var filterString =
+        /// FilterString.Generate<GetCountSummaryParameters> (p =>
+        /// (p.StartTime == startTime) && p.EndTime == endTime);
         /// </param>
         /// <returns>
         /// The List Events operation response.
@@ -161,11 +169,17 @@ namespace Microsoft.Azure.Insights
         /// Reference to the Microsoft.Azure.Insights.IEventOperations.
         /// </param>
         /// <param name='filterString'>
-        /// Required. The filter string
+        /// Required. The filter string should be generated using
+        /// Microsoft.WindowsAzure.Common.OData.FilterStringHere is an
+        /// example:var filterString =
+        /// FilterString.Generate<GetCountSummaryParameters> (p =>
+        /// (p.StartTime == startTime) && p.EndTime == endTime);
         /// </param>
         /// <param name='selectedProperties'>
-        /// Required. The list of property names to be returned. You can save
-        /// bandwith by selecting only the properties you need.
+        /// Optional. The list of property names to be returned. You can save
+        /// bandwidth by selecting only the properties you need.Here is an
+        /// example:string selectedProperties = "EventDataId, EventTimestamp,
+        /// ResourceUri"
         /// </param>
         /// <returns>
         /// The List Events operation response.
@@ -186,11 +200,17 @@ namespace Microsoft.Azure.Insights
         /// Reference to the Microsoft.Azure.Insights.IEventOperations.
         /// </param>
         /// <param name='filterString'>
-        /// Required. The filter string
+        /// Required. The filter string should be generated using
+        /// Microsoft.WindowsAzure.Common.OData.FilterStringHere is an
+        /// example:var filterString =
+        /// FilterString.Generate<GetCountSummaryParameters> (p =>
+        /// (p.StartTime == startTime) && p.EndTime == endTime);
         /// </param>
         /// <param name='selectedProperties'>
-        /// Required. The list of property names to be returned. You can save
-        /// bandwith by selecting only the properties you need.
+        /// Optional. The list of property names to be returned. You can save
+        /// bandwidth by selecting only the properties you need.Here is an
+        /// example:string selectedProperties = "EventDataId, EventTimestamp,
+        /// ResourceUri"
         /// </param>
         /// <returns>
         /// The List Events operation response.
@@ -207,7 +227,9 @@ namespace Microsoft.Azure.Insights
         /// Reference to the Microsoft.Azure.Insights.IEventOperations.
         /// </param>
         /// <param name='nextLink'>
-        /// Required. The next link
+        /// Required. The next link works as a continuation token when all of
+        /// the events are not returned in the response and a second call is
+        /// required
         /// </param>
         /// <returns>
         /// The List Events operation response.
@@ -228,7 +250,9 @@ namespace Microsoft.Azure.Insights
         /// Reference to the Microsoft.Azure.Insights.IEventOperations.
         /// </param>
         /// <param name='nextLink'>
-        /// Required. The next link
+        /// Required. The next link works as a continuation token when all of
+        /// the events are not returned in the response and a second call is
+        /// required
         /// </param>
         /// <returns>
         /// The List Events operation response.

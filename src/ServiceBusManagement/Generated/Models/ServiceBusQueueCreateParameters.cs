@@ -22,23 +22,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Management.ServiceBus.Models;
 
 namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
 {
     public partial class ServiceBusQueueCreateParameters
     {
-        private System.DateTime? _accessedAt;
-        
-        /// <summary>
-        /// Optional. The time the queue was last accessed.
-        /// </summary>
-        public System.DateTime? AccessedAt
-        {
-            get { return this._accessedAt; }
-            set { this._accessedAt = value; }
-        }
-        
         private IList<ServiceBusSharedAccessAuthorizationRule> _authorizationRules;
         
         /// <summary>
@@ -72,17 +62,6 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         {
             get { return this._countDetails; }
             set { this._countDetails = value; }
-        }
-        
-        private System.DateTime? _createdAt;
-        
-        /// <summary>
-        /// Optional. The time the queue was created at.
-        /// </summary>
-        public System.DateTime? CreatedAt
-        {
-            get { return this._createdAt; }
-            set { this._createdAt = value; }
         }
         
         private bool _deadLetteringOnMessageExpiration;
@@ -326,24 +305,13 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
             set { this._supportOrdering = value; }
         }
         
-        private System.DateTime? _updatedAt;
-        
-        /// <summary>
-        /// Optional. The time the queue was last updated.
-        /// </summary>
-        public System.DateTime? UpdatedAt
-        {
-            get { return this._updatedAt; }
-            set { this._updatedAt = value; }
-        }
-        
         /// <summary>
         /// Initializes a new instance of the ServiceBusQueueCreateParameters
         /// class.
         /// </summary>
         public ServiceBusQueueCreateParameters()
         {
-            this.AuthorizationRules = new List<ServiceBusSharedAccessAuthorizationRule>();
+            this.AuthorizationRules = new LazyList<ServiceBusSharedAccessAuthorizationRule>();
         }
         
         /// <summary>

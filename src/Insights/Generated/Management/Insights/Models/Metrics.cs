@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Management.Insights.Models;
+using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Management.Insights.Models
 {
@@ -34,7 +35,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private IList<MetricAggregation> _metricAggregations;
         
         /// <summary>
-        /// Optional. the list of aggregations to generate.
+        /// Optional. The list of aggregations to generate.
         /// </summary>
         public IList<MetricAggregation> MetricAggregations
         {
@@ -45,7 +46,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _resourceId;
         
         /// <summary>
-        /// Optional. resource identifier.
+        /// Optional. The resource ID of the resource the agent runs on.
         /// </summary>
         public string ResourceId
         {
@@ -58,7 +59,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         /// </summary>
         public Metrics()
         {
-            this.MetricAggregations = new List<MetricAggregation>();
+            this.MetricAggregations = new LazyList<MetricAggregation>();
         }
     }
 }

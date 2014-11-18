@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private DateTime _activatedTime;
         
         /// <summary>
-        /// Optional. The time at which the incident got activated.
+        /// Optional. The time at which the incident was activated.
         /// </summary>
         public DateTime ActivatedTime
         {
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private System.DateTime? _resolvedTime;
         
         /// <summary>
-        /// Optional. The time at which the incident got resolved. If null, it
+        /// Optional. The time at which the incident was resolved. If null, it
         /// means the incident is still active.
         /// </summary>
         public System.DateTime? ResolvedTime

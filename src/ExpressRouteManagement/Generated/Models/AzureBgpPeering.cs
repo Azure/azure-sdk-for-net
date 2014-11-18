@@ -26,7 +26,7 @@ using Microsoft.WindowsAzure.Management.ExpressRoute.Models;
 namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
 {
     /// <summary>
-    /// Describes a Bgp Peering.
+    /// Describes a Border Gateway Protocol Peering.
     /// </summary>
     public partial class AzureBgpPeering
     {

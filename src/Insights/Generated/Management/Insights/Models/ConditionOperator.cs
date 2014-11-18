@@ -26,12 +26,26 @@ namespace Microsoft.Azure.Management.Insights.Models
 {
     public enum ConditionOperator
     {
+        /// <summary>
+        /// Trigger if the aggregated metric data is greater than the threshold.
+        /// </summary>
         GreaterThan = 0,
         
+        /// <summary>
+        /// Trigger if the aggregated metric data is greater than or equal to
+        /// the threshold.
+        /// </summary>
         GreaterThanOrEqual = 1,
         
+        /// <summary>
+        /// Trigger if the aggregated metric data is less than the threshold.
+        /// </summary>
         LessThan = 2,
         
+        /// <summary>
+        /// Trigger if the aggregated metric data is less than or equal to the
+        /// threshold.
+        /// </summary>
         LessThanOrEqual = 3,
     }
 }

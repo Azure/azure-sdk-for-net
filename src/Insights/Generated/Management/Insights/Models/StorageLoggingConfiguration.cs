@@ -25,16 +25,15 @@ using System.Linq;
 namespace Microsoft.Azure.Management.Insights.Models
 {
     /// <summary>
-    /// The properties for logging. This allow to specify the operations to be
-    /// logged and the retention.
+    /// The properties for logging. This allows specifying the operations to be
+    /// logged and their retention.
     /// </summary>
     public partial class StorageLoggingConfiguration
     {
         private bool _delete;
         
         /// <summary>
-        /// Optional. Gets or sets a value indicating whether delete operations
-        /// should be logged.
+        /// Optional. Indicates whether all delete requests should be logged.
         /// </summary>
         public bool Delete
         {
@@ -45,8 +44,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private bool _read;
         
         /// <summary>
-        /// Optional. Gets or sets a value indicating whether read operations
-        /// should be logged.
+        /// Optional. Indicates whether all read requests should be logged.
         /// </summary>
         public bool Read
         {
@@ -57,8 +55,10 @@ namespace Microsoft.Azure.Management.Insights.Models
         private TimeSpan _retention;
         
         /// <summary>
-        /// Optional. Gets or sets a value indicating whether retention
-        /// operations should be logged.
+        /// Optional. Indicates the how long log data should be retained (must
+        /// be an even number of days). All data older than this value will be
+        /// deleted. The minimum number of days is 1; the largest value is 365
+        /// (one year).
         /// </summary>
         public TimeSpan Retention
         {
@@ -69,8 +69,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private bool _write;
         
         /// <summary>
-        /// Optional. Gets or sets a value indicating whether write operations
-        /// should be logged.
+        /// Optional. Indicates whether all write requests should be logged.
         /// </summary>
         public bool Write
         {

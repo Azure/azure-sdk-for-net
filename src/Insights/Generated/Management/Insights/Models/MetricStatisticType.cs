@@ -27,22 +27,22 @@ namespace Microsoft.Azure.Management.Insights.Models
     public enum MetricStatisticType
     {
         /// <summary>
-        /// Average value.
+        /// Metric values from all instances is averaged.
         /// </summary>
         Average = 0,
         
         /// <summary>
-        /// Minimum value.
+        /// The least metric value from all instances is used.
         /// </summary>
         Min = 1,
         
         /// <summary>
-        /// Maximum value.
+        /// The greatest metric value from all instances is used.
         /// </summary>
         Max = 2,
         
         /// <summary>
-        /// Total value.
+        /// The total of all of the metric values from all instances is used.
         /// </summary>
         Sum = 3,
     }

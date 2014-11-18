@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
@@ -34,7 +35,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _configuration;
         
         /// <summary>
-        /// Required. The service configuration file for the deployment.
+        /// Required. The service configuration file for the deployment. The
+        /// client library does the base-64 encoding from the plain text input.
         /// </summary>
         public string Configuration
         {
@@ -157,7 +159,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public DeploymentCreateParameters()
         {
-            this.ExtendedProperties = new Dictionary<string, string>();
+            this.ExtendedProperties = new LazyDictionary<string, string>();
         }
     }
 }

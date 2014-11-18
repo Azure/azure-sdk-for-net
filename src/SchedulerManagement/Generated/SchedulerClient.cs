@@ -136,7 +136,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Gets the URI used as the base for all cloud service
+        /// Optional. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
         public SchedulerClient(string cloudServiceName, string jobCollectionName, SubscriptionCloudCredentials credentials, Uri baseUri)
@@ -234,7 +234,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Gets the URI used as the base for all cloud service
+        /// Optional. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
         /// <param name='httpClient'>
@@ -332,6 +332,58 @@ namespace Microsoft.WindowsAzure.Scheduler
                 
                 clonedClient.Credentials.InitializeServiceClient(clonedClient);
             }
+        }
+        
+        /// <summary>
+        /// Parse enum values for type HttpAuthenticationType.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to parse.
+        /// </param>
+        /// <returns>
+        /// The enum value.
+        /// </returns>
+        internal static HttpAuthenticationType ParseHttpAuthenticationType(string value)
+        {
+            if ("notspecified".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return HttpAuthenticationType.NotSpecified;
+            }
+            if ("basic".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return HttpAuthenticationType.Basic;
+            }
+            if ("clientcertificate".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return HttpAuthenticationType.ClientCertificate;
+            }
+            throw new ArgumentOutOfRangeException("value");
+        }
+        
+        /// <summary>
+        /// Convert an enum of type HttpAuthenticationType to a string.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to convert to a string.
+        /// </param>
+        /// <returns>
+        /// The enum value as a string.
+        /// </returns>
+        internal static string HttpAuthenticationTypeToString(HttpAuthenticationType value)
+        {
+            if (value == HttpAuthenticationType.NotSpecified)
+            {
+                return "notspecified";
+            }
+            if (value == HttpAuthenticationType.Basic)
+            {
+                return "basic";
+            }
+            if (value == HttpAuthenticationType.ClientCertificate)
+            {
+                return "clientcertificate";
+            }
+            throw new ArgumentOutOfRangeException("value");
         }
         
         /// <summary>

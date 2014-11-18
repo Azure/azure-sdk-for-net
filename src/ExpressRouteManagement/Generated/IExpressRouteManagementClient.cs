@@ -82,12 +82,27 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             get; set; 
         }
         
+        IAuthorizedDedicatedCircuitOperations AuthorizedDedicatedCircuits
+        {
+            get; 
+        }
+        
         IBorderGatewayProtocolPeeringOperations BorderGatewayProtocolPeerings
         {
             get; 
         }
         
         ICrossConnectionOperations CrossConnections
+        {
+            get; 
+        }
+        
+        IDedicatedCircuitLinkAuthorizationMicrosoftIdOperations DedicatedCircuitLinkAuthorizationMicrosoftIds
+        {
+            get; 
+        }
+        
+        IDedicatedCircuitLinkAuthorizationOperations DedicatedCircuitLinkAuthorizations
         {
             get; 
         }

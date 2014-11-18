@@ -113,9 +113,27 @@ namespace Microsoft.WindowsAzure.Management.Network
         
         /// <summary>
         /// The Network Management API includes operations for managing the
+        /// Network Security Groups for your subscription.
+        /// </summary>
+        INetworkSecurityGroupOperations NetworkSecurityGroups
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// The Network Management API includes operations for managing the
         /// reserved IPs for your subscription.
         /// </summary>
         IReservedIPOperations ReservedIPs
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// The Network Management API includes operations for managing the
+        /// routes for your subscription.
+        /// </summary>
+        IRouteOperations Routes
         {
             get; 
         }

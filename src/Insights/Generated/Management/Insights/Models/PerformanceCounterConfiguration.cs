@@ -23,18 +23,19 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Management.Insights.Models;
+using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Management.Insights.Models
 {
     /// <summary>
-    /// represents the configuration for collecting performance counters.
+    /// Enable the collection of Performance Counters.
     /// </summary>
     public partial class PerformanceCounterConfiguration
     {
         private IList<LocalizedString> _annotations;
         
         /// <summary>
-        /// Optional. localized display values.
+        /// Optional. The display name for the counter.
         /// </summary>
         public IList<LocalizedString> Annotations
         {
@@ -45,7 +46,9 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _counterSpecifier;
         
         /// <summary>
-        /// Optional. performance counter specifier.
+        /// Optional. The name of the performance counter. For example,
+        /// "\\Processor(_Total)\\% Processor Time". To get a list of
+        /// performance counters on your host run the command typeperf.
         /// </summary>
         public string CounterSpecifier
         {
@@ -56,7 +59,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private TimeSpan _sampleRate;
         
         /// <summary>
-        /// Optional. how often to sample the performance counter.
+        /// Optional. How often the counter should be sampled.
         /// </summary>
         public TimeSpan SampleRate
         {
@@ -67,7 +70,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private Units _unit;
         
         /// <summary>
-        /// Optional. units represented by performance counter.
+        /// Optional. The unit of measure of the counter.
         /// </summary>
         public Units Unit
         {
@@ -81,7 +84,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         /// </summary>
         public PerformanceCounterConfiguration()
         {
-            this.Annotations = new List<LocalizedString>();
+            this.Annotations = new LazyList<LocalizedString>();
         }
     }
 }

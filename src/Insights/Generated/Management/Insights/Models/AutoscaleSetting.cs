@@ -23,18 +23,21 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Management.Insights.Models;
+using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Management.Insights.Models
 {
     /// <summary>
-    /// Autoscale setting.
+    /// A setting that contains all of the configuration for the automatic
+    /// scaling of a resource.
     /// </summary>
     public partial class AutoscaleSetting
     {
         private bool _enabled;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Specifies whether automatic scaling is enabled for the
+        /// resource.
         /// </summary>
         public bool Enabled
         {
@@ -45,7 +48,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _name;
         
         /// <summary>
-        /// Optional.
+        /// Optional. The name of the autoscale setting.
         /// </summary>
         public string Name
         {
@@ -56,7 +59,9 @@ namespace Microsoft.Azure.Management.Insights.Models
         private IList<AutoscaleProfile> _profiles;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Contains a collection of automatic scaling profiles that
+        /// specify different scaling parameters for different time periods. A
+        /// maximum of 20 profiles can be specified.
         /// </summary>
         public IList<AutoscaleProfile> Profiles
         {
@@ -67,7 +72,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _targetResourceUri;
         
         /// <summary>
-        /// Optional.
+        /// Optional. The resource identifier of the resource that the
+        /// autoscale setting should be added to.
         /// </summary>
         public string TargetResourceUri
         {
@@ -80,7 +86,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         /// </summary>
         public AutoscaleSetting()
         {
-            this.Profiles = new List<AutoscaleProfile>();
+            this.Profiles = new LazyList<AutoscaleProfile>();
         }
     }
 }

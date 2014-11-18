@@ -101,7 +101,7 @@ namespace Microsoft.WindowsAzure
         /// Required. The namespace name.
         /// </param>
         /// <param name='region'>
-        /// Required. The namespace region.
+        /// Optional. The namespace region.
         /// </param>
         /// <returns>
         /// The response to a request for a particular namespace.
@@ -129,7 +129,7 @@ namespace Microsoft.WindowsAzure
         /// Required. The namespace name.
         /// </param>
         /// <param name='region'>
-        /// Required. The namespace region.
+        /// Optional. The namespace region.
         /// </param>
         /// <returns>
         /// The response to a request for a particular namespace.
@@ -185,6 +185,58 @@ namespace Microsoft.WindowsAzure
         public static Task<ServiceBusAuthorizationRuleResponse> CreateAuthorizationRuleAsync(this INamespaceOperations operations, string namespaceName, ServiceBusSharedAccessAuthorizationRule rule)
         {
             return operations.CreateAuthorizationRuleAsync(namespaceName, rule, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Creates a new service namespace. Once created, this namespace's
+        /// resource manifest is immutable. This operation is idempotent.
+        /// (see http://msdn.microsoft.com/en-us/library/windowsazure/jj856303.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.ServiceBus.INamespaceOperations.
+        /// </param>
+        /// <param name='namespaceName'>
+        /// Required. The namespace name.
+        /// </param>
+        /// <param name='namespaceEntity'>
+        /// Required. The service bus namespace.
+        /// </param>
+        /// <returns>
+        /// The response to a request for a particular namespace.
+        /// </returns>
+        public static ServiceBusNamespaceResponse CreateNamespace(this INamespaceOperations operations, string namespaceName, ServiceBusNamespaceCreateParameters namespaceEntity)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((INamespaceOperations)s).CreateNamespaceAsync(namespaceName, namespaceEntity);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Creates a new service namespace. Once created, this namespace's
+        /// resource manifest is immutable. This operation is idempotent.
+        /// (see http://msdn.microsoft.com/en-us/library/windowsazure/jj856303.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.ServiceBus.INamespaceOperations.
+        /// </param>
+        /// <param name='namespaceName'>
+        /// Required. The namespace name.
+        /// </param>
+        /// <param name='namespaceEntity'>
+        /// Required. The service bus namespace.
+        /// </param>
+        /// <returns>
+        /// The response to a request for a particular namespace.
+        /// </returns>
+        public static Task<ServiceBusNamespaceResponse> CreateNamespaceAsync(this INamespaceOperations operations, string namespaceName, ServiceBusNamespaceCreateParameters namespaceEntity)
+        {
+            return operations.CreateNamespaceAsync(namespaceName, namespaceEntity, CancellationToken.None);
         }
         
         /// <summary>

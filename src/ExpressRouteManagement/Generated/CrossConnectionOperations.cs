@@ -296,7 +296,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -731,7 +731,13 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// </returns>
         public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ExpressRoute.Models.CrossConnectionGetResponse> NewAsync(string serviceKey, CancellationToken cancellationToken)
         {
-            ExpressRouteManagementClient client = this.Client;
+            // Validate
+            if (serviceKey == null)
+            {
+                throw new ArgumentNullException("serviceKey");
+            }
+            
+            // Tracing
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
@@ -741,46 +747,86 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                 tracingParameters.Add("serviceKey", serviceKey);
                 Tracing.Enter(invocationId, this, "NewAsync", tracingParameters);
             }
+            
+            // Construct URL
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/networking/dedicatedcircuits/" + serviceKey.Trim() + "/crossconnection?api-version=1.0";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
             try
             {
-                if (shouldTrace)
-                {
-                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
-                }
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
                 
+                // Set Headers
+                
+                // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
-                ExpressRouteOperationResponse originalResponse = await client.CrossConnections.BeginNewAsync(serviceKey, cancellationToken).ConfigureAwait(false);
-                cancellationToken.ThrowIfCancellationRequested();
-                ExpressRouteOperationStatusResponse result = await client.GetOperationStatusAsync(originalResponse.OperationId, cancellationToken).ConfigureAwait(false);
-                int delayInSeconds = 30;
-                while (result.Status == ExpressRouteOperationStatus.InProgress)
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
                 {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
                     cancellationToken.ThrowIfCancellationRequested();
-                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    result = await client.GetOperationStatusAsync(originalResponse.OperationId, cancellationToken).ConfigureAwait(false);
-                    delayInSeconds = 10;
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode >= HttpStatusCode.BadRequest)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    CrossConnectionGetResponse result = null;
+                    result = new CrossConnectionGetResponse();
+                    result.StatusCode = statusCode;
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
                 }
-                
-                if (result.Status == ExpressRouteOperationStatus.Failed)
+                finally
                 {
-                    string exStr = "A new cross connection could not be provisioned due to an internal server error.";
-                    throw new ArgumentException(exStr);
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
                 }
-                cancellationToken.ThrowIfCancellationRequested();
-                CrossConnectionGetResponse getResult = await client.CrossConnections.GetAsync(serviceKey, cancellationToken).ConfigureAwait(false);
-                if (shouldTrace)
-                {
-                    Tracing.Exit(invocationId, result);
-                }
-                
-                return getResult;
             }
             finally
             {
-                if (client != null && shouldTrace)
+                if (httpRequest != null)
                 {
-                    client.Dispose();
+                    httpRequest.Dispose();
                 }
             }
         }
@@ -804,7 +850,17 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// </returns>
         public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ExpressRoute.Models.CrossConnectionGetResponse> UpdateAsync(string serviceKey, CrossConnectionUpdateParameters parameters, CancellationToken cancellationToken)
         {
-            ExpressRouteManagementClient client = this.Client;
+            // Validate
+            if (serviceKey == null)
+            {
+                throw new ArgumentNullException("serviceKey");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            
+            // Tracing
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
@@ -815,46 +871,86 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                 tracingParameters.Add("parameters", parameters);
                 Tracing.Enter(invocationId, this, "UpdateAsync", tracingParameters);
             }
+            
+            // Construct URL
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/networking/dedicatedcircuits/" + serviceKey.Trim() + "/crossconnection?api-version=1.0";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
             try
             {
-                if (shouldTrace)
-                {
-                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
-                }
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Put;
+                httpRequest.RequestUri = new Uri(url);
                 
+                // Set Headers
+                
+                // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
-                ExpressRouteOperationResponse originalResponse = await client.CrossConnections.BeginUpdateAsync(serviceKey, parameters, cancellationToken).ConfigureAwait(false);
-                cancellationToken.ThrowIfCancellationRequested();
-                ExpressRouteOperationStatusResponse result = await client.GetOperationStatusAsync(originalResponse.OperationId, cancellationToken).ConfigureAwait(false);
-                int delayInSeconds = 30;
-                while (result.Status == ExpressRouteOperationStatus.InProgress)
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
                 {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
                     cancellationToken.ThrowIfCancellationRequested();
-                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    result = await client.GetOperationStatusAsync(originalResponse.OperationId, cancellationToken).ConfigureAwait(false);
-                    delayInSeconds = 10;
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode >= HttpStatusCode.BadRequest)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    CrossConnectionGetResponse result = null;
+                    result = new CrossConnectionGetResponse();
+                    result.StatusCode = statusCode;
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
                 }
-                
-                if (result.Status == ExpressRouteOperationStatus.Failed)
+                finally
                 {
-                    string exStr = "The cross connection could not be updated due to an internal server error.";
-                    throw new ArgumentException(exStr);
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
                 }
-                cancellationToken.ThrowIfCancellationRequested();
-                CrossConnectionGetResponse getResult = await client.CrossConnections.GetAsync(serviceKey, cancellationToken).ConfigureAwait(false);
-                if (shouldTrace)
-                {
-                    Tracing.Exit(invocationId, result);
-                }
-                
-                return getResult;
             }
             finally
             {
-                if (client != null && shouldTrace)
+                if (httpRequest != null)
                 {
-                    client.Dispose();
+                    httpRequest.Dispose();
                 }
             }
         }

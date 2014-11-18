@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Management.Insights.Models;
+using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Management.Insights.Models
 {
@@ -34,7 +35,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private IList<string> _customEmails;
         
         /// <summary>
-        /// Optional. The email address of an adminstrative user.
+        /// Optional. A list of administrator's custom email addresses notifiy
+        /// of the activation of the alert.
         /// </summary>
         public IList<string> CustomEmails
         {
@@ -45,8 +47,9 @@ namespace Microsoft.Azure.Management.Insights.Models
         private bool _sendToServiceOwners;
         
         /// <summary>
-        /// Optional. This indicates if email is sent to sevice adminstrator
-        /// and co-administrators.
+        /// Optional. Whether the administrators (service and
+        /// co-adiminstrators) of the service should be notified when the
+        /// alert is activated.
         /// </summary>
         public bool SendToServiceOwners
         {
@@ -59,7 +62,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         /// </summary>
         public RuleEmailAction()
         {
-            this.CustomEmails = new List<string>();
+            this.CustomEmails = new LazyList<string>();
         }
     }
 }

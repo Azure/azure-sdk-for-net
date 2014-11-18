@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Insights.Models;
+using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Insights.Models
 {
@@ -45,7 +46,7 @@ namespace Microsoft.Azure.Insights.Models
         private IList<MetricValue> _metricValues;
         
         /// <summary>
-        /// Optional. The collection of MetricValues..
+        /// Optional. The collection of actual metric values.
         /// </summary>
         public IList<MetricValue> MetricValues
         {
@@ -56,7 +57,7 @@ namespace Microsoft.Azure.Insights.Models
         private LocalizableString _name;
         
         /// <summary>
-        /// Optional. The name.
+        /// Optional. The name and the display name of the metric.
         /// </summary>
         public LocalizableString Name
         {
@@ -64,12 +65,12 @@ namespace Microsoft.Azure.Insights.Models
             set { this._name = value; }
         }
         
-        private Dictionary<string, string> _properties;
+        private IDictionary<string, string> _properties;
         
         /// <summary>
-        /// Optional. The extendable properties.
+        /// Optional. Collection of extended properties.
         /// </summary>
-        public Dictionary<string, string> Properties
+        public IDictionary<string, string> Properties
         {
             get { return this._properties; }
             set { this._properties = value; }
@@ -78,7 +79,8 @@ namespace Microsoft.Azure.Insights.Models
         private string _resourceId;
         
         /// <summary>
-        /// Optional. the name of the resource this metric belongs to.
+        /// Optional. The resource ID of the resource that has emitted the
+        /// metric.
         /// </summary>
         public string ResourceId
         {
@@ -100,7 +102,8 @@ namespace Microsoft.Azure.Insights.Models
         private TimeSpan _timeGrain;
         
         /// <summary>
-        /// Optional. The timegrain value..
+        /// Optional. The time grain of the metric. Also known as the
+        /// aggregation interval or frequency.
         /// </summary>
         public TimeSpan TimeGrain
         {
@@ -111,7 +114,7 @@ namespace Microsoft.Azure.Insights.Models
         private Unit _unit;
         
         /// <summary>
-        /// Optional. The unit type.
+        /// Optional. The unit of the metric.
         /// </summary>
         public Unit Unit
         {
@@ -124,8 +127,8 @@ namespace Microsoft.Azure.Insights.Models
         /// </summary>
         public Metric()
         {
-            this.MetricValues = new List<MetricValue>();
-            this.Properties = new Dictionary<string, string>();
+            this.MetricValues = new LazyList<MetricValue>();
+            this.Properties = new LazyDictionary<string, string>();
         }
     }
 }

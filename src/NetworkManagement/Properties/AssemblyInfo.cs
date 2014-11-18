@@ -15,17 +15,15 @@
 
 using System.Reflection;
 using System.Resources;
-using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Windows Azure Network Management Library")]
-[assembly: AssemblyDescription("Provides management functionality for Windows Azure Network.")]
+[assembly: AssemblyTitle("Microsoft Azure Network Management Library")]
+[assembly: AssemblyDescription("Provides management functionality for Microsoft Azure Network.")]
 
-[assembly: AssemblyVersion("2.0.0.0")]
-[assembly: AssemblyFileVersion("2.2.1.0")]
-
+[assembly: AssemblyVersion("4.0.0.0")]
+[assembly: AssemblyFileVersion("4.0.3.0")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("Windows Azure .NET SDK")]
+[assembly: AssemblyProduct("Azure .NET SDK")]
 [assembly: AssemblyCopyright("Copyright (c) Microsoft Corporation")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

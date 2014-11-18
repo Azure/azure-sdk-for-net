@@ -23,18 +23,19 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Management.Insights.Models;
+using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Management.Insights.Models
 {
     /// <summary>
-    /// Represents collection of autoscale settings.
+    /// Represents a collection of autoscale setting resources.
     /// </summary>
     public partial class AutoscaleSettingResourceCollection
     {
         private IList<AutoscaleSettingResource> _value;
         
         /// <summary>
-        /// Optional. The values for the autoscale settings.
+        /// Optional. The values for the autoscale setting resources.
         /// </summary>
         public IList<AutoscaleSettingResource> Value
         {
@@ -48,7 +49,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         /// </summary>
         public AutoscaleSettingResourceCollection()
         {
-            this.Value = new List<AutoscaleSettingResource>();
+            this.Value = new LazyList<AutoscaleSettingResource>();
         }
     }
 }

@@ -24,9 +24,6 @@ using System.Linq;
 
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
 {
-    /// <summary>
-    /// The remote debugging version.
-    /// </summary>
     public enum RemoteDebuggingVersion
     {
         /// <summary>

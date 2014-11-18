@@ -14,28 +14,28 @@
     <description>Provides popular portable components for a common HTTP pipeline and JSON parsing. This package is included as a dependency to other libraries such as the Microsoft Azure Management Libraries and should not be directly added to your project.</description>
     <copyright>Copyright © Microsoft Corporation</copyright>
     <!-- A subset of tags here as this library is less useful on its own. -->
-    <tags>windowsazureofficial</tags>
+    <tags>azureofficial windowsazureofficial</tags>
     <dependencies>
-      <group targetFramework="portable-net45+sl50+wp80+win">
+      <group targetFramework="portable-net45+wp8+wpa81+win">
         <dependency id="Microsoft.Bcl" version="1.1.9" />
         <dependency id="Microsoft.Bcl.Async" version="1.0.168" />
         <dependency id="Microsoft.Bcl.Build" version="1.0.14" />
         <dependency id="Microsoft.Net.Http" version="2.2.22" />
-        <dependency id="Newtonsoft.Json" version="5.0.8" />
+        <dependency id="Newtonsoft.Json" version="6.0.4" />
       </group>
       <group targetFramework="net45">
         <dependency id="Microsoft.Bcl" version="1.1.9" />
         <dependency id="Microsoft.Bcl.Async" version="1.0.168" />
         <dependency id="Microsoft.Bcl.Build" version="1.0.14" />
         <dependency id="Microsoft.Net.Http" version="2.2.22" />
-        <dependency id="Newtonsoft.Json" version="5.0.8" />
+        <dependency id="Newtonsoft.Json" version="6.0.4" />
       </group>
       <group targetFramework="net40">
         <dependency id="Microsoft.Bcl" version="1.1.9" />
         <dependency id="Microsoft.Bcl.Async" version="1.0.168" />
         <dependency id="Microsoft.Bcl.Build" version="1.0.14" />
         <dependency id="Microsoft.Net.Http" version="2.2.22" />
-        <dependency id="Newtonsoft.Json" version="5.0.8" />
+        <dependency id="Newtonsoft.Json" version="6.0.4" />
       </group>
     </dependencies>
   </metadata>

@@ -87,7 +87,8 @@ namespace Microsoft.Azure.Insights
         private IEventOperations _eventOperations;
         
         /// <summary>
-        /// Operations for event data.
+        /// Microsoft Azure event logs and summaries can be retrieved using
+        /// these operations
         /// </summary>
         public virtual IEventOperations EventOperations
         {
@@ -146,7 +147,7 @@ namespace Microsoft.Azure.Insights
         /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Gets the URI used as the base for all cloud service
+        /// Optional. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
         public InsightsClient(SubscriptionCloudCredentials credentials, Uri baseUri)
@@ -215,7 +216,7 @@ namespace Microsoft.Azure.Insights
         /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Gets the URI used as the base for all cloud service
+        /// Optional. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
         /// <param name='httpClient'>

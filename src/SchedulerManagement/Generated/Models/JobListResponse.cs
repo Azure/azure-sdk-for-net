@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Scheduler.Models;
 
 namespace Microsoft.WindowsAzure.Scheduler.Models
@@ -48,7 +49,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         /// </summary>
         public JobListResponse()
         {
-            this.Jobs = new List<Job>();
+            this.Jobs = new LazyList<Job>();
         }
         
         /// <summary>

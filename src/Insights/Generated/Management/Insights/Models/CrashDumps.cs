@@ -23,18 +23,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Management.Insights.Models;
+using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Management.Insights.Models
 {
     /// <summary>
-    /// crash dump collection configuration.
+    /// Enable collection of crash dumps.
     /// </summary>
     public partial class CrashDumps
     {
         private string _containerName;
         
         /// <summary>
-        /// Optional. target container.
+        /// Optional. The name of the blob container in your Azure Storage
+        /// account that will be used to store crash dumps.
         /// </summary>
         public string ContainerName
         {
@@ -45,7 +47,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private int? _directoryQuotaPercentage;
         
         /// <summary>
-        /// Optional. directory quota.
+        /// Optional. Configures the percentage of overallQuotaInMB that will
+        /// be reserved for crash dumps.
         /// </summary>
         public int? DirectoryQuotaPercentage
         {
@@ -56,7 +59,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private Microsoft.Azure.Management.Insights.Models.CrashDumpType? _dumpType;
         
         /// <summary>
-        /// Optional. mini or full dump.
+        /// Optional. Configures collection of Mini or Full cash dumps.
         /// </summary>
         public Microsoft.Azure.Management.Insights.Models.CrashDumpType? DumpType
         {
@@ -67,7 +70,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private IList<string> _processes;
         
         /// <summary>
-        /// Optional. processes to collect.
+        /// Optional. The names of the process you want to collect a crash dump
+        /// for.
         /// </summary>
         public IList<string> Processes
         {
@@ -80,7 +84,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         /// </summary>
         public CrashDumps()
         {
-            this.Processes = new List<string>();
+            this.Processes = new LazyList<string>();
         }
     }
 }

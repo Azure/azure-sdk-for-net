@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Sql
     public partial interface IFirewallRuleOperations
     {
         /// <summary>
-        /// Deletes an Azure SQL Database Server Firewall rule.
+        /// Creates or updates an Azure SQL Database Server Firewall rule.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the Resource Group to which the server belongs.

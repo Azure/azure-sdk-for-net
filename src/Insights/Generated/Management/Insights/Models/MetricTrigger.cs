@@ -26,14 +26,15 @@ using Microsoft.Azure.Management.Insights.Models;
 namespace Microsoft.Azure.Management.Insights.Models
 {
     /// <summary>
-    /// A rule that provides the triggers and parameters for the scaling action.
+    /// The trigger that results in a scaling action.
     /// </summary>
     public partial class MetricTrigger
     {
         private string _metricName;
         
         /// <summary>
-        /// Optional. The name of the metric.
+        /// Optional. The name of the metric that defines what the rule
+        /// monitors.
         /// </summary>
         public string MetricName
         {
@@ -44,7 +45,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _metricNamespace;
         
         /// <summary>
-        /// Optional. The namespace of the metric.
+        /// Optional. Only should be present for availability level metrics,
+        /// where the value must be WindowsAzure.Availability.
         /// </summary>
         public string MetricNamespace
         {
@@ -55,7 +57,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _metricResourceUri;
         
         /// <summary>
-        /// Optional. The metric resource uri.
+        /// Optional. The resource identifier of the resource the rule monitors.
         /// </summary>
         public string MetricResourceUri
         {
@@ -66,7 +68,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private ComparisonOperationType _operator;
         
         /// <summary>
-        /// Optional. The operator that is used to evaluate the metric.
+        /// Optional. The operator that is used to compare the metric data and
+        /// the threshold.
         /// </summary>
         public ComparisonOperationType Operator
         {
@@ -88,8 +91,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private double _threshold;
         
         /// <summary>
-        /// Optional. The percentage of usage that triggers the scaling
-        /// operation.
+        /// Optional. The threshold of the metric that triggers the scale
+        /// action.
         /// </summary>
         public double Threshold
         {
@@ -101,7 +104,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         
         /// <summary>
         /// Optional. How the data that is collected should be combined over
-        /// time.
+        /// time. The default value is Average.
         /// </summary>
         public TimeAggregationType TimeAggregation
         {
@@ -112,7 +115,9 @@ namespace Microsoft.Azure.Management.Insights.Models
         private TimeSpan _timeGrain;
         
         /// <summary>
-        /// Optional. The frequency of data collection.
+        /// Optional. The granularity of metrics the rule monitors. Must be one
+        /// of the predefined values returned from metric definitions for the
+        /// metric. Must be between 12 hours and 1 minute.
         /// </summary>
         public TimeSpan TimeGrain
         {
@@ -124,6 +129,9 @@ namespace Microsoft.Azure.Management.Insights.Models
         
         /// <summary>
         /// Optional. The range of time in which instance data is collected.
+        /// This value must be greater than the delay in metric collection,
+        /// which can vary from resource-to-resource. Must be between 12 hours
+        /// and 5 minutes.
         /// </summary>
         public TimeSpan TimeWindow
         {

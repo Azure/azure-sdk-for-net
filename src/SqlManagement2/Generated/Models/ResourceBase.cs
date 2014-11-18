@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
@@ -76,7 +77,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         public ResourceBase()
         {
-            this._tags = new Dictionary<string, string>();
+            this.Tags = new LazyDictionary<string, string>();
         }
     }
 }

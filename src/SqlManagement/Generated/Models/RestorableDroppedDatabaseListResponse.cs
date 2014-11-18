@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Management.Sql.Models;
 
 namespace Microsoft.WindowsAzure.Management.Sql.Models
@@ -35,8 +36,9 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private IList<RestorableDroppedDatabase> _databases;
         
         /// <summary>
-        /// Optional. Gets the collection of restorable dropped databases that
-        /// has been returned from a List Restorable Dropped Databases request.
+        /// Optional. Gets or sets the collection of restorable dropped
+        /// databases that has been returned from a List Restorable Dropped
+        /// Databases request.
         /// </summary>
         public IList<RestorableDroppedDatabase> Databases
         {
@@ -50,7 +52,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public RestorableDroppedDatabaseListResponse()
         {
-            this.Databases = new List<RestorableDroppedDatabase>();
+            this.Databases = new LazyList<RestorableDroppedDatabase>();
         }
         
         /// <summary>

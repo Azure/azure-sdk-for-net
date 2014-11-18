@@ -22,6 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.WindowsAzure.Common.Internals;
+using Microsoft.WindowsAzure.Scheduler.Models;
 
 namespace Microsoft.WindowsAzure.Scheduler.Models
 {
@@ -30,10 +32,21 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
     /// </summary>
     public partial class JobHttpRequest
     {
+        private HttpAuthentication _authentication;
+        
+        /// <summary>
+        /// Optional. Gets or sets the request authentication.
+        /// </summary>
+        public HttpAuthentication Authentication
+        {
+            get { return this._authentication; }
+            set { this._authentication = value; }
+        }
+        
         private string _body;
         
         /// <summary>
-        /// Optional. Request body.
+        /// Optional. Gets or sets the request body.
         /// </summary>
         public string Body
         {
@@ -44,8 +57,8 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private IDictionary<string, string> _headers;
         
         /// <summary>
-        /// Optional. Header name value pairs to supply with the http/https
-        /// action.
+        /// Optional. Gets or sets Header name value pairs to supply with the
+        /// http/https action.
         /// </summary>
         public IDictionary<string, string> Headers
         {
@@ -56,7 +69,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private string _method;
         
         /// <summary>
-        /// Required. Http method e.g. GET, PUT, POST, DELETE.
+        /// Required. Gets or sets Http method e.g. GET, PUT, POST, DELETE.
         /// </summary>
         public string Method
         {
@@ -67,7 +80,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private Uri _uri;
         
         /// <summary>
-        /// Required. Uri of the endpoint to invoke.
+        /// Required. Gets or sets Uri of the endpoint to invoke.
         /// </summary>
         public Uri Uri
         {
@@ -80,7 +93,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         /// </summary>
         public JobHttpRequest()
         {
-            this.Headers = new Dictionary<string, string>();
+            this.Headers = new LazyDictionary<string, string>();
         }
         
         /// <summary>

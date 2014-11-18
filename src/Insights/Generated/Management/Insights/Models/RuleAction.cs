@@ -25,7 +25,8 @@ using System.Linq;
 namespace Microsoft.Azure.Management.Insights.Models
 {
     /// <summary>
-    /// A rule action.
+    /// The action that is performed when the alert rule becomes active, and
+    /// when an alert condition is resolved.
     /// </summary>
     public abstract partial class RuleAction
     {

@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Gallery;
+using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Gallery
 {
@@ -176,9 +177,9 @@ namespace Microsoft.Azure.Gallery
         /// </summary>
         public GalleryItem()
         {
-            this.CategoryIds = new List<string>();
-            this.IconFileUrls = new Dictionary<string, string>();
-            this.ScreenshotUrls = new List<string>();
+            this.CategoryIds = new LazyList<string>();
+            this.IconFileUrls = new LazyDictionary<string, string>();
+            this.ScreenshotUrls = new LazyList<string>();
         }
     }
 }

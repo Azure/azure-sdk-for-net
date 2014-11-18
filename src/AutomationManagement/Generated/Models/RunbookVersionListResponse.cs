@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Management.Automation.Models;
 using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
@@ -48,7 +49,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         public RunbookVersionListResponse()
         {
-            this.RunbookVersions = new List<RunbookVersion>();
+            this.RunbookVersions = new LazyList<RunbookVersion>();
         }
         
         /// <summary>

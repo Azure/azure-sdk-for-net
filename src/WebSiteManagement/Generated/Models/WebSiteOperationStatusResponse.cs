@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Management.WebSites.Models;
 
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
@@ -132,7 +133,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public WebSiteOperationStatusResponse()
         {
-            this.Errors = new List<WebSiteOperationStatusResponse.Error>();
+            this.Errors = new LazyList<WebSiteOperationStatusResponse.Error>();
         }
         
         /// <summary>
@@ -211,7 +212,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             /// </summary>
             public Error()
             {
-                this.Parameters = new List<string>();
+                this.Parameters = new LazyList<string>();
             }
         }
     }

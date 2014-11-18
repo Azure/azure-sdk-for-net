@@ -30,6 +30,17 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
     /// </summary>
     public partial class GatewayCreateParameters
     {
+        private GatewaySKU _gatewaySKU;
+        
+        /// <summary>
+        /// Optional. The SKU of this virtual network gateway.
+        /// </summary>
+        public GatewaySKU GatewaySKU
+        {
+            get { return this._gatewaySKU; }
+            set { this._gatewaySKU = value; }
+        }
+        
         private GatewayType _gatewayType;
         
         /// <summary>

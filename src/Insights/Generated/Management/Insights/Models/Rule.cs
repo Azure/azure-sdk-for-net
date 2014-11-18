@@ -33,7 +33,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private RuleAction _action;
         
         /// <summary>
-        /// Optional. Rule action.
+        /// Optional. The action that is performed when the alert rule becomes
+        /// active, and when an alert condition is resolved.
         /// </summary>
         public RuleAction Action
         {
@@ -44,7 +45,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private RuleCondition _condition;
         
         /// <summary>
-        /// Optional. Rule condition.
+        /// Optional. The condition that results in the alert rule being
+        /// activated.
         /// </summary>
         public RuleCondition Condition
         {
@@ -55,7 +57,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _description;
         
         /// <summary>
-        /// Optional. Rule description.
+        /// Optional. Description of the alert rule that will be included in
+        /// the alert email.
         /// </summary>
         public string Description
         {
@@ -66,8 +69,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private bool _isEnabled;
         
         /// <summary>
-        /// Optional. A flag that determines whether the rule is enabled or
-        /// disabled.
+        /// Optional. Indicates whether the alert rule is enabled.
         /// </summary>
         public bool IsEnabled
         {
@@ -78,7 +80,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private DateTime _lastUpdatedTime;
         
         /// <summary>
-        /// Optional. Rule last updated time.
+        /// Optional. Last time the rule was updated.
         /// </summary>
         public DateTime LastUpdatedTime
         {
@@ -89,7 +91,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _name;
         
         /// <summary>
-        /// Optional. Rule name.
+        /// Optional. Name of the alert rule.
         /// </summary>
         public string Name
         {

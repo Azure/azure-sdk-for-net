@@ -25,14 +25,14 @@ using System.Linq;
 namespace Microsoft.Azure.Management.Insights.Models
 {
     /// <summary>
-    /// represents the display name in a specific locale.
+    /// Represents the display name in a specific locale.
     /// </summary>
     public partial class LocalizedString
     {
         private string _locale;
         
         /// <summary>
-        /// Optional. locale of this value.
+        /// Optional. The locale to use when displaying the counter name.
         /// </summary>
         public string Locale
         {
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _value;
         
         /// <summary>
-        /// Optional. localized display value.
+        /// Optional. The display name for the counter.
         /// </summary>
         public string Value
         {

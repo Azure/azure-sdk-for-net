@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Insights.Models
         private LocalizableString _name;
         
         /// <summary>
-        /// Optional. Get the usage metric name.
+        /// Optional. Get the usage metric name and display name.
         /// </summary>
         public LocalizableString Name
         {
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Insights.Models
         private System.TimeSpan? _quotaPeriod;
         
         /// <summary>
-        /// Optional. When the current value gets reset.
+        /// Optional. The amount of time it takes to reset the value.
         /// </summary>
         public System.TimeSpan? QuotaPeriod
         {

@@ -130,9 +130,9 @@ namespace Microsoft.Azure.Management.Sql
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourceGroups/" + resourceGroupName.Trim() + "/providers/Microsoft.Sql/servers/" + serverName.Trim() + "?";
             url = url + "api-version=2014-04-01";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -143,6 +143,7 @@ namespace Microsoft.Azure.Management.Sql
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -185,21 +186,21 @@ namespace Microsoft.Azure.Management.Sql
                 
                 serverCreateOrUpdateParametersValue["location"] = parameters.Location;
                 
-                JObject tagsDictionary = new JObject();
                 if (parameters.Tags != null)
                 {
+                    JObject tagsDictionary = new JObject();
                     foreach (KeyValuePair<string, string> pair in parameters.Tags)
                     {
                         string tagsKey = pair.Key;
                         string tagsValue = pair.Value;
                         tagsDictionary[tagsKey] = tagsValue;
                     }
+                    serverCreateOrUpdateParametersValue["tags"] = tagsDictionary;
                 }
-                serverCreateOrUpdateParametersValue["tags"] = tagsDictionary;
                 
                 requestContent = requestDoc.ToString(Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -390,9 +391,9 @@ namespace Microsoft.Azure.Management.Sql
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourceGroups/" + resourceGroupName.Trim() + "/providers/Microsoft.Sql/servers/" + serverName.Trim() + "?";
             url = url + "api-version=2014-04-01";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -403,6 +404,7 @@ namespace Microsoft.Azure.Management.Sql
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -517,9 +519,9 @@ namespace Microsoft.Azure.Management.Sql
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourceGroups/" + resourceGroupName.Trim() + "/providers/Microsoft.Sql/servers/" + serverName.Trim() + "?";
             url = url + "api-version=2014-04-01";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -530,6 +532,7 @@ namespace Microsoft.Azure.Management.Sql
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -725,9 +728,9 @@ namespace Microsoft.Azure.Management.Sql
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourceGroups/" + resourceGroupName.Trim() + "/providers/Microsoft.Sql/servers?";
             url = url + "api-version=2014-04-01";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -738,6 +741,7 @@ namespace Microsoft.Azure.Management.Sql
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

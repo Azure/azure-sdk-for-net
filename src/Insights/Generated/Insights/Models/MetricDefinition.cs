@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Insights.Models;
+using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Insights.Models
 {
@@ -34,8 +35,8 @@ namespace Microsoft.Azure.Insights.Models
         private IList<MetricAvailability> _metricAvailabilities;
         
         /// <summary>
-        /// Optional. Collection of availability information defining what
-        /// timeGrains are available to be queried.
+        /// Optional. Collection of what aggregation intervals are available to
+        /// be queried.
         /// </summary>
         public IList<MetricAvailability> MetricAvailabilities
         {
@@ -46,7 +47,7 @@ namespace Microsoft.Azure.Insights.Models
         private LocalizableString _name;
         
         /// <summary>
-        /// Optional. The name.
+        /// Optional. The name and the display name of the metric.
         /// </summary>
         public LocalizableString Name
         {
@@ -66,12 +67,12 @@ namespace Microsoft.Azure.Insights.Models
             set { this._primaryAggregationType = value; }
         }
         
-        private Dictionary<string, string> _properties;
+        private IDictionary<string, string> _properties;
         
         /// <summary>
         /// Optional. Collection of extended properties.
         /// </summary>
-        public Dictionary<string, string> Properties
+        public IDictionary<string, string> Properties
         {
             get { return this._properties; }
             set { this._properties = value; }
@@ -80,7 +81,8 @@ namespace Microsoft.Azure.Insights.Models
         private string _resourceUri;
         
         /// <summary>
-        /// Optional. The target resource uri.
+        /// Optional. The resource identifier of the resource that has emitted
+        /// the metric.
         /// </summary>
         public string ResourceUri
         {
@@ -104,8 +106,8 @@ namespace Microsoft.Azure.Insights.Models
         /// </summary>
         public MetricDefinition()
         {
-            this.MetricAvailabilities = new List<MetricAvailability>();
-            this.Properties = new Dictionary<string, string>();
+            this.MetricAvailabilities = new LazyList<MetricAvailability>();
+            this.Properties = new LazyDictionary<string, string>();
         }
     }
 }

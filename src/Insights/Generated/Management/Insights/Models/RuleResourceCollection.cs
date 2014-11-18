@@ -23,11 +23,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Management.Insights.Models;
+using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Management.Insights.Models
 {
     /// <summary>
-    /// Represents collection of alert rule resources.
+    /// Represents a collection of alert rule resources.
     /// </summary>
     public partial class RuleResourceCollection
     {
@@ -47,7 +48,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         /// </summary>
         public RuleResourceCollection()
         {
-            this.Value = new List<RuleResource>();
+            this.Value = new LazyList<RuleResource>();
         }
     }
 }

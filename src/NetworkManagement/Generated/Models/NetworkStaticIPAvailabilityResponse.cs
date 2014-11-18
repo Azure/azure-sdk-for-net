@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.WindowsAzure.Management.Network.Models
 {
@@ -60,7 +61,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         /// </summary>
         public NetworkStaticIPAvailabilityResponse()
         {
-            this.AvailableAddresses = new List<string>();
+            this.AvailableAddresses = new LazyList<string>();
         }
     }
 }

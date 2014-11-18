@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Insights.Models;
+using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Insights.Models
 {
@@ -34,7 +35,9 @@ namespace Microsoft.Azure.Insights.Models
         private string _nextLink;
         
         /// <summary>
-        /// Optional. The continuation token.
+        /// Optional. The next link works as a continuation token when all of
+        /// the events are not returned in the response and a second call is
+        /// required.
         /// </summary>
         public string NextLink
         {
@@ -45,7 +48,7 @@ namespace Microsoft.Azure.Insights.Models
         private IList<EventData> _value;
         
         /// <summary>
-        /// Optional. The list of events.
+        /// Optional. This list includes the Azure event logs.
         /// </summary>
         public IList<EventData> Value
         {
@@ -58,7 +61,7 @@ namespace Microsoft.Azure.Insights.Models
         /// </summary>
         public EventDataCollection()
         {
-            this.Value = new List<EventData>();
+            this.Value = new LazyList<EventData>();
         }
     }
 }

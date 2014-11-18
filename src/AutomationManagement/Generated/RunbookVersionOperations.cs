@@ -145,7 +145,7 @@ namespace Microsoft.Azure.Management.Automation
                 // Serialize Request
                 Stream requestContent = runbookStream;
                 httpRequest.Content = new StreamContent(requestContent);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/octet-stream");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -433,6 +433,13 @@ namespace Microsoft.Azure.Management.Automation
                                     {
                                         int dayIntervalInstance = ((int)dayIntervalValue);
                                         scheduleInstance.DayInterval = dayIntervalInstance;
+                                    }
+                                    
+                                    JToken hourIntervalValue = schedulesValue["HourInterval"];
+                                    if (hourIntervalValue != null && hourIntervalValue.Type != JTokenType.Null)
+                                    {
+                                        int hourIntervalInstance = ((int)hourIntervalValue);
+                                        scheduleInstance.HourInterval = hourIntervalInstance;
                                     }
                                     
                                     JToken odatatypeValue = schedulesValue["odata.type"];
@@ -836,6 +843,13 @@ namespace Microsoft.Azure.Management.Automation
                                     {
                                         int dayIntervalInstance = ((int)dayIntervalValue);
                                         scheduleInstance.DayInterval = dayIntervalInstance;
+                                    }
+                                    
+                                    JToken hourIntervalValue = schedulesValue["HourInterval"];
+                                    if (hourIntervalValue != null && hourIntervalValue.Type != JTokenType.Null)
+                                    {
+                                        int hourIntervalInstance = ((int)hourIntervalValue);
+                                        scheduleInstance.HourInterval = hourIntervalInstance;
                                     }
                                     
                                     JToken odatatypeValue = schedulesValue["odata.type"];
@@ -1394,6 +1408,13 @@ namespace Microsoft.Azure.Management.Automation
                                                 scheduleInstance.DayInterval = dayIntervalInstance;
                                             }
                                             
+                                            JToken hourIntervalValue = schedulesValue["HourInterval"];
+                                            if (hourIntervalValue != null && hourIntervalValue.Type != JTokenType.Null)
+                                            {
+                                                int hourIntervalInstance = ((int)hourIntervalValue);
+                                                scheduleInstance.HourInterval = hourIntervalInstance;
+                                            }
+                                            
                                             JToken odatatypeValue = schedulesValue["odata.type"];
                                             if (odatatypeValue != null && odatatypeValue.Type != JTokenType.Null)
                                             {
@@ -1813,6 +1834,13 @@ namespace Microsoft.Azure.Management.Automation
                                                 scheduleInstance.DayInterval = dayIntervalInstance;
                                             }
                                             
+                                            JToken hourIntervalValue = schedulesValue["HourInterval"];
+                                            if (hourIntervalValue != null && hourIntervalValue.Type != JTokenType.Null)
+                                            {
+                                                int hourIntervalInstance = ((int)hourIntervalValue);
+                                                scheduleInstance.HourInterval = hourIntervalInstance;
+                                            }
+                                            
                                             JToken odatatypeValue = schedulesValue["odata.type"];
                                             if (odatatypeValue != null && odatatypeValue.Type != JTokenType.Null)
                                             {
@@ -1947,7 +1975,7 @@ namespace Microsoft.Azure.Management.Automation
                 // Serialize Request
                 Stream requestContent = parameters.RunbookStream;
                 httpRequest.Content = new StreamContent(requestContent);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/octet-stream");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;

@@ -29,7 +29,7 @@ using Microsoft.WindowsAzure;
 namespace Microsoft.Azure.Management.Insights
 {
     /// <summary>
-    /// Operations for managing the autoscale.
+    /// Operations for managing autoscale.
     /// </summary>
     public partial interface IAutoscaleOperations
     {
@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Management.Insights
         /// The resource name.
         /// </param>
         /// <param name='targetResourceUri'>
-        /// The resource uri of the target of the autoscale setting.
+        /// The resource identifier of the target of the autoscale setting.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
