@@ -117,7 +117,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/sqlservers/servers/" + sourceServerName.Trim() + "/restoredatabaseoperations";
+            string url = "/" + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId) + "/services/sqlservers/servers/" + Uri.EscapeDataString(sourceServerName) + "/restoredatabaseoperations";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
