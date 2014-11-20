@@ -3,8 +3,8 @@
   <!-- Product properties -->
   <PropertyGroup>
     <CommonSolution>WindowsAzureCommonLibraries.sln</CommonSolution>
-    <ManagementLibrariesSolution>WindowsAzureManagementLibraries.sln</ManagementLibrariesSolution>
-    <ProductFriendlyName>Microsoft Azure Management Libraries</ProductFriendlyName>
+    <ManagementLibrariesSolution>HDInsightManagementLibraries.sln</ManagementLibrariesSolution>
+    <ProductFriendlyName>Microsoft Azure HDInsight Management Libraries</ProductFriendlyName>
     <ProductSourceFolder>$(MSBuildThisFileDirectory)</ProductSourceFolder>
   </PropertyGroup>
 

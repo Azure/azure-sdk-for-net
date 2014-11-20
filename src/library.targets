@@ -98,7 +98,7 @@
   Specifying location of StyleCop targets file and importing it
   -->
   <PropertyGroup>
-    <StyleCopMSBuildTargetsFile>$(SolutionDir)\packages\StyleCop.MSBuild.4.7.47.0\tools\StyleCop.targets</StyleCopMSBuildTargetsFile>
+    <StyleCopMSBuildTargetsFile>$(SolutionDir)packages\StyleCop.MSBuild.4.7.47.0\tools\StyleCop.targets</StyleCopMSBuildTargetsFile>
   </PropertyGroup>  
   <Import Condition="Exists('$(StyleCopMSBuildTargetsFile)')" Project="$(StyleCopMSBuildTargetsFile)" />
   
