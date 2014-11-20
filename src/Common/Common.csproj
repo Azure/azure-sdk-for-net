@@ -4,7 +4,7 @@
   <PropertyGroup>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <WindowsAzureLibraryProfileSet>portable/net40</WindowsAzureLibraryProfileSet>
+    <WindowsAzureLibraryProfileSet>portable/net45/net40</WindowsAzureLibraryProfileSet>
     <ProjectGuid>{856A1D19-C3BF-439A-BEBF-E822A332BC12}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <AppDesignerFolder>Properties</AppDesignerFolder>
