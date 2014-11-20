@@ -827,11 +827,6 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 throw new ArgumentNullException("parameters.ServiceName");
             }
             // TODO: Validate parameters.ServiceName is a valid DNS name.
-            int locationCount = (parameters.AffinityGroup != null ? 1 : 0) + (parameters.Location != null ? 1 : 0);
-            if (locationCount != 1)
-            {
-                throw new ArgumentException("Only one of parameters.AffinityGroup, parameters.Location may be provided.");
-            }
             
             // Tracing
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -4951,11 +4946,6 @@ namespace Microsoft.WindowsAzure.Management.Compute
             if (parameters.Description != null && parameters.Description.Length > 1024)
             {
                 throw new ArgumentOutOfRangeException("parameters.Description");
-            }
-            int minimumUpdateCount = (parameters.Description != null ? 1 : 0) + (parameters.ExtendedProperties != null ? 1 : 0) + (parameters.Label != null ? 1 : 0) + (parameters.ReverseDnsFqdn != null ? 1 : 0);
-            if (minimumUpdateCount < 1)
-            {
-                throw new ArgumentException("Expected at least one of parameters.Description, parameters.ExtendedProperties, parameters.Label, parameters.ReverseDnsFqdn to be provided.");
             }
             
             // Tracing

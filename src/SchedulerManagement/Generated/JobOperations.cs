@@ -301,6 +301,47 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 
                                 authenticationValue["type"] = SchedulerClient.HttpAuthenticationTypeToString(derived.Type);
                             }
+                            if (parameters.Action.ErrorAction.Request.Authentication is AADOAuthAuthentication)
+                            {
+                                authenticationValue["type"] = "ActiveDirectoryOAuth";
+                                AADOAuthAuthentication derived2 = ((AADOAuthAuthentication)parameters.Action.ErrorAction.Request.Authentication);
+                                
+                                if (derived2.Secret != null)
+                                {
+                                    authenticationValue["secret"] = derived2.Secret;
+                                }
+                                
+                                if (derived2.Tenant != null)
+                                {
+                                    authenticationValue["tenant"] = derived2.Tenant;
+                                }
+                                
+                                if (derived2.Audience != null)
+                                {
+                                    authenticationValue["audience"] = derived2.Audience;
+                                }
+                                
+                                if (derived2.ClientId != null)
+                                {
+                                    authenticationValue["clientId"] = derived2.ClientId;
+                                }
+                                
+                                authenticationValue["type"] = SchedulerClient.HttpAuthenticationTypeToString(derived2.Type);
+                            }
+                            if (parameters.Action.ErrorAction.Request.Authentication is BasicAuthentication)
+                            {
+                                authenticationValue["type"] = "Basic";
+                                BasicAuthentication derived3 = ((BasicAuthentication)parameters.Action.ErrorAction.Request.Authentication);
+                                
+                                authenticationValue["username"] = derived3.Username;
+                                
+                                if (derived3.Password != null)
+                                {
+                                    authenticationValue["password"] = derived3.Password;
+                                }
+                                
+                                authenticationValue["type"] = SchedulerClient.HttpAuthenticationTypeToString(derived3.Type);
+                            }
                         }
                     }
                     
@@ -355,34 +396,75 @@ namespace Microsoft.WindowsAzure.Scheduler
                         if (parameters.Action.Request.Authentication is ClientCertAuthentication)
                         {
                             authenticationValue2["type"] = "ClientCertificate";
-                            ClientCertAuthentication derived2 = ((ClientCertAuthentication)parameters.Action.Request.Authentication);
+                            ClientCertAuthentication derived4 = ((ClientCertAuthentication)parameters.Action.Request.Authentication);
                             
-                            if (derived2.Password != null)
+                            if (derived4.Password != null)
                             {
-                                authenticationValue2["password"] = derived2.Password;
+                                authenticationValue2["password"] = derived4.Password;
                             }
                             
-                            if (derived2.Pfx != null)
+                            if (derived4.Pfx != null)
                             {
-                                authenticationValue2["pfx"] = derived2.Pfx;
+                                authenticationValue2["pfx"] = derived4.Pfx;
                             }
                             
-                            if (derived2.CertificateThumbprint != null)
+                            if (derived4.CertificateThumbprint != null)
                             {
-                                authenticationValue2["certificateThumbprint"] = derived2.CertificateThumbprint;
+                                authenticationValue2["certificateThumbprint"] = derived4.CertificateThumbprint;
                             }
                             
-                            if (derived2.CertificateExpiration != null)
+                            if (derived4.CertificateExpiration != null)
                             {
-                                authenticationValue2["certificateExpiration"] = derived2.CertificateExpiration.Value;
+                                authenticationValue2["certificateExpiration"] = derived4.CertificateExpiration.Value;
                             }
                             
-                            if (derived2.CertificateSubjectName != null)
+                            if (derived4.CertificateSubjectName != null)
                             {
-                                authenticationValue2["certificateSubjectName"] = derived2.CertificateSubjectName;
+                                authenticationValue2["certificateSubjectName"] = derived4.CertificateSubjectName;
                             }
                             
-                            authenticationValue2["type"] = SchedulerClient.HttpAuthenticationTypeToString(derived2.Type);
+                            authenticationValue2["type"] = SchedulerClient.HttpAuthenticationTypeToString(derived4.Type);
+                        }
+                        if (parameters.Action.Request.Authentication is AADOAuthAuthentication)
+                        {
+                            authenticationValue2["type"] = "ActiveDirectoryOAuth";
+                            AADOAuthAuthentication derived5 = ((AADOAuthAuthentication)parameters.Action.Request.Authentication);
+                            
+                            if (derived5.Secret != null)
+                            {
+                                authenticationValue2["secret"] = derived5.Secret;
+                            }
+                            
+                            if (derived5.Tenant != null)
+                            {
+                                authenticationValue2["tenant"] = derived5.Tenant;
+                            }
+                            
+                            if (derived5.Audience != null)
+                            {
+                                authenticationValue2["audience"] = derived5.Audience;
+                            }
+                            
+                            if (derived5.ClientId != null)
+                            {
+                                authenticationValue2["clientId"] = derived5.ClientId;
+                            }
+                            
+                            authenticationValue2["type"] = SchedulerClient.HttpAuthenticationTypeToString(derived5.Type);
+                        }
+                        if (parameters.Action.Request.Authentication is BasicAuthentication)
+                        {
+                            authenticationValue2["type"] = "Basic";
+                            BasicAuthentication derived6 = ((BasicAuthentication)parameters.Action.Request.Authentication);
+                            
+                            authenticationValue2["username"] = derived6.Username;
+                            
+                            if (derived6.Password != null)
+                            {
+                                authenticationValue2["password"] = derived6.Password;
+                            }
+                            
+                            authenticationValue2["type"] = SchedulerClient.HttpAuthenticationTypeToString(derived6.Type);
                         }
                     }
                 }
@@ -702,6 +784,72 @@ namespace Microsoft.WindowsAzure.Scheduler
                                             }
                                             requestInstance.Authentication = clientCertAuthenticationInstance;
                                         }
+                                        if (typeName == "ActiveDirectoryOAuth")
+                                        {
+                                            AADOAuthAuthentication aADOAuthAuthenticationInstance = new AADOAuthAuthentication();
+                                            
+                                            JToken secretValue = authenticationValue3["secret"];
+                                            if (secretValue != null && secretValue.Type != JTokenType.Null)
+                                            {
+                                                string secretInstance = ((string)secretValue);
+                                                aADOAuthAuthenticationInstance.Secret = secretInstance;
+                                            }
+                                            
+                                            JToken tenantValue = authenticationValue3["tenant"];
+                                            if (tenantValue != null && tenantValue.Type != JTokenType.Null)
+                                            {
+                                                string tenantInstance = ((string)tenantValue);
+                                                aADOAuthAuthenticationInstance.Tenant = tenantInstance;
+                                            }
+                                            
+                                            JToken audienceValue = authenticationValue3["audience"];
+                                            if (audienceValue != null && audienceValue.Type != JTokenType.Null)
+                                            {
+                                                string audienceInstance = ((string)audienceValue);
+                                                aADOAuthAuthenticationInstance.Audience = audienceInstance;
+                                            }
+                                            
+                                            JToken clientIdValue = authenticationValue3["clientId"];
+                                            if (clientIdValue != null && clientIdValue.Type != JTokenType.Null)
+                                            {
+                                                string clientIdInstance = ((string)clientIdValue);
+                                                aADOAuthAuthenticationInstance.ClientId = clientIdInstance;
+                                            }
+                                            
+                                            JToken typeValue4 = authenticationValue3["type"];
+                                            if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
+                                            {
+                                                HttpAuthenticationType typeInstance4 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue4));
+                                                aADOAuthAuthenticationInstance.Type = typeInstance4;
+                                            }
+                                            requestInstance.Authentication = aADOAuthAuthenticationInstance;
+                                        }
+                                        if (typeName == "Basic")
+                                        {
+                                            BasicAuthentication basicAuthenticationInstance = new BasicAuthentication();
+                                            
+                                            JToken usernameValue = authenticationValue3["username"];
+                                            if (usernameValue != null && usernameValue.Type != JTokenType.Null)
+                                            {
+                                                string usernameInstance = ((string)usernameValue);
+                                                basicAuthenticationInstance.Username = usernameInstance;
+                                            }
+                                            
+                                            JToken passwordValue2 = authenticationValue3["password"];
+                                            if (passwordValue2 != null && passwordValue2.Type != JTokenType.Null)
+                                            {
+                                                string passwordInstance2 = ((string)passwordValue2);
+                                                basicAuthenticationInstance.Password = passwordInstance2;
+                                            }
+                                            
+                                            JToken typeValue5 = authenticationValue3["type"];
+                                            if (typeValue5 != null && typeValue5.Type != JTokenType.Null)
+                                            {
+                                                HttpAuthenticationType typeInstance5 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue5));
+                                                basicAuthenticationInstance.Type = typeInstance5;
+                                            }
+                                            requestInstance.Authentication = basicAuthenticationInstance;
+                                        }
                                     }
                                 }
                                 
@@ -787,11 +935,11 @@ namespace Microsoft.WindowsAzure.Scheduler
                                     {
                                         ClientCertAuthentication clientCertAuthenticationInstance2 = new ClientCertAuthentication();
                                         
-                                        JToken passwordValue2 = authenticationValue4["password"];
-                                        if (passwordValue2 != null && passwordValue2.Type != JTokenType.Null)
+                                        JToken passwordValue3 = authenticationValue4["password"];
+                                        if (passwordValue3 != null && passwordValue3.Type != JTokenType.Null)
                                         {
-                                            string passwordInstance2 = ((string)passwordValue2);
-                                            clientCertAuthenticationInstance2.Password = passwordInstance2;
+                                            string passwordInstance3 = ((string)passwordValue3);
+                                            clientCertAuthenticationInstance2.Password = passwordInstance3;
                                         }
                                         
                                         JToken pfxValue2 = authenticationValue4["pfx"];
@@ -822,13 +970,79 @@ namespace Microsoft.WindowsAzure.Scheduler
                                             clientCertAuthenticationInstance2.CertificateSubjectName = certificateSubjectNameInstance2;
                                         }
                                         
-                                        JToken typeValue4 = authenticationValue4["type"];
-                                        if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
+                                        JToken typeValue6 = authenticationValue4["type"];
+                                        if (typeValue6 != null && typeValue6.Type != JTokenType.Null)
                                         {
-                                            HttpAuthenticationType typeInstance4 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue4));
-                                            clientCertAuthenticationInstance2.Type = typeInstance4;
+                                            HttpAuthenticationType typeInstance6 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue6));
+                                            clientCertAuthenticationInstance2.Type = typeInstance6;
                                         }
                                         requestInstance2.Authentication = clientCertAuthenticationInstance2;
+                                    }
+                                    if (typeName2 == "ActiveDirectoryOAuth")
+                                    {
+                                        AADOAuthAuthentication aADOAuthAuthenticationInstance2 = new AADOAuthAuthentication();
+                                        
+                                        JToken secretValue2 = authenticationValue4["secret"];
+                                        if (secretValue2 != null && secretValue2.Type != JTokenType.Null)
+                                        {
+                                            string secretInstance2 = ((string)secretValue2);
+                                            aADOAuthAuthenticationInstance2.Secret = secretInstance2;
+                                        }
+                                        
+                                        JToken tenantValue2 = authenticationValue4["tenant"];
+                                        if (tenantValue2 != null && tenantValue2.Type != JTokenType.Null)
+                                        {
+                                            string tenantInstance2 = ((string)tenantValue2);
+                                            aADOAuthAuthenticationInstance2.Tenant = tenantInstance2;
+                                        }
+                                        
+                                        JToken audienceValue2 = authenticationValue4["audience"];
+                                        if (audienceValue2 != null && audienceValue2.Type != JTokenType.Null)
+                                        {
+                                            string audienceInstance2 = ((string)audienceValue2);
+                                            aADOAuthAuthenticationInstance2.Audience = audienceInstance2;
+                                        }
+                                        
+                                        JToken clientIdValue2 = authenticationValue4["clientId"];
+                                        if (clientIdValue2 != null && clientIdValue2.Type != JTokenType.Null)
+                                        {
+                                            string clientIdInstance2 = ((string)clientIdValue2);
+                                            aADOAuthAuthenticationInstance2.ClientId = clientIdInstance2;
+                                        }
+                                        
+                                        JToken typeValue7 = authenticationValue4["type"];
+                                        if (typeValue7 != null && typeValue7.Type != JTokenType.Null)
+                                        {
+                                            HttpAuthenticationType typeInstance7 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue7));
+                                            aADOAuthAuthenticationInstance2.Type = typeInstance7;
+                                        }
+                                        requestInstance2.Authentication = aADOAuthAuthenticationInstance2;
+                                    }
+                                    if (typeName2 == "Basic")
+                                    {
+                                        BasicAuthentication basicAuthenticationInstance2 = new BasicAuthentication();
+                                        
+                                        JToken usernameValue2 = authenticationValue4["username"];
+                                        if (usernameValue2 != null && usernameValue2.Type != JTokenType.Null)
+                                        {
+                                            string usernameInstance2 = ((string)usernameValue2);
+                                            basicAuthenticationInstance2.Username = usernameInstance2;
+                                        }
+                                        
+                                        JToken passwordValue4 = authenticationValue4["password"];
+                                        if (passwordValue4 != null && passwordValue4.Type != JTokenType.Null)
+                                        {
+                                            string passwordInstance4 = ((string)passwordValue4);
+                                            basicAuthenticationInstance2.Password = passwordInstance4;
+                                        }
+                                        
+                                        JToken typeValue8 = authenticationValue4["type"];
+                                        if (typeValue8 != null && typeValue8.Type != JTokenType.Null)
+                                        {
+                                            HttpAuthenticationType typeInstance8 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue8));
+                                            basicAuthenticationInstance2.Type = typeInstance8;
+                                        }
+                                        requestInstance2.Authentication = basicAuthenticationInstance2;
                                     }
                                 }
                             }
@@ -1311,6 +1525,47 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 
                                 authenticationValue["type"] = SchedulerClient.HttpAuthenticationTypeToString(derived.Type);
                             }
+                            if (parameters.Action.ErrorAction.Request.Authentication is AADOAuthAuthentication)
+                            {
+                                authenticationValue["type"] = "ActiveDirectoryOAuth";
+                                AADOAuthAuthentication derived2 = ((AADOAuthAuthentication)parameters.Action.ErrorAction.Request.Authentication);
+                                
+                                if (derived2.Secret != null)
+                                {
+                                    authenticationValue["secret"] = derived2.Secret;
+                                }
+                                
+                                if (derived2.Tenant != null)
+                                {
+                                    authenticationValue["tenant"] = derived2.Tenant;
+                                }
+                                
+                                if (derived2.Audience != null)
+                                {
+                                    authenticationValue["audience"] = derived2.Audience;
+                                }
+                                
+                                if (derived2.ClientId != null)
+                                {
+                                    authenticationValue["clientId"] = derived2.ClientId;
+                                }
+                                
+                                authenticationValue["type"] = SchedulerClient.HttpAuthenticationTypeToString(derived2.Type);
+                            }
+                            if (parameters.Action.ErrorAction.Request.Authentication is BasicAuthentication)
+                            {
+                                authenticationValue["type"] = "Basic";
+                                BasicAuthentication derived3 = ((BasicAuthentication)parameters.Action.ErrorAction.Request.Authentication);
+                                
+                                authenticationValue["username"] = derived3.Username;
+                                
+                                if (derived3.Password != null)
+                                {
+                                    authenticationValue["password"] = derived3.Password;
+                                }
+                                
+                                authenticationValue["type"] = SchedulerClient.HttpAuthenticationTypeToString(derived3.Type);
+                            }
                         }
                     }
                     
@@ -1365,34 +1620,75 @@ namespace Microsoft.WindowsAzure.Scheduler
                         if (parameters.Action.Request.Authentication is ClientCertAuthentication)
                         {
                             authenticationValue2["type"] = "ClientCertificate";
-                            ClientCertAuthentication derived2 = ((ClientCertAuthentication)parameters.Action.Request.Authentication);
+                            ClientCertAuthentication derived4 = ((ClientCertAuthentication)parameters.Action.Request.Authentication);
                             
-                            if (derived2.Password != null)
+                            if (derived4.Password != null)
                             {
-                                authenticationValue2["password"] = derived2.Password;
+                                authenticationValue2["password"] = derived4.Password;
                             }
                             
-                            if (derived2.Pfx != null)
+                            if (derived4.Pfx != null)
                             {
-                                authenticationValue2["pfx"] = derived2.Pfx;
+                                authenticationValue2["pfx"] = derived4.Pfx;
                             }
                             
-                            if (derived2.CertificateThumbprint != null)
+                            if (derived4.CertificateThumbprint != null)
                             {
-                                authenticationValue2["certificateThumbprint"] = derived2.CertificateThumbprint;
+                                authenticationValue2["certificateThumbprint"] = derived4.CertificateThumbprint;
                             }
                             
-                            if (derived2.CertificateExpiration != null)
+                            if (derived4.CertificateExpiration != null)
                             {
-                                authenticationValue2["certificateExpiration"] = derived2.CertificateExpiration.Value;
+                                authenticationValue2["certificateExpiration"] = derived4.CertificateExpiration.Value;
                             }
                             
-                            if (derived2.CertificateSubjectName != null)
+                            if (derived4.CertificateSubjectName != null)
                             {
-                                authenticationValue2["certificateSubjectName"] = derived2.CertificateSubjectName;
+                                authenticationValue2["certificateSubjectName"] = derived4.CertificateSubjectName;
                             }
                             
-                            authenticationValue2["type"] = SchedulerClient.HttpAuthenticationTypeToString(derived2.Type);
+                            authenticationValue2["type"] = SchedulerClient.HttpAuthenticationTypeToString(derived4.Type);
+                        }
+                        if (parameters.Action.Request.Authentication is AADOAuthAuthentication)
+                        {
+                            authenticationValue2["type"] = "ActiveDirectoryOAuth";
+                            AADOAuthAuthentication derived5 = ((AADOAuthAuthentication)parameters.Action.Request.Authentication);
+                            
+                            if (derived5.Secret != null)
+                            {
+                                authenticationValue2["secret"] = derived5.Secret;
+                            }
+                            
+                            if (derived5.Tenant != null)
+                            {
+                                authenticationValue2["tenant"] = derived5.Tenant;
+                            }
+                            
+                            if (derived5.Audience != null)
+                            {
+                                authenticationValue2["audience"] = derived5.Audience;
+                            }
+                            
+                            if (derived5.ClientId != null)
+                            {
+                                authenticationValue2["clientId"] = derived5.ClientId;
+                            }
+                            
+                            authenticationValue2["type"] = SchedulerClient.HttpAuthenticationTypeToString(derived5.Type);
+                        }
+                        if (parameters.Action.Request.Authentication is BasicAuthentication)
+                        {
+                            authenticationValue2["type"] = "Basic";
+                            BasicAuthentication derived6 = ((BasicAuthentication)parameters.Action.Request.Authentication);
+                            
+                            authenticationValue2["username"] = derived6.Username;
+                            
+                            if (derived6.Password != null)
+                            {
+                                authenticationValue2["password"] = derived6.Password;
+                            }
+                            
+                            authenticationValue2["type"] = SchedulerClient.HttpAuthenticationTypeToString(derived6.Type);
                         }
                     }
                 }
@@ -1712,6 +2008,72 @@ namespace Microsoft.WindowsAzure.Scheduler
                                             }
                                             requestInstance.Authentication = clientCertAuthenticationInstance;
                                         }
+                                        if (typeName == "ActiveDirectoryOAuth")
+                                        {
+                                            AADOAuthAuthentication aADOAuthAuthenticationInstance = new AADOAuthAuthentication();
+                                            
+                                            JToken secretValue = authenticationValue3["secret"];
+                                            if (secretValue != null && secretValue.Type != JTokenType.Null)
+                                            {
+                                                string secretInstance = ((string)secretValue);
+                                                aADOAuthAuthenticationInstance.Secret = secretInstance;
+                                            }
+                                            
+                                            JToken tenantValue = authenticationValue3["tenant"];
+                                            if (tenantValue != null && tenantValue.Type != JTokenType.Null)
+                                            {
+                                                string tenantInstance = ((string)tenantValue);
+                                                aADOAuthAuthenticationInstance.Tenant = tenantInstance;
+                                            }
+                                            
+                                            JToken audienceValue = authenticationValue3["audience"];
+                                            if (audienceValue != null && audienceValue.Type != JTokenType.Null)
+                                            {
+                                                string audienceInstance = ((string)audienceValue);
+                                                aADOAuthAuthenticationInstance.Audience = audienceInstance;
+                                            }
+                                            
+                                            JToken clientIdValue = authenticationValue3["clientId"];
+                                            if (clientIdValue != null && clientIdValue.Type != JTokenType.Null)
+                                            {
+                                                string clientIdInstance = ((string)clientIdValue);
+                                                aADOAuthAuthenticationInstance.ClientId = clientIdInstance;
+                                            }
+                                            
+                                            JToken typeValue4 = authenticationValue3["type"];
+                                            if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
+                                            {
+                                                HttpAuthenticationType typeInstance4 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue4));
+                                                aADOAuthAuthenticationInstance.Type = typeInstance4;
+                                            }
+                                            requestInstance.Authentication = aADOAuthAuthenticationInstance;
+                                        }
+                                        if (typeName == "Basic")
+                                        {
+                                            BasicAuthentication basicAuthenticationInstance = new BasicAuthentication();
+                                            
+                                            JToken usernameValue = authenticationValue3["username"];
+                                            if (usernameValue != null && usernameValue.Type != JTokenType.Null)
+                                            {
+                                                string usernameInstance = ((string)usernameValue);
+                                                basicAuthenticationInstance.Username = usernameInstance;
+                                            }
+                                            
+                                            JToken passwordValue2 = authenticationValue3["password"];
+                                            if (passwordValue2 != null && passwordValue2.Type != JTokenType.Null)
+                                            {
+                                                string passwordInstance2 = ((string)passwordValue2);
+                                                basicAuthenticationInstance.Password = passwordInstance2;
+                                            }
+                                            
+                                            JToken typeValue5 = authenticationValue3["type"];
+                                            if (typeValue5 != null && typeValue5.Type != JTokenType.Null)
+                                            {
+                                                HttpAuthenticationType typeInstance5 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue5));
+                                                basicAuthenticationInstance.Type = typeInstance5;
+                                            }
+                                            requestInstance.Authentication = basicAuthenticationInstance;
+                                        }
                                     }
                                 }
                                 
@@ -1797,11 +2159,11 @@ namespace Microsoft.WindowsAzure.Scheduler
                                     {
                                         ClientCertAuthentication clientCertAuthenticationInstance2 = new ClientCertAuthentication();
                                         
-                                        JToken passwordValue2 = authenticationValue4["password"];
-                                        if (passwordValue2 != null && passwordValue2.Type != JTokenType.Null)
+                                        JToken passwordValue3 = authenticationValue4["password"];
+                                        if (passwordValue3 != null && passwordValue3.Type != JTokenType.Null)
                                         {
-                                            string passwordInstance2 = ((string)passwordValue2);
-                                            clientCertAuthenticationInstance2.Password = passwordInstance2;
+                                            string passwordInstance3 = ((string)passwordValue3);
+                                            clientCertAuthenticationInstance2.Password = passwordInstance3;
                                         }
                                         
                                         JToken pfxValue2 = authenticationValue4["pfx"];
@@ -1832,13 +2194,79 @@ namespace Microsoft.WindowsAzure.Scheduler
                                             clientCertAuthenticationInstance2.CertificateSubjectName = certificateSubjectNameInstance2;
                                         }
                                         
-                                        JToken typeValue4 = authenticationValue4["type"];
-                                        if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
+                                        JToken typeValue6 = authenticationValue4["type"];
+                                        if (typeValue6 != null && typeValue6.Type != JTokenType.Null)
                                         {
-                                            HttpAuthenticationType typeInstance4 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue4));
-                                            clientCertAuthenticationInstance2.Type = typeInstance4;
+                                            HttpAuthenticationType typeInstance6 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue6));
+                                            clientCertAuthenticationInstance2.Type = typeInstance6;
                                         }
                                         requestInstance2.Authentication = clientCertAuthenticationInstance2;
+                                    }
+                                    if (typeName2 == "ActiveDirectoryOAuth")
+                                    {
+                                        AADOAuthAuthentication aADOAuthAuthenticationInstance2 = new AADOAuthAuthentication();
+                                        
+                                        JToken secretValue2 = authenticationValue4["secret"];
+                                        if (secretValue2 != null && secretValue2.Type != JTokenType.Null)
+                                        {
+                                            string secretInstance2 = ((string)secretValue2);
+                                            aADOAuthAuthenticationInstance2.Secret = secretInstance2;
+                                        }
+                                        
+                                        JToken tenantValue2 = authenticationValue4["tenant"];
+                                        if (tenantValue2 != null && tenantValue2.Type != JTokenType.Null)
+                                        {
+                                            string tenantInstance2 = ((string)tenantValue2);
+                                            aADOAuthAuthenticationInstance2.Tenant = tenantInstance2;
+                                        }
+                                        
+                                        JToken audienceValue2 = authenticationValue4["audience"];
+                                        if (audienceValue2 != null && audienceValue2.Type != JTokenType.Null)
+                                        {
+                                            string audienceInstance2 = ((string)audienceValue2);
+                                            aADOAuthAuthenticationInstance2.Audience = audienceInstance2;
+                                        }
+                                        
+                                        JToken clientIdValue2 = authenticationValue4["clientId"];
+                                        if (clientIdValue2 != null && clientIdValue2.Type != JTokenType.Null)
+                                        {
+                                            string clientIdInstance2 = ((string)clientIdValue2);
+                                            aADOAuthAuthenticationInstance2.ClientId = clientIdInstance2;
+                                        }
+                                        
+                                        JToken typeValue7 = authenticationValue4["type"];
+                                        if (typeValue7 != null && typeValue7.Type != JTokenType.Null)
+                                        {
+                                            HttpAuthenticationType typeInstance7 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue7));
+                                            aADOAuthAuthenticationInstance2.Type = typeInstance7;
+                                        }
+                                        requestInstance2.Authentication = aADOAuthAuthenticationInstance2;
+                                    }
+                                    if (typeName2 == "Basic")
+                                    {
+                                        BasicAuthentication basicAuthenticationInstance2 = new BasicAuthentication();
+                                        
+                                        JToken usernameValue2 = authenticationValue4["username"];
+                                        if (usernameValue2 != null && usernameValue2.Type != JTokenType.Null)
+                                        {
+                                            string usernameInstance2 = ((string)usernameValue2);
+                                            basicAuthenticationInstance2.Username = usernameInstance2;
+                                        }
+                                        
+                                        JToken passwordValue4 = authenticationValue4["password"];
+                                        if (passwordValue4 != null && passwordValue4.Type != JTokenType.Null)
+                                        {
+                                            string passwordInstance4 = ((string)passwordValue4);
+                                            basicAuthenticationInstance2.Password = passwordInstance4;
+                                        }
+                                        
+                                        JToken typeValue8 = authenticationValue4["type"];
+                                        if (typeValue8 != null && typeValue8.Type != JTokenType.Null)
+                                        {
+                                            HttpAuthenticationType typeInstance8 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue8));
+                                            basicAuthenticationInstance2.Type = typeInstance8;
+                                        }
+                                        requestInstance2.Authentication = basicAuthenticationInstance2;
                                     }
                                 }
                             }
@@ -2458,6 +2886,72 @@ namespace Microsoft.WindowsAzure.Scheduler
                                             }
                                             requestInstance.Authentication = clientCertAuthenticationInstance;
                                         }
+                                        if (typeName == "ActiveDirectoryOAuth")
+                                        {
+                                            AADOAuthAuthentication aADOAuthAuthenticationInstance = new AADOAuthAuthentication();
+                                            
+                                            JToken secretValue = authenticationValue["secret"];
+                                            if (secretValue != null && secretValue.Type != JTokenType.Null)
+                                            {
+                                                string secretInstance = ((string)secretValue);
+                                                aADOAuthAuthenticationInstance.Secret = secretInstance;
+                                            }
+                                            
+                                            JToken tenantValue = authenticationValue["tenant"];
+                                            if (tenantValue != null && tenantValue.Type != JTokenType.Null)
+                                            {
+                                                string tenantInstance = ((string)tenantValue);
+                                                aADOAuthAuthenticationInstance.Tenant = tenantInstance;
+                                            }
+                                            
+                                            JToken audienceValue = authenticationValue["audience"];
+                                            if (audienceValue != null && audienceValue.Type != JTokenType.Null)
+                                            {
+                                                string audienceInstance = ((string)audienceValue);
+                                                aADOAuthAuthenticationInstance.Audience = audienceInstance;
+                                            }
+                                            
+                                            JToken clientIdValue = authenticationValue["clientId"];
+                                            if (clientIdValue != null && clientIdValue.Type != JTokenType.Null)
+                                            {
+                                                string clientIdInstance = ((string)clientIdValue);
+                                                aADOAuthAuthenticationInstance.ClientId = clientIdInstance;
+                                            }
+                                            
+                                            JToken typeValue4 = authenticationValue["type"];
+                                            if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
+                                            {
+                                                HttpAuthenticationType typeInstance4 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue4));
+                                                aADOAuthAuthenticationInstance.Type = typeInstance4;
+                                            }
+                                            requestInstance.Authentication = aADOAuthAuthenticationInstance;
+                                        }
+                                        if (typeName == "Basic")
+                                        {
+                                            BasicAuthentication basicAuthenticationInstance = new BasicAuthentication();
+                                            
+                                            JToken usernameValue = authenticationValue["username"];
+                                            if (usernameValue != null && usernameValue.Type != JTokenType.Null)
+                                            {
+                                                string usernameInstance = ((string)usernameValue);
+                                                basicAuthenticationInstance.Username = usernameInstance;
+                                            }
+                                            
+                                            JToken passwordValue2 = authenticationValue["password"];
+                                            if (passwordValue2 != null && passwordValue2.Type != JTokenType.Null)
+                                            {
+                                                string passwordInstance2 = ((string)passwordValue2);
+                                                basicAuthenticationInstance.Password = passwordInstance2;
+                                            }
+                                            
+                                            JToken typeValue5 = authenticationValue["type"];
+                                            if (typeValue5 != null && typeValue5.Type != JTokenType.Null)
+                                            {
+                                                HttpAuthenticationType typeInstance5 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue5));
+                                                basicAuthenticationInstance.Type = typeInstance5;
+                                            }
+                                            requestInstance.Authentication = basicAuthenticationInstance;
+                                        }
                                     }
                                 }
                                 
@@ -2543,11 +3037,11 @@ namespace Microsoft.WindowsAzure.Scheduler
                                     {
                                         ClientCertAuthentication clientCertAuthenticationInstance2 = new ClientCertAuthentication();
                                         
-                                        JToken passwordValue2 = authenticationValue2["password"];
-                                        if (passwordValue2 != null && passwordValue2.Type != JTokenType.Null)
+                                        JToken passwordValue3 = authenticationValue2["password"];
+                                        if (passwordValue3 != null && passwordValue3.Type != JTokenType.Null)
                                         {
-                                            string passwordInstance2 = ((string)passwordValue2);
-                                            clientCertAuthenticationInstance2.Password = passwordInstance2;
+                                            string passwordInstance3 = ((string)passwordValue3);
+                                            clientCertAuthenticationInstance2.Password = passwordInstance3;
                                         }
                                         
                                         JToken pfxValue2 = authenticationValue2["pfx"];
@@ -2578,13 +3072,79 @@ namespace Microsoft.WindowsAzure.Scheduler
                                             clientCertAuthenticationInstance2.CertificateSubjectName = certificateSubjectNameInstance2;
                                         }
                                         
-                                        JToken typeValue4 = authenticationValue2["type"];
-                                        if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
+                                        JToken typeValue6 = authenticationValue2["type"];
+                                        if (typeValue6 != null && typeValue6.Type != JTokenType.Null)
                                         {
-                                            HttpAuthenticationType typeInstance4 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue4));
-                                            clientCertAuthenticationInstance2.Type = typeInstance4;
+                                            HttpAuthenticationType typeInstance6 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue6));
+                                            clientCertAuthenticationInstance2.Type = typeInstance6;
                                         }
                                         requestInstance2.Authentication = clientCertAuthenticationInstance2;
+                                    }
+                                    if (typeName2 == "ActiveDirectoryOAuth")
+                                    {
+                                        AADOAuthAuthentication aADOAuthAuthenticationInstance2 = new AADOAuthAuthentication();
+                                        
+                                        JToken secretValue2 = authenticationValue2["secret"];
+                                        if (secretValue2 != null && secretValue2.Type != JTokenType.Null)
+                                        {
+                                            string secretInstance2 = ((string)secretValue2);
+                                            aADOAuthAuthenticationInstance2.Secret = secretInstance2;
+                                        }
+                                        
+                                        JToken tenantValue2 = authenticationValue2["tenant"];
+                                        if (tenantValue2 != null && tenantValue2.Type != JTokenType.Null)
+                                        {
+                                            string tenantInstance2 = ((string)tenantValue2);
+                                            aADOAuthAuthenticationInstance2.Tenant = tenantInstance2;
+                                        }
+                                        
+                                        JToken audienceValue2 = authenticationValue2["audience"];
+                                        if (audienceValue2 != null && audienceValue2.Type != JTokenType.Null)
+                                        {
+                                            string audienceInstance2 = ((string)audienceValue2);
+                                            aADOAuthAuthenticationInstance2.Audience = audienceInstance2;
+                                        }
+                                        
+                                        JToken clientIdValue2 = authenticationValue2["clientId"];
+                                        if (clientIdValue2 != null && clientIdValue2.Type != JTokenType.Null)
+                                        {
+                                            string clientIdInstance2 = ((string)clientIdValue2);
+                                            aADOAuthAuthenticationInstance2.ClientId = clientIdInstance2;
+                                        }
+                                        
+                                        JToken typeValue7 = authenticationValue2["type"];
+                                        if (typeValue7 != null && typeValue7.Type != JTokenType.Null)
+                                        {
+                                            HttpAuthenticationType typeInstance7 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue7));
+                                            aADOAuthAuthenticationInstance2.Type = typeInstance7;
+                                        }
+                                        requestInstance2.Authentication = aADOAuthAuthenticationInstance2;
+                                    }
+                                    if (typeName2 == "Basic")
+                                    {
+                                        BasicAuthentication basicAuthenticationInstance2 = new BasicAuthentication();
+                                        
+                                        JToken usernameValue2 = authenticationValue2["username"];
+                                        if (usernameValue2 != null && usernameValue2.Type != JTokenType.Null)
+                                        {
+                                            string usernameInstance2 = ((string)usernameValue2);
+                                            basicAuthenticationInstance2.Username = usernameInstance2;
+                                        }
+                                        
+                                        JToken passwordValue4 = authenticationValue2["password"];
+                                        if (passwordValue4 != null && passwordValue4.Type != JTokenType.Null)
+                                        {
+                                            string passwordInstance4 = ((string)passwordValue4);
+                                            basicAuthenticationInstance2.Password = passwordInstance4;
+                                        }
+                                        
+                                        JToken typeValue8 = authenticationValue2["type"];
+                                        if (typeValue8 != null && typeValue8.Type != JTokenType.Null)
+                                        {
+                                            HttpAuthenticationType typeInstance8 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue8));
+                                            basicAuthenticationInstance2.Type = typeInstance8;
+                                        }
+                                        requestInstance2.Authentication = basicAuthenticationInstance2;
                                     }
                                 }
                             }
@@ -3554,6 +4114,72 @@ namespace Microsoft.WindowsAzure.Scheduler
                                                     }
                                                     requestInstance.Authentication = clientCertAuthenticationInstance;
                                                 }
+                                                if (typeName == "ActiveDirectoryOAuth")
+                                                {
+                                                    AADOAuthAuthentication aADOAuthAuthenticationInstance = new AADOAuthAuthentication();
+                                                    
+                                                    JToken secretValue = authenticationValue["secret"];
+                                                    if (secretValue != null && secretValue.Type != JTokenType.Null)
+                                                    {
+                                                        string secretInstance = ((string)secretValue);
+                                                        aADOAuthAuthenticationInstance.Secret = secretInstance;
+                                                    }
+                                                    
+                                                    JToken tenantValue = authenticationValue["tenant"];
+                                                    if (tenantValue != null && tenantValue.Type != JTokenType.Null)
+                                                    {
+                                                        string tenantInstance = ((string)tenantValue);
+                                                        aADOAuthAuthenticationInstance.Tenant = tenantInstance;
+                                                    }
+                                                    
+                                                    JToken audienceValue = authenticationValue["audience"];
+                                                    if (audienceValue != null && audienceValue.Type != JTokenType.Null)
+                                                    {
+                                                        string audienceInstance = ((string)audienceValue);
+                                                        aADOAuthAuthenticationInstance.Audience = audienceInstance;
+                                                    }
+                                                    
+                                                    JToken clientIdValue = authenticationValue["clientId"];
+                                                    if (clientIdValue != null && clientIdValue.Type != JTokenType.Null)
+                                                    {
+                                                        string clientIdInstance = ((string)clientIdValue);
+                                                        aADOAuthAuthenticationInstance.ClientId = clientIdInstance;
+                                                    }
+                                                    
+                                                    JToken typeValue4 = authenticationValue["type"];
+                                                    if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
+                                                    {
+                                                        HttpAuthenticationType typeInstance4 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue4));
+                                                        aADOAuthAuthenticationInstance.Type = typeInstance4;
+                                                    }
+                                                    requestInstance.Authentication = aADOAuthAuthenticationInstance;
+                                                }
+                                                if (typeName == "Basic")
+                                                {
+                                                    BasicAuthentication basicAuthenticationInstance = new BasicAuthentication();
+                                                    
+                                                    JToken usernameValue = authenticationValue["username"];
+                                                    if (usernameValue != null && usernameValue.Type != JTokenType.Null)
+                                                    {
+                                                        string usernameInstance = ((string)usernameValue);
+                                                        basicAuthenticationInstance.Username = usernameInstance;
+                                                    }
+                                                    
+                                                    JToken passwordValue2 = authenticationValue["password"];
+                                                    if (passwordValue2 != null && passwordValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string passwordInstance2 = ((string)passwordValue2);
+                                                        basicAuthenticationInstance.Password = passwordInstance2;
+                                                    }
+                                                    
+                                                    JToken typeValue5 = authenticationValue["type"];
+                                                    if (typeValue5 != null && typeValue5.Type != JTokenType.Null)
+                                                    {
+                                                        HttpAuthenticationType typeInstance5 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue5));
+                                                        basicAuthenticationInstance.Type = typeInstance5;
+                                                    }
+                                                    requestInstance.Authentication = basicAuthenticationInstance;
+                                                }
                                             }
                                         }
                                         
@@ -3639,11 +4265,11 @@ namespace Microsoft.WindowsAzure.Scheduler
                                             {
                                                 ClientCertAuthentication clientCertAuthenticationInstance2 = new ClientCertAuthentication();
                                                 
-                                                JToken passwordValue2 = authenticationValue2["password"];
-                                                if (passwordValue2 != null && passwordValue2.Type != JTokenType.Null)
+                                                JToken passwordValue3 = authenticationValue2["password"];
+                                                if (passwordValue3 != null && passwordValue3.Type != JTokenType.Null)
                                                 {
-                                                    string passwordInstance2 = ((string)passwordValue2);
-                                                    clientCertAuthenticationInstance2.Password = passwordInstance2;
+                                                    string passwordInstance3 = ((string)passwordValue3);
+                                                    clientCertAuthenticationInstance2.Password = passwordInstance3;
                                                 }
                                                 
                                                 JToken pfxValue2 = authenticationValue2["pfx"];
@@ -3674,13 +4300,79 @@ namespace Microsoft.WindowsAzure.Scheduler
                                                     clientCertAuthenticationInstance2.CertificateSubjectName = certificateSubjectNameInstance2;
                                                 }
                                                 
-                                                JToken typeValue4 = authenticationValue2["type"];
-                                                if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
+                                                JToken typeValue6 = authenticationValue2["type"];
+                                                if (typeValue6 != null && typeValue6.Type != JTokenType.Null)
                                                 {
-                                                    HttpAuthenticationType typeInstance4 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue4));
-                                                    clientCertAuthenticationInstance2.Type = typeInstance4;
+                                                    HttpAuthenticationType typeInstance6 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue6));
+                                                    clientCertAuthenticationInstance2.Type = typeInstance6;
                                                 }
                                                 requestInstance2.Authentication = clientCertAuthenticationInstance2;
+                                            }
+                                            if (typeName2 == "ActiveDirectoryOAuth")
+                                            {
+                                                AADOAuthAuthentication aADOAuthAuthenticationInstance2 = new AADOAuthAuthentication();
+                                                
+                                                JToken secretValue2 = authenticationValue2["secret"];
+                                                if (secretValue2 != null && secretValue2.Type != JTokenType.Null)
+                                                {
+                                                    string secretInstance2 = ((string)secretValue2);
+                                                    aADOAuthAuthenticationInstance2.Secret = secretInstance2;
+                                                }
+                                                
+                                                JToken tenantValue2 = authenticationValue2["tenant"];
+                                                if (tenantValue2 != null && tenantValue2.Type != JTokenType.Null)
+                                                {
+                                                    string tenantInstance2 = ((string)tenantValue2);
+                                                    aADOAuthAuthenticationInstance2.Tenant = tenantInstance2;
+                                                }
+                                                
+                                                JToken audienceValue2 = authenticationValue2["audience"];
+                                                if (audienceValue2 != null && audienceValue2.Type != JTokenType.Null)
+                                                {
+                                                    string audienceInstance2 = ((string)audienceValue2);
+                                                    aADOAuthAuthenticationInstance2.Audience = audienceInstance2;
+                                                }
+                                                
+                                                JToken clientIdValue2 = authenticationValue2["clientId"];
+                                                if (clientIdValue2 != null && clientIdValue2.Type != JTokenType.Null)
+                                                {
+                                                    string clientIdInstance2 = ((string)clientIdValue2);
+                                                    aADOAuthAuthenticationInstance2.ClientId = clientIdInstance2;
+                                                }
+                                                
+                                                JToken typeValue7 = authenticationValue2["type"];
+                                                if (typeValue7 != null && typeValue7.Type != JTokenType.Null)
+                                                {
+                                                    HttpAuthenticationType typeInstance7 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue7));
+                                                    aADOAuthAuthenticationInstance2.Type = typeInstance7;
+                                                }
+                                                requestInstance2.Authentication = aADOAuthAuthenticationInstance2;
+                                            }
+                                            if (typeName2 == "Basic")
+                                            {
+                                                BasicAuthentication basicAuthenticationInstance2 = new BasicAuthentication();
+                                                
+                                                JToken usernameValue2 = authenticationValue2["username"];
+                                                if (usernameValue2 != null && usernameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string usernameInstance2 = ((string)usernameValue2);
+                                                    basicAuthenticationInstance2.Username = usernameInstance2;
+                                                }
+                                                
+                                                JToken passwordValue4 = authenticationValue2["password"];
+                                                if (passwordValue4 != null && passwordValue4.Type != JTokenType.Null)
+                                                {
+                                                    string passwordInstance4 = ((string)passwordValue4);
+                                                    basicAuthenticationInstance2.Password = passwordInstance4;
+                                                }
+                                                
+                                                JToken typeValue8 = authenticationValue2["type"];
+                                                if (typeValue8 != null && typeValue8.Type != JTokenType.Null)
+                                                {
+                                                    HttpAuthenticationType typeInstance8 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue8));
+                                                    basicAuthenticationInstance2.Type = typeInstance8;
+                                                }
+                                                requestInstance2.Authentication = basicAuthenticationInstance2;
                                             }
                                         }
                                     }
@@ -4197,6 +4889,72 @@ namespace Microsoft.WindowsAzure.Scheduler
                                                     }
                                                     requestInstance.Authentication = clientCertAuthenticationInstance;
                                                 }
+                                                if (typeName == "ActiveDirectoryOAuth")
+                                                {
+                                                    AADOAuthAuthentication aADOAuthAuthenticationInstance = new AADOAuthAuthentication();
+                                                    
+                                                    JToken secretValue = authenticationValue["secret"];
+                                                    if (secretValue != null && secretValue.Type != JTokenType.Null)
+                                                    {
+                                                        string secretInstance = ((string)secretValue);
+                                                        aADOAuthAuthenticationInstance.Secret = secretInstance;
+                                                    }
+                                                    
+                                                    JToken tenantValue = authenticationValue["tenant"];
+                                                    if (tenantValue != null && tenantValue.Type != JTokenType.Null)
+                                                    {
+                                                        string tenantInstance = ((string)tenantValue);
+                                                        aADOAuthAuthenticationInstance.Tenant = tenantInstance;
+                                                    }
+                                                    
+                                                    JToken audienceValue = authenticationValue["audience"];
+                                                    if (audienceValue != null && audienceValue.Type != JTokenType.Null)
+                                                    {
+                                                        string audienceInstance = ((string)audienceValue);
+                                                        aADOAuthAuthenticationInstance.Audience = audienceInstance;
+                                                    }
+                                                    
+                                                    JToken clientIdValue = authenticationValue["clientId"];
+                                                    if (clientIdValue != null && clientIdValue.Type != JTokenType.Null)
+                                                    {
+                                                        string clientIdInstance = ((string)clientIdValue);
+                                                        aADOAuthAuthenticationInstance.ClientId = clientIdInstance;
+                                                    }
+                                                    
+                                                    JToken typeValue4 = authenticationValue["type"];
+                                                    if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
+                                                    {
+                                                        HttpAuthenticationType typeInstance4 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue4));
+                                                        aADOAuthAuthenticationInstance.Type = typeInstance4;
+                                                    }
+                                                    requestInstance.Authentication = aADOAuthAuthenticationInstance;
+                                                }
+                                                if (typeName == "Basic")
+                                                {
+                                                    BasicAuthentication basicAuthenticationInstance = new BasicAuthentication();
+                                                    
+                                                    JToken usernameValue = authenticationValue["username"];
+                                                    if (usernameValue != null && usernameValue.Type != JTokenType.Null)
+                                                    {
+                                                        string usernameInstance = ((string)usernameValue);
+                                                        basicAuthenticationInstance.Username = usernameInstance;
+                                                    }
+                                                    
+                                                    JToken passwordValue2 = authenticationValue["password"];
+                                                    if (passwordValue2 != null && passwordValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string passwordInstance2 = ((string)passwordValue2);
+                                                        basicAuthenticationInstance.Password = passwordInstance2;
+                                                    }
+                                                    
+                                                    JToken typeValue5 = authenticationValue["type"];
+                                                    if (typeValue5 != null && typeValue5.Type != JTokenType.Null)
+                                                    {
+                                                        HttpAuthenticationType typeInstance5 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue5));
+                                                        basicAuthenticationInstance.Type = typeInstance5;
+                                                    }
+                                                    requestInstance.Authentication = basicAuthenticationInstance;
+                                                }
                                             }
                                         }
                                         
@@ -4282,11 +5040,11 @@ namespace Microsoft.WindowsAzure.Scheduler
                                             {
                                                 ClientCertAuthentication clientCertAuthenticationInstance2 = new ClientCertAuthentication();
                                                 
-                                                JToken passwordValue2 = authenticationValue2["password"];
-                                                if (passwordValue2 != null && passwordValue2.Type != JTokenType.Null)
+                                                JToken passwordValue3 = authenticationValue2["password"];
+                                                if (passwordValue3 != null && passwordValue3.Type != JTokenType.Null)
                                                 {
-                                                    string passwordInstance2 = ((string)passwordValue2);
-                                                    clientCertAuthenticationInstance2.Password = passwordInstance2;
+                                                    string passwordInstance3 = ((string)passwordValue3);
+                                                    clientCertAuthenticationInstance2.Password = passwordInstance3;
                                                 }
                                                 
                                                 JToken pfxValue2 = authenticationValue2["pfx"];
@@ -4317,13 +5075,79 @@ namespace Microsoft.WindowsAzure.Scheduler
                                                     clientCertAuthenticationInstance2.CertificateSubjectName = certificateSubjectNameInstance2;
                                                 }
                                                 
-                                                JToken typeValue4 = authenticationValue2["type"];
-                                                if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
+                                                JToken typeValue6 = authenticationValue2["type"];
+                                                if (typeValue6 != null && typeValue6.Type != JTokenType.Null)
                                                 {
-                                                    HttpAuthenticationType typeInstance4 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue4));
-                                                    clientCertAuthenticationInstance2.Type = typeInstance4;
+                                                    HttpAuthenticationType typeInstance6 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue6));
+                                                    clientCertAuthenticationInstance2.Type = typeInstance6;
                                                 }
                                                 requestInstance2.Authentication = clientCertAuthenticationInstance2;
+                                            }
+                                            if (typeName2 == "ActiveDirectoryOAuth")
+                                            {
+                                                AADOAuthAuthentication aADOAuthAuthenticationInstance2 = new AADOAuthAuthentication();
+                                                
+                                                JToken secretValue2 = authenticationValue2["secret"];
+                                                if (secretValue2 != null && secretValue2.Type != JTokenType.Null)
+                                                {
+                                                    string secretInstance2 = ((string)secretValue2);
+                                                    aADOAuthAuthenticationInstance2.Secret = secretInstance2;
+                                                }
+                                                
+                                                JToken tenantValue2 = authenticationValue2["tenant"];
+                                                if (tenantValue2 != null && tenantValue2.Type != JTokenType.Null)
+                                                {
+                                                    string tenantInstance2 = ((string)tenantValue2);
+                                                    aADOAuthAuthenticationInstance2.Tenant = tenantInstance2;
+                                                }
+                                                
+                                                JToken audienceValue2 = authenticationValue2["audience"];
+                                                if (audienceValue2 != null && audienceValue2.Type != JTokenType.Null)
+                                                {
+                                                    string audienceInstance2 = ((string)audienceValue2);
+                                                    aADOAuthAuthenticationInstance2.Audience = audienceInstance2;
+                                                }
+                                                
+                                                JToken clientIdValue2 = authenticationValue2["clientId"];
+                                                if (clientIdValue2 != null && clientIdValue2.Type != JTokenType.Null)
+                                                {
+                                                    string clientIdInstance2 = ((string)clientIdValue2);
+                                                    aADOAuthAuthenticationInstance2.ClientId = clientIdInstance2;
+                                                }
+                                                
+                                                JToken typeValue7 = authenticationValue2["type"];
+                                                if (typeValue7 != null && typeValue7.Type != JTokenType.Null)
+                                                {
+                                                    HttpAuthenticationType typeInstance7 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue7));
+                                                    aADOAuthAuthenticationInstance2.Type = typeInstance7;
+                                                }
+                                                requestInstance2.Authentication = aADOAuthAuthenticationInstance2;
+                                            }
+                                            if (typeName2 == "Basic")
+                                            {
+                                                BasicAuthentication basicAuthenticationInstance2 = new BasicAuthentication();
+                                                
+                                                JToken usernameValue2 = authenticationValue2["username"];
+                                                if (usernameValue2 != null && usernameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string usernameInstance2 = ((string)usernameValue2);
+                                                    basicAuthenticationInstance2.Username = usernameInstance2;
+                                                }
+                                                
+                                                JToken passwordValue4 = authenticationValue2["password"];
+                                                if (passwordValue4 != null && passwordValue4.Type != JTokenType.Null)
+                                                {
+                                                    string passwordInstance4 = ((string)passwordValue4);
+                                                    basicAuthenticationInstance2.Password = passwordInstance4;
+                                                }
+                                                
+                                                JToken typeValue8 = authenticationValue2["type"];
+                                                if (typeValue8 != null && typeValue8.Type != JTokenType.Null)
+                                                {
+                                                    HttpAuthenticationType typeInstance8 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue8));
+                                                    basicAuthenticationInstance2.Type = typeInstance8;
+                                                }
+                                                requestInstance2.Authentication = basicAuthenticationInstance2;
                                             }
                                         }
                                     }
@@ -4574,7 +5398,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// <returns>
         /// The Update Jobs State operation response.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Scheduler.Models.JobCollectionJobsUpdateStateResponse> UpdateJobCollectionStateAsync(PatchJobCollectionJobsUpdateStateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Scheduler.Models.JobCollectionJobsUpdateStateResponse> UpdateJobCollectionStateAsync(JobCollectionJobsUpdateStateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
@@ -4630,10 +5454,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                 JObject jobCollectionJobsUpdateStateParametersValue = new JObject();
                 requestDoc = jobCollectionJobsUpdateStateParametersValue;
                 
-                if (parameters.State.IsIncluded)
-                {
-                    jobCollectionJobsUpdateStateParametersValue["state"] = SchedulerClient.JobStateToString(parameters.State);
-                }
+                jobCollectionJobsUpdateStateParametersValue["state"] = SchedulerClient.JobStateToString(parameters.State);
                 
                 requestContent = requestDoc.ToString(Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
@@ -4844,6 +5665,72 @@ namespace Microsoft.WindowsAzure.Scheduler
                                                     }
                                                     requestInstance.Authentication = clientCertAuthenticationInstance;
                                                 }
+                                                if (typeName == "ActiveDirectoryOAuth")
+                                                {
+                                                    AADOAuthAuthentication aADOAuthAuthenticationInstance = new AADOAuthAuthentication();
+                                                    
+                                                    JToken secretValue = authenticationValue["secret"];
+                                                    if (secretValue != null && secretValue.Type != JTokenType.Null)
+                                                    {
+                                                        string secretInstance = ((string)secretValue);
+                                                        aADOAuthAuthenticationInstance.Secret = secretInstance;
+                                                    }
+                                                    
+                                                    JToken tenantValue = authenticationValue["tenant"];
+                                                    if (tenantValue != null && tenantValue.Type != JTokenType.Null)
+                                                    {
+                                                        string tenantInstance = ((string)tenantValue);
+                                                        aADOAuthAuthenticationInstance.Tenant = tenantInstance;
+                                                    }
+                                                    
+                                                    JToken audienceValue = authenticationValue["audience"];
+                                                    if (audienceValue != null && audienceValue.Type != JTokenType.Null)
+                                                    {
+                                                        string audienceInstance = ((string)audienceValue);
+                                                        aADOAuthAuthenticationInstance.Audience = audienceInstance;
+                                                    }
+                                                    
+                                                    JToken clientIdValue = authenticationValue["clientId"];
+                                                    if (clientIdValue != null && clientIdValue.Type != JTokenType.Null)
+                                                    {
+                                                        string clientIdInstance = ((string)clientIdValue);
+                                                        aADOAuthAuthenticationInstance.ClientId = clientIdInstance;
+                                                    }
+                                                    
+                                                    JToken typeValue4 = authenticationValue["type"];
+                                                    if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
+                                                    {
+                                                        HttpAuthenticationType typeInstance4 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue4));
+                                                        aADOAuthAuthenticationInstance.Type = typeInstance4;
+                                                    }
+                                                    requestInstance.Authentication = aADOAuthAuthenticationInstance;
+                                                }
+                                                if (typeName == "Basic")
+                                                {
+                                                    BasicAuthentication basicAuthenticationInstance = new BasicAuthentication();
+                                                    
+                                                    JToken usernameValue = authenticationValue["username"];
+                                                    if (usernameValue != null && usernameValue.Type != JTokenType.Null)
+                                                    {
+                                                        string usernameInstance = ((string)usernameValue);
+                                                        basicAuthenticationInstance.Username = usernameInstance;
+                                                    }
+                                                    
+                                                    JToken passwordValue2 = authenticationValue["password"];
+                                                    if (passwordValue2 != null && passwordValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string passwordInstance2 = ((string)passwordValue2);
+                                                        basicAuthenticationInstance.Password = passwordInstance2;
+                                                    }
+                                                    
+                                                    JToken typeValue5 = authenticationValue["type"];
+                                                    if (typeValue5 != null && typeValue5.Type != JTokenType.Null)
+                                                    {
+                                                        HttpAuthenticationType typeInstance5 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue5));
+                                                        basicAuthenticationInstance.Type = typeInstance5;
+                                                    }
+                                                    requestInstance.Authentication = basicAuthenticationInstance;
+                                                }
                                             }
                                         }
                                         
@@ -4929,11 +5816,11 @@ namespace Microsoft.WindowsAzure.Scheduler
                                             {
                                                 ClientCertAuthentication clientCertAuthenticationInstance2 = new ClientCertAuthentication();
                                                 
-                                                JToken passwordValue2 = authenticationValue2["password"];
-                                                if (passwordValue2 != null && passwordValue2.Type != JTokenType.Null)
+                                                JToken passwordValue3 = authenticationValue2["password"];
+                                                if (passwordValue3 != null && passwordValue3.Type != JTokenType.Null)
                                                 {
-                                                    string passwordInstance2 = ((string)passwordValue2);
-                                                    clientCertAuthenticationInstance2.Password = passwordInstance2;
+                                                    string passwordInstance3 = ((string)passwordValue3);
+                                                    clientCertAuthenticationInstance2.Password = passwordInstance3;
                                                 }
                                                 
                                                 JToken pfxValue2 = authenticationValue2["pfx"];
@@ -4964,13 +5851,79 @@ namespace Microsoft.WindowsAzure.Scheduler
                                                     clientCertAuthenticationInstance2.CertificateSubjectName = certificateSubjectNameInstance2;
                                                 }
                                                 
-                                                JToken typeValue4 = authenticationValue2["type"];
-                                                if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
+                                                JToken typeValue6 = authenticationValue2["type"];
+                                                if (typeValue6 != null && typeValue6.Type != JTokenType.Null)
                                                 {
-                                                    HttpAuthenticationType typeInstance4 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue4));
-                                                    clientCertAuthenticationInstance2.Type = typeInstance4;
+                                                    HttpAuthenticationType typeInstance6 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue6));
+                                                    clientCertAuthenticationInstance2.Type = typeInstance6;
                                                 }
                                                 requestInstance2.Authentication = clientCertAuthenticationInstance2;
+                                            }
+                                            if (typeName2 == "ActiveDirectoryOAuth")
+                                            {
+                                                AADOAuthAuthentication aADOAuthAuthenticationInstance2 = new AADOAuthAuthentication();
+                                                
+                                                JToken secretValue2 = authenticationValue2["secret"];
+                                                if (secretValue2 != null && secretValue2.Type != JTokenType.Null)
+                                                {
+                                                    string secretInstance2 = ((string)secretValue2);
+                                                    aADOAuthAuthenticationInstance2.Secret = secretInstance2;
+                                                }
+                                                
+                                                JToken tenantValue2 = authenticationValue2["tenant"];
+                                                if (tenantValue2 != null && tenantValue2.Type != JTokenType.Null)
+                                                {
+                                                    string tenantInstance2 = ((string)tenantValue2);
+                                                    aADOAuthAuthenticationInstance2.Tenant = tenantInstance2;
+                                                }
+                                                
+                                                JToken audienceValue2 = authenticationValue2["audience"];
+                                                if (audienceValue2 != null && audienceValue2.Type != JTokenType.Null)
+                                                {
+                                                    string audienceInstance2 = ((string)audienceValue2);
+                                                    aADOAuthAuthenticationInstance2.Audience = audienceInstance2;
+                                                }
+                                                
+                                                JToken clientIdValue2 = authenticationValue2["clientId"];
+                                                if (clientIdValue2 != null && clientIdValue2.Type != JTokenType.Null)
+                                                {
+                                                    string clientIdInstance2 = ((string)clientIdValue2);
+                                                    aADOAuthAuthenticationInstance2.ClientId = clientIdInstance2;
+                                                }
+                                                
+                                                JToken typeValue7 = authenticationValue2["type"];
+                                                if (typeValue7 != null && typeValue7.Type != JTokenType.Null)
+                                                {
+                                                    HttpAuthenticationType typeInstance7 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue7));
+                                                    aADOAuthAuthenticationInstance2.Type = typeInstance7;
+                                                }
+                                                requestInstance2.Authentication = aADOAuthAuthenticationInstance2;
+                                            }
+                                            if (typeName2 == "Basic")
+                                            {
+                                                BasicAuthentication basicAuthenticationInstance2 = new BasicAuthentication();
+                                                
+                                                JToken usernameValue2 = authenticationValue2["username"];
+                                                if (usernameValue2 != null && usernameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string usernameInstance2 = ((string)usernameValue2);
+                                                    basicAuthenticationInstance2.Username = usernameInstance2;
+                                                }
+                                                
+                                                JToken passwordValue4 = authenticationValue2["password"];
+                                                if (passwordValue4 != null && passwordValue4.Type != JTokenType.Null)
+                                                {
+                                                    string passwordInstance4 = ((string)passwordValue4);
+                                                    basicAuthenticationInstance2.Password = passwordInstance4;
+                                                }
+                                                
+                                                JToken typeValue8 = authenticationValue2["type"];
+                                                if (typeValue8 != null && typeValue8.Type != JTokenType.Null)
+                                                {
+                                                    HttpAuthenticationType typeInstance8 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue8));
+                                                    basicAuthenticationInstance2.Type = typeInstance8;
+                                                }
+                                                requestInstance2.Authentication = basicAuthenticationInstance2;
                                             }
                                         }
                                     }
@@ -5497,6 +6450,72 @@ namespace Microsoft.WindowsAzure.Scheduler
                                             }
                                             requestInstance.Authentication = clientCertAuthenticationInstance;
                                         }
+                                        if (typeName == "ActiveDirectoryOAuth")
+                                        {
+                                            AADOAuthAuthentication aADOAuthAuthenticationInstance = new AADOAuthAuthentication();
+                                            
+                                            JToken secretValue = authenticationValue["secret"];
+                                            if (secretValue != null && secretValue.Type != JTokenType.Null)
+                                            {
+                                                string secretInstance = ((string)secretValue);
+                                                aADOAuthAuthenticationInstance.Secret = secretInstance;
+                                            }
+                                            
+                                            JToken tenantValue = authenticationValue["tenant"];
+                                            if (tenantValue != null && tenantValue.Type != JTokenType.Null)
+                                            {
+                                                string tenantInstance = ((string)tenantValue);
+                                                aADOAuthAuthenticationInstance.Tenant = tenantInstance;
+                                            }
+                                            
+                                            JToken audienceValue = authenticationValue["audience"];
+                                            if (audienceValue != null && audienceValue.Type != JTokenType.Null)
+                                            {
+                                                string audienceInstance = ((string)audienceValue);
+                                                aADOAuthAuthenticationInstance.Audience = audienceInstance;
+                                            }
+                                            
+                                            JToken clientIdValue = authenticationValue["clientId"];
+                                            if (clientIdValue != null && clientIdValue.Type != JTokenType.Null)
+                                            {
+                                                string clientIdInstance = ((string)clientIdValue);
+                                                aADOAuthAuthenticationInstance.ClientId = clientIdInstance;
+                                            }
+                                            
+                                            JToken typeValue4 = authenticationValue["type"];
+                                            if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
+                                            {
+                                                HttpAuthenticationType typeInstance4 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue4));
+                                                aADOAuthAuthenticationInstance.Type = typeInstance4;
+                                            }
+                                            requestInstance.Authentication = aADOAuthAuthenticationInstance;
+                                        }
+                                        if (typeName == "Basic")
+                                        {
+                                            BasicAuthentication basicAuthenticationInstance = new BasicAuthentication();
+                                            
+                                            JToken usernameValue = authenticationValue["username"];
+                                            if (usernameValue != null && usernameValue.Type != JTokenType.Null)
+                                            {
+                                                string usernameInstance = ((string)usernameValue);
+                                                basicAuthenticationInstance.Username = usernameInstance;
+                                            }
+                                            
+                                            JToken passwordValue2 = authenticationValue["password"];
+                                            if (passwordValue2 != null && passwordValue2.Type != JTokenType.Null)
+                                            {
+                                                string passwordInstance2 = ((string)passwordValue2);
+                                                basicAuthenticationInstance.Password = passwordInstance2;
+                                            }
+                                            
+                                            JToken typeValue5 = authenticationValue["type"];
+                                            if (typeValue5 != null && typeValue5.Type != JTokenType.Null)
+                                            {
+                                                HttpAuthenticationType typeInstance5 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue5));
+                                                basicAuthenticationInstance.Type = typeInstance5;
+                                            }
+                                            requestInstance.Authentication = basicAuthenticationInstance;
+                                        }
                                     }
                                 }
                                 
@@ -5582,11 +6601,11 @@ namespace Microsoft.WindowsAzure.Scheduler
                                     {
                                         ClientCertAuthentication clientCertAuthenticationInstance2 = new ClientCertAuthentication();
                                         
-                                        JToken passwordValue2 = authenticationValue2["password"];
-                                        if (passwordValue2 != null && passwordValue2.Type != JTokenType.Null)
+                                        JToken passwordValue3 = authenticationValue2["password"];
+                                        if (passwordValue3 != null && passwordValue3.Type != JTokenType.Null)
                                         {
-                                            string passwordInstance2 = ((string)passwordValue2);
-                                            clientCertAuthenticationInstance2.Password = passwordInstance2;
+                                            string passwordInstance3 = ((string)passwordValue3);
+                                            clientCertAuthenticationInstance2.Password = passwordInstance3;
                                         }
                                         
                                         JToken pfxValue2 = authenticationValue2["pfx"];
@@ -5617,13 +6636,79 @@ namespace Microsoft.WindowsAzure.Scheduler
                                             clientCertAuthenticationInstance2.CertificateSubjectName = certificateSubjectNameInstance2;
                                         }
                                         
-                                        JToken typeValue4 = authenticationValue2["type"];
-                                        if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
+                                        JToken typeValue6 = authenticationValue2["type"];
+                                        if (typeValue6 != null && typeValue6.Type != JTokenType.Null)
                                         {
-                                            HttpAuthenticationType typeInstance4 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue4));
-                                            clientCertAuthenticationInstance2.Type = typeInstance4;
+                                            HttpAuthenticationType typeInstance6 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue6));
+                                            clientCertAuthenticationInstance2.Type = typeInstance6;
                                         }
                                         requestInstance2.Authentication = clientCertAuthenticationInstance2;
+                                    }
+                                    if (typeName2 == "ActiveDirectoryOAuth")
+                                    {
+                                        AADOAuthAuthentication aADOAuthAuthenticationInstance2 = new AADOAuthAuthentication();
+                                        
+                                        JToken secretValue2 = authenticationValue2["secret"];
+                                        if (secretValue2 != null && secretValue2.Type != JTokenType.Null)
+                                        {
+                                            string secretInstance2 = ((string)secretValue2);
+                                            aADOAuthAuthenticationInstance2.Secret = secretInstance2;
+                                        }
+                                        
+                                        JToken tenantValue2 = authenticationValue2["tenant"];
+                                        if (tenantValue2 != null && tenantValue2.Type != JTokenType.Null)
+                                        {
+                                            string tenantInstance2 = ((string)tenantValue2);
+                                            aADOAuthAuthenticationInstance2.Tenant = tenantInstance2;
+                                        }
+                                        
+                                        JToken audienceValue2 = authenticationValue2["audience"];
+                                        if (audienceValue2 != null && audienceValue2.Type != JTokenType.Null)
+                                        {
+                                            string audienceInstance2 = ((string)audienceValue2);
+                                            aADOAuthAuthenticationInstance2.Audience = audienceInstance2;
+                                        }
+                                        
+                                        JToken clientIdValue2 = authenticationValue2["clientId"];
+                                        if (clientIdValue2 != null && clientIdValue2.Type != JTokenType.Null)
+                                        {
+                                            string clientIdInstance2 = ((string)clientIdValue2);
+                                            aADOAuthAuthenticationInstance2.ClientId = clientIdInstance2;
+                                        }
+                                        
+                                        JToken typeValue7 = authenticationValue2["type"];
+                                        if (typeValue7 != null && typeValue7.Type != JTokenType.Null)
+                                        {
+                                            HttpAuthenticationType typeInstance7 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue7));
+                                            aADOAuthAuthenticationInstance2.Type = typeInstance7;
+                                        }
+                                        requestInstance2.Authentication = aADOAuthAuthenticationInstance2;
+                                    }
+                                    if (typeName2 == "Basic")
+                                    {
+                                        BasicAuthentication basicAuthenticationInstance2 = new BasicAuthentication();
+                                        
+                                        JToken usernameValue2 = authenticationValue2["username"];
+                                        if (usernameValue2 != null && usernameValue2.Type != JTokenType.Null)
+                                        {
+                                            string usernameInstance2 = ((string)usernameValue2);
+                                            basicAuthenticationInstance2.Username = usernameInstance2;
+                                        }
+                                        
+                                        JToken passwordValue4 = authenticationValue2["password"];
+                                        if (passwordValue4 != null && passwordValue4.Type != JTokenType.Null)
+                                        {
+                                            string passwordInstance4 = ((string)passwordValue4);
+                                            basicAuthenticationInstance2.Password = passwordInstance4;
+                                        }
+                                        
+                                        JToken typeValue8 = authenticationValue2["type"];
+                                        if (typeValue8 != null && typeValue8.Type != JTokenType.Null)
+                                        {
+                                            HttpAuthenticationType typeInstance8 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue8));
+                                            basicAuthenticationInstance2.Type = typeInstance8;
+                                        }
+                                        requestInstance2.Authentication = basicAuthenticationInstance2;
                                     }
                                 }
                             }

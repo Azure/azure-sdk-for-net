@@ -124,11 +124,6 @@ namespace Microsoft.WindowsAzure.Management.Storage
                 }
             }
             // TODO: Validate parameters.Name is a valid DNS name.
-            int locationCount = (parameters.AffinityGroup != null ? 1 : 0) + (parameters.Location != null ? 1 : 0);
-            if (locationCount != 1)
-            {
-                throw new ArgumentException("Only one of parameters.AffinityGroup, parameters.Location may be provided.");
-            }
             
             // Tracing
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;

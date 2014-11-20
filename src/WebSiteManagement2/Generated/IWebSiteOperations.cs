@@ -163,6 +163,30 @@ namespace Microsoft.Azure.Management.WebSites
         Task<WebSiteDeleteRepositoryResponse> DeleteRepositoryAsync(string resourceGroupName, string webSiteName, string slotName, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Unlink source control from website
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='slotName'>
+        /// The name of the slot.
+        /// </param>
+        /// <param name='repoUrl'>
+        /// The repository url.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<OperationResponse> DeleteSiteSourceControlAsync(string resourceGroupName, string webSiteName, string slotName, string repoUrl, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Scans a backup in a storage account and returns database
         /// information etc. Should be called before calling Restore to
         /// discover what parameters are needed for the restore operation.
@@ -751,6 +775,31 @@ namespace Microsoft.Azure.Management.WebSites
         /// List of metadata for the website.
         /// </returns>
         Task<WebSiteMetadataResult> UpdateMetadataAsync(string resourceGroupName, string webSiteName, string slotName, WebSiteNameValueParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Link source control to website (do not forget to setup the token,
+        /// and if needed token secret, for the specific source control type
+        /// used).
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site
+        /// </param>
+        /// <param name='slotName'>
+        /// The name of the slot of the website
+        /// </param>
+        /// <param name='parameters'>
+        /// The update site source control parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The link site to source control operation response.
+        /// </returns>
+        Task<SiteSourceControlUpdateResponse> UpdateSiteSourceControlAsync(string resourceGroupName, string webSiteName, string slotName, SiteSourceControlUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Update list of app settings and connection strings which to be slot

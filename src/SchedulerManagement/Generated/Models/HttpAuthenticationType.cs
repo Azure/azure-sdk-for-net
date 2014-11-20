@@ -31,8 +31,10 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
     {
         NotSpecified = 0,
         
-        Basic = 1,
+        ClientCertificate = 1,
         
-        ClientCertificate = 2,
+        ActiveDirectoryOAuth = 2,
+        
+        Basic = 3,
     }
 }

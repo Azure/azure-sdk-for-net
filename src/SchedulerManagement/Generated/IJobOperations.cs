@@ -168,7 +168,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// <returns>
         /// The Update Jobs State operation response.
         /// </returns>
-        Task<JobCollectionJobsUpdateStateResponse> UpdateJobCollectionStateAsync(PatchJobCollectionJobsUpdateStateParameters parameters, CancellationToken cancellationToken);
+        Task<JobCollectionJobsUpdateStateResponse> UpdateJobCollectionStateAsync(JobCollectionJobsUpdateStateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Update the state of a job.

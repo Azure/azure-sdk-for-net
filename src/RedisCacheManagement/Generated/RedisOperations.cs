@@ -195,6 +195,8 @@ namespace Microsoft.Azure.Management.Redis
                     propertiesValue["maxMemoryPolicy"] = parameters.Properties.MaxMemoryPolicy;
                 }
                 
+                propertiesValue["enableNonSslPort"] = parameters.Properties.EnableNonSslPort;
+                
                 requestContent = requestDoc.ToString(Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
@@ -362,6 +364,13 @@ namespace Microsoft.Azure.Management.Redis
                             {
                                 string maxMemoryPolicyInstance = ((string)maxMemoryPolicyValue);
                                 propertiesInstance.MaxMemoryPolicy = maxMemoryPolicyInstance;
+                            }
+                            
+                            JToken enableNonSslPortValue = propertiesValue2["enableNonSslPort"];
+                            if (enableNonSslPortValue != null && enableNonSslPortValue.Type != JTokenType.Null)
+                            {
+                                bool enableNonSslPortInstance = ((bool)enableNonSslPortValue);
+                                propertiesInstance.EnableNonSslPort = enableNonSslPortInstance;
                             }
                         }
                     }
@@ -735,6 +744,13 @@ namespace Microsoft.Azure.Management.Redis
                                 string maxMemoryPolicyInstance = ((string)maxMemoryPolicyValue);
                                 propertiesInstance.MaxMemoryPolicy = maxMemoryPolicyInstance;
                             }
+                            
+                            JToken enableNonSslPortValue = propertiesValue["enableNonSslPort"];
+                            if (enableNonSslPortValue != null && enableNonSslPortValue.Type != JTokenType.Null)
+                            {
+                                bool enableNonSslPortInstance = ((bool)enableNonSslPortValue);
+                                propertiesInstance.EnableNonSslPort = enableNonSslPortInstance;
+                            }
                         }
                     }
                     
@@ -980,6 +996,13 @@ namespace Microsoft.Azure.Management.Redis
                                     {
                                         string maxMemoryPolicyInstance = ((string)maxMemoryPolicyValue);
                                         propertiesInstance.MaxMemoryPolicy = maxMemoryPolicyInstance;
+                                    }
+                                    
+                                    JToken enableNonSslPortValue = propertiesValue["enableNonSslPort"];
+                                    if (enableNonSslPortValue != null && enableNonSslPortValue.Type != JTokenType.Null)
+                                    {
+                                        bool enableNonSslPortInstance = ((bool)enableNonSslPortValue);
+                                        propertiesInstance.EnableNonSslPort = enableNonSslPortInstance;
                                     }
                                 }
                             }
@@ -1375,6 +1398,13 @@ namespace Microsoft.Azure.Management.Redis
                                     {
                                         string maxMemoryPolicyInstance = ((string)maxMemoryPolicyValue);
                                         propertiesInstance.MaxMemoryPolicy = maxMemoryPolicyInstance;
+                                    }
+                                    
+                                    JToken enableNonSslPortValue = propertiesValue["enableNonSslPort"];
+                                    if (enableNonSslPortValue != null && enableNonSslPortValue.Type != JTokenType.Null)
+                                    {
+                                        bool enableNonSslPortInstance = ((bool)enableNonSslPortValue);
+                                        propertiesInstance.EnableNonSslPort = enableNonSslPortInstance;
                                     }
                                 }
                             }

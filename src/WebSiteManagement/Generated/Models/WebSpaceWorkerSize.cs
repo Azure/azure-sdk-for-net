@@ -24,9 +24,6 @@ using System.Linq;
 
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
 {
-    /// <summary>
-    /// The size of a web space worker.
-    /// </summary>
     public enum WebSpaceWorkerSize
     {
         Small = 0,
