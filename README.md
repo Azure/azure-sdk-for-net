@@ -77,6 +77,22 @@ Be sure to check out the [Microsoft Azure Developer Forums on MSDN](http://go.mi
 
 ## Collaborate & Contribute
 
+### Environment setup
+
+Install:
+- Visual Studio 2013 RTM with update 2 and Windows and Windows Phone SDKs
+- Latest [Git client] (http://git-scm.com/download/win)
+
+### How to build locally
+
+Open Visual Studio command prompt and navigate to your cloned git folder of azure sdk, then run:
+
+```bash
+msbuild libraries.msbuild
+```
+
+### How to contribute
+
 We gladly accept community contributions.
 
 - Issues: Please report bugs using the Issues section of GitHub
