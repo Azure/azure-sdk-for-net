@@ -95,12 +95,6 @@
   </Target>
   <Import Project="GenerateCode.props" />
   <Import Project="..\..\packages\Hyak.Generator.1.0.5435.25687-prerelease\build\Hyak.Generator.targets" Condition="Exists('..\..\packages\Hyak.Generator.1.0.5435.25687-prerelease\build\Hyak.Generator.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\..\packages\Hyak.Generator.1.0.5435.25687-prerelease\build\Hyak.Generator.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Hyak.Generator.1.0.5435.25687-prerelease\build\Hyak.Generator.targets'))" />
-  </Target>
   <Target Name="DoSpecGeneration" DependsOnTargets="RestorePackages" BeforeTargets="BeforeBuild">
     <CallTarget Targets="GenerateCodeFromSpecs" Condition="'$(HydraGeneratorImported)' != ''" />
     <Error Text="The Hydra code generator package was restored from nuget. Build the project again to do code generation." Condition="Exists('..\..\packages\Hyak.Generator.1.0.5435.25687-prerelease\build\Hyak.Generator.targets') And '$(HydraGeneratorImported)' == ''" />
