@@ -103,7 +103,6 @@
     <Compile Include="GenericRecordTests\AvroGenericsTests.cs" />
     <Compile Include="GenericRecordTests\SequentialGenericWritingReadingTests.cs" />
     <Compile Include="GenericRecordTests\GenericSerializerTests.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IntegrationWithHiveTest\AvroIntegrationWithHiveConfigurations.cs" />
     <Compile Include="IntegrationWithHiveTest\IntegrationWithHiveTests.cs" />
     <Compile Include="MockExecutionContext.cs" />

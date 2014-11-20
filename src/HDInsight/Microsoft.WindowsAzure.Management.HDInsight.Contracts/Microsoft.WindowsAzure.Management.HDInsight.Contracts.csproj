@@ -26,7 +26,6 @@
   <ItemGroup>
     <Compile Include="DataContractSerDeUtils.cs" />
     <Compile Include="ErrorDetails.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="HttpUserChangeRequest.cs" />
     <Compile Include="March2013\ASVAccount.cs" />
     <Compile Include="March2013\AzureClusterDeploymentAction.cs" />

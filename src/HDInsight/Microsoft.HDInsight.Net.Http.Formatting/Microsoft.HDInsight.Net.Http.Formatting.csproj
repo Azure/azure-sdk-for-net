@@ -66,7 +66,6 @@
     <Compile Include="Formatting\FormDataCollection.cs" />
     <Compile Include="Formatting\ContentNegotiationResult.cs" />
     <Compile Include="Formatting\FormUrlEncodedJson.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Formatting\IFormatterLogger.cs" />
     <Compile Include="Formatting\IRequiredMemberSelector.cs" />
     <Compile Include="Headers\CookieHeaderValue.cs" />

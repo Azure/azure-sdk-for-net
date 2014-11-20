@@ -43,7 +43,6 @@
     <Compile Include="Encoders\BufferedBinaryDecoder.cs" />
     <Compile Include="Encoders\BufferedBinaryEncoder.cs" />
     <Compile Include="GeneratedSerializer.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IAvroSerializer.cs" />
     <Compile Include="IAvroSurrogate.cs" />
     <Compile Include="MemberSerializationInfo.cs" />
