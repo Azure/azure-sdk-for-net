@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _name;
         
         /// <summary>
-        /// Required. The name of the subscription quotas response.
+        /// Required. Gets or sets the name of the subscription quotas response.
         /// </summary>
         public string Name
         {
@@ -44,7 +44,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private SubscriptionQuotasProperties _properties;
         
         /// <summary>
-        /// Required. The properties of the subscription quotas response.
+        /// Required. Gets or sets the properties of the subscription quotas
+        /// response.
         /// </summary>
         public SubscriptionQuotasProperties Properties
         {

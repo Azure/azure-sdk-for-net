@@ -21,6 +21,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -36,8 +37,7 @@ using Newtonsoft.Json.Linq;
 namespace Microsoft.Azure.Management.StreamAnalytics
 {
     /// <summary>
-    /// Operations for get the subscription information related to Azure Stream
-    /// Analytics.
+    /// Operations for Azure Stream Analytics subscription information.
     /// </summary>
     internal partial class SubscriptionOperations : IServiceOperations<StreamAnalyticsManagementClient>, ISubscriptionOperations
     {
@@ -95,8 +95,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/providers/Microsoft.StreamAnalytics/locations/" + location.Trim() + "/quotas?";
-            url = url + "api-version=2014-10-01-preview";
+            string url = "/subscriptions/" + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId) + "/providers/Microsoft.StreamAnalytics/locations/" + Uri.EscapeDataString(location) + "/quotas?";
+            url = url + "api-version=2014-12-01-preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -205,6 +205,10 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     }
                     
                     result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("Date"))
+                    {
+                        result.Date = DateTime.Parse(httpResponse.Headers.GetValues("Date").FirstOrDefault(), CultureInfo.InvariantCulture);
+                    }
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();

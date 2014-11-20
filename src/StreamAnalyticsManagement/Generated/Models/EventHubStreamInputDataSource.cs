@@ -30,16 +30,16 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
     /// </summary>
     public partial class EventHubStreamInputDataSource : StreamInputDataSource
     {
-        private EventHubStreamInputDataSourceProperties _eventHubStreamInputDataSourceProperties;
+        private EventHubStreamInputDataSourceProperties _properties;
         
         /// <summary>
-        /// Required. The properties of the EventHub data source as stream
-        /// input.
+        /// Required. Gets or sets the properties of the EventHub data source
+        /// as stream input.
         /// </summary>
-        public EventHubStreamInputDataSourceProperties EventHubStreamInputDataSourceProperties
+        public EventHubStreamInputDataSourceProperties Properties
         {
-            get { return this._eventHubStreamInputDataSourceProperties; }
-            set { this._eventHubStreamInputDataSourceProperties = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>
@@ -54,14 +54,14 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// Initializes a new instance of the EventHubStreamInputDataSource
         /// class with required arguments.
         /// </summary>
-        public EventHubStreamInputDataSource(EventHubStreamInputDataSourceProperties eventHubStreamInputDataSourceProperties)
+        public EventHubStreamInputDataSource(EventHubStreamInputDataSourceProperties properties)
             : this()
         {
-            if (eventHubStreamInputDataSourceProperties == null)
+            if (properties == null)
             {
-                throw new ArgumentNullException("eventHubStreamInputDataSourceProperties");
+                throw new ArgumentNullException("properties");
             }
-            this.EventHubStreamInputDataSourceProperties = eventHubStreamInputDataSourceProperties;
+            this.Properties = properties;
         }
     }
 }

@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _etag;
         
         /// <summary>
-        /// Optional. The etag of the input properties.
+        /// Optional. Gets or sets the etag of the input properties.
         /// </summary>
         public string Etag
         {
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private Serialization _serialization;
         
         /// <summary>
-        /// Required. The serialization configuration of the input.
+        /// Required. Gets or sets the serialization configuration of the input.
         /// </summary>
         public Serialization Serialization
         {

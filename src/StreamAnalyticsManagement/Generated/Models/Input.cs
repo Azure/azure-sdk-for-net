@@ -30,26 +30,26 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
     /// </summary>
     public partial class Input
     {
-        private InputProperties _inputProperties;
-        
-        /// <summary>
-        /// Required. The properties of the input.
-        /// </summary>
-        public InputProperties InputProperties
-        {
-            get { return this._inputProperties; }
-            set { this._inputProperties = value; }
-        }
-        
         private string _name;
         
         /// <summary>
-        /// Required. The name of the input.
+        /// Required. Gets or sets the name of the input.
         /// </summary>
         public string Name
         {
             get { return this._name; }
             set { this._name = value; }
+        }
+        
+        private InputProperties _properties;
+        
+        /// <summary>
+        /// Required. Gets or sets the properties of the input.
+        /// </summary>
+        public InputProperties Properties
+        {
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>
@@ -63,19 +63,19 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// Initializes a new instance of the Input class with required
         /// arguments.
         /// </summary>
-        public Input(string name, InputProperties inputProperties)
+        public Input(string name, InputProperties properties)
             : this()
         {
             if (name == null)
             {
                 throw new ArgumentNullException("name");
             }
-            if (inputProperties == null)
+            if (properties == null)
             {
-                throw new ArgumentNullException("inputProperties");
+                throw new ArgumentNullException("properties");
             }
             this.Name = name;
-            this.InputProperties = inputProperties;
+            this.Properties = properties;
         }
     }
 }

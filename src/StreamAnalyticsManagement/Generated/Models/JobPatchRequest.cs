@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private JobProperties _properties;
         
         /// <summary>
-        /// Required. The job properties for patch request.
+        /// Required. Gets or sets the job properties for patch request.
         /// </summary>
         public JobProperties Properties
         {
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private IDictionary<string, string> _tags;
         
         /// <summary>
-        /// Optional. The tags of the stream analytics job.
+        /// Optional. Gets or sets the tags of the stream analytics job.
         /// </summary>
         public IDictionary<string, string> Tags
         {

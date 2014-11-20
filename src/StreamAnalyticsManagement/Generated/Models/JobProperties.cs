@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private System.DateTime? _createdDate;
         
         /// <summary>
-        /// Optional. ReadOnly. The created date of the stream analytics job.
+        /// Optional. Gets the created date of the stream analytics job.
         /// </summary>
         public System.DateTime? CreatedDate
         {
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _etag;
         
         /// <summary>
-        /// Optional. ReadOnly. The etag of the stream analytics job.
+        /// Optional. Gets the etag of the stream analytics job.
         /// </summary>
         public string Etag
         {
@@ -57,8 +57,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private int _eventsOutOfOrderMaxDelayInMilliseconds;
         
         /// <summary>
-        /// Required. The max delay time of the out of order policy of the
-        /// stream analytics job. It is in Milliseconds
+        /// Required. Gets or sets the max delay time of the out of order
+        /// policy of the stream analytics job. It is in Milliseconds
         /// </summary>
         public int EventsOutOfOrderMaxDelayInMilliseconds
         {
@@ -69,7 +69,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _eventsOutOfOrderPolicy;
         
         /// <summary>
-        /// Required. The out of order policy of the stream analytics job.
+        /// Required. Gets or sets the out of order policy of the stream
+        /// analytics job.
         /// </summary>
         public string EventsOutOfOrderPolicy
         {
@@ -80,7 +81,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private IList<Input> _inputs;
         
         /// <summary>
-        /// Optional. A list of one or more inputs.
+        /// Optional. Gets or sets a list of one or more inputs.
         /// </summary>
         public IList<Input> Inputs
         {
@@ -91,7 +92,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _jobId;
         
         /// <summary>
-        /// Optional. ReadOnly. The id of the stream analytics job.
+        /// Optional. Gets the id of the stream analytics job.
         /// </summary>
         public string JobId
         {
@@ -102,7 +103,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _jobState;
         
         /// <summary>
-        /// Optional. ReadOnly. The running state of the stream analytics job.
+        /// Optional. Gets the running state of the stream analytics job.
         /// </summary>
         public string JobState
         {
@@ -113,7 +114,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private IList<Output> _outputs;
         
         /// <summary>
-        /// Optional. A list of outputs.
+        /// Optional. Gets or sets a list of outputs.
         /// </summary>
         public IList<Output> Outputs
         {
@@ -124,7 +125,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _outputStartMode;
         
         /// <summary>
-        /// Required. The output start mode of the stream analytics job.
+        /// Required. Gets or sets the output start mode of the stream
+        /// analytics job.
         /// </summary>
         public string OutputStartMode
         {
@@ -135,7 +137,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private System.DateTime? _outputStartTime;
         
         /// <summary>
-        /// Optional. The output start time of the stream analytics job.
+        /// Optional. Gets or sets the output start time of the stream
+        /// analytics job.
         /// </summary>
         public System.DateTime? OutputStartTime
         {
@@ -146,8 +149,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _provisioningState;
         
         /// <summary>
-        /// Optional. ReadOnly. The provisioning state of the stream analytics
-        /// job.
+        /// Optional. Gets the provisioning state of the stream analytics job.
         /// </summary>
         public string ProvisioningState
         {
@@ -158,7 +160,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private Sku _sku;
         
         /// <summary>
-        /// Required. The Sku of the stream analytics job.
+        /// Required. Gets or sets the Sku of the stream analytics job.
         /// </summary>
         public Sku Sku
         {
@@ -169,8 +171,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private Transformation _transformation;
         
         /// <summary>
-        /// Optional. The transformation definition, including the query and
-        /// the streaming unit count.
+        /// Optional. Gets or sets the transformation definition, including the
+        /// query and the streaming unit count.
         /// </summary>
         public Transformation Transformation
         {

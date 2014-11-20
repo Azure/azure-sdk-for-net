@@ -217,7 +217,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         }
         
         /// <summary>
-        /// Create or update a stream analytics job.
+        /// Create or update a stream analytics job. The raw json content will
+        /// be used.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -246,7 +247,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         }
         
         /// <summary>
-        /// Create or update a stream analytics job.
+        /// Create or update a stream analytics job. The raw json content will
+        /// be used.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -369,7 +371,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         }
         
         /// <summary>
-        /// List all the stream analytics jobs in the same resource group.
+        /// List all the stream analytics jobs in the given resource group.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -395,7 +397,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         }
         
         /// <summary>
-        /// List all the stream analytics jobs in the same resource group.
+        /// List all the stream analytics jobs in the given resource group.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -417,7 +419,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         }
         
         /// <summary>
-        /// List all the stream analytics jobs in the same subscription.
+        /// List all the stream analytics jobs in the given subscription.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -440,7 +442,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         }
         
         /// <summary>
-        /// List all the stream analytics jobs in the same subscription.
+        /// List all the stream analytics jobs in the given subscription.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the

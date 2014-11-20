@@ -34,7 +34,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private Output _output;
         
         /// <summary>
-        /// Optional. The definition of the output to be created or updated.
+        /// Optional. Gets or sets the definition of the output to be created
+        /// or updated.
         /// </summary>
         public Output Output
         {

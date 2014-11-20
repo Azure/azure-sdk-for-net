@@ -34,7 +34,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private Input _input;
         
         /// <summary>
-        /// Optional. The definition of the input to be created or updated.
+        /// Optional. Gets or sets the definition of the input to be created or
+        /// updated.
         /// </summary>
         public Input Input
         {

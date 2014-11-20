@@ -33,8 +33,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _content;
         
         /// <summary>
-        /// Required. The definition of the input to be created or updated. It
-        /// is in the json format.
+        /// Required. Gets or sets the definition of the input to be created or
+        /// updated. It is in the json format.
         /// </summary>
         public string Content
         {

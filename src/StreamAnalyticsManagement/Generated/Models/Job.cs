@@ -32,10 +32,22 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
     /// </summary>
     public partial class Job
     {
+        private string _id;
+        
+        /// <summary>
+        /// Optional. Gets the id of the stream analytics job resource.
+        /// </summary>
+        public string Id
+        {
+            get { return this._id; }
+            set { this._id = value; }
+        }
+        
         private string _location;
         
         /// <summary>
-        /// Required. Data center location of the stream analytics job.
+        /// Required. Gets or sets the data center location of the stream
+        /// analytics job.
         /// </summary>
         public string Location
         {
@@ -46,7 +58,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _name;
         
         /// <summary>
-        /// Required. Name of the stream analytics job.
+        /// Required. Gets or sets the name of the stream analytics job.
         /// </summary>
         public string Name
         {
@@ -57,7 +69,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private JobProperties _properties;
         
         /// <summary>
-        /// Required. Job properties.
+        /// Required. Gets or sets the job properties.
         /// </summary>
         public JobProperties Properties
         {
@@ -68,12 +80,23 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private IDictionary<string, string> _tags;
         
         /// <summary>
-        /// Optional. Tags of the stream analytics job.
+        /// Optional. Gets or sets the tags of the stream analytics job.
         /// </summary>
         public IDictionary<string, string> Tags
         {
             get { return this._tags; }
             set { this._tags = value; }
+        }
+        
+        private string _type;
+        
+        /// <summary>
+        /// Optional. Gets the type of the stream analytics job resource.
+        /// </summary>
+        public string Type
+        {
+            get { return this._type; }
+            set { this._type = value; }
         }
         
         /// <summary>

@@ -30,15 +30,15 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
     /// </summary>
     public partial class CsvSerialization : Serialization
     {
-        private CsvSerializationProperties _csvSerializationProperties;
+        private CsvSerializationProperties _properties;
         
         /// <summary>
-        /// Required. The properties of the CSV serialization.
+        /// Required. Gets or sets the properties of the CSV serialization.
         /// </summary>
-        public CsvSerializationProperties CsvSerializationProperties
+        public CsvSerializationProperties Properties
         {
-            get { return this._csvSerializationProperties; }
-            set { this._csvSerializationProperties = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>
@@ -52,14 +52,14 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// Initializes a new instance of the CsvSerialization class with
         /// required arguments.
         /// </summary>
-        public CsvSerialization(CsvSerializationProperties csvSerializationProperties)
+        public CsvSerialization(CsvSerializationProperties properties)
             : this()
         {
-            if (csvSerializationProperties == null)
+            if (properties == null)
             {
-                throw new ArgumentNullException("csvSerializationProperties");
+                throw new ArgumentNullException("properties");
             }
-            this.CsvSerializationProperties = csvSerializationProperties;
+            this.Properties = properties;
         }
     }
 }

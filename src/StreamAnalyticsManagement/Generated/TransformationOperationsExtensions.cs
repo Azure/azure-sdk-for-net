@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
     public static partial class TransformationOperationsExtensions
     {
         /// <summary>
-        /// Create an transformation for a stream analytics job.
+        /// Create or update a transformation for a stream analytics job.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// Required. The name of the stream analytics job.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The parameters required to create or update an
+        /// Required. The parameters required to create or update a
         /// transformation for the stream analytics job.
         /// </param>
         /// <returns>
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         }
         
         /// <summary>
-        /// Create an transformation for a stream analytics job.
+        /// Create or update a transformation for a stream analytics job.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// Required. The name of the stream analytics job.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The parameters required to create or update an
+        /// Required. The parameters required to create or update a
         /// transformation for the stream analytics job.
         /// </param>
         /// <returns>
@@ -85,8 +85,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         }
         
         /// <summary>
-        /// Create an transformation for a stream analytics job. The raw json
-        /// content will be used.
+        /// Create or update a transformation for a stream analytics job. The
+        /// raw json content will be used.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -103,7 +103,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// job.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The parameters required to create or update an
+        /// Required. The parameters required to create or update a
         /// transformation for the stream analytics job. It is in json format.
         /// </param>
         /// <returns>
@@ -119,8 +119,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         }
         
         /// <summary>
-        /// Create an transformation for a stream analytics job. The raw json
-        /// content will be used.
+        /// Create or update a transformation for a stream analytics job. The
+        /// raw json content will be used.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -137,7 +137,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// job.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The parameters required to create or update an
+        /// Required. The parameters required to create or update a
         /// transformation for the stream analytics job. It is in json format.
         /// </param>
         /// <returns>
@@ -220,8 +220,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// job.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The parameters required to create or update an
-        /// transformation for the stream analytics job.
+        /// Required. The parameters required to update an transformation for
+        /// the stream analytics job.
         /// </param>
         /// <returns>
         /// The response of the transformation patch operation.
@@ -253,8 +253,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// job.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The parameters required to create or update an
-        /// transformation for the stream analytics job.
+        /// Required. The parameters required to update an transformation for
+        /// the stream analytics job.
         /// </param>
         /// <returns>
         /// The response of the transformation patch operation.

@@ -106,8 +106,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/Microsoft.StreamAnalytics/streamingjobs/" + jobName.Trim() + "?";
-            url = url + "api-version=2014-10-01-preview";
+            string url = "/subscriptions/" + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.StreamAnalytics/streamingjobs/" + Uri.EscapeDataString(jobName) + "?";
+            url = url + "api-version=2014-12-01-preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -178,15 +178,15 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
+                    if (statusCode == HttpStatusCode.NotFound)
+                    {
+                        result.Status = OperationStatus.Failed;
+                    }
                     if (statusCode == HttpStatusCode.Conflict)
                     {
                         result.Status = OperationStatus.Failed;
                     }
                     if (statusCode == HttpStatusCode.PreconditionFailed)
-                    {
-                        result.Status = OperationStatus.Failed;
-                    }
-                    if (statusCode == HttpStatusCode.NotFound)
                     {
                         result.Status = OperationStatus.Failed;
                     }
@@ -262,8 +262,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/Microsoft.StreamAnalytics/streamingjobs/" + jobName.Trim() + "/start?";
-            url = url + "api-version=2014-10-01-preview";
+            string url = "/subscriptions/" + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.StreamAnalytics/streamingjobs/" + Uri.EscapeDataString(jobName) + "/start?";
+            url = url + "api-version=2014-12-01-preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -307,7 +307,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                         Tracing.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.Accepted)
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -334,7 +334,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-                    if (statusCode == HttpStatusCode.PreconditionFailed)
+                    if (statusCode == HttpStatusCode.NotFound)
                     {
                         result.Status = OperationStatus.Failed;
                     }
@@ -342,7 +342,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     {
                         result.Status = OperationStatus.Failed;
                     }
-                    if (statusCode == HttpStatusCode.NotFound)
+                    if (statusCode == HttpStatusCode.PreconditionFailed)
                     {
                         result.Status = OperationStatus.Failed;
                     }
@@ -414,8 +414,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/Microsoft.StreamAnalytics/streamingjobs/" + jobName.Trim() + "/stop?";
-            url = url + "api-version=2014-10-01-preview";
+            string url = "/subscriptions/" + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.StreamAnalytics/streamingjobs/" + Uri.EscapeDataString(jobName) + "/stop?";
+            url = url + "api-version=2014-12-01-preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -459,7 +459,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                         Tracing.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.Accepted)
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -486,15 +486,15 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
+                    if (statusCode == HttpStatusCode.NotFound)
+                    {
+                        result.Status = OperationStatus.Failed;
+                    }
                     if (statusCode == HttpStatusCode.Conflict)
                     {
                         result.Status = OperationStatus.Failed;
                     }
                     if (statusCode == HttpStatusCode.PreconditionFailed)
-                    {
-                        result.Status = OperationStatus.Failed;
-                    }
-                    if (statusCode == HttpStatusCode.NotFound)
                     {
                         result.Status = OperationStatus.Failed;
                     }
@@ -577,17 +577,17 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             {
                 foreach (Input inputsParameterItem in parameters.Job.Properties.Inputs)
                 {
-                    if (inputsParameterItem.InputProperties == null)
-                    {
-                        throw new ArgumentNullException("parameters.Job.Properties.Inputs.InputProperties");
-                    }
-                    if (inputsParameterItem.InputProperties.Serialization == null)
-                    {
-                        throw new ArgumentNullException("parameters.Job.Properties.Inputs.InputProperties.Serialization");
-                    }
                     if (inputsParameterItem.Name == null)
                     {
                         throw new ArgumentNullException("parameters.Job.Properties.Inputs.Name");
+                    }
+                    if (inputsParameterItem.Properties == null)
+                    {
+                        throw new ArgumentNullException("parameters.Job.Properties.Inputs.Properties");
+                    }
+                    if (inputsParameterItem.Properties.Serialization == null)
+                    {
+                        throw new ArgumentNullException("parameters.Job.Properties.Inputs.Properties.Serialization");
                     }
                 }
             }
@@ -599,13 +599,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     {
                         throw new ArgumentNullException("parameters.Job.Properties.Outputs.Name");
                     }
-                    if (outputsParameterItem.OutputProperties == null)
+                    if (outputsParameterItem.Properties == null)
                     {
-                        throw new ArgumentNullException("parameters.Job.Properties.Outputs.OutputProperties");
+                        throw new ArgumentNullException("parameters.Job.Properties.Outputs.Properties");
                     }
-                    if (outputsParameterItem.OutputProperties.DataSource == null)
+                    if (outputsParameterItem.Properties.DataSource == null)
                     {
-                        throw new ArgumentNullException("parameters.Job.Properties.Outputs.OutputProperties.DataSource");
+                        throw new ArgumentNullException("parameters.Job.Properties.Outputs.Properties.DataSource");
                     }
                 }
             }
@@ -627,13 +627,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 {
                     throw new ArgumentNullException("parameters.Job.Properties.Transformation.Name");
                 }
-                if (parameters.Job.Properties.Transformation.TransformationProperties == null)
+                if (parameters.Job.Properties.Transformation.Properties == null)
                 {
-                    throw new ArgumentNullException("parameters.Job.Properties.Transformation.TransformationProperties");
+                    throw new ArgumentNullException("parameters.Job.Properties.Transformation.Properties");
                 }
-                if (parameters.Job.Properties.Transformation.TransformationProperties.Query == null)
+                if (parameters.Job.Properties.Transformation.Properties.Query == null)
                 {
-                    throw new ArgumentNullException("parameters.Job.Properties.Transformation.TransformationProperties.Query");
+                    throw new ArgumentNullException("parameters.Job.Properties.Transformation.Properties.Query");
                 }
             }
             
@@ -650,8 +650,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/Microsoft.StreamAnalytics/streamingjobs/" + parameters.Job.Name.Trim() + "?";
-            url = url + "api-version=2014-10-01-preview";
+            string url = "/subscriptions/" + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.StreamAnalytics/streamingjobs/" + Uri.EscapeDataString(parameters.Job.Name) + "?";
+            url = url + "api-version=2014-12-01-preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -693,7 +693,17 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     jobCreateOrUpdateParametersValue["IfNoneMatch"] = JObject.Parse(parameters.IfNoneMatch);
                 }
                 
+                if (parameters.Job.Id != null)
+                {
+                    jobCreateOrUpdateParametersValue["id"] = parameters.Job.Id;
+                }
+                
                 jobCreateOrUpdateParametersValue["name"] = parameters.Job.Name;
+                
+                if (parameters.Job.Type != null)
+                {
+                    jobCreateOrUpdateParametersValue["type"] = parameters.Job.Type;
+                }
                 
                 jobCreateOrUpdateParametersValue["location"] = parameters.Job.Location;
                 
@@ -753,7 +763,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 
                 if (parameters.Job.Properties.CreatedDate != null)
                 {
-                    propertiesValue["CreatedDate"] = parameters.Job.Properties.CreatedDate.Value;
+                    propertiesValue["createdDate"] = parameters.Job.Properties.CreatedDate.Value;
                 }
                 
                 if (parameters.Job.Properties.Inputs != null)
@@ -770,10 +780,10 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                             
                             JObject propertiesValue2 = new JObject();
                             inputValue["properties"] = propertiesValue2;
-                            if (inputsItem.InputProperties is ReferenceInputProperties)
+                            if (inputsItem.Properties is ReferenceInputProperties)
                             {
                                 propertiesValue2["type"] = "Reference";
-                                ReferenceInputProperties derived = ((ReferenceInputProperties)inputsItem.InputProperties);
+                                ReferenceInputProperties derived = ((ReferenceInputProperties)inputsItem.Properties);
                                 
                                 JObject datasourceValue = new JObject();
                                 propertiesValue2["datasource"] = datasourceValue;
@@ -785,12 +795,12 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                     JObject propertiesValue3 = new JObject();
                                     datasourceValue["properties"] = propertiesValue3;
                                     
-                                    if (derived2.BlobReferenceInputDataSourceProperties.StorageAccounts != null)
+                                    if (derived2.Properties.StorageAccounts != null)
                                     {
-                                        if (derived2.BlobReferenceInputDataSourceProperties.StorageAccounts is ILazyCollection == false || ((ILazyCollection)derived2.BlobReferenceInputDataSourceProperties.StorageAccounts).IsInitialized)
+                                        if (derived2.Properties.StorageAccounts is ILazyCollection == false || ((ILazyCollection)derived2.Properties.StorageAccounts).IsInitialized)
                                         {
                                             JArray storageAccountsArray = new JArray();
-                                            foreach (StorageAccount storageAccountsItem in derived2.BlobReferenceInputDataSourceProperties.StorageAccounts)
+                                            foreach (StorageAccount storageAccountsItem in derived2.Properties.StorageAccounts)
                                             {
                                                 JObject storageAccountValue = new JObject();
                                                 storageAccountsArray.Add(storageAccountValue);
@@ -809,9 +819,9 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                         }
                                     }
                                     
-                                    propertiesValue3["container"] = derived2.BlobReferenceInputDataSourceProperties.Container;
+                                    propertiesValue3["container"] = derived2.Properties.Container;
                                     
-                                    propertiesValue3["blobName"] = derived2.BlobReferenceInputDataSourceProperties.BlobName;
+                                    propertiesValue3["blobName"] = derived2.Properties.BlobName;
                                 }
                                 
                                 if (derived.Etag != null)
@@ -829,9 +839,9 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                     JObject propertiesValue4 = new JObject();
                                     serializationValue["properties"] = propertiesValue4;
                                     
-                                    propertiesValue4["fieldDelimiter"] = derived3.CsvSerializationProperties.FieldDelimiter;
+                                    propertiesValue4["fieldDelimiter"] = derived3.Properties.FieldDelimiter;
                                     
-                                    propertiesValue4["encoding"] = derived3.CsvSerializationProperties.Encoding;
+                                    propertiesValue4["encoding"] = derived3.Properties.Encoding;
                                 }
                                 if (derived.Serialization is JsonSerialization)
                                 {
@@ -841,20 +851,20 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                     JObject propertiesValue5 = new JObject();
                                     serializationValue["properties"] = propertiesValue5;
                                     
-                                    propertiesValue5["encoding"] = derived4.JsonSerializationProperties.Encoding;
+                                    propertiesValue5["encoding"] = derived4.Properties.Encoding;
                                 }
                                 if (derived.Serialization is AvroSerialization)
                                 {
                                     serializationValue["type"] = "Avro";
                                     AvroSerialization derived5 = ((AvroSerialization)derived.Serialization);
                                     
-                                    serializationValue["properties"] = derived5.AvroSerializationProperties.ToString();
+                                    serializationValue["properties"] = derived5.Properties.ToString();
                                 }
                             }
-                            if (inputsItem.InputProperties is StreamInputProperties)
+                            if (inputsItem.Properties is StreamInputProperties)
                             {
                                 propertiesValue2["type"] = "Stream";
-                                StreamInputProperties derived6 = ((StreamInputProperties)inputsItem.InputProperties);
+                                StreamInputProperties derived6 = ((StreamInputProperties)inputsItem.Properties);
                                 
                                 JObject datasourceValue2 = new JObject();
                                 propertiesValue2["datasource"] = datasourceValue2;
@@ -866,12 +876,12 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                     JObject propertiesValue6 = new JObject();
                                     datasourceValue2["properties"] = propertiesValue6;
                                     
-                                    if (derived7.BlobStreamInputDataSourceProperties.StorageAccounts != null)
+                                    if (derived7.Properties.StorageAccounts != null)
                                     {
-                                        if (derived7.BlobStreamInputDataSourceProperties.StorageAccounts is ILazyCollection == false || ((ILazyCollection)derived7.BlobStreamInputDataSourceProperties.StorageAccounts).IsInitialized)
+                                        if (derived7.Properties.StorageAccounts is ILazyCollection == false || ((ILazyCollection)derived7.Properties.StorageAccounts).IsInitialized)
                                         {
                                             JArray storageAccountsArray2 = new JArray();
-                                            foreach (StorageAccount storageAccountsItem2 in derived7.BlobStreamInputDataSourceProperties.StorageAccounts)
+                                            foreach (StorageAccount storageAccountsItem2 in derived7.Properties.StorageAccounts)
                                             {
                                                 JObject storageAccountValue2 = new JObject();
                                                 storageAccountsArray2.Add(storageAccountValue2);
@@ -890,31 +900,31 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                         }
                                     }
                                     
-                                    propertiesValue6["container"] = derived7.BlobStreamInputDataSourceProperties.Container;
+                                    propertiesValue6["container"] = derived7.Properties.Container;
                                     
-                                    if (derived7.BlobStreamInputDataSourceProperties.BlobSerializationBoundary != null)
+                                    if (derived7.Properties.BlobSerializationBoundary != null)
                                     {
-                                        propertiesValue6["blobSerializationBoundary"] = derived7.BlobStreamInputDataSourceProperties.BlobSerializationBoundary;
+                                        propertiesValue6["blobSerializationBoundary"] = derived7.Properties.BlobSerializationBoundary;
                                     }
                                     
-                                    if (derived7.BlobStreamInputDataSourceProperties.PathPattern != null)
+                                    if (derived7.Properties.PathPattern != null)
                                     {
-                                        propertiesValue6["pathPattern"] = derived7.BlobStreamInputDataSourceProperties.PathPattern;
+                                        propertiesValue6["pathPattern"] = derived7.Properties.PathPattern;
                                     }
                                     
-                                    if (derived7.BlobStreamInputDataSourceProperties.DateFormat != null)
+                                    if (derived7.Properties.DateFormat != null)
                                     {
-                                        propertiesValue6["dateFormat"] = derived7.BlobStreamInputDataSourceProperties.DateFormat;
+                                        propertiesValue6["dateFormat"] = derived7.Properties.DateFormat;
                                     }
                                     
-                                    if (derived7.BlobStreamInputDataSourceProperties.TimeFormat != null)
+                                    if (derived7.Properties.TimeFormat != null)
                                     {
-                                        propertiesValue6["timeFormat"] = derived7.BlobStreamInputDataSourceProperties.TimeFormat;
+                                        propertiesValue6["timeFormat"] = derived7.Properties.TimeFormat;
                                     }
                                     
-                                    if (derived7.BlobStreamInputDataSourceProperties.SourcePartitionCount != null)
+                                    if (derived7.Properties.SourcePartitionCount != null)
                                     {
-                                        propertiesValue6["sourcePartitionCount"] = derived7.BlobStreamInputDataSourceProperties.SourcePartitionCount.Value;
+                                        propertiesValue6["sourcePartitionCount"] = derived7.Properties.SourcePartitionCount.Value;
                                     }
                                 }
                                 if (derived6.DataSource is EventHubStreamInputDataSource)
@@ -925,13 +935,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                     JObject propertiesValue7 = new JObject();
                                     datasourceValue2["properties"] = propertiesValue7;
                                     
-                                    propertiesValue7["serviceBusNamespace"] = derived8.EventHubStreamInputDataSourceProperties.ServiceBusNamespace;
+                                    propertiesValue7["serviceBusNamespace"] = derived8.Properties.ServiceBusNamespace;
                                     
-                                    propertiesValue7["sharedAccessPolicyName"] = derived8.EventHubStreamInputDataSourceProperties.SharedAccessPolicyName;
+                                    propertiesValue7["sharedAccessPolicyName"] = derived8.Properties.SharedAccessPolicyName;
                                     
-                                    propertiesValue7["sharedAccessPolicyKey"] = derived8.EventHubStreamInputDataSourceProperties.SharedAccessPolicyKey;
+                                    propertiesValue7["sharedAccessPolicyKey"] = derived8.Properties.SharedAccessPolicyKey;
                                     
-                                    propertiesValue7["eventHubName"] = derived8.EventHubStreamInputDataSourceProperties.EventHubName;
+                                    propertiesValue7["eventHubName"] = derived8.Properties.EventHubName;
                                 }
                                 
                                 if (derived6.Etag != null)
@@ -949,9 +959,9 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                     JObject propertiesValue8 = new JObject();
                                     serializationValue2["properties"] = propertiesValue8;
                                     
-                                    propertiesValue8["fieldDelimiter"] = derived9.CsvSerializationProperties.FieldDelimiter;
+                                    propertiesValue8["fieldDelimiter"] = derived9.Properties.FieldDelimiter;
                                     
-                                    propertiesValue8["encoding"] = derived9.CsvSerializationProperties.Encoding;
+                                    propertiesValue8["encoding"] = derived9.Properties.Encoding;
                                 }
                                 if (derived6.Serialization is JsonSerialization)
                                 {
@@ -961,14 +971,14 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                     JObject propertiesValue9 = new JObject();
                                     serializationValue2["properties"] = propertiesValue9;
                                     
-                                    propertiesValue9["encoding"] = derived10.JsonSerializationProperties.Encoding;
+                                    propertiesValue9["encoding"] = derived10.Properties.Encoding;
                                 }
                                 if (derived6.Serialization is AvroSerialization)
                                 {
                                     serializationValue2["type"] = "Avro";
                                     AvroSerialization derived11 = ((AvroSerialization)derived6.Serialization);
                                     
-                                    serializationValue2["properties"] = derived11.AvroSerializationProperties.ToString();
+                                    serializationValue2["properties"] = derived11.Properties.ToString();
                                 }
                             }
                         }
@@ -986,17 +996,17 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     JObject propertiesValue10 = new JObject();
                     transformationValue["properties"] = propertiesValue10;
                     
-                    if (parameters.Job.Properties.Transformation.TransformationProperties.Etag != null)
+                    if (parameters.Job.Properties.Transformation.Properties.Etag != null)
                     {
-                        propertiesValue10["etag"] = parameters.Job.Properties.Transformation.TransformationProperties.Etag;
+                        propertiesValue10["etag"] = parameters.Job.Properties.Transformation.Properties.Etag;
                     }
                     
-                    if (parameters.Job.Properties.Transformation.TransformationProperties.StreamingUnits != null)
+                    if (parameters.Job.Properties.Transformation.Properties.StreamingUnits != null)
                     {
-                        propertiesValue10["streamingUnits"] = parameters.Job.Properties.Transformation.TransformationProperties.StreamingUnits.Value;
+                        propertiesValue10["streamingUnits"] = parameters.Job.Properties.Transformation.Properties.StreamingUnits.Value;
                     }
                     
-                    propertiesValue10["query"] = parameters.Job.Properties.Transformation.TransformationProperties.Query;
+                    propertiesValue10["query"] = parameters.Job.Properties.Transformation.Properties.Query;
                 }
                 
                 if (parameters.Job.Properties.Outputs != null)
@@ -1014,27 +1024,27 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                             JObject propertiesValue11 = new JObject();
                             outputValue["properties"] = propertiesValue11;
                             
-                            if (outputsItem.OutputProperties.Etag != null)
+                            if (outputsItem.Properties.Etag != null)
                             {
-                                propertiesValue11["etag"] = outputsItem.OutputProperties.Etag;
+                                propertiesValue11["etag"] = outputsItem.Properties.Etag;
                             }
                             
                             JObject datasourceValue3 = new JObject();
                             propertiesValue11["datasource"] = datasourceValue3;
-                            if (outputsItem.OutputProperties.DataSource is BlobOutputDataSource)
+                            if (outputsItem.Properties.DataSource is BlobOutputDataSource)
                             {
                                 datasourceValue3["type"] = "Microsoft.Storage/Blob";
-                                BlobOutputDataSource derived12 = ((BlobOutputDataSource)outputsItem.OutputProperties.DataSource);
+                                BlobOutputDataSource derived12 = ((BlobOutputDataSource)outputsItem.Properties.DataSource);
                                 
                                 JObject propertiesValue12 = new JObject();
                                 datasourceValue3["properties"] = propertiesValue12;
                                 
-                                if (derived12.BlobOutputDataSourceProperties.StorageAccounts != null)
+                                if (derived12.Properties.StorageAccounts != null)
                                 {
-                                    if (derived12.BlobOutputDataSourceProperties.StorageAccounts is ILazyCollection == false || ((ILazyCollection)derived12.BlobOutputDataSourceProperties.StorageAccounts).IsInitialized)
+                                    if (derived12.Properties.StorageAccounts is ILazyCollection == false || ((ILazyCollection)derived12.Properties.StorageAccounts).IsInitialized)
                                     {
                                         JArray storageAccountsArray3 = new JArray();
-                                        foreach (StorageAccount storageAccountsItem3 in derived12.BlobOutputDataSourceProperties.StorageAccounts)
+                                        foreach (StorageAccount storageAccountsItem3 in derived12.Properties.StorageAccounts)
                                         {
                                             JObject storageAccountValue3 = new JObject();
                                             storageAccountsArray3.Add(storageAccountValue3);
@@ -1053,80 +1063,80 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                     }
                                 }
                                 
-                                propertiesValue12["container"] = derived12.BlobOutputDataSourceProperties.Container;
+                                propertiesValue12["container"] = derived12.Properties.Container;
                                 
-                                if (derived12.BlobOutputDataSourceProperties.BlobPathPrefix != null)
+                                if (derived12.Properties.BlobPathPrefix != null)
                                 {
-                                    propertiesValue12["blobPathPrefix"] = derived12.BlobOutputDataSourceProperties.BlobPathPrefix;
+                                    propertiesValue12["blobPathPrefix"] = derived12.Properties.BlobPathPrefix;
                                 }
                             }
-                            if (outputsItem.OutputProperties.DataSource is EventHubOutputDataSource)
+                            if (outputsItem.Properties.DataSource is EventHubOutputDataSource)
                             {
                                 datasourceValue3["type"] = "Microsoft.ServiceBus/EventHub";
-                                EventHubOutputDataSource derived13 = ((EventHubOutputDataSource)outputsItem.OutputProperties.DataSource);
+                                EventHubOutputDataSource derived13 = ((EventHubOutputDataSource)outputsItem.Properties.DataSource);
                                 
                                 JObject propertiesValue13 = new JObject();
                                 datasourceValue3["properties"] = propertiesValue13;
                                 
-                                propertiesValue13["serviceBusNamespace"] = derived13.EventHubOutputDataSourceProperties.ServiceBusNamespace;
+                                propertiesValue13["serviceBusNamespace"] = derived13.Properties.ServiceBusNamespace;
                                 
-                                propertiesValue13["sharedAccessPolicyName"] = derived13.EventHubOutputDataSourceProperties.SharedAccessPolicyName;
+                                propertiesValue13["sharedAccessPolicyName"] = derived13.Properties.SharedAccessPolicyName;
                                 
-                                propertiesValue13["sharedAccessPolicyKey"] = derived13.EventHubOutputDataSourceProperties.SharedAccessPolicyKey;
+                                propertiesValue13["sharedAccessPolicyKey"] = derived13.Properties.SharedAccessPolicyKey;
                                 
-                                propertiesValue13["eventHubName"] = derived13.EventHubOutputDataSourceProperties.EventHubName;
+                                propertiesValue13["eventHubName"] = derived13.Properties.EventHubName;
                             }
-                            if (outputsItem.OutputProperties.DataSource is SqlAzureOutputDataSource)
+                            if (outputsItem.Properties.DataSource is SqlAzureOutputDataSource)
                             {
                                 datasourceValue3["type"] = "Microsoft.Sql/Server/Database";
-                                SqlAzureOutputDataSource derived14 = ((SqlAzureOutputDataSource)outputsItem.OutputProperties.DataSource);
+                                SqlAzureOutputDataSource derived14 = ((SqlAzureOutputDataSource)outputsItem.Properties.DataSource);
                                 
                                 JObject propertiesValue14 = new JObject();
                                 datasourceValue3["properties"] = propertiesValue14;
                                 
-                                propertiesValue14["server"] = derived14.SqlAzureOutputDataSourceProperties.Server;
+                                propertiesValue14["server"] = derived14.Properties.Server;
                                 
-                                propertiesValue14["database"] = derived14.SqlAzureOutputDataSourceProperties.Database;
+                                propertiesValue14["database"] = derived14.Properties.Database;
                                 
-                                propertiesValue14["user"] = derived14.SqlAzureOutputDataSourceProperties.User;
+                                propertiesValue14["user"] = derived14.Properties.User;
                                 
-                                propertiesValue14["password"] = derived14.SqlAzureOutputDataSourceProperties.Password;
+                                propertiesValue14["password"] = derived14.Properties.Password;
                                 
-                                propertiesValue14["table"] = derived14.SqlAzureOutputDataSourceProperties.Table;
+                                propertiesValue14["table"] = derived14.Properties.Table;
                             }
                             
-                            if (outputsItem.OutputProperties.Serialization != null)
+                            if (outputsItem.Properties.Serialization != null)
                             {
                                 JObject serializationValue3 = new JObject();
                                 propertiesValue11["serialization"] = serializationValue3;
-                                if (outputsItem.OutputProperties.Serialization is CsvSerialization)
+                                if (outputsItem.Properties.Serialization is CsvSerialization)
                                 {
                                     serializationValue3["type"] = "Csv";
-                                    CsvSerialization derived15 = ((CsvSerialization)outputsItem.OutputProperties.Serialization);
+                                    CsvSerialization derived15 = ((CsvSerialization)outputsItem.Properties.Serialization);
                                     
                                     JObject propertiesValue15 = new JObject();
                                     serializationValue3["properties"] = propertiesValue15;
                                     
-                                    propertiesValue15["fieldDelimiter"] = derived15.CsvSerializationProperties.FieldDelimiter;
+                                    propertiesValue15["fieldDelimiter"] = derived15.Properties.FieldDelimiter;
                                     
-                                    propertiesValue15["encoding"] = derived15.CsvSerializationProperties.Encoding;
+                                    propertiesValue15["encoding"] = derived15.Properties.Encoding;
                                 }
-                                if (outputsItem.OutputProperties.Serialization is JsonSerialization)
+                                if (outputsItem.Properties.Serialization is JsonSerialization)
                                 {
                                     serializationValue3["type"] = "Json";
-                                    JsonSerialization derived16 = ((JsonSerialization)outputsItem.OutputProperties.Serialization);
+                                    JsonSerialization derived16 = ((JsonSerialization)outputsItem.Properties.Serialization);
                                     
                                     JObject propertiesValue16 = new JObject();
                                     serializationValue3["properties"] = propertiesValue16;
                                     
-                                    propertiesValue16["encoding"] = derived16.JsonSerializationProperties.Encoding;
+                                    propertiesValue16["encoding"] = derived16.Properties.Encoding;
                                 }
-                                if (outputsItem.OutputProperties.Serialization is AvroSerialization)
+                                if (outputsItem.Properties.Serialization is AvroSerialization)
                                 {
                                     serializationValue3["type"] = "Avro";
-                                    AvroSerialization derived17 = ((AvroSerialization)outputsItem.OutputProperties.Serialization);
+                                    AvroSerialization derived17 = ((AvroSerialization)outputsItem.Properties.Serialization);
                                     
-                                    serializationValue3["properties"] = derived17.AvroSerializationProperties.ToString();
+                                    serializationValue3["properties"] = derived17.Properties.ToString();
                                 }
                             }
                         }
@@ -1181,11 +1191,25 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                         Job jobInstance = new Job();
                         result.Job = jobInstance;
                         
+                        JToken idValue = responseDoc["id"];
+                        if (idValue != null && idValue.Type != JTokenType.Null)
+                        {
+                            string idInstance = ((string)idValue);
+                            jobInstance.Id = idInstance;
+                        }
+                        
                         JToken nameValue = responseDoc["name"];
                         if (nameValue != null && nameValue.Type != JTokenType.Null)
                         {
                             string nameInstance = ((string)nameValue);
                             jobInstance.Name = nameInstance;
+                        }
+                        
+                        JToken typeValue = responseDoc["type"];
+                        if (typeValue != null && typeValue.Type != JTokenType.Null)
+                        {
+                            string typeInstance = ((string)typeValue);
+                            jobInstance.Type = typeInstance;
                         }
                         
                         JToken locationValue = responseDoc["location"];
@@ -1282,7 +1306,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                 propertiesInstance.JobState = jobStateInstance;
                             }
                             
-                            JToken createdDateValue = propertiesValue17["CreatedDate"];
+                            JToken createdDateValue = propertiesValue17["createdDate"];
                             if (createdDateValue != null && createdDateValue.Type != JTokenType.Null)
                             {
                                 DateTime createdDateInstance = ((DateTime)createdDateValue);
@@ -1324,7 +1348,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                     if (propertiesValue19 != null && propertiesValue19.Type != JTokenType.Null)
                                                     {
                                                         BlobReferenceInputDataSourceProperties propertiesInstance2 = new BlobReferenceInputDataSourceProperties();
-                                                        blobReferenceInputDataSourceInstance.BlobReferenceInputDataSourceProperties = propertiesInstance2;
+                                                        blobReferenceInputDataSourceInstance.Properties = propertiesInstance2;
                                                         
                                                         JToken storageAccountsArray4 = propertiesValue19["storageAccounts"];
                                                         if (storageAccountsArray4 != null && storageAccountsArray4.Type != JTokenType.Null)
@@ -1387,7 +1411,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                     if (propertiesValue20 != null && propertiesValue20.Type != JTokenType.Null)
                                                     {
                                                         CsvSerializationProperties propertiesInstance3 = new CsvSerializationProperties();
-                                                        csvSerializationInstance.CsvSerializationProperties = propertiesInstance3;
+                                                        csvSerializationInstance.Properties = propertiesInstance3;
                                                         
                                                         JToken fieldDelimiterValue = propertiesValue20["fieldDelimiter"];
                                                         if (fieldDelimiterValue != null && fieldDelimiterValue.Type != JTokenType.Null)
@@ -1413,7 +1437,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                     if (propertiesValue21 != null && propertiesValue21.Type != JTokenType.Null)
                                                     {
                                                         JsonSerializationProperties propertiesInstance4 = new JsonSerializationProperties();
-                                                        jsonSerializationInstance.JsonSerializationProperties = propertiesInstance4;
+                                                        jsonSerializationInstance.Properties = propertiesInstance4;
                                                         
                                                         JToken encodingValue2 = propertiesValue21["encoding"];
                                                         if (encodingValue2 != null && encodingValue2.Type != JTokenType.Null)
@@ -1432,12 +1456,12 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                     if (propertiesValue22 != null && propertiesValue22.Type != JTokenType.Null)
                                                     {
                                                         AvroSerializationProperties propertiesInstance5 = new AvroSerializationProperties();
-                                                        avroSerializationInstance.AvroSerializationProperties = propertiesInstance5;
+                                                        avroSerializationInstance.Properties = propertiesInstance5;
                                                     }
                                                     referenceInputPropertiesInstance.Serialization = avroSerializationInstance;
                                                 }
                                             }
-                                            inputInstance.InputProperties = referenceInputPropertiesInstance;
+                                            inputInstance.Properties = referenceInputPropertiesInstance;
                                         }
                                         if (typeName == "Stream")
                                         {
@@ -1455,7 +1479,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                     if (propertiesValue23 != null && propertiesValue23.Type != JTokenType.Null)
                                                     {
                                                         BlobStreamInputDataSourceProperties propertiesInstance6 = new BlobStreamInputDataSourceProperties();
-                                                        blobStreamInputDataSourceInstance.BlobStreamInputDataSourceProperties = propertiesInstance6;
+                                                        blobStreamInputDataSourceInstance.Properties = propertiesInstance6;
                                                         
                                                         JToken storageAccountsArray5 = propertiesValue23["storageAccounts"];
                                                         if (storageAccountsArray5 != null && storageAccountsArray5.Type != JTokenType.Null)
@@ -1533,7 +1557,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                     if (propertiesValue24 != null && propertiesValue24.Type != JTokenType.Null)
                                                     {
                                                         EventHubStreamInputDataSourceProperties propertiesInstance7 = new EventHubStreamInputDataSourceProperties();
-                                                        eventHubStreamInputDataSourceInstance.EventHubStreamInputDataSourceProperties = propertiesInstance7;
+                                                        eventHubStreamInputDataSourceInstance.Properties = propertiesInstance7;
                                                         
                                                         JToken serviceBusNamespaceValue = propertiesValue24["serviceBusNamespace"];
                                                         if (serviceBusNamespaceValue != null && serviceBusNamespaceValue.Type != JTokenType.Null)
@@ -1586,7 +1610,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                     if (propertiesValue25 != null && propertiesValue25.Type != JTokenType.Null)
                                                     {
                                                         CsvSerializationProperties propertiesInstance8 = new CsvSerializationProperties();
-                                                        csvSerializationInstance2.CsvSerializationProperties = propertiesInstance8;
+                                                        csvSerializationInstance2.Properties = propertiesInstance8;
                                                         
                                                         JToken fieldDelimiterValue2 = propertiesValue25["fieldDelimiter"];
                                                         if (fieldDelimiterValue2 != null && fieldDelimiterValue2.Type != JTokenType.Null)
@@ -1612,7 +1636,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                     if (propertiesValue26 != null && propertiesValue26.Type != JTokenType.Null)
                                                     {
                                                         JsonSerializationProperties propertiesInstance9 = new JsonSerializationProperties();
-                                                        jsonSerializationInstance2.JsonSerializationProperties = propertiesInstance9;
+                                                        jsonSerializationInstance2.Properties = propertiesInstance9;
                                                         
                                                         JToken encodingValue4 = propertiesValue26["encoding"];
                                                         if (encodingValue4 != null && encodingValue4.Type != JTokenType.Null)
@@ -1631,12 +1655,12 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                     if (propertiesValue27 != null && propertiesValue27.Type != JTokenType.Null)
                                                     {
                                                         AvroSerializationProperties propertiesInstance10 = new AvroSerializationProperties();
-                                                        avroSerializationInstance2.AvroSerializationProperties = propertiesInstance10;
+                                                        avroSerializationInstance2.Properties = propertiesInstance10;
                                                     }
                                                     streamInputPropertiesInstance.Serialization = avroSerializationInstance2;
                                                 }
                                             }
-                                            inputInstance.InputProperties = streamInputPropertiesInstance;
+                                            inputInstance.Properties = streamInputPropertiesInstance;
                                         }
                                     }
                                 }
@@ -1659,7 +1683,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                 if (propertiesValue28 != null && propertiesValue28.Type != JTokenType.Null)
                                 {
                                     TransformationProperties propertiesInstance11 = new TransformationProperties();
-                                    transformationInstance.TransformationProperties = propertiesInstance11;
+                                    transformationInstance.Properties = propertiesInstance11;
                                     
                                     JToken etagValue4 = propertiesValue28["etag"];
                                     if (etagValue4 != null && etagValue4.Type != JTokenType.Null)
@@ -1703,7 +1727,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                     if (propertiesValue29 != null && propertiesValue29.Type != JTokenType.Null)
                                     {
                                         OutputProperties propertiesInstance12 = new OutputProperties();
-                                        outputInstance.OutputProperties = propertiesInstance12;
+                                        outputInstance.Properties = propertiesInstance12;
                                         
                                         JToken etagValue5 = propertiesValue29["etag"];
                                         if (etagValue5 != null && etagValue5.Type != JTokenType.Null)
@@ -1724,7 +1748,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                 if (propertiesValue30 != null && propertiesValue30.Type != JTokenType.Null)
                                                 {
                                                     BlobOutputDataSourceProperties propertiesInstance13 = new BlobOutputDataSourceProperties();
-                                                    blobOutputDataSourceInstance.BlobOutputDataSourceProperties = propertiesInstance13;
+                                                    blobOutputDataSourceInstance.Properties = propertiesInstance13;
                                                     
                                                     JToken storageAccountsArray6 = propertiesValue30["storageAccounts"];
                                                     if (storageAccountsArray6 != null && storageAccountsArray6.Type != JTokenType.Null)
@@ -1774,7 +1798,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                 if (propertiesValue31 != null && propertiesValue31.Type != JTokenType.Null)
                                                 {
                                                     EventHubOutputDataSourceProperties propertiesInstance14 = new EventHubOutputDataSourceProperties();
-                                                    eventHubOutputDataSourceInstance.EventHubOutputDataSourceProperties = propertiesInstance14;
+                                                    eventHubOutputDataSourceInstance.Properties = propertiesInstance14;
                                                     
                                                     JToken serviceBusNamespaceValue2 = propertiesValue31["serviceBusNamespace"];
                                                     if (serviceBusNamespaceValue2 != null && serviceBusNamespaceValue2.Type != JTokenType.Null)
@@ -1814,7 +1838,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                 if (propertiesValue32 != null && propertiesValue32.Type != JTokenType.Null)
                                                 {
                                                     SqlAzureOutputDataSourceProperties propertiesInstance15 = new SqlAzureOutputDataSourceProperties();
-                                                    sqlAzureOutputDataSourceInstance.SqlAzureOutputDataSourceProperties = propertiesInstance15;
+                                                    sqlAzureOutputDataSourceInstance.Properties = propertiesInstance15;
                                                     
                                                     JToken serverValue = propertiesValue32["server"];
                                                     if (serverValue != null && serverValue.Type != JTokenType.Null)
@@ -1867,7 +1891,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                 if (propertiesValue33 != null && propertiesValue33.Type != JTokenType.Null)
                                                 {
                                                     CsvSerializationProperties propertiesInstance16 = new CsvSerializationProperties();
-                                                    csvSerializationInstance3.CsvSerializationProperties = propertiesInstance16;
+                                                    csvSerializationInstance3.Properties = propertiesInstance16;
                                                     
                                                     JToken fieldDelimiterValue3 = propertiesValue33["fieldDelimiter"];
                                                     if (fieldDelimiterValue3 != null && fieldDelimiterValue3.Type != JTokenType.Null)
@@ -1893,7 +1917,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                 if (propertiesValue34 != null && propertiesValue34.Type != JTokenType.Null)
                                                 {
                                                     JsonSerializationProperties propertiesInstance17 = new JsonSerializationProperties();
-                                                    jsonSerializationInstance3.JsonSerializationProperties = propertiesInstance17;
+                                                    jsonSerializationInstance3.Properties = propertiesInstance17;
                                                     
                                                     JToken encodingValue6 = propertiesValue34["encoding"];
                                                     if (encodingValue6 != null && encodingValue6.Type != JTokenType.Null)
@@ -1912,7 +1936,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                 if (propertiesValue35 != null && propertiesValue35.Type != JTokenType.Null)
                                                 {
                                                     AvroSerializationProperties propertiesInstance18 = new AvroSerializationProperties();
-                                                    avroSerializationInstance3.AvroSerializationProperties = propertiesInstance18;
+                                                    avroSerializationInstance3.Properties = propertiesInstance18;
                                                 }
                                                 propertiesInstance12.Serialization = avroSerializationInstance3;
                                             }
@@ -1957,7 +1981,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         }
         
         /// <summary>
-        /// Create or update a stream analytics job.
+        /// Create or update a stream analytics job. The raw json content will
+        /// be used.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The resource group name of the stream analytics job.
@@ -2009,8 +2034,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/Microsoft.StreamAnalytics/streamingjobs/" + jobName.Trim() + "?";
-            url = url + "api-version=2014-10-01-preview";
+            string url = "/subscriptions/" + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.StreamAnalytics/streamingjobs/" + Uri.EscapeDataString(jobName) + "?";
+            url = url + "api-version=2014-12-01-preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -2088,11 +2113,25 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                         Job jobInstance = new Job();
                         result.Job = jobInstance;
                         
+                        JToken idValue = responseDoc["id"];
+                        if (idValue != null && idValue.Type != JTokenType.Null)
+                        {
+                            string idInstance = ((string)idValue);
+                            jobInstance.Id = idInstance;
+                        }
+                        
                         JToken nameValue = responseDoc["name"];
                         if (nameValue != null && nameValue.Type != JTokenType.Null)
                         {
                             string nameInstance = ((string)nameValue);
                             jobInstance.Name = nameInstance;
+                        }
+                        
+                        JToken typeValue = responseDoc["type"];
+                        if (typeValue != null && typeValue.Type != JTokenType.Null)
+                        {
+                            string typeInstance = ((string)typeValue);
+                            jobInstance.Type = typeInstance;
                         }
                         
                         JToken locationValue = responseDoc["location"];
@@ -2189,7 +2228,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                 propertiesInstance.JobState = jobStateInstance;
                             }
                             
-                            JToken createdDateValue = propertiesValue["CreatedDate"];
+                            JToken createdDateValue = propertiesValue["createdDate"];
                             if (createdDateValue != null && createdDateValue.Type != JTokenType.Null)
                             {
                                 DateTime createdDateInstance = ((DateTime)createdDateValue);
@@ -2231,7 +2270,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                     if (propertiesValue3 != null && propertiesValue3.Type != JTokenType.Null)
                                                     {
                                                         BlobReferenceInputDataSourceProperties propertiesInstance2 = new BlobReferenceInputDataSourceProperties();
-                                                        blobReferenceInputDataSourceInstance.BlobReferenceInputDataSourceProperties = propertiesInstance2;
+                                                        blobReferenceInputDataSourceInstance.Properties = propertiesInstance2;
                                                         
                                                         JToken storageAccountsArray = propertiesValue3["storageAccounts"];
                                                         if (storageAccountsArray != null && storageAccountsArray.Type != JTokenType.Null)
@@ -2294,7 +2333,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                     if (propertiesValue4 != null && propertiesValue4.Type != JTokenType.Null)
                                                     {
                                                         CsvSerializationProperties propertiesInstance3 = new CsvSerializationProperties();
-                                                        csvSerializationInstance.CsvSerializationProperties = propertiesInstance3;
+                                                        csvSerializationInstance.Properties = propertiesInstance3;
                                                         
                                                         JToken fieldDelimiterValue = propertiesValue4["fieldDelimiter"];
                                                         if (fieldDelimiterValue != null && fieldDelimiterValue.Type != JTokenType.Null)
@@ -2320,7 +2359,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                     if (propertiesValue5 != null && propertiesValue5.Type != JTokenType.Null)
                                                     {
                                                         JsonSerializationProperties propertiesInstance4 = new JsonSerializationProperties();
-                                                        jsonSerializationInstance.JsonSerializationProperties = propertiesInstance4;
+                                                        jsonSerializationInstance.Properties = propertiesInstance4;
                                                         
                                                         JToken encodingValue2 = propertiesValue5["encoding"];
                                                         if (encodingValue2 != null && encodingValue2.Type != JTokenType.Null)
@@ -2339,12 +2378,12 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                     if (propertiesValue6 != null && propertiesValue6.Type != JTokenType.Null)
                                                     {
                                                         AvroSerializationProperties propertiesInstance5 = new AvroSerializationProperties();
-                                                        avroSerializationInstance.AvroSerializationProperties = propertiesInstance5;
+                                                        avroSerializationInstance.Properties = propertiesInstance5;
                                                     }
                                                     referenceInputPropertiesInstance.Serialization = avroSerializationInstance;
                                                 }
                                             }
-                                            inputInstance.InputProperties = referenceInputPropertiesInstance;
+                                            inputInstance.Properties = referenceInputPropertiesInstance;
                                         }
                                         if (typeName == "Stream")
                                         {
@@ -2362,7 +2401,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                     if (propertiesValue7 != null && propertiesValue7.Type != JTokenType.Null)
                                                     {
                                                         BlobStreamInputDataSourceProperties propertiesInstance6 = new BlobStreamInputDataSourceProperties();
-                                                        blobStreamInputDataSourceInstance.BlobStreamInputDataSourceProperties = propertiesInstance6;
+                                                        blobStreamInputDataSourceInstance.Properties = propertiesInstance6;
                                                         
                                                         JToken storageAccountsArray2 = propertiesValue7["storageAccounts"];
                                                         if (storageAccountsArray2 != null && storageAccountsArray2.Type != JTokenType.Null)
@@ -2440,7 +2479,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                     if (propertiesValue8 != null && propertiesValue8.Type != JTokenType.Null)
                                                     {
                                                         EventHubStreamInputDataSourceProperties propertiesInstance7 = new EventHubStreamInputDataSourceProperties();
-                                                        eventHubStreamInputDataSourceInstance.EventHubStreamInputDataSourceProperties = propertiesInstance7;
+                                                        eventHubStreamInputDataSourceInstance.Properties = propertiesInstance7;
                                                         
                                                         JToken serviceBusNamespaceValue = propertiesValue8["serviceBusNamespace"];
                                                         if (serviceBusNamespaceValue != null && serviceBusNamespaceValue.Type != JTokenType.Null)
@@ -2493,7 +2532,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                     if (propertiesValue9 != null && propertiesValue9.Type != JTokenType.Null)
                                                     {
                                                         CsvSerializationProperties propertiesInstance8 = new CsvSerializationProperties();
-                                                        csvSerializationInstance2.CsvSerializationProperties = propertiesInstance8;
+                                                        csvSerializationInstance2.Properties = propertiesInstance8;
                                                         
                                                         JToken fieldDelimiterValue2 = propertiesValue9["fieldDelimiter"];
                                                         if (fieldDelimiterValue2 != null && fieldDelimiterValue2.Type != JTokenType.Null)
@@ -2519,7 +2558,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                     if (propertiesValue10 != null && propertiesValue10.Type != JTokenType.Null)
                                                     {
                                                         JsonSerializationProperties propertiesInstance9 = new JsonSerializationProperties();
-                                                        jsonSerializationInstance2.JsonSerializationProperties = propertiesInstance9;
+                                                        jsonSerializationInstance2.Properties = propertiesInstance9;
                                                         
                                                         JToken encodingValue4 = propertiesValue10["encoding"];
                                                         if (encodingValue4 != null && encodingValue4.Type != JTokenType.Null)
@@ -2538,12 +2577,12 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                     if (propertiesValue11 != null && propertiesValue11.Type != JTokenType.Null)
                                                     {
                                                         AvroSerializationProperties propertiesInstance10 = new AvroSerializationProperties();
-                                                        avroSerializationInstance2.AvroSerializationProperties = propertiesInstance10;
+                                                        avroSerializationInstance2.Properties = propertiesInstance10;
                                                     }
                                                     streamInputPropertiesInstance.Serialization = avroSerializationInstance2;
                                                 }
                                             }
-                                            inputInstance.InputProperties = streamInputPropertiesInstance;
+                                            inputInstance.Properties = streamInputPropertiesInstance;
                                         }
                                     }
                                 }
@@ -2566,7 +2605,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                 if (propertiesValue12 != null && propertiesValue12.Type != JTokenType.Null)
                                 {
                                     TransformationProperties propertiesInstance11 = new TransformationProperties();
-                                    transformationInstance.TransformationProperties = propertiesInstance11;
+                                    transformationInstance.Properties = propertiesInstance11;
                                     
                                     JToken etagValue4 = propertiesValue12["etag"];
                                     if (etagValue4 != null && etagValue4.Type != JTokenType.Null)
@@ -2610,7 +2649,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                     if (propertiesValue13 != null && propertiesValue13.Type != JTokenType.Null)
                                     {
                                         OutputProperties propertiesInstance12 = new OutputProperties();
-                                        outputInstance.OutputProperties = propertiesInstance12;
+                                        outputInstance.Properties = propertiesInstance12;
                                         
                                         JToken etagValue5 = propertiesValue13["etag"];
                                         if (etagValue5 != null && etagValue5.Type != JTokenType.Null)
@@ -2631,7 +2670,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                 if (propertiesValue14 != null && propertiesValue14.Type != JTokenType.Null)
                                                 {
                                                     BlobOutputDataSourceProperties propertiesInstance13 = new BlobOutputDataSourceProperties();
-                                                    blobOutputDataSourceInstance.BlobOutputDataSourceProperties = propertiesInstance13;
+                                                    blobOutputDataSourceInstance.Properties = propertiesInstance13;
                                                     
                                                     JToken storageAccountsArray3 = propertiesValue14["storageAccounts"];
                                                     if (storageAccountsArray3 != null && storageAccountsArray3.Type != JTokenType.Null)
@@ -2681,7 +2720,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                 if (propertiesValue15 != null && propertiesValue15.Type != JTokenType.Null)
                                                 {
                                                     EventHubOutputDataSourceProperties propertiesInstance14 = new EventHubOutputDataSourceProperties();
-                                                    eventHubOutputDataSourceInstance.EventHubOutputDataSourceProperties = propertiesInstance14;
+                                                    eventHubOutputDataSourceInstance.Properties = propertiesInstance14;
                                                     
                                                     JToken serviceBusNamespaceValue2 = propertiesValue15["serviceBusNamespace"];
                                                     if (serviceBusNamespaceValue2 != null && serviceBusNamespaceValue2.Type != JTokenType.Null)
@@ -2721,7 +2760,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                 if (propertiesValue16 != null && propertiesValue16.Type != JTokenType.Null)
                                                 {
                                                     SqlAzureOutputDataSourceProperties propertiesInstance15 = new SqlAzureOutputDataSourceProperties();
-                                                    sqlAzureOutputDataSourceInstance.SqlAzureOutputDataSourceProperties = propertiesInstance15;
+                                                    sqlAzureOutputDataSourceInstance.Properties = propertiesInstance15;
                                                     
                                                     JToken serverValue = propertiesValue16["server"];
                                                     if (serverValue != null && serverValue.Type != JTokenType.Null)
@@ -2774,7 +2813,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                 if (propertiesValue17 != null && propertiesValue17.Type != JTokenType.Null)
                                                 {
                                                     CsvSerializationProperties propertiesInstance16 = new CsvSerializationProperties();
-                                                    csvSerializationInstance3.CsvSerializationProperties = propertiesInstance16;
+                                                    csvSerializationInstance3.Properties = propertiesInstance16;
                                                     
                                                     JToken fieldDelimiterValue3 = propertiesValue17["fieldDelimiter"];
                                                     if (fieldDelimiterValue3 != null && fieldDelimiterValue3.Type != JTokenType.Null)
@@ -2800,7 +2839,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                 if (propertiesValue18 != null && propertiesValue18.Type != JTokenType.Null)
                                                 {
                                                     JsonSerializationProperties propertiesInstance17 = new JsonSerializationProperties();
-                                                    jsonSerializationInstance3.JsonSerializationProperties = propertiesInstance17;
+                                                    jsonSerializationInstance3.Properties = propertiesInstance17;
                                                     
                                                     JToken encodingValue6 = propertiesValue18["encoding"];
                                                     if (encodingValue6 != null && encodingValue6.Type != JTokenType.Null)
@@ -2819,7 +2858,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                 if (propertiesValue19 != null && propertiesValue19.Type != JTokenType.Null)
                                                 {
                                                     AvroSerializationProperties propertiesInstance18 = new AvroSerializationProperties();
-                                                    avroSerializationInstance3.AvroSerializationProperties = propertiesInstance18;
+                                                    avroSerializationInstance3.Properties = propertiesInstance18;
                                                 }
                                                 propertiesInstance12.Serialization = avroSerializationInstance3;
                                             }
@@ -2899,7 +2938,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 }
                 
                 cancellationToken.ThrowIfCancellationRequested();
-                LongRunningOperationResponse response = await client.Job.BeginDeleteAsync(resourceGroupName, jobName, cancellationToken).ConfigureAwait(false);
+                LongRunningOperationResponse response = await client.StreamingJobs.BeginDeleteAsync(resourceGroupName, jobName, cancellationToken).ConfigureAwait(false);
                 if (response.Status == OperationStatus.Succeeded)
                 {
                     return response;
@@ -2909,7 +2948,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 int delayInSeconds = response.RetryAfter;
                 if (delayInSeconds == 0)
                 {
-                    delayInSeconds = 20;
+                    delayInSeconds = 10;
                 }
                 while ((result.Status != OperationStatus.InProgress) == false)
                 {
@@ -2992,9 +3031,9 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/Microsoft.StreamAnalytics/streamingjobs/" + jobName.Trim() + "?";
-            url = url + "$expand=" + Uri.EscapeDataString(parameters.PropertiesToExpand.Trim());
-            url = url + "&api-version=2014-10-01-preview";
+            string url = "/subscriptions/" + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.StreamAnalytics/streamingjobs/" + Uri.EscapeDataString(jobName) + "?";
+            url = url + "$expand=" + Uri.EscapeDataString(parameters.PropertiesToExpand);
+            url = url + "&api-version=2014-12-01-preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -3066,11 +3105,25 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                         Job jobInstance = new Job();
                         result.Job = jobInstance;
                         
+                        JToken idValue = responseDoc["id"];
+                        if (idValue != null && idValue.Type != JTokenType.Null)
+                        {
+                            string idInstance = ((string)idValue);
+                            jobInstance.Id = idInstance;
+                        }
+                        
                         JToken nameValue = responseDoc["name"];
                         if (nameValue != null && nameValue.Type != JTokenType.Null)
                         {
                             string nameInstance = ((string)nameValue);
                             jobInstance.Name = nameInstance;
+                        }
+                        
+                        JToken typeValue = responseDoc["type"];
+                        if (typeValue != null && typeValue.Type != JTokenType.Null)
+                        {
+                            string typeInstance = ((string)typeValue);
+                            jobInstance.Type = typeInstance;
                         }
                         
                         JToken locationValue = responseDoc["location"];
@@ -3167,7 +3220,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                 propertiesInstance.JobState = jobStateInstance;
                             }
                             
-                            JToken createdDateValue = propertiesValue["CreatedDate"];
+                            JToken createdDateValue = propertiesValue["createdDate"];
                             if (createdDateValue != null && createdDateValue.Type != JTokenType.Null)
                             {
                                 DateTime createdDateInstance = ((DateTime)createdDateValue);
@@ -3209,7 +3262,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                     if (propertiesValue3 != null && propertiesValue3.Type != JTokenType.Null)
                                                     {
                                                         BlobReferenceInputDataSourceProperties propertiesInstance2 = new BlobReferenceInputDataSourceProperties();
-                                                        blobReferenceInputDataSourceInstance.BlobReferenceInputDataSourceProperties = propertiesInstance2;
+                                                        blobReferenceInputDataSourceInstance.Properties = propertiesInstance2;
                                                         
                                                         JToken storageAccountsArray = propertiesValue3["storageAccounts"];
                                                         if (storageAccountsArray != null && storageAccountsArray.Type != JTokenType.Null)
@@ -3272,7 +3325,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                     if (propertiesValue4 != null && propertiesValue4.Type != JTokenType.Null)
                                                     {
                                                         CsvSerializationProperties propertiesInstance3 = new CsvSerializationProperties();
-                                                        csvSerializationInstance.CsvSerializationProperties = propertiesInstance3;
+                                                        csvSerializationInstance.Properties = propertiesInstance3;
                                                         
                                                         JToken fieldDelimiterValue = propertiesValue4["fieldDelimiter"];
                                                         if (fieldDelimiterValue != null && fieldDelimiterValue.Type != JTokenType.Null)
@@ -3298,7 +3351,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                     if (propertiesValue5 != null && propertiesValue5.Type != JTokenType.Null)
                                                     {
                                                         JsonSerializationProperties propertiesInstance4 = new JsonSerializationProperties();
-                                                        jsonSerializationInstance.JsonSerializationProperties = propertiesInstance4;
+                                                        jsonSerializationInstance.Properties = propertiesInstance4;
                                                         
                                                         JToken encodingValue2 = propertiesValue5["encoding"];
                                                         if (encodingValue2 != null && encodingValue2.Type != JTokenType.Null)
@@ -3317,12 +3370,12 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                     if (propertiesValue6 != null && propertiesValue6.Type != JTokenType.Null)
                                                     {
                                                         AvroSerializationProperties propertiesInstance5 = new AvroSerializationProperties();
-                                                        avroSerializationInstance.AvroSerializationProperties = propertiesInstance5;
+                                                        avroSerializationInstance.Properties = propertiesInstance5;
                                                     }
                                                     referenceInputPropertiesInstance.Serialization = avroSerializationInstance;
                                                 }
                                             }
-                                            inputInstance.InputProperties = referenceInputPropertiesInstance;
+                                            inputInstance.Properties = referenceInputPropertiesInstance;
                                         }
                                         if (typeName == "Stream")
                                         {
@@ -3340,7 +3393,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                     if (propertiesValue7 != null && propertiesValue7.Type != JTokenType.Null)
                                                     {
                                                         BlobStreamInputDataSourceProperties propertiesInstance6 = new BlobStreamInputDataSourceProperties();
-                                                        blobStreamInputDataSourceInstance.BlobStreamInputDataSourceProperties = propertiesInstance6;
+                                                        blobStreamInputDataSourceInstance.Properties = propertiesInstance6;
                                                         
                                                         JToken storageAccountsArray2 = propertiesValue7["storageAccounts"];
                                                         if (storageAccountsArray2 != null && storageAccountsArray2.Type != JTokenType.Null)
@@ -3418,7 +3471,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                     if (propertiesValue8 != null && propertiesValue8.Type != JTokenType.Null)
                                                     {
                                                         EventHubStreamInputDataSourceProperties propertiesInstance7 = new EventHubStreamInputDataSourceProperties();
-                                                        eventHubStreamInputDataSourceInstance.EventHubStreamInputDataSourceProperties = propertiesInstance7;
+                                                        eventHubStreamInputDataSourceInstance.Properties = propertiesInstance7;
                                                         
                                                         JToken serviceBusNamespaceValue = propertiesValue8["serviceBusNamespace"];
                                                         if (serviceBusNamespaceValue != null && serviceBusNamespaceValue.Type != JTokenType.Null)
@@ -3471,7 +3524,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                     if (propertiesValue9 != null && propertiesValue9.Type != JTokenType.Null)
                                                     {
                                                         CsvSerializationProperties propertiesInstance8 = new CsvSerializationProperties();
-                                                        csvSerializationInstance2.CsvSerializationProperties = propertiesInstance8;
+                                                        csvSerializationInstance2.Properties = propertiesInstance8;
                                                         
                                                         JToken fieldDelimiterValue2 = propertiesValue9["fieldDelimiter"];
                                                         if (fieldDelimiterValue2 != null && fieldDelimiterValue2.Type != JTokenType.Null)
@@ -3497,7 +3550,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                     if (propertiesValue10 != null && propertiesValue10.Type != JTokenType.Null)
                                                     {
                                                         JsonSerializationProperties propertiesInstance9 = new JsonSerializationProperties();
-                                                        jsonSerializationInstance2.JsonSerializationProperties = propertiesInstance9;
+                                                        jsonSerializationInstance2.Properties = propertiesInstance9;
                                                         
                                                         JToken encodingValue4 = propertiesValue10["encoding"];
                                                         if (encodingValue4 != null && encodingValue4.Type != JTokenType.Null)
@@ -3516,12 +3569,12 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                     if (propertiesValue11 != null && propertiesValue11.Type != JTokenType.Null)
                                                     {
                                                         AvroSerializationProperties propertiesInstance10 = new AvroSerializationProperties();
-                                                        avroSerializationInstance2.AvroSerializationProperties = propertiesInstance10;
+                                                        avroSerializationInstance2.Properties = propertiesInstance10;
                                                     }
                                                     streamInputPropertiesInstance.Serialization = avroSerializationInstance2;
                                                 }
                                             }
-                                            inputInstance.InputProperties = streamInputPropertiesInstance;
+                                            inputInstance.Properties = streamInputPropertiesInstance;
                                         }
                                     }
                                 }
@@ -3544,7 +3597,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                 if (propertiesValue12 != null && propertiesValue12.Type != JTokenType.Null)
                                 {
                                     TransformationProperties propertiesInstance11 = new TransformationProperties();
-                                    transformationInstance.TransformationProperties = propertiesInstance11;
+                                    transformationInstance.Properties = propertiesInstance11;
                                     
                                     JToken etagValue4 = propertiesValue12["etag"];
                                     if (etagValue4 != null && etagValue4.Type != JTokenType.Null)
@@ -3588,7 +3641,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                     if (propertiesValue13 != null && propertiesValue13.Type != JTokenType.Null)
                                     {
                                         OutputProperties propertiesInstance12 = new OutputProperties();
-                                        outputInstance.OutputProperties = propertiesInstance12;
+                                        outputInstance.Properties = propertiesInstance12;
                                         
                                         JToken etagValue5 = propertiesValue13["etag"];
                                         if (etagValue5 != null && etagValue5.Type != JTokenType.Null)
@@ -3609,7 +3662,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                 if (propertiesValue14 != null && propertiesValue14.Type != JTokenType.Null)
                                                 {
                                                     BlobOutputDataSourceProperties propertiesInstance13 = new BlobOutputDataSourceProperties();
-                                                    blobOutputDataSourceInstance.BlobOutputDataSourceProperties = propertiesInstance13;
+                                                    blobOutputDataSourceInstance.Properties = propertiesInstance13;
                                                     
                                                     JToken storageAccountsArray3 = propertiesValue14["storageAccounts"];
                                                     if (storageAccountsArray3 != null && storageAccountsArray3.Type != JTokenType.Null)
@@ -3659,7 +3712,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                 if (propertiesValue15 != null && propertiesValue15.Type != JTokenType.Null)
                                                 {
                                                     EventHubOutputDataSourceProperties propertiesInstance14 = new EventHubOutputDataSourceProperties();
-                                                    eventHubOutputDataSourceInstance.EventHubOutputDataSourceProperties = propertiesInstance14;
+                                                    eventHubOutputDataSourceInstance.Properties = propertiesInstance14;
                                                     
                                                     JToken serviceBusNamespaceValue2 = propertiesValue15["serviceBusNamespace"];
                                                     if (serviceBusNamespaceValue2 != null && serviceBusNamespaceValue2.Type != JTokenType.Null)
@@ -3699,7 +3752,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                 if (propertiesValue16 != null && propertiesValue16.Type != JTokenType.Null)
                                                 {
                                                     SqlAzureOutputDataSourceProperties propertiesInstance15 = new SqlAzureOutputDataSourceProperties();
-                                                    sqlAzureOutputDataSourceInstance.SqlAzureOutputDataSourceProperties = propertiesInstance15;
+                                                    sqlAzureOutputDataSourceInstance.Properties = propertiesInstance15;
                                                     
                                                     JToken serverValue = propertiesValue16["server"];
                                                     if (serverValue != null && serverValue.Type != JTokenType.Null)
@@ -3752,7 +3805,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                 if (propertiesValue17 != null && propertiesValue17.Type != JTokenType.Null)
                                                 {
                                                     CsvSerializationProperties propertiesInstance16 = new CsvSerializationProperties();
-                                                    csvSerializationInstance3.CsvSerializationProperties = propertiesInstance16;
+                                                    csvSerializationInstance3.Properties = propertiesInstance16;
                                                     
                                                     JToken fieldDelimiterValue3 = propertiesValue17["fieldDelimiter"];
                                                     if (fieldDelimiterValue3 != null && fieldDelimiterValue3.Type != JTokenType.Null)
@@ -3778,7 +3831,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                 if (propertiesValue18 != null && propertiesValue18.Type != JTokenType.Null)
                                                 {
                                                     JsonSerializationProperties propertiesInstance17 = new JsonSerializationProperties();
-                                                    jsonSerializationInstance3.JsonSerializationProperties = propertiesInstance17;
+                                                    jsonSerializationInstance3.Properties = propertiesInstance17;
                                                     
                                                     JToken encodingValue6 = propertiesValue18["encoding"];
                                                     if (encodingValue6 != null && encodingValue6.Type != JTokenType.Null)
@@ -3797,7 +3850,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                 if (propertiesValue19 != null && propertiesValue19.Type != JTokenType.Null)
                                                 {
                                                     AvroSerializationProperties propertiesInstance18 = new AvroSerializationProperties();
-                                                    avroSerializationInstance3.AvroSerializationProperties = propertiesInstance18;
+                                                    avroSerializationInstance3.Properties = propertiesInstance18;
                                                 }
                                                 propertiesInstance12.Serialization = avroSerializationInstance3;
                                             }
@@ -3842,7 +3895,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         }
         
         /// <summary>
-        /// List all the stream analytics jobs in the same resource group.
+        /// List all the stream analytics jobs in the given resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The resource group name of the stream analytics job.
@@ -3886,9 +3939,9 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/Microsoft.StreamAnalytics/streamingjobs?";
-            url = url + "expand=" + Uri.EscapeDataString(parameters.PropertiesToExpand.Trim());
-            url = url + "&api-version=2014-10-01-preview";
+            string url = "/subscriptions/" + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.StreamAnalytics/streamingjobs?";
+            url = url + "$expand=" + Uri.EscapeDataString(parameters.PropertiesToExpand);
+            url = url + "&api-version=2014-12-01-preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -3965,11 +4018,25 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                 Job jobInstance = new Job();
                                 result.Value.Add(jobInstance);
                                 
+                                JToken idValue = valueValue["id"];
+                                if (idValue != null && idValue.Type != JTokenType.Null)
+                                {
+                                    string idInstance = ((string)idValue);
+                                    jobInstance.Id = idInstance;
+                                }
+                                
                                 JToken nameValue = valueValue["name"];
                                 if (nameValue != null && nameValue.Type != JTokenType.Null)
                                 {
                                     string nameInstance = ((string)nameValue);
                                     jobInstance.Name = nameInstance;
+                                }
+                                
+                                JToken typeValue = valueValue["type"];
+                                if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                {
+                                    string typeInstance = ((string)typeValue);
+                                    jobInstance.Type = typeInstance;
                                 }
                                 
                                 JToken locationValue = valueValue["location"];
@@ -4066,7 +4133,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                         propertiesInstance.JobState = jobStateInstance;
                                     }
                                     
-                                    JToken createdDateValue = propertiesValue["CreatedDate"];
+                                    JToken createdDateValue = propertiesValue["createdDate"];
                                     if (createdDateValue != null && createdDateValue.Type != JTokenType.Null)
                                     {
                                         DateTime createdDateInstance = ((DateTime)createdDateValue);
@@ -4108,7 +4175,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                             if (propertiesValue3 != null && propertiesValue3.Type != JTokenType.Null)
                                                             {
                                                                 BlobReferenceInputDataSourceProperties propertiesInstance2 = new BlobReferenceInputDataSourceProperties();
-                                                                blobReferenceInputDataSourceInstance.BlobReferenceInputDataSourceProperties = propertiesInstance2;
+                                                                blobReferenceInputDataSourceInstance.Properties = propertiesInstance2;
                                                                 
                                                                 JToken storageAccountsArray = propertiesValue3["storageAccounts"];
                                                                 if (storageAccountsArray != null && storageAccountsArray.Type != JTokenType.Null)
@@ -4171,7 +4238,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                             if (propertiesValue4 != null && propertiesValue4.Type != JTokenType.Null)
                                                             {
                                                                 CsvSerializationProperties propertiesInstance3 = new CsvSerializationProperties();
-                                                                csvSerializationInstance.CsvSerializationProperties = propertiesInstance3;
+                                                                csvSerializationInstance.Properties = propertiesInstance3;
                                                                 
                                                                 JToken fieldDelimiterValue = propertiesValue4["fieldDelimiter"];
                                                                 if (fieldDelimiterValue != null && fieldDelimiterValue.Type != JTokenType.Null)
@@ -4197,7 +4264,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                             if (propertiesValue5 != null && propertiesValue5.Type != JTokenType.Null)
                                                             {
                                                                 JsonSerializationProperties propertiesInstance4 = new JsonSerializationProperties();
-                                                                jsonSerializationInstance.JsonSerializationProperties = propertiesInstance4;
+                                                                jsonSerializationInstance.Properties = propertiesInstance4;
                                                                 
                                                                 JToken encodingValue2 = propertiesValue5["encoding"];
                                                                 if (encodingValue2 != null && encodingValue2.Type != JTokenType.Null)
@@ -4216,12 +4283,12 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                             if (propertiesValue6 != null && propertiesValue6.Type != JTokenType.Null)
                                                             {
                                                                 AvroSerializationProperties propertiesInstance5 = new AvroSerializationProperties();
-                                                                avroSerializationInstance.AvroSerializationProperties = propertiesInstance5;
+                                                                avroSerializationInstance.Properties = propertiesInstance5;
                                                             }
                                                             referenceInputPropertiesInstance.Serialization = avroSerializationInstance;
                                                         }
                                                     }
-                                                    inputInstance.InputProperties = referenceInputPropertiesInstance;
+                                                    inputInstance.Properties = referenceInputPropertiesInstance;
                                                 }
                                                 if (typeName == "Stream")
                                                 {
@@ -4239,7 +4306,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                             if (propertiesValue7 != null && propertiesValue7.Type != JTokenType.Null)
                                                             {
                                                                 BlobStreamInputDataSourceProperties propertiesInstance6 = new BlobStreamInputDataSourceProperties();
-                                                                blobStreamInputDataSourceInstance.BlobStreamInputDataSourceProperties = propertiesInstance6;
+                                                                blobStreamInputDataSourceInstance.Properties = propertiesInstance6;
                                                                 
                                                                 JToken storageAccountsArray2 = propertiesValue7["storageAccounts"];
                                                                 if (storageAccountsArray2 != null && storageAccountsArray2.Type != JTokenType.Null)
@@ -4317,7 +4384,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                             if (propertiesValue8 != null && propertiesValue8.Type != JTokenType.Null)
                                                             {
                                                                 EventHubStreamInputDataSourceProperties propertiesInstance7 = new EventHubStreamInputDataSourceProperties();
-                                                                eventHubStreamInputDataSourceInstance.EventHubStreamInputDataSourceProperties = propertiesInstance7;
+                                                                eventHubStreamInputDataSourceInstance.Properties = propertiesInstance7;
                                                                 
                                                                 JToken serviceBusNamespaceValue = propertiesValue8["serviceBusNamespace"];
                                                                 if (serviceBusNamespaceValue != null && serviceBusNamespaceValue.Type != JTokenType.Null)
@@ -4370,7 +4437,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                             if (propertiesValue9 != null && propertiesValue9.Type != JTokenType.Null)
                                                             {
                                                                 CsvSerializationProperties propertiesInstance8 = new CsvSerializationProperties();
-                                                                csvSerializationInstance2.CsvSerializationProperties = propertiesInstance8;
+                                                                csvSerializationInstance2.Properties = propertiesInstance8;
                                                                 
                                                                 JToken fieldDelimiterValue2 = propertiesValue9["fieldDelimiter"];
                                                                 if (fieldDelimiterValue2 != null && fieldDelimiterValue2.Type != JTokenType.Null)
@@ -4396,7 +4463,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                             if (propertiesValue10 != null && propertiesValue10.Type != JTokenType.Null)
                                                             {
                                                                 JsonSerializationProperties propertiesInstance9 = new JsonSerializationProperties();
-                                                                jsonSerializationInstance2.JsonSerializationProperties = propertiesInstance9;
+                                                                jsonSerializationInstance2.Properties = propertiesInstance9;
                                                                 
                                                                 JToken encodingValue4 = propertiesValue10["encoding"];
                                                                 if (encodingValue4 != null && encodingValue4.Type != JTokenType.Null)
@@ -4415,12 +4482,12 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                             if (propertiesValue11 != null && propertiesValue11.Type != JTokenType.Null)
                                                             {
                                                                 AvroSerializationProperties propertiesInstance10 = new AvroSerializationProperties();
-                                                                avroSerializationInstance2.AvroSerializationProperties = propertiesInstance10;
+                                                                avroSerializationInstance2.Properties = propertiesInstance10;
                                                             }
                                                             streamInputPropertiesInstance.Serialization = avroSerializationInstance2;
                                                         }
                                                     }
-                                                    inputInstance.InputProperties = streamInputPropertiesInstance;
+                                                    inputInstance.Properties = streamInputPropertiesInstance;
                                                 }
                                             }
                                         }
@@ -4443,7 +4510,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                         if (propertiesValue12 != null && propertiesValue12.Type != JTokenType.Null)
                                         {
                                             TransformationProperties propertiesInstance11 = new TransformationProperties();
-                                            transformationInstance.TransformationProperties = propertiesInstance11;
+                                            transformationInstance.Properties = propertiesInstance11;
                                             
                                             JToken etagValue4 = propertiesValue12["etag"];
                                             if (etagValue4 != null && etagValue4.Type != JTokenType.Null)
@@ -4487,7 +4554,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                             if (propertiesValue13 != null && propertiesValue13.Type != JTokenType.Null)
                                             {
                                                 OutputProperties propertiesInstance12 = new OutputProperties();
-                                                outputInstance.OutputProperties = propertiesInstance12;
+                                                outputInstance.Properties = propertiesInstance12;
                                                 
                                                 JToken etagValue5 = propertiesValue13["etag"];
                                                 if (etagValue5 != null && etagValue5.Type != JTokenType.Null)
@@ -4508,7 +4575,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                         if (propertiesValue14 != null && propertiesValue14.Type != JTokenType.Null)
                                                         {
                                                             BlobOutputDataSourceProperties propertiesInstance13 = new BlobOutputDataSourceProperties();
-                                                            blobOutputDataSourceInstance.BlobOutputDataSourceProperties = propertiesInstance13;
+                                                            blobOutputDataSourceInstance.Properties = propertiesInstance13;
                                                             
                                                             JToken storageAccountsArray3 = propertiesValue14["storageAccounts"];
                                                             if (storageAccountsArray3 != null && storageAccountsArray3.Type != JTokenType.Null)
@@ -4558,7 +4625,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                         if (propertiesValue15 != null && propertiesValue15.Type != JTokenType.Null)
                                                         {
                                                             EventHubOutputDataSourceProperties propertiesInstance14 = new EventHubOutputDataSourceProperties();
-                                                            eventHubOutputDataSourceInstance.EventHubOutputDataSourceProperties = propertiesInstance14;
+                                                            eventHubOutputDataSourceInstance.Properties = propertiesInstance14;
                                                             
                                                             JToken serviceBusNamespaceValue2 = propertiesValue15["serviceBusNamespace"];
                                                             if (serviceBusNamespaceValue2 != null && serviceBusNamespaceValue2.Type != JTokenType.Null)
@@ -4598,7 +4665,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                         if (propertiesValue16 != null && propertiesValue16.Type != JTokenType.Null)
                                                         {
                                                             SqlAzureOutputDataSourceProperties propertiesInstance15 = new SqlAzureOutputDataSourceProperties();
-                                                            sqlAzureOutputDataSourceInstance.SqlAzureOutputDataSourceProperties = propertiesInstance15;
+                                                            sqlAzureOutputDataSourceInstance.Properties = propertiesInstance15;
                                                             
                                                             JToken serverValue = propertiesValue16["server"];
                                                             if (serverValue != null && serverValue.Type != JTokenType.Null)
@@ -4651,7 +4718,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                         if (propertiesValue17 != null && propertiesValue17.Type != JTokenType.Null)
                                                         {
                                                             CsvSerializationProperties propertiesInstance16 = new CsvSerializationProperties();
-                                                            csvSerializationInstance3.CsvSerializationProperties = propertiesInstance16;
+                                                            csvSerializationInstance3.Properties = propertiesInstance16;
                                                             
                                                             JToken fieldDelimiterValue3 = propertiesValue17["fieldDelimiter"];
                                                             if (fieldDelimiterValue3 != null && fieldDelimiterValue3.Type != JTokenType.Null)
@@ -4677,7 +4744,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                         if (propertiesValue18 != null && propertiesValue18.Type != JTokenType.Null)
                                                         {
                                                             JsonSerializationProperties propertiesInstance17 = new JsonSerializationProperties();
-                                                            jsonSerializationInstance3.JsonSerializationProperties = propertiesInstance17;
+                                                            jsonSerializationInstance3.Properties = propertiesInstance17;
                                                             
                                                             JToken encodingValue6 = propertiesValue18["encoding"];
                                                             if (encodingValue6 != null && encodingValue6.Type != JTokenType.Null)
@@ -4696,7 +4763,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                         if (propertiesValue19 != null && propertiesValue19.Type != JTokenType.Null)
                                                         {
                                                             AvroSerializationProperties propertiesInstance18 = new AvroSerializationProperties();
-                                                            avroSerializationInstance3.AvroSerializationProperties = propertiesInstance18;
+                                                            avroSerializationInstance3.Properties = propertiesInstance18;
                                                         }
                                                         propertiesInstance12.Serialization = avroSerializationInstance3;
                                                     }
@@ -4750,7 +4817,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         }
         
         /// <summary>
-        /// List all the stream analytics jobs in the same subscription.
+        /// List all the stream analytics jobs in the given subscription.
         /// </summary>
         /// <param name='parameters'>
         /// Required. The parameters required to list all the stream analytics
@@ -4786,9 +4853,9 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/providers/Microsoft.StreamAnalytics/streamingjobs?";
-            url = url + "expand=" + Uri.EscapeDataString(parameters.PropertiesToExpand.Trim());
-            url = url + "&api-version=2014-10-01-preview";
+            string url = "/subscriptions/" + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId) + "/providers/Microsoft.StreamAnalytics/streamingjobs?";
+            url = url + "$expand=" + Uri.EscapeDataString(parameters.PropertiesToExpand);
+            url = url + "&api-version=2014-12-01-preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -4865,11 +4932,25 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                 Job jobInstance = new Job();
                                 result.Value.Add(jobInstance);
                                 
+                                JToken idValue = valueValue["id"];
+                                if (idValue != null && idValue.Type != JTokenType.Null)
+                                {
+                                    string idInstance = ((string)idValue);
+                                    jobInstance.Id = idInstance;
+                                }
+                                
                                 JToken nameValue = valueValue["name"];
                                 if (nameValue != null && nameValue.Type != JTokenType.Null)
                                 {
                                     string nameInstance = ((string)nameValue);
                                     jobInstance.Name = nameInstance;
+                                }
+                                
+                                JToken typeValue = valueValue["type"];
+                                if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                {
+                                    string typeInstance = ((string)typeValue);
+                                    jobInstance.Type = typeInstance;
                                 }
                                 
                                 JToken locationValue = valueValue["location"];
@@ -4966,7 +5047,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                         propertiesInstance.JobState = jobStateInstance;
                                     }
                                     
-                                    JToken createdDateValue = propertiesValue["CreatedDate"];
+                                    JToken createdDateValue = propertiesValue["createdDate"];
                                     if (createdDateValue != null && createdDateValue.Type != JTokenType.Null)
                                     {
                                         DateTime createdDateInstance = ((DateTime)createdDateValue);
@@ -5008,7 +5089,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                             if (propertiesValue3 != null && propertiesValue3.Type != JTokenType.Null)
                                                             {
                                                                 BlobReferenceInputDataSourceProperties propertiesInstance2 = new BlobReferenceInputDataSourceProperties();
-                                                                blobReferenceInputDataSourceInstance.BlobReferenceInputDataSourceProperties = propertiesInstance2;
+                                                                blobReferenceInputDataSourceInstance.Properties = propertiesInstance2;
                                                                 
                                                                 JToken storageAccountsArray = propertiesValue3["storageAccounts"];
                                                                 if (storageAccountsArray != null && storageAccountsArray.Type != JTokenType.Null)
@@ -5071,7 +5152,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                             if (propertiesValue4 != null && propertiesValue4.Type != JTokenType.Null)
                                                             {
                                                                 CsvSerializationProperties propertiesInstance3 = new CsvSerializationProperties();
-                                                                csvSerializationInstance.CsvSerializationProperties = propertiesInstance3;
+                                                                csvSerializationInstance.Properties = propertiesInstance3;
                                                                 
                                                                 JToken fieldDelimiterValue = propertiesValue4["fieldDelimiter"];
                                                                 if (fieldDelimiterValue != null && fieldDelimiterValue.Type != JTokenType.Null)
@@ -5097,7 +5178,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                             if (propertiesValue5 != null && propertiesValue5.Type != JTokenType.Null)
                                                             {
                                                                 JsonSerializationProperties propertiesInstance4 = new JsonSerializationProperties();
-                                                                jsonSerializationInstance.JsonSerializationProperties = propertiesInstance4;
+                                                                jsonSerializationInstance.Properties = propertiesInstance4;
                                                                 
                                                                 JToken encodingValue2 = propertiesValue5["encoding"];
                                                                 if (encodingValue2 != null && encodingValue2.Type != JTokenType.Null)
@@ -5116,12 +5197,12 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                             if (propertiesValue6 != null && propertiesValue6.Type != JTokenType.Null)
                                                             {
                                                                 AvroSerializationProperties propertiesInstance5 = new AvroSerializationProperties();
-                                                                avroSerializationInstance.AvroSerializationProperties = propertiesInstance5;
+                                                                avroSerializationInstance.Properties = propertiesInstance5;
                                                             }
                                                             referenceInputPropertiesInstance.Serialization = avroSerializationInstance;
                                                         }
                                                     }
-                                                    inputInstance.InputProperties = referenceInputPropertiesInstance;
+                                                    inputInstance.Properties = referenceInputPropertiesInstance;
                                                 }
                                                 if (typeName == "Stream")
                                                 {
@@ -5139,7 +5220,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                             if (propertiesValue7 != null && propertiesValue7.Type != JTokenType.Null)
                                                             {
                                                                 BlobStreamInputDataSourceProperties propertiesInstance6 = new BlobStreamInputDataSourceProperties();
-                                                                blobStreamInputDataSourceInstance.BlobStreamInputDataSourceProperties = propertiesInstance6;
+                                                                blobStreamInputDataSourceInstance.Properties = propertiesInstance6;
                                                                 
                                                                 JToken storageAccountsArray2 = propertiesValue7["storageAccounts"];
                                                                 if (storageAccountsArray2 != null && storageAccountsArray2.Type != JTokenType.Null)
@@ -5217,7 +5298,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                             if (propertiesValue8 != null && propertiesValue8.Type != JTokenType.Null)
                                                             {
                                                                 EventHubStreamInputDataSourceProperties propertiesInstance7 = new EventHubStreamInputDataSourceProperties();
-                                                                eventHubStreamInputDataSourceInstance.EventHubStreamInputDataSourceProperties = propertiesInstance7;
+                                                                eventHubStreamInputDataSourceInstance.Properties = propertiesInstance7;
                                                                 
                                                                 JToken serviceBusNamespaceValue = propertiesValue8["serviceBusNamespace"];
                                                                 if (serviceBusNamespaceValue != null && serviceBusNamespaceValue.Type != JTokenType.Null)
@@ -5270,7 +5351,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                             if (propertiesValue9 != null && propertiesValue9.Type != JTokenType.Null)
                                                             {
                                                                 CsvSerializationProperties propertiesInstance8 = new CsvSerializationProperties();
-                                                                csvSerializationInstance2.CsvSerializationProperties = propertiesInstance8;
+                                                                csvSerializationInstance2.Properties = propertiesInstance8;
                                                                 
                                                                 JToken fieldDelimiterValue2 = propertiesValue9["fieldDelimiter"];
                                                                 if (fieldDelimiterValue2 != null && fieldDelimiterValue2.Type != JTokenType.Null)
@@ -5296,7 +5377,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                             if (propertiesValue10 != null && propertiesValue10.Type != JTokenType.Null)
                                                             {
                                                                 JsonSerializationProperties propertiesInstance9 = new JsonSerializationProperties();
-                                                                jsonSerializationInstance2.JsonSerializationProperties = propertiesInstance9;
+                                                                jsonSerializationInstance2.Properties = propertiesInstance9;
                                                                 
                                                                 JToken encodingValue4 = propertiesValue10["encoding"];
                                                                 if (encodingValue4 != null && encodingValue4.Type != JTokenType.Null)
@@ -5315,12 +5396,12 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                             if (propertiesValue11 != null && propertiesValue11.Type != JTokenType.Null)
                                                             {
                                                                 AvroSerializationProperties propertiesInstance10 = new AvroSerializationProperties();
-                                                                avroSerializationInstance2.AvroSerializationProperties = propertiesInstance10;
+                                                                avroSerializationInstance2.Properties = propertiesInstance10;
                                                             }
                                                             streamInputPropertiesInstance.Serialization = avroSerializationInstance2;
                                                         }
                                                     }
-                                                    inputInstance.InputProperties = streamInputPropertiesInstance;
+                                                    inputInstance.Properties = streamInputPropertiesInstance;
                                                 }
                                             }
                                         }
@@ -5343,7 +5424,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                         if (propertiesValue12 != null && propertiesValue12.Type != JTokenType.Null)
                                         {
                                             TransformationProperties propertiesInstance11 = new TransformationProperties();
-                                            transformationInstance.TransformationProperties = propertiesInstance11;
+                                            transformationInstance.Properties = propertiesInstance11;
                                             
                                             JToken etagValue4 = propertiesValue12["etag"];
                                             if (etagValue4 != null && etagValue4.Type != JTokenType.Null)
@@ -5387,7 +5468,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                             if (propertiesValue13 != null && propertiesValue13.Type != JTokenType.Null)
                                             {
                                                 OutputProperties propertiesInstance12 = new OutputProperties();
-                                                outputInstance.OutputProperties = propertiesInstance12;
+                                                outputInstance.Properties = propertiesInstance12;
                                                 
                                                 JToken etagValue5 = propertiesValue13["etag"];
                                                 if (etagValue5 != null && etagValue5.Type != JTokenType.Null)
@@ -5408,7 +5489,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                         if (propertiesValue14 != null && propertiesValue14.Type != JTokenType.Null)
                                                         {
                                                             BlobOutputDataSourceProperties propertiesInstance13 = new BlobOutputDataSourceProperties();
-                                                            blobOutputDataSourceInstance.BlobOutputDataSourceProperties = propertiesInstance13;
+                                                            blobOutputDataSourceInstance.Properties = propertiesInstance13;
                                                             
                                                             JToken storageAccountsArray3 = propertiesValue14["storageAccounts"];
                                                             if (storageAccountsArray3 != null && storageAccountsArray3.Type != JTokenType.Null)
@@ -5458,7 +5539,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                         if (propertiesValue15 != null && propertiesValue15.Type != JTokenType.Null)
                                                         {
                                                             EventHubOutputDataSourceProperties propertiesInstance14 = new EventHubOutputDataSourceProperties();
-                                                            eventHubOutputDataSourceInstance.EventHubOutputDataSourceProperties = propertiesInstance14;
+                                                            eventHubOutputDataSourceInstance.Properties = propertiesInstance14;
                                                             
                                                             JToken serviceBusNamespaceValue2 = propertiesValue15["serviceBusNamespace"];
                                                             if (serviceBusNamespaceValue2 != null && serviceBusNamespaceValue2.Type != JTokenType.Null)
@@ -5498,7 +5579,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                         if (propertiesValue16 != null && propertiesValue16.Type != JTokenType.Null)
                                                         {
                                                             SqlAzureOutputDataSourceProperties propertiesInstance15 = new SqlAzureOutputDataSourceProperties();
-                                                            sqlAzureOutputDataSourceInstance.SqlAzureOutputDataSourceProperties = propertiesInstance15;
+                                                            sqlAzureOutputDataSourceInstance.Properties = propertiesInstance15;
                                                             
                                                             JToken serverValue = propertiesValue16["server"];
                                                             if (serverValue != null && serverValue.Type != JTokenType.Null)
@@ -5551,7 +5632,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                         if (propertiesValue17 != null && propertiesValue17.Type != JTokenType.Null)
                                                         {
                                                             CsvSerializationProperties propertiesInstance16 = new CsvSerializationProperties();
-                                                            csvSerializationInstance3.CsvSerializationProperties = propertiesInstance16;
+                                                            csvSerializationInstance3.Properties = propertiesInstance16;
                                                             
                                                             JToken fieldDelimiterValue3 = propertiesValue17["fieldDelimiter"];
                                                             if (fieldDelimiterValue3 != null && fieldDelimiterValue3.Type != JTokenType.Null)
@@ -5577,7 +5658,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                         if (propertiesValue18 != null && propertiesValue18.Type != JTokenType.Null)
                                                         {
                                                             JsonSerializationProperties propertiesInstance17 = new JsonSerializationProperties();
-                                                            jsonSerializationInstance3.JsonSerializationProperties = propertiesInstance17;
+                                                            jsonSerializationInstance3.Properties = propertiesInstance17;
                                                             
                                                             JToken encodingValue6 = propertiesValue18["encoding"];
                                                             if (encodingValue6 != null && encodingValue6.Type != JTokenType.Null)
@@ -5596,7 +5677,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                         if (propertiesValue19 != null && propertiesValue19.Type != JTokenType.Null)
                                                         {
                                                             AvroSerializationProperties propertiesInstance18 = new AvroSerializationProperties();
-                                                            avroSerializationInstance3.AvroSerializationProperties = propertiesInstance18;
+                                                            avroSerializationInstance3.Properties = propertiesInstance18;
                                                         }
                                                         propertiesInstance12.Serialization = avroSerializationInstance3;
                                                     }
@@ -5685,7 +5766,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 }
                 
                 cancellationToken.ThrowIfCancellationRequested();
-                LongRunningOperationResponse response = await client.Job.BeginStartAsync(resourceGroupName, jobName, cancellationToken).ConfigureAwait(false);
+                LongRunningOperationResponse response = await client.StreamingJobs.BeginStartAsync(resourceGroupName, jobName, cancellationToken).ConfigureAwait(false);
                 if (response.Status == OperationStatus.Succeeded)
                 {
                     return response;
@@ -5695,7 +5776,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 int delayInSeconds = response.RetryAfter;
                 if (delayInSeconds == 0)
                 {
-                    delayInSeconds = 90;
+                    delayInSeconds = 10;
                 }
                 while ((result.Status != OperationStatus.InProgress) == false)
                 {
@@ -5762,7 +5843,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 }
                 
                 cancellationToken.ThrowIfCancellationRequested();
-                LongRunningOperationResponse response = await client.Job.BeginStopAsync(resourceGroupName, jobName, cancellationToken).ConfigureAwait(false);
+                LongRunningOperationResponse response = await client.StreamingJobs.BeginStopAsync(resourceGroupName, jobName, cancellationToken).ConfigureAwait(false);
                 if (response.Status == OperationStatus.Succeeded)
                 {
                     return response;
@@ -5772,7 +5853,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 int delayInSeconds = response.RetryAfter;
                 if (delayInSeconds == 0)
                 {
-                    delayInSeconds = 20;
+                    delayInSeconds = 10;
                 }
                 while ((result.Status != OperationStatus.InProgress) == false)
                 {
@@ -5852,17 +5933,17 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             {
                 foreach (Input inputsParameterItem in parameters.JobPatchRequest.Properties.Inputs)
                 {
-                    if (inputsParameterItem.InputProperties == null)
-                    {
-                        throw new ArgumentNullException("parameters.JobPatchRequest.Properties.Inputs.InputProperties");
-                    }
-                    if (inputsParameterItem.InputProperties.Serialization == null)
-                    {
-                        throw new ArgumentNullException("parameters.JobPatchRequest.Properties.Inputs.InputProperties.Serialization");
-                    }
                     if (inputsParameterItem.Name == null)
                     {
                         throw new ArgumentNullException("parameters.JobPatchRequest.Properties.Inputs.Name");
+                    }
+                    if (inputsParameterItem.Properties == null)
+                    {
+                        throw new ArgumentNullException("parameters.JobPatchRequest.Properties.Inputs.Properties");
+                    }
+                    if (inputsParameterItem.Properties.Serialization == null)
+                    {
+                        throw new ArgumentNullException("parameters.JobPatchRequest.Properties.Inputs.Properties.Serialization");
                     }
                 }
             }
@@ -5874,13 +5955,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     {
                         throw new ArgumentNullException("parameters.JobPatchRequest.Properties.Outputs.Name");
                     }
-                    if (outputsParameterItem.OutputProperties == null)
+                    if (outputsParameterItem.Properties == null)
                     {
-                        throw new ArgumentNullException("parameters.JobPatchRequest.Properties.Outputs.OutputProperties");
+                        throw new ArgumentNullException("parameters.JobPatchRequest.Properties.Outputs.Properties");
                     }
-                    if (outputsParameterItem.OutputProperties.DataSource == null)
+                    if (outputsParameterItem.Properties.DataSource == null)
                     {
-                        throw new ArgumentNullException("parameters.JobPatchRequest.Properties.Outputs.OutputProperties.DataSource");
+                        throw new ArgumentNullException("parameters.JobPatchRequest.Properties.Outputs.Properties.DataSource");
                     }
                 }
             }
@@ -5902,13 +5983,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 {
                     throw new ArgumentNullException("parameters.JobPatchRequest.Properties.Transformation.Name");
                 }
-                if (parameters.JobPatchRequest.Properties.Transformation.TransformationProperties == null)
+                if (parameters.JobPatchRequest.Properties.Transformation.Properties == null)
                 {
-                    throw new ArgumentNullException("parameters.JobPatchRequest.Properties.Transformation.TransformationProperties");
+                    throw new ArgumentNullException("parameters.JobPatchRequest.Properties.Transformation.Properties");
                 }
-                if (parameters.JobPatchRequest.Properties.Transformation.TransformationProperties.Query == null)
+                if (parameters.JobPatchRequest.Properties.Transformation.Properties.Query == null)
                 {
-                    throw new ArgumentNullException("parameters.JobPatchRequest.Properties.Transformation.TransformationProperties.Query");
+                    throw new ArgumentNullException("parameters.JobPatchRequest.Properties.Transformation.Properties.Query");
                 }
             }
             
@@ -5926,8 +6007,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/Microsoft.StreamAnalytics/streamingjobs/" + jobName.Trim() + "?";
-            url = url + "api-version=2014-10-01-preview";
+            string url = "/subscriptions/" + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.StreamAnalytics/streamingjobs/" + Uri.EscapeDataString(jobName) + "?";
+            url = url + "api-version=2014-12-01-preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -6025,7 +6106,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 
                 if (parameters.JobPatchRequest.Properties.CreatedDate != null)
                 {
-                    propertiesValue["CreatedDate"] = parameters.JobPatchRequest.Properties.CreatedDate.Value;
+                    propertiesValue["createdDate"] = parameters.JobPatchRequest.Properties.CreatedDate.Value;
                 }
                 
                 if (parameters.JobPatchRequest.Properties.Inputs != null)
@@ -6042,10 +6123,10 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                             
                             JObject propertiesValue2 = new JObject();
                             inputValue["properties"] = propertiesValue2;
-                            if (inputsItem.InputProperties is ReferenceInputProperties)
+                            if (inputsItem.Properties is ReferenceInputProperties)
                             {
                                 propertiesValue2["type"] = "Reference";
-                                ReferenceInputProperties derived = ((ReferenceInputProperties)inputsItem.InputProperties);
+                                ReferenceInputProperties derived = ((ReferenceInputProperties)inputsItem.Properties);
                                 
                                 JObject datasourceValue = new JObject();
                                 propertiesValue2["datasource"] = datasourceValue;
@@ -6057,12 +6138,12 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                     JObject propertiesValue3 = new JObject();
                                     datasourceValue["properties"] = propertiesValue3;
                                     
-                                    if (derived2.BlobReferenceInputDataSourceProperties.StorageAccounts != null)
+                                    if (derived2.Properties.StorageAccounts != null)
                                     {
-                                        if (derived2.BlobReferenceInputDataSourceProperties.StorageAccounts is ILazyCollection == false || ((ILazyCollection)derived2.BlobReferenceInputDataSourceProperties.StorageAccounts).IsInitialized)
+                                        if (derived2.Properties.StorageAccounts is ILazyCollection == false || ((ILazyCollection)derived2.Properties.StorageAccounts).IsInitialized)
                                         {
                                             JArray storageAccountsArray = new JArray();
-                                            foreach (StorageAccount storageAccountsItem in derived2.BlobReferenceInputDataSourceProperties.StorageAccounts)
+                                            foreach (StorageAccount storageAccountsItem in derived2.Properties.StorageAccounts)
                                             {
                                                 JObject storageAccountValue = new JObject();
                                                 storageAccountsArray.Add(storageAccountValue);
@@ -6081,9 +6162,9 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                         }
                                     }
                                     
-                                    propertiesValue3["container"] = derived2.BlobReferenceInputDataSourceProperties.Container;
+                                    propertiesValue3["container"] = derived2.Properties.Container;
                                     
-                                    propertiesValue3["blobName"] = derived2.BlobReferenceInputDataSourceProperties.BlobName;
+                                    propertiesValue3["blobName"] = derived2.Properties.BlobName;
                                 }
                                 
                                 if (derived.Etag != null)
@@ -6101,9 +6182,9 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                     JObject propertiesValue4 = new JObject();
                                     serializationValue["properties"] = propertiesValue4;
                                     
-                                    propertiesValue4["fieldDelimiter"] = derived3.CsvSerializationProperties.FieldDelimiter;
+                                    propertiesValue4["fieldDelimiter"] = derived3.Properties.FieldDelimiter;
                                     
-                                    propertiesValue4["encoding"] = derived3.CsvSerializationProperties.Encoding;
+                                    propertiesValue4["encoding"] = derived3.Properties.Encoding;
                                 }
                                 if (derived.Serialization is JsonSerialization)
                                 {
@@ -6113,20 +6194,20 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                     JObject propertiesValue5 = new JObject();
                                     serializationValue["properties"] = propertiesValue5;
                                     
-                                    propertiesValue5["encoding"] = derived4.JsonSerializationProperties.Encoding;
+                                    propertiesValue5["encoding"] = derived4.Properties.Encoding;
                                 }
                                 if (derived.Serialization is AvroSerialization)
                                 {
                                     serializationValue["type"] = "Avro";
                                     AvroSerialization derived5 = ((AvroSerialization)derived.Serialization);
                                     
-                                    serializationValue["properties"] = derived5.AvroSerializationProperties.ToString();
+                                    serializationValue["properties"] = derived5.Properties.ToString();
                                 }
                             }
-                            if (inputsItem.InputProperties is StreamInputProperties)
+                            if (inputsItem.Properties is StreamInputProperties)
                             {
                                 propertiesValue2["type"] = "Stream";
-                                StreamInputProperties derived6 = ((StreamInputProperties)inputsItem.InputProperties);
+                                StreamInputProperties derived6 = ((StreamInputProperties)inputsItem.Properties);
                                 
                                 JObject datasourceValue2 = new JObject();
                                 propertiesValue2["datasource"] = datasourceValue2;
@@ -6138,12 +6219,12 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                     JObject propertiesValue6 = new JObject();
                                     datasourceValue2["properties"] = propertiesValue6;
                                     
-                                    if (derived7.BlobStreamInputDataSourceProperties.StorageAccounts != null)
+                                    if (derived7.Properties.StorageAccounts != null)
                                     {
-                                        if (derived7.BlobStreamInputDataSourceProperties.StorageAccounts is ILazyCollection == false || ((ILazyCollection)derived7.BlobStreamInputDataSourceProperties.StorageAccounts).IsInitialized)
+                                        if (derived7.Properties.StorageAccounts is ILazyCollection == false || ((ILazyCollection)derived7.Properties.StorageAccounts).IsInitialized)
                                         {
                                             JArray storageAccountsArray2 = new JArray();
-                                            foreach (StorageAccount storageAccountsItem2 in derived7.BlobStreamInputDataSourceProperties.StorageAccounts)
+                                            foreach (StorageAccount storageAccountsItem2 in derived7.Properties.StorageAccounts)
                                             {
                                                 JObject storageAccountValue2 = new JObject();
                                                 storageAccountsArray2.Add(storageAccountValue2);
@@ -6162,31 +6243,31 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                         }
                                     }
                                     
-                                    propertiesValue6["container"] = derived7.BlobStreamInputDataSourceProperties.Container;
+                                    propertiesValue6["container"] = derived7.Properties.Container;
                                     
-                                    if (derived7.BlobStreamInputDataSourceProperties.BlobSerializationBoundary != null)
+                                    if (derived7.Properties.BlobSerializationBoundary != null)
                                     {
-                                        propertiesValue6["blobSerializationBoundary"] = derived7.BlobStreamInputDataSourceProperties.BlobSerializationBoundary;
+                                        propertiesValue6["blobSerializationBoundary"] = derived7.Properties.BlobSerializationBoundary;
                                     }
                                     
-                                    if (derived7.BlobStreamInputDataSourceProperties.PathPattern != null)
+                                    if (derived7.Properties.PathPattern != null)
                                     {
-                                        propertiesValue6["pathPattern"] = derived7.BlobStreamInputDataSourceProperties.PathPattern;
+                                        propertiesValue6["pathPattern"] = derived7.Properties.PathPattern;
                                     }
                                     
-                                    if (derived7.BlobStreamInputDataSourceProperties.DateFormat != null)
+                                    if (derived7.Properties.DateFormat != null)
                                     {
-                                        propertiesValue6["dateFormat"] = derived7.BlobStreamInputDataSourceProperties.DateFormat;
+                                        propertiesValue6["dateFormat"] = derived7.Properties.DateFormat;
                                     }
                                     
-                                    if (derived7.BlobStreamInputDataSourceProperties.TimeFormat != null)
+                                    if (derived7.Properties.TimeFormat != null)
                                     {
-                                        propertiesValue6["timeFormat"] = derived7.BlobStreamInputDataSourceProperties.TimeFormat;
+                                        propertiesValue6["timeFormat"] = derived7.Properties.TimeFormat;
                                     }
                                     
-                                    if (derived7.BlobStreamInputDataSourceProperties.SourcePartitionCount != null)
+                                    if (derived7.Properties.SourcePartitionCount != null)
                                     {
-                                        propertiesValue6["sourcePartitionCount"] = derived7.BlobStreamInputDataSourceProperties.SourcePartitionCount.Value;
+                                        propertiesValue6["sourcePartitionCount"] = derived7.Properties.SourcePartitionCount.Value;
                                     }
                                 }
                                 if (derived6.DataSource is EventHubStreamInputDataSource)
@@ -6197,13 +6278,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                     JObject propertiesValue7 = new JObject();
                                     datasourceValue2["properties"] = propertiesValue7;
                                     
-                                    propertiesValue7["serviceBusNamespace"] = derived8.EventHubStreamInputDataSourceProperties.ServiceBusNamespace;
+                                    propertiesValue7["serviceBusNamespace"] = derived8.Properties.ServiceBusNamespace;
                                     
-                                    propertiesValue7["sharedAccessPolicyName"] = derived8.EventHubStreamInputDataSourceProperties.SharedAccessPolicyName;
+                                    propertiesValue7["sharedAccessPolicyName"] = derived8.Properties.SharedAccessPolicyName;
                                     
-                                    propertiesValue7["sharedAccessPolicyKey"] = derived8.EventHubStreamInputDataSourceProperties.SharedAccessPolicyKey;
+                                    propertiesValue7["sharedAccessPolicyKey"] = derived8.Properties.SharedAccessPolicyKey;
                                     
-                                    propertiesValue7["eventHubName"] = derived8.EventHubStreamInputDataSourceProperties.EventHubName;
+                                    propertiesValue7["eventHubName"] = derived8.Properties.EventHubName;
                                 }
                                 
                                 if (derived6.Etag != null)
@@ -6221,9 +6302,9 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                     JObject propertiesValue8 = new JObject();
                                     serializationValue2["properties"] = propertiesValue8;
                                     
-                                    propertiesValue8["fieldDelimiter"] = derived9.CsvSerializationProperties.FieldDelimiter;
+                                    propertiesValue8["fieldDelimiter"] = derived9.Properties.FieldDelimiter;
                                     
-                                    propertiesValue8["encoding"] = derived9.CsvSerializationProperties.Encoding;
+                                    propertiesValue8["encoding"] = derived9.Properties.Encoding;
                                 }
                                 if (derived6.Serialization is JsonSerialization)
                                 {
@@ -6233,14 +6314,14 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                     JObject propertiesValue9 = new JObject();
                                     serializationValue2["properties"] = propertiesValue9;
                                     
-                                    propertiesValue9["encoding"] = derived10.JsonSerializationProperties.Encoding;
+                                    propertiesValue9["encoding"] = derived10.Properties.Encoding;
                                 }
                                 if (derived6.Serialization is AvroSerialization)
                                 {
                                     serializationValue2["type"] = "Avro";
                                     AvroSerialization derived11 = ((AvroSerialization)derived6.Serialization);
                                     
-                                    serializationValue2["properties"] = derived11.AvroSerializationProperties.ToString();
+                                    serializationValue2["properties"] = derived11.Properties.ToString();
                                 }
                             }
                         }
@@ -6258,17 +6339,17 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     JObject propertiesValue10 = new JObject();
                     transformationValue["properties"] = propertiesValue10;
                     
-                    if (parameters.JobPatchRequest.Properties.Transformation.TransformationProperties.Etag != null)
+                    if (parameters.JobPatchRequest.Properties.Transformation.Properties.Etag != null)
                     {
-                        propertiesValue10["etag"] = parameters.JobPatchRequest.Properties.Transformation.TransformationProperties.Etag;
+                        propertiesValue10["etag"] = parameters.JobPatchRequest.Properties.Transformation.Properties.Etag;
                     }
                     
-                    if (parameters.JobPatchRequest.Properties.Transformation.TransformationProperties.StreamingUnits != null)
+                    if (parameters.JobPatchRequest.Properties.Transformation.Properties.StreamingUnits != null)
                     {
-                        propertiesValue10["streamingUnits"] = parameters.JobPatchRequest.Properties.Transformation.TransformationProperties.StreamingUnits.Value;
+                        propertiesValue10["streamingUnits"] = parameters.JobPatchRequest.Properties.Transformation.Properties.StreamingUnits.Value;
                     }
                     
-                    propertiesValue10["query"] = parameters.JobPatchRequest.Properties.Transformation.TransformationProperties.Query;
+                    propertiesValue10["query"] = parameters.JobPatchRequest.Properties.Transformation.Properties.Query;
                 }
                 
                 if (parameters.JobPatchRequest.Properties.Outputs != null)
@@ -6286,27 +6367,27 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                             JObject propertiesValue11 = new JObject();
                             outputValue["properties"] = propertiesValue11;
                             
-                            if (outputsItem.OutputProperties.Etag != null)
+                            if (outputsItem.Properties.Etag != null)
                             {
-                                propertiesValue11["etag"] = outputsItem.OutputProperties.Etag;
+                                propertiesValue11["etag"] = outputsItem.Properties.Etag;
                             }
                             
                             JObject datasourceValue3 = new JObject();
                             propertiesValue11["datasource"] = datasourceValue3;
-                            if (outputsItem.OutputProperties.DataSource is BlobOutputDataSource)
+                            if (outputsItem.Properties.DataSource is BlobOutputDataSource)
                             {
                                 datasourceValue3["type"] = "Microsoft.Storage/Blob";
-                                BlobOutputDataSource derived12 = ((BlobOutputDataSource)outputsItem.OutputProperties.DataSource);
+                                BlobOutputDataSource derived12 = ((BlobOutputDataSource)outputsItem.Properties.DataSource);
                                 
                                 JObject propertiesValue12 = new JObject();
                                 datasourceValue3["properties"] = propertiesValue12;
                                 
-                                if (derived12.BlobOutputDataSourceProperties.StorageAccounts != null)
+                                if (derived12.Properties.StorageAccounts != null)
                                 {
-                                    if (derived12.BlobOutputDataSourceProperties.StorageAccounts is ILazyCollection == false || ((ILazyCollection)derived12.BlobOutputDataSourceProperties.StorageAccounts).IsInitialized)
+                                    if (derived12.Properties.StorageAccounts is ILazyCollection == false || ((ILazyCollection)derived12.Properties.StorageAccounts).IsInitialized)
                                     {
                                         JArray storageAccountsArray3 = new JArray();
-                                        foreach (StorageAccount storageAccountsItem3 in derived12.BlobOutputDataSourceProperties.StorageAccounts)
+                                        foreach (StorageAccount storageAccountsItem3 in derived12.Properties.StorageAccounts)
                                         {
                                             JObject storageAccountValue3 = new JObject();
                                             storageAccountsArray3.Add(storageAccountValue3);
@@ -6325,80 +6406,80 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                     }
                                 }
                                 
-                                propertiesValue12["container"] = derived12.BlobOutputDataSourceProperties.Container;
+                                propertiesValue12["container"] = derived12.Properties.Container;
                                 
-                                if (derived12.BlobOutputDataSourceProperties.BlobPathPrefix != null)
+                                if (derived12.Properties.BlobPathPrefix != null)
                                 {
-                                    propertiesValue12["blobPathPrefix"] = derived12.BlobOutputDataSourceProperties.BlobPathPrefix;
+                                    propertiesValue12["blobPathPrefix"] = derived12.Properties.BlobPathPrefix;
                                 }
                             }
-                            if (outputsItem.OutputProperties.DataSource is EventHubOutputDataSource)
+                            if (outputsItem.Properties.DataSource is EventHubOutputDataSource)
                             {
                                 datasourceValue3["type"] = "Microsoft.ServiceBus/EventHub";
-                                EventHubOutputDataSource derived13 = ((EventHubOutputDataSource)outputsItem.OutputProperties.DataSource);
+                                EventHubOutputDataSource derived13 = ((EventHubOutputDataSource)outputsItem.Properties.DataSource);
                                 
                                 JObject propertiesValue13 = new JObject();
                                 datasourceValue3["properties"] = propertiesValue13;
                                 
-                                propertiesValue13["serviceBusNamespace"] = derived13.EventHubOutputDataSourceProperties.ServiceBusNamespace;
+                                propertiesValue13["serviceBusNamespace"] = derived13.Properties.ServiceBusNamespace;
                                 
-                                propertiesValue13["sharedAccessPolicyName"] = derived13.EventHubOutputDataSourceProperties.SharedAccessPolicyName;
+                                propertiesValue13["sharedAccessPolicyName"] = derived13.Properties.SharedAccessPolicyName;
                                 
-                                propertiesValue13["sharedAccessPolicyKey"] = derived13.EventHubOutputDataSourceProperties.SharedAccessPolicyKey;
+                                propertiesValue13["sharedAccessPolicyKey"] = derived13.Properties.SharedAccessPolicyKey;
                                 
-                                propertiesValue13["eventHubName"] = derived13.EventHubOutputDataSourceProperties.EventHubName;
+                                propertiesValue13["eventHubName"] = derived13.Properties.EventHubName;
                             }
-                            if (outputsItem.OutputProperties.DataSource is SqlAzureOutputDataSource)
+                            if (outputsItem.Properties.DataSource is SqlAzureOutputDataSource)
                             {
                                 datasourceValue3["type"] = "Microsoft.Sql/Server/Database";
-                                SqlAzureOutputDataSource derived14 = ((SqlAzureOutputDataSource)outputsItem.OutputProperties.DataSource);
+                                SqlAzureOutputDataSource derived14 = ((SqlAzureOutputDataSource)outputsItem.Properties.DataSource);
                                 
                                 JObject propertiesValue14 = new JObject();
                                 datasourceValue3["properties"] = propertiesValue14;
                                 
-                                propertiesValue14["server"] = derived14.SqlAzureOutputDataSourceProperties.Server;
+                                propertiesValue14["server"] = derived14.Properties.Server;
                                 
-                                propertiesValue14["database"] = derived14.SqlAzureOutputDataSourceProperties.Database;
+                                propertiesValue14["database"] = derived14.Properties.Database;
                                 
-                                propertiesValue14["user"] = derived14.SqlAzureOutputDataSourceProperties.User;
+                                propertiesValue14["user"] = derived14.Properties.User;
                                 
-                                propertiesValue14["password"] = derived14.SqlAzureOutputDataSourceProperties.Password;
+                                propertiesValue14["password"] = derived14.Properties.Password;
                                 
-                                propertiesValue14["table"] = derived14.SqlAzureOutputDataSourceProperties.Table;
+                                propertiesValue14["table"] = derived14.Properties.Table;
                             }
                             
-                            if (outputsItem.OutputProperties.Serialization != null)
+                            if (outputsItem.Properties.Serialization != null)
                             {
                                 JObject serializationValue3 = new JObject();
                                 propertiesValue11["serialization"] = serializationValue3;
-                                if (outputsItem.OutputProperties.Serialization is CsvSerialization)
+                                if (outputsItem.Properties.Serialization is CsvSerialization)
                                 {
                                     serializationValue3["type"] = "Csv";
-                                    CsvSerialization derived15 = ((CsvSerialization)outputsItem.OutputProperties.Serialization);
+                                    CsvSerialization derived15 = ((CsvSerialization)outputsItem.Properties.Serialization);
                                     
                                     JObject propertiesValue15 = new JObject();
                                     serializationValue3["properties"] = propertiesValue15;
                                     
-                                    propertiesValue15["fieldDelimiter"] = derived15.CsvSerializationProperties.FieldDelimiter;
+                                    propertiesValue15["fieldDelimiter"] = derived15.Properties.FieldDelimiter;
                                     
-                                    propertiesValue15["encoding"] = derived15.CsvSerializationProperties.Encoding;
+                                    propertiesValue15["encoding"] = derived15.Properties.Encoding;
                                 }
-                                if (outputsItem.OutputProperties.Serialization is JsonSerialization)
+                                if (outputsItem.Properties.Serialization is JsonSerialization)
                                 {
                                     serializationValue3["type"] = "Json";
-                                    JsonSerialization derived16 = ((JsonSerialization)outputsItem.OutputProperties.Serialization);
+                                    JsonSerialization derived16 = ((JsonSerialization)outputsItem.Properties.Serialization);
                                     
                                     JObject propertiesValue16 = new JObject();
                                     serializationValue3["properties"] = propertiesValue16;
                                     
-                                    propertiesValue16["encoding"] = derived16.JsonSerializationProperties.Encoding;
+                                    propertiesValue16["encoding"] = derived16.Properties.Encoding;
                                 }
-                                if (outputsItem.OutputProperties.Serialization is AvroSerialization)
+                                if (outputsItem.Properties.Serialization is AvroSerialization)
                                 {
                                     serializationValue3["type"] = "Avro";
-                                    AvroSerialization derived17 = ((AvroSerialization)outputsItem.OutputProperties.Serialization);
+                                    AvroSerialization derived17 = ((AvroSerialization)outputsItem.Properties.Serialization);
                                     
-                                    serializationValue3["properties"] = derived17.AvroSerializationProperties.ToString();
+                                    serializationValue3["properties"] = derived17.Properties.ToString();
                                 }
                             }
                         }
@@ -6453,11 +6534,25 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                         Job jobInstance = new Job();
                         result.Job = jobInstance;
                         
+                        JToken idValue = responseDoc["id"];
+                        if (idValue != null && idValue.Type != JTokenType.Null)
+                        {
+                            string idInstance = ((string)idValue);
+                            jobInstance.Id = idInstance;
+                        }
+                        
                         JToken nameValue = responseDoc["name"];
                         if (nameValue != null && nameValue.Type != JTokenType.Null)
                         {
                             string nameInstance = ((string)nameValue);
                             jobInstance.Name = nameInstance;
+                        }
+                        
+                        JToken typeValue = responseDoc["type"];
+                        if (typeValue != null && typeValue.Type != JTokenType.Null)
+                        {
+                            string typeInstance = ((string)typeValue);
+                            jobInstance.Type = typeInstance;
                         }
                         
                         JToken locationValue = responseDoc["location"];
@@ -6554,7 +6649,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                 propertiesInstance.JobState = jobStateInstance;
                             }
                             
-                            JToken createdDateValue = propertiesValue17["CreatedDate"];
+                            JToken createdDateValue = propertiesValue17["createdDate"];
                             if (createdDateValue != null && createdDateValue.Type != JTokenType.Null)
                             {
                                 DateTime createdDateInstance = ((DateTime)createdDateValue);
@@ -6596,7 +6691,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                     if (propertiesValue19 != null && propertiesValue19.Type != JTokenType.Null)
                                                     {
                                                         BlobReferenceInputDataSourceProperties propertiesInstance2 = new BlobReferenceInputDataSourceProperties();
-                                                        blobReferenceInputDataSourceInstance.BlobReferenceInputDataSourceProperties = propertiesInstance2;
+                                                        blobReferenceInputDataSourceInstance.Properties = propertiesInstance2;
                                                         
                                                         JToken storageAccountsArray4 = propertiesValue19["storageAccounts"];
                                                         if (storageAccountsArray4 != null && storageAccountsArray4.Type != JTokenType.Null)
@@ -6659,7 +6754,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                     if (propertiesValue20 != null && propertiesValue20.Type != JTokenType.Null)
                                                     {
                                                         CsvSerializationProperties propertiesInstance3 = new CsvSerializationProperties();
-                                                        csvSerializationInstance.CsvSerializationProperties = propertiesInstance3;
+                                                        csvSerializationInstance.Properties = propertiesInstance3;
                                                         
                                                         JToken fieldDelimiterValue = propertiesValue20["fieldDelimiter"];
                                                         if (fieldDelimiterValue != null && fieldDelimiterValue.Type != JTokenType.Null)
@@ -6685,7 +6780,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                     if (propertiesValue21 != null && propertiesValue21.Type != JTokenType.Null)
                                                     {
                                                         JsonSerializationProperties propertiesInstance4 = new JsonSerializationProperties();
-                                                        jsonSerializationInstance.JsonSerializationProperties = propertiesInstance4;
+                                                        jsonSerializationInstance.Properties = propertiesInstance4;
                                                         
                                                         JToken encodingValue2 = propertiesValue21["encoding"];
                                                         if (encodingValue2 != null && encodingValue2.Type != JTokenType.Null)
@@ -6704,12 +6799,12 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                     if (propertiesValue22 != null && propertiesValue22.Type != JTokenType.Null)
                                                     {
                                                         AvroSerializationProperties propertiesInstance5 = new AvroSerializationProperties();
-                                                        avroSerializationInstance.AvroSerializationProperties = propertiesInstance5;
+                                                        avroSerializationInstance.Properties = propertiesInstance5;
                                                     }
                                                     referenceInputPropertiesInstance.Serialization = avroSerializationInstance;
                                                 }
                                             }
-                                            inputInstance.InputProperties = referenceInputPropertiesInstance;
+                                            inputInstance.Properties = referenceInputPropertiesInstance;
                                         }
                                         if (typeName == "Stream")
                                         {
@@ -6727,7 +6822,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                     if (propertiesValue23 != null && propertiesValue23.Type != JTokenType.Null)
                                                     {
                                                         BlobStreamInputDataSourceProperties propertiesInstance6 = new BlobStreamInputDataSourceProperties();
-                                                        blobStreamInputDataSourceInstance.BlobStreamInputDataSourceProperties = propertiesInstance6;
+                                                        blobStreamInputDataSourceInstance.Properties = propertiesInstance6;
                                                         
                                                         JToken storageAccountsArray5 = propertiesValue23["storageAccounts"];
                                                         if (storageAccountsArray5 != null && storageAccountsArray5.Type != JTokenType.Null)
@@ -6805,7 +6900,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                     if (propertiesValue24 != null && propertiesValue24.Type != JTokenType.Null)
                                                     {
                                                         EventHubStreamInputDataSourceProperties propertiesInstance7 = new EventHubStreamInputDataSourceProperties();
-                                                        eventHubStreamInputDataSourceInstance.EventHubStreamInputDataSourceProperties = propertiesInstance7;
+                                                        eventHubStreamInputDataSourceInstance.Properties = propertiesInstance7;
                                                         
                                                         JToken serviceBusNamespaceValue = propertiesValue24["serviceBusNamespace"];
                                                         if (serviceBusNamespaceValue != null && serviceBusNamespaceValue.Type != JTokenType.Null)
@@ -6858,7 +6953,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                     if (propertiesValue25 != null && propertiesValue25.Type != JTokenType.Null)
                                                     {
                                                         CsvSerializationProperties propertiesInstance8 = new CsvSerializationProperties();
-                                                        csvSerializationInstance2.CsvSerializationProperties = propertiesInstance8;
+                                                        csvSerializationInstance2.Properties = propertiesInstance8;
                                                         
                                                         JToken fieldDelimiterValue2 = propertiesValue25["fieldDelimiter"];
                                                         if (fieldDelimiterValue2 != null && fieldDelimiterValue2.Type != JTokenType.Null)
@@ -6884,7 +6979,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                     if (propertiesValue26 != null && propertiesValue26.Type != JTokenType.Null)
                                                     {
                                                         JsonSerializationProperties propertiesInstance9 = new JsonSerializationProperties();
-                                                        jsonSerializationInstance2.JsonSerializationProperties = propertiesInstance9;
+                                                        jsonSerializationInstance2.Properties = propertiesInstance9;
                                                         
                                                         JToken encodingValue4 = propertiesValue26["encoding"];
                                                         if (encodingValue4 != null && encodingValue4.Type != JTokenType.Null)
@@ -6903,12 +6998,12 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                     if (propertiesValue27 != null && propertiesValue27.Type != JTokenType.Null)
                                                     {
                                                         AvroSerializationProperties propertiesInstance10 = new AvroSerializationProperties();
-                                                        avroSerializationInstance2.AvroSerializationProperties = propertiesInstance10;
+                                                        avroSerializationInstance2.Properties = propertiesInstance10;
                                                     }
                                                     streamInputPropertiesInstance.Serialization = avroSerializationInstance2;
                                                 }
                                             }
-                                            inputInstance.InputProperties = streamInputPropertiesInstance;
+                                            inputInstance.Properties = streamInputPropertiesInstance;
                                         }
                                     }
                                 }
@@ -6931,7 +7026,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                 if (propertiesValue28 != null && propertiesValue28.Type != JTokenType.Null)
                                 {
                                     TransformationProperties propertiesInstance11 = new TransformationProperties();
-                                    transformationInstance.TransformationProperties = propertiesInstance11;
+                                    transformationInstance.Properties = propertiesInstance11;
                                     
                                     JToken etagValue4 = propertiesValue28["etag"];
                                     if (etagValue4 != null && etagValue4.Type != JTokenType.Null)
@@ -6975,7 +7070,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                     if (propertiesValue29 != null && propertiesValue29.Type != JTokenType.Null)
                                     {
                                         OutputProperties propertiesInstance12 = new OutputProperties();
-                                        outputInstance.OutputProperties = propertiesInstance12;
+                                        outputInstance.Properties = propertiesInstance12;
                                         
                                         JToken etagValue5 = propertiesValue29["etag"];
                                         if (etagValue5 != null && etagValue5.Type != JTokenType.Null)
@@ -6996,7 +7091,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                 if (propertiesValue30 != null && propertiesValue30.Type != JTokenType.Null)
                                                 {
                                                     BlobOutputDataSourceProperties propertiesInstance13 = new BlobOutputDataSourceProperties();
-                                                    blobOutputDataSourceInstance.BlobOutputDataSourceProperties = propertiesInstance13;
+                                                    blobOutputDataSourceInstance.Properties = propertiesInstance13;
                                                     
                                                     JToken storageAccountsArray6 = propertiesValue30["storageAccounts"];
                                                     if (storageAccountsArray6 != null && storageAccountsArray6.Type != JTokenType.Null)
@@ -7046,7 +7141,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                 if (propertiesValue31 != null && propertiesValue31.Type != JTokenType.Null)
                                                 {
                                                     EventHubOutputDataSourceProperties propertiesInstance14 = new EventHubOutputDataSourceProperties();
-                                                    eventHubOutputDataSourceInstance.EventHubOutputDataSourceProperties = propertiesInstance14;
+                                                    eventHubOutputDataSourceInstance.Properties = propertiesInstance14;
                                                     
                                                     JToken serviceBusNamespaceValue2 = propertiesValue31["serviceBusNamespace"];
                                                     if (serviceBusNamespaceValue2 != null && serviceBusNamespaceValue2.Type != JTokenType.Null)
@@ -7086,7 +7181,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                 if (propertiesValue32 != null && propertiesValue32.Type != JTokenType.Null)
                                                 {
                                                     SqlAzureOutputDataSourceProperties propertiesInstance15 = new SqlAzureOutputDataSourceProperties();
-                                                    sqlAzureOutputDataSourceInstance.SqlAzureOutputDataSourceProperties = propertiesInstance15;
+                                                    sqlAzureOutputDataSourceInstance.Properties = propertiesInstance15;
                                                     
                                                     JToken serverValue = propertiesValue32["server"];
                                                     if (serverValue != null && serverValue.Type != JTokenType.Null)
@@ -7139,7 +7234,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                 if (propertiesValue33 != null && propertiesValue33.Type != JTokenType.Null)
                                                 {
                                                     CsvSerializationProperties propertiesInstance16 = new CsvSerializationProperties();
-                                                    csvSerializationInstance3.CsvSerializationProperties = propertiesInstance16;
+                                                    csvSerializationInstance3.Properties = propertiesInstance16;
                                                     
                                                     JToken fieldDelimiterValue3 = propertiesValue33["fieldDelimiter"];
                                                     if (fieldDelimiterValue3 != null && fieldDelimiterValue3.Type != JTokenType.Null)
@@ -7165,7 +7260,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                 if (propertiesValue34 != null && propertiesValue34.Type != JTokenType.Null)
                                                 {
                                                     JsonSerializationProperties propertiesInstance17 = new JsonSerializationProperties();
-                                                    jsonSerializationInstance3.JsonSerializationProperties = propertiesInstance17;
+                                                    jsonSerializationInstance3.Properties = propertiesInstance17;
                                                     
                                                     JToken encodingValue6 = propertiesValue34["encoding"];
                                                     if (encodingValue6 != null && encodingValue6.Type != JTokenType.Null)
@@ -7184,7 +7279,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                 if (propertiesValue35 != null && propertiesValue35.Type != JTokenType.Null)
                                                 {
                                                     AvroSerializationProperties propertiesInstance18 = new AvroSerializationProperties();
-                                                    avroSerializationInstance3.AvroSerializationProperties = propertiesInstance18;
+                                                    avroSerializationInstance3.Properties = propertiesInstance18;
                                                 }
                                                 propertiesInstance12.Serialization = avroSerializationInstance3;
                                             }

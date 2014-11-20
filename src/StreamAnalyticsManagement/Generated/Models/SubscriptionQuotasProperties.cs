@@ -32,8 +32,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private int _currentCount;
         
         /// <summary>
-        /// Required. The streaming units count currently used for the stream
-        /// analytics for the subscription in this region.
+        /// Required. Gets or sets the streaming units count currently used for
+        /// the stream analytics for the subscription in this region.
         /// </summary>
         public int CurrentCount
         {
@@ -44,8 +44,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private int _maxCount;
         
         /// <summary>
-        /// Required. The max streaming units count allowed for the stream
-        /// analytics for the subscription in this region.
+        /// Required. Gets or sets the max streaming units count allowed for
+        /// the stream analytics for the subscription in this region.
         /// </summary>
         public int MaxCount
         {

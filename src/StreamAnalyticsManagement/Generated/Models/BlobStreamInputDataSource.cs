@@ -30,15 +30,16 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
     /// </summary>
     public partial class BlobStreamInputDataSource : StreamInputDataSource
     {
-        private BlobStreamInputDataSourceProperties _blobStreamInputDataSourceProperties;
+        private BlobStreamInputDataSourceProperties _properties;
         
         /// <summary>
-        /// Required. The properties of the blob data source as stream input.
+        /// Required. Gets or sets the properties of the blob data source as
+        /// stream input.
         /// </summary>
-        public BlobStreamInputDataSourceProperties BlobStreamInputDataSourceProperties
+        public BlobStreamInputDataSourceProperties Properties
         {
-            get { return this._blobStreamInputDataSourceProperties; }
-            set { this._blobStreamInputDataSourceProperties = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>
@@ -52,14 +53,14 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// Initializes a new instance of the BlobStreamInputDataSource class
         /// with required arguments.
         /// </summary>
-        public BlobStreamInputDataSource(BlobStreamInputDataSourceProperties blobStreamInputDataSourceProperties)
+        public BlobStreamInputDataSource(BlobStreamInputDataSourceProperties properties)
             : this()
         {
-            if (blobStreamInputDataSourceProperties == null)
+            if (properties == null)
             {
-                throw new ArgumentNullException("blobStreamInputDataSourceProperties");
+                throw new ArgumentNullException("properties");
             }
-            this.BlobStreamInputDataSourceProperties = blobStreamInputDataSourceProperties;
+            this.Properties = properties;
         }
     }
 }

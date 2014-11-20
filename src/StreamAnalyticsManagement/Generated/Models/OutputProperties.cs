@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private OutputDataSource _dataSource;
         
         /// <summary>
-        /// Required. The data source configuration of the output.
+        /// Required. Gets or sets the data source configuration of the output.
         /// </summary>
         public OutputDataSource DataSource
         {
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _etag;
         
         /// <summary>
-        /// Optional. The etag of the output properties.
+        /// Optional. Gets or sets the etag of the output properties.
         /// </summary>
         public string Etag
         {
@@ -55,7 +55,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private Serialization _serialization;
         
         /// <summary>
-        /// Optional. The serialization configuration of the output.
+        /// Optional. Gets or sets the serialization configuration of the
+        /// output.
         /// </summary>
         public Serialization Serialization
         {

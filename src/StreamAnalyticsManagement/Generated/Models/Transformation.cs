@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _name;
         
         /// <summary>
-        /// Required. The name of the transformation.
+        /// Required. Gets or sets the name of the transformation.
         /// </summary>
         public string Name
         {
@@ -41,15 +41,15 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
             set { this._name = value; }
         }
         
-        private TransformationProperties _transformationProperties;
+        private TransformationProperties _properties;
         
         /// <summary>
-        /// Required. The properties of the transformation.
+        /// Required. Gets or sets the properties of the transformation.
         /// </summary>
-        public TransformationProperties TransformationProperties
+        public TransformationProperties Properties
         {
-            get { return this._transformationProperties; }
-            set { this._transformationProperties = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>
@@ -63,19 +63,19 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// Initializes a new instance of the Transformation class with
         /// required arguments.
         /// </summary>
-        public Transformation(string name, TransformationProperties transformationProperties)
+        public Transformation(string name, TransformationProperties properties)
             : this()
         {
             if (name == null)
             {
                 throw new ArgumentNullException("name");
             }
-            if (transformationProperties == null)
+            if (properties == null)
             {
-                throw new ArgumentNullException("transformationProperties");
+                throw new ArgumentNullException("properties");
             }
             this.Name = name;
-            this.TransformationProperties = transformationProperties;
+            this.Properties = properties;
         }
     }
 }

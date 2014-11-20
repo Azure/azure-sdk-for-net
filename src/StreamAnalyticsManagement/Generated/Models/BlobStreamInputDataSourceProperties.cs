@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _blobSerializationBoundary;
         
         /// <summary>
-        /// Optional. The blob serialization boundary.
+        /// Optional. Gets or sets the blob serialization boundary.
         /// </summary>
         public string BlobSerializationBoundary
         {
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _container;
         
         /// <summary>
-        /// Required. The container of the blob.
+        /// Required. Gets or sets the container of the blob.
         /// </summary>
         public string Container
         {
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _dateFormat;
         
         /// <summary>
-        /// Optional. The date format pattern.
+        /// Optional. Gets or sets the date format pattern.
         /// </summary>
         public string DateFormat
         {
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _pathPattern;
         
         /// <summary>
-        /// Optional. The blob path pattern.
+        /// Optional. Gets or sets the blob path pattern.
         /// </summary>
         public string PathPattern
         {
@@ -79,8 +79,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private int? _sourcePartitionCount;
         
         /// <summary>
-        /// Optional. The partition count of the blob input data source. Range
-        /// 1 – 256.
+        /// Optional. Gets or sets the partition count of the blob input data
+        /// source. Range 1 – 256.
         /// </summary>
         public int? SourcePartitionCount
         {
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private IList<StorageAccount> _storageAccounts;
         
         /// <summary>
-        /// Optional. A list of one or more storage accounts.
+        /// Optional. Gets or sets a list of one or more storage accounts.
         /// </summary>
         public IList<StorageAccount> StorageAccounts
         {
@@ -102,7 +102,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _timeFormat;
         
         /// <summary>
-        /// Optional. The time format pattern.
+        /// Optional. Gets or sets the time format pattern.
         /// </summary>
         public string TimeFormat
         {

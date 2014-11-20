@@ -32,9 +32,9 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _accountKey;
         
         /// <summary>
-        /// Optional. The blob storage account key. Required when constructing
-        /// the request by client. It will be not shown in any service
-        /// response for security protection.
+        /// Optional. Gets or sets the blob storage account key. Required when
+        /// constructing the request by client. It will be not shown in any
+        /// service response for security protection.
         /// </summary>
         public string AccountKey
         {
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _accountName;
         
         /// <summary>
-        /// Optional. The blob storage account name.
+        /// Optional. Gets or sets the blob storage account name.
         /// </summary>
         public string AccountName
         {

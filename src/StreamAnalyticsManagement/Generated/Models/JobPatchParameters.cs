@@ -34,7 +34,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private JobPatchRequest _jobPatchRequest;
         
         /// <summary>
-        /// Required. The definition of the stream analytics job to be patched.
+        /// Required. Gets or sets the definition of the stream analytics job
+        /// to be patched.
         /// </summary>
         public JobPatchRequest JobPatchRequest
         {
@@ -45,9 +46,10 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _jobStateIfMatch;
         
         /// <summary>
-        /// Optional. Use If-None-Match: * to give PUT create-only semantics –
-        /// to make create fail if the named resource exists. Without it, PUT
-        /// replaces the named resource if it exists.
+        /// Optional. Gets or sets the If-None-Match. Use If-None-Match: * to
+        /// give PUT create-only semantics – to make create fail if the named
+        /// resource exists. Without it, PUT replaces the named resource if it
+        /// exists.
         /// </summary>
         public string JobStateIfMatch
         {

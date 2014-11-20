@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _blobName;
         
         /// <summary>
-        /// Required. The blob name.
+        /// Required. Gets or sets the blob name.
         /// </summary>
         public string BlobName
         {
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _container;
         
         /// <summary>
-        /// Required. The container of the blob.
+        /// Required. Gets or sets the container of the blob.
         /// </summary>
         public string Container
         {
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private IList<StorageAccount> _storageAccounts;
         
         /// <summary>
-        /// Optional. A list of one or more blob storage accounts.
+        /// Optional. Gets or sets a list of one or more blob storage accounts.
         /// </summary>
         public IList<StorageAccount> StorageAccounts
         {

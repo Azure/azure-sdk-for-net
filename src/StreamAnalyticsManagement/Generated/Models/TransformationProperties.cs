@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _etag;
         
         /// <summary>
-        /// Optional. The etag of the transformation in DSL.
+        /// Optional. Gets or sets the etag of the transformation in DSL.
         /// </summary>
         public string Etag
         {
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _query;
         
         /// <summary>
-        /// Required. The query of the transformation.
+        /// Required. Gets or sets the query of the transformation.
         /// </summary>
         public string Query
         {
@@ -54,7 +54,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private int? _streamingUnits;
         
         /// <summary>
-        /// Optional. The number of the streaming units of the transformation.
+        /// Optional. Gets or sets the number of the streaming units of the
+        /// transformation.
         /// </summary>
         public int? StreamingUnits
         {

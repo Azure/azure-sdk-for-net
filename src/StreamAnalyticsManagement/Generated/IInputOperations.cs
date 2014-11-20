@@ -24,7 +24,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.Management.StreamAnalytics.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.StreamAnalytics
 {
@@ -71,7 +70,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response of the input create operation.
+        /// The response of the input CreateOrUpdate operation.
         /// </returns>
         Task<InputCreateOrUpdateResponse> CreateOrUpdateAsync(string resourceGroupName, string jobName, InputCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
         
@@ -96,7 +95,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response of the input create operation.
+        /// The response of the input CreateOrUpdate operation.
         /// </returns>
         Task<InputCreateOrUpdateResponse> CreateOrUpdateWithRawJsonContentAsync(string resourceGroupName, string jobName, string inputName, InputCreateOrUpdateWithRawJsonContentParameters parameters, CancellationToken cancellationToken);
         
@@ -116,13 +115,12 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The common operation response.
         /// </returns>
-        Task<OperationResponse> DeleteAsync(string resourceGroupName, string jobName, string inputName, CancellationToken cancellationToken);
+        Task<CommonOperationResponse> DeleteAsync(string resourceGroupName, string jobName, string inputName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Create an input for a stream analytics job.
+        /// Get an input for a stream analytics job.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The resource group name of the stream analytics job.

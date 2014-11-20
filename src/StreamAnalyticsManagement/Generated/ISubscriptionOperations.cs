@@ -28,8 +28,7 @@ using Microsoft.Azure.Management.StreamAnalytics.Models;
 namespace Microsoft.Azure.Management.StreamAnalytics
 {
     /// <summary>
-    /// Operations for get the subscription information related to Azure Stream
-    /// Analytics.
+    /// Operations for Azure Stream Analytics subscription information.
     /// </summary>
     public partial interface ISubscriptionOperations
     {

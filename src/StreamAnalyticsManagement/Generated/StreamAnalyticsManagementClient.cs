@@ -64,56 +64,55 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             set { this._credentials = value; }
         }
         
-        private IInputOperations _input;
+        private IInputOperations _inputs;
         
         /// <summary>
         /// Operations for managing the input of the stream analytics job.
         /// </summary>
-        public virtual IInputOperations Input
+        public virtual IInputOperations Inputs
         {
-            get { return this._input; }
+            get { return this._inputs; }
         }
         
-        private IJobOperations _job;
+        private IJobOperations _streamingJobs;
         
         /// <summary>
         /// Operations for managing the stream analytics job.
         /// </summary>
-        public virtual IJobOperations Job
+        public virtual IJobOperations StreamingJobs
         {
-            get { return this._job; }
+            get { return this._streamingJobs; }
         }
         
-        private IOutputOperations _output;
+        private IOutputOperations _outputs;
         
         /// <summary>
         /// Operations for managing the output of the stream analytics job.
         /// </summary>
-        public virtual IOutputOperations Output
+        public virtual IOutputOperations Outputs
         {
-            get { return this._output; }
+            get { return this._outputs; }
         }
         
-        private ISubscriptionOperations _subscription;
+        private ISubscriptionOperations _subscriptions;
         
         /// <summary>
-        /// Operations for get the subscription information related to Azure
-        /// Stream Analytics.
+        /// Operations for Azure Stream Analytics subscription information.
         /// </summary>
-        public virtual ISubscriptionOperations Subscription
+        public virtual ISubscriptionOperations Subscriptions
         {
-            get { return this._subscription; }
+            get { return this._subscriptions; }
         }
         
-        private ITransformationOperations _transformation;
+        private ITransformationOperations _transformations;
         
         /// <summary>
         /// Operations for managing the transformation definition of the stream
         /// analytics job.
         /// </summary>
-        public virtual ITransformationOperations Transformation
+        public virtual ITransformationOperations Transformations
         {
-            get { return this._transformation; }
+            get { return this._transformations; }
         }
         
         /// <summary>
@@ -123,11 +122,11 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         private StreamAnalyticsManagementClient()
             : base()
         {
-            this._input = new InputOperations(this);
-            this._job = new JobOperations(this);
-            this._output = new OutputOperations(this);
-            this._subscription = new SubscriptionOperations(this);
-            this._transformation = new TransformationOperations(this);
+            this._inputs = new InputOperations(this);
+            this._streamingJobs = new JobOperations(this);
+            this._outputs = new OutputOperations(this);
+            this._subscriptions = new SubscriptionOperations(this);
+            this._transformations = new TransformationOperations(this);
             this.HttpClient.Timeout = TimeSpan.FromSeconds(60);
         }
         
@@ -201,11 +200,11 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         private StreamAnalyticsManagementClient(HttpClient httpClient)
             : base(httpClient)
         {
-            this._input = new InputOperations(this);
-            this._job = new JobOperations(this);
-            this._output = new OutputOperations(this);
-            this._subscription = new SubscriptionOperations(this);
-            this._transformation = new TransformationOperations(this);
+            this._inputs = new InputOperations(this);
+            this._streamingJobs = new JobOperations(this);
+            this._outputs = new OutputOperations(this);
+            this._subscriptions = new SubscriptionOperations(this);
+            this._transformations = new TransformationOperations(this);
             this.HttpClient.Timeout = TimeSpan.FromSeconds(60);
         }
         
@@ -332,7 +331,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             }
             
             // Construct URL
-            string url = operationStatusLink.Trim();
+            string url = operationStatusLink;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -343,7 +342,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-10-01-preview");
+                httpRequest.Headers.Add("x-ms-version", "2014-12-01-preview");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();

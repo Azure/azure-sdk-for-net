@@ -34,8 +34,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private Transformation _transformation;
         
         /// <summary>
-        /// Optional. The definition of the transformation to be created or
-        /// updated.
+        /// Optional. Gets or sets the definition of the transformation to be
+        /// created or updated.
         /// </summary>
         public Transformation Transformation
         {

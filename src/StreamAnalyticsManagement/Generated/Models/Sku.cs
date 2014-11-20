@@ -32,7 +32,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _name;
         
         /// <summary>
-        /// Required. The name of the Sku of the stream analytics job.
+        /// Required. Gets or sets the name of the Sku of the stream analytics
+        /// job.
         /// </summary>
         public string Name
         {

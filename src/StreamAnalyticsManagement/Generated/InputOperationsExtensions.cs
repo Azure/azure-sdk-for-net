@@ -25,7 +25,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.Management.StreamAnalytics;
 using Microsoft.Azure.Management.StreamAnalytics.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.StreamAnalytics
 {
@@ -103,7 +102,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// a stream analytics job.
         /// </param>
         /// <returns>
-        /// The response of the input create operation.
+        /// The response of the input CreateOrUpdate operation.
         /// </returns>
         public static InputCreateOrUpdateResponse CreateOrUpdate(this IInputOperations operations, string resourceGroupName, string jobName, InputCreateOrUpdateParameters parameters)
         {
@@ -132,7 +131,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// a stream analytics job.
         /// </param>
         /// <returns>
-        /// The response of the input create operation.
+        /// The response of the input CreateOrUpdate operation.
         /// </returns>
         public static Task<InputCreateOrUpdateResponse> CreateOrUpdateAsync(this IInputOperations operations, string resourceGroupName, string jobName, InputCreateOrUpdateParameters parameters)
         {
@@ -161,7 +160,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// a stream analytics job.
         /// </param>
         /// <returns>
-        /// The response of the input create operation.
+        /// The response of the input CreateOrUpdate operation.
         /// </returns>
         public static InputCreateOrUpdateResponse CreateOrUpdateWithRawJsonContent(this IInputOperations operations, string resourceGroupName, string jobName, string inputName, InputCreateOrUpdateWithRawJsonContentParameters parameters)
         {
@@ -194,7 +193,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// a stream analytics job.
         /// </param>
         /// <returns>
-        /// The response of the input create operation.
+        /// The response of the input CreateOrUpdate operation.
         /// </returns>
         public static Task<InputCreateOrUpdateResponse> CreateOrUpdateWithRawJsonContentAsync(this IInputOperations operations, string resourceGroupName, string jobName, string inputName, InputCreateOrUpdateWithRawJsonContentParameters parameters)
         {
@@ -218,10 +217,9 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// Required. The name of the input for the stream analytics job.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The common operation response.
         /// </returns>
-        public static OperationResponse Delete(this IInputOperations operations, string resourceGroupName, string jobName, string inputName)
+        public static CommonOperationResponse Delete(this IInputOperations operations, string resourceGroupName, string jobName, string inputName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -247,16 +245,15 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// Required. The name of the input for the stream analytics job.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The common operation response.
         /// </returns>
-        public static Task<OperationResponse> DeleteAsync(this IInputOperations operations, string resourceGroupName, string jobName, string inputName)
+        public static Task<CommonOperationResponse> DeleteAsync(this IInputOperations operations, string resourceGroupName, string jobName, string inputName)
         {
             return operations.DeleteAsync(resourceGroupName, jobName, inputName, CancellationToken.None);
         }
         
         /// <summary>
-        /// Create an input for a stream analytics job.
+        /// Get an input for a stream analytics job.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -284,7 +281,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         }
         
         /// <summary>
-        /// Create an input for a stream analytics job.
+        /// Get an input for a stream analytics job.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the

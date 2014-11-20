@@ -31,15 +31,15 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
     /// </summary>
     public partial class OutputPatchParameters
     {
-        private OutputProperties _outputProperties;
+        private OutputProperties _properties;
         
         /// <summary>
-        /// Required. The properties of the output.
+        /// Required. Gets or sets the properties of the output.
         /// </summary>
-        public OutputProperties OutputProperties
+        public OutputProperties Properties
         {
-            get { return this._outputProperties; }
-            set { this._outputProperties = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>
@@ -53,14 +53,14 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// Initializes a new instance of the OutputPatchParameters class with
         /// required arguments.
         /// </summary>
-        public OutputPatchParameters(OutputProperties outputProperties)
+        public OutputPatchParameters(OutputProperties properties)
             : this()
         {
-            if (outputProperties == null)
+            if (properties == null)
             {
-                throw new ArgumentNullException("outputProperties");
+                throw new ArgumentNullException("properties");
             }
-            this.OutputProperties = outputProperties;
+            this.Properties = properties;
         }
     }
 }

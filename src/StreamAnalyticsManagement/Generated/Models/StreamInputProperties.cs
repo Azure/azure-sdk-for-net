@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private StreamInputDataSource _dataSource;
         
         /// <summary>
-        /// Required. The data source configuration of the input.
+        /// Required. Gets or sets the data source configuration of the input.
         /// </summary>
         public StreamInputDataSource DataSource
         {

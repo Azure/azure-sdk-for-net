@@ -101,7 +101,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         Task<JobCreateOrUpdateResponse> CreateOrUpdateAsync(string resourceGroupName, JobCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Create or update a stream analytics job.
+        /// Create or update a stream analytics job. The raw json content will
+        /// be used.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The resource group name of the stream analytics job.
@@ -158,7 +159,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         Task<JobGetResponse> GetAsync(string resourceGroupName, string jobName, JobGetParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// List all the stream analytics jobs in the same resource group.
+        /// List all the stream analytics jobs in the given resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The resource group name of the stream analytics job.
@@ -176,7 +177,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         Task<JobListResponse> ListJobsInResourceGroupAsync(string resourceGroupName, JobListParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// List all the stream analytics jobs in the same subscription.
+        /// List all the stream analytics jobs in the given subscription.
         /// </summary>
         /// <param name='parameters'>
         /// The parameters required to list all the stream analytics job in the

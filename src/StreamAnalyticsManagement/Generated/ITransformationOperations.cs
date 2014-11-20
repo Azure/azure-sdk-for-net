@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
     public partial interface ITransformationOperations
     {
         /// <summary>
-        /// Create an transformation for a stream analytics job.
+        /// Create or update a transformation for a stream analytics job.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The resource group name of the stream analytics job.
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// The name of the stream analytics job.
         /// </param>
         /// <param name='parameters'>
-        /// The parameters required to create or update an transformation for
+        /// The parameters required to create or update a transformation for
         /// the stream analytics job.
         /// </param>
         /// <param name='cancellationToken'>
@@ -55,8 +55,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         Task<TransformationCreateOrUpdateResponse> CreateOrUpdateAsync(string resourceGroupName, string jobName, TransformationCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Create an transformation for a stream analytics job. The raw json
-        /// content will be used.
+        /// Create or update a transformation for a stream analytics job. The
+        /// raw json content will be used.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The resource group name of the stream analytics job.
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// The name of the transformation for the stream analytics job.
         /// </param>
         /// <param name='parameters'>
-        /// The parameters required to create or update an transformation for
+        /// The parameters required to create or update a transformation for
         /// the stream analytics job. It is in json format.
         /// </param>
         /// <param name='cancellationToken'>
@@ -112,8 +112,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// The name of the transformation for the stream analytics job.
         /// </param>
         /// <param name='parameters'>
-        /// The parameters required to create or update an transformation for
-        /// the stream analytics job.
+        /// The parameters required to update an transformation for the stream
+        /// analytics job.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

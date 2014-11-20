@@ -33,8 +33,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _content;
         
         /// <summary>
-        /// Required. The definition of the stream analytics job to be created
-        /// or updated. It is in the json format.
+        /// Required. Gets or sets the definition of the stream analytics job
+        /// to be created or updated. It is in the json format.
         /// </summary>
         public string Content
         {
@@ -45,9 +45,10 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _ifNoneMatch;
         
         /// <summary>
-        /// Optional. Use If-None-Match: * to give PUT create-only semantics –
-        /// to make create fail if the named resource exists. Without it, PUT
-        /// replaces the named resource if it exists.
+        /// Optional. Gets or sets the If-None-Match. Use If-None-Match: * to
+        /// give PUT create-only semantics – to make create fail if the named
+        /// resource exists. Without it, PUT replaces the named resource if it
+        /// exists.
         /// </summary>
         public string IfNoneMatch
         {

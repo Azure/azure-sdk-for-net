@@ -30,15 +30,16 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
     /// </summary>
     public partial class SqlAzureOutputDataSource : OutputDataSource
     {
-        private SqlAzureOutputDataSourceProperties _sqlAzureOutputDataSourceProperties;
+        private SqlAzureOutputDataSourceProperties _properties;
         
         /// <summary>
-        /// Required. The properties of the Sql Azure data source as output.
+        /// Required. Gets or sets the properties of the Sql Azure data source
+        /// as output.
         /// </summary>
-        public SqlAzureOutputDataSourceProperties SqlAzureOutputDataSourceProperties
+        public SqlAzureOutputDataSourceProperties Properties
         {
-            get { return this._sqlAzureOutputDataSourceProperties; }
-            set { this._sqlAzureOutputDataSourceProperties = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>
@@ -52,14 +53,14 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// Initializes a new instance of the SqlAzureOutputDataSource class
         /// with required arguments.
         /// </summary>
-        public SqlAzureOutputDataSource(SqlAzureOutputDataSourceProperties sqlAzureOutputDataSourceProperties)
+        public SqlAzureOutputDataSource(SqlAzureOutputDataSourceProperties properties)
             : this()
         {
-            if (sqlAzureOutputDataSourceProperties == null)
+            if (properties == null)
             {
-                throw new ArgumentNullException("sqlAzureOutputDataSourceProperties");
+                throw new ArgumentNullException("properties");
             }
-            this.SqlAzureOutputDataSourceProperties = sqlAzureOutputDataSourceProperties;
+            this.Properties = properties;
         }
     }
 }

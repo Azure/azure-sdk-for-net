@@ -25,7 +25,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.Management.StreamAnalytics;
 using Microsoft.Azure.Management.StreamAnalytics.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.StreamAnalytics
 {
@@ -84,7 +83,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         }
         
         /// <summary>
-        /// Create an output for a stream analytics job.
+        /// Create or update an output for a stream analytics job.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -101,7 +100,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// a stream analytics job.
         /// </param>
         /// <returns>
-        /// The response of the output create operation.
+        /// The response of the output CreateOrUpdate operation.
         /// </returns>
         public static OutputCreateOrUpdateResponse CreateOrUpdate(this IOutputOperations operations, string resourceGroupName, string jobName, OutputCreateOrUpdateParameters parameters)
         {
@@ -113,7 +112,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         }
         
         /// <summary>
-        /// Create an output for a stream analytics job.
+        /// Create or update an output for a stream analytics job.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -130,7 +129,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// a stream analytics job.
         /// </param>
         /// <returns>
-        /// The response of the output create operation.
+        /// The response of the output CreateOrUpdate operation.
         /// </returns>
         public static Task<OutputCreateOrUpdateResponse> CreateOrUpdateAsync(this IOutputOperations operations, string resourceGroupName, string jobName, OutputCreateOrUpdateParameters parameters)
         {
@@ -138,8 +137,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         }
         
         /// <summary>
-        /// Create an output for a stream analytics job. The raw json content
-        /// will be used.
+        /// Create or update an output for a stream analytics job. The raw json
+        /// content will be used.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -159,7 +158,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// a stream analytics job. It is in json format
         /// </param>
         /// <returns>
-        /// The response of the output create operation.
+        /// The response of the output CreateOrUpdate operation.
         /// </returns>
         public static OutputCreateOrUpdateResponse CreateOrUpdateWithRawJsonContent(this IOutputOperations operations, string resourceGroupName, string jobName, string outputName, OutputCreateOrUpdateWithRawJsonContentParameters parameters)
         {
@@ -171,8 +170,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         }
         
         /// <summary>
-        /// Create an output for a stream analytics job. The raw json content
-        /// will be used.
+        /// Create or update an output for a stream analytics job. The raw json
+        /// content will be used.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -192,7 +191,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// a stream analytics job. It is in json format
         /// </param>
         /// <returns>
-        /// The response of the output create operation.
+        /// The response of the output CreateOrUpdate operation.
         /// </returns>
         public static Task<OutputCreateOrUpdateResponse> CreateOrUpdateWithRawJsonContentAsync(this IOutputOperations operations, string resourceGroupName, string jobName, string outputName, OutputCreateOrUpdateWithRawJsonContentParameters parameters)
         {
@@ -216,10 +215,9 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// Required. The name of the output for the stream analytics job.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The common operation response.
         /// </returns>
-        public static OperationResponse Delete(this IOutputOperations operations, string resourceGroupName, string jobName, string outputName)
+        public static CommonOperationResponse Delete(this IOutputOperations operations, string resourceGroupName, string jobName, string outputName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -245,10 +243,9 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// Required. The name of the output for the stream analytics job.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The common operation response.
         /// </returns>
-        public static Task<OperationResponse> DeleteAsync(this IOutputOperations operations, string resourceGroupName, string jobName, string outputName)
+        public static Task<CommonOperationResponse> DeleteAsync(this IOutputOperations operations, string resourceGroupName, string jobName, string outputName)
         {
             return operations.DeleteAsync(resourceGroupName, jobName, outputName, CancellationToken.None);
         }
@@ -368,10 +365,9 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// Required. The output Name of the stream analytics job.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// A standard service response for long running operations.
         /// </returns>
-        public static OperationResponse TestConnection(this IOutputOperations operations, string resourceGroupName, string jobName, string outputName)
+        public static LongRunningOperationResponse TestConnection(this IOutputOperations operations, string resourceGroupName, string jobName, string outputName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -397,10 +393,9 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// Required. The output Name of the stream analytics job.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// A standard service response for long running operations.
         /// </returns>
-        public static Task<OperationResponse> TestConnectionAsync(this IOutputOperations operations, string resourceGroupName, string jobName, string outputName)
+        public static Task<LongRunningOperationResponse> TestConnectionAsync(this IOutputOperations operations, string resourceGroupName, string jobName, string outputName)
         {
             return operations.TestConnectionAsync(resourceGroupName, jobName, outputName, CancellationToken.None);
         }

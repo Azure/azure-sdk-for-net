@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// <summary>
         /// Operations for managing the input of the stream analytics job.
         /// </summary>
-        IInputOperations Input
+        IInputOperations Inputs
         {
             get; 
         }
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// <summary>
         /// Operations for managing the stream analytics job.
         /// </summary>
-        IJobOperations Job
+        IJobOperations StreamingJobs
         {
             get; 
         }
@@ -72,16 +72,15 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// <summary>
         /// Operations for managing the output of the stream analytics job.
         /// </summary>
-        IOutputOperations Output
+        IOutputOperations Outputs
         {
             get; 
         }
         
         /// <summary>
-        /// Operations for get the subscription information related to Azure
-        /// Stream Analytics.
+        /// Operations for Azure Stream Analytics subscription information.
         /// </summary>
-        ISubscriptionOperations Subscription
+        ISubscriptionOperations Subscriptions
         {
             get; 
         }
@@ -90,7 +89,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// Operations for managing the transformation definition of the stream
         /// analytics job.
         /// </summary>
-        ITransformationOperations Transformation
+        ITransformationOperations Transformations
         {
             get; 
         }

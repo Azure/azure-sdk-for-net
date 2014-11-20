@@ -30,15 +30,16 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
     /// </summary>
     public partial class BlobOutputDataSource : OutputDataSource
     {
-        private BlobOutputDataSourceProperties _blobOutputDataSourceProperties;
+        private BlobOutputDataSourceProperties _properties;
         
         /// <summary>
-        /// Required. The properties of the Blob data source as output.
+        /// Required. Gets or sets the properties of the Blob data source as
+        /// output.
         /// </summary>
-        public BlobOutputDataSourceProperties BlobOutputDataSourceProperties
+        public BlobOutputDataSourceProperties Properties
         {
-            get { return this._blobOutputDataSourceProperties; }
-            set { this._blobOutputDataSourceProperties = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>
@@ -52,14 +53,14 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// Initializes a new instance of the BlobOutputDataSource class with
         /// required arguments.
         /// </summary>
-        public BlobOutputDataSource(BlobOutputDataSourceProperties blobOutputDataSourceProperties)
+        public BlobOutputDataSource(BlobOutputDataSourceProperties properties)
             : this()
         {
-            if (blobOutputDataSourceProperties == null)
+            if (properties == null)
             {
-                throw new ArgumentNullException("blobOutputDataSourceProperties");
+                throw new ArgumentNullException("properties");
             }
-            this.BlobOutputDataSourceProperties = blobOutputDataSourceProperties;
+            this.Properties = properties;
         }
     }
 }

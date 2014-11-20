@@ -31,15 +31,15 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
     /// </summary>
     public partial class InputPatchParameters
     {
-        private InputProperties _inputProperties;
+        private InputProperties _properties;
         
         /// <summary>
-        /// Required. The properties of the input.
+        /// Required. Gets or sets the properties of the input.
         /// </summary>
-        public InputProperties InputProperties
+        public InputProperties Properties
         {
-            get { return this._inputProperties; }
-            set { this._inputProperties = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>
@@ -53,14 +53,14 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// Initializes a new instance of the InputPatchParameters class with
         /// required arguments.
         /// </summary>
-        public InputPatchParameters(InputProperties inputProperties)
+        public InputPatchParameters(InputProperties properties)
             : this()
         {
-            if (inputProperties == null)
+            if (properties == null)
             {
-                throw new ArgumentNullException("inputProperties");
+                throw new ArgumentNullException("properties");
             }
-            this.InputProperties = inputProperties;
+            this.Properties = properties;
         }
     }
 }

@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _eventHubName;
         
         /// <summary>
-        /// Required. The EventHub name.
+        /// Required. Gets or sets the EventHub name.
         /// </summary>
         public string EventHubName
         {
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _serviceBusNamespace;
         
         /// <summary>
-        /// Required. The service bus namespace of the event hub.
+        /// Required. Gets or sets the service bus namespace of the event hub.
         /// </summary>
         public string ServiceBusNamespace
         {
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _sharedAccessPolicyKey;
         
         /// <summary>
-        /// Required. The shared access policy key.
+        /// Required. Gets or sets the shared access policy key.
         /// </summary>
         public string SharedAccessPolicyKey
         {
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _sharedAccessPolicyName;
         
         /// <summary>
-        /// Required. The shared access policy name.
+        /// Required. Gets or sets the shared access policy name.
         /// </summary>
         public string SharedAccessPolicyName
         {

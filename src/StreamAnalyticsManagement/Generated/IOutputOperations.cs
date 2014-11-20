@@ -24,7 +24,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.Management.StreamAnalytics.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.StreamAnalytics
 {
@@ -54,7 +53,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         Task<LongRunningOperationResponse> BeginTestConnectionAsync(string resourceGroupName, string jobName, string outputName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Create an output for a stream analytics job.
+        /// Create or update an output for a stream analytics job.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The resource group name of the stream analytics job.
@@ -70,13 +69,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response of the output create operation.
+        /// The response of the output CreateOrUpdate operation.
         /// </returns>
         Task<OutputCreateOrUpdateResponse> CreateOrUpdateAsync(string resourceGroupName, string jobName, OutputCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Create an output for a stream analytics job. The raw json content
-        /// will be used.
+        /// Create or update an output for a stream analytics job. The raw json
+        /// content will be used.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The resource group name of the stream analytics job.
@@ -95,7 +94,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response of the output create operation.
+        /// The response of the output CreateOrUpdate operation.
         /// </returns>
         Task<OutputCreateOrUpdateResponse> CreateOrUpdateWithRawJsonContentAsync(string resourceGroupName, string jobName, string outputName, OutputCreateOrUpdateWithRawJsonContentParameters parameters, CancellationToken cancellationToken);
         
@@ -115,10 +114,9 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The common operation response.
         /// </returns>
-        Task<OperationResponse> DeleteAsync(string resourceGroupName, string jobName, string outputName, CancellationToken cancellationToken);
+        Task<CommonOperationResponse> DeleteAsync(string resourceGroupName, string jobName, string outputName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Get an output for a stream analytics job.
@@ -173,10 +171,9 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// A standard service response for long running operations.
         /// </returns>
-        Task<OperationResponse> TestConnectionAsync(string resourceGroupName, string jobName, string outputName, CancellationToken cancellationToken);
+        Task<LongRunningOperationResponse> TestConnectionAsync(string resourceGroupName, string jobName, string outputName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Update an output for a stream analytics job.

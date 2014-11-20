@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         }
         
         /// <summary>
-        /// Create an transformation for a stream analytics job.
+        /// Create or update a transformation for a stream analytics job.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The resource group name of the stream analytics job.
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// Required. The name of the stream analytics job.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The parameters required to create or update an
+        /// Required. The parameters required to create or update a
         /// transformation for the stream analytics job.
         /// </param>
         /// <param name='cancellationToken'>
@@ -107,13 +107,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 {
                     throw new ArgumentNullException("parameters.Transformation.Name");
                 }
-                if (parameters.Transformation.TransformationProperties == null)
+                if (parameters.Transformation.Properties == null)
                 {
-                    throw new ArgumentNullException("parameters.Transformation.TransformationProperties");
+                    throw new ArgumentNullException("parameters.Transformation.Properties");
                 }
-                if (parameters.Transformation.TransformationProperties.Query == null)
+                if (parameters.Transformation.Properties.Query == null)
                 {
-                    throw new ArgumentNullException("parameters.Transformation.TransformationProperties.Query");
+                    throw new ArgumentNullException("parameters.Transformation.Properties.Query");
                 }
             }
             
@@ -131,8 +131,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/Microsoft.StreamAnalytics/streamingjobs/" + jobName.Trim() + "/transformations/" + (parameters.Transformation.Name != null ? parameters.Transformation.Name.Trim() : "") + "?";
-            url = url + "api-version=2014-10-01-preview";
+            string url = "/subscriptions/" + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.StreamAnalytics/streamingjobs/" + Uri.EscapeDataString(jobName) + "/transformations/" + Uri.EscapeDataString(parameters.Transformation.Name) + "?";
+            url = url + "api-version=2014-12-01-preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -175,17 +175,17 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     JObject propertiesValue = new JObject();
                     transformationCreateOrUpdateParametersValue["properties"] = propertiesValue;
                     
-                    if (parameters.Transformation.TransformationProperties.Etag != null)
+                    if (parameters.Transformation.Properties.Etag != null)
                     {
-                        propertiesValue["etag"] = parameters.Transformation.TransformationProperties.Etag;
+                        propertiesValue["etag"] = parameters.Transformation.Properties.Etag;
                     }
                     
-                    if (parameters.Transformation.TransformationProperties.StreamingUnits != null)
+                    if (parameters.Transformation.Properties.StreamingUnits != null)
                     {
-                        propertiesValue["streamingUnits"] = parameters.Transformation.TransformationProperties.StreamingUnits.Value;
+                        propertiesValue["streamingUnits"] = parameters.Transformation.Properties.StreamingUnits.Value;
                     }
                     
-                    propertiesValue["query"] = parameters.Transformation.TransformationProperties.Query;
+                    propertiesValue["query"] = parameters.Transformation.Properties.Query;
                 }
                 
                 requestContent = requestDoc.ToString(Formatting.Indented);
@@ -246,7 +246,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                         if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
                         {
                             TransformationProperties propertiesInstance = new TransformationProperties();
-                            transformationInstance.TransformationProperties = propertiesInstance;
+                            transformationInstance.Properties = propertiesInstance;
                             
                             JToken etagValue = propertiesValue2["etag"];
                             if (etagValue != null && etagValue.Type != JTokenType.Null)
@@ -305,8 +305,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         }
         
         /// <summary>
-        /// Create an transformation for a stream analytics job. The raw json
-        /// content will be used.
+        /// Create or update a transformation for a stream analytics job. The
+        /// raw json content will be used.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The resource group name of the stream analytics job.
@@ -319,7 +319,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// job.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The parameters required to create or update an
+        /// Required. The parameters required to create or update a
         /// transformation for the stream analytics job. It is in json format.
         /// </param>
         /// <param name='cancellationToken'>
@@ -367,8 +367,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/Microsoft.StreamAnalytics/streamingjobs/" + jobName.Trim() + "/transformations/" + transformationName.Trim() + "?";
-            url = url + "api-version=2014-10-01-preview";
+            string url = "/subscriptions/" + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.StreamAnalytics/streamingjobs/" + Uri.EscapeDataString(jobName) + "/transformations/" + Uri.EscapeDataString(transformationName) + "?";
+            url = url + "api-version=2014-12-01-preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -456,7 +456,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                         if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                         {
                             TransformationProperties propertiesInstance = new TransformationProperties();
-                            transformationInstance.TransformationProperties = propertiesInstance;
+                            transformationInstance.Properties = propertiesInstance;
                             
                             JToken etagValue = propertiesValue["etag"];
                             if (etagValue != null && etagValue.Type != JTokenType.Null)
@@ -563,8 +563,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/Microsoft.StreamAnalytics/streamingjobs/" + jobName.Trim() + "/transformations/" + transformationName.Trim() + "?";
-            url = url + "api-version=2014-10-01-preview";
+            string url = "/subscriptions/" + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.StreamAnalytics/streamingjobs/" + Uri.EscapeDataString(jobName) + "/transformations/" + Uri.EscapeDataString(transformationName) + "?";
+            url = url + "api-version=2014-12-01-preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -647,7 +647,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                         if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                         {
                             TransformationProperties propertiesInstance = new TransformationProperties();
-                            transformationInstance.TransformationProperties = propertiesInstance;
+                            transformationInstance.Properties = propertiesInstance;
                             
                             JToken etagValue = propertiesValue["etag"];
                             if (etagValue != null && etagValue.Type != JTokenType.Null)
@@ -673,6 +673,10 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     }
                     
                     result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("Date"))
+                    {
+                        result.Date = DateTime.Parse(httpResponse.Headers.GetValues("Date").FirstOrDefault(), CultureInfo.InvariantCulture);
+                    }
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
@@ -715,8 +719,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// job.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The parameters required to create or update an
-        /// transformation for the stream analytics job.
+        /// Required. The parameters required to update an transformation for
+        /// the stream analytics job.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -743,13 +747,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             {
                 throw new ArgumentNullException("parameters");
             }
-            if (parameters.TransformationProperties == null)
+            if (parameters.Properties == null)
             {
-                throw new ArgumentNullException("parameters.TransformationProperties");
+                throw new ArgumentNullException("parameters.Properties");
             }
-            if (parameters.TransformationProperties.Query == null)
+            if (parameters.Properties.Query == null)
             {
-                throw new ArgumentNullException("parameters.TransformationProperties.Query");
+                throw new ArgumentNullException("parameters.Properties.Query");
             }
             
             // Tracing
@@ -767,8 +771,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/Microsoft.StreamAnalytics/streamingjobs/" + jobName.Trim() + "/transformations/" + transformationName.Trim() + "?";
-            url = url + "api-version=2014-10-01-preview";
+            string url = "/subscriptions/" + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.StreamAnalytics/streamingjobs/" + Uri.EscapeDataString(jobName) + "/transformations/" + Uri.EscapeDataString(transformationName) + "?";
+            url = url + "api-version=2014-12-01-preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -807,17 +811,17 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 JObject propertiesValue = new JObject();
                 transformationPatchParametersValue["properties"] = propertiesValue;
                 
-                if (parameters.TransformationProperties.Etag != null)
+                if (parameters.Properties.Etag != null)
                 {
-                    propertiesValue["etag"] = parameters.TransformationProperties.Etag;
+                    propertiesValue["etag"] = parameters.Properties.Etag;
                 }
                 
-                if (parameters.TransformationProperties.StreamingUnits != null)
+                if (parameters.Properties.StreamingUnits != null)
                 {
-                    propertiesValue["streamingUnits"] = parameters.TransformationProperties.StreamingUnits.Value;
+                    propertiesValue["streamingUnits"] = parameters.Properties.StreamingUnits.Value;
                 }
                 
-                propertiesValue["query"] = parameters.TransformationProperties.Query;
+                propertiesValue["query"] = parameters.Properties.Query;
                 
                 requestContent = requestDoc.ToString(Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);

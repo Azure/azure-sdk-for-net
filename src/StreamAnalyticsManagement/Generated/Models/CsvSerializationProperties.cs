@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _encoding;
         
         /// <summary>
-        /// Required. The encoding.
+        /// Required. Gets or sets the encoding.
         /// </summary>
         public string Encoding
         {
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _fieldDelimiter;
         
         /// <summary>
-        /// Required. The field delimiter.
+        /// Required. Gets or sets the field delimiter.
         /// </summary>
         public string FieldDelimiter
         {

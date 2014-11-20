@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _encoding;
         
         /// <summary>
-        /// Required. The encoding.
+        /// Required. Gets or sets the encoding.
         /// </summary>
         public string Encoding
         {

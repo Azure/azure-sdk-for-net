@@ -30,15 +30,15 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
     /// </summary>
     public partial class JsonSerialization : Serialization
     {
-        private JsonSerializationProperties _jsonSerializationProperties;
+        private JsonSerializationProperties _properties;
         
         /// <summary>
-        /// Required. The properties of the JSON serialization.
+        /// Required. Gets or sets the properties of the JSON serialization.
         /// </summary>
-        public JsonSerializationProperties JsonSerializationProperties
+        public JsonSerializationProperties Properties
         {
-            get { return this._jsonSerializationProperties; }
-            set { this._jsonSerializationProperties = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>
@@ -52,14 +52,14 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// Initializes a new instance of the JsonSerialization class with
         /// required arguments.
         /// </summary>
-        public JsonSerialization(JsonSerializationProperties jsonSerializationProperties)
+        public JsonSerialization(JsonSerializationProperties properties)
             : this()
         {
-            if (jsonSerializationProperties == null)
+            if (properties == null)
             {
-                throw new ArgumentNullException("jsonSerializationProperties");
+                throw new ArgumentNullException("properties");
             }
-            this.JsonSerializationProperties = jsonSerializationProperties;
+            this.Properties = properties;
         }
     }
 }

@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _name;
         
         /// <summary>
-        /// Required. The name of the output.
+        /// Required. Gets or sets the name of the output.
         /// </summary>
         public string Name
         {
@@ -41,15 +41,15 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
             set { this._name = value; }
         }
         
-        private OutputProperties _outputProperties;
+        private OutputProperties _properties;
         
         /// <summary>
-        /// Required. The properties of the output.
+        /// Required. Gets or sets the properties of the output.
         /// </summary>
-        public OutputProperties OutputProperties
+        public OutputProperties Properties
         {
-            get { return this._outputProperties; }
-            set { this._outputProperties = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>
@@ -63,19 +63,19 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// Initializes a new instance of the Output class with required
         /// arguments.
         /// </summary>
-        public Output(string name, OutputProperties outputProperties)
+        public Output(string name, OutputProperties properties)
             : this()
         {
             if (name == null)
             {
                 throw new ArgumentNullException("name");
             }
-            if (outputProperties == null)
+            if (properties == null)
             {
-                throw new ArgumentNullException("outputProperties");
+                throw new ArgumentNullException("properties");
             }
             this.Name = name;
-            this.OutputProperties = outputProperties;
+            this.Properties = properties;
         }
     }
 }

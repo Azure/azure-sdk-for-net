@@ -33,10 +33,11 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _propertiesToExpand;
         
         /// <summary>
-        /// Required. Comma-separated list of additional properties to include
-        /// in the response, beyond the default set returned when this
-        /// parameter is absent. The default set is all properties other than
-        /// “inputs”, “transformation”, and “outputs”.
+        /// Required. Gets or sets the properties to expand. Comma-separated
+        /// list of additional properties to include in the response, beyond
+        /// the default set returned when this parameter is absent. The
+        /// default set is all properties other than “inputs”,
+        /// “transformation”, and “outputs”.
         /// </summary>
         public string PropertiesToExpand
         {

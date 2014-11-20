@@ -35,8 +35,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _blobPathPrefix;
         
         /// <summary>
-        /// Optional. Prefix for the desired blob output path, Includes
-        /// terminating ‘/’.
+        /// Optional. Gets or sets the prefix for the desired blob output path,
+        /// Includes terminating ‘/’.
         /// </summary>
         public string BlobPathPrefix
         {
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _container;
         
         /// <summary>
-        /// Required. The container of the blob.
+        /// Required. Gets or sets the container of the blob.
         /// </summary>
         public string Container
         {
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private IList<StorageAccount> _storageAccounts;
         
         /// <summary>
-        /// Optional. A list of one or more storage accounts.
+        /// Optional. Gets or sets a list of one or more storage accounts.
         /// </summary>
         public IList<StorageAccount> StorageAccounts
         {
