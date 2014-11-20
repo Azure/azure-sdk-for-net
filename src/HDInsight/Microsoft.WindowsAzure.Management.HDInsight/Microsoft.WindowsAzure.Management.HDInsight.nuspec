@@ -1,29 +1,3 @@
-<!--<?xml version="1.0" encoding="utf-8"?>
-<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
-  <metadata>
-    <id>Microsoft.WindowsAzure.Management.HDInsight</id>
-    <version>1.3.5422.32398</version>
-    <title>Windows Azure HDInsight</title>
-    <authors>Microsoft</authors>
-    <owners>Microsoft Azure-sdk</owners>
-    <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
-    <licenseUrl>http://go.microsoft.com/fwlink/?LinkId=235170</licenseUrl>
-    <tags>Microsoft Azure HDInsight Hadoop Scalable windowsazureofficial</tags>
-    <requireLicenseAcceptance>true</requireLicenseAcceptance>
-    <projectUrl>http://hadoopsdk.codeplex.com/</projectUrl>
-    <description>Provides a .NET API for cluster management and job submission on Windows Azure HDInsight service.</description>
-    <dependencies>
-      <dependency id="Microsoft.Hadoop.Client" />
-    </dependencies>
-    <frameworkAssemblies />
-    <references>
-      <group targetFramework="net40">
-        <reference file="Microsoft.WindowsAzure.Management.HDInsight.dll" />
-        <reference file="Microsoft.WindowsAzure.Management.HDInsight.xml" />
-      </group>
-    </references>
-  </metadata>
-</package>-->
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata minClientVersion="2.5">
@@ -37,11 +11,15 @@
     <projectUrl>https://github.com/WindowsAzure/azure-sdk-for-net</projectUrl>
     <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <summary>Provides a .NET API for cluster management and job submission on Windows Azure HDInsight service.</summary>
+    <summary>Provides .NET API for cluster management and job submission on Windows Azure HDInsight service.</summary>
     <description>Provides a .NET API for cluster management and job submission on Windows Azure HDInsight service.</description>
     <copyright>Copyright © Microsoft Corporation</copyright>
     <tags>Microsoft Azure HDInsight  management and job submission client.</tags>
     <references>
+      <group targetFramework="net45">
+        <reference file="Microsoft.WindowsAzure.Management.HDInsight.dll" />
+        <reference file="Microsoft.WindowsAzure.Management.HDInsight.xml" />
+      </group>
       <group targetFramework="net40">
         <reference file="Microsoft.WindowsAzure.Management.HDInsight.dll" />
         <reference file="Microsoft.WindowsAzure.Management.HDInsight.xml" />
@@ -53,9 +31,9 @@
   </metadata>
   <files>
     <file src="HDInsight\**\*.cs" target="src" />
-    <file src="..\binaries\Microsoft.WindowsAzure.Management.HDInsight.dll" target="lib\net40" />
-    <file src="..\binaries\Microsoft.WindowsAzure.Management.HDInsight.pdb" target="lib\net40" />
-    <file src="..\binaries\Microsoft.WindowsAzure.Management.HDInsight.xml" target="lib\net40" />
+    <file src="..\binaries\Microsoft.WindowsAzure.Management.HDInsight.dll" target="lib\net45" />
+    <file src="..\binaries\Microsoft.WindowsAzure.Management.HDInsight.pdb" target="lib\net45" />
+    <file src="..\binaries\Microsoft.WindowsAzure.Management.HDInsight.xml" target="lib\net45" />
     <file src="..\binaries\net40\Microsoft.WindowsAzure.Management.HDInsight.dll" target="lib\net40" />
     <file src="..\binaries\net40\Microsoft.WindowsAzure.Management.HDInsight.pdb" target="lib\net40" />
     <file src="..\binaries\net40\Microsoft.WindowsAzure.Management.HDInsight.xml" target="lib\net40" />
