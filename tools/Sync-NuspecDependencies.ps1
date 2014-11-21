@@ -6,7 +6,7 @@ Param(
 [string]$BasePath
 )
 
-if ($BasePath -eq '' -or $BasePath -eq $null) { $BasePath = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)\..\src\HDInsight" }
+if ($BasePath -eq '' -or $BasePath -eq $null) { $BasePath = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)\..\src" }
 
 $ErrorActionPreference = "Stop"
 
