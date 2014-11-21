@@ -93,7 +93,9 @@ In the root folder of Azure Sdk you will find two solutions:
 - WindowsAzureManagementLibraries.sln, contains projects for Azure Management libraries
 
 Any of them could be opened and built in the IDE of Visual Studio 2013.
-Note: you will need to restore Nuget Packages locally before build. To do so go to "Tools\Nuget Package Manager\Manage Nuget Packages for Solution" menu item in VS IDE and press Restore button in the upper right corner of the window.
+
+> Note: 
+> You will need to restore Nuget Packages locally before build. To do so go to "Tools\Nuget Package Manager\Manage Nuget Packages for Solution" menu item in VS IDE and press Restore button in the upper right corner of the window.
 
 #### Command prompt
 
