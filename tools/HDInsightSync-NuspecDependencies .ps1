@@ -20,11 +20,7 @@ function SyncNuspecFile([string]$FolderPath)
         echo "Updating AssemblyInfo.cs"
 		$folderName = (Get-Item $FolderPath).Name
         [xml]$nuproj = $null
-        if ($folderName -eq "Common") {
-            [xml]$nuproj = Get-Content (Get-Item $FolderPath\*.Common.nuget.proj)
-        } else {
-		    [xml]$nuproj = Get-Content (Get-Item $FolderPath\*.nuget.proj | select -First 1)
-        }
+        [xml]$nuproj = Get-Content (Get-Item $FolderPath\*.nuget.proj | select -First 1)
 
         $assemblyContent = Get-Content $FolderPath\Properties\AssemblyInfo.cs
 
