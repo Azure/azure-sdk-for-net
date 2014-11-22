@@ -1,6 +1,12 @@
-﻿using System;
+﻿//------------------------------------------------------------
+// Copyright (c) Microsoft Corporation.  All rights reserved.
+//------------------------------------------------------------
+
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Text;
 
 namespace Microsoft.Azure.Insights
 {
@@ -13,7 +19,7 @@ namespace Microsoft.Azure.Insights
         private TimeSpan? timeGrain;
         private DateTime? startTime;
         private DateTime? endTime;
-        private IEnumerable<string> names;
+        private IEnumerable<MetricDimension> dimensionFilters;
 
         /// <summary>
         /// Gets or sets the TimeGrain of the filter
@@ -109,18 +115,18 @@ namespace Microsoft.Azure.Insights
         }
 
         /// <summary>
-        /// Gets or sets the TimeGrain of the filter
+        /// Gets or sets the DimensionFilters of the filter
         /// </summary>
-        public IEnumerable<string> Names
+        public IEnumerable<MetricDimension> DimensionFilters
         {
             get
             {
-                return this.names;
+                return this.dimensionFilters;
             }
 
             set
             {
-                if (this.names != null)
+                if (this.dimensionFilters != null)
                 {
                     throw new InvalidOperationException("Names is already set");
                 }
@@ -130,7 +136,7 @@ namespace Microsoft.Azure.Insights
                     throw new InvalidOperationException("Names must be null or non-empty");
                 }
 
-                this.names = value;
+                this.dimensionFilters = value;
             }
         }
     }

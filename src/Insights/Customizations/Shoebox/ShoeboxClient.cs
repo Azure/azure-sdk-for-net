@@ -35,11 +35,17 @@ namespace Microsoft.Azure.Insights
         // Note: Does not populate Metric fields unrelated to query (i.e. "display name", resourceUri, and properties)
         internal static async Task<MetricListResponse> GetMetricsInternalAsync(MetricFilter filter, MetricLocation location, string invocationId)
         {
+            // TODO [davmc]: ShoeboxClient doesn't support dimensions
+            if (filter.DimensionFilters != null && filter.DimensionFilters.Any(df => df.Dimensions != null))
+            {
+                throw new ArgumentException("Shoebox client does not support dimensions", "filter");
+            }
+
             // If metrics are requested by name, get those metrics specifically, unless too many are requested.
             // If no names or too many names are provided, get all metrics and filter if necessary.
             return new MetricListResponse()
             {
-                MetricCollection = await (filter.Names == null || filter.Names.Count() > MaxParallelRequestsByName
+                MetricCollection = await (filter.DimensionFilters == null || filter.DimensionFilters.Count() > MaxParallelRequestsByName
                     ? GetMetricsByTimestampAsync(filter, location, invocationId)
                     : GetMetricsByNameAsync(filter, location, invocationId)).ConfigureAwait(false)
             };
@@ -50,7 +56,7 @@ namespace Microsoft.Azure.Insights
         private static async Task<MetricCollection> GetMetricsByNameAsync(MetricFilter filter, MetricLocation location, string invocationId)
         {
             // Create a query for each metric name
-            Dictionary<string, TableQuery> queries = GenerateMetricNameQueries(filter.Names, location.PartitionKey,
+            Dictionary<string, TableQuery> queries = GenerateMetricNameQueries(filter.DimensionFilters.Select(df => df.Name), location.PartitionKey,
                 filter.StartTime, filter.EndTime);
 
             // Create a task for each query. Each query will correspond to one metric
@@ -83,9 +89,9 @@ namespace Microsoft.Azure.Insights
             IEnumerable<IGrouping<string, DynamicTableEntity>> groups = entities.GroupBy(entity => entity.RowKey.Substring(entity.RowKey.LastIndexOf('_') + 1));
 
             // if names are specified, filter the results to those metrics only
-            if (filter.Names != null)
+            if (filter.DimensionFilters != null)
             {
-                groups = groups.Where(g => filter.Names.Select(ShoeboxHelper.TrimAndEscapeKey).Contains(g.Key));
+                groups = groups.Where(g => filter.DimensionFilters.Select(df => ShoeboxHelper.TrimAndEscapeKey(df.Name)).Contains(g.Key));
             }
 
             // Construct MetricCollection (list of metrics) by taking each group and converting the entities in that group to MetricValue objects
@@ -96,7 +102,7 @@ namespace Microsoft.Azure.Insights
                     {
                         Name = new LocalizableString()
                         {
-                            Value = FindMetricName(g.Key, filter.Names)
+                            Value = FindMetricName(g.Key, filter.DimensionFilters.Select(df => df.Name))
                         },
                         StartTime = filter.StartTime,
                         EndTime = filter.EndTime,

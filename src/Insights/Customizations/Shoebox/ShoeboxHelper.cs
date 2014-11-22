@@ -54,16 +54,43 @@ namespace Microsoft.Azure.Insights
 
         public static string GenerateMetricDefinitionFilterString(IEnumerable<string> names)
         {
-            return names == null || !names.Any() ? null : names.Select(n => "name.value eq '" + n + "'").Aggregate((a, b) => a + " or " + b);
+            return IsNullOrEmpty(names) ? null : names.Select(n => "name.value eq '" + n + "'").Aggregate((a, b) => a + " or " + b);
         }
 
         public static string GenerateMetricFilterString(MetricFilter filter)
         {
             return string.Format(CultureInfo.InvariantCulture, "{0}timeGrain eq duration'{1}' and startTime eq {2} and endTime eq {3}",
-                filter.Names == null || !filter.Names.Any() ? string.Empty : "(" + GenerateMetricDefinitionFilterString(filter.Names) + ") and ",
+                IsNullOrEmpty(filter.DimensionFilters) ? string.Empty : "(" + GenerateMetricDimensionFilterString(filter.DimensionFilters) + ") and ",
                 filter.TimeGrain.To8601String(),
                 filter.StartTime.ToString("O"),
                 filter.EndTime.ToString("O"));
+        }
+
+        private static string GenerateMetricDimensionFilterString(IEnumerable<MetricDimension> metricDimensions)
+        {
+            return IsNullOrEmpty(metricDimensions) ? null : metricDimensions.Select(md => string.Format(CultureInfo.InvariantCulture, "name.value eq '{0}'{1}",
+                    md.Name,
+                    IsNullOrEmpty(md.Dimensions) ? string.Empty : string.Format(CultureInfo.InvariantCulture, " and ({0})", GenerateDimensionFilterString(md.Dimensions))))
+                .Aggregate((a, b) => a + " or " + b);
+        }
+
+        private static string GenerateDimensionFilterString(IEnumerable<Dimension> dimensions)
+        {
+            return IsNullOrEmpty(dimensions) ? null : dimensions.Select(d => string.Format(CultureInfo.InvariantCulture, "dimensionName.value eq '{0}'{1}",
+                d.Name,
+                IsNullOrEmpty(d.Values) ? string.Empty : string.Format(CultureInfo.InvariantCulture, " and ({0})", GenerateDimensionValueFilterString(d.Values))))
+                .Aggregate((a, b) => a + " or " + b);
+        }
+
+        private static string GenerateDimensionValueFilterString(IEnumerable<string> dimensionValues)
+        {
+            return IsNullOrEmpty(dimensionValues) ? null
+                : dimensionValues.Select(dv => string.Format(CultureInfo.InvariantCulture, "dimensionValue.value eq '{0}'", dv)).Aggregate((a, b) => a + " or " + b);
+        }
+
+        private static bool IsNullOrEmpty<T>(IEnumerable<T> collection)
+        {
+            return collection == null || !collection.Any();
         }
 
         private static string EscapeStorageKey(string key)
@@ -88,13 +115,13 @@ namespace Microsoft.Azure.Insights
         {
             if (limit < KeyTrimPadding)
             {
-                throw new ArgumentException(string.Format("The key limit should be at least {0} characters.", KeyTrimPadding), "limit");
+                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "The key limit should be at least {0} characters.", KeyTrimPadding), "limit");
             }
 
             if (key.Contains('|'))
             {
                 throw new ArgumentException(
-                    string.Format("The key '{0}' is not properly encoded. Use EscapeKey for encoding.", key), "key");
+                    string.Format(CultureInfo.InvariantCulture, "The key '{0}' is not properly encoded. Use EscapeKey for encoding.", key), "key");
             }
 
             if (key.Length > limit)
