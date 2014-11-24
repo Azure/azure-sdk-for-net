@@ -270,11 +270,11 @@ namespace Microsoft.Azure.Insights
             private void InitializeProperties()
             {
                 PropertyInfo[] properties = typeof(T).GetProperties(Flags);
-                ExpressionElementPropertyCache[typeof(T)] = properties.Where(p => p.GetCustomAttribute(typeof(ExpressionElementPropertyAttribute), true) != null);
+                ExpressionElementPropertyCache[typeof(T)] = properties.Where(p => p.GetCustomAttributes(typeof(ExpressionElementPropertyAttribute), true).Any());
                 ExpressionElementCollectionPropertyCache[typeof(T)] = properties
                     .Select(p => new Tuple<PropertyInfo, ExpressionElementCollectionPropertyAttribute>(
                         p,
-                        p.GetCustomAttribute(typeof(ExpressionElementCollectionPropertyAttribute), true) as ExpressionElementCollectionPropertyAttribute))
+                        p.GetCustomAttributes(typeof(ExpressionElementCollectionPropertyAttribute), true).FirstOrDefault() as ExpressionElementCollectionPropertyAttribute))
                     .Where(t => t.Item2 != null);
             }
         }
