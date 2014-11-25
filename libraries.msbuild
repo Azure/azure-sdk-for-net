@@ -133,6 +133,7 @@
     <DeveloperBuildProperties>Configuration=Debug;Platform=Any CPU;CopyToBinaries=true;GenerateHydraSpecs=$(GenerateHydraSpecs)</DeveloperBuildProperties>
     <OfficialMSBuildProperties>Configuration=Release;OfficialBuild=true;Platform=Any CPU;GenerateHydraSpecs=$(GenerateHydraSpecs)</OfficialMSBuildProperties>
     <Net40BuildProperty>BuildSecondConfiguration=true</Net40BuildProperty>
+    <Net45BuildProperty>BuildThirdConfiguration=true</Net45BuildProperty>
   </PropertyGroup>
 
   <!--
@@ -145,11 +146,17 @@
     <MSBuild Projects="@(CommonProjects)"
              Properties="$(DeveloperBuildProperties);$(Net40BuildProperty)"
              Targets="Rebuild" />
+    <MSBuild Projects="@(CommonProjects)"
+             Properties="$(DeveloperBuildProperties);$(Net45BuildProperty)"
+             Targets="Rebuild" />
     <MSBuild Projects="@(ManagementLibrariesProjects)"
              Properties="$(DeveloperBuildProperties)"
              Targets="Rebuild" />
     <MSBuild Projects="@(ManagementLibrariesProjects)"
              Properties="$(DeveloperBuildProperties);$(Net40BuildProperty)"
+             Targets="Rebuild" />
+    <MSBuild Projects="@(ManagementLibrariesProjects)"
+             Properties="$(DeveloperBuildProperties);$(Net45BuildProperty)"
              Targets="Rebuild" />
   </Target>
 
@@ -163,6 +170,9 @@
     <MSBuild Projects="@(ManagementLibrariesProjects)"
              Properties="$(DeveloperBuildProperties);$(Net40BuildProperty)"
              Targets="Rebuild" />
+    <MSBuild Projects="@(ManagementLibrariesProjects)"
+             Properties="$(DeveloperBuildProperties);$(Net45BuildProperty)"
+             Targets="Rebuild" />
   </Target>
 
   <!--
@@ -175,11 +185,17 @@
     <MSBuild Projects="@(CommonProjects)"
              Properties="$(DeveloperBuildProperties);$(Net40BuildProperty)"
              Targets="Clean" />
+    <MSBuild Projects="@(CommonProjects)"
+             Properties="$(DeveloperBuildProperties);$(Net45BuildProperty)"
+             Targets="Clean" />
     <MSBuild Projects="@(ManagementLibrariesProjects)"
              Properties="$(DeveloperBuildProperties)"
              Targets="Clean" />
     <MSBuild Projects="@(ManagementLibrariesProjects)"
              Properties="$(DeveloperBuildProperties);$(Net40BuildProperty)"
+             Targets="Clean" />
+    <MSBuild Projects="@(ManagementLibrariesProjects)"
+             Properties="$(DeveloperBuildProperties);$(Net45BuildProperty)"
              Targets="Clean" />
     <RemoveDir Directories="binaries" Condition="Exists('binaries\')" ContinueOnError="true" />
   </Target>
@@ -219,11 +235,17 @@
     <MSBuild Projects="@(CommonProjects)"
              Properties="$(OfficialMSBuildProperties);$(Net40BuildProperty)"
              Targets="Rebuild" />
+    <MSBuild Projects="@(CommonProjects)"
+             Properties="$(OfficialMSBuildProperties);$(Net45BuildProperty)"
+             Targets="Rebuild" />
     <MSBuild Projects="@(ManagementLibrariesProjects)"
              Properties="$(OfficialMSBuildProperties)"
              Targets="Rebuild" />
     <MSBuild Projects="@(ManagementLibrariesProjects)"
              Properties="$(OfficialMSBuildProperties);$(Net40BuildProperty)"
+             Targets="Rebuild" />
+    <MSBuild Projects="@(ManagementLibrariesProjects)"
+             Properties="$(OfficialMSBuildProperties);$(Net45BuildProperty)"
              Targets="Rebuild" />
   </Target>
 
@@ -286,6 +308,7 @@
     <ItemGroup>
       <AssembliesToBuild Include="binaries\unsigned\Microsoft.*Azure.*.dll" />
       <Net40AssembliesToBuild Include="binaries\net40\unsigned\Microsoft.*Azure.*.dll" />
+      <Net45AssembliesToBuild Include="binaries\net45\unsigned\Microsoft.*Azure.*.dll" />
     </ItemGroup>
 
     <CodeSigningTask
@@ -307,6 +330,16 @@
       ToolsPath="$(OnPremiseBuildTasks)" />
     <Error Condition=" !Exists('binaries\net40\Microsoft.WindowsAzure.Common.dll') " Text="The Microsoft.WindowsAzure.Common.dll binary is not in the .\binaries\ folder. .NET 4.0 code signing likely failed." />
 
+    <Message Text="Signing .NET Framework 4.5 assemblies..." />
+    <CodeSigningTask
+      Description="Microsoft Azure SDK"
+      Keywords="Microsoft Azure .NET SDK"
+      UnsignedFiles="@(Net45AssembliesToBuild)"
+      DestinationPath="binaries\net45\"
+      SigningLogPath="binaries\net45\signing.log"
+      ToolsPath="$(OnPremiseBuildTasks)" />
+    <Error Condition=" !Exists('binaries\net45\Microsoft.WindowsAzure.Common.dll') " Text="The Microsoft.WindowsAzure.Common.dll binary is not in the .\binaries\ folder. .NET 4.5 code signing likely failed." />
+
     <Message Text="Validate the signed files" />
     <CallTarget Targets="ValidateOfficialBuildBinaries" />
 
@@ -318,6 +351,7 @@
 
     <RemoveDir Directories="binaries\unsigned" Condition="Exists('binaries\unsigned')" ContinueOnError="true" />
     <RemoveDir Directories="binaries\net40\unsigned" Condition="Exists('binaries\net40\unsigned')" ContinueOnError="true" />
+    <RemoveDir Directories="binaries\net45\unsigned" Condition="Exists('binaries\net45\unsigned')" ContinueOnError="true" />
     <Message Text="Have a nice day." />
   </Target>
 
@@ -333,6 +367,7 @@
     <ItemGroup>
       <DelaySignedAssembliesToValidate Include="binaries\unsigned\*.dll" />
       <DelaySignedAssembliesToValidate Include="binaries\net40\unsigned\*.dll" />
+      <DelaySignedAssembliesToValidate Include="binaries\net45\unsigned\*.dll" />
     </ItemGroup>
     <ValidateStrongNameSignatureTask
         WindowsSdkPath="$(WindowsSdkPath)"
@@ -353,6 +388,7 @@
     <ItemGroup>
       <AfterSignedAssembliesToValidate Include="binaries\*.dll" />
       <AfterSignedAssembliesToValidate Include="binaries\net40\*.dll" />
+      <AfterSignedAssembliesToValidate Include="binaries\net45\*.dll" />
     </ItemGroup>
     <ValidateStrongNameSignatureTask
         WindowsSdkPath="$(WindowsSdkPath)"
@@ -371,10 +407,12 @@
     <ItemGroup>
       <PclBinaries Include="binaries\unsigned\*.dll" />
       <Net40Binaries Include="binaries\net40\unsigned\*.dll" />
+      <Net45Binaries Include="binaries\net45\unsigned\*.dll" />
     </ItemGroup>
 
     <Copy SourceFiles="@(PclBinaries)" DestinationFolder="binaries" />
     <Copy SourceFiles="@(Net40Binaries)" DestinationFolder="binaries\net40" />
+    <Copy SourceFiles="@(Net45Binaries)" DestinationFolder="binaries\net45" />
 
     <CallTarget Targets="BuildPackages" />
   </Target>

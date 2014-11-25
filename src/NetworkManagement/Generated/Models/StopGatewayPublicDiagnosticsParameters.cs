@@ -25,34 +25,28 @@ using Microsoft.WindowsAzure.Management.Network.Models;
 
 namespace Microsoft.WindowsAzure.Management.Network.Models
 {
-    public partial class ResizeGatewayParameters
+    /// <summary>
+    /// Parameters supplied to the Start Public Diagnostics operation.
+    /// </summary>
+    public partial class StopGatewayPublicDiagnosticsParameters
     {
-        private string _gatewaySKU;
+        private UpdateGatewayPublicDiagnosticsOperation _operation;
         
         /// <summary>
-        /// Optional.
+        /// Optional. The update gateway diagnostics operation to perform on
+        /// the gateway tenant
         /// </summary>
-        public string GatewaySKU
-        {
-            get { return this._gatewaySKU; }
-            set { this._gatewaySKU = value; }
-        }
-        
-        private UpdateGatewayOperation _operation;
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public UpdateGatewayOperation Operation
+        public UpdateGatewayPublicDiagnosticsOperation Operation
         {
             get { return this._operation; }
             set { this._operation = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ResizeGatewayParameters class.
+        /// Initializes a new instance of the
+        /// StopGatewayPublicDiagnosticsParameters class.
         /// </summary>
-        public ResizeGatewayParameters()
+        public StopGatewayPublicDiagnosticsParameters()
         {
         }
     }

@@ -21,38 +21,33 @@
 
 using System;
 using System.Linq;
+using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Management.Network.Models;
 
 namespace Microsoft.WindowsAzure.Management.Network.Models
 {
-    public partial class ResizeGatewayParameters
+    /// <summary>
+    /// The response that will be returned from a GetIPsecParameters request.
+    /// This contains the IPsec parameters for the specified connection.
+    /// </summary>
+    public partial class GatewayGetIPsecParametersResponse : OperationResponse
     {
-        private string _gatewaySKU;
+        private IPsecParameters _iPsecParameters;
         
         /// <summary>
         /// Optional.
         /// </summary>
-        public string GatewaySKU
+        public IPsecParameters IPsecParameters
         {
-            get { return this._gatewaySKU; }
-            set { this._gatewaySKU = value; }
-        }
-        
-        private UpdateGatewayOperation _operation;
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public UpdateGatewayOperation Operation
-        {
-            get { return this._operation; }
-            set { this._operation = value; }
+            get { return this._iPsecParameters; }
+            set { this._iPsecParameters = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ResizeGatewayParameters class.
+        /// Initializes a new instance of the GatewayGetIPsecParametersResponse
+        /// class.
         /// </summary>
-        public ResizeGatewayParameters()
+        public GatewayGetIPsecParametersResponse()
         {
         }
     }
