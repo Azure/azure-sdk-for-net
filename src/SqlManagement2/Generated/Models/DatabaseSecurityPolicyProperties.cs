@@ -29,17 +29,6 @@ namespace Microsoft.Azure.Management.Sql.Models
     /// </summary>
     public partial class DatabaseSecurityPolicyProperties
     {
-        private string _adoNetConnectionString;
-        
-        /// <summary>
-        /// Optional. Gets or sets ADO.NET connection string.
-        /// </summary>
-        public string AdoNetConnectionString
-        {
-            get { return this._adoNetConnectionString; }
-            set { this._adoNetConnectionString = value; }
-        }
-        
         private bool _isAuditingEnabled;
         
         /// <summary>
@@ -119,39 +108,6 @@ namespace Microsoft.Azure.Management.Sql.Models
             set { this._isEventTypeSecurityExceptionsEnabled = value; }
         }
         
-        private string _jdbcConnectionString;
-        
-        /// <summary>
-        /// Optional. Gets or set JDBC connection string.
-        /// </summary>
-        public string JdbcConnectionString
-        {
-            get { return this._jdbcConnectionString; }
-            set { this._jdbcConnectionString = value; }
-        }
-        
-        private string _odbcConnectionString;
-        
-        /// <summary>
-        /// Optional. Gets or sets ODBC connection string.
-        /// </summary>
-        public string OdbcConnectionString
-        {
-            get { return this._odbcConnectionString; }
-            set { this._odbcConnectionString = value; }
-        }
-        
-        private string _phpConnectionString;
-        
-        /// <summary>
-        /// Optional. Gets or sets PHP connection setring.
-        /// </summary>
-        public string PhpConnectionString
-        {
-            get { return this._phpConnectionString; }
-            set { this._phpConnectionString = value; }
-        }
-        
         private string _proxyDnsName;
         
         /// <summary>
@@ -161,6 +117,17 @@ namespace Microsoft.Azure.Management.Sql.Models
         {
             get { return this._proxyDnsName; }
             set { this._proxyDnsName = value; }
+        }
+        
+        private string _proxyPort;
+        
+        /// <summary>
+        /// Optional. Gets or sets the proxy port.
+        /// </summary>
+        public string ProxyPort
+        {
+            get { return this._proxyPort; }
+            set { this._proxyPort = value; }
         }
         
         private int _retentionDays;
