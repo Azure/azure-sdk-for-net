@@ -25,34 +25,27 @@ using Microsoft.WindowsAzure.Management.Network.Models;
 
 namespace Microsoft.WindowsAzure.Management.Network.Models
 {
-    public partial class ResizeGatewayParameters
+    /// <summary>
+    /// The IPsec parameters to set for the connection.
+    /// </summary>
+    public partial class GatewaySetIPsecParametersParameters
     {
-        private string _gatewaySKU;
+        private IPsecParameters _parameters;
         
         /// <summary>
         /// Optional.
         /// </summary>
-        public string GatewaySKU
+        public IPsecParameters Parameters
         {
-            get { return this._gatewaySKU; }
-            set { this._gatewaySKU = value; }
-        }
-        
-        private UpdateGatewayOperation _operation;
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public UpdateGatewayOperation Operation
-        {
-            get { return this._operation; }
-            set { this._operation = value; }
+            get { return this._parameters; }
+            set { this._parameters = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ResizeGatewayParameters class.
+        /// Initializes a new instance of the
+        /// GatewaySetIPsecParametersParameters class.
         /// </summary>
-        public ResizeGatewayParameters()
+        public GatewaySetIPsecParametersParameters()
         {
         }
     }

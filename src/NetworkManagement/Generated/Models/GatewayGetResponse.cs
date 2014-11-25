@@ -43,23 +43,23 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             set { this._defaultSite = value; }
         }
         
-        private GatewaySKU _gatewaySKU;
+        private string _gatewaySKU;
         
         /// <summary>
         /// Optional. The SKU for this virtual network gateway.
         /// </summary>
-        public GatewaySKU GatewaySKU
+        public string GatewaySKU
         {
             get { return this._gatewaySKU; }
             set { this._gatewaySKU = value; }
         }
         
-        private GatewayType _gatewayType;
+        private string _gatewayType;
         
         /// <summary>
         /// Optional. The type of gateway routing used for this virtual network.
         /// </summary>
-        public GatewayType GatewayType
+        public string GatewayType
         {
             get { return this._gatewayType; }
             set { this._gatewayType = value; }

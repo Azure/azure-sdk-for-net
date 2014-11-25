@@ -24,10 +24,13 @@ using System.Linq;
 
 namespace Microsoft.WindowsAzure.Management.Network.Models
 {
-    public enum GatewaySKU
+    /// <summary>
+    /// The different SKUs that a gateway can have.
+    /// </summary>
+    public static partial class GatewaySKU
     {
-        Default = 0,
+        public const string Default = "Default";
         
-        HighPerformance = 1,
+        public const string HighPerformance = "HighPerformance";
     }
 }

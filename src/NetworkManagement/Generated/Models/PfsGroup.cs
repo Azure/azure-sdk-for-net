@@ -21,39 +21,13 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure.Management.Network.Models;
 
 namespace Microsoft.WindowsAzure.Management.Network.Models
 {
-    public partial class ResizeGatewayParameters
+    public static partial class PfsGroup
     {
-        private string _gatewaySKU;
+        public const string PFS1 = "PFS1";
         
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public string GatewaySKU
-        {
-            get { return this._gatewaySKU; }
-            set { this._gatewaySKU = value; }
-        }
-        
-        private UpdateGatewayOperation _operation;
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public UpdateGatewayOperation Operation
-        {
-            get { return this._operation; }
-            set { this._operation = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the ResizeGatewayParameters class.
-        /// </summary>
-        public ResizeGatewayParameters()
-        {
-        }
+        public const string None = "None";
     }
 }

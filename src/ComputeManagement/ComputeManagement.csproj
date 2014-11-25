@@ -218,7 +218,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="hyak.xml" />
+    <Content Include="hyak.xml">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.WindowsAzure.Common">
