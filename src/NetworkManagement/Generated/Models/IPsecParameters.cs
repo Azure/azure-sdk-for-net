@@ -21,38 +21,59 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure.Management.Network.Models;
 
 namespace Microsoft.WindowsAzure.Management.Network.Models
 {
-    public partial class ResizeGatewayParameters
+    public partial class IPsecParameters
     {
-        private string _gatewaySKU;
+        private string _encryptionType;
+        
+        /// <summary>
+        /// Optional. The encryption type that will be used on the connection.
+        /// </summary>
+        public string EncryptionType
+        {
+            get { return this._encryptionType; }
+            set { this._encryptionType = value; }
+        }
+        
+        private string _pfsGroup;
+        
+        /// <summary>
+        /// Optional. The PfsGroup type that will be used on the connection.
+        /// </summary>
+        public string PfsGroup
+        {
+            get { return this._pfsGroup; }
+            set { this._pfsGroup = value; }
+        }
+        
+        private int _sADataSizeKilobytes;
         
         /// <summary>
         /// Optional.
         /// </summary>
-        public string GatewaySKU
+        public int SADataSizeKilobytes
         {
-            get { return this._gatewaySKU; }
-            set { this._gatewaySKU = value; }
+            get { return this._sADataSizeKilobytes; }
+            set { this._sADataSizeKilobytes = value; }
         }
         
-        private UpdateGatewayOperation _operation;
+        private int _sALifeTimeSeconds;
         
         /// <summary>
         /// Optional.
         /// </summary>
-        public UpdateGatewayOperation Operation
+        public int SALifeTimeSeconds
         {
-            get { return this._operation; }
-            set { this._operation = value; }
+            get { return this._sALifeTimeSeconds; }
+            set { this._sALifeTimeSeconds = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ResizeGatewayParameters class.
+        /// Initializes a new instance of the IPsecParameters class.
         /// </summary>
-        public ResizeGatewayParameters()
+        public IPsecParameters()
         {
         }
     }

@@ -26,9 +26,9 @@ using Microsoft.WindowsAzure.Management.Network.Models;
 namespace Microsoft.WindowsAzure.Management.Network.Models
 {
     /// <summary>
-    /// Parameters supplied to the Create Virtual Network Gateway operation.
+    /// Parameters supplied to the Start Public Diagnostics operation.
     /// </summary>
-    public partial class UpdateGatewayPublicDiagnostics
+    public partial class StartGatewayPublicDiagnosticsParameters
     {
         private string _captureDurationInSeconds;
         
@@ -87,10 +87,10 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the UpdateGatewayPublicDiagnostics
-        /// class.
+        /// Initializes a new instance of the
+        /// StartGatewayPublicDiagnosticsParameters class.
         /// </summary>
-        public UpdateGatewayPublicDiagnostics()
+        public StartGatewayPublicDiagnosticsParameters()
         {
         }
     }
