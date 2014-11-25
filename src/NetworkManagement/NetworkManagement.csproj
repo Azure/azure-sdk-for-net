@@ -115,7 +115,6 @@
     <Compile Include="NetworkManagementClient.Customizations.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="GenerateCode.props" />
     <None Include="Microsoft.WindowsAzure.Management.Network.nuget.proj" />
     <None Include="Microsoft.WindowsAzure.Management.Network.nuspec" />
