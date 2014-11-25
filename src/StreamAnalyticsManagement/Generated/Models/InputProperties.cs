@@ -52,6 +52,17 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
             set { this._serialization = value; }
         }
         
+        private string _type;
+        
+        /// <summary>
+        /// Optional. Gets the type of the input property.
+        /// </summary>
+        public string Type
+        {
+            get { return this._type; }
+            set { this._type = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the InputProperties class.
         /// </summary>

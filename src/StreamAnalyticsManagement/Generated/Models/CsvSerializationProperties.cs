@@ -21,7 +21,6 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.StreamAnalytics.Models;
 
 namespace Microsoft.Azure.Management.StreamAnalytics.Models
 {
@@ -50,17 +49,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         {
             get { return this._fieldDelimiter; }
             set { this._fieldDelimiter = value; }
-        }
-        
-        private InputProperties _inputProperties;
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public InputProperties InputProperties
-        {
-            get { return this._inputProperties; }
-            set { this._inputProperties = value; }
         }
         
         /// <summary>

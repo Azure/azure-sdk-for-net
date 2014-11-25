@@ -54,16 +54,16 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
             set { this._etag = value; }
         }
         
-        private int _eventsOutOfOrderMaxDelayInMilliseconds;
+        private int _eventsOutOfOrderMaxDelayInSeconds;
         
         /// <summary>
         /// Required. Gets or sets the max delay time of the out of order
         /// policy of the stream analytics job. It is in Milliseconds
         /// </summary>
-        public int EventsOutOfOrderMaxDelayInMilliseconds
+        public int EventsOutOfOrderMaxDelayInSeconds
         {
-            get { return this._eventsOutOfOrderMaxDelayInMilliseconds; }
-            set { this._eventsOutOfOrderMaxDelayInMilliseconds = value; }
+            get { return this._eventsOutOfOrderMaxDelayInSeconds; }
+            set { this._eventsOutOfOrderMaxDelayInSeconds = value; }
         }
         
         private string _eventsOutOfOrderPolicy;

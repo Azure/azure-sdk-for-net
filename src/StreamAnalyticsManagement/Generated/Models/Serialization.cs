@@ -29,6 +29,17 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
     /// </summary>
     public abstract partial class Serialization
     {
+        private string _type;
+        
+        /// <summary>
+        /// Optional. Gets the type of the serialization of the input or output.
+        /// </summary>
+        public string Type
+        {
+            get { return this._type; }
+            set { this._type = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the Serialization class.
         /// </summary>
