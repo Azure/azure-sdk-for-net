@@ -133,7 +133,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Gets the URI used as the base for all cloud service
+        /// Optional. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
         public StorageManagementClient(SubscriptionCloudCredentials credentials, Uri baseUri)
@@ -199,7 +199,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Gets the URI used as the base for all cloud service
+        /// Optional. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
         /// <param name='httpClient'>

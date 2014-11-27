@@ -153,7 +153,7 @@
     <Exec Condition=" '%(SdkNuGetPackage.SkipSymbolSourcePackage)' != 'true' "
           Command="$(NuGetCommand) pack -BasePath .\src\ -Verbosity $(NuGetVerbosity) &quot;binaries\packages\specs\%(SdkNuGetPackage.Identity).nuspec&quot; -Version %(SdkNuGetPackage.PackageVersion)$(BuildVersionSuffix)$(AdditionalVersionSuffix) -OutputDirectory &quot;$(PackageOutputDir)&quot; -Symbols" />
 
-    <Message Text="Generating NuGet packages without symbol + source packages" Importance="high" />
+    <Message Text="Generating NuGet packages without symbol + source packages into $(PackageOutputDir)" Importance="high" />
     <Exec Condition=" '%(SdkNuGetPackage.SkipSymbolSourcePackage)' == 'true' "
           Command="$(NuGetCommand) pack -BasePath .\src\ -Verbosity $(NuGetVerbosity) &quot;binaries\packages\specs\%(SdkNuGetPackage.Identity).nuspec&quot; -Version %(SdkNuGetPackage.PackageVersion)$(BuildVersionSuffix)$(AdditionalVersionSuffix) -OutputDirectory &quot;$(PackageOutputDir)&quot;" />
   </Target>

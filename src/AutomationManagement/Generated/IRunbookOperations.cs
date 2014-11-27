@@ -270,7 +270,7 @@ namespace Microsoft.Azure.Management.Automation
         Task<RunbookPublishResponse> PublishAsync(string automationAccount, RunbookPublishParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Delete the runbook identified by runbookId.  (see
+        /// Start the runbook identified by runbookId.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
         /// for more information)
         /// </summary>

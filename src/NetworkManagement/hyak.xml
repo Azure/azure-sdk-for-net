@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Hyak>
+  <Assembly>Microsoft.WindowsAzure.Management.Network.Specification.dll</Assembly>
+  <OutputDirectory>Generated</OutputDirectory>
+
+  <Specification>
+    <Type>Microsoft.WindowsAzure.Management.Network.NetworkManagementClient</Type>
+
+    <Platform>
+      <Flavor>CSharp.Azure</Flavor>
+      <OutputDirectory></OutputDirectory>
+      <BaseNamespace>microsoft.windowsazure.management.network</BaseNamespace>
+      <Split>Namespace</Split>
+    </Platform>
+  </Specification>
+</Hyak>

@@ -136,7 +136,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Gets the URI used as the base for all cloud service
+        /// Optional. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
         public SchedulerClient(string cloudServiceName, string jobCollectionName, SubscriptionCloudCredentials credentials, Uri baseUri)
@@ -234,7 +234,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Gets the URI used as the base for all cloud service
+        /// Optional. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
         /// <param name='httpClient'>
@@ -345,17 +345,21 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// </returns>
         internal static HttpAuthenticationType ParseHttpAuthenticationType(string value)
         {
-            if ("notspecified".Equals(value, StringComparison.OrdinalIgnoreCase))
+            if ("NotSpecified".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return HttpAuthenticationType.NotSpecified;
             }
-            if ("basic".Equals(value, StringComparison.OrdinalIgnoreCase))
-            {
-                return HttpAuthenticationType.Basic;
-            }
-            if ("clientcertificate".Equals(value, StringComparison.OrdinalIgnoreCase))
+            if ("ClientCertificate".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return HttpAuthenticationType.ClientCertificate;
+            }
+            if ("ActiveDirectoryOAuth".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return HttpAuthenticationType.ActiveDirectoryOAuth;
+            }
+            if ("Basic".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return HttpAuthenticationType.Basic;
             }
             throw new ArgumentOutOfRangeException("value");
         }
@@ -373,15 +377,19 @@ namespace Microsoft.WindowsAzure.Scheduler
         {
             if (value == HttpAuthenticationType.NotSpecified)
             {
-                return "notspecified";
-            }
-            if (value == HttpAuthenticationType.Basic)
-            {
-                return "basic";
+                return "NotSpecified";
             }
             if (value == HttpAuthenticationType.ClientCertificate)
             {
-                return "clientcertificate";
+                return "ClientCertificate";
+            }
+            if (value == HttpAuthenticationType.ActiveDirectoryOAuth)
+            {
+                return "ActiveDirectoryOAuth";
+            }
+            if (value == HttpAuthenticationType.Basic)
+            {
+                return "Basic";
             }
             throw new ArgumentOutOfRangeException("value");
         }

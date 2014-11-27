@@ -359,6 +359,66 @@ namespace Microsoft.Azure.Management.WebSites
         }
         
         /// <summary>
+        /// Unlink source control from website
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot.
+        /// </param>
+        /// <param name='repoUrl'>
+        /// Required. The repository url.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static OperationResponse DeleteSiteSourceControl(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName, string repoUrl)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IWebSiteOperations)s).DeleteSiteSourceControlAsync(resourceGroupName, webSiteName, slotName, repoUrl);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Unlink source control from website
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot.
+        /// </param>
+        /// <param name='repoUrl'>
+        /// Required. The repository url.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<OperationResponse> DeleteSiteSourceControlAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName, string repoUrl)
+        {
+            return operations.DeleteSiteSourceControlAsync(resourceGroupName, webSiteName, slotName, repoUrl, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Scans a backup in a storage account and returns database
         /// information etc. Should be called before calling Restore to
         /// discover what parameters are needed for the restore operation.
@@ -1836,6 +1896,68 @@ namespace Microsoft.Azure.Management.WebSites
         public static Task<WebSiteMetadataResult> UpdateMetadataAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName, WebSiteNameValueParameters parameters)
         {
             return operations.UpdateMetadataAsync(resourceGroupName, webSiteName, slotName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Link source control to website (do not forget to setup the token,
+        /// and if needed token secret, for the specific source control type
+        /// used).
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site
+        /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot of the website
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The update site source control parameters.
+        /// </param>
+        /// <returns>
+        /// The link site to source control operation response.
+        /// </returns>
+        public static SiteSourceControlUpdateResponse UpdateSiteSourceControl(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName, SiteSourceControlUpdateParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IWebSiteOperations)s).UpdateSiteSourceControlAsync(resourceGroupName, webSiteName, slotName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Link source control to website (do not forget to setup the token,
+        /// and if needed token secret, for the specific source control type
+        /// used).
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site
+        /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot of the website
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The update site source control parameters.
+        /// </param>
+        /// <returns>
+        /// The link site to source control operation response.
+        /// </returns>
+        public static Task<SiteSourceControlUpdateResponse> UpdateSiteSourceControlAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName, SiteSourceControlUpdateParameters parameters)
+        {
+            return operations.UpdateSiteSourceControlAsync(resourceGroupName, webSiteName, slotName, parameters, CancellationToken.None);
         }
         
         /// <summary>
