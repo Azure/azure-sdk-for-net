@@ -135,7 +135,7 @@ namespace Microsoft.Azure.Management.DataFactories
             string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/Microsoft.DataFactory/datafactories/" + dataFactoryName.Trim() + "/tables/" + tableName.Trim() + "/slices?";
             url = url + "start=" + Uri.EscapeDataString(dataSliceRangeStartTime.Trim());
             url = url + "&end=" + Uri.EscapeDataString(dataSliceRangeEndTime.Trim());
-            url = url + "&api-version=2014-10-01-preview";
+            url = url + "&api-version=2014-12-01-preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -538,7 +538,7 @@ namespace Microsoft.Azure.Management.DataFactories
             {
                 url = url + "&end=" + Uri.EscapeDataString(parameters.DataSliceRangeEndTime != null ? parameters.DataSliceRangeEndTime.Trim() : "");
             }
-            url = url + "&api-version=2014-10-01-preview";
+            url = url + "&api-version=2014-12-01-preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')

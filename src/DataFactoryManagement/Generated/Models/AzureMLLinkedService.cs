@@ -26,59 +26,57 @@ using Microsoft.Azure.Management.DataFactories.Models;
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// Data factory gateway resource definition.
+    /// AzureML Web Service linked service.
     /// </summary>
-    public partial class Gateway
+    public partial class AzureMLLinkedService : LinkedServiceProperties
     {
-        private string _name;
+        private string _apiKey;
         
         /// <summary>
-        /// Required. Name of the data factory gateway.
+        /// Required. The API key for accessing the AzureML model endpoint.
         /// </summary>
-        public string Name
+        public string ApiKey
         {
-            get { return this._name; }
-            set { this._name = value; }
+            get { return this._apiKey; }
+            set { this._apiKey = value; }
         }
         
-        private GatewayProperties _properties;
+        private string _mlEndpoint;
         
         /// <summary>
-        /// Required. Properties of the data factory gateway. Only the
-        /// Description property is applicable in the PUT/PATCH request. Other
-        /// properties are only applicable in service response, and they will
-        /// be ignored in the PUT/PATCH request.
+        /// Required. The AzureML Web Service REST URL for requesting batch
+        /// scoring.
         /// </summary>
-        public GatewayProperties Properties
+        public string MlEndpoint
         {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._mlEndpoint; }
+            set { this._mlEndpoint = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the Gateway class.
+        /// Initializes a new instance of the AzureMLLinkedService class.
         /// </summary>
-        public Gateway()
+        public AzureMLLinkedService()
         {
         }
         
         /// <summary>
-        /// Initializes a new instance of the Gateway class with required
-        /// arguments.
+        /// Initializes a new instance of the AzureMLLinkedService class with
+        /// required arguments.
         /// </summary>
-        public Gateway(string name, GatewayProperties properties)
+        public AzureMLLinkedService(string mlEndpoint, string apiKey)
             : this()
         {
-            if (name == null)
+            if (mlEndpoint == null)
             {
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException("mlEndpoint");
             }
-            if (properties == null)
+            if (apiKey == null)
             {
-                throw new ArgumentNullException("properties");
+                throw new ArgumentNullException("apiKey");
             }
-            this.Name = name;
-            this.Properties = properties;
+            this.MlEndpoint = mlEndpoint;
+            this.ApiKey = apiKey;
         }
     }
 }
