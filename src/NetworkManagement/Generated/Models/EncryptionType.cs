@@ -21,39 +21,19 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure.Management.Network.Models;
 
 namespace Microsoft.WindowsAzure.Management.Network.Models
 {
-    public partial class ResizeGatewayParameters
+    public static partial class EncryptionType
     {
-        private string _gatewaySKU;
+        public const string NoEncryption = "NoEncryption";
         
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public string GatewaySKU
-        {
-            get { return this._gatewaySKU; }
-            set { this._gatewaySKU = value; }
-        }
+        public const string AES256 = "AES256";
         
-        private UpdateGatewayOperation _operation;
+        public const string AES128 = "AES128";
         
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public UpdateGatewayOperation Operation
-        {
-            get { return this._operation; }
-            set { this._operation = value; }
-        }
+        public const string DES3 = "DES3";
         
-        /// <summary>
-        /// Initializes a new instance of the ResizeGatewayParameters class.
-        /// </summary>
-        public ResizeGatewayParameters()
-        {
-        }
+        public const string RequireEncryption = "RequireEncryption";
     }
 }

@@ -86,6 +86,7 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\..\packages\Hyak.Generator.1.0.5429.26906-prerelease\build\Hyak.Generator.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Hyak.Generator.1.0.5429.26906-prerelease\build\Hyak.Generator.targets'))" />
   </Target>
+  <Import Project="..\..\packages\Hyak.Generator.1.0.5400.37276-prerelease\build\Hyak.Generator.targets" Condition="Exists('..\..\packages\Hyak.Generator.1.0.5400.37276-prerelease\build\Hyak.Generator.targets')" />
   <Target Name="DoSpecGeneration" DependsOnTargets="RestorePackages" BeforeTargets="BeforeBuild">
     <CallTarget Targets="GenerateCodeFromSpecs" Condition="'$(HydraGeneratorImported)' != ''" />
     <Error Text="The Hydra code generator package was restored from nuget. Build the project again to do code generation." Condition="Exists('..\..\packages\Hyak.Generator.1.0.5429.26906-prerelease\build\Hyak.Generator.targets') And '$(HydraGeneratorImported)' == ''" />
