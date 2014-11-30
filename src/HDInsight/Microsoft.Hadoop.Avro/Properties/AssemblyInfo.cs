@@ -1,4 +1,4 @@
-﻿// /********************************************************
+// /********************************************************
 // *                                                       *
 // *   Copyright (C) Microsoft. All rights reserved.       *
 // *                                                       *
@@ -19,7 +19,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Microsoft.Hadoop.Avro")]
-[assembly: AssemblyCopyright("Copyright © Microsoft 2014")]
+[assembly: AssemblyCopyright("Copyright � Microsoft 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: Guid("109bd5a1-5f33-47b1-83ee-a57269b4da87")]

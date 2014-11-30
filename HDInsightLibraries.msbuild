@@ -169,16 +169,36 @@
   <!--
   Run all tests
   -->
-  <UsingTask TaskName="Xunit.Runner.msbuild.xunit" AssemblyFile="tools\xunit.runner.msbuild.dll" />
-  <ItemGroup>
-    <TestDlls Include=".\src\*.Test\bin\*\*Test.dll"/>
-  </ItemGroup>
+ 
+  <Target Name="RunTests" >
+		<PropertyGroup>
+			<TestSettings Condition="'$(TestSettings)' == ''">.\src\HDInsight\Local.testsettings</TestSettings>
+			<TestFilter Condition="'$(TestFilter)' == ''" >!Functional&#x26;!Scenario</TestFilter>
+			<TestFilter Condition="'$(NoInteractiveTests)' == 'true'">$(TestFilter)&#x26;!Interactive</TestFilter>
+			<TestOutputDirectory Condition="'$(TestOutputDirectory)' == ''">$(MSBuildProjectDirectory)\TestResults</TestOutputDirectory>
+		</PropertyGroup>	
+		  		<ItemGroup>
+			<TestDlls Include=".\src\HDInsight\*.Tests\bin\*\*Tests.dll"/>
+		</ItemGroup>
+		<MakeDir Directories="$(MSBuildProjectDirectory)\TestResults"/>
+		<Message Text="Found test file: %(TestDlls.Filename)" />
 
-  <Target Name="RunTests">
-    <MakeDir Directories="$(MSBuildProjectDirectory)\TestResults"/>
-	<Message Text="%(TestDlls.Filename)" />
-    <xunit Assemblies="@(TestDlls)" Html="$(MSBuildProjectDirectory)\TestResults\MAML.xunit.results.html" ContinueOnError="ErrorAndContinue" />
-  </Target>
+		<Message Importance="high" Text="Running tests..." />
+		<Message Importance="high" Text="You are required to have installed a version of Visual Studio with support for MSTest (and MSTest on your path)." />
+		<MakeDir Directories="$(TestOutputDirectory)" ContinueOnError="false" />
+
+		<Message Importance="high" Text="Debug tests: %(TestDlls.FullPath)" />
+		
+		<ItemGroup>
+			<TestOutputFiles Include="$(TestOutputDirectory)\%(TestDlls.FileName).trx" />
+		</ItemGroup>
+		
+		<Message Importance="high" Text="Test Output Files: %(TestOutputFiles.FullPath)" />
+		
+		<Exec
+		  Command="MSTest.exe /testcontainer:%(TestDlls.FullPath) /testsettings:$(TestSettings) /category:&quot;$(TestFilter)&quot; /resultsfile:$(TestOutputDirectory)\%(TestDlls.Filename).trx"
+		  ContinueOnError="true" />
+	</Target>
 
   <!--
   An official build is designed for use while shipping. It generates a release

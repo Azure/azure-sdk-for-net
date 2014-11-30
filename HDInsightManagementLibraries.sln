@@ -69,6 +69,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "git", "git", "{55754CA3-22E
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "product", "product", "{CF4F962A-172D-4C36-97ED-1783B3A25329}"
 	ProjectSection(SolutionItems) = preProject
+		src\HDInsight\Microsoft.Hadoop.Avro\Microsoft.Hadoop.Avro.nuget.proj = src\HDInsight\Microsoft.Hadoop.Avro\Microsoft.Hadoop.Avro.nuget.proj
+		src\HDInsight\Microsoft.Hadoop.Avro\Microsoft.Hadoop.Avro.nuspec = src\HDInsight\Microsoft.Hadoop.Avro\Microsoft.Hadoop.Avro.nuspec
+		src\HDInsight\Microsoft.Hadoop.Client\Microsoft.Hadoop.Client.nuget.proj = src\HDInsight\Microsoft.Hadoop.Client\Microsoft.Hadoop.Client.nuget.proj
+		src\HDInsight\Microsoft.Hadoop.Client\Microsoft.Hadoop.Client.nuspec = src\HDInsight\Microsoft.Hadoop.Client\Microsoft.Hadoop.Client.nuspec
+		src\HDInsight\Microsoft.HadoopAppliance.Client\Microsoft.HadoopAppliance.Client.nuget.proj = src\HDInsight\Microsoft.HadoopAppliance.Client\Microsoft.HadoopAppliance.Client.nuget.proj
+		src\HDInsight\Microsoft.HadoopAppliance.Client\Microsoft.HadoopAppliance.Client.nuspec = src\HDInsight\Microsoft.HadoopAppliance.Client\Microsoft.HadoopAppliance.Client.nuspec
 		src\HDInsight\Microsoft.WindowsAzure.Management.HDInsight\Microsoft.WindowsAzure.Management.HDInsight.nuget.proj = src\HDInsight\Microsoft.WindowsAzure.Management.HDInsight\Microsoft.WindowsAzure.Management.HDInsight.nuget.proj
 		src\HDInsight\Microsoft.WindowsAzure.Management.HDInsight\Microsoft.WindowsAzure.Management.HDInsight.nuspec = src\HDInsight\Microsoft.WindowsAzure.Management.HDInsight\Microsoft.WindowsAzure.Management.HDInsight.nuspec
 	EndProjectSection
