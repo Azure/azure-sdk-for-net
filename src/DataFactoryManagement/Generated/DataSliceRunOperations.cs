@@ -111,7 +111,7 @@ namespace Microsoft.Azure.Management.DataFactories
             
             // Construct URL
             string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/Microsoft.DataFactory/datafactories/" + dataFactoryName.Trim() + "/runs/" + dataSliceRunId.Trim() + "/logInfo?";
-            url = url + "api-version=2014-10-01-preview";
+            url = url + "api-version=2014-12-01-preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -273,7 +273,7 @@ namespace Microsoft.Azure.Management.DataFactories
             // Construct URL
             string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/Microsoft.DataFactory/datafactories/" + dataFactoryName.Trim() + "/tables/" + tableName.Trim() + "/sliceruns?";
             url = url + "startTime=" + Uri.EscapeDataString(dataSliceStartTime.Trim());
-            url = url + "&api-version=2014-10-01-preview";
+            url = url + "&api-version=2014-12-01-preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')

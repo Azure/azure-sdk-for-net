@@ -26,33 +26,22 @@ using Microsoft.Azure.Management.DataFactories.Models;
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// Custom .Net activity.
+    /// AzureML Web Service batch scoring activity.
     /// </summary>
-    public partial class CustomActivity : BaseActivity
+    public partial class AzureMLBatchScoringActivity : BaseActivity
     {
-        private CustomActivityProperties _transformation;
-        
         /// <summary>
-        /// Optional. Custom activity properties.
+        /// Initializes a new instance of the AzureMLBatchScoringActivity class.
         /// </summary>
-        public CustomActivityProperties Transformation
-        {
-            get { return this._transformation; }
-            set { this._transformation = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the CustomActivity class.
-        /// </summary>
-        public CustomActivity()
+        public AzureMLBatchScoringActivity()
         {
         }
         
         /// <summary>
-        /// Initializes a new instance of the CustomActivity class with
-        /// required arguments.
+        /// Initializes a new instance of the AzureMLBatchScoringActivity class
+        /// with required arguments.
         /// </summary>
-        public CustomActivity(string name)
+        public AzureMLBatchScoringActivity(string name)
             : this()
         {
             if (name == null)
