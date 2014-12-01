@@ -46,6 +46,9 @@
     <Compile Include="Generated\Insights\Models\EventStatusCountSummaryItemCollection.cs" />
     <Compile Include="Generated\Insights\Models\EventStatusCountSummaryListResponse.cs" />
     <Compile Include="Generated\Insights\Models\StatusCount.cs" />
+    <Compile Include="Generated\Insights\Models\UsageMetricCollectionDeprecated.cs" />
+    <Compile Include="Generated\Insights\Models\UsageMetricDeprecated.cs" />
+    <Compile Include="Generated\Insights\Models\UsageMetricListResponseDeprecated.cs" />
     <Compile Include="Generated\Management\Insights\AgentDiagnosticSettingsOperations.cs" />
     <Compile Include="Generated\Management\Insights\AgentDiagnosticSettingsOperationsExtensions.cs" />
     <Compile Include="Generated\Management\Insights\IAgentDiagnosticSettingsOperations.cs" />
