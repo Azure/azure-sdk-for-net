@@ -15,7 +15,7 @@
   <Import Project="developer\$(USERNAME)\build.props" Condition="Exists('developer\$(USERNAME)\build.props')" />
 
   <!--
-  Microsoft Azure Management Libraries SDK Builder Guide
+  Microsoft Azure HDInsight Management Libraries SDK Builder Guide
   - - -
 
   Available Targets:
