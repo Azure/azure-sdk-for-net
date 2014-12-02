@@ -41,6 +41,17 @@ namespace Microsoft.Azure.Management.DataFactories.Models
             set { this._connectionString = value; }
         }
         
+        private string _gatewayLocation;
+        
+        /// <summary>
+        /// Required. The on-premises gateway location.
+        /// </summary>
+        public string GatewayLocation
+        {
+            get { return this._gatewayLocation; }
+            set { this._gatewayLocation = value; }
+        }
+        
         private string _gatewayName;
         
         /// <summary>
@@ -85,7 +96,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// Initializes a new instance of the OnPremisesSqlLinkedService class
         /// with required arguments.
         /// </summary>
-        public OnPremisesSqlLinkedService(string connectionString, string gatewayName)
+        public OnPremisesSqlLinkedService(string connectionString, string gatewayName, string gatewayLocation)
             : this()
         {
             if (connectionString == null)
@@ -96,8 +107,13 @@ namespace Microsoft.Azure.Management.DataFactories.Models
             {
                 throw new ArgumentNullException("gatewayName");
             }
+            if (gatewayLocation == null)
+            {
+                throw new ArgumentNullException("gatewayLocation");
+            }
             this.ConnectionString = connectionString;
             this.GatewayName = gatewayName;
+            this.GatewayLocation = gatewayLocation;
         }
     }
 }

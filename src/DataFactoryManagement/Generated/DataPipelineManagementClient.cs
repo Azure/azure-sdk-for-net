@@ -239,7 +239,7 @@ namespace Microsoft.Azure.Management.DataFactories
                 throw new ArgumentNullException("credentials");
             }
             this._credentials = credentials;
-            this._baseUri = new Uri("https://management.azure.com");
+            this._baseUri = new Uri("https://management.core.windows.net");
             
             this.Credentials.InitializeServiceClient(this);
         }
@@ -328,7 +328,7 @@ namespace Microsoft.Azure.Management.DataFactories
                 throw new ArgumentNullException("credentials");
             }
             this._credentials = credentials;
-            this._baseUri = new Uri("https://management.azure.com");
+            this._baseUri = new Uri("https://management.core.windows.net");
             
             this.Credentials.InitializeServiceClient(this);
         }
@@ -401,7 +401,7 @@ namespace Microsoft.Azure.Management.DataFactories
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-12-01-preview");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01-preview");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -445,11 +445,11 @@ namespace Microsoft.Azure.Management.DataFactories
                     {
                         result.Status = OperationStatus.Failed;
                     }
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.NoContent)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
-                    if (statusCode == HttpStatusCode.NoContent)
+                    if (statusCode == HttpStatusCode.OK)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }

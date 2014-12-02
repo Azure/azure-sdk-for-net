@@ -32,12 +32,12 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// </summary>
     public partial class PipelineProperties
     {
-        private IList<BaseActivity> _activities;
+        private IList<Activity> _activities;
         
         /// <summary>
         /// Required. Activities that belong to the pipeline.
         /// </summary>
-        public IList<BaseActivity> Activities
+        public IList<Activity> Activities
         {
             get { return this._activities; }
             set { this._activities = value; }
@@ -137,14 +137,14 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// </summary>
         public PipelineProperties()
         {
-            this.Activities = new LazyList<BaseActivity>();
+            this.Activities = new LazyList<Activity>();
         }
         
         /// <summary>
         /// Initializes a new instance of the PipelineProperties class with
         /// required arguments.
         /// </summary>
-        public PipelineProperties(IList<BaseActivity> activities)
+        public PipelineProperties(IList<Activity> activities)
             : this()
         {
             if (activities == null)

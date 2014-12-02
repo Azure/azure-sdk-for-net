@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// <summary>
     /// Copy activity.
     /// </summary>
-    public partial class CopyActivity : BaseActivity
+    public partial class CopyActivity : Activity
     {
         private CopyActivityProperties _transformation;
         

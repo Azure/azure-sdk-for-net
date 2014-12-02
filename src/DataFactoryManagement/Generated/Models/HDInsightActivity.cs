@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// <summary>
     /// HDInsight activity.
     /// </summary>
-    public partial class HDInsightActivity : BaseActivity
+    public partial class HDInsightActivity : Activity
     {
         private HDInsightActivityPropertiesBase _transformation;
         

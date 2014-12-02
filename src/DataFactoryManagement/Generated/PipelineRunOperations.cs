@@ -136,7 +136,7 @@ namespace Microsoft.Azure.Management.DataFactories
             url = url + "&start=" + Uri.EscapeDataString(parameters.RunRangeStartTime.ToString());
             url = url + "&end=" + Uri.EscapeDataString(parameters.RunRangeEndTime.ToString());
             url = url + "&status=" + Uri.EscapeDataString(parameters.RunRecordStatus.ToString());
-            url = url + "&api-version=2014-12-01-preview";
+            url = url + "&api-version=2014-10-01-preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
