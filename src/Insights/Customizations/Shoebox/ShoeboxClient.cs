@@ -167,6 +167,12 @@ namespace Microsoft.Azure.Insights
         // Gets the entities from running a query on multiple tables and collects the results
         private static async Task<IEnumerable<DynamicTableEntity>> GetEntitiesAsync(IEnumerable<CloudTable> tables, TableQuery query, string invocationId)
         {
+            // Return empty collection for no tables
+            if (!tables.Any())
+            {
+                return new DynamicTableEntity[0];
+            }
+
             // Create a task for each table
             IEnumerable<Task<IEnumerable<DynamicTableEntity>>> queryTasks = tables.Select(table => GetEntitiesAsync(table, query, invocationId));
 
