@@ -27,9 +27,9 @@ using Microsoft.WindowsAzure.Common.Internals;
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// Custom activity properties.
+    /// .NET activity properties.
     /// </summary>
-    public partial class CustomActivityProperties
+    public partial class DotNetActivityProperties
     {
         private string _assemblyName;
         
@@ -57,9 +57,9 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         
         /// <summary>
         /// Optional. User defined property bag. There is no restriction on the
-        /// keys or values that can be used. The user specified custom
-        /// activity has the full responsibility to consume and interpret the
-        /// content defined.
+        /// keys or values that can be used. The user specified .NET activity
+        /// has the full responsibility to consume and interpret the content
+        /// defined.
         /// </summary>
         public IDictionary<string, string> ExtendedProperties
         {
@@ -90,18 +90,18 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the CustomActivityProperties class.
+        /// Initializes a new instance of the DotNetActivityProperties class.
         /// </summary>
-        public CustomActivityProperties()
+        public DotNetActivityProperties()
         {
             this.ExtendedProperties = new LazyDictionary<string, string>();
         }
         
         /// <summary>
-        /// Initializes a new instance of the CustomActivityProperties class
+        /// Initializes a new instance of the DotNetActivityProperties class
         /// with required arguments.
         /// </summary>
-        public CustomActivityProperties(string assemblyName, string entryPoint, string packageFile)
+        public DotNetActivityProperties(string assemblyName, string entryPoint, string packageFile)
             : this()
         {
             if (assemblyName == null)

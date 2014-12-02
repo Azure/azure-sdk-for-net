@@ -26,40 +26,57 @@ using Microsoft.Azure.Management.DataFactories.Models;
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// Custom activity.
+    /// AzureML Web Service linked service.
     /// </summary>
-    public partial class CustomActivity : Activity
+    public partial class AzureMLLinkedService : LinkedServiceProperties
     {
-        private CustomActivityProperties _transformation;
+        private string _apiKey;
         
         /// <summary>
-        /// Optional. Custom activity properties.
+        /// Required. The API key for accessing the AzureML model endpoint.
         /// </summary>
-        public CustomActivityProperties Transformation
+        public string ApiKey
         {
-            get { return this._transformation; }
-            set { this._transformation = value; }
+            get { return this._apiKey; }
+            set { this._apiKey = value; }
+        }
+        
+        private string _mlEndpoint;
+        
+        /// <summary>
+        /// Required. The AzureML Web Service REST URL for requesting batch
+        /// scoring.
+        /// </summary>
+        public string MlEndpoint
+        {
+            get { return this._mlEndpoint; }
+            set { this._mlEndpoint = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the CustomActivity class.
+        /// Initializes a new instance of the AzureMLLinkedService class.
         /// </summary>
-        public CustomActivity()
+        public AzureMLLinkedService()
         {
         }
         
         /// <summary>
-        /// Initializes a new instance of the CustomActivity class with
+        /// Initializes a new instance of the AzureMLLinkedService class with
         /// required arguments.
         /// </summary>
-        public CustomActivity(string name)
+        public AzureMLLinkedService(string mlEndpoint, string apiKey)
             : this()
         {
-            if (name == null)
+            if (mlEndpoint == null)
             {
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException("mlEndpoint");
             }
-            this.Name = name;
+            if (apiKey == null)
+            {
+                throw new ArgumentNullException("apiKey");
+            }
+            this.MlEndpoint = mlEndpoint;
+            this.ApiKey = apiKey;
         }
     }
 }

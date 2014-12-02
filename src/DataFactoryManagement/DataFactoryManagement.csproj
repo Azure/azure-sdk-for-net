@@ -46,7 +46,7 @@
     <Compile Include="Generated\ITableOperations.cs" />
     <Compile Include="Generated\LinkedServiceOperations.cs" />
     <Compile Include="Generated\LinkedServiceOperationsExtensions.cs" />
-    <Compile Include="Generated\Models\Activity.cs" />
+    <Compile Include="Generated\Models\BaseActivity.cs" />
     <Compile Include="Generated\Models\ActivityInput.cs" />
     <Compile Include="Generated\Models\ActivityOutput.cs" />
     <Compile Include="Generated\Models\ActivityPolicy.cs" />
@@ -54,6 +54,8 @@
     <Compile Include="Generated\Models\AvroFormat.cs" />
     <Compile Include="Generated\Models\AzureBlobLocation.cs" />
     <Compile Include="Generated\Models\AzureQueueSink.cs" />
+    <Compile Include="Generated\Models\AzureMLBatchScoringActivity.cs" />
+    <Compile Include="Generated\Models\AzureMLLinkedService.cs" />
     <Compile Include="Generated\Models\AzureSqlLinkedService.cs" />
     <Compile Include="Generated\Models\AzureSqlTableLocation.cs" />
     <Compile Include="Generated\Models\AzureStorageLinkedService.cs" />
@@ -67,8 +69,8 @@
     <Compile Include="Generated\Models\CopySink.cs" />
     <Compile Include="Generated\Models\CopySource.cs" />
     <Compile Include="Generated\Models\CopyTranslator.cs" />
-    <Compile Include="Generated\Models\CustomActivity.cs" />
-    <Compile Include="Generated\Models\CustomActivityProperties.cs" />
+    <Compile Include="Generated\Models\DotNetActivity.cs" />
+    <Compile Include="Generated\Models\DotNetActivityProperties.cs" />
     <Compile Include="Generated\Models\CustomLinkedService.cs" />
     <Compile Include="Generated\Models\CustomLocation.cs" />
     <Compile Include="Generated\Models\DataElement.cs" />
@@ -204,6 +206,6 @@
     <Warning Text="The Hyak code generation packages are not available. Compilation will be done on existing generated sources." Condition="!Exists('..\..\packages\Hyak.Generator.1.0.5400.37276-prerelease\build\Hyak.Generator.targets')" />
   </Target>
   <Target Name="CopyMicrosoftAzureManagementDataFactoriesSpecification" BeforeTargets="GenerateCodeFromSpecs">
-    <Copy SourceFiles="..\..\packages\Microsoft.Azure.Management.DataFactories.Specification.0.1.5424.10963-prerelease\tools\Microsoft.Azure.Management.DataFactories.Specification.dll" DestinationFolder="." />
+    <Copy SourceFiles="..\..\packages\Microsoft.Azure.Management.DataFactories.Specification.0.1.5448.25736-prerelease\tools\Microsoft.Azure.Management.DataFactories.Specification.dll" DestinationFolder="." />
   </Target>
 </Project>
