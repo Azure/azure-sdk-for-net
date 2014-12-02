@@ -26,33 +26,22 @@ using Microsoft.Azure.Management.DataFactories.Models;
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// HDInsight activity.
+    /// AzureML Web Service batch scoring activity.
     /// </summary>
-    public partial class HDInsightActivity : BaseActivity
+    public partial class AzureMLBatchScoringActivity : BaseActivity
     {
-        private HDInsightActivityPropertiesBase _transformation;
-        
         /// <summary>
-        /// Optional. HD Insight activity properties.
+        /// Initializes a new instance of the AzureMLBatchScoringActivity class.
         /// </summary>
-        public HDInsightActivityPropertiesBase Transformation
-        {
-            get { return this._transformation; }
-            set { this._transformation = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the HDInsightActivity class.
-        /// </summary>
-        public HDInsightActivity()
+        public AzureMLBatchScoringActivity()
         {
         }
         
         /// <summary>
-        /// Initializes a new instance of the HDInsightActivity class with
-        /// required arguments.
+        /// Initializes a new instance of the AzureMLBatchScoringActivity class
+        /// with required arguments.
         /// </summary>
-        public HDInsightActivity(string name)
+        public AzureMLBatchScoringActivity(string name)
             : this()
         {
             if (name == null)

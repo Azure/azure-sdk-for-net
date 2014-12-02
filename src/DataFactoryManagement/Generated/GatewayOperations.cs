@@ -127,7 +127,7 @@ namespace Microsoft.Azure.Management.DataFactories
             
             // Construct URL
             string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/Microsoft.DataFactory/datafactories/" + dataFactoryName.Trim() + "/gateways/" + (parameters.Gateway.Name != null ? parameters.Gateway.Name.Trim() : "") + "?";
-            url = url + "api-version=2014-10-01-preview";
+            url = url + "api-version=2014-12-01-preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -166,11 +166,6 @@ namespace Microsoft.Azure.Management.DataFactories
                 if (parameters.Gateway != null)
                 {
                     gatewayCreateOrUpdateParametersValue["name"] = parameters.Gateway.Name;
-                    
-                    if (parameters.Gateway.Location != null)
-                    {
-                        gatewayCreateOrUpdateParametersValue["location"] = parameters.Gateway.Location;
-                    }
                     
                     JObject propertiesValue = new JObject();
                     gatewayCreateOrUpdateParametersValue["properties"] = propertiesValue;
@@ -278,13 +273,6 @@ namespace Microsoft.Azure.Management.DataFactories
                         {
                             string nameInstance = ((string)nameValue);
                             gatewayInstance.Name = nameInstance;
-                        }
-                        
-                        JToken locationValue = responseDoc["location"];
-                        if (locationValue != null && locationValue.Type != JTokenType.Null)
-                        {
-                            string locationInstance = ((string)locationValue);
-                            gatewayInstance.Location = locationInstance;
                         }
                         
                         JToken propertiesValue2 = responseDoc["properties"];
@@ -444,7 +432,7 @@ namespace Microsoft.Azure.Management.DataFactories
             
             // Construct URL
             string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/Microsoft.DataFactory/datafactories/" + dataFactoryName.Trim() + "/gateways/" + gatewayName.Trim() + "?";
-            url = url + "api-version=2014-10-01-preview";
+            url = url + "api-version=2014-12-01-preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -748,7 +736,7 @@ namespace Microsoft.Azure.Management.DataFactories
             
             // Construct URL
             string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/Microsoft.DataFactory/datafactories/" + dataFactoryName.Trim() + "/gateways/" + gatewayName.Trim() + "?";
-            url = url + "api-version=2014-10-01-preview";
+            url = url + "api-version=2014-12-01-preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -825,13 +813,6 @@ namespace Microsoft.Azure.Management.DataFactories
                         {
                             string nameInstance = ((string)nameValue);
                             gatewayInstance.Name = nameInstance;
-                        }
-                        
-                        JToken locationValue = responseDoc["location"];
-                        if (locationValue != null && locationValue.Type != JTokenType.Null)
-                        {
-                            string locationInstance = ((string)locationValue);
-                            gatewayInstance.Location = locationInstance;
                         }
                         
                         JToken propertiesValue = responseDoc["properties"];
@@ -988,7 +969,7 @@ namespace Microsoft.Azure.Management.DataFactories
                 
                 // Set Headers
                 httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
-                httpRequest.Headers.Add("x-ms-version", "2014-10-01-preview");
+                httpRequest.Headers.Add("x-ms-version", "2014-12-01-preview");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1042,13 +1023,6 @@ namespace Microsoft.Azure.Management.DataFactories
                         {
                             string nameInstance = ((string)nameValue);
                             gatewayInstance.Name = nameInstance;
-                        }
-                        
-                        JToken locationValue = responseDoc["location"];
-                        if (locationValue != null && locationValue.Type != JTokenType.Null)
-                        {
-                            string locationInstance = ((string)locationValue);
-                            gatewayInstance.Location = locationInstance;
                         }
                         
                         JToken propertiesValue = responseDoc["properties"];
@@ -1135,11 +1109,11 @@ namespace Microsoft.Azure.Management.DataFactories
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
                     result.Location = url;
-                    if (result.Gateway.Properties.ProvisioningState == "Failed")
+                    if (result.Gateway != null && result.Gateway.Properties != null && result.Gateway.Properties.ProvisioningState == "Failed")
                     {
                         result.Status = OperationStatus.Failed;
                     }
-                    if (result.Gateway.Properties.ProvisioningState == "Succeeded")
+                    if (result.Gateway != null && result.Gateway.Properties != null && result.Gateway.Properties.ProvisioningState == "Succeeded")
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
@@ -1208,7 +1182,7 @@ namespace Microsoft.Azure.Management.DataFactories
             
             // Construct URL
             string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/Microsoft.DataFactory/datafactories/" + dataFactoryName.Trim() + "/gateways?";
-            url = url + "api-version=2014-10-01-preview";
+            url = url + "api-version=2014-12-01-preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1290,13 +1264,6 @@ namespace Microsoft.Azure.Management.DataFactories
                                 {
                                     string nameInstance = ((string)nameValue);
                                     gatewayInstance.Name = nameInstance;
-                                }
-                                
-                                JToken locationValue = valueValue["location"];
-                                if (locationValue != null && locationValue.Type != JTokenType.Null)
-                                {
-                                    string locationInstance = ((string)locationValue);
-                                    gatewayInstance.Location = locationInstance;
                                 }
                                 
                                 JToken propertiesValue = valueValue["properties"];
@@ -1457,7 +1424,7 @@ namespace Microsoft.Azure.Management.DataFactories
             
             // Construct URL
             string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/Microsoft.DataFactory/datafactories/" + dataFactoryName.Trim() + "/gateways/" + gatewayName.Trim() + "/regeneratekey?";
-            url = url + "api-version=2014-10-01-preview";
+            url = url + "api-version=2014-12-01-preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1612,7 +1579,7 @@ namespace Microsoft.Azure.Management.DataFactories
             
             // Construct URL
             string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/Microsoft.DataFactory/datafactories/" + dataFactoryName.Trim() + "/gateways/" + gatewayName.Trim() + "/connectioninfo?";
-            url = url + "api-version=2014-10-01-preview";
+            url = url + "api-version=2014-12-01-preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1703,6 +1670,13 @@ namespace Microsoft.Azure.Management.DataFactories
                         {
                             Uri hostServiceUriInstance = TypeConversion.TryParseUri(((string)hostServiceUriValue));
                             connectionInfoInstance.HostServiceUri = hostServiceUriInstance;
+                        }
+                        
+                        JToken versionValue = responseDoc["version"];
+                        if (versionValue != null && versionValue.Type != JTokenType.Null)
+                        {
+                            string versionInstance = ((string)versionValue);
+                            connectionInfoInstance.Version = versionInstance;
                         }
                     }
                     
@@ -1796,7 +1770,7 @@ namespace Microsoft.Azure.Management.DataFactories
             
             // Construct URL
             string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/Microsoft.DataFactory/datafactories/" + dataFactoryName.Trim() + "/gateways/" + (parameters.Gateway.Name != null ? parameters.Gateway.Name.Trim() : "") + "?";
-            url = url + "api-version=2014-10-01-preview";
+            url = url + "api-version=2014-12-01-preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1835,11 +1809,6 @@ namespace Microsoft.Azure.Management.DataFactories
                 if (parameters.Gateway != null)
                 {
                     gatewayCreateOrUpdateParametersValue["name"] = parameters.Gateway.Name;
-                    
-                    if (parameters.Gateway.Location != null)
-                    {
-                        gatewayCreateOrUpdateParametersValue["location"] = parameters.Gateway.Location;
-                    }
                     
                     JObject propertiesValue = new JObject();
                     gatewayCreateOrUpdateParametersValue["properties"] = propertiesValue;
@@ -1947,13 +1916,6 @@ namespace Microsoft.Azure.Management.DataFactories
                         {
                             string nameInstance = ((string)nameValue);
                             gatewayInstance.Name = nameInstance;
-                        }
-                        
-                        JToken locationValue = responseDoc["location"];
-                        if (locationValue != null && locationValue.Type != JTokenType.Null)
-                        {
-                            string locationInstance = ((string)locationValue);
-                            gatewayInstance.Location = locationInstance;
                         }
                         
                         JToken propertiesValue2 = responseDoc["properties"];
