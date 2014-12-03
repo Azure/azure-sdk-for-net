@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// <summary>
     /// A pipeline activity.
     /// </summary>
-    public abstract partial class Activity
+    public abstract partial class BaseActivity
     {
         private string _description;
         
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         private string _linkedServiceName;
         
         /// <summary>
-        /// Optional. LinkedService name.
+        /// Optional. LinkedService name where the Activity Runs.
         /// </summary>
         public string LinkedServiceName
         {
@@ -99,19 +99,19 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the Activity class.
+        /// Initializes a new instance of the BaseActivity class.
         /// </summary>
-        public Activity()
+        public BaseActivity()
         {
             this.Inputs = new LazyList<ActivityInput>();
             this.Outputs = new LazyList<ActivityOutput>();
         }
         
         /// <summary>
-        /// Initializes a new instance of the Activity class with required
+        /// Initializes a new instance of the BaseActivity class with required
         /// arguments.
         /// </summary>
-        public Activity(string name)
+        public BaseActivity(string name)
             : this()
         {
             if (name == null)

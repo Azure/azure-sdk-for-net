@@ -26,59 +26,40 @@ using Microsoft.Azure.Management.DataFactories.Models;
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// Data factory gateway resource definition.
+    /// .NET activity.
     /// </summary>
-    public partial class Gateway
+    public partial class DotNetActivity : BaseActivity
     {
-        private string _name;
+        private DotNetActivityProperties _transformation;
         
         /// <summary>
-        /// Required. Name of the data factory gateway.
+        /// Optional. .NET activity properties.
         /// </summary>
-        public string Name
+        public DotNetActivityProperties Transformation
         {
-            get { return this._name; }
-            set { this._name = value; }
-        }
-        
-        private GatewayProperties _properties;
-        
-        /// <summary>
-        /// Required. Properties of the data factory gateway. Only the
-        /// Description property is applicable in the PUT/PATCH request. Other
-        /// properties are only applicable in service response, and they will
-        /// be ignored in the PUT/PATCH request.
-        /// </summary>
-        public GatewayProperties Properties
-        {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._transformation; }
+            set { this._transformation = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the Gateway class.
+        /// Initializes a new instance of the DotNetActivity class.
         /// </summary>
-        public Gateway()
+        public DotNetActivity()
         {
         }
         
         /// <summary>
-        /// Initializes a new instance of the Gateway class with required
-        /// arguments.
+        /// Initializes a new instance of the DotNetActivity class with
+        /// required arguments.
         /// </summary>
-        public Gateway(string name, GatewayProperties properties)
+        public DotNetActivity(string name)
             : this()
         {
             if (name == null)
             {
                 throw new ArgumentNullException("name");
             }
-            if (properties == null)
-            {
-                throw new ArgumentNullException("properties");
-            }
             this.Name = name;
-            this.Properties = properties;
         }
     }
 }
