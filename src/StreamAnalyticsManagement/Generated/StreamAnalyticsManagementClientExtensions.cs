@@ -75,5 +75,39 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         {
             return operations.GetLongRunningOperationStatusAsync(operationStatusLink, CancellationToken.None);
         }
+        
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.StreamAnalytics.IStreamAnalyticsManagementClient.
+        /// </param>
+        /// <param name='operationStatusLink'>
+        /// Required. Location value returned by the Begin operation.
+        /// </param>
+        /// <returns>
+        /// The test result of the input or output data source.
+        /// </returns>
+        public static DataSourceTestConnectionResponse GetTestConnectionStatus(this IStreamAnalyticsManagementClient operations, string operationStatusLink)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IStreamAnalyticsManagementClient)s).GetTestConnectionStatusAsync(operationStatusLink);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.StreamAnalytics.IStreamAnalyticsManagementClient.
+        /// </param>
+        /// <param name='operationStatusLink'>
+        /// Required. Location value returned by the Begin operation.
+        /// </param>
+        /// <returns>
+        /// The test result of the input or output data source.
+        /// </returns>
+        public static Task<DataSourceTestConnectionResponse> GetTestConnectionStatusAsync(this IStreamAnalyticsManagementClient operations, string operationStatusLink)
+        {
+            return operations.GetTestConnectionStatusAsync(operationStatusLink, CancellationToken.None);
+        }
     }
 }

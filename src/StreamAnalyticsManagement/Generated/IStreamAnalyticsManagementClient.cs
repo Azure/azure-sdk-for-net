@@ -110,5 +110,16 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// A standard service response for long running operations.
         /// </returns>
         Task<LongRunningOperationResponse> GetLongRunningOperationStatusAsync(string operationStatusLink, CancellationToken cancellationToken);
+        
+        /// <param name='operationStatusLink'>
+        /// Location value returned by the Begin operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The test result of the input or output data source.
+        /// </returns>
+        Task<DataSourceTestConnectionResponse> GetTestConnectionStatusAsync(string operationStatusLink, CancellationToken cancellationToken);
     }
 }

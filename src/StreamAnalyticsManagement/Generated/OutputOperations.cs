@@ -82,9 +82,9 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response for long running operations.
+        /// The test result of the input or output data source.
         /// </returns>
-        public async Task<LongRunningOperationResponse> BeginTestConnectionAsync(string resourceGroupName, string jobName, string outputName, CancellationToken cancellationToken)
+        public async Task<DataSourceTestConnectionResponse> BeginTestConnectionAsync(string resourceGroupName, string jobName, string outputName, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -159,7 +159,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                         Tracing.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted)
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted && statusCode != HttpStatusCode.BadRequest && statusCode != HttpStatusCode.NotFound)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -171,8 +171,69 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     }
                     
                     // Create Result
-                    LongRunningOperationResponse result = null;
-                    result = new LongRunningOperationResponse();
+                    DataSourceTestConnectionResponse result = null;
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new DataSourceTestConnectionResponse();
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
+                    
+                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                    {
+                        JToken statusValue = responseDoc["status"];
+                        if (statusValue != null && statusValue.Type != JTokenType.Null)
+                        {
+                            string statusInstance = ((string)statusValue);
+                            result.DataSourceTestStatus = statusInstance;
+                        }
+                        
+                        JToken errorValue = responseDoc["error"];
+                        if (errorValue != null && errorValue.Type != JTokenType.Null)
+                        {
+                            ErrorResponse errorInstance = new ErrorResponse();
+                            result.Error = errorInstance;
+                            
+                            JToken codeValue = errorValue["code"];
+                            if (codeValue != null && codeValue.Type != JTokenType.Null)
+                            {
+                                string codeInstance = ((string)codeValue);
+                                errorInstance.Code = codeInstance;
+                            }
+                            
+                            JToken messageValue = errorValue["message"];
+                            if (messageValue != null && messageValue.Type != JTokenType.Null)
+                            {
+                                string messageInstance = ((string)messageValue);
+                                errorInstance.Message = messageInstance;
+                            }
+                            
+                            JToken detailsValue = errorValue["details"];
+                            if (detailsValue != null && detailsValue.Type != JTokenType.Null)
+                            {
+                                ErrorDetailsResponse detailsInstance = new ErrorDetailsResponse();
+                                errorInstance.Details = detailsInstance;
+                                
+                                JToken codeValue2 = detailsValue["code"];
+                                if (codeValue2 != null && codeValue2.Type != JTokenType.Null)
+                                {
+                                    string codeInstance2 = ((string)codeValue2);
+                                    detailsInstance.Code = codeInstance2;
+                                }
+                                
+                                JToken messageValue2 = detailsValue["message"];
+                                if (messageValue2 != null && messageValue2.Type != JTokenType.Null)
+                                {
+                                    string messageInstance2 = ((string)messageValue2);
+                                    detailsInstance.Message = messageInstance2;
+                                }
+                            }
+                        }
+                    }
+                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("Location"))
                     {
@@ -186,11 +247,11 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-                    if (statusCode == HttpStatusCode.BadRequest)
+                    if (statusCode == HttpStatusCode.NotFound)
                     {
                         result.Status = OperationStatus.Failed;
                     }
-                    if (statusCode == HttpStatusCode.NotFound)
+                    if (statusCode == HttpStatusCode.BadRequest)
                     {
                         result.Status = OperationStatus.Failed;
                     }
@@ -2280,9 +2341,9 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response for long running operations.
+        /// The test result of the input or output data source.
         /// </returns>
-        public async Task<LongRunningOperationResponse> TestConnectionAsync(string resourceGroupName, string jobName, string outputName, CancellationToken cancellationToken)
+        public async Task<DataSourceTestConnectionResponse> TestConnectionAsync(string resourceGroupName, string jobName, string outputName, CancellationToken cancellationToken)
         {
             StreamAnalyticsManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -2304,13 +2365,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 }
                 
                 cancellationToken.ThrowIfCancellationRequested();
-                LongRunningOperationResponse response = await client.Outputs.BeginTestConnectionAsync(resourceGroupName, jobName, outputName, cancellationToken).ConfigureAwait(false);
+                DataSourceTestConnectionResponse response = await client.Outputs.BeginTestConnectionAsync(resourceGroupName, jobName, outputName, cancellationToken).ConfigureAwait(false);
                 if (response.Status == OperationStatus.Succeeded)
                 {
                     return response;
                 }
                 cancellationToken.ThrowIfCancellationRequested();
-                LongRunningOperationResponse result = await client.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+                DataSourceTestConnectionResponse result = await client.GetTestConnectionStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = response.RetryAfter;
                 if (delayInSeconds == 0)
                 {
@@ -2321,7 +2382,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     cancellationToken.ThrowIfCancellationRequested();
                     await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
                     cancellationToken.ThrowIfCancellationRequested();
-                    result = await client.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+                    result = await client.GetTestConnectionStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
                     delayInSeconds = result.RetryAfter;
                     if (delayInSeconds == 0)
                     {

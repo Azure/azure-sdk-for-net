@@ -49,9 +49,9 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response for long running operations.
+        /// The test result of the input or output data source.
         /// </returns>
-        Task<LongRunningOperationResponse> BeginTestConnectionAsync(string resourceGroupName, string jobName, string inputName, CancellationToken cancellationToken);
+        Task<DataSourceTestConnectionResponse> BeginTestConnectionAsync(string resourceGroupName, string jobName, string inputName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Create or update an input for a stream analytics job.
@@ -172,9 +172,9 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response for long running operations.
+        /// The test result of the input or output data source.
         /// </returns>
-        Task<LongRunningOperationResponse> TestConnectionAsync(string resourceGroupName, string jobName, string inputName, CancellationToken cancellationToken);
+        Task<DataSourceTestConnectionResponse> TestConnectionAsync(string resourceGroupName, string jobName, string inputName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Update an input for a stream analytics job.

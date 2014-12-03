@@ -47,9 +47,9 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// Required. The output Name of the stream analytics job.
         /// </param>
         /// <returns>
-        /// A standard service response for long running operations.
+        /// The test result of the input or output data source.
         /// </returns>
-        public static LongRunningOperationResponse BeginTestConnection(this IOutputOperations operations, string resourceGroupName, string jobName, string outputName)
+        public static DataSourceTestConnectionResponse BeginTestConnection(this IOutputOperations operations, string resourceGroupName, string jobName, string outputName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -75,9 +75,9 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// Required. The output Name of the stream analytics job.
         /// </param>
         /// <returns>
-        /// A standard service response for long running operations.
+        /// The test result of the input or output data source.
         /// </returns>
-        public static Task<LongRunningOperationResponse> BeginTestConnectionAsync(this IOutputOperations operations, string resourceGroupName, string jobName, string outputName)
+        public static Task<DataSourceTestConnectionResponse> BeginTestConnectionAsync(this IOutputOperations operations, string resourceGroupName, string jobName, string outputName)
         {
             return operations.BeginTestConnectionAsync(resourceGroupName, jobName, outputName, CancellationToken.None);
         }
@@ -365,9 +365,9 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// Required. The output Name of the stream analytics job.
         /// </param>
         /// <returns>
-        /// A standard service response for long running operations.
+        /// The test result of the input or output data source.
         /// </returns>
-        public static LongRunningOperationResponse TestConnection(this IOutputOperations operations, string resourceGroupName, string jobName, string outputName)
+        public static DataSourceTestConnectionResponse TestConnection(this IOutputOperations operations, string resourceGroupName, string jobName, string outputName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -393,9 +393,9 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// Required. The output Name of the stream analytics job.
         /// </param>
         /// <returns>
-        /// A standard service response for long running operations.
+        /// The test result of the input or output data source.
         /// </returns>
-        public static Task<LongRunningOperationResponse> TestConnectionAsync(this IOutputOperations operations, string resourceGroupName, string jobName, string outputName)
+        public static Task<DataSourceTestConnectionResponse> TestConnectionAsync(this IOutputOperations operations, string resourceGroupName, string jobName, string outputName)
         {
             return operations.TestConnectionAsync(resourceGroupName, jobName, outputName, CancellationToken.None);
         }

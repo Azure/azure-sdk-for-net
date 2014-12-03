@@ -190,11 +190,11 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     {
                         result.Status = OperationStatus.Failed;
                     }
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.NoContent)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
-                    if (statusCode == HttpStatusCode.NoContent)
+                    if (statusCode == HttpStatusCode.OK)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
@@ -307,7 +307,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                         Tracing.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted)
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted && statusCode != HttpStatusCode.NotFound && statusCode != HttpStatusCode.Conflict && statusCode != HttpStatusCode.PreconditionFailed)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -334,15 +334,15 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-                    if (statusCode == HttpStatusCode.Conflict)
-                    {
-                        result.Status = OperationStatus.Failed;
-                    }
                     if (statusCode == HttpStatusCode.NotFound)
                     {
                         result.Status = OperationStatus.Failed;
                     }
                     if (statusCode == HttpStatusCode.PreconditionFailed)
+                    {
+                        result.Status = OperationStatus.Failed;
+                    }
+                    if (statusCode == HttpStatusCode.Conflict)
                     {
                         result.Status = OperationStatus.Failed;
                     }
@@ -490,11 +490,11 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     {
                         result.Status = OperationStatus.Failed;
                     }
-                    if (statusCode == HttpStatusCode.PreconditionFailed)
+                    if (statusCode == HttpStatusCode.Conflict)
                     {
                         result.Status = OperationStatus.Failed;
                     }
-                    if (statusCode == HttpStatusCode.Conflict)
+                    if (statusCode == HttpStatusCode.PreconditionFailed)
                     {
                         result.Status = OperationStatus.Failed;
                     }
@@ -932,10 +932,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                         propertiesValue6["blobSerializationBoundary"] = derived7.Properties.BlobSerializationBoundary;
                                     }
                                     
-                                    if (derived7.Properties.PathPattern != null)
-                                    {
-                                        propertiesValue6["pathPattern"] = derived7.Properties.PathPattern;
-                                    }
+                                    propertiesValue6["pathPattern"] = derived7.Properties.PathPattern;
                                     
                                     if (derived7.Properties.DateFormat != null)
                                     {
@@ -6955,10 +6952,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                         propertiesValue6["blobSerializationBoundary"] = derived7.Properties.BlobSerializationBoundary;
                                     }
                                     
-                                    if (derived7.Properties.PathPattern != null)
-                                    {
-                                        propertiesValue6["pathPattern"] = derived7.Properties.PathPattern;
-                                    }
+                                    propertiesValue6["pathPattern"] = derived7.Properties.PathPattern;
                                     
                                     if (derived7.Properties.DateFormat != null)
                                     {

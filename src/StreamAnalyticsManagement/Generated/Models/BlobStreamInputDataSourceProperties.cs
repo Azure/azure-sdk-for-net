@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _pathPattern;
         
         /// <summary>
-        /// Optional. Gets or sets the blob path pattern.
+        /// Required. Gets or sets the blob path pattern.
         /// </summary>
         public string PathPattern
         {
@@ -123,14 +123,19 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// Initializes a new instance of the
         /// BlobStreamInputDataSourceProperties class with required arguments.
         /// </summary>
-        public BlobStreamInputDataSourceProperties(string container)
+        public BlobStreamInputDataSourceProperties(string container, string pathPattern)
             : this()
         {
             if (container == null)
             {
                 throw new ArgumentNullException("container");
             }
+            if (pathPattern == null)
+            {
+                throw new ArgumentNullException("pathPattern");
+            }
             this.Container = container;
+            this.PathPattern = pathPattern;
         }
     }
 }
