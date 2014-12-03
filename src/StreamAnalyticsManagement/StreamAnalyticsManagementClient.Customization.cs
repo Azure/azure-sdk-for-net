@@ -22,19 +22,19 @@ using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Management.StreamAnalytics
 {
-    public static class ResourceGroupManagementDiscoveryExtensions
+    public static class StreamAnalyticsManagementDiscoveryExtensions
     {
-        public static StreamAnalyticsManagementClient CreateCloudServiceManagementClient(this CloudClients clients, SubscriptionCloudCredentials credentials)
+        public static StreamAnalyticsManagementClient CreateStreamAnalyticsManagementClient(this CloudClients clients, SubscriptionCloudCredentials credentials)
         {
             return new StreamAnalyticsManagementClient(credentials);
         }
 
-        public static StreamAnalyticsManagementClient CreateCloudServiceManagementClient(this CloudClients clients, SubscriptionCloudCredentials credentials, Uri baseUri)
+        public static StreamAnalyticsManagementClient CreateStreamAnalyticsManagementClient(this CloudClients clients, SubscriptionCloudCredentials credentials, Uri baseUri)
         {
             return new StreamAnalyticsManagementClient(credentials, baseUri);
         }
 
-        public static StreamAnalyticsManagementClient CreateCloudServiceManagementClient(this CloudClients clients)
+        public static StreamAnalyticsManagementClient CreateStreamAnalyticsManagementClient(this CloudClients clients)
         {
             return ConfigurationHelper.CreateFromSettings<StreamAnalyticsManagementClient>(StreamAnalyticsManagementClient.Create);
         }
