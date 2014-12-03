@@ -38,6 +38,7 @@
     <Compile Include="Customizations\Shoebox\SizeBoundedCache.cs" />
     <Compile Include="Customizations\Shoebox\TableOperationContextLogger.cs" />
     <Compile Include="Generated\Insights\Models\CountSummaryItem.cs" />
+    <Compile Include="Generated\Insights\Models\Dimension.cs" />
     <Compile Include="Generated\Insights\Models\EventCountSummaryItem.cs" />
     <Compile Include="Generated\Insights\Models\EventCountSummaryItemCollection.cs" />
     <Compile Include="Generated\Insights\Models\EventCountSummaryListResponse.cs" />

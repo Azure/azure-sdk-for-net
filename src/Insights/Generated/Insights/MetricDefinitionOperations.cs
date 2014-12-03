@@ -330,6 +330,61 @@ namespace Microsoft.Azure.Insights
                                         metricDefinitionInstance.Properties.Add(propertiesKey, propertiesValue);
                                     }
                                 }
+                                
+                                JToken dimensionsArray = valueValue["dimensions"];
+                                if (dimensionsArray != null && dimensionsArray.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken dimensionsValue in ((JArray)dimensionsArray))
+                                    {
+                                        Dimension dimensionInstance = new Dimension();
+                                        metricDefinitionInstance.Dimensions.Add(dimensionInstance);
+                                        
+                                        JToken nameValue2 = dimensionsValue["name"];
+                                        if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                        {
+                                            LocalizableString nameInstance2 = new LocalizableString();
+                                            dimensionInstance.Name = nameInstance2;
+                                            
+                                            JToken valueValue3 = nameValue2["value"];
+                                            if (valueValue3 != null && valueValue3.Type != JTokenType.Null)
+                                            {
+                                                string valueInstance2 = ((string)valueValue3);
+                                                nameInstance2.Value = valueInstance2;
+                                            }
+                                            
+                                            JToken localizedValueValue2 = nameValue2["localizedValue"];
+                                            if (localizedValueValue2 != null && localizedValueValue2.Type != JTokenType.Null)
+                                            {
+                                                string localizedValueInstance2 = ((string)localizedValueValue2);
+                                                nameInstance2.LocalizedValue = localizedValueInstance2;
+                                            }
+                                        }
+                                        
+                                        JToken valuesArray = dimensionsValue["values"];
+                                        if (valuesArray != null && valuesArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken valuesValue in ((JArray)valuesArray))
+                                            {
+                                                LocalizableString localizableStringInstance = new LocalizableString();
+                                                dimensionInstance.Values.Add(localizableStringInstance);
+                                                
+                                                JToken valueValue4 = valuesValue["value"];
+                                                if (valueValue4 != null && valueValue4.Type != JTokenType.Null)
+                                                {
+                                                    string valueInstance3 = ((string)valueValue4);
+                                                    localizableStringInstance.Value = valueInstance3;
+                                                }
+                                                
+                                                JToken localizedValueValue3 = valuesValue["localizedValue"];
+                                                if (localizedValueValue3 != null && localizedValueValue3.Type != JTokenType.Null)
+                                                {
+                                                    string localizedValueInstance3 = ((string)localizedValueValue3);
+                                                    localizableStringInstance.LocalizedValue = localizedValueInstance3;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                     }

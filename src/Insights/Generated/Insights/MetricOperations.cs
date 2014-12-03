@@ -326,6 +326,48 @@ namespace Microsoft.Azure.Insights
                                         metricInstance.Properties.Add(propertiesKey2, propertiesValue2);
                                     }
                                 }
+                                
+                                JToken dimensionNameValue = valueValue["dimensionName"];
+                                if (dimensionNameValue != null && dimensionNameValue.Type != JTokenType.Null)
+                                {
+                                    LocalizableString dimensionNameInstance = new LocalizableString();
+                                    metricInstance.DimensionName = dimensionNameInstance;
+                                    
+                                    JToken valueValue3 = dimensionNameValue["value"];
+                                    if (valueValue3 != null && valueValue3.Type != JTokenType.Null)
+                                    {
+                                        string valueInstance2 = ((string)valueValue3);
+                                        dimensionNameInstance.Value = valueInstance2;
+                                    }
+                                    
+                                    JToken localizedValueValue2 = dimensionNameValue["localizedValue"];
+                                    if (localizedValueValue2 != null && localizedValueValue2.Type != JTokenType.Null)
+                                    {
+                                        string localizedValueInstance2 = ((string)localizedValueValue2);
+                                        dimensionNameInstance.LocalizedValue = localizedValueInstance2;
+                                    }
+                                }
+                                
+                                JToken dimensionValueValue = valueValue["dimensionValue"];
+                                if (dimensionValueValue != null && dimensionValueValue.Type != JTokenType.Null)
+                                {
+                                    LocalizableString dimensionValueInstance = new LocalizableString();
+                                    metricInstance.DimensionValue = dimensionValueInstance;
+                                    
+                                    JToken valueValue4 = dimensionValueValue["value"];
+                                    if (valueValue4 != null && valueValue4.Type != JTokenType.Null)
+                                    {
+                                        string valueInstance3 = ((string)valueValue4);
+                                        dimensionValueInstance.Value = valueInstance3;
+                                    }
+                                    
+                                    JToken localizedValueValue3 = dimensionValueValue["localizedValue"];
+                                    if (localizedValueValue3 != null && localizedValueValue3.Type != JTokenType.Null)
+                                    {
+                                        string localizedValueInstance3 = ((string)localizedValueValue3);
+                                        dimensionValueInstance.LocalizedValue = localizedValueInstance3;
+                                    }
+                                }
                             }
                         }
                     }
