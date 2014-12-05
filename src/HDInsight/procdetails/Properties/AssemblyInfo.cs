@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation
+ï»¿// Copyright (c) Microsoft Corporation
 // All rights reserved.
 // 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not
@@ -26,7 +26,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Microsoft.Hadoop.MapReduce.Test")]
-[assembly: AssemblyCopyright("Copyright © Microsoft 2012")]
+[assembly: AssemblyCopyright("Copyright (c) Microsoft Corporation")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: Guid("2E0EF5F1-5C42-4E0C-A743-63C3C55E2C02")]

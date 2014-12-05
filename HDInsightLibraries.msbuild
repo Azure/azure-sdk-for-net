@@ -124,8 +124,8 @@
   Build profiles
   -->
   <PropertyGroup>
-    <DeveloperBuildProperties>Configuration=Debug;Platform=Any CPU;CopyToBinaries=true;GenerateHydraSpecs=$(GenerateHydraSpecs)</DeveloperBuildProperties>
-    <OfficialMSBuildProperties>Configuration=Release;OfficialBuild=true;Platform=Any CPU;GenerateHydraSpecs=$(GenerateHydraSpecs)</OfficialMSBuildProperties>
+    <DeveloperBuildProperties>Configuration=Debug;Platform=Any CPU;CopyToBinaries=true;GenerateHydraSpecs=$(GenerateHydraSpecs);DefineConstants=DEVSIGNED</DeveloperBuildProperties>
+    <OfficialMSBuildProperties>Configuration=Release;OfficialBuild=true;Platform=Any CPU;GenerateHydraSpecs=$(GenerateHydraSpecs);DefineConstants=OFFICIALSIGNED</OfficialMSBuildProperties>
     <Net40BuildProperty>BuildSecondConfiguration=true</Net40BuildProperty>
   </PropertyGroup>
 
