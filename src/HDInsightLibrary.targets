@@ -123,7 +123,7 @@
   <Target Name="SyncPackageVersions" BeforeTargets="BeforeBuild">
     <PropertyGroup>
       <PowerShellExe Condition=" '$(PowerShellExe)'=='' ">%WINDIR%\System32\WindowsPowerShell\v1.0\powershell.exe</PowerShellExe>   
-      <NuSpecSyncScript>$(SolutionDir)\tools\HDInsightSync-NuspecDependencies.ps1</NuSpecSyncScript>	  
+      <NuSpecSyncScript>$(SolutionDir)tools\HDInsightSync-NuspecDependencies.ps1</NuSpecSyncScript>	  
     </PropertyGroup>
 	
 	<!-- Update all explicit references to dependent versions. -->
