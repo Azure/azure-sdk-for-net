@@ -286,8 +286,8 @@
 
     <Message Text="Code signing" Importance="high" />
     <ItemGroup>
-      <AssembliesToBuild Include="binaries\unsigned\Microsoft.*Azure.*.dll" />
-      <Net40AssembliesToBuild Include="binaries\net40\unsigned\Microsoft.*Azure.*.dll" />
+      <AssembliesToBuild Include="binaries\unsigned\*.dll" />
+      <Net40AssembliesToBuild Include="binaries\net40\unsigned\*.dll" />
     </ItemGroup>
 
     <CodeSigningTask
