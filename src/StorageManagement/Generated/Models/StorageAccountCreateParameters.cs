@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.WindowsAzure.Management.Storage.Models
 {
@@ -153,7 +154,7 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         /// </summary>
         public StorageAccountCreateParameters()
         {
-            this.ExtendedProperties = new Dictionary<string, string>();
+            this.ExtendedProperties = new LazyDictionary<string, string>();
         }
         
         /// <summary>

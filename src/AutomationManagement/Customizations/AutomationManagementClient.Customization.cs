@@ -27,17 +27,17 @@ namespace Microsoft.Azure
 {
     public static class AutomationManagementDiscoveryExtensions
     {
-        public static AutomationManagementClient CreateCloudServiceManagementClient(this CloudClients clients, SubscriptionCloudCredentials credentials)
+        public static AutomationManagementClient CreateAutomationManagementClient(this CloudClients clients, SubscriptionCloudCredentials credentials)
         {
             return new AutomationManagementClient(credentials);
         }
 
-        public static AutomationManagementClient CreateCloudServiceManagementClient(this CloudClients clients, SubscriptionCloudCredentials credentials, Uri baseUri)
+        public static AutomationManagementClient CreateAutomationManagementClient(this CloudClients clients, SubscriptionCloudCredentials credentials, Uri baseUri)
         {
             return new AutomationManagementClient(credentials, baseUri);
         }
 
-        public static AutomationManagementClient CreateCloudServiceManagementClient(this CloudClients clients)
+        public static AutomationManagementClient CreateAutomationManagementClient(this CloudClients clients)
         {
             return ConfigurationHelper.CreateFromSettings<AutomationManagementClient>(AutomationManagementClient.Create);
         }

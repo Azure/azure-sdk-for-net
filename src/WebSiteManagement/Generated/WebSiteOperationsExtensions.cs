@@ -891,6 +891,48 @@ namespace Microsoft.WindowsAzure
             return operations.GetRepositoryAsync(webSpaceName, webSiteName, CancellationToken.None);
         }
         
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static SlotConfigNames GetSlotConfigNames(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IWebSiteOperations)s).GetSlotConfigNamesAsync(webSpaceName, webSiteName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<SlotConfigNames> GetSlotConfigNamesAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
+        {
+            return operations.GetSlotConfigNamesAsync(webSpaceName, webSiteName, CancellationToken.None);
+        }
+        
         /// <summary>
         /// You can retrieve current usage metrics for a site by issuing an
         /// HTTP GET request. The metrics returned include CPU Time, Data In,
@@ -1441,6 +1483,54 @@ namespace Microsoft.WindowsAzure
         public static Task<OperationResponse> UpdateConfigurationAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName, WebSiteUpdateConfigurationParameters parameters)
         {
             return operations.UpdateConfigurationAsync(webSpaceName, webSiteName, parameters, CancellationToken.None);
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static OperationResponse UpdateSlotConfigNames(this IWebSiteOperations operations, string webSpaceName, string webSiteName, SlotConfigNamesUpdate parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IWebSiteOperations)s).UpdateSlotConfigNamesAsync(webSpaceName, webSiteName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<OperationResponse> UpdateSlotConfigNamesAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName, SlotConfigNamesUpdate parameters)
+        {
+            return operations.UpdateSlotConfigNamesAsync(webSpaceName, webSiteName, parameters, CancellationToken.None);
         }
     }
 }

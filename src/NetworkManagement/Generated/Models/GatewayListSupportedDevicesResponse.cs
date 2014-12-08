@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Management.Network.Models;
 
 namespace Microsoft.WindowsAzure.Management.Network.Models
@@ -60,7 +61,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         /// </summary>
         public GatewayListSupportedDevicesResponse()
         {
-            this.Vendors = new List<GatewayListSupportedDevicesResponse.Vendor>();
+            this.Vendors = new LazyList<GatewayListSupportedDevicesResponse.Vendor>();
         }
         
         public partial class OSFamily
@@ -116,7 +117,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             /// </summary>
             public Platform()
             {
-                this.OSFamilies = new List<GatewayListSupportedDevicesResponse.OSFamily>();
+                this.OSFamilies = new LazyList<GatewayListSupportedDevicesResponse.OSFamily>();
             }
         }
         
@@ -152,7 +153,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             /// </summary>
             public Vendor()
             {
-                this.Platforms = new List<GatewayListSupportedDevicesResponse.Platform>();
+                this.Platforms = new LazyList<GatewayListSupportedDevicesResponse.Platform>();
             }
         }
     }

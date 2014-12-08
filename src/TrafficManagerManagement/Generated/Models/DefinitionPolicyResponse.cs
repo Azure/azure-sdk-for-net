@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Management.TrafficManager.Models;
 
 namespace Microsoft.WindowsAzure.Management.TrafficManager.Models
@@ -71,7 +72,7 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager.Models
         /// </summary>
         public DefinitionPolicyResponse()
         {
-            this.Endpoints = new List<DefinitionEndpointResponse>();
+            this.Endpoints = new LazyList<DefinitionEndpointResponse>();
         }
         
         /// <summary>

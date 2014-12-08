@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Management.RecoveryServices.Models;
 
 namespace Microsoft.WindowsAzure.Management.RecoveryServices.Models
@@ -157,7 +158,7 @@ namespace Microsoft.WindowsAzure.Management.RecoveryServices.Models
         /// </summary>
         public Vault()
         {
-            this.OutputItems = new List<OutputItem>();
+            this.OutputItems = new LazyList<OutputItem>();
         }
     }
 }

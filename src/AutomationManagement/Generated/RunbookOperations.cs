@@ -161,23 +161,26 @@ namespace Microsoft.Azure.Management.Automation
                 
                 if (parameters.Parameters != null)
                 {
-                    JArray parametersArray = new JArray();
-                    foreach (NameValuePair parametersItem in parameters.Parameters)
+                    if (parameters.Parameters is ILazyCollection == false || ((ILazyCollection)parameters.Parameters).IsInitialized)
                     {
-                        JObject nameValuePairValue = new JObject();
-                        parametersArray.Add(nameValuePairValue);
-                        
-                        if (parametersItem.Name != null)
+                        JArray parametersArray = new JArray();
+                        foreach (NameValuePair parametersItem in parameters.Parameters)
                         {
-                            nameValuePairValue["Name"] = parametersItem.Name;
+                            JObject nameValuePairValue = new JObject();
+                            parametersArray.Add(nameValuePairValue);
+                            
+                            if (parametersItem.Name != null)
+                            {
+                                nameValuePairValue["Name"] = parametersItem.Name;
+                            }
+                            
+                            if (parametersItem.Value != null)
+                            {
+                                nameValuePairValue["Value"] = parametersItem.Value;
+                            }
                         }
-                        
-                        if (parametersItem.Value != null)
-                        {
-                            nameValuePairValue["Value"] = parametersItem.Value;
-                        }
+                        runbookCreateScheduleLinkParametersValue["parameters"] = parametersArray;
                     }
-                    runbookCreateScheduleLinkParametersValue["parameters"] = parametersArray;
                 }
                 
                 runbookCreateScheduleLinkParametersValue["scheduleId"] = parameters.ScheduleId;
@@ -1000,6 +1003,13 @@ namespace Microsoft.Azure.Management.Automation
                                     scheduleInstance.DayInterval = dayIntervalInstance;
                                 }
                                 
+                                JToken hourIntervalValue = schedulesValue["HourInterval"];
+                                if (hourIntervalValue != null && hourIntervalValue.Type != JTokenType.Null)
+                                {
+                                    int hourIntervalInstance = ((int)hourIntervalValue);
+                                    scheduleInstance.HourInterval = hourIntervalInstance;
+                                }
+                                
                                 JToken odatatypeValue = schedulesValue["odata.type"];
                                 if (odatatypeValue != null && odatatypeValue.Type != JTokenType.Null)
                                 {
@@ -1346,6 +1356,13 @@ namespace Microsoft.Azure.Management.Automation
                                 {
                                     int dayIntervalInstance = ((int)dayIntervalValue);
                                     scheduleInstance.DayInterval = dayIntervalInstance;
+                                }
+                                
+                                JToken hourIntervalValue = schedulesValue["HourInterval"];
+                                if (hourIntervalValue != null && hourIntervalValue.Type != JTokenType.Null)
+                                {
+                                    int hourIntervalInstance = ((int)hourIntervalValue);
+                                    scheduleInstance.HourInterval = hourIntervalInstance;
                                 }
                                 
                                 JToken odatatypeValue = schedulesValue["odata.type"];
@@ -1701,6 +1718,13 @@ namespace Microsoft.Azure.Management.Automation
                                         {
                                             int dayIntervalInstance = ((int)dayIntervalValue);
                                             scheduleInstance.DayInterval = dayIntervalInstance;
+                                        }
+                                        
+                                        JToken hourIntervalValue = schedulesValue["HourInterval"];
+                                        if (hourIntervalValue != null && hourIntervalValue.Type != JTokenType.Null)
+                                        {
+                                            int hourIntervalInstance = ((int)hourIntervalValue);
+                                            scheduleInstance.HourInterval = hourIntervalInstance;
                                         }
                                         
                                         JToken odatatypeValue = schedulesValue["odata.type"];
@@ -2066,6 +2090,13 @@ namespace Microsoft.Azure.Management.Automation
                                         {
                                             int dayIntervalInstance = ((int)dayIntervalValue);
                                             scheduleInstance.DayInterval = dayIntervalInstance;
+                                        }
+                                        
+                                        JToken hourIntervalValue = schedulesValue["HourInterval"];
+                                        if (hourIntervalValue != null && hourIntervalValue.Type != JTokenType.Null)
+                                        {
+                                            int hourIntervalInstance = ((int)hourIntervalValue);
+                                            scheduleInstance.HourInterval = hourIntervalInstance;
                                         }
                                         
                                         JToken odatatypeValue = schedulesValue["odata.type"];
@@ -2439,6 +2470,13 @@ namespace Microsoft.Azure.Management.Automation
                                         {
                                             int dayIntervalInstance = ((int)dayIntervalValue);
                                             scheduleInstance.DayInterval = dayIntervalInstance;
+                                        }
+                                        
+                                        JToken hourIntervalValue = schedulesValue["HourInterval"];
+                                        if (hourIntervalValue != null && hourIntervalValue.Type != JTokenType.Null)
+                                        {
+                                            int hourIntervalInstance = ((int)hourIntervalValue);
+                                            scheduleInstance.HourInterval = hourIntervalInstance;
                                         }
                                         
                                         JToken odatatypeValue = schedulesValue["odata.type"];
@@ -2815,6 +2853,13 @@ namespace Microsoft.Azure.Management.Automation
                                             scheduleInstance.DayInterval = dayIntervalInstance;
                                         }
                                         
+                                        JToken hourIntervalValue = schedulesValue["HourInterval"];
+                                        if (hourIntervalValue != null && hourIntervalValue.Type != JTokenType.Null)
+                                        {
+                                            int hourIntervalInstance = ((int)hourIntervalValue);
+                                            scheduleInstance.HourInterval = hourIntervalInstance;
+                                        }
+                                        
                                         JToken odatatypeValue = schedulesValue["odata.type"];
                                         if (odatatypeValue != null && odatatypeValue.Type != JTokenType.Null)
                                         {
@@ -3177,6 +3222,13 @@ namespace Microsoft.Azure.Management.Automation
                                             scheduleInstance.DayInterval = dayIntervalInstance;
                                         }
                                         
+                                        JToken hourIntervalValue = schedulesValue["HourInterval"];
+                                        if (hourIntervalValue != null && hourIntervalValue.Type != JTokenType.Null)
+                                        {
+                                            int hourIntervalInstance = ((int)hourIntervalValue);
+                                            scheduleInstance.HourInterval = hourIntervalInstance;
+                                        }
+                                        
                                         JToken odatatypeValue = schedulesValue["odata.type"];
                                         if (odatatypeValue != null && odatatypeValue.Type != JTokenType.Null)
                                         {
@@ -3387,7 +3439,7 @@ namespace Microsoft.Azure.Management.Automation
         }
         
         /// <summary>
-        /// Delete the runbook identified by runbookId.  (see
+        /// Start the runbook identified by runbookId.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
         /// for more information)
         /// </summary>
@@ -3474,23 +3526,26 @@ namespace Microsoft.Azure.Management.Automation
                 
                 if (parameters.Parameters != null)
                 {
-                    JArray parametersArray = new JArray();
-                    foreach (NameValuePair parametersItem in parameters.Parameters)
+                    if (parameters.Parameters is ILazyCollection == false || ((ILazyCollection)parameters.Parameters).IsInitialized)
                     {
-                        JObject nameValuePairValue = new JObject();
-                        parametersArray.Add(nameValuePairValue);
-                        
-                        if (parametersItem.Name != null)
+                        JArray parametersArray = new JArray();
+                        foreach (NameValuePair parametersItem in parameters.Parameters)
                         {
-                            nameValuePairValue["Name"] = parametersItem.Name;
+                            JObject nameValuePairValue = new JObject();
+                            parametersArray.Add(nameValuePairValue);
+                            
+                            if (parametersItem.Name != null)
+                            {
+                                nameValuePairValue["Name"] = parametersItem.Name;
+                            }
+                            
+                            if (parametersItem.Value != null)
+                            {
+                                nameValuePairValue["Value"] = parametersItem.Value;
+                            }
                         }
-                        
-                        if (parametersItem.Value != null)
-                        {
-                            nameValuePairValue["Value"] = parametersItem.Value;
-                        }
+                        runbookStartParametersValue["parameters"] = parametersArray;
                     }
-                    runbookStartParametersValue["parameters"] = parametersArray;
                 }
                 
                 requestContent = requestDoc.ToString(Formatting.Indented);
@@ -3717,55 +3772,63 @@ namespace Microsoft.Azure.Management.Automation
                 
                 if (parameters.Runbook.Schedules != null)
                 {
-                    JArray schedulesArray = new JArray();
-                    foreach (Schedule schedulesItem in parameters.Runbook.Schedules)
+                    if (parameters.Runbook.Schedules is ILazyCollection == false || ((ILazyCollection)parameters.Runbook.Schedules).IsInitialized)
                     {
-                        JObject scheduleValue = new JObject();
-                        schedulesArray.Add(scheduleValue);
-                        
-                        if (schedulesItem.Id != null)
+                        JArray schedulesArray = new JArray();
+                        foreach (Schedule schedulesItem in parameters.Runbook.Schedules)
                         {
-                            scheduleValue["ScheduleID"] = schedulesItem.Id;
+                            JObject scheduleValue = new JObject();
+                            schedulesArray.Add(scheduleValue);
+                            
+                            if (schedulesItem.Id != null)
+                            {
+                                scheduleValue["ScheduleID"] = schedulesItem.Id;
+                            }
+                            
+                            if (schedulesItem.AccountId != null)
+                            {
+                                scheduleValue["AccountID"] = schedulesItem.AccountId;
+                            }
+                            
+                            if (schedulesItem.Name != null)
+                            {
+                                scheduleValue["Name"] = schedulesItem.Name;
+                            }
+                            
+                            if (schedulesItem.Description != null)
+                            {
+                                scheduleValue["Description"] = schedulesItem.Description;
+                            }
+                            
+                            scheduleValue["StartTime"] = schedulesItem.StartTime;
+                            
+                            scheduleValue["ExpiryTime"] = schedulesItem.ExpiryTime;
+                            
+                            scheduleValue["CreationTime"] = schedulesItem.CreationTime;
+                            
+                            scheduleValue["LastModifiedTime"] = schedulesItem.LastModifiedTime;
+                            
+                            scheduleValue["IsEnabled"] = schedulesItem.IsEnabled;
+                            
+                            if (schedulesItem.NextRun != null)
+                            {
+                                scheduleValue["NextRun"] = schedulesItem.NextRun.Value;
+                            }
+                            
+                            if (schedulesItem.DayInterval != null)
+                            {
+                                scheduleValue["DayInterval"] = schedulesItem.DayInterval.Value;
+                            }
+                            
+                            if (schedulesItem.HourInterval != null)
+                            {
+                                scheduleValue["HourInterval"] = schedulesItem.HourInterval.Value;
+                            }
+                            
+                            scheduleValue["odata.type"] = schedulesItem.ScheduleType.ToString();
                         }
-                        
-                        if (schedulesItem.AccountId != null)
-                        {
-                            scheduleValue["AccountID"] = schedulesItem.AccountId;
-                        }
-                        
-                        if (schedulesItem.Name != null)
-                        {
-                            scheduleValue["Name"] = schedulesItem.Name;
-                        }
-                        
-                        if (schedulesItem.Description != null)
-                        {
-                            scheduleValue["Description"] = schedulesItem.Description;
-                        }
-                        
-                        scheduleValue["StartTime"] = schedulesItem.StartTime;
-                        
-                        scheduleValue["ExpiryTime"] = schedulesItem.ExpiryTime;
-                        
-                        scheduleValue["CreationTime"] = schedulesItem.CreationTime;
-                        
-                        scheduleValue["LastModifiedTime"] = schedulesItem.LastModifiedTime;
-                        
-                        scheduleValue["IsEnabled"] = schedulesItem.IsEnabled;
-                        
-                        if (schedulesItem.NextRun != null)
-                        {
-                            scheduleValue["NextRun"] = schedulesItem.NextRun.Value;
-                        }
-                        
-                        if (schedulesItem.DayInterval != null)
-                        {
-                            scheduleValue["DayInterval"] = schedulesItem.DayInterval.Value;
-                        }
-                        
-                        scheduleValue["odata.type"] = schedulesItem.ScheduleType.ToString();
+                        runbookUpdateParametersValue["Schedules"] = schedulesArray;
                     }
-                    runbookUpdateParametersValue["Schedules"] = schedulesArray;
                 }
                 
                 requestContent = requestDoc.ToString(Formatting.Indented);

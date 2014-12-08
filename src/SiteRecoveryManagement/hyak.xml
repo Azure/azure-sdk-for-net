@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Hyak>
+  <Assembly>Microsoft.WindowsAzure.Management.RecoveryServices.Specification.dll</Assembly>
+  <OutputDirectory>Generated</OutputDirectory>
+
+  <Specification>
+    <Type>Microsoft.WindowsAzure.Management.SiteRecovery.SiteRecoveryManagementClient</Type>
+
+    <Platform>
+      <Flavor>CSharp.Azure</Flavor>
+      <OutputDirectory></OutputDirectory>
+      <BaseNamespace>Microsoft.WindowsAzure.Management.SiteRecovery</BaseNamespace>
+      <Split>Namespace</Split>
+    </Platform>
+
+  </Specification>
+
+  <Specification>
+    <Type>Microsoft.WindowsAzure.Management.RecoveryServices.RecoveryServicesManagementClient</Type>
+
+    <Platform>
+      <Flavor>CSharp.Azure</Flavor>
+      <OutputDirectory></OutputDirectory>
+      <BaseNamespace>Microsoft.WindowsAzure.Management.RecoveryServices</BaseNamespace>
+      <Split>Namespace</Split>
+    </Platform>
+
+  </Specification>
+</Hyak>

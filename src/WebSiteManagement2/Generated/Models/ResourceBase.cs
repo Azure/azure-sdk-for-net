@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
@@ -52,7 +53,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         private string _name;
         
         /// <summary>
-        /// Optional. The name of the server farm.
+        /// Optional. The name of the resource.
         /// </summary>
         public string Name
         {
@@ -71,12 +72,23 @@ namespace Microsoft.Azure.Management.WebSites.Models
             set { this._tags = value; }
         }
         
+        private string _type;
+        
+        /// <summary>
+        /// Optional. The type of the resource
+        /// </summary>
+        public string Type
+        {
+            get { return this._type; }
+            set { this._type = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the ResourceBase class.
         /// </summary>
         public ResourceBase()
         {
-            this.Tags = new Dictionary<string, string>();
+            this.Tags = new LazyDictionary<string, string>();
         }
         
         /// <summary>

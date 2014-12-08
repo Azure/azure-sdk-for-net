@@ -156,7 +156,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Gets the URI used as the base for all cloud service
+        /// Optional. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
         public WebSiteManagementClient(SubscriptionCloudCredentials credentials, Uri baseUri)
@@ -224,7 +224,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Gets the URI used as the base for all cloud service
+        /// Optional. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
         /// <param name='httpClient'>
@@ -294,6 +294,110 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 
                 clonedClient.Credentials.InitializeServiceClient(clonedClient);
             }
+        }
+        
+        /// <summary>
+        /// Parse enum values for type ConnectionStringType.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to parse.
+        /// </param>
+        /// <returns>
+        /// The enum value.
+        /// </returns>
+        internal static ConnectionStringType ParseConnectionStringType(string value)
+        {
+            if ("0".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return ConnectionStringType.MySql;
+            }
+            if ("1".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return ConnectionStringType.SqlServer;
+            }
+            if ("2".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return ConnectionStringType.SqlAzure;
+            }
+            if ("3".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return ConnectionStringType.Custom;
+            }
+            throw new ArgumentOutOfRangeException("value");
+        }
+        
+        /// <summary>
+        /// Convert an enum of type ConnectionStringType to a string.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to convert to a string.
+        /// </param>
+        /// <returns>
+        /// The enum value as a string.
+        /// </returns>
+        internal static string ConnectionStringTypeToString(ConnectionStringType value)
+        {
+            if (value == ConnectionStringType.MySql)
+            {
+                return "0";
+            }
+            if (value == ConnectionStringType.SqlServer)
+            {
+                return "1";
+            }
+            if (value == ConnectionStringType.SqlAzure)
+            {
+                return "2";
+            }
+            if (value == ConnectionStringType.Custom)
+            {
+                return "3";
+            }
+            throw new ArgumentOutOfRangeException("value");
+        }
+        
+        /// <summary>
+        /// Parse enum values for type ManagedPipelineMode.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to parse.
+        /// </param>
+        /// <returns>
+        /// The enum value.
+        /// </returns>
+        internal static ManagedPipelineMode ParseManagedPipelineMode(string value)
+        {
+            if ("0".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return ManagedPipelineMode.Integrated;
+            }
+            if ("1".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return ManagedPipelineMode.Classic;
+            }
+            throw new ArgumentOutOfRangeException("value");
+        }
+        
+        /// <summary>
+        /// Convert an enum of type ManagedPipelineMode to a string.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to convert to a string.
+        /// </param>
+        /// <returns>
+        /// The enum value as a string.
+        /// </returns>
+        internal static string ManagedPipelineModeToString(ManagedPipelineMode value)
+        {
+            if (value == ManagedPipelineMode.Integrated)
+            {
+                return "0";
+            }
+            if (value == ManagedPipelineMode.Classic)
+            {
+                return "1";
+            }
+            throw new ArgumentOutOfRangeException("value");
         }
         
         /// <summary>
@@ -880,110 +984,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     httpRequest.Dispose();
                 }
             }
-        }
-        
-        /// <summary>
-        /// Parse enum values for type ConnectionStringType.
-        /// </summary>
-        /// <param name='value'>
-        /// The value to parse.
-        /// </param>
-        /// <returns>
-        /// The enum value.
-        /// </returns>
-        internal static ConnectionStringType ParseConnectionStringType(string value)
-        {
-            if ("0".Equals(value, StringComparison.OrdinalIgnoreCase))
-            {
-                return ConnectionStringType.MySql;
-            }
-            if ("1".Equals(value, StringComparison.OrdinalIgnoreCase))
-            {
-                return ConnectionStringType.SqlServer;
-            }
-            if ("2".Equals(value, StringComparison.OrdinalIgnoreCase))
-            {
-                return ConnectionStringType.SqlAzure;
-            }
-            if ("3".Equals(value, StringComparison.OrdinalIgnoreCase))
-            {
-                return ConnectionStringType.Custom;
-            }
-            throw new ArgumentOutOfRangeException("value");
-        }
-        
-        /// <summary>
-        /// Convert an enum of type ConnectionStringType to a string.
-        /// </summary>
-        /// <param name='value'>
-        /// The value to convert to a string.
-        /// </param>
-        /// <returns>
-        /// The enum value as a string.
-        /// </returns>
-        internal static string ConnectionStringTypeToString(ConnectionStringType value)
-        {
-            if (value == ConnectionStringType.MySql)
-            {
-                return "0";
-            }
-            if (value == ConnectionStringType.SqlServer)
-            {
-                return "1";
-            }
-            if (value == ConnectionStringType.SqlAzure)
-            {
-                return "2";
-            }
-            if (value == ConnectionStringType.Custom)
-            {
-                return "3";
-            }
-            throw new ArgumentOutOfRangeException("value");
-        }
-        
-        /// <summary>
-        /// Parse enum values for type ManagedPipelineMode.
-        /// </summary>
-        /// <param name='value'>
-        /// The value to parse.
-        /// </param>
-        /// <returns>
-        /// The enum value.
-        /// </returns>
-        internal static ManagedPipelineMode ParseManagedPipelineMode(string value)
-        {
-            if ("0".Equals(value, StringComparison.OrdinalIgnoreCase))
-            {
-                return ManagedPipelineMode.Integrated;
-            }
-            if ("1".Equals(value, StringComparison.OrdinalIgnoreCase))
-            {
-                return ManagedPipelineMode.Classic;
-            }
-            throw new ArgumentOutOfRangeException("value");
-        }
-        
-        /// <summary>
-        /// Convert an enum of type ManagedPipelineMode to a string.
-        /// </summary>
-        /// <param name='value'>
-        /// The value to convert to a string.
-        /// </param>
-        /// <returns>
-        /// The enum value as a string.
-        /// </returns>
-        internal static string ManagedPipelineModeToString(ManagedPipelineMode value)
-        {
-            if (value == ManagedPipelineMode.Integrated)
-            {
-                return "0";
-            }
-            if (value == ManagedPipelineMode.Classic)
-            {
-                return "1";
-            }
-            throw new ArgumentOutOfRangeException("value");
         }
     }
 }

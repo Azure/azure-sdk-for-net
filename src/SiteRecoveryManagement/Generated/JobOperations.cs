@@ -126,6 +126,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
+                httpRequest.Headers.Add("Agent-Authentication", customRequestHeaders.AgentAuthenticationHeader);
                 httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
                 httpRequest.Headers.Add("x-ms-version", "2013-03-01");
                 
@@ -1057,6 +1058,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                 
                 // Set Headers
                 httpRequest.Headers.Add("Accept", "application/xml");
+                httpRequest.Headers.Add("Agent-Authentication", customRequestHeaders.AgentAuthenticationHeader);
                 httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
                 httpRequest.Headers.Add("x-ms-version", "2013-03-01");
                 
@@ -1458,6 +1460,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                 
                 // Set Headers
                 httpRequest.Headers.Add("Accept", "application/xml");
+                httpRequest.Headers.Add("Agent-Authentication", customRequestHeaders.AgentAuthenticationHeader);
                 httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
                 httpRequest.Headers.Add("x-ms-version", "2013-03-01");
                 

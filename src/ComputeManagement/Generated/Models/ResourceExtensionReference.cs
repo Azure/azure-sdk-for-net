@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
@@ -111,7 +112,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public ResourceExtensionReference()
         {
-            this.ResourceExtensionParameterValues = new List<ResourceExtensionParameterValue>();
+            this.ResourceExtensionParameterValues = new LazyList<ResourceExtensionParameterValue>();
         }
     }
 }

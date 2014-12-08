@@ -381,7 +381,7 @@ namespace Microsoft.WindowsAzure
         /// <returns>
         /// The Update Jobs State operation response.
         /// </returns>
-        public static JobCollectionJobsUpdateStateResponse UpdateJobCollectionState(this IJobOperations operations, PatchJobCollectionJobsUpdateStateParameters parameters)
+        public static JobCollectionJobsUpdateStateResponse UpdateJobCollectionState(this IJobOperations operations, JobCollectionJobsUpdateStateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -402,7 +402,7 @@ namespace Microsoft.WindowsAzure
         /// <returns>
         /// The Update Jobs State operation response.
         /// </returns>
-        public static Task<JobCollectionJobsUpdateStateResponse> UpdateJobCollectionStateAsync(this IJobOperations operations, PatchJobCollectionJobsUpdateStateParameters parameters)
+        public static Task<JobCollectionJobsUpdateStateResponse> UpdateJobCollectionStateAsync(this IJobOperations operations, JobCollectionJobsUpdateStateParameters parameters)
         {
             return operations.UpdateJobCollectionStateAsync(parameters, CancellationToken.None);
         }

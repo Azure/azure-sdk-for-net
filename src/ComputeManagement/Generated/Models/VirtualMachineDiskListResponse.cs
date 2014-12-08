@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
@@ -50,7 +51,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public VirtualMachineDiskListResponse()
         {
-            this.Disks = new List<VirtualMachineDiskListResponse.VirtualMachineDisk>();
+            this.Disks = new LazyList<VirtualMachineDiskListResponse.VirtualMachineDisk>();
         }
         
         /// <summary>
@@ -87,6 +88,17 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             {
                 get { return this._affinityGroup; }
                 set { this._affinityGroup = value; }
+            }
+            
+            private string _iOType;
+            
+            /// <summary>
+            /// Optional. Gets or sets the IO type.
+            /// </summary>
+            public string IOType
+            {
+                get { return this._iOType; }
+                set { this._iOType = value; }
             }
             
             private bool? _isCorrupted;

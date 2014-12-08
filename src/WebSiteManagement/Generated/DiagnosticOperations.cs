@@ -263,17 +263,20 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                 string requestContent = null;
                 JToken requestDoc = null;
                 
-                JObject settingsDictionary = new JObject();
                 if (parameters.Settings != null)
                 {
-                    foreach (KeyValuePair<string, string> pair in parameters.Settings)
+                    if (parameters.Settings is ILazyCollection == false || ((ILazyCollection)parameters.Settings).IsInitialized)
                     {
-                        string settingsKey = pair.Key;
-                        string settingsValue = pair.Value;
-                        settingsDictionary[settingsKey] = settingsValue;
+                        JObject settingsDictionary = new JObject();
+                        foreach (KeyValuePair<string, string> pair in parameters.Settings)
+                        {
+                            string settingsKey = pair.Key;
+                            string settingsValue = pair.Value;
+                            settingsDictionary[settingsKey] = settingsValue;
+                        }
+                        requestDoc = settingsDictionary;
                     }
                 }
-                requestDoc = settingsDictionary;
                 
                 requestContent = requestDoc.ToString(Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);

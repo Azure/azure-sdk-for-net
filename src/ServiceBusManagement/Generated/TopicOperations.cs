@@ -199,72 +199,78 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                 
                 if (topic.AuthorizationRules != null)
                 {
-                    XElement authorizationRulesSequenceElement = new XElement(XName.Get("AuthorizationRules", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
-                    foreach (ServiceBusSharedAccessAuthorizationRule authorizationRulesItem in topic.AuthorizationRules)
+                    if (topic.AuthorizationRules is ILazyCollection == false || ((ILazyCollection)topic.AuthorizationRules).IsInitialized)
                     {
-                        XElement authorizationRuleElement = new XElement(XName.Get("AuthorizationRule", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
-                        authorizationRulesSequenceElement.Add(authorizationRuleElement);
-                        
-                        XAttribute typeAttribute2 = new XAttribute(XName.Get("type", "http://www.w3.org/2001/XMLSchema-instance"), "");
-                        typeAttribute2.Value = "SharedAccessAuthorizationRule";
-                        authorizationRuleElement.Add(typeAttribute2);
-                        
-                        if (authorizationRulesItem.ClaimType != null)
+                        XElement authorizationRulesSequenceElement = new XElement(XName.Get("AuthorizationRules", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
+                        foreach (ServiceBusSharedAccessAuthorizationRule authorizationRulesItem in topic.AuthorizationRules)
                         {
-                            XElement claimTypeElement = new XElement(XName.Get("ClaimType", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
-                            claimTypeElement.Value = authorizationRulesItem.ClaimType;
-                            authorizationRuleElement.Add(claimTypeElement);
-                        }
-                        
-                        if (authorizationRulesItem.ClaimValue != null)
-                        {
-                            XElement claimValueElement = new XElement(XName.Get("ClaimValue", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
-                            claimValueElement.Value = authorizationRulesItem.ClaimValue;
-                            authorizationRuleElement.Add(claimValueElement);
-                        }
-                        
-                        if (authorizationRulesItem.Rights != null)
-                        {
-                            XElement rightsSequenceElement = new XElement(XName.Get("Rights", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
-                            foreach (AccessRight rightsItem in authorizationRulesItem.Rights)
+                            XElement authorizationRuleElement = new XElement(XName.Get("AuthorizationRule", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
+                            authorizationRulesSequenceElement.Add(authorizationRuleElement);
+                            
+                            XAttribute typeAttribute2 = new XAttribute(XName.Get("type", "http://www.w3.org/2001/XMLSchema-instance"), "");
+                            typeAttribute2.Value = "SharedAccessAuthorizationRule";
+                            authorizationRuleElement.Add(typeAttribute2);
+                            
+                            if (authorizationRulesItem.ClaimType != null)
                             {
-                                XElement rightsItemElement = new XElement(XName.Get("AccessRights", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
-                                rightsItemElement.Value = rightsItem.ToString();
-                                rightsSequenceElement.Add(rightsItemElement);
+                                XElement claimTypeElement = new XElement(XName.Get("ClaimType", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
+                                claimTypeElement.Value = authorizationRulesItem.ClaimType;
+                                authorizationRuleElement.Add(claimTypeElement);
                             }
-                            authorizationRuleElement.Add(rightsSequenceElement);
+                            
+                            if (authorizationRulesItem.ClaimValue != null)
+                            {
+                                XElement claimValueElement = new XElement(XName.Get("ClaimValue", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
+                                claimValueElement.Value = authorizationRulesItem.ClaimValue;
+                                authorizationRuleElement.Add(claimValueElement);
+                            }
+                            
+                            if (authorizationRulesItem.Rights != null)
+                            {
+                                if (authorizationRulesItem.Rights is ILazyCollection == false || ((ILazyCollection)authorizationRulesItem.Rights).IsInitialized)
+                                {
+                                    XElement rightsSequenceElement = new XElement(XName.Get("Rights", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
+                                    foreach (AccessRight rightsItem in authorizationRulesItem.Rights)
+                                    {
+                                        XElement rightsItemElement = new XElement(XName.Get("AccessRights", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
+                                        rightsItemElement.Value = rightsItem.ToString();
+                                        rightsSequenceElement.Add(rightsItemElement);
+                                    }
+                                    authorizationRuleElement.Add(rightsSequenceElement);
+                                }
+                            }
+                            
+                            XElement createdTimeElement = new XElement(XName.Get("CreatedTime", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
+                            createdTimeElement.Value = authorizationRulesItem.CreatedTime.ToString();
+                            authorizationRuleElement.Add(createdTimeElement);
+                            
+                            if (authorizationRulesItem.KeyName != null)
+                            {
+                                XElement keyNameElement = new XElement(XName.Get("KeyName", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
+                                keyNameElement.Value = authorizationRulesItem.KeyName;
+                                authorizationRuleElement.Add(keyNameElement);
+                            }
+                            
+                            XElement modifiedTimeElement = new XElement(XName.Get("ModifiedTime", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
+                            modifiedTimeElement.Value = authorizationRulesItem.ModifiedTime.ToString();
+                            authorizationRuleElement.Add(modifiedTimeElement);
+                            
+                            if (authorizationRulesItem.PrimaryKey != null)
+                            {
+                                XElement primaryKeyElement = new XElement(XName.Get("PrimaryKey", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
+                                primaryKeyElement.Value = authorizationRulesItem.PrimaryKey;
+                                authorizationRuleElement.Add(primaryKeyElement);
+                            }
+                            
+                            if (authorizationRulesItem.SecondaryKey != null)
+                            {
+                                XElement secondaryKeyElement = new XElement(XName.Get("SecondaryKey", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
+                                secondaryKeyElement.Value = authorizationRulesItem.SecondaryKey;
+                                authorizationRuleElement.Add(secondaryKeyElement);
+                            }
                         }
-                        
-                        XElement createdTimeElement = new XElement(XName.Get("CreatedTime", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
-                        createdTimeElement.Value = authorizationRulesItem.CreatedTime.ToString();
-                        authorizationRuleElement.Add(createdTimeElement);
-                        
-                        if (authorizationRulesItem.KeyName != null)
-                        {
-                            XElement keyNameElement = new XElement(XName.Get("KeyName", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
-                            keyNameElement.Value = authorizationRulesItem.KeyName;
-                            authorizationRuleElement.Add(keyNameElement);
-                        }
-                        
-                        XElement modifiedTimeElement = new XElement(XName.Get("ModifiedTime", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
-                        modifiedTimeElement.Value = authorizationRulesItem.ModifiedTime.ToString();
-                        authorizationRuleElement.Add(modifiedTimeElement);
-                        
-                        if (authorizationRulesItem.PrimaryKey != null)
-                        {
-                            XElement primaryKeyElement = new XElement(XName.Get("PrimaryKey", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
-                            primaryKeyElement.Value = authorizationRulesItem.PrimaryKey;
-                            authorizationRuleElement.Add(primaryKeyElement);
-                        }
-                        
-                        if (authorizationRulesItem.SecondaryKey != null)
-                        {
-                            XElement secondaryKeyElement = new XElement(XName.Get("SecondaryKey", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
-                            secondaryKeyElement.Value = authorizationRulesItem.SecondaryKey;
-                            authorizationRuleElement.Add(secondaryKeyElement);
-                        }
+                        topicDescriptionElement.Add(authorizationRulesSequenceElement);
                     }
-                    topicDescriptionElement.Add(authorizationRulesSequenceElement);
                 }
                 
                 if (topic.Status != null)
@@ -1739,72 +1745,78 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                 
                 if (topic.AuthorizationRules != null)
                 {
-                    XElement authorizationRulesSequenceElement = new XElement(XName.Get("AuthorizationRules", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
-                    foreach (ServiceBusSharedAccessAuthorizationRule authorizationRulesItem in topic.AuthorizationRules)
+                    if (topic.AuthorizationRules is ILazyCollection == false || ((ILazyCollection)topic.AuthorizationRules).IsInitialized)
                     {
-                        XElement authorizationRuleElement = new XElement(XName.Get("AuthorizationRule", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
-                        authorizationRulesSequenceElement.Add(authorizationRuleElement);
-                        
-                        XAttribute typeAttribute2 = new XAttribute(XName.Get("type", "http://www.w3.org/2001/XMLSchema-instance"), "");
-                        typeAttribute2.Value = "SharedAccessAuthorizationRule";
-                        authorizationRuleElement.Add(typeAttribute2);
-                        
-                        if (authorizationRulesItem.ClaimType != null)
+                        XElement authorizationRulesSequenceElement = new XElement(XName.Get("AuthorizationRules", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
+                        foreach (ServiceBusSharedAccessAuthorizationRule authorizationRulesItem in topic.AuthorizationRules)
                         {
-                            XElement claimTypeElement = new XElement(XName.Get("ClaimType", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
-                            claimTypeElement.Value = authorizationRulesItem.ClaimType;
-                            authorizationRuleElement.Add(claimTypeElement);
-                        }
-                        
-                        if (authorizationRulesItem.ClaimValue != null)
-                        {
-                            XElement claimValueElement = new XElement(XName.Get("ClaimValue", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
-                            claimValueElement.Value = authorizationRulesItem.ClaimValue;
-                            authorizationRuleElement.Add(claimValueElement);
-                        }
-                        
-                        if (authorizationRulesItem.Rights != null)
-                        {
-                            XElement rightsSequenceElement = new XElement(XName.Get("Rights", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
-                            foreach (AccessRight rightsItem in authorizationRulesItem.Rights)
+                            XElement authorizationRuleElement = new XElement(XName.Get("AuthorizationRule", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
+                            authorizationRulesSequenceElement.Add(authorizationRuleElement);
+                            
+                            XAttribute typeAttribute2 = new XAttribute(XName.Get("type", "http://www.w3.org/2001/XMLSchema-instance"), "");
+                            typeAttribute2.Value = "SharedAccessAuthorizationRule";
+                            authorizationRuleElement.Add(typeAttribute2);
+                            
+                            if (authorizationRulesItem.ClaimType != null)
                             {
-                                XElement rightsItemElement = new XElement(XName.Get("AccessRights", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
-                                rightsItemElement.Value = rightsItem.ToString();
-                                rightsSequenceElement.Add(rightsItemElement);
+                                XElement claimTypeElement = new XElement(XName.Get("ClaimType", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
+                                claimTypeElement.Value = authorizationRulesItem.ClaimType;
+                                authorizationRuleElement.Add(claimTypeElement);
                             }
-                            authorizationRuleElement.Add(rightsSequenceElement);
+                            
+                            if (authorizationRulesItem.ClaimValue != null)
+                            {
+                                XElement claimValueElement = new XElement(XName.Get("ClaimValue", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
+                                claimValueElement.Value = authorizationRulesItem.ClaimValue;
+                                authorizationRuleElement.Add(claimValueElement);
+                            }
+                            
+                            if (authorizationRulesItem.Rights != null)
+                            {
+                                if (authorizationRulesItem.Rights is ILazyCollection == false || ((ILazyCollection)authorizationRulesItem.Rights).IsInitialized)
+                                {
+                                    XElement rightsSequenceElement = new XElement(XName.Get("Rights", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
+                                    foreach (AccessRight rightsItem in authorizationRulesItem.Rights)
+                                    {
+                                        XElement rightsItemElement = new XElement(XName.Get("AccessRights", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
+                                        rightsItemElement.Value = rightsItem.ToString();
+                                        rightsSequenceElement.Add(rightsItemElement);
+                                    }
+                                    authorizationRuleElement.Add(rightsSequenceElement);
+                                }
+                            }
+                            
+                            XElement createdTimeElement = new XElement(XName.Get("CreatedTime", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
+                            createdTimeElement.Value = authorizationRulesItem.CreatedTime.ToString();
+                            authorizationRuleElement.Add(createdTimeElement);
+                            
+                            if (authorizationRulesItem.KeyName != null)
+                            {
+                                XElement keyNameElement = new XElement(XName.Get("KeyName", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
+                                keyNameElement.Value = authorizationRulesItem.KeyName;
+                                authorizationRuleElement.Add(keyNameElement);
+                            }
+                            
+                            XElement modifiedTimeElement = new XElement(XName.Get("ModifiedTime", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
+                            modifiedTimeElement.Value = authorizationRulesItem.ModifiedTime.ToString();
+                            authorizationRuleElement.Add(modifiedTimeElement);
+                            
+                            if (authorizationRulesItem.PrimaryKey != null)
+                            {
+                                XElement primaryKeyElement = new XElement(XName.Get("PrimaryKey", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
+                                primaryKeyElement.Value = authorizationRulesItem.PrimaryKey;
+                                authorizationRuleElement.Add(primaryKeyElement);
+                            }
+                            
+                            if (authorizationRulesItem.SecondaryKey != null)
+                            {
+                                XElement secondaryKeyElement = new XElement(XName.Get("SecondaryKey", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
+                                secondaryKeyElement.Value = authorizationRulesItem.SecondaryKey;
+                                authorizationRuleElement.Add(secondaryKeyElement);
+                            }
                         }
-                        
-                        XElement createdTimeElement = new XElement(XName.Get("CreatedTime", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
-                        createdTimeElement.Value = authorizationRulesItem.CreatedTime.ToString();
-                        authorizationRuleElement.Add(createdTimeElement);
-                        
-                        if (authorizationRulesItem.KeyName != null)
-                        {
-                            XElement keyNameElement = new XElement(XName.Get("KeyName", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
-                            keyNameElement.Value = authorizationRulesItem.KeyName;
-                            authorizationRuleElement.Add(keyNameElement);
-                        }
-                        
-                        XElement modifiedTimeElement = new XElement(XName.Get("ModifiedTime", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
-                        modifiedTimeElement.Value = authorizationRulesItem.ModifiedTime.ToString();
-                        authorizationRuleElement.Add(modifiedTimeElement);
-                        
-                        if (authorizationRulesItem.PrimaryKey != null)
-                        {
-                            XElement primaryKeyElement = new XElement(XName.Get("PrimaryKey", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
-                            primaryKeyElement.Value = authorizationRulesItem.PrimaryKey;
-                            authorizationRuleElement.Add(primaryKeyElement);
-                        }
-                        
-                        if (authorizationRulesItem.SecondaryKey != null)
-                        {
-                            XElement secondaryKeyElement = new XElement(XName.Get("SecondaryKey", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
-                            secondaryKeyElement.Value = authorizationRulesItem.SecondaryKey;
-                            authorizationRuleElement.Add(secondaryKeyElement);
-                        }
+                        topicDescriptionElement.Add(authorizationRulesSequenceElement);
                     }
-                    topicDescriptionElement.Add(authorizationRulesSequenceElement);
                 }
                 
                 if (topic.Status != null)

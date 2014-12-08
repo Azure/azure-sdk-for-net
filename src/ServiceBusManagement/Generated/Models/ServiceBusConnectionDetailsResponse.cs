@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Management.ServiceBus.Models;
 
 namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
@@ -49,7 +50,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         /// </summary>
         public ServiceBusConnectionDetailsResponse()
         {
-            this.ConnectionDetails = new List<ServiceBusConnectionDetail>();
+            this.ConnectionDetails = new LazyList<ServiceBusConnectionDetail>();
         }
         
         /// <summary>

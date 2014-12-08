@@ -1,0 +1,163 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <WindowsAzureLibraryProfileSet>portable/net40</WindowsAzureLibraryProfileSet>
+    <ProjectGuid>{43206A5D-D990-4310-BC61-266773178265}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Microsoft.Azure.Management.StreamAnalytics</RootNamespace>
+    <AssemblyName>Microsoft.Azure.Management.StreamAnalytics</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <RestorePackages>true</RestorePackages>
+    <NuGetPackageImportStamp>bcd5129c</NuGetPackageImportStamp>
+    <TargetFrameworkProfile>Profile7</TargetFrameworkProfile>
+  </PropertyGroup>
+  <Import Project="..\library.props" />
+  <ItemGroup>
+    <Compile Include="Generated\IJobOperations.cs" />
+    <Compile Include="Generated\InputOperations.cs" />
+    <Compile Include="Generated\InputOperationsExtensions.cs" />
+    <Compile Include="Generated\IOutputOperations.cs" />
+    <Compile Include="Generated\IStreamAnalyticsManagementClient.cs" />
+    <Compile Include="Generated\ISubscriptionOperations.cs" />
+    <Compile Include="Generated\ITransformationOperations.cs" />
+    <Compile Include="Generated\JobOperations.cs" />
+    <Compile Include="Generated\JobOperationsExtensions.cs" />
+    <Compile Include="Generated\Models\AvroSerializationProperties.cs" />
+    <Compile Include="Generated\Models\BlobOutputDataSource.cs" />
+    <Compile Include="Generated\Models\BlobOutputDataSourceProperties.cs" />
+    <Compile Include="Generated\Models\BlobReferenceInputDataSource.cs" />
+    <Compile Include="Generated\Models\BlobReferenceInputDataSourceProperties.cs" />
+    <Compile Include="Generated\Models\BlobSerializationBoundary.cs" />
+    <Compile Include="Generated\Models\BlobStreamInputDataSource.cs" />
+    <Compile Include="Generated\Models\BlobStreamInputDataSourceProperties.cs" />
+    <Compile Include="Generated\Models\CommonOperationResponse.cs" />
+    <Compile Include="Generated\Models\CsvSerialization.cs" />
+    <Compile Include="Generated\Models\CsvSerializationProperties.cs" />
+    <Compile Include="Generated\Models\DataSourceTestConnectionResponse.cs" />
+    <Compile Include="Generated\Models\DataSourceTestStatus.cs" />
+    <Compile Include="Generated\Models\ErrorDetailsResponse.cs" />
+    <Compile Include="Generated\Models\ErrorResponse.cs" />
+    <Compile Include="Generated\Models\EventHubOutputDataSource.cs" />
+    <Compile Include="Generated\Models\EventHubOutputDataSourceProperties.cs" />
+    <Compile Include="Generated\Models\EventHubStreamInputDataSource.cs" />
+    <Compile Include="Generated\Models\EventHubStreamInputDataSourceProperties.cs" />
+    <Compile Include="Generated\Models\EventsOutOfOrderPolicy.cs" />
+    <Compile Include="Generated\Models\Input.cs" />
+    <Compile Include="Generated\Models\InputCreateOrUpdateParameters.cs" />
+    <Compile Include="Generated\Models\InputCreateOrUpdateResponse.cs" />
+    <Compile Include="Generated\Models\InputCreateOrUpdateWithRawJsonContentParameters.cs" />
+    <Compile Include="Generated\Models\InputGetResponse.cs" />
+    <Compile Include="Generated\Models\InputListResponse.cs" />
+    <Compile Include="Generated\Models\InputPatchParameters.cs" />
+    <Compile Include="Generated\Models\InputPatchResponse.cs" />
+    <Compile Include="Generated\Models\InputProperties.cs" />
+    <Compile Include="Generated\Models\Job.cs" />
+    <Compile Include="Generated\Models\JobCreateOrUpdateParameters.cs" />
+    <Compile Include="Generated\Models\JobCreateOrUpdateResponse.cs" />
+    <Compile Include="Generated\Models\JobCreateOrUpdateWithRawJsonContentParameters.cs" />
+    <Compile Include="Generated\Models\JobGetParameters.cs" />
+    <Compile Include="Generated\Models\JobGetResponse.cs" />
+    <Compile Include="Generated\Models\JobListParameters.cs" />
+    <Compile Include="Generated\Models\JobListResponse.cs" />
+    <Compile Include="Generated\Models\JobPatchParameters.cs" />
+    <Compile Include="Generated\Models\JobPatchRequest.cs" />
+    <Compile Include="Generated\Models\JobPatchResponse.cs" />
+    <Compile Include="Generated\Models\JobProperties.cs" />
+    <Compile Include="Generated\Models\JobProvisioningState.cs" />
+    <Compile Include="Generated\Models\JobRunningState.cs" />
+    <Compile Include="Generated\Models\JsonSerialization.cs" />
+    <Compile Include="Generated\Models\JsonSerializationProperties.cs" />
+    <Compile Include="Generated\Models\LongRunningOperationResponse.cs" />
+    <Compile Include="Generated\Models\Output.cs" />
+    <Compile Include="Generated\Models\OutputCreateOrUpdateParameters.cs" />
+    <Compile Include="Generated\Models\OutputCreateOrUpdateResponse.cs" />
+    <Compile Include="Generated\Models\OutputCreateOrUpdateWithRawJsonContentParameters.cs" />
+    <Compile Include="Generated\Models\OutputDataSource.cs" />
+    <Compile Include="Generated\Models\OutputGetResponse.cs" />
+    <Compile Include="Generated\Models\OutputListResponse.cs" />
+    <Compile Include="Generated\Models\OutputPatchParameters.cs" />
+    <Compile Include="Generated\Models\OutputPatchResponse.cs" />
+    <Compile Include="Generated\Models\OutputProperties.cs" />
+    <Compile Include="Generated\Models\OutputStartMode.cs" />
+    <Compile Include="Generated\Models\ReferenceInputDataSource.cs" />
+    <Compile Include="Generated\Models\ReferenceInputProperties.cs" />
+    <Compile Include="Generated\Models\Serialization.cs" />
+    <Compile Include="Generated\Models\Sku.cs" />
+    <Compile Include="Generated\Models\SqlAzureOutputDataSource.cs" />
+    <Compile Include="Generated\Models\SqlAzureOutputDataSourceProperties.cs" />
+    <Compile Include="Generated\Models\StorageAccount.cs" />
+    <Compile Include="Generated\Models\StreamInputDataSource.cs" />
+    <Compile Include="Generated\Models\StreamInputProperties.cs" />
+    <Compile Include="Generated\Models\SubscriptionQuotas.cs" />
+    <Compile Include="Generated\Models\SubscriptionQuotasGetResponse.cs" />
+    <Compile Include="Generated\Models\SubscriptionQuotasProperties.cs" />
+    <Compile Include="Generated\Models\Transformation.cs" />
+    <Compile Include="Generated\Models\TransformationCreateOrUpdateParameters.cs" />
+    <Compile Include="Generated\Models\TransformationCreateOrUpdateResponse.cs" />
+    <Compile Include="Generated\Models\TransformationCreateOrUpdateWithRawJsonContentParameters.cs" />
+    <Compile Include="Generated\Models\TransformationPatchParameters.cs" />
+    <Compile Include="Generated\Models\TransformationPatchResponse.cs" />
+    <Compile Include="Generated\Models\TransformationProperties.cs" />
+    <Compile Include="Generated\Models\TransformationsGetResponse.cs" />
+    <Compile Include="Generated\OutputOperations.cs" />
+    <Compile Include="Generated\OutputOperationsExtensions.cs" />
+    <Compile Include="Generated\StreamAnalyticsManagementClient.cs" />
+    <Compile Include="Generated\StreamAnalyticsManagementClientExtensions.cs" />
+    <Compile Include="Generated\SubscriptionOperations.cs" />
+    <Compile Include="Generated\SubscriptionOperationsExtensions.cs" />
+    <Compile Include="Generated\TransformationOperations.cs" />
+    <Compile Include="Generated\TransformationOperationsExtensions.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Generated\IInputOperations.cs" />
+    <Compile Include="Generated\Models\AvroSerialization.cs" />
+    <Compile Include="StreamAnalyticsManagementClient.Customization.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="GenerateCode.props" />
+    <None Include="Microsoft.Azure.Management.StreamAnalytics.nuget.proj" />
+    <None Include="Microsoft.Azure.Management.StreamAnalytics.nuspec" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="hyak.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.WindowsAzure.Common">
+      <HintPath>..\..\packages\Microsoft.WindowsAzure.Common.1.4.1\lib\portable-net45+wp8+wpa81+win\Microsoft.WindowsAzure.Common.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <Import Project="$(SolutionDir)\src\library.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(WindowsAzureCurrentConfiguration)' == 'portable' " />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(WindowsAzureCurrentConfiguration)' != 'portable' " />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets') " />
+  <Import Project="$(SolutionDir)\src\library.targets" />
+  <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
+    <Error Condition="!Exists('..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  </Target>
+  <Import Project="GenerateCode.props" />
+  <Import Project="..\..\packages\Hyak.Generator.1.0.5435.25687-prerelease\build\Hyak.Generator.targets" Condition="Exists('..\..\packages\Hyak.Generator.1.0.5435.25687-prerelease\build\Hyak.Generator.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\Hyak.Generator.1.0.5435.25687-prerelease\build\Hyak.Generator.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Hyak.Generator.1.0.5435.25687-prerelease\build\Hyak.Generator.targets'))" />
+  </Target>
+  <Target Name="DoSpecGeneration" DependsOnTargets="RestorePackages" BeforeTargets="BeforeBuild">
+    <CallTarget Targets="GenerateCodeFromSpecs" Condition="'$(HydraGeneratorImported)' != ''" />
+    <Error Text="The Hydra code generator package was restored from nuget. Build the project again to do code generation." Condition="Exists('..\..\packages\Hyak.Generator.1.0.5435.25687-prerelease\build\Hyak.Generator.targets') And '$(HydraGeneratorImported)' == ''" />
+    <Warning Text="The Hydra code generation packages are not available. Compilation will be done on existing generated sources." Condition="!Exists('..\..\packages\Hyak.Generator.1.0.5435.25687-prerelease\build\Hyak.Generator.targets')" />
+  </Target>
+  <Target Name="CopyMicrosoftAzureManagementStreamAnalyticsSpecification" BeforeTargets="GenerateCodeFromSpecs">
+    <Copy SourceFiles="..\..\packages\Microsoft.Azure.Management.StreamAnalytics.Specification.0.1.5449.29685-prerelease\tools\Microsoft.Azure.Management.StreamAnalytics.Specification.dll" DestinationFolder="." />
+  </Target>
+</Project>

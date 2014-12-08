@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models;
 
 namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
@@ -47,7 +48,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         /// </summary>
         public MetricValueSetCollection()
         {
-            this.Value = new List<MetricValueSet>();
+            this.Value = new LazyList<MetricValueSet>();
         }
     }
 }

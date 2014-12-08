@@ -124,11 +124,6 @@ namespace Microsoft.WindowsAzure.Management.Storage
                 }
             }
             // TODO: Validate parameters.Name is a valid DNS name.
-            int locationCount = (parameters.AffinityGroup != null ? 1 : 0) + (parameters.Location != null ? 1 : 0);
-            if (locationCount != 1)
-            {
-                throw new ArgumentException("Only one of parameters.AffinityGroup, parameters.Location may be provided.");
-            }
             
             // Tracing
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -165,7 +160,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -217,23 +212,26 @@ namespace Microsoft.WindowsAzure.Management.Storage
                 
                 if (parameters.ExtendedProperties != null)
                 {
-                    XElement extendedPropertiesDictionaryElement = new XElement(XName.Get("ExtendedProperties", "http://schemas.microsoft.com/windowsazure"));
-                    foreach (KeyValuePair<string, string> pair in parameters.ExtendedProperties)
+                    if (parameters.ExtendedProperties is ILazyCollection == false || ((ILazyCollection)parameters.ExtendedProperties).IsInitialized)
                     {
-                        string extendedPropertiesKey = pair.Key;
-                        string extendedPropertiesValue = pair.Value;
-                        XElement extendedPropertiesElement = new XElement(XName.Get("ExtendedProperty", "http://schemas.microsoft.com/windowsazure"));
-                        extendedPropertiesDictionaryElement.Add(extendedPropertiesElement);
-                        
-                        XElement extendedPropertiesKeyElement = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                        extendedPropertiesKeyElement.Value = extendedPropertiesKey;
-                        extendedPropertiesElement.Add(extendedPropertiesKeyElement);
-                        
-                        XElement extendedPropertiesValueElement = new XElement(XName.Get("Value", "http://schemas.microsoft.com/windowsazure"));
-                        extendedPropertiesValueElement.Value = extendedPropertiesValue;
-                        extendedPropertiesElement.Add(extendedPropertiesValueElement);
+                        XElement extendedPropertiesDictionaryElement = new XElement(XName.Get("ExtendedProperties", "http://schemas.microsoft.com/windowsazure"));
+                        foreach (KeyValuePair<string, string> pair in parameters.ExtendedProperties)
+                        {
+                            string extendedPropertiesKey = pair.Key;
+                            string extendedPropertiesValue = pair.Value;
+                            XElement extendedPropertiesElement = new XElement(XName.Get("ExtendedProperty", "http://schemas.microsoft.com/windowsazure"));
+                            extendedPropertiesDictionaryElement.Add(extendedPropertiesElement);
+                            
+                            XElement extendedPropertiesKeyElement = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                            extendedPropertiesKeyElement.Value = extendedPropertiesKey;
+                            extendedPropertiesElement.Add(extendedPropertiesKeyElement);
+                            
+                            XElement extendedPropertiesValueElement = new XElement(XName.Get("Value", "http://schemas.microsoft.com/windowsazure"));
+                            extendedPropertiesValueElement.Value = extendedPropertiesValue;
+                            extendedPropertiesElement.Add(extendedPropertiesValueElement);
+                        }
+                        createStorageServiceInputElement.Add(extendedPropertiesDictionaryElement);
                     }
-                    createStorageServiceInputElement.Add(extendedPropertiesDictionaryElement);
                 }
                 
                 if (parameters.AccountType != null)
@@ -364,7 +362,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -624,7 +622,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -746,7 +744,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1007,7 +1005,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1155,7 +1153,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1423,7 +1421,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1625,7 +1623,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1662,23 +1660,26 @@ namespace Microsoft.WindowsAzure.Management.Storage
                 
                 if (parameters.ExtendedProperties != null)
                 {
-                    XElement extendedPropertiesDictionaryElement = new XElement(XName.Get("ExtendedProperties", "http://schemas.microsoft.com/windowsazure"));
-                    foreach (KeyValuePair<string, string> pair in parameters.ExtendedProperties)
+                    if (parameters.ExtendedProperties is ILazyCollection == false || ((ILazyCollection)parameters.ExtendedProperties).IsInitialized)
                     {
-                        string extendedPropertiesKey = pair.Key;
-                        string extendedPropertiesValue = pair.Value;
-                        XElement extendedPropertiesElement = new XElement(XName.Get("ExtendedProperty", "http://schemas.microsoft.com/windowsazure"));
-                        extendedPropertiesDictionaryElement.Add(extendedPropertiesElement);
-                        
-                        XElement extendedPropertiesKeyElement = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                        extendedPropertiesKeyElement.Value = extendedPropertiesKey;
-                        extendedPropertiesElement.Add(extendedPropertiesKeyElement);
-                        
-                        XElement extendedPropertiesValueElement = new XElement(XName.Get("Value", "http://schemas.microsoft.com/windowsazure"));
-                        extendedPropertiesValueElement.Value = extendedPropertiesValue;
-                        extendedPropertiesElement.Add(extendedPropertiesValueElement);
+                        XElement extendedPropertiesDictionaryElement = new XElement(XName.Get("ExtendedProperties", "http://schemas.microsoft.com/windowsazure"));
+                        foreach (KeyValuePair<string, string> pair in parameters.ExtendedProperties)
+                        {
+                            string extendedPropertiesKey = pair.Key;
+                            string extendedPropertiesValue = pair.Value;
+                            XElement extendedPropertiesElement = new XElement(XName.Get("ExtendedProperty", "http://schemas.microsoft.com/windowsazure"));
+                            extendedPropertiesDictionaryElement.Add(extendedPropertiesElement);
+                            
+                            XElement extendedPropertiesKeyElement = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                            extendedPropertiesKeyElement.Value = extendedPropertiesKey;
+                            extendedPropertiesElement.Add(extendedPropertiesKeyElement);
+                            
+                            XElement extendedPropertiesValueElement = new XElement(XName.Get("Value", "http://schemas.microsoft.com/windowsazure"));
+                            extendedPropertiesValueElement.Value = extendedPropertiesValue;
+                            extendedPropertiesElement.Add(extendedPropertiesValueElement);
+                        }
+                        updateStorageServiceInputElement.Add(extendedPropertiesDictionaryElement);
                     }
-                    updateStorageServiceInputElement.Add(extendedPropertiesDictionaryElement);
                 }
                 
                 if (parameters.AccountType != null)

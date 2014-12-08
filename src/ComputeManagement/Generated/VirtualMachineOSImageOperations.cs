@@ -136,7 +136,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -263,7 +263,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -403,7 +403,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -676,6 +676,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             string languageInstance = languageElement2.Value;
                             result.Language = languageInstance;
                         }
+                        
+                        XElement iOTypeElement = oSImageElement2.Element(XName.Get("IOType", "http://schemas.microsoft.com/windowsazure"));
+                        if (iOTypeElement != null)
+                        {
+                            string iOTypeInstance = iOTypeElement.Value;
+                            result.IOType = iOTypeInstance;
+                        }
                     }
                     
                     result.StatusCode = statusCode;
@@ -775,7 +782,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -897,7 +904,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1079,6 +1086,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             string languageInstance = languageElement.Value;
                             result.Language = languageInstance;
                         }
+                        
+                        XElement iOTypeElement = oSImageElement.Element(XName.Get("IOType", "http://schemas.microsoft.com/windowsazure"));
+                        if (iOTypeElement != null)
+                        {
+                            string iOTypeInstance = iOTypeElement.Value;
+                            result.IOType = iOTypeInstance;
+                        }
                     }
                     
                     result.StatusCode = statusCode;
@@ -1167,7 +1181,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1380,6 +1394,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             string languageInstance = languageElement.Value;
                             result.Language = languageInstance;
                         }
+                        
+                        XElement iOTypeElement = oSImageDetailsElement.Element(XName.Get("IOType", "http://schemas.microsoft.com/windowsazure"));
+                        if (iOTypeElement != null)
+                        {
+                            string iOTypeInstance = iOTypeElement.Value;
+                            result.IOType = iOTypeInstance;
+                        }
                     }
                     
                     result.StatusCode = statusCode;
@@ -1461,7 +1482,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1586,6 +1607,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 oSImageInstance.ImageFamily = imageFamilyInstance;
                             }
                             
+                            XElement showInGuiElement = imagesElement.Element(XName.Get("ShowInGui", "http://schemas.microsoft.com/windowsazure"));
+                            if (showInGuiElement != null && string.IsNullOrEmpty(showInGuiElement.Value) == false)
+                            {
+                                bool showInGuiInstance = bool.Parse(showInGuiElement.Value);
+                                oSImageInstance.ShowInGui = showInGuiInstance;
+                            }
+                            
                             XElement publishedDateElement = imagesElement.Element(XName.Get("PublishedDate", "http://schemas.microsoft.com/windowsazure"));
                             if (publishedDateElement != null)
                             {
@@ -1640,6 +1668,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             {
                                 string languageInstance = languageElement.Value;
                                 oSImageInstance.Language = languageInstance;
+                            }
+                            
+                            XElement iOTypeElement = imagesElement.Element(XName.Get("IOType", "http://schemas.microsoft.com/windowsazure"));
+                            if (iOTypeElement != null)
+                            {
+                                string iOTypeInstance = iOTypeElement.Value;
+                                oSImageInstance.IOType = iOTypeInstance;
                             }
                         }
                     }
@@ -1739,7 +1774,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1754,14 +1789,17 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 if (parameters.TargetLocations != null)
                 {
-                    XElement targetLocationsSequenceElement = new XElement(XName.Get("TargetLocations", "http://schemas.microsoft.com/windowsazure"));
-                    foreach (string targetLocationsItem in parameters.TargetLocations)
+                    if (parameters.TargetLocations is ILazyCollection == false || ((ILazyCollection)parameters.TargetLocations).IsInitialized)
                     {
-                        XElement targetLocationsItemElement = new XElement(XName.Get("Region", "http://schemas.microsoft.com/windowsazure"));
-                        targetLocationsItemElement.Value = targetLocationsItem;
-                        targetLocationsSequenceElement.Add(targetLocationsItemElement);
+                        XElement targetLocationsSequenceElement = new XElement(XName.Get("TargetLocations", "http://schemas.microsoft.com/windowsazure"));
+                        foreach (string targetLocationsItem in parameters.TargetLocations)
+                        {
+                            XElement targetLocationsItemElement = new XElement(XName.Get("Region", "http://schemas.microsoft.com/windowsazure"));
+                            targetLocationsItemElement.Value = targetLocationsItem;
+                            targetLocationsSequenceElement.Add(targetLocationsItemElement);
+                        }
+                        replicationInputElement.Add(targetLocationsSequenceElement);
                     }
-                    replicationInputElement.Add(targetLocationsSequenceElement);
                 }
                 
                 requestContent = requestDoc.ToString();
@@ -2126,7 +2164,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2392,6 +2430,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         {
                             string languageInstance = languageElement2.Value;
                             result.Language = languageInstance;
+                        }
+                        
+                        XElement iOTypeElement = oSImageElement2.Element(XName.Get("IOType", "http://schemas.microsoft.com/windowsazure"));
+                        if (iOTypeElement != null)
+                        {
+                            string iOTypeInstance = iOTypeElement.Value;
+                            result.IOType = iOTypeInstance;
                         }
                     }
                     

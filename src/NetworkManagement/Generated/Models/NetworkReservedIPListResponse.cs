@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Management.Network.Models;
 
 namespace Microsoft.WindowsAzure.Management.Network.Models
@@ -49,7 +50,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         /// </summary>
         public NetworkReservedIPListResponse()
         {
-            this.ReservedIPs = new List<NetworkReservedIPListResponse.ReservedIP>();
+            this.ReservedIPs = new LazyList<NetworkReservedIPListResponse.ReservedIP>();
         }
         
         /// <summary>

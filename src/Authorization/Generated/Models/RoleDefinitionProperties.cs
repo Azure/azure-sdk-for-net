@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Management.Authorization.Models;
+using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Management.Authorization.Models
 {
@@ -91,7 +92,7 @@ namespace Microsoft.Azure.Management.Authorization.Models
         /// </summary>
         public RoleDefinitionProperties()
         {
-            this.Permissions = new List<Permission>();
+            this.Permissions = new LazyList<Permission>();
         }
     }
 }

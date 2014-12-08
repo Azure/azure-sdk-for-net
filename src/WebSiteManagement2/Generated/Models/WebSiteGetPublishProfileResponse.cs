@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Management.WebSites.Models;
 using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
@@ -49,7 +50,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         public WebSiteGetPublishProfileResponse()
         {
-            this.PublishProfiles = new List<WebSiteGetPublishProfileResponse.PublishProfile>();
+            this.PublishProfiles = new LazyList<WebSiteGetPublishProfileResponse.PublishProfile>();
         }
         
         /// <summary>
@@ -289,7 +290,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
             /// </summary>
             public PublishProfile()
             {
-                this.Databases = new List<WebSiteGetPublishProfileResponse.Database>();
+                this.Databases = new LazyList<WebSiteGetPublishProfileResponse.Database>();
             }
         }
     }

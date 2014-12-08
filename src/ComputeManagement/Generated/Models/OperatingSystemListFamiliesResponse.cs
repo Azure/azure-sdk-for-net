@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
@@ -50,7 +51,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public OperatingSystemListFamiliesResponse()
         {
-            this.OperatingSystemFamilies = new List<OperatingSystemListFamiliesResponse.OperatingSystemFamily>();
+            this.OperatingSystemFamilies = new LazyList<OperatingSystemListFamiliesResponse.OperatingSystemFamily>();
         }
         
         /// <summary>
@@ -199,7 +200,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             /// </summary>
             public OperatingSystemFamily()
             {
-                this.OperatingSystems = new List<OperatingSystemListFamiliesResponse.OperatingSystem>();
+                this.OperatingSystems = new LazyList<OperatingSystemListFamiliesResponse.OperatingSystem>();
             }
         }
     }

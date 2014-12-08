@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Management.WebSites.Models;
+using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
@@ -47,7 +48,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         public BackupItemsEnvelope()
         {
-            this.Properties = new List<BackupItem>();
+            this.Properties = new LazyList<BackupItem>();
         }
         
         /// <summary>

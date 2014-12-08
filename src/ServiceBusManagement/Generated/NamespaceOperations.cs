@@ -422,6 +422,20 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                                     bool enabledInstance = bool.Parse(enabledElement.Value);
                                     namespaceDescriptionInstance.Enabled = enabledInstance;
                                 }
+                                
+                                XElement createACSNamespaceElement = namespaceDescriptionElement2.Element(XName.Get("CreateACSNamespace", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
+                                if (createACSNamespaceElement != null)
+                                {
+                                    bool createACSNamespaceInstance = bool.Parse(createACSNamespaceElement.Value);
+                                    namespaceDescriptionInstance.CreateACSNamespace = createACSNamespaceInstance;
+                                }
+                                
+                                XElement namespaceTypeElement = namespaceDescriptionElement2.Element(XName.Get("NamespaceType", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
+                                if (namespaceTypeElement != null)
+                                {
+                                    NamespaceType namespaceTypeInstance = ((NamespaceType)Enum.Parse(typeof(NamespaceType), namespaceTypeElement.Value, true));
+                                    namespaceDescriptionInstance.NamespaceType = namespaceTypeInstance;
+                                }
                             }
                         }
                     }
@@ -560,14 +574,17 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                 
                 if (rule.Rights != null)
                 {
-                    XElement rightsSequenceElement = new XElement(XName.Get("Rights", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
-                    foreach (AccessRight rightsItem in rule.Rights)
+                    if (rule.Rights is ILazyCollection == false || ((ILazyCollection)rule.Rights).IsInitialized)
                     {
-                        XElement rightsItemElement = new XElement(XName.Get("AccessRights", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
-                        rightsItemElement.Value = rightsItem.ToString();
-                        rightsSequenceElement.Add(rightsItemElement);
+                        XElement rightsSequenceElement = new XElement(XName.Get("Rights", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
+                        foreach (AccessRight rightsItem in rule.Rights)
+                        {
+                            XElement rightsItemElement = new XElement(XName.Get("AccessRights", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
+                            rightsItemElement.Value = rightsItem.ToString();
+                            rightsSequenceElement.Add(rightsItemElement);
+                        }
+                        sharedAccessAuthorizationRuleElement.Add(rightsSequenceElement);
                     }
-                    sharedAccessAuthorizationRuleElement.Add(rightsSequenceElement);
                 }
                 
                 XElement createdTimeElement = new XElement(XName.Get("CreatedTime", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
@@ -957,6 +974,20 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                                 {
                                     bool enabledInstance = bool.Parse(enabledElement.Value);
                                     namespaceDescriptionInstance.Enabled = enabledInstance;
+                                }
+                                
+                                XElement createACSNamespaceElement2 = namespaceDescriptionElement2.Element(XName.Get("CreateACSNamespace", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
+                                if (createACSNamespaceElement2 != null)
+                                {
+                                    bool createACSNamespaceInstance = bool.Parse(createACSNamespaceElement2.Value);
+                                    namespaceDescriptionInstance.CreateACSNamespace = createACSNamespaceInstance;
+                                }
+                                
+                                XElement namespaceTypeElement2 = namespaceDescriptionElement2.Element(XName.Get("NamespaceType", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
+                                if (namespaceTypeElement2 != null)
+                                {
+                                    NamespaceType namespaceTypeInstance = ((NamespaceType)Enum.Parse(typeof(NamespaceType), namespaceTypeElement2.Value, true));
+                                    namespaceDescriptionInstance.NamespaceType = namespaceTypeInstance;
                                 }
                             }
                         }
@@ -1409,6 +1440,20 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                                 {
                                     bool enabledInstance = bool.Parse(enabledElement.Value);
                                     namespaceDescriptionInstance.Enabled = enabledInstance;
+                                }
+                                
+                                XElement createACSNamespaceElement = namespaceDescriptionElement.Element(XName.Get("CreateACSNamespace", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
+                                if (createACSNamespaceElement != null)
+                                {
+                                    bool createACSNamespaceInstance = bool.Parse(createACSNamespaceElement.Value);
+                                    namespaceDescriptionInstance.CreateACSNamespace = createACSNamespaceInstance;
+                                }
+                                
+                                XElement namespaceTypeElement = namespaceDescriptionElement.Element(XName.Get("NamespaceType", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
+                                if (namespaceTypeElement != null)
+                                {
+                                    NamespaceType namespaceTypeInstance = ((NamespaceType)Enum.Parse(typeof(NamespaceType), namespaceTypeElement.Value, true));
+                                    namespaceDescriptionInstance.NamespaceType = namespaceTypeInstance;
                                 }
                             }
                         }
@@ -2005,6 +2050,20 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                                             bool enabledInstance = bool.Parse(enabledElement.Value);
                                             entryInstance.Enabled = enabledInstance;
                                         }
+                                        
+                                        XElement createACSNamespaceElement = namespaceDescriptionElement.Element(XName.Get("CreateACSNamespace", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
+                                        if (createACSNamespaceElement != null)
+                                        {
+                                            bool createACSNamespaceInstance = bool.Parse(createACSNamespaceElement.Value);
+                                            entryInstance.CreateACSNamespace = createACSNamespaceInstance;
+                                        }
+                                        
+                                        XElement namespaceTypeElement = namespaceDescriptionElement.Element(XName.Get("NamespaceType", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
+                                        if (namespaceTypeElement != null)
+                                        {
+                                            NamespaceType namespaceTypeInstance = ((NamespaceType)Enum.Parse(typeof(NamespaceType), namespaceTypeElement.Value, true));
+                                            entryInstance.NamespaceType = namespaceTypeInstance;
+                                        }
                                     }
                                 }
                             }
@@ -2356,14 +2415,17 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                     
                     if (rule.Rights != null)
                     {
-                        XElement rightsSequenceElement = new XElement(XName.Get("Rights", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
-                        foreach (AccessRight rightsItem in rule.Rights)
+                        if (rule.Rights is ILazyCollection == false || ((ILazyCollection)rule.Rights).IsInitialized)
                         {
-                            XElement rightsItemElement = new XElement(XName.Get("AccessRights", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
-                            rightsItemElement.Value = rightsItem.ToString();
-                            rightsSequenceElement.Add(rightsItemElement);
+                            XElement rightsSequenceElement = new XElement(XName.Get("Rights", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
+                            foreach (AccessRight rightsItem in rule.Rights)
+                            {
+                                XElement rightsItemElement = new XElement(XName.Get("AccessRights", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
+                                rightsItemElement.Value = rightsItem.ToString();
+                                rightsSequenceElement.Add(rightsItemElement);
+                            }
+                            sharedAccessAuthorizationRuleElement.Add(rightsSequenceElement);
                         }
-                        sharedAccessAuthorizationRuleElement.Add(rightsSequenceElement);
                     }
                     
                     XElement createdTimeElement = new XElement(XName.Get("CreatedTime", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
