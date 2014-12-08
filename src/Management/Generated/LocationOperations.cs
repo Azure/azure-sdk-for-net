@@ -116,7 +116,7 @@ namespace Microsoft.WindowsAzure.Management
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -184,6 +184,23 @@ namespace Microsoft.WindowsAzure.Management
                                 foreach (XElement availableServicesElement in availableServicesSequenceElement.Elements(XName.Get("AvailableService", "http://schemas.microsoft.com/windowsazure")))
                                 {
                                     locationInstance.AvailableServices.Add(availableServicesElement.Value);
+                                }
+                            }
+                            
+                            XElement storageCapabilitiesElement = locationsElement.Element(XName.Get("StorageCapabilities", "http://schemas.microsoft.com/windowsazure"));
+                            if (storageCapabilitiesElement != null)
+                            {
+                                StorageCapabilities storageCapabilitiesInstance = new StorageCapabilities();
+                                locationInstance.StorageCapabilities = storageCapabilitiesInstance;
+                                
+                                XElement storageAccountTypesSequenceElement = storageCapabilitiesElement.Element(XName.Get("StorageAccountTypes", "http://schemas.microsoft.com/windowsazure"));
+                                if (storageAccountTypesSequenceElement != null)
+                                {
+                                    storageCapabilitiesInstance.StorageAccountTypes = new List<string>();
+                                    foreach (XElement storageAccountTypesElement in storageAccountTypesSequenceElement.Elements(XName.Get("StorageAccountType", "http://schemas.microsoft.com/windowsazure")))
+                                    {
+                                        storageCapabilitiesInstance.StorageAccountTypes.Add(storageAccountTypesElement.Value);
+                                    }
                                 }
                             }
                             

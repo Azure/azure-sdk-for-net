@@ -35,6 +35,25 @@ namespace Microsoft.WindowsAzure.Management.Compute
     public partial interface IVirtualMachineVMImageOperations
     {
         /// <summary>
+        /// The Create VM Image operation creates a VM image that in your image
+        /// repository.  (see
+        /// http://msdn.microsoft.com/en-us/library/azure/dn775054.aspx for
+        /// more information)
+        /// </summary>
+        /// <param name='parameters'>
+        /// Parameters supplied to the virtual machine VM image create
+        /// operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<OperationResponse> BeginCreatingAsync(VirtualMachineVMImageCreateParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// The Begin Deleting Virtual Machine Image operation deletes the
         /// specified virtual machine image.
         /// </summary>
@@ -95,6 +114,31 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// request ID.
         /// </returns>
         Task<OperationResponse> BeginUnreplicatingAsync(string vmImageName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Create VM Image operation creates a VM image that in your image
+        /// repository.  (see
+        /// http://msdn.microsoft.com/en-us/library/azure/dn775054.aspx for
+        /// more information)
+        /// </summary>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Create Virtual Machine Image operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        Task<OperationStatusResponse> CreateAsync(VirtualMachineVMImageCreateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Delete Virtual Machine Image operation deletes the specified

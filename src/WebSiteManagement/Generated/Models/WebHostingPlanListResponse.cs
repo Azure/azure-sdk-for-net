@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Management.WebSites.Models;
 
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
@@ -48,7 +49,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public WebHostingPlanListResponse()
         {
-            this.WebHostingPlans = new List<WebHostingPlan>();
+            this.WebHostingPlans = new LazyList<WebHostingPlan>();
         }
         
         /// <summary>

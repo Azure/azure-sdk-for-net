@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.WebSitesExtensions.Models;
 
 namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
@@ -48,7 +49,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         /// </summary>
         public DeploymentListLogsResponse()
         {
-            this.Logs = new List<DeploymentLog>();
+            this.Logs = new LazyList<DeploymentLog>();
         }
         
         /// <summary>

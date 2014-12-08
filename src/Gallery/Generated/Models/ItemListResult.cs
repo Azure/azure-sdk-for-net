@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Gallery;
 using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Gallery.Models
 {
@@ -48,7 +49,7 @@ namespace Microsoft.Azure.Gallery.Models
         /// </summary>
         public ItemListResult()
         {
-            this.Items = new List<GalleryItem>();
+            this.Items = new LazyList<GalleryItem>();
         }
     }
 }

@@ -1,0 +1,211 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <WindowsAzureLibraryProfileSet>portable/net45/net40</WindowsAzureLibraryProfileSet>
+    <ProjectGuid>{5CF6CC47-222C-4510-9123-1F9CC35B6E50}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Microsoft.Azure.Management.DataFactories</RootNamespace>
+    <AssemblyName>Microsoft.Azure.Management.DataFactories</AssemblyName>
+    <OutputType>Library</OutputType>
+    <RestorePackages>true</RestorePackages>
+    <NuGetPackageImportStamp>0be9922d</NuGetPackageImportStamp>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Profile7</TargetFrameworkProfile>
+  </PropertyGroup>
+  <Import Project="..\library.props" />
+  <ItemGroup>
+    <Compile Include="DataPipelineManagementClient.Customization.cs" />
+    <Compile Include="Generated\DataFactoryOperations.cs" />
+    <Compile Include="Generated\DataFactoryOperationsExtensions.cs" />
+    <Compile Include="Generated\DataPipelineManagementClient.cs" />
+    <Compile Include="Generated\DataPipelineManagementClientExtensions.cs" />
+    <Compile Include="Generated\DataSliceOperations.cs" />
+    <Compile Include="Generated\DataSliceOperationsExtensions.cs" />
+    <Compile Include="Generated\DataSliceRunOperations.cs" />
+    <Compile Include="Generated\DataSliceRunOperationsExtensions.cs" />
+    <Compile Include="Generated\EncryptionCertificateOperations.cs" />
+    <Compile Include="Generated\EncryptionCertificateOperationsExtensions.cs" />
+    <Compile Include="Generated\GatewayOperations.cs" />
+    <Compile Include="Generated\GatewayOperationsExtensions.cs" />
+    <Compile Include="Generated\HubOperations.cs" />
+    <Compile Include="Generated\HubOperationsExtensions.cs" />
+    <Compile Include="Generated\IDataFactoryOperations.cs" />
+    <Compile Include="Generated\IDataPipelineManagementClient.cs" />
+    <Compile Include="Generated\IDataSliceOperations.cs" />
+    <Compile Include="Generated\IDataSliceRunOperations.cs" />
+    <Compile Include="Generated\IEncryptionCertificateOperations.cs" />
+    <Compile Include="Generated\IGatewayOperations.cs" />
+    <Compile Include="Generated\IHubOperations.cs" />
+    <Compile Include="Generated\ILinkedServiceOperations.cs" />
+    <Compile Include="Generated\IPipelineOperations.cs" />
+    <Compile Include="Generated\IPipelineRunOperations.cs" />
+    <Compile Include="Generated\ITableOperations.cs" />
+    <Compile Include="Generated\LinkedServiceOperations.cs" />
+    <Compile Include="Generated\LinkedServiceOperationsExtensions.cs" />
+    <Compile Include="Generated\Models\BaseActivity.cs" />
+    <Compile Include="Generated\Models\ActivityInput.cs" />
+    <Compile Include="Generated\Models\ActivityOutput.cs" />
+    <Compile Include="Generated\Models\ActivityPolicy.cs" />
+    <Compile Include="Generated\Models\Availability.cs" />
+    <Compile Include="Generated\Models\AvroFormat.cs" />
+    <Compile Include="Generated\Models\AzureBlobLocation.cs" />
+    <Compile Include="Generated\Models\AzureQueueSink.cs" />
+    <Compile Include="Generated\Models\AzureMLBatchScoringActivity.cs" />
+    <Compile Include="Generated\Models\AzureMLLinkedService.cs" />
+    <Compile Include="Generated\Models\AzureSqlLinkedService.cs" />
+    <Compile Include="Generated\Models\AzureSqlTableLocation.cs" />
+    <Compile Include="Generated\Models\AzureStorageLinkedService.cs" />
+    <Compile Include="Generated\Models\AzureTableLocation.cs" />
+    <Compile Include="Generated\Models\AzureTableSink.cs" />
+    <Compile Include="Generated\Models\AzureTableSource.cs" />
+    <Compile Include="Generated\Models\BlobSink.cs" />
+    <Compile Include="Generated\Models\BlobSource.cs" />
+    <Compile Include="Generated\Models\CopyActivity.cs" />
+    <Compile Include="Generated\Models\CopyActivityProperties.cs" />
+    <Compile Include="Generated\Models\CopySink.cs" />
+    <Compile Include="Generated\Models\CopySource.cs" />
+    <Compile Include="Generated\Models\CopyTranslator.cs" />
+    <Compile Include="Generated\Models\DotNetActivity.cs" />
+    <Compile Include="Generated\Models\DotNetActivityProperties.cs" />
+    <Compile Include="Generated\Models\CustomLinkedService.cs" />
+    <Compile Include="Generated\Models\CustomLocation.cs" />
+    <Compile Include="Generated\Models\DataElement.cs" />
+    <Compile Include="Generated\Models\DataFactory.cs" />
+    <Compile Include="Generated\Models\DataFactoryCreateOrUpdateParameters.cs" />
+    <Compile Include="Generated\Models\DataFactoryCreateOrUpdateResponse.cs" />
+    <Compile Include="Generated\Models\DataFactoryGetResponse.cs" />
+    <Compile Include="Generated\Models\DataFactoryListResponse.cs" />
+    <Compile Include="Generated\Models\DataFactoryProperties.cs" />
+    <Compile Include="Generated\Models\DataSlice.cs" />
+    <Compile Include="Generated\Models\DataSliceLatencyStatus.cs" />
+    <Compile Include="Generated\Models\DataSliceListResponse.cs" />
+    <Compile Include="Generated\Models\DataSliceRun.cs" />
+    <Compile Include="Generated\Models\DataSliceRunGetLogsResponse.cs" />
+    <Compile Include="Generated\Models\DataSliceRunListResponse.cs" />
+    <Compile Include="Generated\Models\DataSliceSetStatusParameters.cs" />
+    <Compile Include="Generated\Models\DataSliceStatus.cs" />
+    <Compile Include="Generated\Models\DateTimePartitionValue.cs" />
+    <Compile Include="Generated\Models\EncryptionCertificateGetResponse.cs" />
+    <Compile Include="Generated\Models\EntityStatus.cs" />
+    <Compile Include="Generated\Models\ExecutionPriorityOrder.cs" />
+    <Compile Include="Generated\Models\Gateway.cs" />
+    <Compile Include="Generated\Models\GatewayConnectionInfo.cs" />
+    <Compile Include="Generated\Models\GatewayConnectionInfoRetrieveResponse.cs" />
+    <Compile Include="Generated\Models\GatewayCreateOrUpdateParameters.cs" />
+    <Compile Include="Generated\Models\GatewayCreateOrUpdateResponse.cs" />
+    <Compile Include="Generated\Models\GatewayGetResponse.cs" />
+    <Compile Include="Generated\Models\GatewayListResponse.cs" />
+    <Compile Include="Generated\Models\GatewayProperties.cs" />
+    <Compile Include="Generated\Models\GatewayRegenerateKeyResponse.cs" />
+    <Compile Include="Generated\Models\GatewayStatus.cs" />
+    <Compile Include="Generated\Models\GatewayVersionStatus.cs" />
+    <Compile Include="Generated\Models\HDInsightActivity.cs" />
+    <Compile Include="Generated\Models\HDInsightActivityPropertiesBase.cs" />
+    <Compile Include="Generated\Models\HDInsightBYOCLinkedService.cs" />
+    <Compile Include="Generated\Models\HDInsightOnDemandLinkedService.cs" />
+    <Compile Include="Generated\Models\Hive.cs" />
+    <Compile Include="Generated\Models\Hub.cs" />
+    <Compile Include="Generated\Models\HubBaseProperties.cs" />
+    <Compile Include="Generated\Models\HubCreateOrUpdateParameters.cs" />
+    <Compile Include="Generated\Models\HubCreateOrUpdateResponse.cs" />
+    <Compile Include="Generated\Models\HubCreateOrUpdateWithRawJsonContentParameters.cs" />
+    <Compile Include="Generated\Models\HubGetResponse.cs" />
+    <Compile Include="Generated\Models\HubListResponse.cs" />
+    <Compile Include="Generated\Models\HubProperties.cs" />
+    <Compile Include="Generated\Models\InternalHubProperties.cs" />
+    <Compile Include="Generated\Models\LatencyPolicy.cs" />
+    <Compile Include="Generated\Models\LinkedService.cs" />
+    <Compile Include="Generated\Models\LinkedServiceCreateOrUpdateParameters.cs" />
+    <Compile Include="Generated\Models\LinkedServiceCreateOrUpdateResponse.cs" />
+    <Compile Include="Generated\Models\LinkedServiceCreateOrUpdateWithRawJsonContentParameters.cs" />
+    <Compile Include="Generated\Models\LinkedServiceGetResponse.cs" />
+    <Compile Include="Generated\Models\LinkedServiceListResponse.cs" />
+    <Compile Include="Generated\Models\LinkedServiceProperties.cs" />
+    <Compile Include="Generated\Models\LongRunningOperationResponse.cs" />
+    <Compile Include="Generated\Models\MapReduce.cs" />
+    <Compile Include="Generated\Models\OnPremisesSqlLinkedService.cs" />
+    <Compile Include="Generated\Models\OnPremisesSqlServerTableLocation.cs" />
+    <Compile Include="Generated\Models\Partition.cs" />
+    <Compile Include="Generated\Models\PartitionValue.cs" />
+    <Compile Include="Generated\Models\Pig.cs" />
+    <Compile Include="Generated\Models\Pipeline.cs" />
+    <Compile Include="Generated\Models\PipelineCreateOrUpdateParameters.cs" />
+    <Compile Include="Generated\Models\PipelineCreateOrUpdateResponse.cs" />
+    <Compile Include="Generated\Models\PipelineCreateOrUpdateWithRawJsonContentParameters.cs" />
+    <Compile Include="Generated\Models\PipelineGetResponse.cs" />
+    <Compile Include="Generated\Models\PipelineListResponse.cs" />
+    <Compile Include="Generated\Models\PipelineProperties.cs" />
+    <Compile Include="Generated\Models\PipelineRunListParameters.cs" />
+    <Compile Include="Generated\Models\PipelineRunListResponse.cs" />
+    <Compile Include="Generated\Models\PipelineRuntimeInfo.cs" />
+    <Compile Include="Generated\Models\PipelineSetActivePeriodParameters.cs" />
+    <Compile Include="Generated\Models\Policy.cs" />
+    <Compile Include="Generated\Models\PropertyDataType.cs" />
+    <Compile Include="Generated\Models\RunRecordType.cs" />
+    <Compile Include="Generated\Models\RunStatus.cs" />
+    <Compile Include="Generated\Models\SchedulePeriod.cs" />
+    <Compile Include="Generated\Models\SchedulerStyle.cs" />
+    <Compile Include="Generated\Models\SetSliceStatusType.cs" />
+    <Compile Include="Generated\Models\SqlSink.cs" />
+    <Compile Include="Generated\Models\SqlSource.cs" />
+    <Compile Include="Generated\Models\StorageFormat.cs" />
+    <Compile Include="Generated\Models\Table.cs" />
+    <Compile Include="Generated\Models\TableCreateOrUpdateParameters.cs" />
+    <Compile Include="Generated\Models\TableCreateOrUpdateResponse.cs" />
+    <Compile Include="Generated\Models\TableCreateOrUpdateWithRawJsonContentParameters.cs" />
+    <Compile Include="Generated\Models\TableGetResponse.cs" />
+    <Compile Include="Generated\Models\TableListResponse.cs" />
+    <Compile Include="Generated\Models\TableLocation.cs" />
+    <Compile Include="Generated\Models\TableProperties.cs" />
+    <Compile Include="Generated\Models\TabularTranslator.cs" />
+    <Compile Include="Generated\Models\TextFormat.cs" />
+    <Compile Include="Generated\Models\ValidationPolicy.cs" />
+    <Compile Include="Generated\Models\WaitOnExternal.cs" />
+    <Compile Include="Generated\PipelineOperations.cs" />
+    <Compile Include="Generated\PipelineOperationsExtensions.cs" />
+    <Compile Include="Generated\PipelineRunOperations.cs" />
+    <Compile Include="Generated\PipelineRunOperationsExtensions.cs" />
+    <Compile Include="Generated\TableOperations.cs" />
+    <Compile Include="Generated\TableOperationsExtensions.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="GenerateCode.props" />
+    <None Include="Microsoft.Azure.Management.DataFactories.nuspec" />
+    <None Include="Microsoft.Azure.Management.DataFactories.nuget.proj" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="hyak.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.WindowsAzure.Common">
+      <HintPath>..\..\packages\Microsoft.WindowsAzure.Common.1.4.1\lib\portable-net45+wp8+wpa81+win\Microsoft.WindowsAzure.Common.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(WindowsAzureCurrentConfiguration)' == 'portable' " />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(WindowsAzureCurrentConfiguration)' != 'portable' " />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets') " />
+  <Import Project="$(SolutionDir)\src\library.targets" />
+  <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
+    <Error Condition="!Exists('..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  </Target>
+  <Import Project="GenerateCode.props" />
+  <Import Project="..\..\packages\Hyak.Generator.1.0.5400.37276-prerelease\build\Hyak.Generator.targets" Condition="Exists('..\..\packages\Hyak.Generator.1.0.5400.37276-prerelease\build\Hyak.Generator.targets')" />
+  <Target Name="DoSpecGeneration" DependsOnTargets="RestorePackages" BeforeTargets="BeforeBuild">
+    <CallTarget Targets="GenerateCodeFromSpecs" Condition="'$(HydraGeneratorImported)' != ''" />
+    <Error Text="The Hyak code generator package was restored from nuget. Build the project again to do code generation." Condition="Exists('..\..\packages\Hyak.Generator.1.0.5400.37276-prerelease\build\Hyak.Generator.targets') And '$(HydraGeneratorImported)' == ''" />
+    <Warning Text="The Hyak code generation packages are not available. Compilation will be done on existing generated sources." Condition="!Exists('..\..\packages\Hyak.Generator.1.0.5400.37276-prerelease\build\Hyak.Generator.targets')" />
+  </Target>
+  <Target Name="CopyMicrosoftAzureManagementDataFactoriesSpecification" BeforeTargets="GenerateCodeFromSpecs">
+    <Copy SourceFiles="..\..\packages\Microsoft.Azure.Management.DataFactories.Specification.0.1.5448.25736-prerelease\tools\Microsoft.Azure.Management.DataFactories.Specification.dll" DestinationFolder="." />
+  </Target>
+</Project>

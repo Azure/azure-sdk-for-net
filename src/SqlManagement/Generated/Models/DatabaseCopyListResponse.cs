@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Management.Sql.Models;
 
 namespace Microsoft.WindowsAzure.Management.Sql.Models
@@ -49,7 +50,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public DatabaseCopyListResponse()
         {
-            this.DatabaseCopies = new List<DatabaseCopy>();
+            this.DatabaseCopies = new LazyList<DatabaseCopy>();
         }
         
         /// <summary>

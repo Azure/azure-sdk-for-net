@@ -136,6 +136,17 @@ namespace Microsoft.WindowsAzure.Management.Network
             get { return this._networks; }
         }
         
+        private INetworkSecurityGroupOperations _networkSecurityGroups;
+        
+        /// <summary>
+        /// The Network Management API includes operations for managing the
+        /// Network Security Groups for your subscription.
+        /// </summary>
+        public virtual INetworkSecurityGroupOperations NetworkSecurityGroups
+        {
+            get { return this._networkSecurityGroups; }
+        }
+        
         private IReservedIPOperations _reservedIPs;
         
         /// <summary>
@@ -145,6 +156,17 @@ namespace Microsoft.WindowsAzure.Management.Network
         public virtual IReservedIPOperations ReservedIPs
         {
             get { return this._reservedIPs; }
+        }
+        
+        private IRouteOperations _routes;
+        
+        /// <summary>
+        /// The Network Management API includes operations for managing the
+        /// routes for your subscription.
+        /// </summary>
+        public virtual IRouteOperations Routes
+        {
+            get { return this._routes; }
         }
         
         private IStaticIPOperations _staticIPs;
@@ -167,9 +189,11 @@ namespace Microsoft.WindowsAzure.Management.Network
             this._clientRootCertificates = new ClientRootCertificateOperations(this);
             this._gateways = new GatewayOperations(this);
             this._networks = new NetworkOperations(this);
+            this._networkSecurityGroups = new NetworkSecurityGroupOperations(this);
             this._reservedIPs = new ReservedIPOperations(this);
+            this._routes = new RouteOperations(this);
             this._staticIPs = new StaticIPOperations(this);
-            this._apiVersion = "2014-05-01";
+            this._apiVersion = "2014-10-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -184,7 +208,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Gets the URI used as the base for all cloud service
+        /// Optional. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
         public NetworkManagementClient(SubscriptionCloudCredentials credentials, Uri baseUri)
@@ -237,9 +261,11 @@ namespace Microsoft.WindowsAzure.Management.Network
             this._clientRootCertificates = new ClientRootCertificateOperations(this);
             this._gateways = new GatewayOperations(this);
             this._networks = new NetworkOperations(this);
+            this._networkSecurityGroups = new NetworkSecurityGroupOperations(this);
             this._reservedIPs = new ReservedIPOperations(this);
+            this._routes = new RouteOperations(this);
             this._staticIPs = new StaticIPOperations(this);
-            this._apiVersion = "2014-05-01";
+            this._apiVersion = "2014-10-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -254,7 +280,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Gets the URI used as the base for all cloud service
+        /// Optional. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
         /// <param name='httpClient'>
@@ -327,6 +353,50 @@ namespace Microsoft.WindowsAzure.Management.Network
         }
         
         /// <summary>
+        /// Parse enum values for type LocalNetworkConnectionType.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to parse.
+        /// </param>
+        /// <returns>
+        /// The enum value.
+        /// </returns>
+        internal static LocalNetworkConnectionType ParseLocalNetworkConnectionType(string value)
+        {
+            if ("IPsec".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return LocalNetworkConnectionType.IPSecurity;
+            }
+            if ("Dedicated".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return LocalNetworkConnectionType.Dedicated;
+            }
+            throw new ArgumentOutOfRangeException("value");
+        }
+        
+        /// <summary>
+        /// Convert an enum of type LocalNetworkConnectionType to a string.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to convert to a string.
+        /// </param>
+        /// <returns>
+        /// The enum value as a string.
+        /// </returns>
+        internal static string LocalNetworkConnectionTypeToString(LocalNetworkConnectionType value)
+        {
+            if (value == LocalNetworkConnectionType.IPSecurity)
+            {
+                return "IPsec";
+            }
+            if (value == LocalNetworkConnectionType.Dedicated)
+            {
+                return "Dedicated";
+            }
+            throw new ArgumentOutOfRangeException("value");
+        }
+        
+        /// <summary>
         /// The Get Operation Status operation returns the status of the
         /// specified operation. After calling an asynchronous operation, you
         /// can call Get Operation Status to determine whether the operation
@@ -396,7 +466,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -509,50 +579,6 @@ namespace Microsoft.WindowsAzure.Management.Network
                     httpRequest.Dispose();
                 }
             }
-        }
-        
-        /// <summary>
-        /// Parse enum values for type LocalNetworkConnectionType.
-        /// </summary>
-        /// <param name='value'>
-        /// The value to parse.
-        /// </param>
-        /// <returns>
-        /// The enum value.
-        /// </returns>
-        internal static LocalNetworkConnectionType ParseLocalNetworkConnectionType(string value)
-        {
-            if ("IPsec".Equals(value, StringComparison.OrdinalIgnoreCase))
-            {
-                return LocalNetworkConnectionType.IPSecurity;
-            }
-            if ("Dedicated".Equals(value, StringComparison.OrdinalIgnoreCase))
-            {
-                return LocalNetworkConnectionType.Dedicated;
-            }
-            throw new ArgumentOutOfRangeException("value");
-        }
-        
-        /// <summary>
-        /// Convert an enum of type LocalNetworkConnectionType to a string.
-        /// </summary>
-        /// <param name='value'>
-        /// The value to convert to a string.
-        /// </param>
-        /// <returns>
-        /// The enum value as a string.
-        /// </returns>
-        internal static string LocalNetworkConnectionTypeToString(LocalNetworkConnectionType value)
-        {
-            if (value == LocalNetworkConnectionType.IPSecurity)
-            {
-                return "IPsec";
-            }
-            if (value == LocalNetworkConnectionType.Dedicated)
-            {
-                return "Dedicated";
-            }
-            throw new ArgumentOutOfRangeException("value");
         }
     }
 }

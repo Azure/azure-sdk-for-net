@@ -44,6 +44,17 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._affinityGroup = value; }
         }
         
+        private string _iOType;
+        
+        /// <summary>
+        /// Optional. Gets or sets the IO type.
+        /// </summary>
+        public string IOType
+        {
+            get { return this._iOType; }
+            set { this._iOType = value; }
+        }
+        
         private bool? _isPremium;
         
         /// <summary>

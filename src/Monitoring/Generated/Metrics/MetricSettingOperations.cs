@@ -159,54 +159,60 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                     
                     if (derived.AvailableLocations != null)
                     {
-                        JArray availableLocationsArray = new JArray();
-                        foreach (NameConfig availableLocationsItem in derived.AvailableLocations)
+                        if (derived.AvailableLocations is ILazyCollection == false || ((ILazyCollection)derived.AvailableLocations).IsInitialized)
                         {
-                            JObject nameConfigValue = new JObject();
-                            availableLocationsArray.Add(nameConfigValue);
-                            
-                            if (availableLocationsItem.Name != null)
+                            JArray availableLocationsArray = new JArray();
+                            foreach (NameConfig availableLocationsItem in derived.AvailableLocations)
                             {
-                                nameConfigValue["Name"] = availableLocationsItem.Name;
+                                JObject nameConfigValue = new JObject();
+                                availableLocationsArray.Add(nameConfigValue);
+                                
+                                if (availableLocationsItem.Name != null)
+                                {
+                                    nameConfigValue["Name"] = availableLocationsItem.Name;
+                                }
+                                
+                                if (availableLocationsItem.DisplayName != null)
+                                {
+                                    nameConfigValue["DisplayName"] = availableLocationsItem.DisplayName;
+                                }
                             }
-                            
-                            if (availableLocationsItem.DisplayName != null)
-                            {
-                                nameConfigValue["DisplayName"] = availableLocationsItem.DisplayName;
-                            }
+                            valueValue["AvailableLocations"] = availableLocationsArray;
                         }
-                        valueValue["AvailableLocations"] = availableLocationsArray;
                     }
                     
                     if (derived.Endpoints != null)
                     {
-                        JArray endpointsArray = new JArray();
-                        foreach (EndpointConfig endpointsItem in derived.Endpoints)
+                        if (derived.Endpoints is ILazyCollection == false || ((ILazyCollection)derived.Endpoints).IsInitialized)
                         {
-                            JObject endpointConfigValue = new JObject();
-                            endpointsArray.Add(endpointConfigValue);
-                            
-                            if (endpointsItem.ConfigId != null)
+                            JArray endpointsArray = new JArray();
+                            foreach (EndpointConfig endpointsItem in derived.Endpoints)
                             {
-                                endpointConfigValue["ConfigId"] = endpointsItem.ConfigId;
+                                JObject endpointConfigValue = new JObject();
+                                endpointsArray.Add(endpointConfigValue);
+                                
+                                if (endpointsItem.ConfigId != null)
+                                {
+                                    endpointConfigValue["ConfigId"] = endpointsItem.ConfigId;
+                                }
+                                
+                                if (endpointsItem.Name != null)
+                                {
+                                    endpointConfigValue["Name"] = endpointsItem.Name;
+                                }
+                                
+                                if (endpointsItem.Location != null)
+                                {
+                                    endpointConfigValue["Location"] = endpointsItem.Location;
+                                }
+                                
+                                if (endpointsItem.Url != null)
+                                {
+                                    endpointConfigValue["Url"] = endpointsItem.Url.AbsoluteUri;
+                                }
                             }
-                            
-                            if (endpointsItem.Name != null)
-                            {
-                                endpointConfigValue["Name"] = endpointsItem.Name;
-                            }
-                            
-                            if (endpointsItem.Location != null)
-                            {
-                                endpointConfigValue["Location"] = endpointsItem.Location;
-                            }
-                            
-                            if (endpointsItem.Url != null)
-                            {
-                                endpointConfigValue["Url"] = endpointsItem.Url.AbsoluteUri;
-                            }
+                            valueValue["Endpoints"] = endpointsArray;
                         }
-                        valueValue["Endpoints"] = endpointsArray;
                     }
                 }
                 
@@ -242,7 +248,20 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                     
                     // Create Result
                     OperationResponse result = null;
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new OperationResponse();
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
+                    
+                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                    {
+                    }
+                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {

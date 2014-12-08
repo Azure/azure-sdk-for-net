@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Hyak>
+  <Assembly>Microsoft.WindowsAzure.Management.ExpressRoute.Specification.dll</Assembly>
+  <OutputDirectory>Generated</OutputDirectory>
+
+  <Specification>
+    <Type>Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient</Type>
+
+    <Platform>
+      <Flavor>CSharp.Azure</Flavor>
+      <OutputDirectory></OutputDirectory>
+      <BaseNamespace>microsoft.windowsazure.management.expressroute</BaseNamespace>
+      <Split>Namespace</Split>
+    </Platform>
+  </Specification>
+</Hyak>

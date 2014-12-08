@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Hyak>
+  <Assembly>Microsoft.WindowsAzure.Management.Monitoring.Specification.dll</Assembly>
+  <OutputDirectory>Generated</OutputDirectory>
+
+  <Specification>
+    <Type>Microsoft.WindowsAzure.Management.Monitoring.Alerts.AlertsClient</Type>
+
+    <Platform>
+      <Flavor>CSharp.Azure</Flavor>
+      <OutputDirectory></OutputDirectory>
+      <BaseNamespace>microsoft.windowsazure.management.monitoring</BaseNamespace>
+      <Split>Namespace</Split>
+    </Platform>
+  </Specification>
+  <Specification>
+    <Type>Microsoft.WindowsAzure.Management.Monitoring.Autoscale.AutoscaleClient</Type>
+
+    <Platform>
+      <Flavor>CSharp.Azure</Flavor>
+      <OutputDirectory></OutputDirectory>
+      <BaseNamespace>microsoft.windowsazure.management.monitoring</BaseNamespace>
+      <Split>Namespace</Split>
+    </Platform>
+  </Specification>
+
+  <Specification>
+    <Type>Microsoft.WindowsAzure.Management.Monitoring.Metrics.MetricsClient</Type>
+
+    <Platform>
+      <Flavor>CSharp.Azure</Flavor>
+      <OutputDirectory></OutputDirectory>
+      <BaseNamespace>microsoft.windowsazure.management.monitoring</BaseNamespace>
+      <Split>Namespace</Split>
+    </Platform>
+  </Specification>
+</Hyak>

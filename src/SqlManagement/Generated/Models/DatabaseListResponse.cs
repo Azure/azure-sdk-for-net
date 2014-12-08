@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Management.Sql.Models;
 
 namespace Microsoft.WindowsAzure.Management.Sql.Models
@@ -50,7 +51,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public DatabaseListResponse()
         {
-            this.Databases = new List<Database>();
+            this.Databases = new LazyList<Database>();
         }
         
         /// <summary>

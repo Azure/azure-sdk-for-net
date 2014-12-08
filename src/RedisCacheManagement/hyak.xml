@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Hyak>
+  <Assembly>Microsoft.Azure.Management.Redis.Specification.dll</Assembly>
+  <OutputDirectory>Generated</OutputDirectory>
+
+  <Specification>
+    <Type>Microsoft.Azure.Management.Redis.RedisManagementClient</Type>
+
+    <Platform>
+      <Flavor>CSharp.Azure</Flavor>
+      <OutputDirectory></OutputDirectory>
+      <BaseNamespace>Microsoft.Azure.Management.Redis</BaseNamespace>
+      <Split>Namespace</Split>
+    </Platform>
+
+  </Specification>
+</Hyak>

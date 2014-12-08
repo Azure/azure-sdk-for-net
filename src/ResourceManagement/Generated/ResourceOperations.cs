@@ -346,17 +346,46 @@ namespace Microsoft.Azure.Management.Resources
                     basicResourceValue["properties"] = JObject.Parse(parameters.Properties);
                 }
                 
-                JObject tagsDictionary = new JObject();
                 if (parameters.Tags != null)
                 {
-                    foreach (KeyValuePair<string, string> pair in parameters.Tags)
+                    if (parameters.Tags is ILazyCollection == false || ((ILazyCollection)parameters.Tags).IsInitialized)
                     {
-                        string tagsKey = pair.Key;
-                        string tagsValue = pair.Value;
-                        tagsDictionary[tagsKey] = tagsValue;
+                        JObject tagsDictionary = new JObject();
+                        foreach (KeyValuePair<string, string> pair in parameters.Tags)
+                        {
+                            string tagsKey = pair.Key;
+                            string tagsValue = pair.Value;
+                            tagsDictionary[tagsKey] = tagsValue;
+                        }
+                        basicResourceValue["tags"] = tagsDictionary;
                     }
                 }
-                basicResourceValue["tags"] = tagsDictionary;
+                
+                if (parameters.Plan != null)
+                {
+                    JObject planValue = new JObject();
+                    basicResourceValue["plan"] = planValue;
+                    
+                    if (parameters.Plan.Name != null)
+                    {
+                        planValue["name"] = parameters.Plan.Name;
+                    }
+                    
+                    if (parameters.Plan.Publisher != null)
+                    {
+                        planValue["publisher"] = parameters.Plan.Publisher;
+                    }
+                    
+                    if (parameters.Plan.Product != null)
+                    {
+                        planValue["product"] = parameters.Plan.Product;
+                    }
+                    
+                    if (parameters.Plan.PromotionCode != null)
+                    {
+                        planValue["promotionCode"] = parameters.Plan.PromotionCode;
+                    }
+                }
                 
                 if (parameters.ProvisioningState != null)
                 {
@@ -464,6 +493,41 @@ namespace Microsoft.Azure.Management.Resources
                                 string tagsKey2 = ((string)property.Name);
                                 string tagsValue2 = ((string)property.Value);
                                 resourceInstance.Tags.Add(tagsKey2, tagsValue2);
+                            }
+                        }
+                        
+                        JToken planValue2 = responseDoc["plan"];
+                        if (planValue2 != null && planValue2.Type != JTokenType.Null)
+                        {
+                            Plan planInstance = new Plan();
+                            resourceInstance.Plan = planInstance;
+                            
+                            JToken nameValue2 = planValue2["name"];
+                            if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                            {
+                                string nameInstance2 = ((string)nameValue2);
+                                planInstance.Name = nameInstance2;
+                            }
+                            
+                            JToken publisherValue = planValue2["publisher"];
+                            if (publisherValue != null && publisherValue.Type != JTokenType.Null)
+                            {
+                                string publisherInstance = ((string)publisherValue);
+                                planInstance.Publisher = publisherInstance;
+                            }
+                            
+                            JToken productValue = planValue2["product"];
+                            if (productValue != null && productValue.Type != JTokenType.Null)
+                            {
+                                string productInstance = ((string)productValue);
+                                planInstance.Product = productInstance;
+                            }
+                            
+                            JToken promotionCodeValue = planValue2["promotionCode"];
+                            if (promotionCodeValue != null && promotionCodeValue.Type != JTokenType.Null)
+                            {
+                                string promotionCodeInstance = ((string)promotionCodeValue);
+                                planInstance.PromotionCode = promotionCodeInstance;
                             }
                         }
                         
@@ -851,6 +915,41 @@ namespace Microsoft.Azure.Management.Resources
                             }
                         }
                         
+                        JToken planValue = responseDoc["plan"];
+                        if (planValue != null && planValue.Type != JTokenType.Null)
+                        {
+                            Plan planInstance = new Plan();
+                            resourceInstance.Plan = planInstance;
+                            
+                            JToken nameValue2 = planValue["name"];
+                            if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                            {
+                                string nameInstance2 = ((string)nameValue2);
+                                planInstance.Name = nameInstance2;
+                            }
+                            
+                            JToken publisherValue = planValue["publisher"];
+                            if (publisherValue != null && publisherValue.Type != JTokenType.Null)
+                            {
+                                string publisherInstance = ((string)publisherValue);
+                                planInstance.Publisher = publisherInstance;
+                            }
+                            
+                            JToken productValue = planValue["product"];
+                            if (productValue != null && productValue.Type != JTokenType.Null)
+                            {
+                                string productInstance = ((string)productValue);
+                                planInstance.Product = productInstance;
+                            }
+                            
+                            JToken promotionCodeValue = planValue["promotionCode"];
+                            if (promotionCodeValue != null && promotionCodeValue.Type != JTokenType.Null)
+                            {
+                                string promotionCodeInstance = ((string)promotionCodeValue);
+                                planInstance.PromotionCode = promotionCodeInstance;
+                            }
+                        }
+                        
                         JToken provisioningStateValue2 = responseDoc["provisioningState"];
                         if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
                         {
@@ -1092,6 +1191,41 @@ namespace Microsoft.Azure.Management.Resources
                                     }
                                 }
                                 
+                                JToken planValue = valueValue["plan"];
+                                if (planValue != null && planValue.Type != JTokenType.Null)
+                                {
+                                    Plan planInstance = new Plan();
+                                    resourceJsonFormatInstance.Plan = planInstance;
+                                    
+                                    JToken nameValue2 = planValue["name"];
+                                    if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance2 = ((string)nameValue2);
+                                        planInstance.Name = nameInstance2;
+                                    }
+                                    
+                                    JToken publisherValue = planValue["publisher"];
+                                    if (publisherValue != null && publisherValue.Type != JTokenType.Null)
+                                    {
+                                        string publisherInstance = ((string)publisherValue);
+                                        planInstance.Publisher = publisherInstance;
+                                    }
+                                    
+                                    JToken productValue = planValue["product"];
+                                    if (productValue != null && productValue.Type != JTokenType.Null)
+                                    {
+                                        string productInstance = ((string)productValue);
+                                        planInstance.Product = productInstance;
+                                    }
+                                    
+                                    JToken promotionCodeValue = planValue["promotionCode"];
+                                    if (promotionCodeValue != null && promotionCodeValue.Type != JTokenType.Null)
+                                    {
+                                        string promotionCodeInstance = ((string)promotionCodeValue);
+                                        planInstance.PromotionCode = promotionCodeInstance;
+                                    }
+                                }
+                                
                                 JToken provisioningStateValue2 = valueValue["provisioningState"];
                                 if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
                                 {
@@ -1289,6 +1423,41 @@ namespace Microsoft.Azure.Management.Resources
                                         string tagsKey = ((string)property.Name);
                                         string tagsValue = ((string)property.Value);
                                         resourceJsonFormatInstance.Tags.Add(tagsKey, tagsValue);
+                                    }
+                                }
+                                
+                                JToken planValue = valueValue["plan"];
+                                if (planValue != null && planValue.Type != JTokenType.Null)
+                                {
+                                    Plan planInstance = new Plan();
+                                    resourceJsonFormatInstance.Plan = planInstance;
+                                    
+                                    JToken nameValue2 = planValue["name"];
+                                    if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance2 = ((string)nameValue2);
+                                        planInstance.Name = nameInstance2;
+                                    }
+                                    
+                                    JToken publisherValue = planValue["publisher"];
+                                    if (publisherValue != null && publisherValue.Type != JTokenType.Null)
+                                    {
+                                        string publisherInstance = ((string)publisherValue);
+                                        planInstance.Publisher = publisherInstance;
+                                    }
+                                    
+                                    JToken productValue = planValue["product"];
+                                    if (productValue != null && productValue.Type != JTokenType.Null)
+                                    {
+                                        string productInstance = ((string)productValue);
+                                        planInstance.Product = productInstance;
+                                    }
+                                    
+                                    JToken promotionCodeValue = planValue["promotionCode"];
+                                    if (promotionCodeValue != null && promotionCodeValue.Type != JTokenType.Null)
+                                    {
+                                        string promotionCodeInstance = ((string)promotionCodeValue);
+                                        planInstance.PromotionCode = promotionCodeInstance;
                                     }
                                 }
                                 

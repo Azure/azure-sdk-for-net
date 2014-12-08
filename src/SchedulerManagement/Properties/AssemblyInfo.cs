@@ -20,8 +20,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Microsoft Azure Scheduler Management Library")]
 [assembly: AssemblyDescription("Provides Microsoft Azure Scheduler management operations including the ability to create, update and delete scheduled jobs and get job status and history.")]
 
-[assembly: AssemblyVersion("3.0.0.0")]
-[assembly: AssemblyFileVersion("3.0.0.0")]
+[assembly: AssemblyVersion("4.0.0.0")]
+[assembly: AssemblyFileVersion("4.1.0.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]

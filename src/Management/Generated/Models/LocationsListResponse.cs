@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Management.Models;
 
 namespace Microsoft.WindowsAzure.Management.Models
@@ -49,7 +50,7 @@ namespace Microsoft.WindowsAzure.Management.Models
         /// </summary>
         public LocationsListResponse()
         {
-            this.Locations = new List<LocationsListResponse.Location>();
+            this.Locations = new LazyList<LocationsListResponse.Location>();
         }
         
         /// <summary>
@@ -118,12 +119,23 @@ namespace Microsoft.WindowsAzure.Management.Models
                 set { this._name = value; }
             }
             
+            private StorageCapabilities _storageCapabilities;
+            
+            /// <summary>
+            /// Optional. The storage capabilities in this location.
+            /// </summary>
+            public StorageCapabilities StorageCapabilities
+            {
+                get { return this._storageCapabilities; }
+                set { this._storageCapabilities = value; }
+            }
+            
             /// <summary>
             /// Initializes a new instance of the Location class.
             /// </summary>
             public Location()
             {
-                this.AvailableServices = new List<string>();
+                this.AvailableServices = new LazyList<string>();
             }
         }
     }

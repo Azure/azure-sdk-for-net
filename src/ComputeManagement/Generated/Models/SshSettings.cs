@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
@@ -60,8 +61,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public SshSettings()
         {
-            this.KeyPairs = new List<SshSettingKeyPair>();
-            this.PublicKeys = new List<SshSettingPublicKey>();
+            this.KeyPairs = new LazyList<SshSettingKeyPair>();
+            this.PublicKeys = new LazyList<SshSettingPublicKey>();
         }
     }
 }

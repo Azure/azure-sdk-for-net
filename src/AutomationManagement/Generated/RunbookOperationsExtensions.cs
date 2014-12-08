@@ -644,7 +644,7 @@ namespace Microsoft.Azure.Management.Automation
         }
         
         /// <summary>
-        /// Delete the runbook identified by runbookId.  (see
+        /// Start the runbook identified by runbookId.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
         /// for more information)
         /// </summary>
@@ -671,7 +671,7 @@ namespace Microsoft.Azure.Management.Automation
         }
         
         /// <summary>
-        /// Delete the runbook identified by runbookId.  (see
+        /// Start the runbook identified by runbookId.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
         /// for more information)
         /// </summary>

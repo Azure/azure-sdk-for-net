@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
@@ -52,7 +53,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public VirtualMachineOSImageReplicateParameters()
         {
-            this.TargetLocations = new List<string>();
+            this.TargetLocations = new LazyList<string>();
         }
     }
 }

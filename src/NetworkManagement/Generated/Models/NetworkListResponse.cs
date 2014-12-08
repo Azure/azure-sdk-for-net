@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Management.Network.Models;
 
 namespace Microsoft.WindowsAzure.Management.Network.Models
@@ -48,7 +49,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         /// </summary>
         public NetworkListResponse()
         {
-            this.VirtualNetworkSites = new List<NetworkListResponse.VirtualNetworkSite>();
+            this.VirtualNetworkSites = new LazyList<NetworkListResponse.VirtualNetworkSite>();
         }
         
         /// <summary>
@@ -85,7 +86,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             /// </summary>
             public AddressSpace()
             {
-                this.AddressPrefixes = new List<string>();
+                this.AddressPrefixes = new LazyList<string>();
             }
         }
         
@@ -194,7 +195,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             /// </summary>
             public Gateway()
             {
-                this.Sites = new List<NetworkListResponse.LocalNetworkSite>();
+                this.Sites = new LazyList<NetworkListResponse.LocalNetworkSite>();
             }
         }
         
@@ -253,7 +254,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             /// </summary>
             public LocalNetworkSite()
             {
-                this.Connections = new List<NetworkListResponse.Connection>();
+                this.Connections = new LazyList<NetworkListResponse.Connection>();
             }
         }
         
@@ -280,6 +281,18 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             {
                 get { return this._name; }
                 set { this._name = value; }
+            }
+            
+            private string _networkSecurityGroup;
+            
+            /// <summary>
+            /// Optional. Name of Network Security Group associated with this
+            /// subnet.
+            /// </summary>
+            public string NetworkSecurityGroup
+            {
+                get { return this._networkSecurityGroup; }
+                set { this._networkSecurityGroup = value; }
             }
             
             /// <summary>
@@ -370,6 +383,17 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
                 set { this._label = value; }
             }
             
+            private string _location;
+            
+            /// <summary>
+            /// Optional. Gets or sets the virtual network location.
+            /// </summary>
+            public string Location
+            {
+                get { return this._location; }
+                set { this._location = value; }
+            }
+            
             private string _name;
             
             /// <summary>
@@ -411,8 +435,8 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             /// </summary>
             public VirtualNetworkSite()
             {
-                this.DnsServers = new List<NetworkListResponse.DnsServer>();
-                this.Subnets = new List<NetworkListResponse.Subnet>();
+                this.DnsServers = new LazyList<NetworkListResponse.DnsServer>();
+                this.Subnets = new LazyList<NetworkListResponse.Subnet>();
             }
         }
         
@@ -439,7 +463,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             /// </summary>
             public VPNClientAddressPool()
             {
-                this.AddressPrefixes = new List<string>();
+                this.AddressPrefixes = new LazyList<string>();
             }
         }
     }

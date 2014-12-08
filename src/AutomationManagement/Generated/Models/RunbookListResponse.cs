@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Management.Automation.Models;
+using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
@@ -47,7 +48,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         public RunbookListResponse()
         {
-            this.Runbooks = new List<Runbook>();
+            this.Runbooks = new LazyList<Runbook>();
         }
     }
 }
