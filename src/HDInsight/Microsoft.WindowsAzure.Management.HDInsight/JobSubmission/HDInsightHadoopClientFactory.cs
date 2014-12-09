@@ -36,5 +36,10 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.JobSubmission
         {
             return Help.SafeCreate(() => new HDInsightHadoopClient(credential, customUserAgent));
         }
+
+        public IHadoopApplicationHistoryClient CreateHadoopApplicationHistoryClient(IHDInsightSubscriptionCredentials credential)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

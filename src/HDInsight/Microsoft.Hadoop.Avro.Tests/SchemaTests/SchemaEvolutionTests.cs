@@ -21,6 +21,7 @@ namespace Microsoft.Hadoop.Avro.Tests
     using System.Runtime.Serialization;
     using Microsoft.Hadoop.Avro.Schema;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Microsoft.WindowsAzure.Management.HDInsight.TestUtilities;
 
     [TestClass]
     public sealed class SchemaEvolutionTests
@@ -434,6 +435,40 @@ namespace Microsoft.Hadoop.Avro.Tests
 
                 dynamic actual = deserializer.Deserialize(stream);
                 Assert.AreEqual(expected.IntField, actual.IntField);
+            }
+        }
+
+        [TestMethod]
+        [TestCategory("CheckIn")]
+        public void SchemaEvolution_RecordWithMemberOrderChanged()
+        {
+            var settings = new AvroSerializerSettings() { Resolver = new AvroDataContractResolver(true, true) };
+            var serializer = AvroSerializer.Create<Rectangle>(settings);
+            var deserializer = AvroSerializer.Create<AnotherRectangle>(settings);
+
+            using (var stream = new MemoryStream())
+            {
+                Rectangle expected = Rectangle.Create();
+                serializer.Serialize(stream, expected);
+                stream.Seek(0, SeekOrigin.Begin);
+
+                AnotherRectangle actual = deserializer.Deserialize(stream);
+                Assert.AreEqual(expected.Width, actual.Width);
+                Assert.AreEqual(expected.Height, actual.Height);
+            }
+        }
+
+        [TestMethod]
+        [TestCategory("CheckIn")]
+        public void SchemaEvolution_SerializeWithoutGetter()
+        {
+            try
+            {
+                AvroSerializer.Create<AbstractNoGetter>();
+            }
+            catch (SerializationException ex)
+            {
+                Assert.AreEqual(true, ex.Message.Contains("Microsoft.Hadoop.Avro.Tests.NoGetter"));
             }
         }
 

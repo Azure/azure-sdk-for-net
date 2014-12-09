@@ -15,13 +15,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Management.Automation;
+using System.Text;
 using TechTalk.SpecFlow;
 
 namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.StepDefinitions
 {
+    using System.Management.Automation;
     using System.Reflection;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Microsoft.WindowsAzure.Management.HDInsight;
     using Microsoft.WindowsAzure.Management.HDInsight.Framework.Core.Library;
 
     [Binding]

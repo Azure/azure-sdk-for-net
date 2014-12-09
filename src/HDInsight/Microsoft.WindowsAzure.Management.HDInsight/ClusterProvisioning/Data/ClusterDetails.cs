@@ -19,9 +19,10 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
     using System.Diagnostics.CodeAnalysis;
     using System.Security.Cryptography.X509Certificates;
     using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Data;
+    using Microsoft.Hadoop.Client;
 
     /// <summary>
-    /// Object that encapsulates all the properties of a List Request.
+    /// Represents cluster properties and provides cluster scoped operations.
     /// </summary>
     public sealed class ClusterDetails
     {
@@ -168,6 +169,31 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         {
             this.StateString = newState.ToString();
             this.State = newState;
+        }
+
+        /// <summary>
+        /// Creates and returns a new instance of HDInsightApplicationHistoryClient.
+        /// </summary>
+        /// <returns>
+        /// Returns an HDInsight Application History Client.
+        /// </returns>
+        public IHDInsightApplicationHistoryClient CreateHDInsightApplicationHistoryClient()
+        {
+            return new HDInsightApplicationHistoryClient(this);
+        }
+
+        /// <summary>
+        /// Creates and returns a new instance of HDInsightApplicationHistoryClient.
+        /// </summary>
+        /// <param name="timeout">
+        /// The timeout to use for operations made by this client.
+        /// </param>
+        /// <returns>
+        /// Returns an HDInsight Application History Client.
+        /// </returns>
+        public IHDInsightApplicationHistoryClient CreateHDInsightApplicationHistoryClient(TimeSpan timeout)
+        {
+            return new HDInsightApplicationHistoryClient(this, timeout);
         }
     }
 }

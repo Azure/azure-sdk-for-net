@@ -198,6 +198,33 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         }
 
         /// <inheritdoc />
+        public async Task<ClusterDetails> GetClusterAsync(string name, string location)
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException("name");
+            }
+
+            if (location == null)
+            {
+                throw new ArgumentNullException("location");
+            }
+
+            try
+            {
+                using (var client = this.CreatePocoClientForDnsName(name))
+                {
+                    return await client.ListContainer(name, location);
+                }
+            }
+            catch (HDInsightClusterDoesNotExistException)
+            {
+                //The semantics of this method is that if a cluster doesn't exist we return null
+                return null;
+            }
+        }
+        
+        /// <inheritdoc />
         public async Task<ClusterDetails> CreateClusterAsync(ClusterCreateParameters clusterCreateParameters)
         {
             if (clusterCreateParameters == null)
@@ -250,6 +277,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
             }
             await client.WaitForClusterInConditionOrError(this.HandleClusterWaitNotifyEvent,
                                                           clusterCreateParameters.Name,
+                                                          clusterCreateParameters.Location,
                                                           clusterCreateParameters.CreateTimeout,
                                                           this.PollingInterval,
                                                           this.Context,
@@ -374,7 +402,25 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
 
             var client = this.CreatePocoClientForDnsName(name);
             await client.DeleteContainer(name);
-            await client.WaitForClusterNull(name, TimeSpan.FromMinutes(30), this.Context.CancellationToken);
+            await client.WaitForClusterNull(name, TimeSpan.FromMinutes(30), this.PollingInterval, this.Context.CancellationToken);
+        }
+
+        /// <inheritdoc />
+        public async Task DeleteClusterAsync(string name, string location)
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException("name");
+            }
+
+            if (location == null)
+            {
+                throw new ArgumentNullException("location");
+            }
+
+            var client = this.CreatePocoClientForDnsName(name);
+            await client.DeleteContainer(name, location);
+            await client.WaitForClusterNull(name, location, TimeSpan.FromMinutes(30), this.Context.CancellationToken);
         }
 
         /// <inheritdoc />
@@ -451,6 +497,12 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         }
 
         /// <inheritdoc />
+        public ClusterDetails GetCluster(string dnsName, string location)
+        {
+            return this.GetClusterAsync(dnsName, location).WaitForResult();
+        }
+
+        /// <inheritdoc />
         public ClusterDetails CreateCluster(ClusterCreateParameters cluster)
         {
             return this.CreateClusterAsync(cluster).WaitForResult();
@@ -463,15 +515,15 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         }
 
         /// <inheritdoc />
-        public void ChangeClusterSize(string dnsName, string location, int newSize)
+        public ClusterDetails ChangeClusterSize(string dnsName, string location, int newSize)
         {
-            this.ChangeClusterSizeAsync(dnsName, location, newSize).WaitForResult();
+            return this.ChangeClusterSizeAsync(dnsName, location, newSize).WaitForResult();
         }
 
         /// <inheritdoc />
-        public void ChangeClusterSize(string dnsName, string location, int newSize, TimeSpan timeout)
+        public ClusterDetails ChangeClusterSize(string dnsName, string location, int newSize, TimeSpan timeout)
         {
-            this.ChangeClusterSizeAsync(dnsName, location, newSize, timeout).ConfigureAwait(false).GetAwaiter().GetResult();
+            return this.ChangeClusterSizeAsync(dnsName, location, newSize, timeout).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         /// <inheritdoc />
@@ -485,6 +537,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         {
             dnsName.ArgumentNotNullOrEmpty("dnsName");
             newSize.ArgumentNotNull("newSize");
+            location.ArgumentNotNull("location");
 
             if (!this.canUseClustersContract.Value)
             {
@@ -504,7 +557,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
             try
             {
                 this.LogMessage("Sending Change Cluster Size request.", Severity.Informational, Verbosity.Detailed);
-                operationId = await client.ChangeClusterSize(dnsName, newSize);
+                operationId = await client.ChangeClusterSize(dnsName, location, newSize);
             }
             catch (Exception ex)
             {
@@ -518,6 +571,14 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
             }
 
             await client.WaitForOperationCompleteOrError(dnsName, location, operationId, timeout, this.Context.CancellationToken);
+            await client.WaitForClusterInConditionOrError(this.HandleClusterWaitNotifyEvent,
+                                                          dnsName,
+                                                          location,
+                                                          timeout,
+                                                          this.PollingInterval,
+                                                          this.Context,
+                                                          ClusterState.Operational,
+                                                          ClusterState.Running);
 
             this.LogMessage("Validating that the cluster didn't go into an error state.", Severity.Informational, Verbosity.Detailed);
             var result = await client.ListContainer(dnsName);
@@ -544,6 +605,18 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         public void DeleteCluster(string dnsName, TimeSpan timeout)
         {
             this.DeleteClusterAsync(dnsName).WaitForResult(timeout);
+        }
+
+        /// <inheritdoc />
+        public void DeleteCluster(string dnsName, string location)
+        {
+            this.DeleteClusterAsync(dnsName, location).WaitForResult();
+        }
+
+        /// <inheritdoc />
+        public void DeleteCluster(string dnsName, string location, TimeSpan timeout)
+        {
+            this.DeleteClusterAsync(dnsName, location).WaitForResult(timeout);
         }
 
         /// <summary>

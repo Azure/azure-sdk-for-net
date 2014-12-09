@@ -59,6 +59,11 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests
             return underlying.ListContainer(dnsName);
         }
 
+        public Task<ClusterDetails> ListContainer(string dnsName, string location)
+        {
+            return underlying.ListContainer(dnsName, location);
+        }
+        
         public Task CreateContainer(ClusterCreateParameters details)
         {
             this.LastCreateRequest = details;
@@ -75,9 +80,9 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests
             return underlying.DeleteContainer(dnsName, location);
         }
 
-        public Task<Guid> ChangeClusterSize(string dnsName, int newSize)
+        public Task<Guid> ChangeClusterSize(string dnsName, string location, int newSize)
         {
-            return underlying.ChangeClusterSize(dnsName, newSize);
+            return underlying.ChangeClusterSize(dnsName, location, newSize);
         }
 
         public Task<Guid> EnableDisableProtocol(
@@ -115,6 +120,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests
         public ILogger Logger
         {
             get { return underlying.Logger; }
-        }
+        }               
     }
 }

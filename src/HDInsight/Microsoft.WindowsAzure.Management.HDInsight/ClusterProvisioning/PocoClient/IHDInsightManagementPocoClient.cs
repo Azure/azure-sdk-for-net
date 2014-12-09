@@ -63,6 +63,20 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
         Task<ClusterDetails> ListContainer(string dnsName);
 
         /// <summary>
+        /// Lists a single HDInsight container by name in specified region.
+        /// </summary>
+        /// <param name="dnsName">
+        /// The name of the HDInsight container.
+        /// </param>
+        /// <param name="location">
+        /// The location of the HDInsight container.
+        /// </param>
+        /// <returns>
+        /// A task that can be used to retrieve the requested HDInsight container.
+        /// </returns>
+        Task<ClusterDetails> ListContainer(string dnsName, string location);
+
+        /// <summary>
         /// Creates a new HDInsight container (cluster).
         /// </summary>
         /// <param name="details">
@@ -97,15 +111,16 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
         /// <returns>
         /// A task that can be used to wait for the delete request to complete.
         /// </returns>
-        Task DeleteContainer(string dnsName, string location);
+        Task DeleteContainer(string dnsName, string location);       
 
         /// <summary>
         /// Changes the size of the cluster.
         /// </summary>
         /// <param name="dnsName">The DNS name of the cluster.</param>
+        /// <param name="location">The location of the cluster.</param>
         /// <param name="newSize">The new size.</param>
         /// <returns>A task that can be used to wait for the request to complete.</returns>
-        Task<Guid> ChangeClusterSize(string dnsName, int newSize);
+        Task<Guid> ChangeClusterSize(string dnsName, string location, int newSize);
 
         /// <summary>
         /// Used to enable or disable a given protocol.

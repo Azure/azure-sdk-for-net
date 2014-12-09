@@ -57,11 +57,34 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities
             return this.Request.CreateResponse(HttpStatusCode.Accepted, cloudServiceList);;
         }
 
+        [System.Web.Http.Route("~/{subscriptionId}/cloudservices/{cloudServiceName}/resources/{resourceNamespace}/clusters/{dnsName}")]
+        [HttpDelete]
+        public HttpResponseMessage DeleteCluster(string subscriptionId, string cloudServiceName, string resourceNamespace, string dnsName)
+        {
+            var requestMessage = this.Request;
+
+            List<Cluster> clusters;
+            bool subExists = _clustersAvailable.TryGetValue(subscriptionId, out clusters);
+            if (!subExists)
+            {
+                return null;
+            }
+
+            var cluster = clusters.SingleOrDefault(c => c.DnsName.Equals(dnsName) && cloudServiceName.Contains(c.Location.Replace(" ", "-")));
+            if (cluster != null)
+            {
+                clusters.Remove(cluster);
+                _clustersAvailable[subscriptionId] = clusters;
+            }
+
+            return this.Request.CreateResponse(HttpStatusCode.OK);
+        }
+        
         [Route("~/{subscriptionId}/cloudservices/{cloudServiceName}/resources/{resourceNamespace}/~/clusters/{dnsName}")]
         [HttpGet]
         public PassthroughResponse GetCluster(string subscriptionId, string cloudServiceName, string resourceNamespace, string dnsName)
         {
-            return new PassthroughResponse { Data = this.GetCluster(dnsName, subscriptionId) };
+            return new PassthroughResponse { Data = this.GetCluster(dnsName, cloudServiceName, subscriptionId) };
         }
 
         [Route("~/{subscriptionId}/cloudservices/{cloudServiceName}/resources/{resourceNamespace}/~/clusters/{dnsName}/roles")]
@@ -83,7 +106,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities
             }
 
             int instanceCount = workerNode.InstanceCount;
-            var cluster = this.GetCluster(dnsName, subscriptionId);
+            var cluster = this.GetCluster(dnsName, cloudServiceName, subscriptionId);
             if (cluster == null)
             {
                 throw new ArgumentNullException(string.Format(ClustersTestConstants.ClusterDoesNotExistException, dnsName, subscriptionId));
@@ -99,7 +122,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities
             return new PassthroughResponse { Data = new Operation { OperationId = Guid.NewGuid().ToString(), Status = OperationStatus.InProgress, } };
         }
 
-        private Cluster GetCluster(string dnsName, string subscriptionId)
+        private Cluster GetCluster(string dnsName, string cloudserviceName, string subscriptionId)
         {
             List<Cluster> clusters;
             bool subExists = _clustersAvailable.TryGetValue(subscriptionId, out clusters);
@@ -108,7 +131,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities
                 return null;
             }
 
-            var cluster = clusters.SingleOrDefault(c => c.DnsName.Equals(dnsName));
+            var cluster = clusters.SingleOrDefault(c => c.DnsName.Equals(dnsName) && cloudserviceName.Contains(c.Location.Replace(" ", "-")));
             if (cluster == null)
             {
                 return null;

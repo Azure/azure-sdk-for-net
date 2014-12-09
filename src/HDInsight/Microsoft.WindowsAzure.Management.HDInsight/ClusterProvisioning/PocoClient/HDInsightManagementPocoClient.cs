@@ -92,6 +92,13 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
             var result = clusters.FirstOrDefault(cluster => cluster.Name.Equals(dnsName, StringComparison.OrdinalIgnoreCase));
             return result;
         }
+        
+        public async Task<ClusterDetails> ListContainer(string dnsName, string location)
+        {
+            var clusters = await this.ListContainers();
+            var result = clusters.FirstOrDefault(cluster => cluster.Name.Equals(dnsName, StringComparison.OrdinalIgnoreCase) && cluster.Location.Equals(location, StringComparison.OrdinalIgnoreCase));
+            return result;
+        }
 
         public async Task CreateContainer(ClusterCreateParameters details)
         {
@@ -176,7 +183,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
             await client.DeleteContainer(dnsName, location);
         }
 
-        public Task<Guid> ChangeClusterSize(string dnsName, int newSize)
+        public Task<Guid> ChangeClusterSize(string dnsName, string location, int newSize)
         {
             throw new NotImplementedException();
         }

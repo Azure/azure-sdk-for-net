@@ -571,7 +571,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities.RestSimulato
 
             lock (Clusters)
             {
-                var existingCluster = Clusters.FirstOrDefault(c => c.Cluster.Name == dnsName);
+                var existingCluster = Clusters.FirstOrDefault(c => c.Cluster.Name == dnsName && c.Cluster.Location == location);
                 if (existingCluster != null)
                     throw new HttpLayerException(HttpStatusCode.BadRequest, "<!DOCTYPE html><html>" + HDInsightClient.ClusterAlreadyExistsError + "</html>");
 

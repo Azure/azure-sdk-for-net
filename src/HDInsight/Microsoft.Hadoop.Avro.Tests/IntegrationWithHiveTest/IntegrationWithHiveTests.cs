@@ -95,36 +95,6 @@ namespace Microsoft.Hadoop.Avro.Tests
         [TestCategory("Integration")]
         [TestCategory("Scenario")]
         [TestCategory("Nightly")]
-        public void CreateHiveTableBackedByAvro_ReadAvroGeneratedByHive_UsingGenericRecord_NullCodec()
-        {
-            this.dataProvider = new LargeClassGenericDataProvider(Codec.Null);
-            this.RoundtripAvroDataToHive();
-        }
-
-        [TestMethod]
-        [TestCategory("Integration")]
-        [TestCategory("Scenario")]
-        [TestCategory("Nightly")]
-        public void CreateHiveTableBackedByAvro_ReadAvroGeneratedByHive_UsingReflection_NullCodec()
-        {
-            this.dataProvider = new LargeClassReflectionDataProvider(Codec.Null);
-            this.RoundtripAvroDataToHive();
-        }
-
-        [TestMethod]
-        [TestCategory("Integration")]
-        [TestCategory("Scenario")]
-        [TestCategory("Nightly")]
-        public void CreateHiveTableBackedByAvro_ReadAvroGeneratedByHive_UsingGenericRecord_DeflateCodec()
-        {
-            this.dataProvider = new LargeClassGenericDataProvider(Codec.Deflate);
-            this.RoundtripAvroDataToHive();
-        }
-
-        [TestMethod]
-        [TestCategory("Integration")]
-        [TestCategory("Scenario")]
-        [TestCategory("Nightly")]
         public void CreateHiveTableBackedByAvro_ReadAvroGeneratedByHive_UsingReflection_DeflateCodec()
         {
             this.dataProvider = new LargeClassReflectionDataProvider(Codec.Deflate);

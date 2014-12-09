@@ -93,18 +93,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
 
         [TestMethod]
         [TestCategory("Integration")]
-        [TestCategory("Scenario")]
-        [TestCategory("Nightly")]
-        [TestCategory("RestClient")]
-        [TestCategory("Production")]
-        public async Task ICanPerformA_ListCloudServices_Using_AzureProduction()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            await this.ICanPerformA_ListCloudServices_Using_RestClientAbstraction();
-        }
-
-        [TestMethod]
-        [TestCategory("Integration")]
         [TestCategory("CheckIn")]
         [TestCategory("RestClient")]
         public async Task ICanPerformA_ListCloudServices_Using_RestClientAbstraction()
@@ -116,18 +104,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
         }
 
         [TestMethod]
-        [TestCategory("Integration")]
-        [TestCategory("Scenario")]
-        [TestCategory("Nightly")]
-        [TestCategory("RestClient")]
-        [TestCategory("Production")]
-        public async Task ICanPerformA_CreateDeleteContainers_Using_RestClient_AzureProduction()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            await this.ICanPerformA_ListCloudServices_Using_RestClientAbstraction();
-        }
-
-        [TestMethod]
         public void ICanSerializeAndDeserialzeCreationResults()
         {
             JobCreationResults expected = new JobCreationResults() { HttpStatusCode = HttpStatusCode.Accepted, JobId = "job123" };
@@ -135,47 +111,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
             JobPayloadConverter deser = new JobPayloadConverter();
             var payload = ser.SerializeJobCreationResults(expected);
             var actual = deser.DeserializeJobCreationResults(payload);
-        }
-
-        [TestMethod]
-        [TestCategory("Integration")]
-        [TestCategory("Nightly")]
-        [TestCategory("RestClient")]
-        [Timeout(5*60*1000)] // ms
-        public async Task ICanPerformA_CreateDeleteContainers_Using_RestClient()
-        {
-            IHDInsightSubscriptionCredentials credentials = IntegrationTestBase.GetValidCredentials();
-            var client = new HDInsightManagementRestClient(credentials, GetAbstractionContext(), false);
-            var dnsName = GetRandomClusterName();
-            var location = "East US 2";
-            var subscriptionId = credentials.SubscriptionId;
-
-            var createPayload = String.Format(CreateContainerGenericRequest, dnsName, location, subscriptionId, Guid.NewGuid());
-            var xmlReader = new XmlTextReader(new StringReader(createPayload));
-            var resource = new Resource()
-            {
-                IntrinsicSettings = new[] { new XmlDocument().ReadNode(xmlReader) }
-            };
-            var result = await client.ListCloudServices();
-
-            Assert.IsTrue(!this.ContainsContainer(dnsName, result.Content));
-
-            await client.CreateContainer(dnsName, location, resource.SerializeToXml());
-            result = await client.ListCloudServices();
-            while (!this.ContainsContainer(dnsName, result.Content))
-            {
-                result = await client.ListCloudServices();
-                Thread.Sleep(TimeSpan.FromMilliseconds(100));
-            }
-
-            await client.DeleteContainer(dnsName, location);
-            bool containsContiner = true;
-            while (containsContiner)
-            {
-                result = await client.ListCloudServices();
-                containsContiner = this.ContainsContainer(dnsName, result.Content);
-                Thread.Sleep(TimeSpan.FromMilliseconds(100));
-            }
         }
 
         [TestMethod]

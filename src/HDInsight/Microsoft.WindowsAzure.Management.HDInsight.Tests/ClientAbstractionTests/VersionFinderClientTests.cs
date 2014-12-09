@@ -76,24 +76,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
         }
 
         [TestMethod]
-        [TestCategory("Integration")]
-        [TestCategory("Nightly")]
-        [TestCategory("VersionFinderClient")]
-        [TestCategory("Scenario")]
-        public async Task ICanPerformA_PositiveVersionValidation_Using_VersionFinderAbstraction() // Always goes against azure to quickly validate end2end
-        {
-            this.ApplyNoMocking();
-            IHDInsightCertificateCredential credentials = IntegrationTestBase.GetValidCredentials();
-
-            // Validate Versions
-            var client = new VersionFinderClient(credentials, GetAbstractionContext(), false);
-            var versions = await client.ListAvailableVersions();
-            var versionStrings = versions.Select(v => v.Version).ToList();
-            Assert.AreEqual(1, versionStrings.Count(version => version == "1.4"));
-            Assert.AreEqual(1, versionStrings.Count(version => version == "1.5"));
-        }
-
-        [TestMethod]
         [TestCategory("CheckIn")]
         [TestCategory("VersionFinderClient")]
         public void UserSuppliedVersionTooLow()

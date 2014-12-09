@@ -24,6 +24,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationHistoryAndLogs\HDInsightApplicationHistoryClient.cs" />
+    <Compile Include="ApplicationHistoryAndLogs\IHDInsightApplicationHistoryAsyncClient.cs" />
+    <Compile Include="ApplicationHistoryAndLogs\IHDInsightApplicationHistoryClient.cs" />
+    <Compile Include="ApplicationHistoryAndLogs\IHDInsightApplicationHistorySyncClient.cs" />
     <Compile Include="ClusterNodeType.cs" />
     <Compile Include="ClusterProvisioning\Data\ClusterType.cs" />
     <Compile Include="ClusterProvisioning\Data\HBaseConfiguration.cs" />
@@ -160,7 +164,7 @@
     <Compile Include="JobSubmission\PocoClient\HDInsightJobSubmissionPocoClient.cs" />
     <Compile Include="JobSubmission\PocoClient\HDInsightJobSubmissionPocoClientFactory.cs" />
     <None Include="app.config" />
-    <None Include="JobSubmission\PocoClient\RDFE\HDInsightRdfeJobSubmissionPocoClient.cs" />
+	<None Include="JobSubmission\PocoClient\RDFE\HDInsightRdfeJobSubmissionPocoClient.cs" />
     <None Include="JobSubmission\PocoClient\RDFE\HDInsightRdfeJobSubmissionPocoClientFactory.cs" />
     <Compile Include="JobSubmission\PocoClient\IHDInsightJobSubmissionPocoClient.cs" />
     <Compile Include="JobSubmission\PocoClient\IHDInsightJobSubmissionPocoClientFactory.cs" />

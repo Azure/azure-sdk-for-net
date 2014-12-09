@@ -232,24 +232,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.HadoopClientTests
         }
 
         [TestMethod]
-        [TestCategory("Nightly")]
-        public async Task GetNullForJobWithInvalidJobId()
-        {
-            var pocoMock = new MockRemotePoco();
-            var creds = new BasicAuthCredential()
-            {
-                Password = IntegrationTestBase.TestCredentials.AzurePassword,
-                Server = GatewayUriResolver.GetGatewayUri(IntegrationTestBase.TestCredentials.WellKnownCluster.DnsName),
-                UserName = IntegrationTestBase.TestCredentials.AzureUserName
-            };
-
-            var poco = new RemoteHadoopJobSubmissionPocoClient(creds, GetAbstractionContext(), false, pocoMock.GetUserAgentString());
-            var job = await poco.GetJob("job_201309101629_0004");
-
-            Assert.IsNull(job);
-        }
-
-        [TestMethod]
         [TestCategory("CheckIn")]
         public void ICanListJobs()
         {

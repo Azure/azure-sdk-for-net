@@ -76,6 +76,96 @@
 
         [TestMethod]
         [TestCategory("CheckIn")]
+        public void CanListCloudServicesWithDuplicateNames()
+        {
+            var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
+                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, ClustersPocoClient.GetSchemaVersion(Capabilities));
+            using (var clustersPocoClient = new ClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient))
+            {
+                CreateCluster("testcluster1", "West US");
+                CreateCluster("testcluster1", "East US");
+                var containersList = clustersPocoClient.ListContainers().Result;
+                Assert.AreEqual(containersList.Count, 2);
+                Assert.IsNotNull(containersList.SingleOrDefault(cluster => cluster.Name.Equals("testcluster1") && cluster.Location.Equals("West US")));
+                Assert.IsNotNull(containersList.SingleOrDefault(cluster => cluster.Name.Equals("testcluster1") && cluster.Location.Equals("East US")));
+            }
+        }
+
+        [TestMethod]
+        [TestCategory("CheckIn")]
+        public void CanGetCloudServicesWithDuplicateNames()
+        {
+            var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
+                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, ClustersPocoClient.GetSchemaVersion(Capabilities));
+            using (var clustersPocoClient = new ClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient))
+            {
+                CreateCluster("testcluster1", "West US");
+                CreateCluster("testcluster1", "East US");
+                var containersList = clustersPocoClient.ListContainers().Result;
+                Assert.AreEqual(containersList.Count, 2);
+                // Now list cluster without region name and the first one should always be returned
+                Assert.IsNotNull(clustersPocoClient.ListContainer("testcluster1"));
+                Assert.IsNotNull(clustersPocoClient.ListContainer("testcluster1").Result.Location.Equals("West US"));
+                // Now list cluster with region name 
+                Assert.IsNotNull(clustersPocoClient.ListContainer("testcluster1", "West US"));
+                Assert.IsNotNull(clustersPocoClient.ListContainer("testcluster1", "West US").Result.Location.Equals("West US"));
+                Assert.IsNotNull(clustersPocoClient.ListContainer("testcluster1", "East US"));
+                Assert.IsNotNull(clustersPocoClient.ListContainer("testcluster1", "East US").Result.Location.Equals("East US"));
+            }
+        }
+
+        [TestMethod]
+        [TestCategory("CheckIn")]
+        public void CanDeleteCloudServicesWithDuplicateNames()
+        {
+            var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
+                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, ClustersPocoClient.GetSchemaVersion(Capabilities));
+            using (var clustersPocoClient = new ClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient))
+            {
+                CreateCluster("testcluster1", "West US");
+                CreateCluster("testcluster1", "East US");
+                var containersList = clustersPocoClient.ListContainers().Result;
+                Assert.AreEqual(containersList.Count, 2);
+                // Now delete cluster without region name and both should be deleted
+                try
+                {
+                    clustersPocoClient.DeleteContainer("testcluster1").Wait();
+                    Assert.Fail("Exception not thrown");
+                }
+                catch (AggregateException age)
+                {
+                    Assert.IsTrue(age.InnerException != null, "Inner exception is not null");
+                    Assert.IsTrue(age.InnerException is InvalidOperationException, "Exception is not InvalidOperationException");
+                    Assert.AreEqual("Multiple clusters found with dnsname 'testcluster1'. Please specify dnsname and location", age.InnerException.Message, "Message not as expected");
+                }
+                containersList = clustersPocoClient.ListContainers().Result;
+                Assert.AreEqual(containersList.Count, 2);
+            }
+        }
+
+        [TestMethod]
+        [TestCategory("CheckIn")]
+        public void CanDeleteCloudServiceWithRegionWithDuplicateNames()
+        {
+            var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
+                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, ClustersPocoClient.GetSchemaVersion(Capabilities));
+            using (var clustersPocoClient = new ClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient))
+            {
+                CreateCluster("testcluster1", "West US");
+                CreateCluster("testcluster1", "East US");
+                var containersList = clustersPocoClient.ListContainers().Result;
+                Assert.AreEqual(containersList.Count, 2);
+                // Now delete cluster without region name and both should be deleted
+                clustersPocoClient.DeleteContainer("testcluster1", "West US");
+                containersList = clustersPocoClient.ListContainers().Result;
+                Assert.AreEqual(containersList.Count, 1);
+                Assert.IsNotNull(clustersPocoClient.ListContainer("testcluster1", "East US"));
+                Assert.IsNotNull(clustersPocoClient.ListContainer("testcluster1", "East US").Result.Location.Equals("East US"));
+            }
+        }
+
+        [TestMethod]
+        [TestCategory("CheckIn")]
         [ExpectedException(typeof(NotSupportedException))]
         public async Task CannotDeserializeClusterWithoutClusterCapability()
         {
@@ -87,7 +177,7 @@
             var originalInstanceCount = cluster.ClusterSizeInNodes;
             var expectedNewCount = originalInstanceCount * 2;
             Assert.AreEqual(cluster.ClusterSizeInNodes, originalInstanceCount);
-            await clustersPocoClient.ChangeClusterSize("testcluster", expectedNewCount);
+            await clustersPocoClient.ChangeClusterSize("testcluster", cluster.Location, expectedNewCount);
             cluster = clustersPocoClient.ListContainer("testcluster").Result;
             var actualNewCount = cluster.ClusterSizeInNodes;
             Assert.AreEqual(expectedNewCount, actualNewCount);
@@ -105,7 +195,7 @@
             var originalInstanceCount = cluster.ClusterSizeInNodes;
             var expectedNewCount = originalInstanceCount * 2;
             Assert.AreEqual(cluster.ClusterSizeInNodes, originalInstanceCount);
-            await clustersPocoClient.ChangeClusterSize("testcluster", expectedNewCount);
+            await clustersPocoClient.ChangeClusterSize("testcluster", cluster.Location, expectedNewCount);
             cluster = clustersPocoClient.ListContainer("testcluster").Result;
             var actualNewCount = cluster.ClusterSizeInNodes;
             Assert.AreEqual(expectedNewCount, actualNewCount);
@@ -122,7 +212,7 @@
             var cluster = clustersPocoClient.ListContainer("testcluster").Result;
             var originalInstanceCount = cluster.ClusterSizeInNodes;
 
-            var operationId = await clustersPocoClient.ChangeClusterSize("testcluster", originalInstanceCount);
+            var operationId = await clustersPocoClient.ChangeClusterSize("testcluster", cluster.Location, originalInstanceCount);
             Assert.AreEqual(operationId, Guid.Empty);
         }
 
@@ -138,7 +228,7 @@
             CreateCluster("testcluster", "West US");
             try
             {
-                await clustersPocoClient.ChangeClusterSize("testcluster", 100);
+                await clustersPocoClient.ChangeClusterSize("testcluster", "West US", 100);
             }
             catch (NotSupportedException ex)
             {
@@ -159,7 +249,7 @@
             Assert.AreEqual(cluster.ClusterSizeInNodes, originalInstanceCount);
             try
             {
-                await clustersPocoClient.ChangeClusterSize("testcluster", 0);
+                await clustersPocoClient.ChangeClusterSize("testcluster", cluster.Location, 0);
             }
             catch (ArgumentOutOfRangeException ex)
             {

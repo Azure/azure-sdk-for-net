@@ -84,59 +84,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
         }
 
         [TestMethod]
-        [TestCategory("Nightly")]
-        public async Task CanCheckExistenceOfOutputDirectory()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            var wellKnownStorageAccount = IntegrationTestBase.GetWellKnownStorageAccounts().First();
-            var storageCreds = new WindowsAzureStorageAccountCredentials()
-            {
-                Key = wellKnownStorageAccount.Key,
-                Name = wellKnownStorageAccount.Name
-            };
-            var wabsStorageClient = new WabStorageAbstraction(storageCreds);
-            var hivePath = new Uri(string.Format(CultureInfo.InvariantCulture, "{0}{1}@{2}/hive", Constants.WabsProtocolSchemeName, wellKnownStorageAccount.Container, wellKnownStorageAccount.Name));
-            var hivePathExists = await wabsStorageClient.Exists(hivePath);
-            Assert.IsTrue(hivePathExists);
-        }
-
-        [TestMethod]
-        [TestCategory("Nightly")]
-        public async Task CanReadFile()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            var wellKnownStorageAccount = IntegrationTestBase.GetWellKnownStorageAccounts().First();
-            var storageCreds = new WindowsAzureStorageAccountCredentials()
-            {
-                Key = wellKnownStorageAccount.Key,
-                Name = wellKnownStorageAccount.Name
-            };
-            var wabsStorageClient = new WabStorageAbstraction(storageCreds);
-            var testFilePath = new Uri(string.Format(CultureInfo.InvariantCulture, "{0}{1}@{2}/hive/warehouse/hivesampletable/HiveSampleData.txt", Constants.WabsProtocolSchemeName, wellKnownStorageAccount.Container, wellKnownStorageAccount.Name));
-            var testFileStream = await wabsStorageClient.Read(testFilePath);
-            Assert.IsNotNull(testFileStream);
-            var contents = new StreamReader(testFileStream).ReadToEnd();
-            Assert.IsTrue(contents.Length > 0);
-        }
-
-        [TestMethod]
-        [TestCategory("Nightly")]
-        public async Task CanListDirectoryContents()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            var wellKnownStorageAccount = IntegrationTestBase.GetWellKnownStorageAccounts().First();
-            var storageCreds = new WindowsAzureStorageAccountCredentials()
-            {
-                Key = wellKnownStorageAccount.Key,
-                Name = wellKnownStorageAccount.Name
-            };
-            var wabsStorageClient = new WabStorageAbstraction(storageCreds);
-            var testFilePath = new Uri(string.Format(CultureInfo.InvariantCulture, "{0}{1}@{2}/example", Constants.WabsProtocolSchemeName, wellKnownStorageAccount.Container, wellKnownStorageAccount.Name));
-            var testFileStream = await wabsStorageClient.List(testFilePath, true);
-            Assert.IsNotNull(testFileStream);
-        }
-
-        [TestMethod]
         [TestCategory("CheckIn")]
         public void CanRoundTripHttpPath()
         {

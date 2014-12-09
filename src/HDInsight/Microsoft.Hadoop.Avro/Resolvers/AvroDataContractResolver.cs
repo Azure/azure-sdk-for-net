@@ -29,6 +29,7 @@ namespace Microsoft.Hadoop.Avro
     public class AvroDataContractResolver : AvroContractResolver
     {
         private readonly bool allowNullable;
+        private readonly bool useAlphabeticalOrder;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AvroDataContractResolver"/> class.
@@ -42,8 +43,19 @@ namespace Microsoft.Hadoop.Avro
         /// </summary>
         /// <param name="allowNullable">If set to <c>true</c>, null values are allowed.</param>
         public AvroDataContractResolver(bool allowNullable)
+            : this(allowNullable, false)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AvroDataContractResolver"/> class.
+        /// </summary>
+        /// <param name="allowNullable">If set to <c>true</c>, null values are allowed.</param>
+        /// <param name="useAlphabeticalOrder">If set to <c>true</c> use alphabetical data member order during serialization/deserialization.</param>
+        public AvroDataContractResolver(bool allowNullable, bool useAlphabeticalOrder)
         {
             this.allowNullable = allowNullable;
+            this.useAlphabeticalOrder = useAlphabeticalOrder;
         }
 
         /// <summary>
@@ -153,8 +165,14 @@ namespace Microsoft.Hadoop.Avro
             var fields = type.GetAllFields();
             var properties = type.GetAllProperties();
 
+            var dataMemberProperties = properties
+                .Where(p => p.GetDataMemberAttribute() != null);
+
+            var serializedProperties = TypeExtensions.RemoveDuplicates(dataMemberProperties);
+            TypeExtensions.CheckPropertyGetters(serializedProperties);
+
             var members = fields
-                .Concat<MemberInfo>(properties)
+                .Concat<MemberInfo>(serializedProperties)
                 .Select(m => new
                 {
                     Member = m,
@@ -162,14 +180,20 @@ namespace Microsoft.Hadoop.Avro
                     Nullable = m.GetCustomAttributes(false).OfType<NullableSchemaAttribute>().Any()
                 });
 
-            return members.Where(m => m.Attribute != null)
+            var result = members.Where(m => m.Attribute != null)
                           .Select(m => new MemberSerializationInfo
                           {
                               Name = m.Attribute.Name ?? m.Member.Name,
                               MemberInfo = m.Member,
                               Nullable = m.Nullable
-                          })
-                          .ToArray();
+                          });
+
+            if (this.useAlphabeticalOrder)
+            {
+                result = result.OrderBy(p => p.Name);
+            }
+
+            return result.ToArray();
         }
     }
 }

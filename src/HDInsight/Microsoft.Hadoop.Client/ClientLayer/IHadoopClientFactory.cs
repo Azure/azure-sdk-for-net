@@ -53,5 +53,15 @@ namespace Microsoft.Hadoop.Client.ClientLayer
         /// </returns>
         IJobSubmissionClient Create(T credential, string customUserAgent);
 
+        /// <summary>
+        /// Creates a new Hadoop Application History client capable of retrieving application history from a Hadoop cluster.
+        /// </summary>
+        /// <param name="credential">
+        /// The credential to use.
+        /// </param>
+        /// <returns>
+        /// A new Hadoop Application History Client.
+        /// </returns>
+        IHadoopApplicationHistoryClient CreateHadoopApplicationHistoryClient(T credential);
     }
 }

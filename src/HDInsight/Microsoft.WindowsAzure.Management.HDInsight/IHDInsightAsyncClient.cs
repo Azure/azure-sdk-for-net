@@ -71,6 +71,14 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         Task<ClusterDetails> GetClusterAsync(string name);
 
         /// <summary>
+        /// Queries for a specific HDInsight Cluster registered.
+        /// </summary>
+        /// <param name="name">Name of the HDInsight cluster.</param>
+        /// <param name="location">Location of the HDInsight cluster.</param>
+        /// <returns>Task that returns an HDInsight Cluster or NULL if not found.</returns>
+        Task<ClusterDetails> GetClusterAsync(string name, string location);
+
+        /// <summary>
         /// Submits a request to create an HDInsight cluster and waits for it to complete.
         /// </summary>
         /// <param name="clusterCreateParameters">Request object that encapsulates all the configurations.</param>
@@ -83,6 +91,14 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         /// <param name="name">Name of the HDInsight cluster.</param>
         /// <returns>Task that submits a DeleteCluster request.</returns>
         Task DeleteClusterAsync(string name);
+
+        /// <summary>
+        /// Submits a request to delete an HDInsight cluster.
+        /// </summary>
+        /// <param name="name">Name of the HDInsight cluster.</param>
+        /// <param name="location">Location of the HDInsight cluster.</param>
+        /// <returns>Task that submits a DeleteCluster request.</returns>
+        Task DeleteClusterAsync(string name, string location);
 
         /// <summary>
         /// Submits a request to change the data node size of a cluster.

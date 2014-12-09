@@ -163,6 +163,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
         /// <param name="dnsName">
         /// The dnsName of the cluster.
         /// </param>
+        /// <param name="location">The location of the cluster.</param>
         /// <param name="timeout">
         /// The amount of time to wait for the condition to be satisfied.
         /// </param>
@@ -172,13 +173,56 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
         /// <returns>
         /// An awaitable task.
         /// </returns>
-        public static async Task WaitForClusterNullOrError(this IHDInsightManagementPocoClient client, string dnsName, TimeSpan timeout, CancellationToken cancellationToken)
+        public static async Task WaitForClusterNullOrError(this IHDInsightManagementPocoClient client, string dnsName, string location, TimeSpan timeout, CancellationToken cancellationToken)
         {
-            await client.WaitForCondition(() => client.ListContainer(dnsName), c => c == null ? PollResult.Stop : c.Error != null ? PollResult.Stop : PollResult.Continue, null, TimeSpan.FromMilliseconds(100), timeout, cancellationToken);
+            await client.WaitForCondition(() => client.ListContainer(dnsName, location), c => c == null ? PollResult.Stop : c.Error != null ? PollResult.Stop : PollResult.Continue, null, TimeSpan.FromMilliseconds(100), timeout, cancellationToken);
         }
 
         /// <summary>
         /// Waits for the cluster to not exist (null).
+        /// </summary>
+        /// <param name="client">The client instance this is extending.</param>
+        /// <param name="dnsName">The dnsName of the cluster.</param>
+        /// <param name="timeout">The amount of time to wait for the condition to be satisfied.</param>
+        /// <param name="pollInterval">The poll interval.</param>
+        /// <param name="cancellationToken">A Cancelation Token that can be used to cancel the request.</param>
+        /// <returns>
+        /// An awaitable task.
+        /// </returns>
+        public static async Task WaitForClusterNull(this IHDInsightManagementPocoClient client, string dnsName, TimeSpan timeout, TimeSpan pollInterval, CancellationToken cancellationToken)
+        {
+            await client.WaitForCondition(() => client.ListContainer(dnsName), c => c == null ? PollResult.Stop : PollResult.Continue, null, pollInterval, timeout, cancellationToken);
+        }
+
+        /// <summary>
+        /// Waits for the cluster to not exist (null).
+        /// </summary>
+        /// <param name="client">
+        /// The client instance this is extending.
+        /// </param>
+        /// <param name="dnsName">
+        /// The dnsName of the cluster.
+        /// </param>
+        /// <param name="location">
+        /// The location of the cluster.
+        /// </param>
+        /// <param name="timeout">
+        /// The amount of time to wait for the condition to be satisfied.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// A Cancelation Token that can be used to cancel the request.
+        /// </param>
+        /// <returns>
+        /// An awaitable task.
+        /// </returns>
+        public static async Task WaitForClusterNull(this IHDInsightManagementPocoClient client, string dnsName, string location, TimeSpan timeout, CancellationToken cancellationToken)
+        {
+            await client.WaitForCondition(() => client.ListContainer(dnsName, location), c => c == null ? PollResult.Stop : PollResult.Continue, null, TimeSpan.FromMilliseconds(100), timeout, cancellationToken);
+        }
+
+        /// <summary>
+        /// Waits for the cluster to not exist (null). Doesnt work when this overload is called and there are two cluster
+        /// with same names. Please call the overload with the location in that case.
         /// </summary>
         /// <param name="client">
         /// The client instance this is extending.
@@ -197,7 +241,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
         /// </returns>
         public static async Task WaitForClusterNull(this IHDInsightManagementPocoClient client, string dnsName, TimeSpan timeout, CancellationToken cancellationToken)
         {
-            await client.WaitForCondition(() => client.ListContainer(dnsName), c => c == null ? PollResult.Stop : PollResult.Continue, null, TimeSpan.FromMilliseconds(100), timeout, cancellationToken);
+            await client.WaitForCondition(() => client.ListContainer(dnsName), c => c == null ? PollResult.Stop : PollResult.Continue, null, TimeSpan.FromSeconds(15), timeout, cancellationToken);
         }
 
         /// <summary>
@@ -209,6 +253,9 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
         /// <param name="dnsName">
         /// The dnsName of the cluster.
         /// </param>
+        /// <param name="location">
+        /// The location of the cluster.
+        /// </param>
         /// <param name="timeout">
         /// The amount of time to wait for the condition to be satisfied.
         /// </param>
@@ -218,9 +265,9 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
         /// <returns>
         /// An awaitable task.
         /// </returns>
-        public static async Task WaitForClusterNotNull(this IHDInsightManagementPocoClient client, string dnsName, TimeSpan timeout, CancellationToken cancellationToken)
+        public static async Task WaitForClusterNotNull(this IHDInsightManagementPocoClient client, string dnsName, string location, TimeSpan timeout, CancellationToken cancellationToken)
         {
-            await client.WaitForCondition(() => client.ListContainer(dnsName), c => c != null ? PollResult.Stop : PollResult.Continue, null, TimeSpan.FromMilliseconds(100), timeout, cancellationToken);
+            await client.WaitForCondition(() => client.ListContainer(dnsName, location), c => c != null ? PollResult.Stop : PollResult.Continue, null, TimeSpan.FromMilliseconds(100), timeout, cancellationToken);
         }
 
         /// <summary>
@@ -234,6 +281,9 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
         /// </param>
         /// <param name="dnsName">
         /// The dnsName of the cluster.
+        /// </param>
+        /// <param name="location">
+        /// The location of the cluster.
         /// </param>
         /// <param name="timeout">
         /// The amount of time to wait for the condition to be satisfied.
@@ -250,9 +300,9 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
         /// <returns>
         /// An awaitable task.
         /// </returns>
-        public static async Task WaitForClusterInConditionOrError(this IHDInsightManagementPocoClient client, Action<ClusterDetails> notifyHandler, string dnsName, TimeSpan timeout, TimeSpan interval, IAbstractionContext context, params ClusterState[] states)
+        public static async Task WaitForClusterInConditionOrError(this IHDInsightManagementPocoClient client, Action<ClusterDetails> notifyHandler, string dnsName, string location, TimeSpan timeout, TimeSpan interval, IAbstractionContext context, params ClusterState[] states)
         {
-            await client.WaitForCondition(() => client.ListContainer(dnsName), c => client.PollSignal(c, states), notifyHandler, interval, timeout, context.CancellationToken);
+            await client.WaitForCondition(() => client.ListContainer(dnsName, location), c => client.PollSignal(c, states), notifyHandler, interval, timeout, context.CancellationToken);
         }
 
         internal enum PollResult

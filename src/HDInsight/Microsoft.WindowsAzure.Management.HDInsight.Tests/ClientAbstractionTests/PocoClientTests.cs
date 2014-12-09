@@ -788,7 +788,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
             using (var client = ServiceLocator.Instance.Locate<IHDInsightManagementPocoClientFactory>().Create(credentials, GetAbstractionContext(), false))
             {
                 client.CreateContainer(cluster).Wait();
-                await client.WaitForClusterInConditionOrError(null, cluster.Name, TimeSpan.FromMinutes(30), HDInsightClient.DefaultPollingInterval, GetAbstractionContext(), this.CreatingStates);
+                await client.WaitForClusterInConditionOrError(null, cluster.Name, cluster.Location, TimeSpan.FromMinutes(30), HDInsightClient.DefaultPollingInterval, GetAbstractionContext(), this.CreatingStates);
 
                 var task = client.ListContainer(cluster.Name);
                 task.WaitForResult();
@@ -805,7 +805,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
                 }
 
                 await client.DeleteContainer(cluster.Name);
-                await client.WaitForClusterNullOrError(cluster.Name, TimeSpan.FromMinutes(10), IntegrationTestBase.GetAbstractionContext().CancellationToken);
+                await client.WaitForClusterNullOrError(cluster.Name, cluster.Location, TimeSpan.FromMinutes(10), IntegrationTestBase.GetAbstractionContext().CancellationToken);
 
                 Assert.IsNull(container.Error);
                 Assert.IsNull(client.ListContainer(cluster.Name).WaitForResult());
@@ -1049,14 +1049,14 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
             IHDInsightCertificateCredential credentials = IntegrationTestBase.GetValidCredentials();
             var client = ServiceLocator.Instance.Locate<IHDInsightManagementPocoClientFactory>().Create(credentials, GetAbstractionContext(), false);
             await client.CreateContainer(cluster);
-            await client.WaitForClusterNotNull(cluster.Name, TimeSpan.FromMinutes(10), GetAbstractionContext().CancellationToken);
+            await client.WaitForClusterNotNull(cluster.Name, cluster.Location, TimeSpan.FromMinutes(10), GetAbstractionContext().CancellationToken);
 
             var result = await client.ListContainer(cluster.Name);
             Assert.IsNotNull(result);
             Assert.IsNotNull(result.Error);
 
             await client.DeleteContainer(cluster.Name);
-            await client.WaitForClusterNull(cluster.Name, TimeSpan.FromMinutes(10), GetAbstractionContext().CancellationToken);
+            await client.WaitForClusterNull(cluster.Name, cluster.Location, TimeSpan.FromMinutes(10), GetAbstractionContext().CancellationToken);
         }
 
         [TestMethod]

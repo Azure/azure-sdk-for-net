@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation
+// Copyright (c) Microsoft Corporation
 // All rights reserved.
 // 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not
@@ -55,6 +55,14 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         ClusterDetails GetCluster(string dnsName);
 
         /// <summary>
+        /// Queries for a specific HDInsight Cluster registered.
+        /// </summary>
+        /// <param name="dnsName">Name of the HDInsight cluster.</param>
+        /// <param name="location">Location of the HDInsight cluster.</param>
+        /// <returns>HDInsight Cluster or NULL if not found.</returns>
+        ClusterDetails GetCluster(string dnsName, string location);
+
+        /// <summary>
         /// Submits a request to create an HDInsight cluster and waits for it to complete.
         /// </summary>
         /// <param name="cluster">Request object that encapsulates all the configurations.</param>
@@ -83,12 +91,28 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         void DeleteCluster(string dnsName, TimeSpan timeout);
 
         /// <summary>
+        /// Submits a request to delete an HDInsight cluster and waits for it to complete.
+        /// </summary>
+        /// <param name="dnsName">Name of the HDInsight cluster.</param>
+        /// <param name="location">Location of the HDInsight cluster.</param>
+        void DeleteCluster(string dnsName, string location);
+
+        /// <summary>
+        /// Submits a request to delete an HDInsight cluster and waits for it to complete.
+        /// </summary>
+        /// <param name="dnsName">Name of the HDInsight cluster.</param>
+        /// <param name="location">Location of the HDInsight cluster.</param>
+        /// <param name="timeout">Timeout interval for the operation.</param>
+        void DeleteCluster(string dnsName, string location, TimeSpan timeout);
+
+        /// <summary>
         /// Submits a request to change the data node size of a cluster.
         /// </summary>
         /// <param name="dnsName">The DNS name of the cluster.</param>
         /// <param name="location">The location of the cluster.</param>
         /// <param name="newSize">The new size.</param>
-        void ChangeClusterSize(string dnsName, string location, int newSize);
+        /// <returns>Object that represents the HDInsight Cluster created.</returns>
+        ClusterDetails ChangeClusterSize(string dnsName, string location, int newSize);
 
         /// <summary>
         /// Enables Http Connectivity on the HDInsight cluster.

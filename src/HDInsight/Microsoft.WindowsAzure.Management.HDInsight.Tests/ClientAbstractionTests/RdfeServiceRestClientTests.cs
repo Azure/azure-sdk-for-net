@@ -88,28 +88,5 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
             capabilities = rdfeCapabilitiesClient.ParseCapabilities(xml);
             Assert.AreEqual(0, capabilities.Count());
         }
-
-        [TestMethod]
-        [TestCategory("Integration")]
-        [TestCategory("Nightly")]
-        [TestCategory("RdfePropertyFinderClient")]
-        [TestCategory("Scenario")]
-        public async Task ICanPerformA_PositiveSubscriptionValidation_Using_RdfePropertyFinderAbstraction() // Always goes against azure to quickly validate end2end
-        {
-            this.ApplyNoMocking();
-            IHDInsightCertificateCredential credentials = IntegrationTestBase.GetValidCredentials();
-
-            // Validate Versions & locations
-            var client = new RdfeServiceRestClient(credentials, GetAbstractionContext(), false);
-            var capabilities = await client.GetResourceProviderProperties();
-            var versions = VersionFinderClient.ParseVersions(capabilities);
-            var locations = LocationFinderClient.ParseLocations(capabilities);
-            Assert.AreEqual(1, locations.Count(location => location == "East US"));
-            Assert.AreEqual(1, locations.Count(location => location == "East US 2"));
-            Assert.AreEqual(1, locations.Count(location => location == "North Europe"));
-            Assert.AreEqual(1, versions.Select(v => v.Version).Count(version => version == "1.4"));
-            Assert.AreEqual(1, versions.Select(v => v.Version).Count(version => version == "1.5"));
-        }
-
     }
 }

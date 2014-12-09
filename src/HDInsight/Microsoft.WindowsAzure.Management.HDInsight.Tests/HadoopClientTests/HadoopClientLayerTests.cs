@@ -63,113 +63,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.HadoopClientTests
         }
 
         [TestMethod]
-        [TestCategory("Integration")]
-        [TestCategory("Nightly")]
-        public void CanCreateMapReduceJob_PiJob_AgainstAzure()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            this.CanCreateMapReduceJob_PiJob();
-            string[] filesToBeDeleted = { "piresults" };
-            DeleteFiles(filesToBeDeleted).WaitForResult();
-        }
-
-        [TestMethod]
-        [TestCategory("Integration")]
-        [TestCategory("Nightly")]
-        public void CanCreateMapReduceJob_WordCount_AgainstAzure()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            this.CanCreateMapReduceJob_WordCountJob();
-            string[] filesToBeDeleted = { "wordcountresults" };
-            DeleteFiles(filesToBeDeleted).WaitForResult();
-        }
-
-        [TestMethod]
-        [TestCategory("Integration")]
-        [TestCategory("Nightly")]
-        public void CanCreateMapReduceJob_Terasort_AgainstAzure()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            this.CanCreateMapReduceJob_TerasortJob();
-            string[] filesToBeDeleted = { "teragenresults", "terasortresults", "teravalidateresults", "example/data/terasort-input", "example/data/terasort-output", "example/data/terasort-validate" };
-            DeleteFiles(filesToBeDeleted).WaitForResult();
-        }
-
-        [TestMethod]
-        [TestCategory("Integration")]
-        [TestCategory("Nightly")]
-        public void CanCreateStreamingMapReduceJob_AgainstAzure()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            this.CanCreateStreamingMapReduceJob();
-            string[] filesToBeDeleted = { "example/data/gutenberg/wc.out", string.Format("user/{0}/mrstreamingoutput", IntegrationTestBase.TestCredentials.AzureUserName) };
-            DeleteFiles(filesToBeDeleted).WaitForResult();
-        }
-
-        [TestMethod]
-        [TestCategory("Integration")]
-        [TestCategory("Nightly")]
-        public void CanCreateHiveJob_AgainstAzure()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            this.CanCreateHiveJobs();
-            string[] filesToBeDeleted = { "tables" };
-            DeleteFiles(filesToBeDeleted).WaitForResult();
-        }
-
-        [TestMethod]
-        [TestCategory("Integration")]
-        [TestCategory("Nightly")]
-        public void CanCreateHiveJobWithQueryFile_AgainstAzure()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            this.CanCreateHiveJobsWithQueryFile();
-            string[] filesToBeDeleted = { "hivequeryfileresultsfolder" };
-            DeleteFiles(filesToBeDeleted).WaitForResult();
-        }
-
-        [TestMethod]
-        [TestCategory("Integration")]
-        [TestCategory("Nightly")]
-        public void CanCreateSerdeHiveJob_AgainstAzure()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            this.CanCreateSerdeHiveJobs();
-            string[] filesToBeDeleted = { "hiveserderesultsfolder" };
-            DeleteFiles(filesToBeDeleted).WaitForResult();
-        }
-
-        [TestMethod]
-        [TestCategory("Integration")]
-        [TestCategory("Nightly")]
-        public void CanCreatePigJob_AgainstAzure()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            this.CanCreatePigJobs();
-            string[] filesToBeDeleted = { "pigresultsfolder" };
-            DeleteFiles(filesToBeDeleted).WaitForResult();
-        }
-
-        [TestMethod]
-        [TestCategory("Integration")]
-        [TestCategory("Nightly")]
-        public void CanListFullyDetailedJobs_AgainstAzure()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            this.CanListFullyDetailedJobs();
-        }
-
-        [TestMethod]
-        [TestCategory("Integration")]
-        [TestCategory("Nightly")]
-        [ExpectedException(typeof(HttpLayerException))]
-        public void CanStopJobs_AgainstAzure()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            this.CanStopJob();
-        }
-
-        [TestMethod]
         [TestCategory("CheckIn")]
         public void CanStopJob()
         {
@@ -323,6 +216,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.HadoopClientTests
         internal class MockIHadoopClientFactoryManager : IHadoopClientFactoryManager
         {
             public IJobSubmissionClient retval;
+
             public MockIHadoopClientFactoryManager(IJobSubmissionClient retval)
             {
                 this.retval = retval;
@@ -348,6 +242,11 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.HadoopClientTests
             public IJobSubmissionClient Create(IJobSubmissionClientCredential credentials, string userAgentString)
             {
                 return retval;
+            }
+
+            public IHadoopApplicationHistoryClient CreateHadoopApplicationHistoryClient(IJobSubmissionClientCredential credentials)
+            {
+                throw new NotImplementedException();
             }
         }
 
@@ -684,30 +583,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.HadoopClientTests
             var output = hadoopClient.GetJobOutput(job.JobId);
             var content = new StreamReader(output).ReadToEnd();
             Assert.IsTrue(content.Length >= 0);
-        }
-
-        [TestMethod]
-        [TestCategory("Nightly")]
-        public void CanWriteHiveQueryToFile_AgainstAzure()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            this.CanWriteHiveQueryToFile();
-        }
-
-        [TestMethod]
-        [TestCategory("Nightly")]
-        public void CanWritePigQueryToFile_AgainstAzure()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            this.CanWritePigQueryToFile();
-        }
-
-        [TestMethod]
-        [TestCategory("Nightly")]
-        public void CanWriteSqoopCommandToFile_AgainstAzure()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            this.CanWriteSqoopCommandToFile();
         }
 
         [TestMethod]

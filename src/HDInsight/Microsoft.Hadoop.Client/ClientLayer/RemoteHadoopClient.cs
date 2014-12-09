@@ -34,7 +34,7 @@ namespace Microsoft.Hadoop.Client
     /// <summary>
     /// Represents a Hadoop client that can be used to submit jobs to an Hadoop cluster.
     /// </summary>
-    internal class RemoteHadoopClient : ClientBase, IJobSubmissionClient
+    internal class RemoteHadoopClient : ClientBase, IJobSubmissionClient, IHadoopApplicationHistoryClient
     {
         private BasicAuthCredential credentials;
         private const string SDKVersionUserAgentString = "HDInsight .NET SDK/{0} {1}";
@@ -171,6 +171,78 @@ namespace Microsoft.Hadoop.Client
             var factory = ServiceLocator.Instance.Locate<IRemoteHadoopJobSubmissionPocoClientFactory>();
             var pocoClient = factory.Create(this.credentials, this.Context, this.IgnoreSslErrors, this.GetCustomUserAgent());
             return pocoClient.SubmitStreamingJob(streamingMapReduceJobCreateParameters);
+        }
+
+        /// <inheritdoc />
+        public async Task<IEnumerable<ApplicationDetails>> ListCompletedApplicationsAsync(DateTime submittedAfterInUtc, DateTime submittedBeforeInUtc)
+        {
+            var factory = ServiceLocator.Instance.Locate<IHadoopApplicationHistoryRestClientFactory>();
+            var applicationHistoryRestClient = factory.Create(this.credentials, this.Context, this.IgnoreSslErrors);
+            var applicationHistory = await applicationHistoryRestClient.ListCompletedApplicationsAsync(submittedAfterInUtc, submittedBeforeInUtc);
+            return applicationHistory;
+        }
+
+        /// <inheritdoc />
+        public async Task<IEnumerable<ApplicationDetails>> ListCompletedApplicationsAsync()
+        {
+            return await this.ListCompletedApplicationsAsync(DateTime.MinValue, DateTime.UtcNow);
+        }
+
+        /// <inheritdoc />
+        public IEnumerable<ApplicationDetails> ListCompletedApplications(DateTime submittedAfterInUtc, DateTime submittedBeforeInUtc)
+        {
+            return this.ListCompletedApplicationsAsync(submittedAfterInUtc, submittedBeforeInUtc).WaitForResult();
+        }
+
+        /// <inheritdoc />
+        public IEnumerable<ApplicationDetails> ListCompletedApplications()
+        {
+            return this.ListCompletedApplicationsAsync().WaitForResult();
+        }
+
+        /// <inheritdoc />
+        public async Task<ApplicationDetails> GetApplicationDetailsAsync(string applicationId)
+        {
+            var factory = ServiceLocator.Instance.Locate<IHadoopApplicationHistoryRestClientFactory>();
+            var applicationHistoryRestClient = factory.Create(this.credentials, this.Context, this.IgnoreSslErrors);
+            var applicationDetails = await applicationHistoryRestClient.GetApplicationDetailsAsync(applicationId);
+            return applicationDetails;
+        }
+
+        /// <inheritdoc />
+        public ApplicationDetails GetApplicationDetails(string applicationId)
+        {
+            return this.GetApplicationDetailsAsync(applicationId).WaitForResult();
+        }
+
+        /// <inheritdoc />
+        public async Task<IEnumerable<ApplicationAttemptDetails>> ListApplicationAttemptsAsync(ApplicationDetails application)
+        {
+            var factory = ServiceLocator.Instance.Locate<IHadoopApplicationHistoryRestClientFactory>();
+            var applicationHistoryRestClient = factory.Create(this.credentials, this.Context, this.IgnoreSslErrors);
+            var attempts = await applicationHistoryRestClient.ListApplicationAttemptsAsync(application);
+            return attempts;
+        }
+
+        /// <inheritdoc />
+        public IEnumerable<ApplicationAttemptDetails> ListApplicationAttempts(ApplicationDetails application)
+        {
+            return this.ListApplicationAttemptsAsync(application).WaitForResult();
+        }
+
+        /// <inheritdoc />
+        public async Task<IEnumerable<ApplicationContainerDetails>> ListApplicationContainersAsync(ApplicationAttemptDetails applicationAttempt)
+        {
+            var factory = ServiceLocator.Instance.Locate<IHadoopApplicationHistoryRestClientFactory>();
+            var applicationHistoryRestClient = factory.Create(this.credentials, this.Context, this.IgnoreSslErrors);
+            var containers = await applicationHistoryRestClient.ListApplicationContainersAsync(applicationAttempt);
+            return containers;
+        }
+
+        /// <inheritdoc />
+        public IEnumerable<ApplicationContainerDetails> ListApplicationContainers(ApplicationAttemptDetails applicationAttempt)
+        {
+            return this.ListApplicationContainersAsync(applicationAttempt).WaitForResult();
         }
 
         /// <inheritdoc />

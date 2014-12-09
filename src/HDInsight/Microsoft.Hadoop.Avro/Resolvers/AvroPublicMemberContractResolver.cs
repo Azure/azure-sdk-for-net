@@ -15,6 +15,7 @@
 namespace Microsoft.Hadoop.Avro
 {
     using System;
+    using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
     using System.Reflection;
@@ -102,8 +103,9 @@ namespace Microsoft.Hadoop.Avro
                            p.DeclaringType.IsKeyValuePair() ||
                            (p.CanRead && p.CanWrite && p.GetSetMethod() != null && p.GetGetMethod() != null));
 
+            var serializedProperties = TypeExtensions.RemoveDuplicates(properties);
             return fields
-                .Concat<MemberInfo>(properties)
+                .Concat<MemberInfo>(serializedProperties)
                 .Select(m => new MemberSerializationInfo { Name = m.Name, MemberInfo = m, Nullable = m.GetCustomAttributes(false).OfType<NullableSchemaAttribute>().Any() })
                 .ToArray();
         }

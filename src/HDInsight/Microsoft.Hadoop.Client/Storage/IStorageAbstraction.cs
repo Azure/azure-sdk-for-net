@@ -82,6 +82,20 @@ namespace Microsoft.Hadoop.Client.Storage
         Task<Stream> Read(Uri path);
 
         /// <summary>
+        /// Downloads the content of a file on the storage system into a local file.
+        /// </summary>
+        /// <param name="path">
+        /// The Uri to the file.
+        /// </param>
+        /// <param name="localFileName">
+        /// Full path of the local file.
+        /// </param>
+        /// <returns>
+        /// A task object that can be awaited and downloads the content of a blob to a local file.
+        /// </returns>
+        Task DownloadToFile(Uri path, string localFileName);
+
+        /// <summary>
         /// Lists the contents of a given path on the storage system.
         /// </summary>
         /// <param name="path">

@@ -12,13 +12,11 @@
 // 
 // See the Apache Version 2.0 License for specific language governing
 // permissions and limitations under the License.
-
-using Newtonsoft.Json;
-
 namespace Microsoft.Hadoop.Avro.Schema
 {
     using System;
     using System.Collections.Generic;
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Node for surrogate types.

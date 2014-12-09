@@ -32,5 +32,10 @@ namespace Microsoft.Hadoop.Client.ClientLayer
         {
             return Help.SafeCreate(() => new RemoteHadoopClient(credential, customUserAgent));
         }
+
+        public IHadoopApplicationHistoryClient CreateHadoopApplicationHistoryClient(BasicAuthCredential credential)
+        {
+            return Help.SafeCreate(() => new RemoteHadoopClient(credential, string.Empty));
+        }
     }
 }

@@ -15,6 +15,8 @@
 
 namespace Microsoft.Hadoop.Client
 {
+    using System;
+
     /// <summary>
     ///     Provides Hard codes for key values.
     /// </summary>
@@ -49,5 +51,10 @@ namespace Microsoft.Hadoop.Client
         ///     The protocol scheme name to use when using a Windows Azure Blob Storage account.
         /// </summary>
         public const string WabsProtocolSchemeName = "wasb://";
+
+        /// <summary>
+        ///     Represents Unix Epoch.
+        /// </summary>
+        public static readonly DateTime UnixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
     }
 }

@@ -127,6 +127,11 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities.RestSimulato
             return Task.Delay(0);
         }
 
+        public Task DownloadToFile(Uri path, string localFileName)
+        {
+            throw new NotImplementedException();
+        }
+
         private void AssertIsValidWabsUri(PathInfo pathInfo)
         {
             if (!pathInfo.IsAbsolute || pathInfo.Protocol != Constants.WabsProtocol || pathInfo.Container.IsNullOrEmpty() ||

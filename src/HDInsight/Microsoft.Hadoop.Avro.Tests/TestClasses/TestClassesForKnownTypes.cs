@@ -26,7 +26,7 @@ namespace Microsoft.Hadoop.Avro.Tests
         public string Color { get; set; }
 
         [DataMember]
-        public string Name { get; set; }
+        public abstract string Name { get; set; }
     }
 
     [DataContract]
@@ -34,6 +34,9 @@ namespace Microsoft.Hadoop.Avro.Tests
     {
         [DataMember]
         public int Side { get; set; }
+
+        [DataMember]
+        public override string Name { get; set; }
 
         public static Square Create()
         {
@@ -114,6 +117,9 @@ namespace Microsoft.Hadoop.Avro.Tests
         [DataMember]
         public int Width { get; set; }
 
+        [DataMember]
+        public override string Name { get; set; }
+
         public static Rectangle Create()
         {
             return new Rectangle
@@ -138,6 +144,53 @@ namespace Microsoft.Hadoop.Avro.Tests
         public override bool Equals(object obj)
         {
             return this.Equals(obj as Rectangle);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+    }
+
+    /// <summary>
+    /// Width and Height property declaration order is reversed in compare with Rectangle
+    /// </summary>
+    [DataContract]
+    internal class AnotherRectangle : AbstractShape, IEquatable<AnotherRectangle>
+    {
+        [DataMember]
+        public int Width { get; set; }
+
+        [DataMember]
+        public int Height { get; set; }
+
+        [DataMember]
+        public override string Name { get; set; }
+
+        public static AnotherRectangle Create()
+        {
+            return new AnotherRectangle
+            {
+                Color = Utilities.GetRandom<string>(false),
+                Name = Utilities.GetRandom<string>(false),
+                Width = Utilities.GetRandom<int>(false),
+                Height = Utilities.GetRandom<int>(false)
+            };
+        }
+
+        public bool Equals(AnotherRectangle other)
+        {
+            if (other == null)
+            {
+                return false;
+            }
+
+            return this.Width == other.Width && this.Height == other.Height && this.Name == other.Name && this.Color == other.Color;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return this.Equals(obj as AnotherRectangle);
         }
 
         public override int GetHashCode()
@@ -449,6 +502,24 @@ namespace Microsoft.Hadoop.Avro.Tests
         public override int GetHashCode()
         {
             return base.GetHashCode();
+        }
+    }
+
+    [DataContract]
+    [KnownType(typeof(NoGetter))]
+    internal abstract class AbstractNoGetter
+    {
+        [DataMember]
+        public abstract string Property { set; }
+    }
+
+    [DataContract]
+    internal class NoGetter : AbstractNoGetter
+    {
+        [DataMember]
+        public override string Property
+        {
+            set { }
         }
     }
 }

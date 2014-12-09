@@ -45,18 +45,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
 
         [TestMethod]
         [TestCategory("Integration")]
-        [TestCategory("Nightly")]
-        [TestCategory("SubscriptionRegistrationClient")]
-        [TestCategory("Scenario")]
-        public async Task ICanPerformA_PositiveSubscriptionValidation_Using_SubscriptionRegistrationAbstraction_AgainstAzure() // Always goes against azure to quickly validate end2end
-        {
-            IHDInsightCertificateCredential credentials = IntegrationTestBase.GetValidCredentials();
-            var client = new SubscriptionRegistrationClient(credentials, GetAbstractionContext(), false);
-            Assert.IsTrue(await client.ValidateSubscriptionLocation("East US 2"));
-        }
-
-        [TestMethod]
-        [TestCategory("Integration")]
         [TestCategory("CheckIn")]
         [TestCategory("SubscriptionRegistrationClient")]
         public async Task ICanPerformA_PositiveSubscriptionValidation_Using_SubscriptionRegistrationAbstraction()

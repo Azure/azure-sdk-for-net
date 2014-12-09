@@ -315,7 +315,8 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
         }
 
         /// <summary>
-        /// Deletes an HDInsight container (cluster).
+        /// Deletes an HDInsight container (cluster). If there are multiple clusters with same
+        /// name in different regions then all of them will be deleted.
         /// </summary>
         /// <param name="dnsName">The name of the cluster to delete.</param>
         /// <returns>
@@ -331,26 +332,35 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
             try
             {
                 var cloudServices = await this.ListCloudServices();
-                var serviceHoldingTheService =
-                    cloudServices.SingleOrDefault(
+
+                var servicesHoldingTheService =
+                    cloudServices.Where(
                         c =>
                         c.Resources.Any(
                             r =>
                             r.Type.Equals(ClustersResourceType, StringComparison.OrdinalIgnoreCase) &&
-                            r.Name.Equals(dnsName, StringComparison.OrdinalIgnoreCase)));
+                            r.Name.Equals(dnsName, StringComparison.OrdinalIgnoreCase))).ToList();
 
-                if (serviceHoldingTheService == null)
+                if (servicesHoldingTheService == null || servicesHoldingTheService.Count == 0)
                 {
                     throw new HDInsightClusterDoesNotExistException(dnsName);
                 }
 
-                await
-                    this.rdfeClustersRestClient.DeleteCluster(
-                        this.credentials.SubscriptionId.ToString(),
-                        this.GetCloudServiceName(serviceHoldingTheService.GeoRegion),
-                        this.credentials.DeploymentNamespace,
-                        dnsName,
-                        this.Context.CancellationToken);
+                if (servicesHoldingTheService.Count > 1)
+                {
+                    throw new InvalidOperationException(string.Format("Multiple clusters found with dnsname '{0}'. Please specify dnsname and location", dnsName));
+                }
+
+                foreach (var service in servicesHoldingTheService)
+                {
+                    await
+                        this.rdfeClustersRestClient.DeleteCluster(
+                            this.credentials.SubscriptionId.ToString(),
+                            this.GetCloudServiceName(service.GeoRegion),
+                            this.credentials.DeploymentNamespace,
+                            dnsName,
+                            this.Context.CancellationToken);                    
+                }
             }
             catch (InvalidExpectedStatusCodeException iEx)
             {
@@ -396,7 +406,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
         }
 
         /// <inheritdoc />
-        public async Task<Guid> ChangeClusterSize(string dnsName, int newSize)
+        public async Task<Guid> ChangeClusterSize(string dnsName, string location, int newSize)
         {
             if (string.IsNullOrEmpty(dnsName))
             {
@@ -416,7 +426,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
 
             try
             {
-                var clusterResult = await this.GetCluster(dnsName);
+                var clusterResult = string.IsNullOrEmpty(location) ? await this.GetCluster(dnsName) : await this.GetCluster(dnsName, location);
                 var cloudServiceName = this.GetCloudServiceName(clusterResult.ClusterDetails.Location);
 
                 var cluster = clusterResult.ResultOfGetClusterCall;
@@ -692,10 +702,39 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
             foreach (CloudService service in cloudServices)
             {
                 clusterResource =
-                    service.Resources.SingleOrDefault(
+                    service.Resources.FirstOrDefault(
                         r =>
                         r.Type.Equals(ClustersResourceType, StringComparison.OrdinalIgnoreCase) &&
                         r.Name.Equals(dnsName, StringComparison.OrdinalIgnoreCase));
+                if (clusterResource != null)
+                {
+                    cloudServiceForResource = service;
+                    break;
+                }
+            }
+
+            if (clusterResource == null)
+            {
+                return null;
+            }
+
+            var result = await this.GetClusterFromCloudServiceResource(cloudServiceForResource, clusterResource);
+            return result;
+        }
+
+        private async Task<GetClusterResult> GetCluster(string dnsName, string location)
+        {
+            var cloudServices = await this.ListCloudServices();
+            Resource clusterResource = null;
+            CloudService cloudServiceForResource = null;
+            foreach (CloudService service in cloudServices)
+            {
+                clusterResource =
+                    service.Resources.FirstOrDefault(
+                        r =>
+                        r.Type.Equals(ClustersResourceType, StringComparison.OrdinalIgnoreCase) &&
+                        r.Name.Equals(dnsName, StringComparison.OrdinalIgnoreCase) &&
+                        service.GeoRegion.Equals(location, StringComparison.OrdinalIgnoreCase));
                 if (clusterResource != null)
                 {
                     cloudServiceForResource = service;
@@ -728,6 +767,36 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
             try
             {
                 var result = await this.GetCluster(dnsName);
+                return result == null ? null : result.ClusterDetails;
+            }
+            catch (InvalidExpectedStatusCodeException iEx)
+            {
+                var content = iEx.Response.Content != null ? iEx.Response.Content.ReadAsStringAsync().Result : string.Empty;
+                throw new HttpLayerException(iEx.ReceivedStatusCode, content);
+            }
+        }
+
+        /// <summary>
+        /// Lists a single HDInsight container by name and region.
+        /// </summary>
+        /// <param name="dnsName">The name of the HDInsight container.</param>
+        /// <param name="location">The location of the HDInsight container.</param>
+        /// <returns>
+        /// A task that can be used to retrieve the requested HDInsight container.
+        /// </returns>
+        public async Task<ClusterDetails> ListContainer(string dnsName, string location)
+        {
+            if (string.IsNullOrEmpty(dnsName))
+            {
+                throw new ArgumentNullException("dnsName");
+            }
+            if (string.IsNullOrEmpty(location))
+            {
+                throw new ArgumentNullException("location");
+            }
+            try
+            {
+                var result = await this.GetCluster(dnsName, location);
                 return result == null ? null : result.ClusterDetails;
             }
             catch (InvalidExpectedStatusCodeException iEx)

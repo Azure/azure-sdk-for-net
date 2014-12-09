@@ -12,9 +12,6 @@
 // 
 // See the Apache Version 2.0 License for specific language governing
 // permissions and limitations under the License.
-
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
 namespace Microsoft.WindowsAzure.Management.HDInsight.JobSubmission.Data
 {
     using System;
@@ -28,6 +25,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.JobSubmission.Data
     using System.Threading.Tasks;
     using System.Xml;
     using Microsoft.Hadoop.Client;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Microsoft.WindowsAzure.Management.HDInsight;
     using Microsoft.WindowsAzure.Management.HDInsight.Framework.Core.Library;
     using Microsoft.WindowsAzure.Management.HDInsight.Framework.Core.Library.DynamicXml.Reader;

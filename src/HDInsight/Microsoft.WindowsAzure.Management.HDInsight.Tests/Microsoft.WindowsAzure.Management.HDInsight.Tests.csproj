@@ -94,6 +94,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>JobPayloadConverter_JobList.feature</DependentUpon>
     </Compile>
+    <Compile Include="HadoopApplicationHistoryTests\HadoopApplicationHistoryTests.cs" />
+    <Compile Include="HadoopClientTests\DuplicateDnsNameTests.cs" />
     <Compile Include="HadoopClientTests\HDInsightPocoClient.cs" />
     <Compile Include="HadoopClientTests\HadoopClientLayerTests.cs" />
     <Compile Include="Gherkin\StorageAccountAbstraction.feature.cs">
@@ -160,7 +162,7 @@
     <Compile Include="TestPocoClientFactoryFlowThrough.cs" />
     <Compile Include="TestPocoClientFlowThrough.cs" />
     <Compile Include="TestSetupCleanup.cs" />
-    <None Include="Settings.StyleCop" />
+	<None Include="Settings.StyleCop" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -215,7 +217,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Json\1599940_repro.txt" />
   </ItemGroup>
-  <ItemGroup>
+<ItemGroup>
     <Reference Include="Microsoft.Owin">
       <HintPath>$(SolutionDir)\packages\Microsoft.Owin.2.0.2\lib\net45\Microsoft.Owin.dll</HintPath>
     </Reference>
