@@ -142,6 +142,17 @@ namespace Microsoft.Azure.Management.WebSites.Models
             set { this._httpLoggingEnabled = value; }
         }
         
+        private SiteLimits _limits;
+        
+        /// <summary>
+        /// Optional. The per site limits.
+        /// </summary>
+        public SiteLimits Limits
+        {
+            get { return this._limits; }
+            set { this._limits = value; }
+        }
+        
         private int? _logsDirectorySizeLimit;
         
         /// <summary>
