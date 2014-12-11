@@ -512,6 +512,295 @@ namespace Microsoft.Azure.Management.WebSites
         }
         
         /// <summary>
+        /// You can clone a web site by using a PUT request that includes the
+        /// name of the web site and other information in the request body.
+        /// (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166986.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the clone Web Site operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The website operation response.
+        /// </returns>
+        public async Task<WebSiteAsyncOperationResponse> CloneAsync(string resourceGroupName, string webSiteName, string slotName, WebSiteCloneParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (webSiteName == null)
+            {
+                throw new ArgumentNullException("webSiteName");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            if (parameters.WebSiteClone == null)
+            {
+                throw new ArgumentNullException("parameters.WebSiteClone");
+            }
+            if (parameters.WebSiteClone.Location == null)
+            {
+                throw new ArgumentNullException("parameters.WebSiteClone.Location");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("webSiteName", webSiteName);
+                tracingParameters.Add("slotName", slotName);
+                tracingParameters.Add("parameters", parameters);
+                Tracing.Enter(invocationId, this, "CloneAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourceGroups/" + resourceGroupName.Trim() + "/providers/Microsoft.Web/sites/" + webSiteName.Trim();
+            if (slotName != null)
+            {
+                url = url + "/slots/" + Uri.EscapeDataString(slotName != null ? slotName.Trim() : "");
+            }
+            url = url + "?";
+            url = url + "api-version=2014-06-01";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Put;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                JToken requestDoc = null;
+                
+                JObject webSiteCloneParametersValue = new JObject();
+                requestDoc = webSiteCloneParametersValue;
+                
+                if (parameters.WebSiteClone.Properties != null)
+                {
+                    JObject propertiesValue = new JObject();
+                    webSiteCloneParametersValue["properties"] = propertiesValue;
+                    
+                    if (parameters.WebSiteClone.Properties.ServerFarm != null)
+                    {
+                        propertiesValue["ServerFarm"] = parameters.WebSiteClone.Properties.ServerFarm;
+                    }
+                    
+                    if (parameters.WebSiteClone.Properties.CloningInfo != null)
+                    {
+                        JObject cloningInfoValue = new JObject();
+                        propertiesValue["cloningInfo"] = cloningInfoValue;
+                        
+                        cloningInfoValue["CorrelationId"] = parameters.WebSiteClone.Properties.CloningInfo.CorrelationId.ToString();
+                        
+                        cloningInfoValue["Overwrite"] = parameters.WebSiteClone.Properties.CloningInfo.Overwrite;
+                        
+                        cloningInfoValue["CloneCustomHostNames"] = parameters.WebSiteClone.Properties.CloningInfo.CloneCustomHostNames;
+                        
+                        if (parameters.WebSiteClone.Properties.CloningInfo.Source != null)
+                        {
+                            JObject sourceValue = new JObject();
+                            cloningInfoValue["Source"] = sourceValue;
+                            
+                            if (parameters.WebSiteClone.Properties.CloningInfo.Source.Name != null)
+                            {
+                                sourceValue["Name"] = parameters.WebSiteClone.Properties.CloningInfo.Source.Name;
+                            }
+                            
+                            if (parameters.WebSiteClone.Properties.CloningInfo.Source.Location != null)
+                            {
+                                sourceValue["Location"] = parameters.WebSiteClone.Properties.CloningInfo.Source.Location;
+                            }
+                            
+                            if (parameters.WebSiteClone.Properties.CloningInfo.Source.ResourceGroupName != null)
+                            {
+                                sourceValue["ResourceGroupName"] = parameters.WebSiteClone.Properties.CloningInfo.Source.ResourceGroupName;
+                            }
+                            
+                            if (parameters.WebSiteClone.Properties.CloningInfo.Source.SubscriptionId != null)
+                            {
+                                sourceValue["SubscriptionId"] = parameters.WebSiteClone.Properties.CloningInfo.Source.SubscriptionId;
+                            }
+                            
+                            if (parameters.WebSiteClone.Properties.CloningInfo.Source.Slot != null)
+                            {
+                                sourceValue["Slot"] = parameters.WebSiteClone.Properties.CloningInfo.Source.Slot;
+                            }
+                        }
+                        
+                        if (parameters.WebSiteClone.Properties.CloningInfo.HostingEnvironment != null)
+                        {
+                            cloningInfoValue["HostingEnvironment"] = parameters.WebSiteClone.Properties.CloningInfo.HostingEnvironment;
+                        }
+                    }
+                }
+                
+                if (parameters.WebSiteClone.Id != null)
+                {
+                    webSiteCloneParametersValue["id"] = parameters.WebSiteClone.Id;
+                }
+                
+                if (parameters.WebSiteClone.Name != null)
+                {
+                    webSiteCloneParametersValue["name"] = parameters.WebSiteClone.Name;
+                }
+                
+                webSiteCloneParametersValue["location"] = parameters.WebSiteClone.Location;
+                
+                if (parameters.WebSiteClone.Tags != null)
+                {
+                    JObject tagsDictionary = new JObject();
+                    foreach (KeyValuePair<string, string> pair in parameters.WebSiteClone.Tags)
+                    {
+                        string tagsKey = pair.Key;
+                        string tagsValue = pair.Value;
+                        tagsDictionary[tagsKey] = tagsValue;
+                    }
+                    webSiteCloneParametersValue["tags"] = tagsDictionary;
+                }
+                
+                if (parameters.WebSiteClone.Type != null)
+                {
+                    webSiteCloneParametersValue["type"] = parameters.WebSiteClone.Type;
+                }
+                
+                requestContent = requestDoc.ToString(Formatting.Indented);
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    WebSiteAsyncOperationResponse result = null;
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new WebSiteAsyncOperationResponse();
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
+                    
+                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                    {
+                        JToken locationValue = responseDoc["location"];
+                        if (locationValue != null && locationValue.Type != JTokenType.Null)
+                        {
+                            string locationInstance = ((string)locationValue);
+                            result.Location = locationInstance;
+                        }
+                        
+                        JToken retryAfterValue = responseDoc["retry-after"];
+                        if (retryAfterValue != null && retryAfterValue.Type != JTokenType.Null)
+                        {
+                            string retryAfterInstance = ((string)retryAfterValue);
+                            result.RetryAfter = retryAfterInstance;
+                        }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("location"))
+                    {
+                        result.Location = httpResponse.Headers.GetValues("location").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("retry-after"))
+                    {
+                        result.RetryAfter = httpResponse.Headers.GetValues("retry-after").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
         /// You can create a web site by using a POST request that includes the
         /// name of the web site and other information in the request body.
         /// (see
@@ -3172,6 +3461,34 @@ namespace Microsoft.Azure.Management.WebSites
                                 bool webSocketsEnabledInstance = ((bool)webSocketsEnabledValue);
                                 propertiesInstance.WebSocketsEnabled = webSocketsEnabledInstance;
                             }
+                            
+                            JToken limitsValue = propertiesValue["limits"];
+                            if (limitsValue != null && limitsValue.Type != JTokenType.Null)
+                            {
+                                SiteLimits limitsInstance = new SiteLimits();
+                                propertiesInstance.Limits = limitsInstance;
+                                
+                                JToken maxPercentageCpuValue = limitsValue["maxPercentageCpu"];
+                                if (maxPercentageCpuValue != null && maxPercentageCpuValue.Type != JTokenType.Null)
+                                {
+                                    double maxPercentageCpuInstance = ((double)maxPercentageCpuValue);
+                                    limitsInstance.MaxPercentageCpu = maxPercentageCpuInstance;
+                                }
+                                
+                                JToken maxMemoryInMbValue = limitsValue["maxMemoryInMb"];
+                                if (maxMemoryInMbValue != null && maxMemoryInMbValue.Type != JTokenType.Null)
+                                {
+                                    long maxMemoryInMbInstance = ((long)maxMemoryInMbValue);
+                                    limitsInstance.MaxMemoryInMb = maxMemoryInMbInstance;
+                                }
+                                
+                                JToken maxDiskSizeInMbValue = limitsValue["maxDiskSizeInMb"];
+                                if (maxDiskSizeInMbValue != null && maxDiskSizeInMbValue.Type != JTokenType.Null)
+                                {
+                                    long maxDiskSizeInMbInstance = ((long)maxDiskSizeInMbValue);
+                                    limitsInstance.MaxDiskSizeInMb = maxDiskSizeInMbInstance;
+                                }
+                            }
                         }
                         
                         JToken idValue = responseDoc["id"];
@@ -3959,6 +4276,183 @@ namespace Microsoft.Azure.Management.WebSites
                     }
                     
                     result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// You can retrieve details for a web site by issuing an HTTP GET
+        /// request.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn167007.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot.
+        /// </param>
+        /// <param name='operationId'>
+        /// Required. Additional parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The website operation response.
+        /// </returns>
+        public async Task<WebSiteAsyncOperationResponse> GetOperationAsync(string resourceGroupName, string webSiteName, string slotName, Guid operationId, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (webSiteName == null)
+            {
+                throw new ArgumentNullException("webSiteName");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("webSiteName", webSiteName);
+                tracingParameters.Add("slotName", slotName);
+                tracingParameters.Add("operationId", operationId);
+                Tracing.Enter(invocationId, this, "GetOperationAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourceGroups/" + resourceGroupName.Trim() + "/providers/Microsoft.Web/sites/" + webSiteName.Trim();
+            if (slotName != null)
+            {
+                url = url + "/slots/" + Uri.EscapeDataString(slotName != null ? slotName.Trim() : "");
+            }
+            url = url + "/operations/" + operationId + "?";
+            url = url + "api-version=2014-06-01";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created && statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    WebSiteAsyncOperationResponse result = null;
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new WebSiteAsyncOperationResponse();
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
+                    
+                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                    {
+                        JToken locationValue = responseDoc["location"];
+                        if (locationValue != null && locationValue.Type != JTokenType.Null)
+                        {
+                            string locationInstance = ((string)locationValue);
+                            result.Location = locationInstance;
+                        }
+                        
+                        JToken retryAfterValue = responseDoc["retry-after"];
+                        if (retryAfterValue != null && retryAfterValue.Type != JTokenType.Null)
+                        {
+                            string retryAfterInstance = ((string)retryAfterValue);
+                            result.RetryAfter = retryAfterInstance;
+                        }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("location"))
+                    {
+                        result.Location = httpResponse.Headers.GetValues("location").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("retry-after"))
+                    {
+                        result.RetryAfter = httpResponse.Headers.GetValues("retry-after").FirstOrDefault();
+                    }
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
@@ -7315,6 +7809,27 @@ namespace Microsoft.Azure.Management.WebSites
                 if (parameters.Properties.AutoSwapSlotName != null)
                 {
                     propertiesValue["autoSwapSlotName"] = parameters.Properties.AutoSwapSlotName;
+                }
+                
+                if (parameters.Properties.Limits != null)
+                {
+                    JObject limitsValue = new JObject();
+                    propertiesValue["limits"] = limitsValue;
+                    
+                    if (parameters.Properties.Limits.MaxPercentageCpu != null)
+                    {
+                        limitsValue["maxPercentageCpu"] = parameters.Properties.Limits.MaxPercentageCpu.Value;
+                    }
+                    
+                    if (parameters.Properties.Limits.MaxMemoryInMb != null)
+                    {
+                        limitsValue["maxMemoryInMb"] = parameters.Properties.Limits.MaxMemoryInMb.Value;
+                    }
+                    
+                    if (parameters.Properties.Limits.MaxDiskSizeInMb != null)
+                    {
+                        limitsValue["maxDiskSizeInMb"] = parameters.Properties.Limits.MaxDiskSizeInMb.Value;
+                    }
                 }
                 
                 if (parameters.Id != null)

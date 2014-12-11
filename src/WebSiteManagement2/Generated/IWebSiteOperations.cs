@@ -57,6 +57,33 @@ namespace Microsoft.Azure.Management.WebSites
         Task<WebSiteBackupResponse> BackupAsync(string resourceGroupName, string webSiteName, string slotName, BackupRequestEnvelope backupRequestEnvelope, CancellationToken cancellationToken);
         
         /// <summary>
+        /// You can clone a web site by using a PUT request that includes the
+        /// name of the web site and other information in the request body.
+        /// (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166986.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='slotName'>
+        /// The name of the slot.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the clone Web Site operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The website operation response.
+        /// </returns>
+        Task<WebSiteAsyncOperationResponse> CloneAsync(string resourceGroupName, string webSiteName, string slotName, WebSiteCloneParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// You can create a web site by using a POST request that includes the
         /// name of the web site and other information in the request body.
         /// (see
@@ -401,6 +428,32 @@ namespace Microsoft.Azure.Management.WebSites
         /// List of metadata for the website.
         /// </returns>
         Task<WebSiteMetadataResult> GetMetadataAsync(string resourceGroupName, string webSiteName, string slotName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// You can retrieve details for a web site by issuing an HTTP GET
+        /// request.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn167007.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='slotName'>
+        /// The name of the slot.
+        /// </param>
+        /// <param name='operationId'>
+        /// Additional parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The website operation response.
+        /// </returns>
+        Task<WebSiteAsyncOperationResponse> GetOperationAsync(string resourceGroupName, string webSiteName, string slotName, Guid operationId, CancellationToken cancellationToken);
         
         /// <summary>
         /// Get publishing credentials for the web site.

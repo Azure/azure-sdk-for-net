@@ -99,6 +99,72 @@ namespace Microsoft.Azure.Management.WebSites
         }
         
         /// <summary>
+        /// You can clone a web site by using a PUT request that includes the
+        /// name of the web site and other information in the request body.
+        /// (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166986.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the clone Web Site operation.
+        /// </param>
+        /// <returns>
+        /// The website operation response.
+        /// </returns>
+        public static WebSiteAsyncOperationResponse Clone(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName, WebSiteCloneParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IWebSiteOperations)s).CloneAsync(resourceGroupName, webSiteName, slotName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// You can clone a web site by using a PUT request that includes the
+        /// name of the web site and other information in the request body.
+        /// (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166986.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the clone Web Site operation.
+        /// </param>
+        /// <returns>
+        /// The website operation response.
+        /// </returns>
+        public static Task<WebSiteAsyncOperationResponse> CloneAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName, WebSiteCloneParameters parameters)
+        {
+            return operations.CloneAsync(resourceGroupName, webSiteName, slotName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// You can create a web site by using a POST request that includes the
         /// name of the web site and other information in the request body.
         /// (see
@@ -956,6 +1022,70 @@ namespace Microsoft.Azure.Management.WebSites
         public static Task<WebSiteMetadataResult> GetMetadataAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName)
         {
             return operations.GetMetadataAsync(resourceGroupName, webSiteName, slotName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// You can retrieve details for a web site by issuing an HTTP GET
+        /// request.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn167007.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot.
+        /// </param>
+        /// <param name='operationId'>
+        /// Required. Additional parameters.
+        /// </param>
+        /// <returns>
+        /// The website operation response.
+        /// </returns>
+        public static WebSiteAsyncOperationResponse GetOperation(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName, Guid operationId)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IWebSiteOperations)s).GetOperationAsync(resourceGroupName, webSiteName, slotName, operationId);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// You can retrieve details for a web site by issuing an HTTP GET
+        /// request.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn167007.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot.
+        /// </param>
+        /// <param name='operationId'>
+        /// Required. Additional parameters.
+        /// </param>
+        /// <returns>
+        /// The website operation response.
+        /// </returns>
+        public static Task<WebSiteAsyncOperationResponse> GetOperationAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName, Guid operationId)
+        {
+            return operations.GetOperationAsync(resourceGroupName, webSiteName, slotName, operationId, CancellationToken.None);
         }
         
         /// <summary>
