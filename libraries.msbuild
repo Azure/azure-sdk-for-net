@@ -9,11 +9,6 @@
 	<ProductSourceFolder>$(MSBuildThisFileDirectory)$(ProductSourceFolderPath)</ProductSourceFolder>
   </PropertyGroup>
 
-  <Target Name="DisplayMessages">
-  <Message Text="ProductSourceFolder $(ProductSourceFolder)" />
-  <Message Text="ManagementLibrariesSolution $(ManagementLibrariesSolution)" />
-  </Target>
-  
   <!-- NuGet Packages -->
   <Import Project="nuget.targets" />
 
