@@ -25,10 +25,6 @@
         <reference file="Microsoft.Hadoop.Client.xml" />
       </group>
     </references>
-    <dependencies>
-      <dependency id="WindowsAzure.Storage" version="3.0.3.0" />
-      <dependency id="NewtonSoft.Json" version="6.0.4" />
-    </dependencies>
   </metadata>
   <files>
     <file src="HDInsight\**\*.cs" target="src" />

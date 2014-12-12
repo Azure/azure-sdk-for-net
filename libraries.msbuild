@@ -3,17 +3,23 @@
   <!-- Product properties -->
   <PropertyGroup>
     <CommonSolution>WindowsAzureCommonLibraries.sln</CommonSolution>
-    <ManagementLibrariesSolution>WindowsAzureManagementLibraries.sln</ManagementLibrariesSolution>
+    <ManagementLibrariesSolution Condition="$(ManagementLibrariesSolution) == ''">WindowsAzureManagementLibraries.sln</ManagementLibrariesSolution>
     <ProductFriendlyName>Microsoft Azure Management Libraries</ProductFriendlyName>
-    <ProductSourceFolder>$(MSBuildThisFileDirectory)src</ProductSourceFolder>
+	<ProductSourceFolderPath Condition="$(ProductSourceFolderPath) == ''">src</ProductSourceFolderPath>
+	<ProductSourceFolder>$(MSBuildThisFileDirectory)$(ProductSourceFolderPath)</ProductSourceFolder>
   </PropertyGroup>
- 
+
+  <Target Name="DisplayMessages">
+  <Message Text="ProductSourceFolder $(ProductSourceFolder)" />
+  <Message Text="ManagementLibrariesSolution $(ManagementLibrariesSolution)" />
+  </Target>
+  
   <!-- NuGet Packages -->
   <Import Project="nuget.targets" />
 
   <ItemGroup>
     <CommonProjects Include="$(CommonSolution)" Condition="$(MamlProjectName) == ''" />
-    <ManagementLibrariesProjects Include="WindowsAzureManagementLibraries.sln" Condition="$(MamlProjectName) == ''" />
+    <ManagementLibrariesProjects Include="$(ManagementLibrariesSolution)" Condition="$(MamlProjectName) == ''" />
     <ManagementLibrariesProjects Include="$(ProductSourceFolder)\$(MamlProjectName)\*.csproj" Condition="$(MamlProjectName) != ''" />
   </ItemGroup>
 
@@ -52,6 +58,12 @@
   /t:OfficialSignedBuild
 
   Properties of interest:
+  
+  /p:ManagementLibrariesSolution
+	Provides the relative path of the management libraries solution. Default is WindowsAzureCommonLibraries.sln.
+    
+  /p:ProductSourceFolderPath
+	Provide the product source folder to be build and published. Default is under src folder.
 
   /p:BuildVersionSuffix=BUILD_SUFFIX
     Inserts a string suffix value at the end of all the NuGet package versions
@@ -533,7 +545,7 @@
           DependsOnTargets="GetGeneratedBuildDate">
     <Message Text="Destructive burn of assembly file versions to include the build number in the revision component." />
     <ItemGroup>
-      <AssemblyInfoFilesToUpdate Include="$(ProductSourceFolder)\**\Properties\AssemblyInfo.cs" />
+      <AssemblyInfoFilesToUpdate Include="$(ProductSourceFolder)\*\Properties\AssemblyInfo.cs" />
     </ItemGroup>
     <RegexReplacementTask Files="@(AssemblyInfoFilesToUpdate)"
                           Find="AssemblyFileVersion\(&quot;(?&lt;semver&gt;\d{1,3}\.\d{1,3}\.\d{1,3}).(?&lt;revision&gt;)\d{1,3}&quot;\)"
