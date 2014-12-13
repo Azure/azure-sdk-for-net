@@ -3,17 +3,18 @@
   <!-- Product properties -->
   <PropertyGroup>
     <CommonSolution>WindowsAzureCommonLibraries.sln</CommonSolution>
-    <ManagementLibrariesSolution>WindowsAzureManagementLibraries.sln</ManagementLibrariesSolution>
+    <ManagementLibrariesSolution Condition="$(ManagementLibrariesSolution) == ''">WindowsAzureManagementLibraries.sln</ManagementLibrariesSolution>
     <ProductFriendlyName>Microsoft Azure Management Libraries</ProductFriendlyName>
-    <ProductSourceFolder>$(MSBuildThisFileDirectory)src</ProductSourceFolder>
+	  <ProductSourceFolderPath Condition="$(ProductSourceFolderPath) == ''">src</ProductSourceFolderPath>
+	  <ProductSourceFolder>$(MSBuildThisFileDirectory)$(ProductSourceFolderPath)</ProductSourceFolder>
   </PropertyGroup>
- 
+
   <!-- NuGet Packages -->
   <Import Project="nuget.targets" />
 
   <ItemGroup>
     <CommonProjects Include="$(CommonSolution)" Condition="$(MamlProjectName) == ''" />
-    <ManagementLibrariesProjects Include="WindowsAzureManagementLibraries.sln" Condition="$(MamlProjectName) == ''" />
+    <ManagementLibrariesProjects Include="$(ManagementLibrariesSolution)" Condition="$(MamlProjectName) == ''" />
     <ManagementLibrariesProjects Include="$(ProductSourceFolder)\$(MamlProjectName)\*.csproj" Condition="$(MamlProjectName) != ''" />
   </ItemGroup>
 
@@ -52,6 +53,12 @@
   /t:OfficialSignedBuild
 
   Properties of interest:
+  
+  /p:ManagementLibrariesSolution
+	Provides the relative path of the management libraries solution. Default is WindowsAzureCommonLibraries.sln.
+    
+  /p:ProductSourceFolderPath
+	Provide the product source folder to be build and published. Default is under src folder.
 
   /p:BuildVersionSuffix=BUILD_SUFFIX
     Inserts a string suffix value at the end of all the NuGet package versions
@@ -130,8 +137,8 @@
   Build profiles
   -->
   <PropertyGroup>
-    <DeveloperBuildProperties>Configuration=Debug;Platform=Any CPU;CopyToBinaries=true;GenerateHydraSpecs=$(GenerateHydraSpecs)</DeveloperBuildProperties>
-    <OfficialMSBuildProperties>Configuration=Release;OfficialBuild=true;Platform=Any CPU;GenerateHydraSpecs=$(GenerateHydraSpecs)</OfficialMSBuildProperties>
+    <DeveloperBuildProperties>Configuration=Debug;Platform=Any CPU;CopyToBinaries=true;GenerateHydraSpecs=$(GenerateHydraSpecs);DefineConstants=DEVSIGNED</DeveloperBuildProperties>
+    <OfficialMSBuildProperties>Configuration=Release;OfficialBuild=true;Platform=Any CPU;GenerateHydraSpecs=$(GenerateHydraSpecs);DefineConstants=OFFICIALSIGNED</OfficialMSBuildProperties>
     <Net40BuildProperty>BuildSecondConfiguration=true</Net40BuildProperty>
     <Net45BuildProperty>BuildThirdConfiguration=true</Net45BuildProperty>
   </PropertyGroup>
@@ -214,6 +221,36 @@
     <xunit Assemblies="@(TestDlls)" Html="$(MSBuildProjectDirectory)\TestResults\MAML.xunit.results.html" ContinueOnError="ErrorAndContinue" />
   </Target>
 
+  <Target Name="RunMSTests" >
+		<PropertyGroup>
+			<TestSettings Condition="'$(TestSettings)' == ''">$(ProductSourceFolder)\Local.testsettings</TestSettings>
+			<TestFilter Condition="'$(TestFilter)' == ''" >!Functional&#x26;!Scenario</TestFilter>
+			<TestFilter Condition="'$(NoInteractiveTests)' == 'true'">$(TestFilter)&#x26;!Interactive</TestFilter>
+			<TestOutputDirectory Condition="'$(TestOutputDirectory)' == ''">$(MSBuildProjectDirectory)\TestResults</TestOutputDirectory>
+		</PropertyGroup>	
+		  		<ItemGroup>
+			<TestDlls Include="$(ProductSourceFolder)\*.Tests\bin\*\*Tests.dll"/>
+		</ItemGroup>
+		<MakeDir Directories="$(MSBuildProjectDirectory)\TestResults"/>
+		<Message Text="Found test file: %(TestDlls.Filename)" />
+
+		<Message Importance="high" Text="Running tests..." />
+		<Message Importance="high" Text="You are required to have installed a version of Visual Studio with support for MSTest (and MSTest on your path)." />
+		<MakeDir Directories="$(TestOutputDirectory)" ContinueOnError="false" />
+
+		<Message Importance="high" Text="Debug tests: %(TestDlls.FullPath)" />
+		
+		<ItemGroup>
+			<TestOutputFiles Include="$(TestOutputDirectory)\%(TestDlls.FileName).trx" />
+		</ItemGroup>
+		
+		<Message Importance="high" Text="Test Output Files: %(TestOutputFiles.FullPath)" />
+		
+		<Exec
+		  Command="MSTest.exe /testcontainer:%(TestDlls.FullPath) /testsettings:$(TestSettings) /category:&quot;$(TestFilter)&quot; /resultsfile:$(TestOutputDirectory)\%(TestDlls.Filename).trx"
+		  ContinueOnError="true" />
+	</Target>
+	
   <!--
   An official build is designed for use while shipping. It generates a release
   build and places binaries ready for the official Microsoft signing process
@@ -306,9 +343,9 @@
 
     <Message Text="Code signing" Importance="high" />
     <ItemGroup>
-      <AssembliesToBuild Include="binaries\unsigned\Microsoft.*Azure.*.dll" />
-      <Net40AssembliesToBuild Include="binaries\net40\unsigned\Microsoft.*Azure.*.dll" />
-      <Net45AssembliesToBuild Include="binaries\net45\unsigned\Microsoft.*Azure.*.dll" />
+      <AssembliesToBuild Include="binaries\unsigned\*.dll" />
+      <Net40AssembliesToBuild Include="binaries\net40\unsigned\*.dll" />
+      <Net45AssembliesToBuild Include="binaries\net45\unsigned\*.dll" />
     </ItemGroup>
 
     <CodeSigningTask
@@ -533,7 +570,7 @@
           DependsOnTargets="GetGeneratedBuildDate">
     <Message Text="Destructive burn of assembly file versions to include the build number in the revision component." />
     <ItemGroup>
-      <AssemblyInfoFilesToUpdate Include="$(ProductSourceFolder)\**\Properties\AssemblyInfo.cs" />
+      <AssemblyInfoFilesToUpdate Include="$(ProductSourceFolder)\*\Properties\AssemblyInfo.cs" />
     </ItemGroup>
     <RegexReplacementTask Files="@(AssemblyInfoFilesToUpdate)"
                           Find="AssemblyFileVersion\(&quot;(?&lt;semver&gt;\d{1,3}\.\d{1,3}\.\d{1,3}).(?&lt;revision&gt;)\d{1,3}&quot;\)"
