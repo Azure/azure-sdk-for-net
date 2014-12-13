@@ -30,20 +30,6 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// </summary>
     public partial class Gateway
     {
-        private string _location;
-        
-        /// <summary>
-        /// Optional. Location of the data factory gateway. It cannot be
-        /// changed after the gateway has been created. Has to be one of the
-        /// supported Azure Locations, such as West US, East US, West Europe,
-        /// East Asia, etc.
-        /// </summary>
-        public string Location
-        {
-            get { return this._location; }
-            set { this._location = value; }
-        }
-        
         private string _name;
         
         /// <summary>

@@ -123,7 +123,7 @@ namespace Microsoft.Azure.Management.Batch
         /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Gets the URI used as the base for all cloud service
+        /// Optional. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
         public BatchManagementClient(SubscriptionCloudCredentials credentials, Uri baseUri)
@@ -189,7 +189,7 @@ namespace Microsoft.Azure.Management.Batch
         /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Gets the URI used as the base for all cloud service
+        /// Optional. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
         /// <param name='httpClient'>
@@ -447,7 +447,7 @@ namespace Microsoft.Azure.Management.Batch
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-                    if (result.Resource != null && result.Resource.Properties != null &&result.Resource.Properties.ProvisioningState == AccountProvisioningState.Succeeded)
+                    if (result.Resource != null && result.Resource.Properties != null && result.Resource.Properties.ProvisioningState == AccountProvisioningState.Succeeded)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
@@ -542,7 +542,7 @@ namespace Microsoft.Azure.Management.Batch
                         Tracing.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted)
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted && statusCode != HttpStatusCode.NotFound)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -562,6 +562,10 @@ namespace Microsoft.Azure.Management.Batch
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
                     if (statusCode == HttpStatusCode.OK)
+                    {
+                        result.Status = OperationStatus.Succeeded;
+                    }
+                    if (statusCode == HttpStatusCode.NotFound)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }

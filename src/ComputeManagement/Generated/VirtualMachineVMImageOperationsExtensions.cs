@@ -40,6 +40,56 @@ namespace Microsoft.WindowsAzure
     public static partial class VirtualMachineVMImageOperationsExtensions
     {
         /// <summary>
+        /// The Create VM Image operation creates a VM image that in your image
+        /// repository.  (see
+        /// http://msdn.microsoft.com/en-us/library/azure/dn775054.aspx for
+        /// more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineVMImageOperations.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the virtual machine VM image
+        /// create operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static OperationResponse BeginCreating(this IVirtualMachineVMImageOperations operations, VirtualMachineVMImageCreateParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IVirtualMachineVMImageOperations)s).BeginCreatingAsync(parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Create VM Image operation creates a VM image that in your image
+        /// repository.  (see
+        /// http://msdn.microsoft.com/en-us/library/azure/dn775054.aspx for
+        /// more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineVMImageOperations.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the virtual machine VM image
+        /// create operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<OperationResponse> BeginCreatingAsync(this IVirtualMachineVMImageOperations operations, VirtualMachineVMImageCreateParameters parameters)
+        {
+            return operations.BeginCreatingAsync(parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// The Begin Deleting Virtual Machine Image operation deletes the
         /// specified virtual machine image.
         /// </summary>
@@ -197,6 +247,70 @@ namespace Microsoft.WindowsAzure
         public static Task<OperationResponse> BeginUnreplicatingAsync(this IVirtualMachineVMImageOperations operations, string vmImageName)
         {
             return operations.BeginUnreplicatingAsync(vmImageName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The Create VM Image operation creates a VM image that in your image
+        /// repository.  (see
+        /// http://msdn.microsoft.com/en-us/library/azure/dn775054.aspx for
+        /// more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineVMImageOperations.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Create Virtual Machine Image
+        /// operation.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        public static OperationStatusResponse Create(this IVirtualMachineVMImageOperations operations, VirtualMachineVMImageCreateParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IVirtualMachineVMImageOperations)s).CreateAsync(parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Create VM Image operation creates a VM image that in your image
+        /// repository.  (see
+        /// http://msdn.microsoft.com/en-us/library/azure/dn775054.aspx for
+        /// more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineVMImageOperations.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Create Virtual Machine Image
+        /// operation.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        public static Task<OperationStatusResponse> CreateAsync(this IVirtualMachineVMImageOperations operations, VirtualMachineVMImageCreateParameters parameters)
+        {
+            return operations.CreateAsync(parameters, CancellationToken.None);
         }
         
         /// <summary>

@@ -64,35 +64,22 @@ namespace Microsoft.Azure.Management.DataFactories.Models
             set { this._serviceToken = value; }
         }
         
+        private string _version;
+        
+        /// <summary>
+        /// Required. Gateway instance version.
+        /// </summary>
+        public string Version
+        {
+            get { return this._version; }
+            set { this._version = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the GatewayConnectionInfo class.
         /// </summary>
         public GatewayConnectionInfo()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the GatewayConnectionInfo class with
-        /// required arguments.
-        /// </summary>
-        public GatewayConnectionInfo(string serviceToken, string identityCertThumbprint, Uri hostServiceUri)
-            : this()
-        {
-            if (serviceToken == null)
-            {
-                throw new ArgumentNullException("serviceToken");
-            }
-            if (identityCertThumbprint == null)
-            {
-                throw new ArgumentNullException("identityCertThumbprint");
-            }
-            if (hostServiceUri == null)
-            {
-                throw new ArgumentNullException("hostServiceUri");
-            }
-            this.ServiceToken = serviceToken;
-            this.IdentityCertThumbprint = identityCertThumbprint;
-            this.HostServiceUri = hostServiceUri;
         }
     }
 }

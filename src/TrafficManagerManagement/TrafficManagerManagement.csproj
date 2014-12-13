@@ -4,7 +4,7 @@
   <PropertyGroup>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <WindowsAzureLibraryProfileSet>portable/net40</WindowsAzureLibraryProfileSet>
+    <WindowsAzureLibraryProfileSet>portable/net45/net40</WindowsAzureLibraryProfileSet>
     <ProjectGuid>{7B0B141D-483E-4F32-AF9B-EEE20A3C4B2C}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -84,12 +84,6 @@
   <Import Project="$(SolutionDir)\src\library.targets" />
   <Import Project="GenerateCode.props" />
   <Import Project="..\..\packages\Hyak.Generator.1.0.5400.37276-prerelease\build\Hyak.Generator.targets" Condition="Exists('..\..\packages\Hyak.Generator.1.0.5400.37276-prerelease\build\Hyak.Generator.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\..\packages\Hyak.Generator.1.0.5400.37276-prerelease\build\Hyak.Generator.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Hyak.Generator.1.0.5400.37276-prerelease\build\Hyak.Generator.targets'))" />
-  </Target>
   <Target Name="DoSpecGeneration" DependsOnTargets="RestorePackages" BeforeTargets="BeforeBuild">
     <CallTarget Targets="GenerateCodeFromSpecs" Condition="'$(HydraGeneratorImported)' != ''" />
     <Error Text="The Hyak code generator package was restored from nuget. Build the project again to do code generation." Condition="Exists('..\..\packages\Hyak.Generator.1.0.5400.37276-prerelease\build\Hyak.Generator.targets') And '$(HydraGeneratorImported)' == ''" />

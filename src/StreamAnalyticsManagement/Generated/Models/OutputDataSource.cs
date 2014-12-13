@@ -21,45 +21,30 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.DataFactories.Models;
 
-namespace Microsoft.Azure.Management.DataFactories.Models
+namespace Microsoft.Azure.Management.StreamAnalytics.Models
 {
     /// <summary>
-    /// Custom activity.
+    /// The data source of the output.
     /// </summary>
-    public partial class CustomActivity : Activity
+    public abstract partial class OutputDataSource
     {
-        private CustomActivityProperties _transformation;
+        private string _type;
         
         /// <summary>
-        /// Optional. Custom activity properties.
+        /// Optional. Gets the type of the data source of the output.
         /// </summary>
-        public CustomActivityProperties Transformation
+        public string Type
         {
-            get { return this._transformation; }
-            set { this._transformation = value; }
+            get { return this._type; }
+            set { this._type = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the CustomActivity class.
+        /// Initializes a new instance of the OutputDataSource class.
         /// </summary>
-        public CustomActivity()
+        public OutputDataSource()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the CustomActivity class with
-        /// required arguments.
-        /// </summary>
-        public CustomActivity(string name)
-            : this()
-        {
-            if (name == null)
-            {
-                throw new ArgumentNullException("name");
-            }
-            this.Name = name;
         }
     }
 }

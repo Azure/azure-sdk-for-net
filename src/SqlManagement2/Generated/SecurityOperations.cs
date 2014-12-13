@@ -120,7 +120,7 @@ namespace Microsoft.Azure.Management.Sql
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourceGroups/" + resourceGroupName.Trim() + "/providers/Microsoft.Sql/servers/" + serverName.Trim() + "/databaseSecurityPolicies/" + databaseName.Trim() + "?";
+            string url = "/subscriptions/" + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId) + "/resourceGroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.Sql/servers/" + Uri.EscapeDataString(serverName) + "/databaseSecurityPolicies/" + Uri.EscapeDataString(databaseName) + "?";
             url = url + "api-version=2014-04-01";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -296,39 +296,18 @@ namespace Microsoft.Azure.Management.Sql
                                 propertiesInstance.StorageAccountSubscriptionId = storageAccountSubscriptionIdInstance;
                             }
                             
-                            JToken adoNetConnectionStringValue = propertiesValue["adoNetConnectionString"];
-                            if (adoNetConnectionStringValue != null && adoNetConnectionStringValue.Type != JTokenType.Null)
-                            {
-                                string adoNetConnectionStringInstance = ((string)adoNetConnectionStringValue);
-                                propertiesInstance.AdoNetConnectionString = adoNetConnectionStringInstance;
-                            }
-                            
-                            JToken odbcConnectionStringValue = propertiesValue["odbcConnectionString"];
-                            if (odbcConnectionStringValue != null && odbcConnectionStringValue.Type != JTokenType.Null)
-                            {
-                                string odbcConnectionStringInstance = ((string)odbcConnectionStringValue);
-                                propertiesInstance.OdbcConnectionString = odbcConnectionStringInstance;
-                            }
-                            
-                            JToken phpConnectionStringValue = propertiesValue["phpConnectionString"];
-                            if (phpConnectionStringValue != null && phpConnectionStringValue.Type != JTokenType.Null)
-                            {
-                                string phpConnectionStringInstance = ((string)phpConnectionStringValue);
-                                propertiesInstance.PhpConnectionString = phpConnectionStringInstance;
-                            }
-                            
-                            JToken jdbcConnectionStringValue = propertiesValue["jdbcConnectionString"];
-                            if (jdbcConnectionStringValue != null && jdbcConnectionStringValue.Type != JTokenType.Null)
-                            {
-                                string jdbcConnectionStringInstance = ((string)jdbcConnectionStringValue);
-                                propertiesInstance.JdbcConnectionString = jdbcConnectionStringInstance;
-                            }
-                            
                             JToken proxyDnsNameValue = propertiesValue["proxyDnsName"];
                             if (proxyDnsNameValue != null && proxyDnsNameValue.Type != JTokenType.Null)
                             {
                                 string proxyDnsNameInstance = ((string)proxyDnsNameValue);
                                 propertiesInstance.ProxyDnsName = proxyDnsNameInstance;
+                            }
+                            
+                            JToken proxyPortValue = propertiesValue["proxyPort"];
+                            if (proxyPortValue != null && proxyPortValue.Type != JTokenType.Null)
+                            {
+                                string proxyPortInstance = ((string)proxyPortValue);
+                                propertiesInstance.ProxyPort = proxyPortInstance;
                             }
                             
                             JToken useServerDefaultValue = propertiesValue["useServerDefault"];
@@ -472,7 +451,7 @@ namespace Microsoft.Azure.Management.Sql
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourceGroups/" + resourceGroupName.Trim() + "/providers/Microsoft.Sql/servers/" + serverName.Trim() + "/databaseSecurityPolicies/" + databaseName.Trim() + "?";
+            string url = "/subscriptions/" + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId) + "/resourceGroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.Sql/servers/" + Uri.EscapeDataString(serverName) + "/databaseSecurityPolicies/" + Uri.EscapeDataString(databaseName) + "?";
             url = url + "api-version=2014-04-01";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -555,29 +534,14 @@ namespace Microsoft.Azure.Management.Sql
                     propertiesValue["storageAccountSubscriptionId"] = parameters.Properties.StorageAccountSubscriptionId;
                 }
                 
-                if (parameters.Properties.AdoNetConnectionString != null)
-                {
-                    propertiesValue["adoNetConnectionString"] = parameters.Properties.AdoNetConnectionString;
-                }
-                
-                if (parameters.Properties.OdbcConnectionString != null)
-                {
-                    propertiesValue["odbcConnectionString"] = parameters.Properties.OdbcConnectionString;
-                }
-                
-                if (parameters.Properties.PhpConnectionString != null)
-                {
-                    propertiesValue["phpConnectionString"] = parameters.Properties.PhpConnectionString;
-                }
-                
-                if (parameters.Properties.JdbcConnectionString != null)
-                {
-                    propertiesValue["jdbcConnectionString"] = parameters.Properties.JdbcConnectionString;
-                }
-                
                 if (parameters.Properties.ProxyDnsName != null)
                 {
                     propertiesValue["proxyDnsName"] = parameters.Properties.ProxyDnsName;
+                }
+                
+                if (parameters.Properties.ProxyPort != null)
+                {
+                    propertiesValue["proxyPort"] = parameters.Properties.ProxyPort;
                 }
                 
                 propertiesValue["useServerDefault"] = parameters.Properties.UseServerDefault;

@@ -27,12 +27,12 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
 {
     public partial class ResizeGatewayParameters
     {
-        private GatewaySKU _gatewaySKU;
+        private string _gatewaySKU;
         
         /// <summary>
         /// Optional.
         /// </summary>
-        public GatewaySKU GatewaySKU
+        public string GatewaySKU
         {
             get { return this._gatewaySKU; }
             set { this._gatewaySKU = value; }
