@@ -5,8 +5,8 @@
     <CommonSolution>WindowsAzureCommonLibraries.sln</CommonSolution>
     <ManagementLibrariesSolution Condition="$(ManagementLibrariesSolution) == ''">WindowsAzureManagementLibraries.sln</ManagementLibrariesSolution>
     <ProductFriendlyName>Microsoft Azure Management Libraries</ProductFriendlyName>
-	<ProductSourceFolderPath Condition="$(ProductSourceFolderPath) == ''">src</ProductSourceFolderPath>
-	<ProductSourceFolder>$(MSBuildThisFileDirectory)$(ProductSourceFolderPath)</ProductSourceFolder>
+	  <ProductSourceFolderPath Condition="$(ProductSourceFolderPath) == ''">src</ProductSourceFolderPath>
+	  <ProductSourceFolder>$(MSBuildThisFileDirectory)$(ProductSourceFolderPath)</ProductSourceFolder>
   </PropertyGroup>
 
   <!-- NuGet Packages -->
