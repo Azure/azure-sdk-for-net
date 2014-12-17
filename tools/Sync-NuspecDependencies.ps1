@@ -7,13 +7,14 @@ Param(
 )
 
 if ($BasePath -eq '' -or $BasePath -eq $null) { $BasePath = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)\..\src" }
-
+echo "Base path: $BasePath" 
 $ErrorActionPreference = "Stop"
 
 # Function to update nuspec file
 function SyncNuspecFile([string]$FolderPath)
 {
 	Write-Debug "folder: $FolderPath"
+	echo "folder: $FolderPath"
 	
 	# Try updating Assembly
 	if((Test-Path -Path $FolderPath\*.nuget.proj) -and (Test-Path -Path $FolderPath\Properties\AssemblyInfo.cs)) { 

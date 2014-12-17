@@ -161,6 +161,26 @@ namespace Microsoft.WindowsAzure.Management.Network
         Task<GatewayOperationResponse> BeginRemoveDefaultSitesAsync(string networkName, CancellationToken cancellationToken);
         
         /// <summary>
+        /// The Begin Reset Virtual network Gateway operation resets an
+        /// existing gateway.
+        /// </summary>
+        /// <param name='networkName'>
+        /// The name of the virtual network for this gateway.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Begin Reset Virtual Network Gateway
+        /// operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<GatewayOperationResponse> BeginResetAsync(string networkName, ResetGatewayParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// The Begin Reset Virtual Network Gateway Shared Key operation resets
         /// the shared key on the virtual network gateway for the specified
         /// virtual network connection to the specified local network in
@@ -625,6 +645,32 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// information regarding the failure.
         /// </returns>
         Task<GatewayGetOperationStatusResponse> RemoveDefaultSitesAsync(string networkName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Begin Reset Virtual network Gateway operation resets an
+        /// existing gateway.
+        /// </summary>
+        /// <param name='networkName'>
+        /// The name of the virtual network for this gateway.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Reset Virtual Network Gateway operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is in progress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        Task<GatewayGetOperationStatusResponse> ResetAsync(string networkName, ResetGatewayParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Reset Virtual Network Gateway Shared Key operation resets the
