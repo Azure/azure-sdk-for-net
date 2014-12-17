@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Insights
         /// The List Usage Metric operation response.
         /// </returns>
         Task<UsageMetricListResponse> ListAsync(string resourceUri, string filterString, CancellationToken cancellationToken);
-
+        
         /// <summary>
         /// The List operation lists the usage metrics for the resource.
         /// </summary>

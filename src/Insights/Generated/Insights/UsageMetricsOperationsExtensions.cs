@@ -51,13 +51,13 @@ namespace Microsoft.Azure.Insights
         /// </returns>
         public static UsageMetricListResponse List(this IUsageMetricsOperations operations, string resourceUri, string filterString)
         {
-            return Task.Factory.StartNew((object s) =>
+            return Task.Factory.StartNew((object s) => 
             {
                 return ((IUsageMetricsOperations)s).ListAsync(resourceUri, filterString);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
-
+        
         /// <summary>
         /// The List operation lists the usage metrics for the resource.
         /// </summary>
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Insights
         {
             return operations.ListAsync(resourceUri, filterString, CancellationToken.None);
         }
-
+        
         /// <summary>
         /// The List operation lists the usage metrics for the resource.
         /// </summary>
@@ -99,13 +99,13 @@ namespace Microsoft.Azure.Insights
         /// </returns>
         public static UsageMetricListResponseDeprecated ListDeprecated(this IUsageMetricsOperations operations, string resourceUri, IList<string> metricNames)
         {
-            return Task.Factory.StartNew((object s) =>
+            return Task.Factory.StartNew((object s) => 
             {
                 return ((IUsageMetricsOperations)s).ListDeprecatedAsync(resourceUri, metricNames);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
-
+        
         /// <summary>
         /// The List operation lists the usage metrics for the resource.
         /// </summary>

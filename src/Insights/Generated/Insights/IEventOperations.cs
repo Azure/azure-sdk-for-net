@@ -67,24 +67,6 @@ namespace Microsoft.Azure.Insights
         Task<EventDataListResponse> ListDigestEventsNextAsync(string nextLink, CancellationToken cancellationToken);
         
         /// <summary>
-        /// The count of events in a subscription.
-        /// </summary>
-        /// <param name='filterString'>
-        /// The filter string should be generated using
-        /// Microsoft.WindowsAzure.Common.OData.FilterStringHere is an
-        /// example:var filterString =
-        /// FilterString.Generate<GetCountSummaryParameters> (p =>
-        /// (p.StartTime == startTime) && p.EndTime == endTime);
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        Task<EventCountSummaryListResponse> ListEventCountSummaryItemsAsync(string filterString, CancellationToken cancellationToken);
-        
-        /// <summary>
         /// The List Event Values operation lists the events.
         /// </summary>
         /// <param name='filterString'>
