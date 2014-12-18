@@ -21,20 +21,34 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.DataFactories.Models;
 
-namespace Microsoft.WindowsAzure.Management.Network.Models
+namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// Possible values for the Gateway Profile.
+    /// AzureML Web Service batch scoring activity.
     /// </summary>
-    public static partial class GatewayProfile
+    public partial class AzureMLBatchScoringActivity : BaseActivity
     {
-        public const string Small = "Small";
+        /// <summary>
+        /// Initializes a new instance of the AzureMLBatchScoringActivity class.
+        /// </summary>
+        public AzureMLBatchScoringActivity()
+        {
+        }
         
-        public const string Medium = "Medium";
-        
-        public const string Large = "Large";
-        
-        public const string ExtraLarge = "ExtraLarge";
+        /// <summary>
+        /// Initializes a new instance of the AzureMLBatchScoringActivity class
+        /// with required arguments.
+        /// </summary>
+        public AzureMLBatchScoringActivity(string name)
+            : this()
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException("name");
+            }
+            this.Name = name;
+        }
     }
 }

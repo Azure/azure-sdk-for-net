@@ -543,7 +543,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                                 XElement profileElement = gatewayElement.Element(XName.Get("Profile", "http://schemas.microsoft.com/windowsazure"));
                                 if (profileElement != null)
                                 {
-                                    GatewayProfile profileInstance = ((GatewayProfile)Enum.Parse(typeof(GatewayProfile), profileElement.Value, true));
+                                    string profileInstance = profileElement.Value;
                                     gatewayInstance.Profile = profileInstance;
                                 }
                                 
@@ -596,7 +596,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                                                 XElement typeElement = connectionsElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
                                                 if (typeElement != null)
                                                 {
-                                                    LocalNetworkConnectionType typeInstance = NetworkManagementClient.ParseLocalNetworkConnectionType(typeElement.Value);
+                                                    string typeInstance = typeElement.Value;
                                                     connectionInstance.Type = typeInstance;
                                                 }
                                             }
