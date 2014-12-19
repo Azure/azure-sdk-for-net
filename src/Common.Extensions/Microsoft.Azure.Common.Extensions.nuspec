@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata minClientVersion="2.5">
-    <id>Microsoft.WindowsAzure.Common.Extensions</id>
+    <id>Microsoft.Azure.Common.Extensions</id>
     <title>Microsoft Azure Common Extensions Library</title>
     <version>$version$</version>
     <authors>Microsoft</authors>
