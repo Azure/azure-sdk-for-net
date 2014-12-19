@@ -97,12 +97,12 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         /// </summary>
         public partial class Connection
         {
-            private LocalNetworkConnectionType _type;
+            private string _type;
             
             /// <summary>
             /// Optional.
             /// </summary>
-            public LocalNetworkConnectionType Type
+            public string Type
             {
                 get { return this._type; }
                 set { this._type = value; }
@@ -154,12 +154,12 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         /// </summary>
         public partial class Gateway
         {
-            private GatewayProfile _profile;
+            private string _profile;
             
             /// <summary>
             /// Optional. The gateway connection size.
             /// </summary>
-            public GatewayProfile Profile
+            public string Profile
             {
                 get { return this._profile; }
                 set { this._profile = value; }
