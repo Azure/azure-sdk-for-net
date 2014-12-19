@@ -16,9 +16,9 @@
     <tags>Microsoft "Microsoft Azure" Azure cloud REST HTTP client core common azureofficial windowsazureofficial</tags>
     <dependencies>
       <dependency id="Microsoft.WindowsAzure.Common" version="1.4.1" />
-      <dependency id="Microsoft.IdentityModel.Clients.ActiveDirectory" version="2.11.10918.12222.11.10918.12222.11.10918.1222" />
+      <dependency id="Microsoft.IdentityModel.Clients.ActiveDirectory" version="2.11.10918.1222" />
       <dependency id="Microsoft.WindowsAzure.Management" version="2.2.2" />
-      <dependency id="Microsoft.Azure.Management.Resources" version="2.7.0-preview-preview-preview" />
+      <dependency id="Microsoft.Azure.Management.Resources" version="2.7.0-preview" />
     </dependencies>
   </metadata>
   <files>
