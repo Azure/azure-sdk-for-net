@@ -57,6 +57,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.WindowsPhone", "src\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.WindowsPhone81", "src\Common.WindowsPhone81\Common.WindowsPhone81.csproj", "{0B661D48-49D3-4D23-8E51-E528C80C8816}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Extensions", "src\Common.Extensions\Common.Extensions.csproj", "{B95C489C-8CB7-4DCF-8D5F-B9AEBDBBAF89}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -153,6 +155,14 @@ Global
 		{0B661D48-49D3-4D23-8E51-E528C80C8816}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0B661D48-49D3-4D23-8E51-E528C80C8816}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{0B661D48-49D3-4D23-8E51-E528C80C8816}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{B95C489C-8CB7-4DCF-8D5F-B9AEBDBBAF89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B95C489C-8CB7-4DCF-8D5F-B9AEBDBBAF89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B95C489C-8CB7-4DCF-8D5F-B9AEBDBBAF89}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{B95C489C-8CB7-4DCF-8D5F-B9AEBDBBAF89}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{B95C489C-8CB7-4DCF-8D5F-B9AEBDBBAF89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B95C489C-8CB7-4DCF-8D5F-B9AEBDBBAF89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B95C489C-8CB7-4DCF-8D5F-B9AEBDBBAF89}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{B95C489C-8CB7-4DCF-8D5F-B9AEBDBBAF89}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -169,6 +179,7 @@ Global
 		{65C1AFA4-9F6A-4105-B28C-AA1B95C17494} = {868850B4-1073-41A1-ABA8-A3B465880148}
 		{997EADB9-7FFE-42FF-AA2F-D5F90F39B86D} = {868850B4-1073-41A1-ABA8-A3B465880148}
 		{0B661D48-49D3-4D23-8E51-E528C80C8816} = {868850B4-1073-41A1-ABA8-A3B465880148}
+		{B95C489C-8CB7-4DCF-8D5F-B9AEBDBBAF89} = {868850B4-1073-41A1-ABA8-A3B465880148}
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = WindowsAzureLibraries.vsmdi
