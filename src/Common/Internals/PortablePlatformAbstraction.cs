@@ -31,7 +31,6 @@ namespace Microsoft.WindowsAzure.Common.Internals
                 "WindowsStore",                
                 "WindowsPhone",
                 "WindowsPhone81",
-                "Silverlight",
                 "Test"
             };
 
