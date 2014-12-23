@@ -8,10 +8,13 @@
     <ProjectGuid>{14529261-9F9F-4D2F-80D5-B26677F51E8B}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Microsoft.WindowsAzure.Common</RootNamespace>
-    <AssemblyName>Microsoft.WindowsAzure.Common.NetFramework</AssemblyName>
+    <RootNamespace>Microsoft.Azure.Common</RootNamespace>
+    <AssemblyName>Microsoft.Azure.Common.NetFramework</AssemblyName>
     <OutputType>Library</OutputType>
     <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\Microsoft.Azure.Common.NetFramework.xml</DocumentationFile>
   </PropertyGroup>
   <Import Project="..\library.props" />
   <ItemGroup>

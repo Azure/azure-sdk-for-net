@@ -8,8 +8,8 @@
     <ProjectGuid>{856A1D19-C3BF-439A-BEBF-E822A332BC12}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Microsoft.WindowsAzure.Common</RootNamespace>
-    <AssemblyName>Microsoft.WindowsAzure.Common</AssemblyName>
+    <RootNamespace>Microsoft.Azure.Common</RootNamespace>
+    <AssemblyName>Microsoft.Azure.Common</AssemblyName>
     <OutputType>Library</OutputType>
     <RestorePackages>true</RestorePackages>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
@@ -18,14 +18,15 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>false</RunCodeAnalysis>
+    <DocumentationFile>bin\Debug\Microsoft.Azure.Common.xml</DocumentationFile>
   </PropertyGroup>
   <Import Project="..\library.props" />
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Microsoft.WindowsAzure.Common.Dependencies.nuget.proj" />
-    <None Include="Microsoft.WindowsAzure.Common.Dependencies.nuspec" />
-    <None Include="Microsoft.WindowsAzure.Common.nuget.proj" />
-    <None Include="Microsoft.WindowsAzure.Common.nuspec" />
+    <None Include="Microsoft.Azure.Common.Dependencies.nuget.proj" />
+    <None Include="Microsoft.Azure.Common.Dependencies.nuspec" />
+    <None Include="Microsoft.Azure.Common.nuget.proj" />
+    <None Include="Microsoft.Azure.Common.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
