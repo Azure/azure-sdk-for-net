@@ -2,8 +2,8 @@
 <Project DefaultTargets="DeveloperBuild" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <!-- Product properties -->
   <PropertyGroup>
-    <CommonSolution>WindowsAzureCommonLibraries.sln</CommonSolution>
-    <ManagementLibrariesSolution Condition="$(ManagementLibrariesSolution) == ''">WindowsAzureManagementLibraries.sln</ManagementLibrariesSolution>
+    <CommonSolution>AzureCommonLibraries.sln</CommonSolution>
+    <ManagementLibrariesSolution Condition="$(ManagementLibrariesSolution) == ''">AzureManagementLibraries.sln</ManagementLibrariesSolution>
     <ProductFriendlyName>Microsoft Azure Management Libraries</ProductFriendlyName>
 	  <ProductSourceFolderPath Condition="$(ProductSourceFolderPath) == ''">src</ProductSourceFolderPath>
 	  <ProductSourceFolder>$(MSBuildThisFileDirectory)$(ProductSourceFolderPath)</ProductSourceFolder>
