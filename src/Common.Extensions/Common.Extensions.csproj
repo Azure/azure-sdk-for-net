@@ -12,7 +12,7 @@
     <AssemblyName>Microsoft.Azure.Common.Extensions</AssemblyName>
     <OutputType>Library</OutputType>
     <RestorePackages>true</RestorePackages>
-	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <Import Project="..\library.props" />
   <ItemGroup>
@@ -31,18 +31,23 @@
     <Compile Include="Authentication\ShowDialog.cs" />
     <Compile Include="Authentication\UserTokenProvider.cs" />
     <Compile Include="AzureSession.cs" />
+    <Compile Include="CloudClients.cs" />
+    <Compile Include="CloudContext.cs" />
     <Compile Include="Common\AzureModule.cs" />
     <Compile Include="Common\ProfileClient.cs" />
     <Compile Include="Common\ProfileData.cs" />
     <Compile Include="Common\PublishSettingsImporter.cs" />
     <Compile Include="Common\RequiredResourceLookup.cs" />
     <Compile Include="Common\Validate.cs" />
+    <Compile Include="Credentials\AnonymousCloudCredentials.cs" />
+    <Compile Include="Extensions\CloudExceptionExtensions.cs" />
     <Compile Include="Factories\AuthenticationFactory.cs" />
     <Compile Include="Factories\ClientFactory.cs" />
     <Compile Include="Interfaces\IAuthenticationFactory.cs" />
     <Compile Include="Interfaces\IClientFactory.cs" />
     <Compile Include="Interfaces\IDataStore.cs" />
     <Compile Include="Interfaces\IProfileSerializer.cs" />
+    <Compile Include="Internals\ConnectionStringParser.cs" />
     <Compile Include="Models\AzureAccount.cs" />
     <Compile Include="Models\AzureAccount.Methods.cs" />
     <Compile Include="Models\AzureContext.cs" />
@@ -56,6 +61,10 @@
     <Compile Include="Models\JsonProfileSerializer.cs" />
     <Compile Include="Models\RPRegistrationAction.cs" />
     <Compile Include="Models\XmlProfileSerializer.cs" />
+    <Compile Include="OData\FilterParameterAttribute.cs" />
+    <Compile Include="OData\FilterString.cs" />
+    <Compile Include="OData\UrlExpressionVisitor.cs" />
+    <Compile Include="Platform\HttpTransportHandlerProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

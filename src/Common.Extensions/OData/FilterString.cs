@@ -13,26 +13,27 @@
 // limitations under the License.
 //
 
-namespace Microsoft.Azure
+using System;
+using System.Linq.Expressions;
+
+namespace Microsoft.Azure.Common.OData
 {
     /// <summary>
-    /// The status of the asynchronous request.
+    /// Handles OData filter generation.
     /// </summary>
-    public enum OperationStatus
+    public class FilterString
     {
         /// <summary>
-        /// The asynchronous request is in progress.
+        /// Generates an OData filter from a specified Linq expression.
         /// </summary>
-        InProgress,
-
-        /// <summary>
-        /// The asynchronous request succeeded.
-        /// </summary>
-        Succeeded,
-
-        /// <summary>
-        /// The asynchronous request failed.
-        /// </summary>
-        Failed
+        /// <typeparam name="T">Filter type</typeparam>
+        /// <param name="filter">Entity to use for filter generation</param>
+        /// <returns></returns>
+        public static string Generate<T>(Expression<Func<T, bool>> filter)
+        {
+            UrlExpressionVisitor visitor = new UrlExpressionVisitor();
+            visitor.Visit(filter);
+            return visitor.ToString();
+        }
     }
 }

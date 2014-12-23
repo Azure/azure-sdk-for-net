@@ -16,10 +16,6 @@
   <Import Project="..\library.props" />
   <ItemGroup>
     <Compile Include="CertificateCloudCredentials.cs" />
-    <Compile Include="Platform\CertificateCloudCredentialsProvider.cs" />
-    <Compile Include="Platform\CryptographyProvider.cs" />
-    <Compile Include="Platform\ServiceRuntimeReference.cs" />
-    <Compile Include="Platform\CloudConfigurationProvider.cs" />
     <Compile Include="Platform\HttpTransportHandlerProvider.cs" />
     <Compile Include="Internals\PlatformConfigurationHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -30,6 +26,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Hyak.Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c66ce9294aae1300, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Hyak.Common.1.0.0\lib\portable-net403+win+wpa81\Hyak.Common.dll</HintPath>
+    </Reference>
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
@@ -41,6 +41,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

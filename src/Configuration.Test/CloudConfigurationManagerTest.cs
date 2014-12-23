@@ -13,6 +13,7 @@
 //  limitations under the License.
 //
 
+using Microsoft.Azure;
 using Xunit;
 namespace Microsoft.WindowsAzure.Configuration.Test
 {

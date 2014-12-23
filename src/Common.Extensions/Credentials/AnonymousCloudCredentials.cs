@@ -16,23 +16,16 @@
 namespace Microsoft.Azure
 {
     /// <summary>
-    /// The status of the asynchronous request.
+    /// Class for token based credentials associated with a particular subscription.
     /// </summary>
-    public enum OperationStatus
+    public class AnonymousCloudCredentials : SubscriptionCloudCredentials
     {
         /// <summary>
-        /// The asynchronous request is in progress.
+        /// Gets an empty subscription Id.
         /// </summary>
-        InProgress,
-
-        /// <summary>
-        /// The asynchronous request succeeded.
-        /// </summary>
-        Succeeded,
-
-        /// <summary>
-        /// The asynchronous request failed.
-        /// </summary>
-        Failed
+        public override string SubscriptionId
+        {
+            get { return string.Empty; }
+        }
     }
 }

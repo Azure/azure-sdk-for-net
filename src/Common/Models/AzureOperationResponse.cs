@@ -13,26 +13,20 @@
 // limitations under the License.
 //
 
+using Hyak.Common;
+
 namespace Microsoft.Azure
 {
     /// <summary>
-    /// The status of the asynchronous request.
+    /// A standard service response including an HTTP status code and request
+    /// ID.
     /// </summary>
-    public enum OperationStatus
+    public class AzureOperationResponse : HttpOperationResponse
     {
         /// <summary>
-        /// The asynchronous request is in progress.
+        /// Gets or sets the value that uniquely identifies a request 
+        /// made against the service.
         /// </summary>
-        InProgress,
-
-        /// <summary>
-        /// The asynchronous request succeeded.
-        /// </summary>
-        Succeeded,
-
-        /// <summary>
-        /// The asynchronous request failed.
-        /// </summary>
-        Failed
+        public string RequestId { get; set; }
     }
 }

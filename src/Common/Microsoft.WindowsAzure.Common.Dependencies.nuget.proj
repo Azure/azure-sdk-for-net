@@ -2,9 +2,9 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <!--
-    Microsoft.WindowsAzure.Common.Dependencies
+    Microsoft.Azure.Common.Dependencies
     -->
-    <SdkNuGetPackage Include="Microsoft.WindowsAzure.Common.Dependencies">
+    <SdkNuGetPackage Include="Microsoft.Azure.Common.Dependencies">
       <PackageVersion>1.1.1</PackageVersion>
       <SkipSymbolSourcePackage>true</SkipSymbolSourcePackage>
 

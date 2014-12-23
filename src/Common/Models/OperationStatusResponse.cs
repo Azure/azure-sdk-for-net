@@ -14,13 +14,9 @@
 // limitations under the License.
 // 
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.Azure
 {
     /// <summary>
     /// The response body contains the status of the specified
@@ -33,7 +29,7 @@ namespace Microsoft.WindowsAzure
     /// status code for the failed request, and also includes error
     /// information regarding the failure.
     /// </summary>
-    public class OperationStatusResponse : OperationResponse
+    public class OperationStatusResponse : AzureOperationResponse
     {
         private OperationStatusResponse.ErrorDetails _error;
         
