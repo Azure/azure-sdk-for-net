@@ -19,11 +19,11 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
-namespace Microsoft.WindowsAzure.Common.Test.Fakes
+namespace Microsoft.Azure.Common.Test.Fakes
 {
     public class RecordedDelegatingHandler : DelegatingHandler
     {
-        private HttpResponseMessage _response;
+        private readonly HttpResponseMessage _response;
 
         public RecordedDelegatingHandler()
         {
@@ -36,19 +36,19 @@ namespace Microsoft.WindowsAzure.Common.Test.Fakes
             _response = response;
         }
 
-        public HttpStatusCode StatusCodeToReturn { get; set; }
+        public HttpContentHeaders ContentHeaders { get; private set; }
+
+        public bool IsPassThrough { get; set; }
+
+        public HttpMethod Method { get; private set; }
 
         public string Request { get; private set; }
 
         public HttpRequestHeaders RequestHeaders { get; private set; }
 
-        public HttpContentHeaders ContentHeaders { get; private set; }
-
-        public HttpMethod Method { get; private set; }
+        public HttpStatusCode StatusCodeToReturn { get; set; }
 
         public Uri Uri { get; private set; }
-
-        public bool IsPassThrough { get; set; }
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, System.Threading.CancellationToken cancellationToken)
         {

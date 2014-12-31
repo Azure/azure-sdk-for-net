@@ -13,11 +13,12 @@
 // limitations under the License.
 //
 
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Hyak.Common.Internals;
 using Xunit;
 using Xunit.Extensions;
 
-namespace Microsoft.WindowsAzure.Common.Test.Internals
+namespace Microsoft.Azure.Common.Test.Internals
 {
     public class ParserHelperTests
     {
@@ -34,7 +35,7 @@ namespace Microsoft.WindowsAzure.Common.Test.Internals
         [InlineData(null, false)]
         public void IsJsonWorksWithoutValidation(string body, bool expectedResult)
         {
-            Assert.Equal(expectedResult, ParserHelper.IsJson(body));
+            Assert.Equal(expectedResult, CloudException.IsJson(body));
         }
 
         [Theory]
@@ -52,7 +53,7 @@ namespace Microsoft.WindowsAzure.Common.Test.Internals
         [InlineData(null, false)]
         public void IsJsonWorksWithValidation(string body, bool expectedResult)
         {
-            Assert.Equal(expectedResult, ParserHelper.IsJson(body, true));
+            Assert.Equal(expectedResult, CloudException.IsJson(body, true));
         }
 
         [Theory]
@@ -68,7 +69,7 @@ namespace Microsoft.WindowsAzure.Common.Test.Internals
         [InlineData(null, false)]
         public void IsXmlWorksWithoutValidation(string body, bool expectedResult)
         {
-            Assert.Equal(expectedResult, ParserHelper.IsXml(body));
+            Assert.Equal(expectedResult, CloudException.IsXml(body));
         }
 
         [Theory]
@@ -85,7 +86,7 @@ namespace Microsoft.WindowsAzure.Common.Test.Internals
         [InlineData(null, false)]
         public void IsXmlWorksWithValidation(string body, bool expectedResult)
         {
-            Assert.Equal(expectedResult, ParserHelper.IsXml(body, true));
+            Assert.Equal(expectedResult, CloudException.IsXml(body, true));
         }
     }
 }

@@ -13,26 +13,18 @@
 // limitations under the License.
 //
 
-namespace Microsoft.Azure
+using System.Net.Http;
+using Hyak.Common.Platform;
+
+namespace Microsoft.Azure.Common.Platform
 {
-    /// <summary>
-    /// The status of the asynchronous request.
-    /// </summary>
-    public enum OperationStatus
+    internal class HttpTransportHandlerProvider : IHttpTransportHandlerProvider
     {
-        /// <summary>
-        /// The asynchronous request is in progress.
-        /// </summary>
-        InProgress,
-
-        /// <summary>
-        /// The asynchronous request succeeded.
-        /// </summary>
-        Succeeded,
-
-        /// <summary>
-        /// The asynchronous request failed.
-        /// </summary>
-        Failed
+        public HttpMessageHandler CreateHttpTransportHandler()
+        {
+            var httpHandler = new HttpClientHandler();
+            httpHandler.ClientCertificateOptions = ClientCertificateOption.Automatic;
+            return httpHandler;
+        }
     }
 }
