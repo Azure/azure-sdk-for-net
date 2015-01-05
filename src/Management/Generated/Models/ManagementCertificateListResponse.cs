@@ -22,8 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Models;
 
 namespace Microsoft.WindowsAzure.Management.Models
@@ -31,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.Models
     /// <summary>
     /// The List Management Certificates operation response.
     /// </summary>
-    public partial class ManagementCertificateListResponse : OperationResponse, IEnumerable<ManagementCertificateListResponse.SubscriptionCertificate>
+    public partial class ManagementCertificateListResponse : AzureOperationResponse, IEnumerable<ManagementCertificateListResponse.SubscriptionCertificate>
     {
         private IList<ManagementCertificateListResponse.SubscriptionCertificate> _subscriptionCertificates;
         

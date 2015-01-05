@@ -21,8 +21,8 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Insights;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Insights
 {
@@ -71,6 +71,14 @@ namespace Microsoft.Azure.Management.Insights
         }
         
         /// <summary>
+        /// Operations for managing agent diagnostic settings.
+        /// </summary>
+        IAgentDiagnosticSettingsOperations AgentDiagnosticSettingsOperations
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Operations for managing alert rules and incidents.
         /// </summary>
         IAlertOperations AlertOperations
@@ -91,6 +99,22 @@ namespace Microsoft.Azure.Management.Insights
         /// monitoring data.
         /// </summary>
         IMonitoringConfigurationOperations MonitoringConfigurationOperations
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Operations for managing service diagnostic settings.
+        /// </summary>
+        IServiceDiagnosticSettingsOperations ServiceDiagnosticSettingsOperations
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Operations for managing storage diagnostic settings.
+        /// </summary>
+        IStorageDiagnosticSettingsOperations StorageDiagnosticSettingsOperations
         {
             get; 
         }

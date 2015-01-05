@@ -21,8 +21,8 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Insights.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Insights.Models
 {
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Insights.Models
     /// A standard service response including an HTTP status code and request
     /// ID.
     /// </summary>
-    public partial class StorageConfigurationGetResponse : OperationResponse
+    public partial class StorageConfigurationGetResponse : AzureOperationResponse
     {
         private string _location;
         

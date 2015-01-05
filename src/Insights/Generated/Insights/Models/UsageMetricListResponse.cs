@@ -21,15 +21,15 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Insights.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Insights.Models
 {
     /// <summary>
     /// The List Usage Metric operation response.
     /// </summary>
-    public partial class UsageMetricListResponse : OperationResponse
+    public partial class UsageMetricListResponse : AzureOperationResponse
     {
         private UsageMetricCollection _usageMetricCollection;
         
