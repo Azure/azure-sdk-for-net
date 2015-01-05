@@ -24,8 +24,8 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Automation.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Automation
 {
@@ -154,6 +154,6 @@ namespace Microsoft.Azure.Management.Automation
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> UpdateRunbookDefinitionAsync(string automationAccount, RunbookVersionUpdateRunbookDefinitionParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> UpdateRunbookDefinitionAsync(string automationAccount, RunbookVersionUpdateRunbookDefinitionParameters parameters, CancellationToken cancellationToken);
     }
 }

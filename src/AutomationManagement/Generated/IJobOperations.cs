@@ -23,8 +23,8 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Automation.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Automation
 {
@@ -228,7 +228,7 @@ namespace Microsoft.Azure.Management.Automation
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> ResumeAsync(string automationAccount, string jobId, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> ResumeAsync(string automationAccount, string jobId, CancellationToken cancellationToken);
         
         /// <summary>
         /// Stop the job identified by jobId.  (see
@@ -248,7 +248,7 @@ namespace Microsoft.Azure.Management.Automation
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> StopAsync(string automationAccount, string jobId, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> StopAsync(string automationAccount, string jobId, CancellationToken cancellationToken);
         
         /// <summary>
         /// Suspend the job identified by jobId.  (see
@@ -268,6 +268,6 @@ namespace Microsoft.Azure.Management.Automation
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> SuspendAsync(string automationAccount, string jobId, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> SuspendAsync(string automationAccount, string jobId, CancellationToken cancellationToken);
     }
 }

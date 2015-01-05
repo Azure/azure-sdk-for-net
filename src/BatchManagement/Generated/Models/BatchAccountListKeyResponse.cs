@@ -21,14 +21,14 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.Azure.Management.Batch.Models
 {
     /// <summary>
     /// Values returned by the GetKeys operation.
     /// </summary>
-    public partial class BatchAccountListKeyResponse : OperationResponse
+    public partial class BatchAccountListKeyResponse : AzureOperationResponse
     {
         private string _primaryKey;
         

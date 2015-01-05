@@ -21,14 +21,14 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
     /// The response model for the edit runbook operation.
     /// </summary>
-    public partial class RunbookEditResponse : OperationResponse
+    public partial class RunbookEditResponse : AzureOperationResponse
     {
         private string _draftRunbookVersionId;
         
