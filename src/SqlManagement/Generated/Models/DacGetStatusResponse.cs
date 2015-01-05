@@ -22,8 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Sql.Models;
 
 namespace Microsoft.WindowsAzure.Management.Sql.Models
@@ -32,7 +32,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
     /// Represents a list of import or export status values returned from
     /// GetStatus.
     /// </summary>
-    public partial class DacGetStatusResponse : OperationResponse, IEnumerable<StatusInfo>
+    public partial class DacGetStatusResponse : AzureOperationResponse, IEnumerable<StatusInfo>
     {
         private IList<StatusInfo> _statusInfoList;
         

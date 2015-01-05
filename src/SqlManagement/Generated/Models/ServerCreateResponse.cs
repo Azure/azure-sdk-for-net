@@ -21,7 +21,7 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.WindowsAzure.Management.Sql.Models
 {
@@ -29,7 +29,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
     /// The response returned from the Create Server operation.  This contains
     /// all the information returned from the service when a server is created.
     /// </summary>
-    public partial class ServerCreateResponse : OperationResponse
+    public partial class ServerCreateResponse : AzureOperationResponse
     {
         private string _fullyQualifiedDomainName;
         

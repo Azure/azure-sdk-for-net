@@ -21,7 +21,7 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Storage.Models;
 
 namespace Microsoft.WindowsAzure.Management.Storage.Models
@@ -29,7 +29,7 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
     /// <summary>
     /// The Get Storage Account Properties operation response.
     /// </summary>
-    public partial class StorageAccountGetResponse : OperationResponse
+    public partial class StorageAccountGetResponse : AzureOperationResponse
     {
         private StorageAccount _storageAccount;
         

@@ -22,8 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.WebSites.Models;
 
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
@@ -31,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
     /// <summary>
     /// List of backups for the website.
     /// </summary>
-    public partial class WebSiteGetBackupsResponse : OperationResponse, IEnumerable<BackupItem>
+    public partial class WebSiteGetBackupsResponse : AzureOperationResponse, IEnumerable<BackupItem>
     {
         private IList<BackupItem> _backupItems;
         

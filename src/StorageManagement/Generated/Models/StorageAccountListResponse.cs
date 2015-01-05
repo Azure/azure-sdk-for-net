@@ -22,8 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Storage.Models;
 
 namespace Microsoft.WindowsAzure.Management.Storage.Models
@@ -31,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
     /// <summary>
     /// The List Storage Accounts operation response.
     /// </summary>
-    public partial class StorageAccountListResponse : OperationResponse, IEnumerable<StorageAccount>
+    public partial class StorageAccountListResponse : AzureOperationResponse, IEnumerable<StorageAccount>
     {
         private IList<StorageAccount> _storageAccounts;
         

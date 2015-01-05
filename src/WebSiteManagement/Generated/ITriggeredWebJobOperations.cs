@@ -24,7 +24,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.WebSitesExtensions.Models;
 
 namespace Microsoft.WindowsAzure.WebSitesExtensions
@@ -47,7 +47,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> DeleteAsync(string jobName, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> DeleteAsync(string jobName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Get a triggered web job.
@@ -132,7 +132,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> RunAsync(string jobName, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> RunAsync(string jobName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Set the settings of a triggered WebJob (will replace the current
@@ -151,7 +151,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> SetSettingsAsync(string jobName, TriggeredWebJobSettingsUpdateParameters settings, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> SetSettingsAsync(string jobName, TriggeredWebJobSettingsUpdateParameters settings, CancellationToken cancellationToken);
         
         /// <summary>
         /// Create or replace a triggered WebJob with a script file (.exe,
@@ -173,7 +173,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> UploadFileAsync(string jobName, string fileName, Stream jobContent, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> UploadFileAsync(string jobName, string fileName, Stream jobContent, CancellationToken cancellationToken);
         
         /// <summary>
         /// Create or replace a triggered WebJob with a zip file (containing
@@ -195,6 +195,6 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> UploadZipAsync(string jobName, string fileName, Stream jobContent, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> UploadZipAsync(string jobName, string fileName, Stream jobContent, CancellationToken cancellationToken);
     }
 }

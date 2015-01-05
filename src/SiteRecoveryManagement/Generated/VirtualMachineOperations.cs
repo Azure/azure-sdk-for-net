@@ -27,9 +27,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
 using Microsoft.WindowsAzure.Management.SiteRecovery;
 using Microsoft.WindowsAzure.Management.SiteRecovery.Models;
 
@@ -39,7 +37,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
     /// Definition of virtual machine operations for the Site Recovery
     /// extension.
     /// </summary>
-    internal partial class VirtualMachineOperations : IServiceOperations<SiteRecoveryManagementClient>, Microsoft.WindowsAzure.Management.SiteRecovery.IVirtualMachineOperations
+    internal partial class VirtualMachineOperations : IServiceOperations<SiteRecoveryManagementClient>, IVirtualMachineOperations
     {
         /// <summary>
         /// Initializes a new instance of the VirtualMachineOperations class.
@@ -81,7 +79,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
         /// <returns>
         /// The response model for the Vm object.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.SiteRecovery.Models.VirtualMachineResponse> GetAsync(string protectionContainerId, string virtualMachineId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<VirtualMachineResponse> GetAsync(string protectionContainerId, string virtualMachineId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             if (protectionContainerId == null)
@@ -94,20 +92,20 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("protectionContainerId", protectionContainerId);
                 tracingParameters.Add("virtualMachineId", virtualMachineId);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
-                Tracing.Enter(invocationId, this, "GetAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/WAHyperVRecoveryManager/~/HyperVRecoveryManagerVault/" + this.Client.ResourceName.Trim() + "/ProtectionContainers/" + protectionContainerId.Trim() + "/VirtualMachines/" + virtualMachineId.Trim() + "?";
+            string url = (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/cloudservices/" + Uri.EscapeDataString(this.Client.CloudServiceName) + "/resources/WAHyperVRecoveryManager/~/HyperVRecoveryManagerVault/" + Uri.EscapeDataString(this.Client.ResourceName) + "/ProtectionContainers/" + Uri.EscapeDataString(protectionContainerId) + "/VirtualMachines/" + Uri.EscapeDataString(virtualMachineId) + "?";
             url = url + "api-version=2014-10-27";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -145,13 +143,13 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -160,7 +158,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -168,130 +166,133 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                     // Create Result
                     VirtualMachineResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new VirtualMachineResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement serviceResourceElement = responseDoc.Element(XName.Get("ServiceResource", "http://schemas.microsoft.com/windowsazure"));
-                    if (serviceResourceElement != null)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        VirtualMachine serviceResourceInstance = new VirtualMachine();
-                        result.Vm = serviceResourceInstance;
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new VirtualMachineResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
                         
-                        XElement replicationProviderSettingsElement = serviceResourceElement.Element(XName.Get("ReplicationProviderSettings", "http://schemas.microsoft.com/windowsazure"));
-                        if (replicationProviderSettingsElement != null)
+                        XElement serviceResourceElement = responseDoc.Element(XName.Get("ServiceResource", "http://schemas.microsoft.com/windowsazure"));
+                        if (serviceResourceElement != null)
                         {
-                            string replicationProviderSettingsInstance = replicationProviderSettingsElement.Value;
-                            serviceResourceInstance.ReplicationProviderSettings = replicationProviderSettingsInstance;
+                            VirtualMachine serviceResourceInstance = new VirtualMachine();
+                            result.Vm = serviceResourceInstance;
+                            
+                            XElement replicationProviderSettingsElement = serviceResourceElement.Element(XName.Get("ReplicationProviderSettings", "http://schemas.microsoft.com/windowsazure"));
+                            if (replicationProviderSettingsElement != null)
+                            {
+                                string replicationProviderSettingsInstance = replicationProviderSettingsElement.Value;
+                                serviceResourceInstance.ReplicationProviderSettings = replicationProviderSettingsInstance;
+                            }
+                            
+                            XElement typeElement = serviceResourceElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
+                            if (typeElement != null)
+                            {
+                                string typeInstance = typeElement.Value;
+                                serviceResourceInstance.Type = typeInstance;
+                            }
+                            
+                            XElement fabricObjectIdElement = serviceResourceElement.Element(XName.Get("FabricObjectId", "http://schemas.microsoft.com/windowsazure"));
+                            if (fabricObjectIdElement != null)
+                            {
+                                string fabricObjectIdInstance = fabricObjectIdElement.Value;
+                                serviceResourceInstance.FabricObjectId = fabricObjectIdInstance;
+                            }
+                            
+                            XElement serverIdElement = serviceResourceElement.Element(XName.Get("ServerId", "http://schemas.microsoft.com/windowsazure"));
+                            if (serverIdElement != null)
+                            {
+                                string serverIdInstance = serverIdElement.Value;
+                                serviceResourceInstance.ServerId = serverIdInstance;
+                            }
+                            
+                            XElement protectionContainerIdElement = serviceResourceElement.Element(XName.Get("ProtectionContainerId", "http://schemas.microsoft.com/windowsazure"));
+                            if (protectionContainerIdElement != null)
+                            {
+                                string protectionContainerIdInstance = protectionContainerIdElement.Value;
+                                serviceResourceInstance.ProtectionContainerId = protectionContainerIdInstance;
+                            }
+                            
+                            XElement protectedElement = serviceResourceElement.Element(XName.Get("Protected", "http://schemas.microsoft.com/windowsazure"));
+                            if (protectedElement != null)
+                            {
+                                bool protectedInstance = bool.Parse(protectedElement.Value);
+                                serviceResourceInstance.Protected = protectedInstance;
+                            }
+                            
+                            XElement protectionStateDescriptionElement = serviceResourceElement.Element(XName.Get("ProtectionStateDescription", "http://schemas.microsoft.com/windowsazure"));
+                            if (protectionStateDescriptionElement != null)
+                            {
+                                string protectionStateDescriptionInstance = protectionStateDescriptionElement.Value;
+                                serviceResourceInstance.ProtectionStateDescription = protectionStateDescriptionInstance;
+                            }
+                            
+                            XElement activeLocationElement = serviceResourceElement.Element(XName.Get("ActiveLocation", "http://schemas.microsoft.com/windowsazure"));
+                            if (activeLocationElement != null)
+                            {
+                                string activeLocationInstance = activeLocationElement.Value;
+                                serviceResourceInstance.ActiveLocation = activeLocationInstance;
+                            }
+                            
+                            XElement testFailoverStateDescriptionElement = serviceResourceElement.Element(XName.Get("TestFailoverStateDescription", "http://schemas.microsoft.com/windowsazure"));
+                            if (testFailoverStateDescriptionElement != null)
+                            {
+                                string testFailoverStateDescriptionInstance = testFailoverStateDescriptionElement.Value;
+                                serviceResourceInstance.TestFailoverStateDescription = testFailoverStateDescriptionInstance;
+                            }
+                            
+                            XElement canFailoverElement = serviceResourceElement.Element(XName.Get("CanFailover", "http://schemas.microsoft.com/windowsazure"));
+                            if (canFailoverElement != null)
+                            {
+                                bool canFailoverInstance = bool.Parse(canFailoverElement.Value);
+                                serviceResourceInstance.CanFailover = canFailoverInstance;
+                            }
+                            
+                            XElement canReverseReplicateElement = serviceResourceElement.Element(XName.Get("CanReverseReplicate", "http://schemas.microsoft.com/windowsazure"));
+                            if (canReverseReplicateElement != null)
+                            {
+                                bool canReverseReplicateInstance = bool.Parse(canReverseReplicateElement.Value);
+                                serviceResourceInstance.CanReverseReplicate = canReverseReplicateInstance;
+                            }
+                            
+                            XElement canCommitElement = serviceResourceElement.Element(XName.Get("CanCommit", "http://schemas.microsoft.com/windowsazure"));
+                            if (canCommitElement != null)
+                            {
+                                bool canCommitInstance = bool.Parse(canCommitElement.Value);
+                                serviceResourceInstance.CanCommit = canCommitInstance;
+                            }
+                            
+                            XElement replicationHealthElement = serviceResourceElement.Element(XName.Get("ReplicationHealth", "http://schemas.microsoft.com/windowsazure"));
+                            if (replicationHealthElement != null)
+                            {
+                                string replicationHealthInstance = replicationHealthElement.Value;
+                                serviceResourceInstance.ReplicationHealth = replicationHealthInstance;
+                            }
+                            
+                            XElement replicationProviderElement = serviceResourceElement.Element(XName.Get("ReplicationProvider", "http://schemas.microsoft.com/windowsazure"));
+                            if (replicationProviderElement != null)
+                            {
+                                string replicationProviderInstance = replicationProviderElement.Value;
+                                serviceResourceInstance.ReplicationProvider = replicationProviderInstance;
+                            }
+                            
+                            XElement nameElement = serviceResourceElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                            if (nameElement != null)
+                            {
+                                string nameInstance = nameElement.Value;
+                                serviceResourceInstance.Name = nameInstance;
+                            }
+                            
+                            XElement idElement = serviceResourceElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
+                            if (idElement != null)
+                            {
+                                string idInstance = idElement.Value;
+                                serviceResourceInstance.ID = idInstance;
+                            }
                         }
                         
-                        XElement typeElement = serviceResourceElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
-                        if (typeElement != null)
-                        {
-                            string typeInstance = typeElement.Value;
-                            serviceResourceInstance.Type = typeInstance;
-                        }
-                        
-                        XElement fabricObjectIdElement = serviceResourceElement.Element(XName.Get("FabricObjectId", "http://schemas.microsoft.com/windowsazure"));
-                        if (fabricObjectIdElement != null)
-                        {
-                            string fabricObjectIdInstance = fabricObjectIdElement.Value;
-                            serviceResourceInstance.FabricObjectId = fabricObjectIdInstance;
-                        }
-                        
-                        XElement serverIdElement = serviceResourceElement.Element(XName.Get("ServerId", "http://schemas.microsoft.com/windowsazure"));
-                        if (serverIdElement != null)
-                        {
-                            string serverIdInstance = serverIdElement.Value;
-                            serviceResourceInstance.ServerId = serverIdInstance;
-                        }
-                        
-                        XElement protectionContainerIdElement = serviceResourceElement.Element(XName.Get("ProtectionContainerId", "http://schemas.microsoft.com/windowsazure"));
-                        if (protectionContainerIdElement != null)
-                        {
-                            string protectionContainerIdInstance = protectionContainerIdElement.Value;
-                            serviceResourceInstance.ProtectionContainerId = protectionContainerIdInstance;
-                        }
-                        
-                        XElement protectedElement = serviceResourceElement.Element(XName.Get("Protected", "http://schemas.microsoft.com/windowsazure"));
-                        if (protectedElement != null)
-                        {
-                            bool protectedInstance = bool.Parse(protectedElement.Value);
-                            serviceResourceInstance.Protected = protectedInstance;
-                        }
-                        
-                        XElement protectionStateDescriptionElement = serviceResourceElement.Element(XName.Get("ProtectionStateDescription", "http://schemas.microsoft.com/windowsazure"));
-                        if (protectionStateDescriptionElement != null)
-                        {
-                            string protectionStateDescriptionInstance = protectionStateDescriptionElement.Value;
-                            serviceResourceInstance.ProtectionStateDescription = protectionStateDescriptionInstance;
-                        }
-                        
-                        XElement activeLocationElement = serviceResourceElement.Element(XName.Get("ActiveLocation", "http://schemas.microsoft.com/windowsazure"));
-                        if (activeLocationElement != null)
-                        {
-                            string activeLocationInstance = activeLocationElement.Value;
-                            serviceResourceInstance.ActiveLocation = activeLocationInstance;
-                        }
-                        
-                        XElement testFailoverStateDescriptionElement = serviceResourceElement.Element(XName.Get("TestFailoverStateDescription", "http://schemas.microsoft.com/windowsazure"));
-                        if (testFailoverStateDescriptionElement != null)
-                        {
-                            string testFailoverStateDescriptionInstance = testFailoverStateDescriptionElement.Value;
-                            serviceResourceInstance.TestFailoverStateDescription = testFailoverStateDescriptionInstance;
-                        }
-                        
-                        XElement canFailoverElement = serviceResourceElement.Element(XName.Get("CanFailover", "http://schemas.microsoft.com/windowsazure"));
-                        if (canFailoverElement != null)
-                        {
-                            bool canFailoverInstance = bool.Parse(canFailoverElement.Value);
-                            serviceResourceInstance.CanFailover = canFailoverInstance;
-                        }
-                        
-                        XElement canReverseReplicateElement = serviceResourceElement.Element(XName.Get("CanReverseReplicate", "http://schemas.microsoft.com/windowsazure"));
-                        if (canReverseReplicateElement != null)
-                        {
-                            bool canReverseReplicateInstance = bool.Parse(canReverseReplicateElement.Value);
-                            serviceResourceInstance.CanReverseReplicate = canReverseReplicateInstance;
-                        }
-                        
-                        XElement canCommitElement = serviceResourceElement.Element(XName.Get("CanCommit", "http://schemas.microsoft.com/windowsazure"));
-                        if (canCommitElement != null)
-                        {
-                            bool canCommitInstance = bool.Parse(canCommitElement.Value);
-                            serviceResourceInstance.CanCommit = canCommitInstance;
-                        }
-                        
-                        XElement replicationHealthElement = serviceResourceElement.Element(XName.Get("ReplicationHealth", "http://schemas.microsoft.com/windowsazure"));
-                        if (replicationHealthElement != null)
-                        {
-                            string replicationHealthInstance = replicationHealthElement.Value;
-                            serviceResourceInstance.ReplicationHealth = replicationHealthInstance;
-                        }
-                        
-                        XElement replicationProviderElement = serviceResourceElement.Element(XName.Get("ReplicationProvider", "http://schemas.microsoft.com/windowsazure"));
-                        if (replicationProviderElement != null)
-                        {
-                            string replicationProviderInstance = replicationProviderElement.Value;
-                            serviceResourceInstance.ReplicationProvider = replicationProviderInstance;
-                        }
-                        
-                        XElement nameElement = serviceResourceElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                        if (nameElement != null)
-                        {
-                            string nameInstance = nameElement.Value;
-                            serviceResourceInstance.Name = nameInstance;
-                        }
-                        
-                        XElement idElement = serviceResourceElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
-                        if (idElement != null)
-                        {
-                            string idInstance = idElement.Value;
-                            serviceResourceInstance.ID = idInstance;
-                        }
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -300,7 +301,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -336,7 +337,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
         /// <returns>
         /// The response model for the list Vm operation.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.SiteRecovery.Models.VirtualMachineListResponse> ListAsync(string protectionContainerId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<VirtualMachineListResponse> ListAsync(string protectionContainerId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             if (protectionContainerId == null)
@@ -345,19 +346,19 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("protectionContainerId", protectionContainerId);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
-                Tracing.Enter(invocationId, this, "ListAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/WAHyperVRecoveryManager/~/HyperVRecoveryManagerVault/" + this.Client.ResourceName.Trim() + "/ProtectionContainers/" + protectionContainerId.Trim() + "/VirtualMachines?";
+            string url = (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/cloudservices/" + Uri.EscapeDataString(this.Client.CloudServiceName) + "/resources/WAHyperVRecoveryManager/~/HyperVRecoveryManagerVault/" + Uri.EscapeDataString(this.Client.ResourceName) + "/ProtectionContainers/" + Uri.EscapeDataString(protectionContainerId) + "/VirtualMachines?";
             url = url + "api-version=2014-10-27";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -395,13 +396,13 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -410,7 +411,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -418,133 +419,136 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                     // Create Result
                     VirtualMachineListResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new VirtualMachineListResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement arrayOfServiceResourceSequenceElement = responseDoc.Element(XName.Get("ArrayOfServiceResource", "http://schemas.microsoft.com/windowsazure"));
-                    if (arrayOfServiceResourceSequenceElement != null)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        foreach (XElement arrayOfServiceResourceElement in arrayOfServiceResourceSequenceElement.Elements(XName.Get("ServiceResource", "http://schemas.microsoft.com/windowsazure")))
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new VirtualMachineListResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement arrayOfServiceResourceSequenceElement = responseDoc.Element(XName.Get("ArrayOfServiceResource", "http://schemas.microsoft.com/windowsazure"));
+                        if (arrayOfServiceResourceSequenceElement != null)
                         {
-                            VirtualMachine serviceResourceInstance = new VirtualMachine();
-                            result.Vms.Add(serviceResourceInstance);
-                            
-                            XElement replicationProviderSettingsElement = arrayOfServiceResourceElement.Element(XName.Get("ReplicationProviderSettings", "http://schemas.microsoft.com/windowsazure"));
-                            if (replicationProviderSettingsElement != null)
+                            foreach (XElement arrayOfServiceResourceElement in arrayOfServiceResourceSequenceElement.Elements(XName.Get("ServiceResource", "http://schemas.microsoft.com/windowsazure")))
                             {
-                                string replicationProviderSettingsInstance = replicationProviderSettingsElement.Value;
-                                serviceResourceInstance.ReplicationProviderSettings = replicationProviderSettingsInstance;
-                            }
-                            
-                            XElement typeElement = arrayOfServiceResourceElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
-                            if (typeElement != null)
-                            {
-                                string typeInstance = typeElement.Value;
-                                serviceResourceInstance.Type = typeInstance;
-                            }
-                            
-                            XElement fabricObjectIdElement = arrayOfServiceResourceElement.Element(XName.Get("FabricObjectId", "http://schemas.microsoft.com/windowsazure"));
-                            if (fabricObjectIdElement != null)
-                            {
-                                string fabricObjectIdInstance = fabricObjectIdElement.Value;
-                                serviceResourceInstance.FabricObjectId = fabricObjectIdInstance;
-                            }
-                            
-                            XElement serverIdElement = arrayOfServiceResourceElement.Element(XName.Get("ServerId", "http://schemas.microsoft.com/windowsazure"));
-                            if (serverIdElement != null)
-                            {
-                                string serverIdInstance = serverIdElement.Value;
-                                serviceResourceInstance.ServerId = serverIdInstance;
-                            }
-                            
-                            XElement protectionContainerIdElement = arrayOfServiceResourceElement.Element(XName.Get("ProtectionContainerId", "http://schemas.microsoft.com/windowsazure"));
-                            if (protectionContainerIdElement != null)
-                            {
-                                string protectionContainerIdInstance = protectionContainerIdElement.Value;
-                                serviceResourceInstance.ProtectionContainerId = protectionContainerIdInstance;
-                            }
-                            
-                            XElement protectedElement = arrayOfServiceResourceElement.Element(XName.Get("Protected", "http://schemas.microsoft.com/windowsazure"));
-                            if (protectedElement != null)
-                            {
-                                bool protectedInstance = bool.Parse(protectedElement.Value);
-                                serviceResourceInstance.Protected = protectedInstance;
-                            }
-                            
-                            XElement protectionStateDescriptionElement = arrayOfServiceResourceElement.Element(XName.Get("ProtectionStateDescription", "http://schemas.microsoft.com/windowsazure"));
-                            if (protectionStateDescriptionElement != null)
-                            {
-                                string protectionStateDescriptionInstance = protectionStateDescriptionElement.Value;
-                                serviceResourceInstance.ProtectionStateDescription = protectionStateDescriptionInstance;
-                            }
-                            
-                            XElement activeLocationElement = arrayOfServiceResourceElement.Element(XName.Get("ActiveLocation", "http://schemas.microsoft.com/windowsazure"));
-                            if (activeLocationElement != null)
-                            {
-                                string activeLocationInstance = activeLocationElement.Value;
-                                serviceResourceInstance.ActiveLocation = activeLocationInstance;
-                            }
-                            
-                            XElement testFailoverStateDescriptionElement = arrayOfServiceResourceElement.Element(XName.Get("TestFailoverStateDescription", "http://schemas.microsoft.com/windowsazure"));
-                            if (testFailoverStateDescriptionElement != null)
-                            {
-                                string testFailoverStateDescriptionInstance = testFailoverStateDescriptionElement.Value;
-                                serviceResourceInstance.TestFailoverStateDescription = testFailoverStateDescriptionInstance;
-                            }
-                            
-                            XElement canFailoverElement = arrayOfServiceResourceElement.Element(XName.Get("CanFailover", "http://schemas.microsoft.com/windowsazure"));
-                            if (canFailoverElement != null)
-                            {
-                                bool canFailoverInstance = bool.Parse(canFailoverElement.Value);
-                                serviceResourceInstance.CanFailover = canFailoverInstance;
-                            }
-                            
-                            XElement canReverseReplicateElement = arrayOfServiceResourceElement.Element(XName.Get("CanReverseReplicate", "http://schemas.microsoft.com/windowsazure"));
-                            if (canReverseReplicateElement != null)
-                            {
-                                bool canReverseReplicateInstance = bool.Parse(canReverseReplicateElement.Value);
-                                serviceResourceInstance.CanReverseReplicate = canReverseReplicateInstance;
-                            }
-                            
-                            XElement canCommitElement = arrayOfServiceResourceElement.Element(XName.Get("CanCommit", "http://schemas.microsoft.com/windowsazure"));
-                            if (canCommitElement != null)
-                            {
-                                bool canCommitInstance = bool.Parse(canCommitElement.Value);
-                                serviceResourceInstance.CanCommit = canCommitInstance;
-                            }
-                            
-                            XElement replicationHealthElement = arrayOfServiceResourceElement.Element(XName.Get("ReplicationHealth", "http://schemas.microsoft.com/windowsazure"));
-                            if (replicationHealthElement != null)
-                            {
-                                string replicationHealthInstance = replicationHealthElement.Value;
-                                serviceResourceInstance.ReplicationHealth = replicationHealthInstance;
-                            }
-                            
-                            XElement replicationProviderElement = arrayOfServiceResourceElement.Element(XName.Get("ReplicationProvider", "http://schemas.microsoft.com/windowsazure"));
-                            if (replicationProviderElement != null)
-                            {
-                                string replicationProviderInstance = replicationProviderElement.Value;
-                                serviceResourceInstance.ReplicationProvider = replicationProviderInstance;
-                            }
-                            
-                            XElement nameElement = arrayOfServiceResourceElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                            if (nameElement != null)
-                            {
-                                string nameInstance = nameElement.Value;
-                                serviceResourceInstance.Name = nameInstance;
-                            }
-                            
-                            XElement idElement = arrayOfServiceResourceElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
-                            if (idElement != null)
-                            {
-                                string idInstance = idElement.Value;
-                                serviceResourceInstance.ID = idInstance;
+                                VirtualMachine serviceResourceInstance = new VirtualMachine();
+                                result.Vms.Add(serviceResourceInstance);
+                                
+                                XElement replicationProviderSettingsElement = arrayOfServiceResourceElement.Element(XName.Get("ReplicationProviderSettings", "http://schemas.microsoft.com/windowsazure"));
+                                if (replicationProviderSettingsElement != null)
+                                {
+                                    string replicationProviderSettingsInstance = replicationProviderSettingsElement.Value;
+                                    serviceResourceInstance.ReplicationProviderSettings = replicationProviderSettingsInstance;
+                                }
+                                
+                                XElement typeElement = arrayOfServiceResourceElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
+                                if (typeElement != null)
+                                {
+                                    string typeInstance = typeElement.Value;
+                                    serviceResourceInstance.Type = typeInstance;
+                                }
+                                
+                                XElement fabricObjectIdElement = arrayOfServiceResourceElement.Element(XName.Get("FabricObjectId", "http://schemas.microsoft.com/windowsazure"));
+                                if (fabricObjectIdElement != null)
+                                {
+                                    string fabricObjectIdInstance = fabricObjectIdElement.Value;
+                                    serviceResourceInstance.FabricObjectId = fabricObjectIdInstance;
+                                }
+                                
+                                XElement serverIdElement = arrayOfServiceResourceElement.Element(XName.Get("ServerId", "http://schemas.microsoft.com/windowsazure"));
+                                if (serverIdElement != null)
+                                {
+                                    string serverIdInstance = serverIdElement.Value;
+                                    serviceResourceInstance.ServerId = serverIdInstance;
+                                }
+                                
+                                XElement protectionContainerIdElement = arrayOfServiceResourceElement.Element(XName.Get("ProtectionContainerId", "http://schemas.microsoft.com/windowsazure"));
+                                if (protectionContainerIdElement != null)
+                                {
+                                    string protectionContainerIdInstance = protectionContainerIdElement.Value;
+                                    serviceResourceInstance.ProtectionContainerId = protectionContainerIdInstance;
+                                }
+                                
+                                XElement protectedElement = arrayOfServiceResourceElement.Element(XName.Get("Protected", "http://schemas.microsoft.com/windowsazure"));
+                                if (protectedElement != null)
+                                {
+                                    bool protectedInstance = bool.Parse(protectedElement.Value);
+                                    serviceResourceInstance.Protected = protectedInstance;
+                                }
+                                
+                                XElement protectionStateDescriptionElement = arrayOfServiceResourceElement.Element(XName.Get("ProtectionStateDescription", "http://schemas.microsoft.com/windowsazure"));
+                                if (protectionStateDescriptionElement != null)
+                                {
+                                    string protectionStateDescriptionInstance = protectionStateDescriptionElement.Value;
+                                    serviceResourceInstance.ProtectionStateDescription = protectionStateDescriptionInstance;
+                                }
+                                
+                                XElement activeLocationElement = arrayOfServiceResourceElement.Element(XName.Get("ActiveLocation", "http://schemas.microsoft.com/windowsazure"));
+                                if (activeLocationElement != null)
+                                {
+                                    string activeLocationInstance = activeLocationElement.Value;
+                                    serviceResourceInstance.ActiveLocation = activeLocationInstance;
+                                }
+                                
+                                XElement testFailoverStateDescriptionElement = arrayOfServiceResourceElement.Element(XName.Get("TestFailoverStateDescription", "http://schemas.microsoft.com/windowsazure"));
+                                if (testFailoverStateDescriptionElement != null)
+                                {
+                                    string testFailoverStateDescriptionInstance = testFailoverStateDescriptionElement.Value;
+                                    serviceResourceInstance.TestFailoverStateDescription = testFailoverStateDescriptionInstance;
+                                }
+                                
+                                XElement canFailoverElement = arrayOfServiceResourceElement.Element(XName.Get("CanFailover", "http://schemas.microsoft.com/windowsazure"));
+                                if (canFailoverElement != null)
+                                {
+                                    bool canFailoverInstance = bool.Parse(canFailoverElement.Value);
+                                    serviceResourceInstance.CanFailover = canFailoverInstance;
+                                }
+                                
+                                XElement canReverseReplicateElement = arrayOfServiceResourceElement.Element(XName.Get("CanReverseReplicate", "http://schemas.microsoft.com/windowsazure"));
+                                if (canReverseReplicateElement != null)
+                                {
+                                    bool canReverseReplicateInstance = bool.Parse(canReverseReplicateElement.Value);
+                                    serviceResourceInstance.CanReverseReplicate = canReverseReplicateInstance;
+                                }
+                                
+                                XElement canCommitElement = arrayOfServiceResourceElement.Element(XName.Get("CanCommit", "http://schemas.microsoft.com/windowsazure"));
+                                if (canCommitElement != null)
+                                {
+                                    bool canCommitInstance = bool.Parse(canCommitElement.Value);
+                                    serviceResourceInstance.CanCommit = canCommitInstance;
+                                }
+                                
+                                XElement replicationHealthElement = arrayOfServiceResourceElement.Element(XName.Get("ReplicationHealth", "http://schemas.microsoft.com/windowsazure"));
+                                if (replicationHealthElement != null)
+                                {
+                                    string replicationHealthInstance = replicationHealthElement.Value;
+                                    serviceResourceInstance.ReplicationHealth = replicationHealthInstance;
+                                }
+                                
+                                XElement replicationProviderElement = arrayOfServiceResourceElement.Element(XName.Get("ReplicationProvider", "http://schemas.microsoft.com/windowsazure"));
+                                if (replicationProviderElement != null)
+                                {
+                                    string replicationProviderInstance = replicationProviderElement.Value;
+                                    serviceResourceInstance.ReplicationProvider = replicationProviderInstance;
+                                }
+                                
+                                XElement nameElement = arrayOfServiceResourceElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                if (nameElement != null)
+                                {
+                                    string nameInstance = nameElement.Value;
+                                    serviceResourceInstance.Name = nameInstance;
+                                }
+                                
+                                XElement idElement = arrayOfServiceResourceElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
+                                if (idElement != null)
+                                {
+                                    string idInstance = idElement.Value;
+                                    serviceResourceInstance.ID = idInstance;
+                                }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -553,7 +557,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }

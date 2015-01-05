@@ -13,63 +13,8 @@
 // limitations under the License.
 //
 
-using System;
-using System.Collections.Generic;
-using System.Net.Http;
 using System.Runtime.Serialization;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
-using Microsoft.WindowsAzure.Scheduler;
 
-namespace Microsoft.WindowsAzure
-{
-    public static class SchedulerDiscoveryExtensions
-    {
-        public static SchedulerClient CreateSchedulerClient(this CloudClients clients, SubscriptionCloudCredentials credentials, string cloudServiceName, string jobCollectionName)
-        {
-            return new SchedulerClient(cloudServiceName, jobCollectionName, credentials);
-        }
-
-        public static SchedulerClient CreateSchedulerClient(this CloudClients clients, SubscriptionCloudCredentials credentials, string cloudServiceName, string jobCollectionName, Uri baseUri)
-        {
-            return new SchedulerClient(cloudServiceName, jobCollectionName, credentials, baseUri);
-        }
-
-        public static SchedulerClient CreateSchedulerClient(this CloudClients clients)
-        {
-            return ConfigurationHelper.CreateFromSettings<SchedulerClient>(SchedulerClient.Create);
-        }
-    }
-}
-
-namespace Microsoft.WindowsAzure.Scheduler
-{
-    public partial class SchedulerClient
-    {
-        public static SchedulerClient Create(IDictionary<string, object> settings)
-        {
-            if (settings == null)
-            {
-                throw new ArgumentNullException("settings");
-            }
-
-            SubscriptionCloudCredentials credentials = ConfigurationHelper.GetCredentials<SubscriptionCloudCredentials>(settings);
-
-            string cloudServiceName = ConfigurationHelper.GetString(settings, "CloudServiceName", true);
-            string jobCollectionName = ConfigurationHelper.GetString(settings, "JobCollectionName", true);
-            Uri baseUri = ConfigurationHelper.GetUri(settings, "BaseUri", false);
-
-            return baseUri != null ?
-                new SchedulerClient(cloudServiceName, jobCollectionName, credentials, baseUri) :
-                new SchedulerClient(cloudServiceName, jobCollectionName, credentials);
-        }
-
-        public override SchedulerClient WithHandler(DelegatingHandler handler)
-        {
-            return (SchedulerClient)WithHandler(new SchedulerClient(), handler);
-        }
-    }
-}
 
 namespace Microsoft.WindowsAzure.Scheduler.Models
 {

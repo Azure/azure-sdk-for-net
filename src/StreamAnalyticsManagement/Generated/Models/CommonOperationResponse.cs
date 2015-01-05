@@ -21,14 +21,14 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.Azure.Management.StreamAnalytics.Models
 {
     /// <summary>
     /// The common operation response.
     /// </summary>
-    public partial class CommonOperationResponse : OperationResponse
+    public partial class CommonOperationResponse : AzureOperationResponse
     {
         private DateTime _date;
         

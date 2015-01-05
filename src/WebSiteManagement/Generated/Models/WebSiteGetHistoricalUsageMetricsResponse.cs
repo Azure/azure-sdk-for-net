@@ -22,8 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.WebSites.Models;
 
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
@@ -31,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
     /// <summary>
     /// The Get Historical Usage Metrics Web Site operation response.
     /// </summary>
-    public partial class WebSiteGetHistoricalUsageMetricsResponse : OperationResponse, IEnumerable<HistoricalUsageMetric>
+    public partial class WebSiteGetHistoricalUsageMetricsResponse : AzureOperationResponse, IEnumerable<HistoricalUsageMetric>
     {
         private IList<HistoricalUsageMetric> _usageMetrics;
         

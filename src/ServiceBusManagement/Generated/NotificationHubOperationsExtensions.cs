@@ -23,11 +23,11 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.ServiceBus;
 using Microsoft.WindowsAzure.Management.ServiceBus.Models;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.Management.ServiceBus
 {
     /// <summary>
     /// The Service Bus Management API is a REST API for managing Service Bus
@@ -54,7 +54,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Delete(this INotificationHubOperations operations, string namespaceName, string notificationHubName)
+        public static AzureOperationResponse Delete(this INotificationHubOperations operations, string namespaceName, string notificationHubName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -80,7 +80,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> DeleteAsync(this INotificationHubOperations operations, string namespaceName, string notificationHubName)
+        public static Task<AzureOperationResponse> DeleteAsync(this INotificationHubOperations operations, string namespaceName, string notificationHubName)
         {
             return operations.DeleteAsync(namespaceName, notificationHubName, CancellationToken.None);
         }

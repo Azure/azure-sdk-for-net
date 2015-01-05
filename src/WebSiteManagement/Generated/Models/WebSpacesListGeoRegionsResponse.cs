@@ -22,8 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.WebSites.Models;
 
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
@@ -31,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
     /// <summary>
     /// The List Geo Regions operation response.
     /// </summary>
-    public partial class WebSpacesListGeoRegionsResponse : OperationResponse, IEnumerable<WebSpacesListGeoRegionsResponse.GeoRegion>
+    public partial class WebSpacesListGeoRegionsResponse : AzureOperationResponse, IEnumerable<WebSpacesListGeoRegionsResponse.GeoRegion>
     {
         private IList<WebSpacesListGeoRegionsResponse.GeoRegion> _geoRegions;
         

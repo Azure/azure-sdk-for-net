@@ -21,14 +21,14 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
 {
     /// <summary>
     /// The response to a query for the availability status of a namespace name.
     /// </summary>
-    public partial class CheckNamespaceAvailabilityResponse : OperationResponse
+    public partial class CheckNamespaceAvailabilityResponse : AzureOperationResponse
     {
         private bool _isAvailable;
         

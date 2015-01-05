@@ -21,7 +21,7 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.WebSitesExtensions.Models;
 
 namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
@@ -29,7 +29,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
     /// <summary>
     /// The get triggered WebJob Operation Response.
     /// </summary>
-    public partial class TriggeredWebJobGetResponse : OperationResponse
+    public partial class TriggeredWebJobGetResponse : AzureOperationResponse
     {
         private TriggeredWebJob _triggeredWebJob;
         

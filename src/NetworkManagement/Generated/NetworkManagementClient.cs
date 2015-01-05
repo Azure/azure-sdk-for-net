@@ -29,7 +29,6 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using Hyak.Common;
 using Microsoft.Azure;
-using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Management.Network;
 
 namespace Microsoft.WindowsAzure.Management.Network

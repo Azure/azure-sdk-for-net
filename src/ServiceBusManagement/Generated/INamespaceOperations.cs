@@ -23,7 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.ServiceBus.Models;
 
 namespace Microsoft.WindowsAzure.Management.ServiceBus
@@ -128,7 +128,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> DeleteAsync(string namespaceName, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> DeleteAsync(string namespaceName, CancellationToken cancellationToken);
         
         /// <summary>
         /// The delete namespace authorization rule operation deletes an
@@ -147,12 +147,12 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> DeleteAuthorizationRuleAsync(string namespaceName, string ruleName, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> DeleteAuthorizationRuleAsync(string namespaceName, string ruleName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Returns the description for the specified namespace.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn140232.aspx
-        /// for more information)
+        /// http://msdn.microsoft.com/library/azure/dn140232.aspx for more
+        /// information)
         /// </summary>
         /// <param name='namespaceName'>
         /// The namespace name.
@@ -203,8 +203,8 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         
         /// <summary>
         /// Lists the available namespaces.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn140232.asp
-        /// for more information)
+        /// http://msdn.microsoft.com/en-us/library/azure/hh780759.aspx for
+        /// more information)
         /// </summary>
         /// <param name='cancellationToken'>
         /// Cancellation token.
