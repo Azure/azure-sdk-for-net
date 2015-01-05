@@ -29,8 +29,6 @@
     <Compile Include="Generated\Models\MediaServicesAccountListResponse.cs" />
     <Compile Include="Generated\Models\MediaServicesCreatedAccount.cs" />
     <Compile Include="Generated\Models\MediaServicesKeyType.cs" />
-    <Compile Include="MediaServicesManagementClient.Customization.cs" />
-    <Compile Include="MediaServicesMangementDiscoveryExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

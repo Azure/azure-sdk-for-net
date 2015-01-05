@@ -23,6 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Management.Network.Models;
 
@@ -85,7 +86,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginAddRouteTableToSubnetAsync(string vnetName, string subnetName, AddRouteTableToSubnetParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BeginAddRouteTableToSubnetAsync(string vnetName, string subnetName, AddRouteTableToSubnetParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Create the specified route table for this subscription.
@@ -100,7 +101,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginCreateRouteTableAsync(CreateRouteTableParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BeginCreateRouteTableAsync(CreateRouteTableParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Set the specified route for the provided table in this subscription.
@@ -118,7 +119,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginDeleteRouteAsync(string routeTableName, string routeName, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BeginDeleteRouteAsync(string routeTableName, string routeName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Delete the specified route table for this subscription.
@@ -133,7 +134,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginDeleteRouteTableAsync(string routeTableName, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BeginDeleteRouteTableAsync(string routeTableName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Remove the route table from the provided subnet in the provided
@@ -152,7 +153,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginRemoveRouteTableFromSubnetAsync(string vnetName, string subnetName, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BeginRemoveRouteTableFromSubnetAsync(string vnetName, string subnetName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Set the specified route for the provided table in this subscription.
@@ -173,7 +174,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginSetRouteAsync(string routeTableName, string routeName, SetRouteParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BeginSetRouteAsync(string routeTableName, string routeName, SetRouteParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Create the specified route table for this subscription.

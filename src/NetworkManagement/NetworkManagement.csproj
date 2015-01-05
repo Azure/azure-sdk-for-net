@@ -113,7 +113,6 @@
     <Compile Include="Generated\StaticIPOperations.cs" />
     <Compile Include="Generated\StaticIPOperationsExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="NetworkManagementClient.Customizations.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="GenerateCode.props" />

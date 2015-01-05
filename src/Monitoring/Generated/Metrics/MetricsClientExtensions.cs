@@ -22,7 +22,7 @@
 using System;
 using System.Linq;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
 {
     public static partial class MetricsClientExtensions
     {

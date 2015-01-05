@@ -21,7 +21,7 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Network.Models;
 
 namespace Microsoft.WindowsAzure.Management.Network.Models
@@ -30,7 +30,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
     /// A standard service response including an HTTP status code and request
     /// ID.
     /// </summary>
-    public partial class GetRouteTableResponse : OperationResponse
+    public partial class GetRouteTableResponse : AzureOperationResponse
     {
         private RouteTable _routeTable;
         
