@@ -31,7 +31,6 @@ using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Common;
 using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Management.Network;
-using Microsoft.WindowsAzure.Management.Network.Models;
 
 namespace Microsoft.WindowsAzure.Management.Network
 {
@@ -350,50 +349,6 @@ namespace Microsoft.WindowsAzure.Management.Network
                 
                 clonedClient.Credentials.InitializeServiceClient(clonedClient);
             }
-        }
-        
-        /// <summary>
-        /// Parse enum values for type LocalNetworkConnectionType.
-        /// </summary>
-        /// <param name='value'>
-        /// The value to parse.
-        /// </param>
-        /// <returns>
-        /// The enum value.
-        /// </returns>
-        internal static LocalNetworkConnectionType ParseLocalNetworkConnectionType(string value)
-        {
-            if ("IPsec".Equals(value, StringComparison.OrdinalIgnoreCase))
-            {
-                return LocalNetworkConnectionType.IPSecurity;
-            }
-            if ("Dedicated".Equals(value, StringComparison.OrdinalIgnoreCase))
-            {
-                return LocalNetworkConnectionType.Dedicated;
-            }
-            throw new ArgumentOutOfRangeException("value");
-        }
-        
-        /// <summary>
-        /// Convert an enum of type LocalNetworkConnectionType to a string.
-        /// </summary>
-        /// <param name='value'>
-        /// The value to convert to a string.
-        /// </param>
-        /// <returns>
-        /// The enum value as a string.
-        /// </returns>
-        internal static string LocalNetworkConnectionTypeToString(LocalNetworkConnectionType value)
-        {
-            if (value == LocalNetworkConnectionType.IPSecurity)
-            {
-                return "IPsec";
-            }
-            if (value == LocalNetworkConnectionType.Dedicated)
-            {
-                return "Dedicated";
-            }
-            throw new ArgumentOutOfRangeException("value");
         }
         
         /// <summary>
