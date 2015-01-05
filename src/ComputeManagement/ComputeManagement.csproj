@@ -16,7 +16,6 @@
   </PropertyGroup>
   <Import Project="..\library.props" />
   <ItemGroup>
-    <Compile Include="ComputeManagementClient.Customization.cs" />
     <Compile Include="Generated\ComputeManagementClient.cs" />
     <Compile Include="Generated\ComputeManagementClientExtensions.cs" />
     <Compile Include="Generated\DeploymentOperations.cs" />

@@ -23,11 +23,12 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Management.Compute;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.Management.Compute
 {
     /// <summary>
     /// The Service Management API provides programmatic access to much of the
@@ -57,7 +58,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginCreating(this IVirtualMachineVMImageOperations operations, VirtualMachineVMImageCreateParameters parameters)
+        public static AzureOperationResponse BeginCreating(this IVirtualMachineVMImageOperations operations, VirtualMachineVMImageCreateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -84,7 +85,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginCreatingAsync(this IVirtualMachineVMImageOperations operations, VirtualMachineVMImageCreateParameters parameters)
+        public static Task<AzureOperationResponse> BeginCreatingAsync(this IVirtualMachineVMImageOperations operations, VirtualMachineVMImageCreateParameters parameters)
         {
             return operations.BeginCreatingAsync(parameters, CancellationToken.None);
         }
@@ -108,7 +109,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginDeleting(this IVirtualMachineVMImageOperations operations, string vmImageName, bool deleteFromStorage)
+        public static AzureOperationResponse BeginDeleting(this IVirtualMachineVMImageOperations operations, string vmImageName, bool deleteFromStorage)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -136,7 +137,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginDeletingAsync(this IVirtualMachineVMImageOperations operations, string vmImageName, bool deleteFromStorage)
+        public static Task<AzureOperationResponse> BeginDeletingAsync(this IVirtualMachineVMImageOperations operations, string vmImageName, bool deleteFromStorage)
         {
             return operations.BeginDeletingAsync(vmImageName, deleteFromStorage, CancellationToken.None);
         }
@@ -160,7 +161,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginSharing(this IVirtualMachineVMImageOperations operations, string vmImageName, string permission)
+        public static AzureOperationResponse BeginSharing(this IVirtualMachineVMImageOperations operations, string vmImageName, string permission)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -188,7 +189,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginSharingAsync(this IVirtualMachineVMImageOperations operations, string vmImageName, string permission)
+        public static Task<AzureOperationResponse> BeginSharingAsync(this IVirtualMachineVMImageOperations operations, string vmImageName, string permission)
         {
             return operations.BeginSharingAsync(vmImageName, permission, CancellationToken.None);
         }
@@ -214,7 +215,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginUnreplicating(this IVirtualMachineVMImageOperations operations, string vmImageName)
+        public static AzureOperationResponse BeginUnreplicating(this IVirtualMachineVMImageOperations operations, string vmImageName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -244,7 +245,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginUnreplicatingAsync(this IVirtualMachineVMImageOperations operations, string vmImageName)
+        public static Task<AzureOperationResponse> BeginUnreplicatingAsync(this IVirtualMachineVMImageOperations operations, string vmImageName)
         {
             return operations.BeginUnreplicatingAsync(vmImageName, CancellationToken.None);
         }
@@ -666,7 +667,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Update(this IVirtualMachineVMImageOperations operations, string imageName, VirtualMachineVMImageUpdateParameters parameters)
+        public static AzureOperationResponse Update(this IVirtualMachineVMImageOperations operations, string imageName, VirtualMachineVMImageUpdateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -694,7 +695,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> UpdateAsync(this IVirtualMachineVMImageOperations operations, string imageName, VirtualMachineVMImageUpdateParameters parameters)
+        public static Task<AzureOperationResponse> UpdateAsync(this IVirtualMachineVMImageOperations operations, string imageName, VirtualMachineVMImageUpdateParameters parameters)
         {
             return operations.UpdateAsync(imageName, parameters, CancellationToken.None);
         }

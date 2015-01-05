@@ -13,31 +13,19 @@
 // limitations under the License.
 //
 
-
-using System.Collections.Generic;
-using Microsoft.Azure.Common.OData;
-
-namespace Microsoft.Azure.Gallery
+namespace Microsoft.Azure
 {
     /// <summary>
-    /// Class used to define a list filter.
+    /// Class for token based credentials associated with a particular subscription.
     /// </summary>
-    public class ItemListFilter
+    public class AnonymousCloudCredentials : SubscriptionCloudCredentials
     {
         /// <summary>
-        /// Gets or sets gallery item name to filter by.
+        /// Gets an empty subscription Id.
         /// </summary>
-        [FilterParameter("ItemName")]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Gets or sets gallery item publisher name to filter by.
-        /// </summary>
-        public string Publisher { get; set; }
-
-        /// <summary>
-        /// Gets or sets gallery items to filter by (using Contains method).
-        /// </summary>
-        public IList<string> CategoryIds { get; set; }
+        public override string SubscriptionId
+        {
+            get { return string.Empty; }
+        }
     }
 }

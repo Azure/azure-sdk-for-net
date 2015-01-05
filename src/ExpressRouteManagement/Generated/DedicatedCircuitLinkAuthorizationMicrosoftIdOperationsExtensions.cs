@@ -23,11 +23,11 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.ExpressRoute;
 using Microsoft.WindowsAzure.Management.ExpressRoute.Models;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.Management.ExpressRoute
 {
     /// <summary>
     /// The Express Route API provides programmatic access to the functionality
@@ -60,7 +60,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse New(this IDedicatedCircuitLinkAuthorizationMicrosoftIdOperations operations, string serviceKey, string authId, DedicatedCircuitLinkAuthorizationMicrosoftIdNewParameters parameters)
+        public static AzureOperationResponse New(this IDedicatedCircuitLinkAuthorizationMicrosoftIdOperations operations, string serviceKey, string authId, DedicatedCircuitLinkAuthorizationMicrosoftIdNewParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -89,7 +89,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> NewAsync(this IDedicatedCircuitLinkAuthorizationMicrosoftIdOperations operations, string serviceKey, string authId, DedicatedCircuitLinkAuthorizationMicrosoftIdNewParameters parameters)
+        public static Task<AzureOperationResponse> NewAsync(this IDedicatedCircuitLinkAuthorizationMicrosoftIdOperations operations, string serviceKey, string authId, DedicatedCircuitLinkAuthorizationMicrosoftIdNewParameters parameters)
         {
             return operations.NewAsync(serviceKey, authId, parameters, CancellationToken.None);
         }
@@ -114,7 +114,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Remove(this IDedicatedCircuitLinkAuthorizationMicrosoftIdOperations operations, string serviceKey, string authId, DedicatedCircuitLinkAuthorizationMicrosoftIdRemoveParameters parameters)
+        public static AzureOperationResponse Remove(this IDedicatedCircuitLinkAuthorizationMicrosoftIdOperations operations, string serviceKey, string authId, DedicatedCircuitLinkAuthorizationMicrosoftIdRemoveParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -143,7 +143,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> RemoveAsync(this IDedicatedCircuitLinkAuthorizationMicrosoftIdOperations operations, string serviceKey, string authId, DedicatedCircuitLinkAuthorizationMicrosoftIdRemoveParameters parameters)
+        public static Task<AzureOperationResponse> RemoveAsync(this IDedicatedCircuitLinkAuthorizationMicrosoftIdOperations operations, string serviceKey, string authId, DedicatedCircuitLinkAuthorizationMicrosoftIdRemoveParameters parameters)
         {
             return operations.RemoveAsync(serviceKey, authId, parameters, CancellationToken.None);
         }

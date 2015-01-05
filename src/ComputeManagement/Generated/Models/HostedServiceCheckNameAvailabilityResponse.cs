@@ -21,14 +21,14 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
     /// The Check Hosted Service Name Availability operation response.
     /// </summary>
-    public partial class HostedServiceCheckNameAvailabilityResponse : OperationResponse
+    public partial class HostedServiceCheckNameAvailabilityResponse : AzureOperationResponse
     {
         private bool _isAvailable;
         

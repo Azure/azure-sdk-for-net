@@ -23,9 +23,9 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.DataFactories;
 using Microsoft.Azure.Management.DataFactories.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.DataFactories
 {
@@ -166,7 +166,7 @@ namespace Microsoft.Azure.Management.DataFactories
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse SetStatus(this IDataSliceOperations operations, string resourceGroupName, string dataFactoryName, string tableName, DataSliceSetStatusParameters parameters)
+        public static AzureOperationResponse SetStatus(this IDataSliceOperations operations, string resourceGroupName, string dataFactoryName, string tableName, DataSliceSetStatusParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -198,7 +198,7 @@ namespace Microsoft.Azure.Management.DataFactories
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> SetStatusAsync(this IDataSliceOperations operations, string resourceGroupName, string dataFactoryName, string tableName, DataSliceSetStatusParameters parameters)
+        public static Task<AzureOperationResponse> SetStatusAsync(this IDataSliceOperations operations, string resourceGroupName, string dataFactoryName, string tableName, DataSliceSetStatusParameters parameters)
         {
             return operations.SetStatusAsync(resourceGroupName, dataFactoryName, tableName, parameters, CancellationToken.None);
         }

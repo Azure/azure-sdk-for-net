@@ -23,8 +23,8 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.DataFactories.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.DataFactories
 {
@@ -242,7 +242,7 @@ namespace Microsoft.Azure.Management.DataFactories
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> ResumeAsync(string resourceGroupName, string dataFactoryName, string dataPipelineName, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> ResumeAsync(string resourceGroupName, string dataFactoryName, string dataPipelineName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Sets the active period of a pipeline.
@@ -266,7 +266,7 @@ namespace Microsoft.Azure.Management.DataFactories
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> SetActivePeriodAsync(string resourceGroupName, string dataFactoryName, string dataPipelineName, PipelineSetActivePeriodParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> SetActivePeriodAsync(string resourceGroupName, string dataFactoryName, string dataPipelineName, PipelineSetActivePeriodParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Suspend a running pipeline.
@@ -287,6 +287,6 @@ namespace Microsoft.Azure.Management.DataFactories
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> SuspendAsync(string resourceGroupName, string dataFactoryName, string dataPipelineName, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> SuspendAsync(string resourceGroupName, string dataFactoryName, string dataPipelineName, CancellationToken cancellationToken);
     }
 }

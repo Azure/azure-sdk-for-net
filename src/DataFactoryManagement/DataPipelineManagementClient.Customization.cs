@@ -13,72 +13,20 @@
 // limitations under the License.
 //
 
-using Microsoft.Azure.Management.DataFactories;
 using Microsoft.Azure.Management.DataFactories.Models;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.WindowsAzure
-{
-    public static class DataPipelineManagementDiscoveryExtensions
-    {
-        public static DataPipelineManagementClient CreateDataPipelineManagementClient(
-            this CloudClients clients, SubscriptionCloudCredentials credentials)
-        {
-            return new DataPipelineManagementClient(credentials);
-        }
-
-        public static DataPipelineManagementClient CreateDataPipelineManagementClient(
-            this CloudClients clients, SubscriptionCloudCredentials credentials, Uri baseUri)
-        {
-            return new DataPipelineManagementClient(credentials, baseUri);
-        }
-
-        public static DataPipelineManagementClient CreateDataPipelineManagementClient(this CloudClients clients)
-        {
-            return
-                ConfigurationHelper.CreateFromSettings<DataPipelineManagementClient>(
-                    DataPipelineManagementClient.Create);
-        }
-    }
-}
-
 namespace Microsoft.Azure.Management.DataFactories
 {
     public partial class DataPipelineManagementClient
     {
-        public static DataPipelineManagementClient Create(IDictionary<string, object> settings)
-        {
-            if (settings == null)
-            {
-                throw new ArgumentNullException("settings");
-            }
-
-            SubscriptionCloudCredentials credentials =
-                ConfigurationHelper.GetCredentials<SubscriptionCloudCredentials>(settings);
-
-            Uri baseUri = ConfigurationHelper.GetUri(settings, "BaseUri", false);
-
-            return baseUri != null
-                       ? new DataPipelineManagementClient(credentials, baseUri)
-                       : new DataPipelineManagementClient(credentials);
-        }
-
-        public override DataPipelineManagementClient WithHandler(DelegatingHandler handler)
-        {
-            return (DataPipelineManagementClient)WithHandler(new DataPipelineManagementClient(), handler);
-        }
-
         #region DelegatingHandlers
 
         /// <summary>

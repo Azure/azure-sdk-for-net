@@ -30,9 +30,10 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Hyak.Common;
+using Hyak.Common.Internals;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Management.Compute;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
@@ -42,7 +43,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
     /// The Service Management API includes operations for managing the virtual
     /// machine templates in your subscription.
     /// </summary>
-    internal partial class VirtualMachineVMImageOperations : IServiceOperations<ComputeManagementClient>, Microsoft.WindowsAzure.Management.Compute.IVirtualMachineVMImageOperations
+    internal partial class VirtualMachineVMImageOperations : IServiceOperations<ComputeManagementClient>, IVirtualMachineVMImageOperations
     {
         /// <summary>
         /// Initializes a new instance of the VirtualMachineVMImageOperations
@@ -84,7 +85,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationResponse> BeginCreatingAsync(VirtualMachineVMImageCreateParameters parameters, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> BeginCreatingAsync(VirtualMachineVMImageCreateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
@@ -127,18 +128,18 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "BeginCreatingAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "BeginCreatingAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/vmimages";
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/vmimages";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -320,13 +321,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.Accepted)
@@ -335,14 +336,15 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
-                    result = new OperationResponse();
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -351,7 +353,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -390,7 +392,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationResponse> BeginDeletingAsync(string vmImageName, bool deleteFromStorage, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> BeginDeletingAsync(string vmImageName, bool deleteFromStorage, CancellationToken cancellationToken)
         {
             // Validate
             if (vmImageName == null)
@@ -399,19 +401,19 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("vmImageName", vmImageName);
                 tracingParameters.Add("deleteFromStorage", deleteFromStorage);
-                Tracing.Enter(invocationId, this, "BeginDeletingAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "BeginDeletingAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/vmimages/" + vmImageName.Trim() + "?";
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/vmimages/" + Uri.EscapeDataString(vmImageName) + "?";
             if (deleteFromStorage == true)
             {
                 url = url + "comp=media";
@@ -450,13 +452,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.Accepted)
@@ -465,14 +467,15 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
-                    result = new OperationResponse();
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -481,7 +484,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -520,7 +523,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationResponse> BeginSharingAsync(string vmImageName, string permission, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> BeginSharingAsync(string vmImageName, string permission, CancellationToken cancellationToken)
         {
             // Validate
             if (vmImageName == null)
@@ -533,20 +536,20 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("vmImageName", vmImageName);
                 tracingParameters.Add("permission", permission);
-                Tracing.Enter(invocationId, this, "BeginSharingAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "BeginSharingAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/vmimages/" + vmImageName.Trim() + "/share?";
-            url = url + "permission=" + Uri.EscapeDataString(permission.Trim());
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/vmimages/" + Uri.EscapeDataString(vmImageName) + "/share?";
+            url = url + "permission=" + Uri.EscapeDataString(permission);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -581,13 +584,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -596,14 +599,15 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
-                    result = new OperationResponse();
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -612,7 +616,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -653,7 +657,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationResponse> BeginUnreplicatingAsync(string vmImageName, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> BeginUnreplicatingAsync(string vmImageName, CancellationToken cancellationToken)
         {
             // Validate
             if (vmImageName == null)
@@ -662,18 +666,18 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("vmImageName", vmImageName);
-                Tracing.Enter(invocationId, this, "BeginUnreplicatingAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "BeginUnreplicatingAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/vmimages/" + vmImageName.Trim() + "/unreplicate";
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/vmimages/" + Uri.EscapeDataString(vmImageName) + "/unreplicate";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -708,13 +712,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -723,14 +727,15 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
-                    result = new OperationResponse();
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -739,7 +744,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -784,85 +789,72 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request and error information regarding
         /// the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationStatusResponse> CreateAsync(VirtualMachineVMImageCreateParameters parameters, CancellationToken cancellationToken)
+        public async Task<OperationStatusResponse> CreateAsync(VirtualMachineVMImageCreateParameters parameters, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "CreateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "CreateAsync", tracingParameters);
             }
-            try
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            AzureOperationResponse response = await client.VirtualMachineVMImages.BeginCreatingAsync(parameters, cancellationToken).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested();
+            OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 30;
+            if (client.LongRunningOperationInitialTimeout >= 0)
             {
-                if (shouldTrace)
-                {
-                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
-                }
-                
-                cancellationToken.ThrowIfCancellationRequested();
-                OperationResponse response = await client.VirtualMachineVMImages.BeginCreatingAsync(parameters, cancellationToken).ConfigureAwait(false);
-                cancellationToken.ThrowIfCancellationRequested();
-                OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
-                int delayInSeconds = 30;
-                if (client.LongRunningOperationInitialTimeout >= 0)
-                {
-                    delayInSeconds = client.LongRunningOperationInitialTimeout;
-                }
-                while ((result.Status != OperationStatus.InProgress) == false)
-                {
-                    cancellationToken.ThrowIfCancellationRequested();
-                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
-                    delayInSeconds = 30;
-                    if (client.LongRunningOperationRetryTimeout >= 0)
-                    {
-                        delayInSeconds = client.LongRunningOperationRetryTimeout;
-                    }
-                }
-                
-                if (shouldTrace)
-                {
-                    Tracing.Exit(invocationId, result);
-                }
-                
-                if (result.Status != OperationStatus.Succeeded)
-                {
-                    if (result.Error != null)
-                    {
-                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                        ex.ErrorCode = result.Error.Code;
-                        ex.ErrorMessage = result.Error.Message;
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    else
-                    {
-                        CloudException ex = new CloudException("");
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                }
-                
-                return result;
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            finally
+            while ((result.Status != OperationStatus.InProgress) == false)
             {
-                if (client != null && shouldTrace)
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 30;
+                if (client.LongRunningOperationRetryTimeout >= 0)
                 {
-                    client.Dispose();
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
                 }
             }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            if (result.Status != OperationStatus.Succeeded)
+            {
+                if (result.Error != null)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.Error = new CloudError();
+                    ex.Error.Code = result.Error.Code;
+                    ex.Error.Message = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                else
+                {
+                    CloudException ex = new CloudException("");
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+            }
+            
+            return result;
         }
         
         /// <summary>
@@ -890,86 +882,73 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request and error information regarding
         /// the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationStatusResponse> DeleteAsync(string vmImageName, bool deleteFromStorage, CancellationToken cancellationToken)
+        public async Task<OperationStatusResponse> DeleteAsync(string vmImageName, bool deleteFromStorage, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("vmImageName", vmImageName);
                 tracingParameters.Add("deleteFromStorage", deleteFromStorage);
-                Tracing.Enter(invocationId, this, "DeleteAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "DeleteAsync", tracingParameters);
             }
-            try
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            AzureOperationResponse response = await client.VirtualMachineVMImages.BeginDeletingAsync(vmImageName, deleteFromStorage, cancellationToken).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested();
+            OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 30;
+            if (client.LongRunningOperationInitialTimeout >= 0)
             {
-                if (shouldTrace)
-                {
-                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
-                }
-                
-                cancellationToken.ThrowIfCancellationRequested();
-                OperationResponse response = await client.VirtualMachineVMImages.BeginDeletingAsync(vmImageName, deleteFromStorage, cancellationToken).ConfigureAwait(false);
-                cancellationToken.ThrowIfCancellationRequested();
-                OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
-                int delayInSeconds = 30;
-                if (client.LongRunningOperationInitialTimeout >= 0)
-                {
-                    delayInSeconds = client.LongRunningOperationInitialTimeout;
-                }
-                while ((result.Status != OperationStatus.InProgress) == false)
-                {
-                    cancellationToken.ThrowIfCancellationRequested();
-                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
-                    delayInSeconds = 30;
-                    if (client.LongRunningOperationRetryTimeout >= 0)
-                    {
-                        delayInSeconds = client.LongRunningOperationRetryTimeout;
-                    }
-                }
-                
-                if (shouldTrace)
-                {
-                    Tracing.Exit(invocationId, result);
-                }
-                
-                if (result.Status != OperationStatus.Succeeded)
-                {
-                    if (result.Error != null)
-                    {
-                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                        ex.ErrorCode = result.Error.Code;
-                        ex.ErrorMessage = result.Error.Message;
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    else
-                    {
-                        CloudException ex = new CloudException("");
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                }
-                
-                return result;
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            finally
+            while ((result.Status != OperationStatus.InProgress) == false)
             {
-                if (client != null && shouldTrace)
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 30;
+                if (client.LongRunningOperationRetryTimeout >= 0)
                 {
-                    client.Dispose();
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
                 }
             }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            if (result.Status != OperationStatus.Succeeded)
+            {
+                if (result.Error != null)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.Error = new CloudError();
+                    ex.Error.Code = result.Error.Code;
+                    ex.Error.Message = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                else
+                {
+                    CloudException ex = new CloudException("");
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+            }
+            
+            return result;
         }
         
         /// <summary>
@@ -986,7 +965,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// The Get Details VM Images operation response.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.VirtualMachineVMImageGetDetailsResponse> GetDetailsAsync(string vmImageName, CancellationToken cancellationToken)
+        public async Task<VirtualMachineVMImageGetDetailsResponse> GetDetailsAsync(string vmImageName, CancellationToken cancellationToken)
         {
             // Validate
             if (vmImageName == null)
@@ -995,18 +974,18 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("vmImageName", vmImageName);
-                Tracing.Enter(invocationId, this, "GetDetailsAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetDetailsAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/vmimages/" + vmImageName.Trim() + "/details";
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/vmimages/" + Uri.EscapeDataString(vmImageName) + "/details";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1041,13 +1020,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -1056,7 +1035,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -1064,487 +1043,49 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     // Create Result
                     VirtualMachineVMImageGetDetailsResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new VirtualMachineVMImageGetDetailsResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement vMImageDetailsElement = responseDoc.Element(XName.Get("VMImageDetails", "http://schemas.microsoft.com/windowsazure"));
-                    if (vMImageDetailsElement != null)
-                    {
-                        XElement nameElement = vMImageDetailsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                        if (nameElement != null)
-                        {
-                            string nameInstance = nameElement.Value;
-                            result.Name = nameInstance;
-                        }
-                        
-                        XElement labelElement = vMImageDetailsElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
-                        if (labelElement != null)
-                        {
-                            string labelInstance = labelElement.Value;
-                            result.Label = labelInstance;
-                        }
-                        
-                        XElement categoryElement = vMImageDetailsElement.Element(XName.Get("Category", "http://schemas.microsoft.com/windowsazure"));
-                        if (categoryElement != null)
-                        {
-                            string categoryInstance = categoryElement.Value;
-                            result.Category = categoryInstance;
-                        }
-                        
-                        XElement descriptionElement = vMImageDetailsElement.Element(XName.Get("Description", "http://schemas.microsoft.com/windowsazure"));
-                        if (descriptionElement != null)
-                        {
-                            string descriptionInstance = descriptionElement.Value;
-                            result.Description = descriptionInstance;
-                        }
-                        
-                        XElement oSDiskConfigurationElement = vMImageDetailsElement.Element(XName.Get("OSDiskConfiguration", "http://schemas.microsoft.com/windowsazure"));
-                        if (oSDiskConfigurationElement != null)
-                        {
-                            VirtualMachineVMImageListResponse.OSDiskConfiguration oSDiskConfigurationInstance = new VirtualMachineVMImageListResponse.OSDiskConfiguration();
-                            result.OSDiskConfiguration = oSDiskConfigurationInstance;
-                            
-                            XElement nameElement2 = oSDiskConfigurationElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                            if (nameElement2 != null)
-                            {
-                                string nameInstance2 = nameElement2.Value;
-                                oSDiskConfigurationInstance.Name = nameInstance2;
-                            }
-                            
-                            XElement hostCachingElement = oSDiskConfigurationElement.Element(XName.Get("HostCaching", "http://schemas.microsoft.com/windowsazure"));
-                            if (hostCachingElement != null)
-                            {
-                                string hostCachingInstance = hostCachingElement.Value;
-                                oSDiskConfigurationInstance.HostCaching = hostCachingInstance;
-                            }
-                            
-                            XElement oSStateElement = oSDiskConfigurationElement.Element(XName.Get("OSState", "http://schemas.microsoft.com/windowsazure"));
-                            if (oSStateElement != null)
-                            {
-                                string oSStateInstance = oSStateElement.Value;
-                                oSDiskConfigurationInstance.OSState = oSStateInstance;
-                            }
-                            
-                            XElement osElement = oSDiskConfigurationElement.Element(XName.Get("OS", "http://schemas.microsoft.com/windowsazure"));
-                            if (osElement != null)
-                            {
-                                string osInstance = osElement.Value;
-                                oSDiskConfigurationInstance.OperatingSystem = osInstance;
-                            }
-                            
-                            XElement mediaLinkElement = oSDiskConfigurationElement.Element(XName.Get("MediaLink", "http://schemas.microsoft.com/windowsazure"));
-                            if (mediaLinkElement != null)
-                            {
-                                Uri mediaLinkInstance = TypeConversion.TryParseUri(mediaLinkElement.Value);
-                                oSDiskConfigurationInstance.MediaLink = mediaLinkInstance;
-                            }
-                            
-                            XElement logicalDiskSizeInGBElement = oSDiskConfigurationElement.Element(XName.Get("LogicalDiskSizeInGB", "http://schemas.microsoft.com/windowsazure"));
-                            if (logicalDiskSizeInGBElement != null)
-                            {
-                                int logicalDiskSizeInGBInstance = int.Parse(logicalDiskSizeInGBElement.Value, CultureInfo.InvariantCulture);
-                                oSDiskConfigurationInstance.LogicalDiskSizeInGB = logicalDiskSizeInGBInstance;
-                            }
-                            
-                            XElement iOTypeElement = oSDiskConfigurationElement.Element(XName.Get("IOType", "http://schemas.microsoft.com/windowsazure"));
-                            if (iOTypeElement != null)
-                            {
-                                string iOTypeInstance = iOTypeElement.Value;
-                                oSDiskConfigurationInstance.IOType = iOTypeInstance;
-                            }
-                        }
-                        
-                        XElement dataDiskConfigurationsSequenceElement = vMImageDetailsElement.Element(XName.Get("DataDiskConfigurations", "http://schemas.microsoft.com/windowsazure"));
-                        if (dataDiskConfigurationsSequenceElement != null)
-                        {
-                            foreach (XElement dataDiskConfigurationsElement in dataDiskConfigurationsSequenceElement.Elements(XName.Get("DataDiskConfiguration", "http://schemas.microsoft.com/windowsazure")))
-                            {
-                                VirtualMachineVMImageListResponse.DataDiskConfiguration dataDiskConfigurationInstance = new VirtualMachineVMImageListResponse.DataDiskConfiguration();
-                                result.DataDiskConfigurations.Add(dataDiskConfigurationInstance);
-                                
-                                XElement nameElement3 = dataDiskConfigurationsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                                if (nameElement3 != null)
-                                {
-                                    string nameInstance3 = nameElement3.Value;
-                                    dataDiskConfigurationInstance.Name = nameInstance3;
-                                }
-                                
-                                XElement hostCachingElement2 = dataDiskConfigurationsElement.Element(XName.Get("HostCaching", "http://schemas.microsoft.com/windowsazure"));
-                                if (hostCachingElement2 != null)
-                                {
-                                    string hostCachingInstance2 = hostCachingElement2.Value;
-                                    dataDiskConfigurationInstance.HostCaching = hostCachingInstance2;
-                                }
-                                
-                                XElement lunElement = dataDiskConfigurationsElement.Element(XName.Get("Lun", "http://schemas.microsoft.com/windowsazure"));
-                                if (lunElement != null && string.IsNullOrEmpty(lunElement.Value) == false)
-                                {
-                                    int lunInstance = int.Parse(lunElement.Value, CultureInfo.InvariantCulture);
-                                    dataDiskConfigurationInstance.LogicalUnitNumber = lunInstance;
-                                }
-                                
-                                XElement mediaLinkElement2 = dataDiskConfigurationsElement.Element(XName.Get("MediaLink", "http://schemas.microsoft.com/windowsazure"));
-                                if (mediaLinkElement2 != null)
-                                {
-                                    Uri mediaLinkInstance2 = TypeConversion.TryParseUri(mediaLinkElement2.Value);
-                                    dataDiskConfigurationInstance.MediaLink = mediaLinkInstance2;
-                                }
-                                
-                                XElement logicalDiskSizeInGBElement2 = dataDiskConfigurationsElement.Element(XName.Get("LogicalDiskSizeInGB", "http://schemas.microsoft.com/windowsazure"));
-                                if (logicalDiskSizeInGBElement2 != null)
-                                {
-                                    int logicalDiskSizeInGBInstance2 = int.Parse(logicalDiskSizeInGBElement2.Value, CultureInfo.InvariantCulture);
-                                    dataDiskConfigurationInstance.LogicalDiskSizeInGB = logicalDiskSizeInGBInstance2;
-                                }
-                                
-                                XElement iOTypeElement2 = dataDiskConfigurationsElement.Element(XName.Get("IOType", "http://schemas.microsoft.com/windowsazure"));
-                                if (iOTypeElement2 != null)
-                                {
-                                    string iOTypeInstance2 = iOTypeElement2.Value;
-                                    dataDiskConfigurationInstance.IOType = iOTypeInstance2;
-                                }
-                            }
-                        }
-                        
-                        XElement serviceNameElement = vMImageDetailsElement.Element(XName.Get("ServiceName", "http://schemas.microsoft.com/windowsazure"));
-                        if (serviceNameElement != null)
-                        {
-                            string serviceNameInstance = serviceNameElement.Value;
-                            result.ServiceName = serviceNameInstance;
-                        }
-                        
-                        XElement deploymentNameElement = vMImageDetailsElement.Element(XName.Get("DeploymentName", "http://schemas.microsoft.com/windowsazure"));
-                        if (deploymentNameElement != null)
-                        {
-                            string deploymentNameInstance = deploymentNameElement.Value;
-                            result.DeploymentName = deploymentNameInstance;
-                        }
-                        
-                        XElement roleNameElement = vMImageDetailsElement.Element(XName.Get("RoleName", "http://schemas.microsoft.com/windowsazure"));
-                        if (roleNameElement != null)
-                        {
-                            string roleNameInstance = roleNameElement.Value;
-                            result.RoleName = roleNameInstance;
-                        }
-                        
-                        XElement affinityGroupElement = vMImageDetailsElement.Element(XName.Get("AffinityGroup", "http://schemas.microsoft.com/windowsazure"));
-                        if (affinityGroupElement != null)
-                        {
-                            string affinityGroupInstance = affinityGroupElement.Value;
-                            result.AffinityGroup = affinityGroupInstance;
-                        }
-                        
-                        XElement locationElement = vMImageDetailsElement.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
-                        if (locationElement != null)
-                        {
-                            string locationInstance = locationElement.Value;
-                            result.Location = locationInstance;
-                        }
-                        
-                        XElement createdTimeElement = vMImageDetailsElement.Element(XName.Get("CreatedTime", "http://schemas.microsoft.com/windowsazure"));
-                        if (createdTimeElement != null && string.IsNullOrEmpty(createdTimeElement.Value) == false)
-                        {
-                            DateTime createdTimeInstance = DateTime.Parse(createdTimeElement.Value, CultureInfo.InvariantCulture);
-                            result.CreatedTime = createdTimeInstance;
-                        }
-                        
-                        XElement modifiedTimeElement = vMImageDetailsElement.Element(XName.Get("ModifiedTime", "http://schemas.microsoft.com/windowsazure"));
-                        if (modifiedTimeElement != null && string.IsNullOrEmpty(modifiedTimeElement.Value) == false)
-                        {
-                            DateTime modifiedTimeInstance = DateTime.Parse(modifiedTimeElement.Value, CultureInfo.InvariantCulture);
-                            result.ModifiedTime = modifiedTimeInstance;
-                        }
-                        
-                        XElement languageElement = vMImageDetailsElement.Element(XName.Get("Language", "http://schemas.microsoft.com/windowsazure"));
-                        if (languageElement != null)
-                        {
-                            string languageInstance = languageElement.Value;
-                            result.Language = languageInstance;
-                        }
-                        
-                        XElement imageFamilyElement = vMImageDetailsElement.Element(XName.Get("ImageFamily", "http://schemas.microsoft.com/windowsazure"));
-                        if (imageFamilyElement != null)
-                        {
-                            string imageFamilyInstance = imageFamilyElement.Value;
-                            result.ImageFamily = imageFamilyInstance;
-                        }
-                        
-                        XElement recommendedVMSizeElement = vMImageDetailsElement.Element(XName.Get("RecommendedVMSize", "http://schemas.microsoft.com/windowsazure"));
-                        if (recommendedVMSizeElement != null)
-                        {
-                            string recommendedVMSizeInstance = recommendedVMSizeElement.Value;
-                            result.RecommendedVMSize = recommendedVMSizeInstance;
-                        }
-                        
-                        XElement isPremiumElement = vMImageDetailsElement.Element(XName.Get("IsPremium", "http://schemas.microsoft.com/windowsazure"));
-                        if (isPremiumElement != null && string.IsNullOrEmpty(isPremiumElement.Value) == false)
-                        {
-                            bool isPremiumInstance = bool.Parse(isPremiumElement.Value);
-                            result.IsPremium = isPremiumInstance;
-                        }
-                        
-                        XElement eulaElement = vMImageDetailsElement.Element(XName.Get("Eula", "http://schemas.microsoft.com/windowsazure"));
-                        if (eulaElement != null)
-                        {
-                            string eulaInstance = eulaElement.Value;
-                            result.Eula = eulaInstance;
-                        }
-                        
-                        XElement iconUriElement = vMImageDetailsElement.Element(XName.Get("IconUri", "http://schemas.microsoft.com/windowsazure"));
-                        if (iconUriElement != null)
-                        {
-                            Uri iconUriInstance = TypeConversion.TryParseUri(iconUriElement.Value);
-                            result.IconUri = iconUriInstance;
-                        }
-                        
-                        XElement smallIconUriElement = vMImageDetailsElement.Element(XName.Get("SmallIconUri", "http://schemas.microsoft.com/windowsazure"));
-                        if (smallIconUriElement != null)
-                        {
-                            Uri smallIconUriInstance = TypeConversion.TryParseUri(smallIconUriElement.Value);
-                            result.SmallIconUri = smallIconUriInstance;
-                        }
-                        
-                        XElement privacyUriElement = vMImageDetailsElement.Element(XName.Get("PrivacyUri", "http://schemas.microsoft.com/windowsazure"));
-                        if (privacyUriElement != null)
-                        {
-                            Uri privacyUriInstance = TypeConversion.TryParseUri(privacyUriElement.Value);
-                            result.PrivacyUri = privacyUriInstance;
-                        }
-                        
-                        XElement publisherNameElement = vMImageDetailsElement.Element(XName.Get("PublisherName", "http://schemas.microsoft.com/windowsazure"));
-                        if (publisherNameElement != null)
-                        {
-                            string publisherNameInstance = publisherNameElement.Value;
-                            result.PublisherName = publisherNameInstance;
-                        }
-                        
-                        XElement publishedDateElement = vMImageDetailsElement.Element(XName.Get("PublishedDate", "http://schemas.microsoft.com/windowsazure"));
-                        if (publishedDateElement != null && string.IsNullOrEmpty(publishedDateElement.Value) == false)
-                        {
-                            DateTime publishedDateInstance = DateTime.Parse(publishedDateElement.Value, CultureInfo.InvariantCulture);
-                            result.PublishedDate = publishedDateInstance;
-                        }
-                        
-                        XElement showInGuiElement = vMImageDetailsElement.Element(XName.Get("ShowInGui", "http://schemas.microsoft.com/windowsazure"));
-                        if (showInGuiElement != null && string.IsNullOrEmpty(showInGuiElement.Value) == false)
-                        {
-                            bool showInGuiInstance = bool.Parse(showInGuiElement.Value);
-                            result.ShowInGui = showInGuiInstance;
-                        }
-                        
-                        XElement pricingDetailLinkElement = vMImageDetailsElement.Element(XName.Get("PricingDetailLink", "http://schemas.microsoft.com/windowsazure"));
-                        if (pricingDetailLinkElement != null)
-                        {
-                            Uri pricingDetailLinkInstance = TypeConversion.TryParseUri(pricingDetailLinkElement.Value);
-                            result.PricingDetailLink = pricingDetailLinkInstance;
-                        }
-                        
-                        XElement isCorruptedElement = vMImageDetailsElement.Element(XName.Get("IsCorrupted", "http://schemas.microsoft.com/windowsazure"));
-                        if (isCorruptedElement != null && string.IsNullOrEmpty(isCorruptedElement.Value) == false)
-                        {
-                            bool isCorruptedInstance = bool.Parse(isCorruptedElement.Value);
-                            result.IsCorrupted = isCorruptedInstance;
-                        }
-                        
-                        XElement publishedNameElement = vMImageDetailsElement.Element(XName.Get("PublishedName", "http://schemas.microsoft.com/windowsazure"));
-                        if (publishedNameElement != null)
-                        {
-                            string publishedNameInstance = publishedNameElement.Value;
-                            result.PublishedName = publishedNameInstance;
-                        }
-                        
-                        XElement sharingStatusElement = vMImageDetailsElement.Element(XName.Get("SharingStatus", "http://schemas.microsoft.com/windowsazure"));
-                        if (sharingStatusElement != null)
-                        {
-                            string sharingStatusInstance = sharingStatusElement.Value;
-                            result.SharingStatus = sharingStatusInstance;
-                        }
-                        
-                        XElement replicationProgressSequenceElement = vMImageDetailsElement.Element(XName.Get("ReplicationProgress", "http://schemas.microsoft.com/windowsazure"));
-                        if (replicationProgressSequenceElement != null)
-                        {
-                            foreach (XElement replicationProgressElement in replicationProgressSequenceElement.Elements(XName.Get("ReplicationProgressElement", "http://schemas.microsoft.com/windowsazure")))
-                            {
-                                VirtualMachineVMImageGetDetailsResponse.ReplicationProgressElement replicationProgressElementInstance = new VirtualMachineVMImageGetDetailsResponse.ReplicationProgressElement();
-                                result.ReplicationProgress.Add(replicationProgressElementInstance);
-                                
-                                XElement locationElement2 = replicationProgressElement.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
-                                if (locationElement2 != null)
-                                {
-                                    string locationInstance2 = locationElement2.Value;
-                                    replicationProgressElementInstance.Location = locationInstance2;
-                                }
-                                
-                                XElement progressElement = replicationProgressElement.Element(XName.Get("Progress", "http://schemas.microsoft.com/windowsazure"));
-                                if (progressElement != null)
-                                {
-                                    string progressInstance = progressElement.Value;
-                                    replicationProgressElementInstance.Progress = progressInstance;
-                                }
-                            }
-                        }
-                    }
-                    
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        Tracing.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// The List Virtual Machine Images operation retrieves a list of the
-        /// virtual machine images.
-        /// </summary>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The List VM Images operation response.
-        /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.VirtualMachineVMImageListResponse> ListAsync(CancellationToken cancellationToken)
-        {
-            // Validate
-            
-            // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = Tracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                Tracing.Enter(invocationId, this, "ListAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/vmimages";
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            // Trim '/' character from the end of baseUrl and beginning of url.
-            if (baseUrl[baseUrl.Length - 1] == '/')
-            {
-                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
-            }
-            if (url[0] == '/')
-            {
-                url = url.Substring(1);
-            }
-            url = baseUrl + "/" + url;
-            url = url.Replace(" ", "%20");
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        Tracing.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new VirtualMachineVMImageGetDetailsResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement vMImageDetailsElement = responseDoc.Element(XName.Get("VMImageDetails", "http://schemas.microsoft.com/windowsazure"));
+                        if (vMImageDetailsElement != null)
                         {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    VirtualMachineVMImageListResponse result = null;
-                    // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new VirtualMachineVMImageListResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement vMImagesSequenceElement = responseDoc.Element(XName.Get("VMImages", "http://schemas.microsoft.com/windowsazure"));
-                    if (vMImagesSequenceElement != null)
-                    {
-                        foreach (XElement vMImagesElement in vMImagesSequenceElement.Elements(XName.Get("VMImage", "http://schemas.microsoft.com/windowsazure")))
-                        {
-                            VirtualMachineVMImageListResponse.VirtualMachineVMImage vMImageInstance = new VirtualMachineVMImageListResponse.VirtualMachineVMImage();
-                            result.VMImages.Add(vMImageInstance);
-                            
-                            XElement nameElement = vMImagesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                            XElement nameElement = vMImageDetailsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
                             if (nameElement != null)
                             {
                                 string nameInstance = nameElement.Value;
-                                vMImageInstance.Name = nameInstance;
+                                result.Name = nameInstance;
                             }
                             
-                            XElement labelElement = vMImagesElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
+                            XElement labelElement = vMImageDetailsElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
                             if (labelElement != null)
                             {
                                 string labelInstance = labelElement.Value;
-                                vMImageInstance.Label = labelInstance;
+                                result.Label = labelInstance;
                             }
                             
-                            XElement categoryElement = vMImagesElement.Element(XName.Get("Category", "http://schemas.microsoft.com/windowsazure"));
+                            XElement categoryElement = vMImageDetailsElement.Element(XName.Get("Category", "http://schemas.microsoft.com/windowsazure"));
                             if (categoryElement != null)
                             {
                                 string categoryInstance = categoryElement.Value;
-                                vMImageInstance.Category = categoryInstance;
+                                result.Category = categoryInstance;
                             }
                             
-                            XElement descriptionElement = vMImagesElement.Element(XName.Get("Description", "http://schemas.microsoft.com/windowsazure"));
+                            XElement descriptionElement = vMImageDetailsElement.Element(XName.Get("Description", "http://schemas.microsoft.com/windowsazure"));
                             if (descriptionElement != null)
                             {
                                 string descriptionInstance = descriptionElement.Value;
-                                vMImageInstance.Description = descriptionInstance;
+                                result.Description = descriptionInstance;
                             }
                             
-                            XElement oSDiskConfigurationElement = vMImagesElement.Element(XName.Get("OSDiskConfiguration", "http://schemas.microsoft.com/windowsazure"));
+                            XElement oSDiskConfigurationElement = vMImageDetailsElement.Element(XName.Get("OSDiskConfiguration", "http://schemas.microsoft.com/windowsazure"));
                             if (oSDiskConfigurationElement != null)
                             {
                                 VirtualMachineVMImageListResponse.OSDiskConfiguration oSDiskConfigurationInstance = new VirtualMachineVMImageListResponse.OSDiskConfiguration();
-                                vMImageInstance.OSDiskConfiguration = oSDiskConfigurationInstance;
+                                result.OSDiskConfiguration = oSDiskConfigurationInstance;
                                 
                                 XElement nameElement2 = oSDiskConfigurationElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
                                 if (nameElement2 != null)
@@ -1596,13 +1137,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 }
                             }
                             
-                            XElement dataDiskConfigurationsSequenceElement = vMImagesElement.Element(XName.Get("DataDiskConfigurations", "http://schemas.microsoft.com/windowsazure"));
+                            XElement dataDiskConfigurationsSequenceElement = vMImageDetailsElement.Element(XName.Get("DataDiskConfigurations", "http://schemas.microsoft.com/windowsazure"));
                             if (dataDiskConfigurationsSequenceElement != null)
                             {
                                 foreach (XElement dataDiskConfigurationsElement in dataDiskConfigurationsSequenceElement.Elements(XName.Get("DataDiskConfiguration", "http://schemas.microsoft.com/windowsazure")))
                                 {
                                     VirtualMachineVMImageListResponse.DataDiskConfiguration dataDiskConfigurationInstance = new VirtualMachineVMImageListResponse.DataDiskConfiguration();
-                                    vMImageInstance.DataDiskConfigurations.Add(dataDiskConfigurationInstance);
+                                    result.DataDiskConfigurations.Add(dataDiskConfigurationInstance);
                                     
                                     XElement nameElement3 = dataDiskConfigurationsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
                                     if (nameElement3 != null)
@@ -1619,7 +1160,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     }
                                     
                                     XElement lunElement = dataDiskConfigurationsElement.Element(XName.Get("Lun", "http://schemas.microsoft.com/windowsazure"));
-                                    if (lunElement != null && string.IsNullOrEmpty(lunElement.Value) == false)
+                                    if (lunElement != null && !string.IsNullOrEmpty(lunElement.Value))
                                     {
                                         int lunInstance = int.Parse(lunElement.Value, CultureInfo.InvariantCulture);
                                         dataDiskConfigurationInstance.LogicalUnitNumber = lunInstance;
@@ -1648,141 +1189,186 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 }
                             }
                             
-                            XElement serviceNameElement = vMImagesElement.Element(XName.Get("ServiceName", "http://schemas.microsoft.com/windowsazure"));
+                            XElement serviceNameElement = vMImageDetailsElement.Element(XName.Get("ServiceName", "http://schemas.microsoft.com/windowsazure"));
                             if (serviceNameElement != null)
                             {
                                 string serviceNameInstance = serviceNameElement.Value;
-                                vMImageInstance.ServiceName = serviceNameInstance;
+                                result.ServiceName = serviceNameInstance;
                             }
                             
-                            XElement deploymentNameElement = vMImagesElement.Element(XName.Get("DeploymentName", "http://schemas.microsoft.com/windowsazure"));
+                            XElement deploymentNameElement = vMImageDetailsElement.Element(XName.Get("DeploymentName", "http://schemas.microsoft.com/windowsazure"));
                             if (deploymentNameElement != null)
                             {
                                 string deploymentNameInstance = deploymentNameElement.Value;
-                                vMImageInstance.DeploymentName = deploymentNameInstance;
+                                result.DeploymentName = deploymentNameInstance;
                             }
                             
-                            XElement roleNameElement = vMImagesElement.Element(XName.Get("RoleName", "http://schemas.microsoft.com/windowsazure"));
+                            XElement roleNameElement = vMImageDetailsElement.Element(XName.Get("RoleName", "http://schemas.microsoft.com/windowsazure"));
                             if (roleNameElement != null)
                             {
                                 string roleNameInstance = roleNameElement.Value;
-                                vMImageInstance.RoleName = roleNameInstance;
+                                result.RoleName = roleNameInstance;
                             }
                             
-                            XElement affinityGroupElement = vMImagesElement.Element(XName.Get("AffinityGroup", "http://schemas.microsoft.com/windowsazure"));
+                            XElement affinityGroupElement = vMImageDetailsElement.Element(XName.Get("AffinityGroup", "http://schemas.microsoft.com/windowsazure"));
                             if (affinityGroupElement != null)
                             {
                                 string affinityGroupInstance = affinityGroupElement.Value;
-                                vMImageInstance.AffinityGroup = affinityGroupInstance;
+                                result.AffinityGroup = affinityGroupInstance;
                             }
                             
-                            XElement locationElement = vMImagesElement.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
+                            XElement locationElement = vMImageDetailsElement.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
                             if (locationElement != null)
                             {
                                 string locationInstance = locationElement.Value;
-                                vMImageInstance.Location = locationInstance;
+                                result.Location = locationInstance;
                             }
                             
-                            XElement createdTimeElement = vMImagesElement.Element(XName.Get("CreatedTime", "http://schemas.microsoft.com/windowsazure"));
-                            if (createdTimeElement != null && string.IsNullOrEmpty(createdTimeElement.Value) == false)
+                            XElement createdTimeElement = vMImageDetailsElement.Element(XName.Get("CreatedTime", "http://schemas.microsoft.com/windowsazure"));
+                            if (createdTimeElement != null && !string.IsNullOrEmpty(createdTimeElement.Value))
                             {
                                 DateTime createdTimeInstance = DateTime.Parse(createdTimeElement.Value, CultureInfo.InvariantCulture);
-                                vMImageInstance.CreatedTime = createdTimeInstance;
+                                result.CreatedTime = createdTimeInstance;
                             }
                             
-                            XElement modifiedTimeElement = vMImagesElement.Element(XName.Get("ModifiedTime", "http://schemas.microsoft.com/windowsazure"));
-                            if (modifiedTimeElement != null && string.IsNullOrEmpty(modifiedTimeElement.Value) == false)
+                            XElement modifiedTimeElement = vMImageDetailsElement.Element(XName.Get("ModifiedTime", "http://schemas.microsoft.com/windowsazure"));
+                            if (modifiedTimeElement != null && !string.IsNullOrEmpty(modifiedTimeElement.Value))
                             {
                                 DateTime modifiedTimeInstance = DateTime.Parse(modifiedTimeElement.Value, CultureInfo.InvariantCulture);
-                                vMImageInstance.ModifiedTime = modifiedTimeInstance;
+                                result.ModifiedTime = modifiedTimeInstance;
                             }
                             
-                            XElement languageElement = vMImagesElement.Element(XName.Get("Language", "http://schemas.microsoft.com/windowsazure"));
+                            XElement languageElement = vMImageDetailsElement.Element(XName.Get("Language", "http://schemas.microsoft.com/windowsazure"));
                             if (languageElement != null)
                             {
                                 string languageInstance = languageElement.Value;
-                                vMImageInstance.Language = languageInstance;
+                                result.Language = languageInstance;
                             }
                             
-                            XElement imageFamilyElement = vMImagesElement.Element(XName.Get("ImageFamily", "http://schemas.microsoft.com/windowsazure"));
+                            XElement imageFamilyElement = vMImageDetailsElement.Element(XName.Get("ImageFamily", "http://schemas.microsoft.com/windowsazure"));
                             if (imageFamilyElement != null)
                             {
                                 string imageFamilyInstance = imageFamilyElement.Value;
-                                vMImageInstance.ImageFamily = imageFamilyInstance;
+                                result.ImageFamily = imageFamilyInstance;
                             }
                             
-                            XElement recommendedVMSizeElement = vMImagesElement.Element(XName.Get("RecommendedVMSize", "http://schemas.microsoft.com/windowsazure"));
+                            XElement recommendedVMSizeElement = vMImageDetailsElement.Element(XName.Get("RecommendedVMSize", "http://schemas.microsoft.com/windowsazure"));
                             if (recommendedVMSizeElement != null)
                             {
                                 string recommendedVMSizeInstance = recommendedVMSizeElement.Value;
-                                vMImageInstance.RecommendedVMSize = recommendedVMSizeInstance;
+                                result.RecommendedVMSize = recommendedVMSizeInstance;
                             }
                             
-                            XElement isPremiumElement = vMImagesElement.Element(XName.Get("IsPremium", "http://schemas.microsoft.com/windowsazure"));
-                            if (isPremiumElement != null && string.IsNullOrEmpty(isPremiumElement.Value) == false)
+                            XElement isPremiumElement = vMImageDetailsElement.Element(XName.Get("IsPremium", "http://schemas.microsoft.com/windowsazure"));
+                            if (isPremiumElement != null && !string.IsNullOrEmpty(isPremiumElement.Value))
                             {
                                 bool isPremiumInstance = bool.Parse(isPremiumElement.Value);
-                                vMImageInstance.IsPremium = isPremiumInstance;
+                                result.IsPremium = isPremiumInstance;
                             }
                             
-                            XElement eulaElement = vMImagesElement.Element(XName.Get("Eula", "http://schemas.microsoft.com/windowsazure"));
+                            XElement eulaElement = vMImageDetailsElement.Element(XName.Get("Eula", "http://schemas.microsoft.com/windowsazure"));
                             if (eulaElement != null)
                             {
                                 string eulaInstance = eulaElement.Value;
-                                vMImageInstance.Eula = eulaInstance;
+                                result.Eula = eulaInstance;
                             }
                             
-                            XElement iconUriElement = vMImagesElement.Element(XName.Get("IconUri", "http://schemas.microsoft.com/windowsazure"));
+                            XElement iconUriElement = vMImageDetailsElement.Element(XName.Get("IconUri", "http://schemas.microsoft.com/windowsazure"));
                             if (iconUriElement != null)
                             {
                                 Uri iconUriInstance = TypeConversion.TryParseUri(iconUriElement.Value);
-                                vMImageInstance.IconUri = iconUriInstance;
+                                result.IconUri = iconUriInstance;
                             }
                             
-                            XElement smallIconUriElement = vMImagesElement.Element(XName.Get("SmallIconUri", "http://schemas.microsoft.com/windowsazure"));
+                            XElement smallIconUriElement = vMImageDetailsElement.Element(XName.Get("SmallIconUri", "http://schemas.microsoft.com/windowsazure"));
                             if (smallIconUriElement != null)
                             {
                                 Uri smallIconUriInstance = TypeConversion.TryParseUri(smallIconUriElement.Value);
-                                vMImageInstance.SmallIconUri = smallIconUriInstance;
+                                result.SmallIconUri = smallIconUriInstance;
                             }
                             
-                            XElement privacyUriElement = vMImagesElement.Element(XName.Get("PrivacyUri", "http://schemas.microsoft.com/windowsazure"));
+                            XElement privacyUriElement = vMImageDetailsElement.Element(XName.Get("PrivacyUri", "http://schemas.microsoft.com/windowsazure"));
                             if (privacyUriElement != null)
                             {
                                 Uri privacyUriInstance = TypeConversion.TryParseUri(privacyUriElement.Value);
-                                vMImageInstance.PrivacyUri = privacyUriInstance;
+                                result.PrivacyUri = privacyUriInstance;
                             }
                             
-                            XElement publisherNameElement = vMImagesElement.Element(XName.Get("PublisherName", "http://schemas.microsoft.com/windowsazure"));
+                            XElement publisherNameElement = vMImageDetailsElement.Element(XName.Get("PublisherName", "http://schemas.microsoft.com/windowsazure"));
                             if (publisherNameElement != null)
                             {
                                 string publisherNameInstance = publisherNameElement.Value;
-                                vMImageInstance.PublisherName = publisherNameInstance;
+                                result.PublisherName = publisherNameInstance;
                             }
                             
-                            XElement publishedDateElement = vMImagesElement.Element(XName.Get("PublishedDate", "http://schemas.microsoft.com/windowsazure"));
-                            if (publishedDateElement != null && string.IsNullOrEmpty(publishedDateElement.Value) == false)
+                            XElement publishedDateElement = vMImageDetailsElement.Element(XName.Get("PublishedDate", "http://schemas.microsoft.com/windowsazure"));
+                            if (publishedDateElement != null && !string.IsNullOrEmpty(publishedDateElement.Value))
                             {
                                 DateTime publishedDateInstance = DateTime.Parse(publishedDateElement.Value, CultureInfo.InvariantCulture);
-                                vMImageInstance.PublishedDate = publishedDateInstance;
+                                result.PublishedDate = publishedDateInstance;
                             }
                             
-                            XElement showInGuiElement = vMImagesElement.Element(XName.Get("ShowInGui", "http://schemas.microsoft.com/windowsazure"));
-                            if (showInGuiElement != null && string.IsNullOrEmpty(showInGuiElement.Value) == false)
+                            XElement showInGuiElement = vMImageDetailsElement.Element(XName.Get("ShowInGui", "http://schemas.microsoft.com/windowsazure"));
+                            if (showInGuiElement != null && !string.IsNullOrEmpty(showInGuiElement.Value))
                             {
                                 bool showInGuiInstance = bool.Parse(showInGuiElement.Value);
-                                vMImageInstance.ShowInGui = showInGuiInstance;
+                                result.ShowInGui = showInGuiInstance;
                             }
                             
-                            XElement pricingDetailLinkElement = vMImagesElement.Element(XName.Get("PricingDetailLink", "http://schemas.microsoft.com/windowsazure"));
+                            XElement pricingDetailLinkElement = vMImageDetailsElement.Element(XName.Get("PricingDetailLink", "http://schemas.microsoft.com/windowsazure"));
                             if (pricingDetailLinkElement != null)
                             {
                                 Uri pricingDetailLinkInstance = TypeConversion.TryParseUri(pricingDetailLinkElement.Value);
-                                vMImageInstance.PricingDetailLink = pricingDetailLinkInstance;
+                                result.PricingDetailLink = pricingDetailLinkInstance;
+                            }
+                            
+                            XElement isCorruptedElement = vMImageDetailsElement.Element(XName.Get("IsCorrupted", "http://schemas.microsoft.com/windowsazure"));
+                            if (isCorruptedElement != null && !string.IsNullOrEmpty(isCorruptedElement.Value))
+                            {
+                                bool isCorruptedInstance = bool.Parse(isCorruptedElement.Value);
+                                result.IsCorrupted = isCorruptedInstance;
+                            }
+                            
+                            XElement publishedNameElement = vMImageDetailsElement.Element(XName.Get("PublishedName", "http://schemas.microsoft.com/windowsazure"));
+                            if (publishedNameElement != null)
+                            {
+                                string publishedNameInstance = publishedNameElement.Value;
+                                result.PublishedName = publishedNameInstance;
+                            }
+                            
+                            XElement sharingStatusElement = vMImageDetailsElement.Element(XName.Get("SharingStatus", "http://schemas.microsoft.com/windowsazure"));
+                            if (sharingStatusElement != null)
+                            {
+                                string sharingStatusInstance = sharingStatusElement.Value;
+                                result.SharingStatus = sharingStatusInstance;
+                            }
+                            
+                            XElement replicationProgressSequenceElement = vMImageDetailsElement.Element(XName.Get("ReplicationProgress", "http://schemas.microsoft.com/windowsazure"));
+                            if (replicationProgressSequenceElement != null)
+                            {
+                                foreach (XElement replicationProgressElement in replicationProgressSequenceElement.Elements(XName.Get("ReplicationProgressElement", "http://schemas.microsoft.com/windowsazure")))
+                                {
+                                    VirtualMachineVMImageGetDetailsResponse.ReplicationProgressElement replicationProgressElementInstance = new VirtualMachineVMImageGetDetailsResponse.ReplicationProgressElement();
+                                    result.ReplicationProgress.Add(replicationProgressElementInstance);
+                                    
+                                    XElement locationElement2 = replicationProgressElement.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
+                                    if (locationElement2 != null)
+                                    {
+                                        string locationInstance2 = locationElement2.Value;
+                                        replicationProgressElementInstance.Location = locationInstance2;
+                                    }
+                                    
+                                    XElement progressElement = replicationProgressElement.Element(XName.Get("Progress", "http://schemas.microsoft.com/windowsazure"));
+                                    if (progressElement != null)
+                                    {
+                                        string progressInstance = progressElement.Value;
+                                        replicationProgressElementInstance.Progress = progressInstance;
+                                    }
+                                }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1791,7 +1377,406 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The List Virtual Machine Images operation retrieves a list of the
+        /// virtual machine images.
+        /// </summary>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List VM Images operation response.
+        /// </returns>
+        public async Task<VirtualMachineVMImageListResponse> ListAsync(CancellationToken cancellationToken)
+        {
+            // Validate
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/vmimages";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    VirtualMachineVMImageListResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new VirtualMachineVMImageListResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement vMImagesSequenceElement = responseDoc.Element(XName.Get("VMImages", "http://schemas.microsoft.com/windowsazure"));
+                        if (vMImagesSequenceElement != null)
+                        {
+                            foreach (XElement vMImagesElement in vMImagesSequenceElement.Elements(XName.Get("VMImage", "http://schemas.microsoft.com/windowsazure")))
+                            {
+                                VirtualMachineVMImageListResponse.VirtualMachineVMImage vMImageInstance = new VirtualMachineVMImageListResponse.VirtualMachineVMImage();
+                                result.VMImages.Add(vMImageInstance);
+                                
+                                XElement nameElement = vMImagesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                if (nameElement != null)
+                                {
+                                    string nameInstance = nameElement.Value;
+                                    vMImageInstance.Name = nameInstance;
+                                }
+                                
+                                XElement labelElement = vMImagesElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
+                                if (labelElement != null)
+                                {
+                                    string labelInstance = labelElement.Value;
+                                    vMImageInstance.Label = labelInstance;
+                                }
+                                
+                                XElement categoryElement = vMImagesElement.Element(XName.Get("Category", "http://schemas.microsoft.com/windowsazure"));
+                                if (categoryElement != null)
+                                {
+                                    string categoryInstance = categoryElement.Value;
+                                    vMImageInstance.Category = categoryInstance;
+                                }
+                                
+                                XElement descriptionElement = vMImagesElement.Element(XName.Get("Description", "http://schemas.microsoft.com/windowsazure"));
+                                if (descriptionElement != null)
+                                {
+                                    string descriptionInstance = descriptionElement.Value;
+                                    vMImageInstance.Description = descriptionInstance;
+                                }
+                                
+                                XElement oSDiskConfigurationElement = vMImagesElement.Element(XName.Get("OSDiskConfiguration", "http://schemas.microsoft.com/windowsazure"));
+                                if (oSDiskConfigurationElement != null)
+                                {
+                                    VirtualMachineVMImageListResponse.OSDiskConfiguration oSDiskConfigurationInstance = new VirtualMachineVMImageListResponse.OSDiskConfiguration();
+                                    vMImageInstance.OSDiskConfiguration = oSDiskConfigurationInstance;
+                                    
+                                    XElement nameElement2 = oSDiskConfigurationElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                    if (nameElement2 != null)
+                                    {
+                                        string nameInstance2 = nameElement2.Value;
+                                        oSDiskConfigurationInstance.Name = nameInstance2;
+                                    }
+                                    
+                                    XElement hostCachingElement = oSDiskConfigurationElement.Element(XName.Get("HostCaching", "http://schemas.microsoft.com/windowsazure"));
+                                    if (hostCachingElement != null)
+                                    {
+                                        string hostCachingInstance = hostCachingElement.Value;
+                                        oSDiskConfigurationInstance.HostCaching = hostCachingInstance;
+                                    }
+                                    
+                                    XElement oSStateElement = oSDiskConfigurationElement.Element(XName.Get("OSState", "http://schemas.microsoft.com/windowsazure"));
+                                    if (oSStateElement != null)
+                                    {
+                                        string oSStateInstance = oSStateElement.Value;
+                                        oSDiskConfigurationInstance.OSState = oSStateInstance;
+                                    }
+                                    
+                                    XElement osElement = oSDiskConfigurationElement.Element(XName.Get("OS", "http://schemas.microsoft.com/windowsazure"));
+                                    if (osElement != null)
+                                    {
+                                        string osInstance = osElement.Value;
+                                        oSDiskConfigurationInstance.OperatingSystem = osInstance;
+                                    }
+                                    
+                                    XElement mediaLinkElement = oSDiskConfigurationElement.Element(XName.Get("MediaLink", "http://schemas.microsoft.com/windowsazure"));
+                                    if (mediaLinkElement != null)
+                                    {
+                                        Uri mediaLinkInstance = TypeConversion.TryParseUri(mediaLinkElement.Value);
+                                        oSDiskConfigurationInstance.MediaLink = mediaLinkInstance;
+                                    }
+                                    
+                                    XElement logicalDiskSizeInGBElement = oSDiskConfigurationElement.Element(XName.Get("LogicalDiskSizeInGB", "http://schemas.microsoft.com/windowsazure"));
+                                    if (logicalDiskSizeInGBElement != null)
+                                    {
+                                        int logicalDiskSizeInGBInstance = int.Parse(logicalDiskSizeInGBElement.Value, CultureInfo.InvariantCulture);
+                                        oSDiskConfigurationInstance.LogicalDiskSizeInGB = logicalDiskSizeInGBInstance;
+                                    }
+                                    
+                                    XElement iOTypeElement = oSDiskConfigurationElement.Element(XName.Get("IOType", "http://schemas.microsoft.com/windowsazure"));
+                                    if (iOTypeElement != null)
+                                    {
+                                        string iOTypeInstance = iOTypeElement.Value;
+                                        oSDiskConfigurationInstance.IOType = iOTypeInstance;
+                                    }
+                                }
+                                
+                                XElement dataDiskConfigurationsSequenceElement = vMImagesElement.Element(XName.Get("DataDiskConfigurations", "http://schemas.microsoft.com/windowsazure"));
+                                if (dataDiskConfigurationsSequenceElement != null)
+                                {
+                                    foreach (XElement dataDiskConfigurationsElement in dataDiskConfigurationsSequenceElement.Elements(XName.Get("DataDiskConfiguration", "http://schemas.microsoft.com/windowsazure")))
+                                    {
+                                        VirtualMachineVMImageListResponse.DataDiskConfiguration dataDiskConfigurationInstance = new VirtualMachineVMImageListResponse.DataDiskConfiguration();
+                                        vMImageInstance.DataDiskConfigurations.Add(dataDiskConfigurationInstance);
+                                        
+                                        XElement nameElement3 = dataDiskConfigurationsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                        if (nameElement3 != null)
+                                        {
+                                            string nameInstance3 = nameElement3.Value;
+                                            dataDiskConfigurationInstance.Name = nameInstance3;
+                                        }
+                                        
+                                        XElement hostCachingElement2 = dataDiskConfigurationsElement.Element(XName.Get("HostCaching", "http://schemas.microsoft.com/windowsazure"));
+                                        if (hostCachingElement2 != null)
+                                        {
+                                            string hostCachingInstance2 = hostCachingElement2.Value;
+                                            dataDiskConfigurationInstance.HostCaching = hostCachingInstance2;
+                                        }
+                                        
+                                        XElement lunElement = dataDiskConfigurationsElement.Element(XName.Get("Lun", "http://schemas.microsoft.com/windowsazure"));
+                                        if (lunElement != null && !string.IsNullOrEmpty(lunElement.Value))
+                                        {
+                                            int lunInstance = int.Parse(lunElement.Value, CultureInfo.InvariantCulture);
+                                            dataDiskConfigurationInstance.LogicalUnitNumber = lunInstance;
+                                        }
+                                        
+                                        XElement mediaLinkElement2 = dataDiskConfigurationsElement.Element(XName.Get("MediaLink", "http://schemas.microsoft.com/windowsazure"));
+                                        if (mediaLinkElement2 != null)
+                                        {
+                                            Uri mediaLinkInstance2 = TypeConversion.TryParseUri(mediaLinkElement2.Value);
+                                            dataDiskConfigurationInstance.MediaLink = mediaLinkInstance2;
+                                        }
+                                        
+                                        XElement logicalDiskSizeInGBElement2 = dataDiskConfigurationsElement.Element(XName.Get("LogicalDiskSizeInGB", "http://schemas.microsoft.com/windowsazure"));
+                                        if (logicalDiskSizeInGBElement2 != null)
+                                        {
+                                            int logicalDiskSizeInGBInstance2 = int.Parse(logicalDiskSizeInGBElement2.Value, CultureInfo.InvariantCulture);
+                                            dataDiskConfigurationInstance.LogicalDiskSizeInGB = logicalDiskSizeInGBInstance2;
+                                        }
+                                        
+                                        XElement iOTypeElement2 = dataDiskConfigurationsElement.Element(XName.Get("IOType", "http://schemas.microsoft.com/windowsazure"));
+                                        if (iOTypeElement2 != null)
+                                        {
+                                            string iOTypeInstance2 = iOTypeElement2.Value;
+                                            dataDiskConfigurationInstance.IOType = iOTypeInstance2;
+                                        }
+                                    }
+                                }
+                                
+                                XElement serviceNameElement = vMImagesElement.Element(XName.Get("ServiceName", "http://schemas.microsoft.com/windowsazure"));
+                                if (serviceNameElement != null)
+                                {
+                                    string serviceNameInstance = serviceNameElement.Value;
+                                    vMImageInstance.ServiceName = serviceNameInstance;
+                                }
+                                
+                                XElement deploymentNameElement = vMImagesElement.Element(XName.Get("DeploymentName", "http://schemas.microsoft.com/windowsazure"));
+                                if (deploymentNameElement != null)
+                                {
+                                    string deploymentNameInstance = deploymentNameElement.Value;
+                                    vMImageInstance.DeploymentName = deploymentNameInstance;
+                                }
+                                
+                                XElement roleNameElement = vMImagesElement.Element(XName.Get("RoleName", "http://schemas.microsoft.com/windowsazure"));
+                                if (roleNameElement != null)
+                                {
+                                    string roleNameInstance = roleNameElement.Value;
+                                    vMImageInstance.RoleName = roleNameInstance;
+                                }
+                                
+                                XElement affinityGroupElement = vMImagesElement.Element(XName.Get("AffinityGroup", "http://schemas.microsoft.com/windowsazure"));
+                                if (affinityGroupElement != null)
+                                {
+                                    string affinityGroupInstance = affinityGroupElement.Value;
+                                    vMImageInstance.AffinityGroup = affinityGroupInstance;
+                                }
+                                
+                                XElement locationElement = vMImagesElement.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
+                                if (locationElement != null)
+                                {
+                                    string locationInstance = locationElement.Value;
+                                    vMImageInstance.Location = locationInstance;
+                                }
+                                
+                                XElement createdTimeElement = vMImagesElement.Element(XName.Get("CreatedTime", "http://schemas.microsoft.com/windowsazure"));
+                                if (createdTimeElement != null && !string.IsNullOrEmpty(createdTimeElement.Value))
+                                {
+                                    DateTime createdTimeInstance = DateTime.Parse(createdTimeElement.Value, CultureInfo.InvariantCulture);
+                                    vMImageInstance.CreatedTime = createdTimeInstance;
+                                }
+                                
+                                XElement modifiedTimeElement = vMImagesElement.Element(XName.Get("ModifiedTime", "http://schemas.microsoft.com/windowsazure"));
+                                if (modifiedTimeElement != null && !string.IsNullOrEmpty(modifiedTimeElement.Value))
+                                {
+                                    DateTime modifiedTimeInstance = DateTime.Parse(modifiedTimeElement.Value, CultureInfo.InvariantCulture);
+                                    vMImageInstance.ModifiedTime = modifiedTimeInstance;
+                                }
+                                
+                                XElement languageElement = vMImagesElement.Element(XName.Get("Language", "http://schemas.microsoft.com/windowsazure"));
+                                if (languageElement != null)
+                                {
+                                    string languageInstance = languageElement.Value;
+                                    vMImageInstance.Language = languageInstance;
+                                }
+                                
+                                XElement imageFamilyElement = vMImagesElement.Element(XName.Get("ImageFamily", "http://schemas.microsoft.com/windowsazure"));
+                                if (imageFamilyElement != null)
+                                {
+                                    string imageFamilyInstance = imageFamilyElement.Value;
+                                    vMImageInstance.ImageFamily = imageFamilyInstance;
+                                }
+                                
+                                XElement recommendedVMSizeElement = vMImagesElement.Element(XName.Get("RecommendedVMSize", "http://schemas.microsoft.com/windowsazure"));
+                                if (recommendedVMSizeElement != null)
+                                {
+                                    string recommendedVMSizeInstance = recommendedVMSizeElement.Value;
+                                    vMImageInstance.RecommendedVMSize = recommendedVMSizeInstance;
+                                }
+                                
+                                XElement isPremiumElement = vMImagesElement.Element(XName.Get("IsPremium", "http://schemas.microsoft.com/windowsazure"));
+                                if (isPremiumElement != null && !string.IsNullOrEmpty(isPremiumElement.Value))
+                                {
+                                    bool isPremiumInstance = bool.Parse(isPremiumElement.Value);
+                                    vMImageInstance.IsPremium = isPremiumInstance;
+                                }
+                                
+                                XElement eulaElement = vMImagesElement.Element(XName.Get("Eula", "http://schemas.microsoft.com/windowsazure"));
+                                if (eulaElement != null)
+                                {
+                                    string eulaInstance = eulaElement.Value;
+                                    vMImageInstance.Eula = eulaInstance;
+                                }
+                                
+                                XElement iconUriElement = vMImagesElement.Element(XName.Get("IconUri", "http://schemas.microsoft.com/windowsazure"));
+                                if (iconUriElement != null)
+                                {
+                                    Uri iconUriInstance = TypeConversion.TryParseUri(iconUriElement.Value);
+                                    vMImageInstance.IconUri = iconUriInstance;
+                                }
+                                
+                                XElement smallIconUriElement = vMImagesElement.Element(XName.Get("SmallIconUri", "http://schemas.microsoft.com/windowsazure"));
+                                if (smallIconUriElement != null)
+                                {
+                                    Uri smallIconUriInstance = TypeConversion.TryParseUri(smallIconUriElement.Value);
+                                    vMImageInstance.SmallIconUri = smallIconUriInstance;
+                                }
+                                
+                                XElement privacyUriElement = vMImagesElement.Element(XName.Get("PrivacyUri", "http://schemas.microsoft.com/windowsazure"));
+                                if (privacyUriElement != null)
+                                {
+                                    Uri privacyUriInstance = TypeConversion.TryParseUri(privacyUriElement.Value);
+                                    vMImageInstance.PrivacyUri = privacyUriInstance;
+                                }
+                                
+                                XElement publisherNameElement = vMImagesElement.Element(XName.Get("PublisherName", "http://schemas.microsoft.com/windowsazure"));
+                                if (publisherNameElement != null)
+                                {
+                                    string publisherNameInstance = publisherNameElement.Value;
+                                    vMImageInstance.PublisherName = publisherNameInstance;
+                                }
+                                
+                                XElement publishedDateElement = vMImagesElement.Element(XName.Get("PublishedDate", "http://schemas.microsoft.com/windowsazure"));
+                                if (publishedDateElement != null && !string.IsNullOrEmpty(publishedDateElement.Value))
+                                {
+                                    DateTime publishedDateInstance = DateTime.Parse(publishedDateElement.Value, CultureInfo.InvariantCulture);
+                                    vMImageInstance.PublishedDate = publishedDateInstance;
+                                }
+                                
+                                XElement showInGuiElement = vMImagesElement.Element(XName.Get("ShowInGui", "http://schemas.microsoft.com/windowsazure"));
+                                if (showInGuiElement != null && !string.IsNullOrEmpty(showInGuiElement.Value))
+                                {
+                                    bool showInGuiInstance = bool.Parse(showInGuiElement.Value);
+                                    vMImageInstance.ShowInGui = showInGuiInstance;
+                                }
+                                
+                                XElement pricingDetailLinkElement = vMImagesElement.Element(XName.Get("PricingDetailLink", "http://schemas.microsoft.com/windowsazure"));
+                                if (pricingDetailLinkElement != null)
+                                {
+                                    Uri pricingDetailLinkInstance = TypeConversion.TryParseUri(pricingDetailLinkElement.Value);
+                                    vMImageInstance.PricingDetailLink = pricingDetailLinkInstance;
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -1830,7 +1815,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// The response body contains the published name of the image.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.VirtualMachineVMImageReplicateResponse> ReplicateAsync(string vmImageName, VirtualMachineVMImageReplicateParameters parameters, CancellationToken cancellationToken)
+        public async Task<VirtualMachineVMImageReplicateResponse> ReplicateAsync(string vmImageName, VirtualMachineVMImageReplicateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (vmImageName == null)
@@ -1843,19 +1828,19 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("vmImageName", vmImageName);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "ReplicateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ReplicateAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/vmimages/" + vmImageName.Trim() + "/replicate";
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/vmimages/" + Uri.EscapeDataString(vmImageName) + "/replicate";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1916,13 +1901,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -1931,7 +1916,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -1939,20 +1924,23 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     // Create Result
                     VirtualMachineVMImageReplicateResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new VirtualMachineVMImageReplicateResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement virtualMachineVMImageReplicateResponseElement = responseDoc.Element(XName.Get("VirtualMachineVMImageReplicateResponse", ""));
-                    if (virtualMachineVMImageReplicateResponseElement != null)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        XElement stringElement = virtualMachineVMImageReplicateResponseElement.Element(XName.Get("string", ""));
-                        if (stringElement != null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new VirtualMachineVMImageReplicateResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement virtualMachineVMImageReplicateResponseElement = responseDoc.Element(XName.Get("VirtualMachineVMImageReplicateResponse", ""));
+                        if (virtualMachineVMImageReplicateResponseElement != null)
                         {
+                            XElement stringElement = virtualMachineVMImageReplicateResponseElement.Element(XName.Get("string", ""));
+                            if (stringElement != null)
+                            {
+                            }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1961,7 +1949,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -2007,86 +1995,73 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request and error information regarding
         /// the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationStatusResponse> ShareAsync(string vmImageName, string permission, CancellationToken cancellationToken)
+        public async Task<OperationStatusResponse> ShareAsync(string vmImageName, string permission, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("vmImageName", vmImageName);
                 tracingParameters.Add("permission", permission);
-                Tracing.Enter(invocationId, this, "ShareAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ShareAsync", tracingParameters);
             }
-            try
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            AzureOperationResponse response = await client.VirtualMachineVMImages.BeginSharingAsync(vmImageName, permission, cancellationToken).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested();
+            OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 30;
+            if (client.LongRunningOperationInitialTimeout >= 0)
             {
-                if (shouldTrace)
-                {
-                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
-                }
-                
-                cancellationToken.ThrowIfCancellationRequested();
-                OperationResponse response = await client.VirtualMachineVMImages.BeginSharingAsync(vmImageName, permission, cancellationToken).ConfigureAwait(false);
-                cancellationToken.ThrowIfCancellationRequested();
-                OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
-                int delayInSeconds = 30;
-                if (client.LongRunningOperationInitialTimeout >= 0)
-                {
-                    delayInSeconds = client.LongRunningOperationInitialTimeout;
-                }
-                while ((result.Status != OperationStatus.InProgress) == false)
-                {
-                    cancellationToken.ThrowIfCancellationRequested();
-                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
-                    delayInSeconds = 30;
-                    if (client.LongRunningOperationRetryTimeout >= 0)
-                    {
-                        delayInSeconds = client.LongRunningOperationRetryTimeout;
-                    }
-                }
-                
-                if (shouldTrace)
-                {
-                    Tracing.Exit(invocationId, result);
-                }
-                
-                if (result.Status != OperationStatus.Succeeded)
-                {
-                    if (result.Error != null)
-                    {
-                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                        ex.ErrorCode = result.Error.Code;
-                        ex.ErrorMessage = result.Error.Message;
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    else
-                    {
-                        CloudException ex = new CloudException("");
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                }
-                
-                return result;
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            finally
+            while ((result.Status != OperationStatus.InProgress) == false)
             {
-                if (client != null && shouldTrace)
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 30;
+                if (client.LongRunningOperationRetryTimeout >= 0)
                 {
-                    client.Dispose();
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
                 }
             }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            if (result.Status != OperationStatus.Succeeded)
+            {
+                if (result.Error != null)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.Error = new CloudError();
+                    ex.Error.Code = result.Error.Code;
+                    ex.Error.Message = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                else
+                {
+                    CloudException ex = new CloudException("");
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+            }
+            
+            return result;
         }
         
         /// <summary>
@@ -2116,85 +2091,72 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request and error information regarding
         /// the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationStatusResponse> UnreplicateAsync(string vmImageName, CancellationToken cancellationToken)
+        public async Task<OperationStatusResponse> UnreplicateAsync(string vmImageName, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("vmImageName", vmImageName);
-                Tracing.Enter(invocationId, this, "UnreplicateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "UnreplicateAsync", tracingParameters);
             }
-            try
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            AzureOperationResponse response = await client.VirtualMachineVMImages.BeginUnreplicatingAsync(vmImageName, cancellationToken).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested();
+            OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 30;
+            if (client.LongRunningOperationInitialTimeout >= 0)
             {
-                if (shouldTrace)
-                {
-                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
-                }
-                
-                cancellationToken.ThrowIfCancellationRequested();
-                OperationResponse response = await client.VirtualMachineVMImages.BeginUnreplicatingAsync(vmImageName, cancellationToken).ConfigureAwait(false);
-                cancellationToken.ThrowIfCancellationRequested();
-                OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
-                int delayInSeconds = 30;
-                if (client.LongRunningOperationInitialTimeout >= 0)
-                {
-                    delayInSeconds = client.LongRunningOperationInitialTimeout;
-                }
-                while ((result.Status != OperationStatus.InProgress) == false)
-                {
-                    cancellationToken.ThrowIfCancellationRequested();
-                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
-                    delayInSeconds = 30;
-                    if (client.LongRunningOperationRetryTimeout >= 0)
-                    {
-                        delayInSeconds = client.LongRunningOperationRetryTimeout;
-                    }
-                }
-                
-                if (shouldTrace)
-                {
-                    Tracing.Exit(invocationId, result);
-                }
-                
-                if (result.Status != OperationStatus.Succeeded)
-                {
-                    if (result.Error != null)
-                    {
-                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                        ex.ErrorCode = result.Error.Code;
-                        ex.ErrorMessage = result.Error.Message;
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    else
-                    {
-                        CloudException ex = new CloudException("");
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                }
-                
-                return result;
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            finally
+            while ((result.Status != OperationStatus.InProgress) == false)
             {
-                if (client != null && shouldTrace)
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 30;
+                if (client.LongRunningOperationRetryTimeout >= 0)
                 {
-                    client.Dispose();
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
                 }
             }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            if (result.Status != OperationStatus.Succeeded)
+            {
+                if (result.Error != null)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.Error = new CloudError();
+                    ex.Error.Code = result.Error.Code;
+                    ex.Error.Message = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                else
+                {
+                    CloudException ex = new CloudException("");
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+            }
+            
+            return result;
         }
         
         /// <summary>
@@ -2215,7 +2177,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationResponse> UpdateAsync(string imageName, VirtualMachineVMImageUpdateParameters parameters, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> UpdateAsync(string imageName, VirtualMachineVMImageUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (imageName == null)
@@ -2232,19 +2194,19 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("imageName", imageName);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "UpdateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "UpdateAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/vmimages/" + imageName.Trim();
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/vmimages/" + Uri.EscapeDataString(imageName);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -2412,13 +2374,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -2427,14 +2389,15 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
-                    result = new OperationResponse();
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -2443,7 +2406,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }

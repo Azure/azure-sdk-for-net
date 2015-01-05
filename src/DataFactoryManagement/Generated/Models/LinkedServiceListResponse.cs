@@ -22,16 +22,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.DataFactories.Models;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
     /// The List data factory linkedServices operation response.
     /// </summary>
-    public partial class LinkedServiceListResponse : OperationResponse
+    public partial class LinkedServiceListResponse : AzureOperationResponse
     {
         private IList<LinkedService> _linkedServices;
         

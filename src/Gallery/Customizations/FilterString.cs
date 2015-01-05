@@ -13,31 +13,27 @@
 // limitations under the License.
 //
 
+using System;
+using System.Linq.Expressions;
 
-using System.Collections.Generic;
-using Microsoft.Azure.Common.OData;
-
-namespace Microsoft.Azure.Gallery
+namespace Microsoft.Azure.Common.OData
 {
     /// <summary>
-    /// Class used to define a list filter.
+    /// Handles OData filter generation.
     /// </summary>
-    public class ItemListFilter
+    public class FilterString
     {
         /// <summary>
-        /// Gets or sets gallery item name to filter by.
+        /// Generates an OData filter from a specified Linq expression.
         /// </summary>
-        [FilterParameter("ItemName")]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Gets or sets gallery item publisher name to filter by.
-        /// </summary>
-        public string Publisher { get; set; }
-
-        /// <summary>
-        /// Gets or sets gallery items to filter by (using Contains method).
-        /// </summary>
-        public IList<string> CategoryIds { get; set; }
+        /// <typeparam name="T">Filter type</typeparam>
+        /// <param name="filter">Entity to use for filter generation</param>
+        /// <returns></returns>
+        public static string Generate<T>(Expression<Func<T, bool>> filter)
+        {
+            UrlExpressionVisitor visitor = new UrlExpressionVisitor();
+            visitor.Visit(filter);
+            return visitor.ToString();
+        }
     }
 }

@@ -23,11 +23,12 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Management.Compute;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.Management.Compute
 {
     /// <summary>
     /// The Service Management API provides programmatic access to much of the
@@ -58,7 +59,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginSharing(this IVirtualMachineOSImageOperations operations, string imageName, string permission)
+        public static AzureOperationResponse BeginSharing(this IVirtualMachineOSImageOperations operations, string imageName, string permission)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -86,7 +87,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginSharingAsync(this IVirtualMachineOSImageOperations operations, string imageName, string permission)
+        public static Task<AzureOperationResponse> BeginSharingAsync(this IVirtualMachineOSImageOperations operations, string imageName, string permission)
         {
             return operations.BeginSharingAsync(imageName, permission, CancellationToken.None);
         }
@@ -112,7 +113,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginUnreplicating(this IVirtualMachineOSImageOperations operations, string imageName)
+        public static AzureOperationResponse BeginUnreplicating(this IVirtualMachineOSImageOperations operations, string imageName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -142,7 +143,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginUnreplicatingAsync(this IVirtualMachineOSImageOperations operations, string imageName)
+        public static Task<AzureOperationResponse> BeginUnreplicatingAsync(this IVirtualMachineOSImageOperations operations, string imageName)
         {
             return operations.BeginUnreplicatingAsync(imageName, CancellationToken.None);
         }
@@ -218,7 +219,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Delete(this IVirtualMachineOSImageOperations operations, string imageName, bool deleteFromStorage)
+        public static AzureOperationResponse Delete(this IVirtualMachineOSImageOperations operations, string imageName, bool deleteFromStorage)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -248,7 +249,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> DeleteAsync(this IVirtualMachineOSImageOperations operations, string imageName, bool deleteFromStorage)
+        public static Task<AzureOperationResponse> DeleteAsync(this IVirtualMachineOSImageOperations operations, string imageName, bool deleteFromStorage)
         {
             return operations.DeleteAsync(imageName, deleteFromStorage, CancellationToken.None);
         }

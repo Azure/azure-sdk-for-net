@@ -16,7 +16,10 @@
   </PropertyGroup>
   <Import Project="..\library.props" />
   <ItemGroup>
-    <Compile Include="GalleryClient.Customization.cs" />
+    <Compile Include="Customizations\AnonymousCloudCredentials.cs" />
+    <Compile Include="Customizations\FilterParameterAttribute.cs" />
+    <Compile Include="Customizations\FilterString.cs" />
+    <Compile Include="Customizations\UrlExpressionVisitor.cs" />
     <Compile Include="Generated\DefinitionTemplates.cs" />
     <Compile Include="Generated\GalleryClient.cs" />
     <Compile Include="Generated\GalleryClientExtensions.cs" />

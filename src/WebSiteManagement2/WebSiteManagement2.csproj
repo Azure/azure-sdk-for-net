@@ -145,7 +145,6 @@
     <Content Include="hyak.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="readme.txt" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Hyak.Common">

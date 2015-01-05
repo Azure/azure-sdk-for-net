@@ -23,6 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
@@ -54,7 +55,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginSharingAsync(string imageName, string permission, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BeginSharingAsync(string imageName, string permission, CancellationToken cancellationToken);
         
         /// <summary>
         /// Unreplicate an OS image to multiple target locations. This
@@ -76,7 +77,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginUnreplicatingAsync(string imageName, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BeginUnreplicatingAsync(string imageName, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Create OS Image operation adds an operating system image that
@@ -116,7 +117,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> DeleteAsync(string imageName, bool deleteFromStorage, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> DeleteAsync(string imageName, bool deleteFromStorage, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Get OS Image operation retrieves the details for an operating

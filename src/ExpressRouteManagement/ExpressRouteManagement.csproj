@@ -16,9 +16,6 @@
   </PropertyGroup>
   <Import Project="..\library.props" />
   <ItemGroup>
-    <Compile Include="ExpressRouteManagementClient.Customizations.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Generated\AuthorizedDedicatedCircuitOperations.cs" />
     <Compile Include="Generated\AuthorizedDedicatedCircuitOperationsExtensions.cs" />
     <Compile Include="Generated\BorderGatewayProtocolPeeringOperations.cs" />
