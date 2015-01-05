@@ -25,6 +25,7 @@
     </references>
     <dependencies>
       <dependency id="Microsoft.WindowsAzure.Common" version="[1.4.0,2.0)" />
+      <dependency id="Microsoft.Azure.Management.Resources" version="__VERSION_Microsoft.Azure.Management.Resources__" />
     </dependencies>
   </metadata>
   <files>

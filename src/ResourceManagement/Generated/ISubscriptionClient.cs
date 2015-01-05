@@ -21,8 +21,8 @@
 
 using System;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.Azure.Subscriptions;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Subscriptions
 {

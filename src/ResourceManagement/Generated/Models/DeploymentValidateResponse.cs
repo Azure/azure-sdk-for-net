@@ -21,15 +21,15 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Resources.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Resources.Models
 {
     /// <summary>
     /// Information from validate template deployment response.
     /// </summary>
-    public partial class DeploymentValidateResponse : OperationResponse
+    public partial class DeploymentValidateResponse : AzureOperationResponse
     {
         private ResourceManagementErrorWithDetails _error;
         

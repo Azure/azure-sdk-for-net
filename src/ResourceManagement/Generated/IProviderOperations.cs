@@ -23,8 +23,8 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Resources.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Resources
 {
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.Resources
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> RegisterAsync(string resourceProviderNamespace, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> RegisterAsync(string resourceProviderNamespace, CancellationToken cancellationToken);
         
         /// <summary>
         /// Unregisters provider from a subscription.
@@ -103,6 +103,6 @@ namespace Microsoft.Azure.Management.Resources
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> UnregisterAsync(string resourceProviderNamespace, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> UnregisterAsync(string resourceProviderNamespace, CancellationToken cancellationToken);
     }
 }
