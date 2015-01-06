@@ -12,19 +12,22 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
-using Microsoft.Azure.Common.Extensions.Authentication;
-using Microsoft.Azure.Common.Extensions.Factories;
-using Microsoft.Azure.Common.Extensions.Interfaces;
-using Microsoft.Azure.Common.Extensions.Models;
-using Microsoft.Azure.Common.Extensions.Properties;
-using Microsoft.Azure.Subscriptions;
-using Microsoft.WindowsAzure;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Security;
 using System.Security.Cryptography.X509Certificates;
+using Hyak.Common;
+using Microsoft.Azure.Common.Extensions.Authentication;
+using Microsoft.Azure.Common.Extensions.Factories;
+using Microsoft.Azure.Common.Extensions.Interfaces;
+using Microsoft.Azure.Common.Extensions.Models;
+using Microsoft.Azure.Common.Extensions.Properties;
+using Microsoft.Azure.Subscriptions;
+using Microsoft.WindowsAzure.Subscriptions;
+using CSMSubscriptionClient = Microsoft.Azure.Subscriptions.SubscriptionClient;
+using RDFESubscriptionClient = Microsoft.WindowsAzure.Subscriptions.SubscriptionClient;
 
 namespace Microsoft.Azure.Common.Extensions
 {
@@ -731,22 +734,22 @@ namespace Microsoft.Azure.Common.Extensions
 
             if (environment.IsEndpointSet(AzureEnvironment.Endpoint.ResourceManager))
             {
-                using (var subscriptionClient = AzureSession.ClientFactory
-                        .CreateCustomClient<Azure.Subscriptions.SubscriptionClient>(
+                using (CSMSubscriptionClient csmSubscriptionClient = AzureSession.ClientFactory
+                        .CreateCustomClient<CSMSubscriptionClient>(
                             new TokenCloudCredentials(commonTenantToken.AccessToken),
                             environment.GetEndpointAsUri(AzureEnvironment.Endpoint.ResourceManager)))
                 {
-                    return subscriptionClient.Tenants.List().TenantIds.Select(ti => ti.TenantId).ToArray();
+                    return csmSubscriptionClient.Tenants.List().TenantIds.Select(ti => ti.TenantId).ToArray();
                 }
             }
             else
             {
-                using (var subscriptionClient = AzureSession.ClientFactory
-                        .CreateCustomClient<WindowsAzure.Subscriptions.SubscriptionClient>(
+                using (RDFESubscriptionClient rdfeSubscriptionClient = AzureSession.ClientFactory
+                        .CreateCustomClient<RDFESubscriptionClient>(
                             new TokenCloudCredentials(commonTenantToken.AccessToken),
                             environment.GetEndpointAsUri(AzureEnvironment.Endpoint.ServiceManagement)))
                 {
-                    var subscriptionListResult = subscriptionClient.Subscriptions.List();
+                    var subscriptionListResult = rdfeSubscriptionClient.Subscriptions.List();
                     return subscriptionListResult.Subscriptions.Select(s => s.ActiveDirectoryTenantId).Distinct().ToArray();
                 }
             }

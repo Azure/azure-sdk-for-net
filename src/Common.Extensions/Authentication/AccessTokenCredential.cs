@@ -12,7 +12,6 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
-using Microsoft.WindowsAzure;
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;

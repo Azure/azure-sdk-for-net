@@ -12,7 +12,7 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
-using Microsoft.WindowsAzure.Common;
+using Hyak.Common;
 
 namespace Microsoft.Azure.Common.Extensions.Models
 {

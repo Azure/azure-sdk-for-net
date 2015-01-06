@@ -14,6 +14,7 @@
 
 using System.Security;
 using System.Security.Cryptography.X509Certificates;
+using Microsoft.Azure;
 using Microsoft.Azure.Common.Extensions.Models;
 using Microsoft.Azure.Common.Extensions.Authentication;
 using Microsoft.Azure.Common.Extensions;

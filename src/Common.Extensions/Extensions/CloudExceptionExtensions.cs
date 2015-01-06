@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-using Hyak.Common;
 using System.Linq;
+using Hyak.Common;
 
 namespace Microsoft.Azure.Common
 {
