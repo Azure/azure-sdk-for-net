@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Insights
     /// The expression parser creates an Expression that represents an expression in disjunctive-normal-form
     /// Each Expression contains a set of Subexpressions (the conjunctions) with the total expression being the disjunction of them
     /// </summary>
-    public static class MetricFilterExpressionParser
+    internal static class MetricFilterExpressionParser
     {
         private static Dictionary<Type, IEnumerable<PropertyInfo>> ExpressionElementPropertyCache = new Dictionary<Type, IEnumerable<PropertyInfo>>();
         private static Dictionary<Type, IEnumerable<Tuple<PropertyInfo, ExpressionElementCollectionPropertyAttribute>>> ExpressionElementCollectionPropertyCache =

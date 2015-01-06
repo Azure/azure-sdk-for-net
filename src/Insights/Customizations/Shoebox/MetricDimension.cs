@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Insights
     /// <summary>
     /// MetricFilterDimensionFilter class represents a dimension filter tied to a particular metric (by name) and containing an optional list of dimensions
     /// </summary>
-    public class MetricDimension
+    internal class MetricDimension
     {
         private string name;
         private IEnumerable<Dimension> dimensions;

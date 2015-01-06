@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Insights
     /// Simple Filter parser for $filter expressions on MetricDefinition and Usage calls
     /// Supported Syntax: Name clauses (Name eq 'value') separated by " or "s (no parentheses)
     /// </summary>
-    public static class MetricDefinitionFilterParser
+    internal static class MetricDefinitionFilterParser
     {
         private static Regex splitRegex = new Regex("\\sor\\s", RegexOptions.Compiled);
         private static Regex clauseRegex = new Regex("^\\s*name\\.value\\s+eq\\s+'(?<value>[^']+)'\\s*$", RegexOptions.Compiled);

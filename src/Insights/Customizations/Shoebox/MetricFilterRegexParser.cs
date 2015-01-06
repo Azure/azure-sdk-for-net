@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Insights
     /// No parentheses are allowed outside the names clause
     /// NOTE: The regex parser does not currently support dimensions (dimensionname.value, dimensionvalue.value)
     /// </summary>
-    public static class MetricFilterRegexParser
+    internal static class MetricFilterRegexParser
     {
         private static Regex splitOnAndRegex = new Regex("\\sand\\s", RegexOptions.Compiled);
         private static Regex splitOnORegex = new Regex("\\sor\\s", RegexOptions.Compiled);

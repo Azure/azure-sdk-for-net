@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Microsoft.Azure.Insights
 {
     // TODO: Add locking (thread safety)
-    public class SizeBoundedCache<TKey, TValue>
+    internal class SizeBoundedCache<TKey, TValue>
     {
         private Dictionary<TKey, LinkedListNode<KeyValuePair<TKey, TValue>>> dictionary;
         private LinkedList<KeyValuePair<TKey, TValue>> list;

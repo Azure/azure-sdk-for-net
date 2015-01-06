@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Insights
     {
         private MetricDefinitionCache _cache;
 
-        public MetricDefinitionCache Cache
+        internal MetricDefinitionCache Cache
         {
             get { return _cache ?? (_cache = new MetricDefinitionCache()); }
         }
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Insights
             return WithHandler(new InsightsClient(), handler);
         }
 
-        public class MetricDefinitionCache : SizeBoundedCache<string, IEnumerable<MetricDefinition>>
+        internal class MetricDefinitionCache : SizeBoundedCache<string, IEnumerable<MetricDefinition>>
         {
         }
     }
