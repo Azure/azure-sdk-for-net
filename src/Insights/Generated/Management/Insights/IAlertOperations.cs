@@ -23,8 +23,8 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Insights.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Insights
 {
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> CreateOrUpdateRuleAsync(string resourceGroupName, RuleCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> CreateOrUpdateRuleAsync(string resourceGroupName, RuleCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> DeleteRuleAsync(string resourceGroupName, string ruleName, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> DeleteRuleAsync(string resourceGroupName, string ruleName, CancellationToken cancellationToken);
         
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -138,6 +138,6 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> UpdateRuleAsync(string resourceGroupName, RuleCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> UpdateRuleAsync(string resourceGroupName, RuleCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
     }
 }

@@ -21,15 +21,15 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.WebSites.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
     /// <summary>
     /// List of metadata for the website.
     /// </summary>
-    public partial class WebSiteMetadataResult : OperationResponse
+    public partial class WebSiteMetadataResult : AzureOperationResponse
     {
         private WebSiteMetadataEnvelope _resource;
         

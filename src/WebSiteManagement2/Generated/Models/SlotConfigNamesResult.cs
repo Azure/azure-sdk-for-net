@@ -21,15 +21,15 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.WebSites.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
     /// <summary>
     /// List of slot specific settings.
     /// </summary>
-    public partial class SlotConfigNamesResult : OperationResponse
+    public partial class SlotConfigNamesResult : AzureOperationResponse
     {
         private SlotConfigNamesEnvelope _resource;
         

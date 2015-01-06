@@ -22,16 +22,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.StreamAnalytics.Models;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Management.StreamAnalytics.Models
 {
     /// <summary>
     /// The response of the list stream analytics job operation.
     /// </summary>
-    public partial class JobListResponse : OperationResponse
+    public partial class JobListResponse : AzureOperationResponse
     {
         private DateTime _date;
         

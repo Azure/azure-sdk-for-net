@@ -21,14 +21,14 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
     /// The regenerate gateway key operation response.
     /// </summary>
-    public partial class GatewayRegenerateKeyResponse : OperationResponse
+    public partial class GatewayRegenerateKeyResponse : AzureOperationResponse
     {
         private string _key;
         

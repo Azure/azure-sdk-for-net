@@ -21,14 +21,14 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.WindowsAzure.Management.Scheduler.Models
 {
     /// <summary>
     /// The Create Job Collection operation response.
     /// </summary>
-    public partial class JobCollectionCreateResponse : OperationResponse
+    public partial class JobCollectionCreateResponse : AzureOperationResponse
     {
         private string _eTag;
         

@@ -21,15 +21,15 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.StreamAnalytics.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.StreamAnalytics.Models
 {
     /// <summary>
     /// The response of the input CreateOrUpdate operation.
     /// </summary>
-    public partial class InputCreateOrUpdateResponse : OperationResponse
+    public partial class InputCreateOrUpdateResponse : AzureOperationResponse
     {
         private DateTime _date;
         

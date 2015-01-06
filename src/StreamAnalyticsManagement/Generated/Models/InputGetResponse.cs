@@ -21,15 +21,15 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.StreamAnalytics.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.StreamAnalytics.Models
 {
     /// <summary>
     /// The response of the get stream analytics intput operation.
     /// </summary>
-    public partial class InputGetResponse : OperationResponse
+    public partial class InputGetResponse : AzureOperationResponse
     {
         private DateTime _date;
         

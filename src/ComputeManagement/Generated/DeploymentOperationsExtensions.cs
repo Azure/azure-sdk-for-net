@@ -23,11 +23,11 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Compute;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.Management.Compute
 {
     /// <summary>
     /// The Service Management API provides programmatic access to much of the
@@ -69,7 +69,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginChangingConfigurationByName(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentChangeConfigurationParameters parameters)
+        public static AzureOperationResponse BeginChangingConfigurationByName(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentChangeConfigurationParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -108,7 +108,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginChangingConfigurationByNameAsync(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentChangeConfigurationParameters parameters)
+        public static Task<AzureOperationResponse> BeginChangingConfigurationByNameAsync(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentChangeConfigurationParameters parameters)
         {
             return operations.BeginChangingConfigurationByNameAsync(serviceName, deploymentName, parameters, CancellationToken.None);
         }
@@ -143,7 +143,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginChangingConfigurationBySlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentChangeConfigurationParameters parameters)
+        public static AzureOperationResponse BeginChangingConfigurationBySlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentChangeConfigurationParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -182,7 +182,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginChangingConfigurationBySlotAsync(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentChangeConfigurationParameters parameters)
+        public static Task<AzureOperationResponse> BeginChangingConfigurationBySlotAsync(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentChangeConfigurationParameters parameters)
         {
             return operations.BeginChangingConfigurationBySlotAsync(serviceName, deploymentSlot, parameters, CancellationToken.None);
         }
@@ -218,7 +218,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginCreating(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentCreateParameters parameters)
+        public static AzureOperationResponse BeginCreating(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentCreateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -258,7 +258,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginCreatingAsync(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentCreateParameters parameters)
+        public static Task<AzureOperationResponse> BeginCreatingAsync(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentCreateParameters parameters)
         {
             return operations.BeginCreatingAsync(serviceName, deploymentSlot, parameters, CancellationToken.None);
         }
@@ -293,7 +293,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginDeletingByName(this IDeploymentOperations operations, string serviceName, string deploymentName, bool deleteFromStorage)
+        public static AzureOperationResponse BeginDeletingByName(this IDeploymentOperations operations, string serviceName, string deploymentName, bool deleteFromStorage)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -332,7 +332,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginDeletingByNameAsync(this IDeploymentOperations operations, string serviceName, string deploymentName, bool deleteFromStorage)
+        public static Task<AzureOperationResponse> BeginDeletingByNameAsync(this IDeploymentOperations operations, string serviceName, string deploymentName, bool deleteFromStorage)
         {
             return operations.BeginDeletingByNameAsync(serviceName, deploymentName, deleteFromStorage, CancellationToken.None);
         }
@@ -363,7 +363,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginDeletingBySlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot)
+        public static AzureOperationResponse BeginDeletingBySlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -398,7 +398,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginDeletingBySlotAsync(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot)
+        public static Task<AzureOperationResponse> BeginDeletingBySlotAsync(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot)
         {
             return operations.BeginDeletingBySlotAsync(serviceName, deploymentSlot, CancellationToken.None);
         }
@@ -426,7 +426,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginDeletingRoleInstanceByBeploymentSlot(this IDeploymentOperations operations, string serviceName, string deploymentSlot, DeploymentDeleteRoleInstanceParameters parameters)
+        public static AzureOperationResponse BeginDeletingRoleInstanceByBeploymentSlot(this IDeploymentOperations operations, string serviceName, string deploymentSlot, DeploymentDeleteRoleInstanceParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -458,7 +458,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginDeletingRoleInstanceByBeploymentSlotAsync(this IDeploymentOperations operations, string serviceName, string deploymentSlot, DeploymentDeleteRoleInstanceParameters parameters)
+        public static Task<AzureOperationResponse> BeginDeletingRoleInstanceByBeploymentSlotAsync(this IDeploymentOperations operations, string serviceName, string deploymentSlot, DeploymentDeleteRoleInstanceParameters parameters)
         {
             return operations.BeginDeletingRoleInstanceByBeploymentSlotAsync(serviceName, deploymentSlot, parameters, CancellationToken.None);
         }
@@ -486,7 +486,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginDeletingRoleInstanceByDeploymentName(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentDeleteRoleInstanceParameters parameters)
+        public static AzureOperationResponse BeginDeletingRoleInstanceByDeploymentName(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentDeleteRoleInstanceParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -518,7 +518,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginDeletingRoleInstanceByDeploymentNameAsync(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentDeleteRoleInstanceParameters parameters)
+        public static Task<AzureOperationResponse> BeginDeletingRoleInstanceByDeploymentNameAsync(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentDeleteRoleInstanceParameters parameters)
         {
             return operations.BeginDeletingRoleInstanceByDeploymentNameAsync(serviceName, deploymentName, parameters, CancellationToken.None);
         }
@@ -552,7 +552,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginGettingPackageByName(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentGetPackageParameters parameters)
+        public static AzureOperationResponse BeginGettingPackageByName(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentGetPackageParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -590,7 +590,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginGettingPackageByNameAsync(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentGetPackageParameters parameters)
+        public static Task<AzureOperationResponse> BeginGettingPackageByNameAsync(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentGetPackageParameters parameters)
         {
             return operations.BeginGettingPackageByNameAsync(serviceName, deploymentName, parameters, CancellationToken.None);
         }
@@ -624,7 +624,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginGettingPackageBySlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentGetPackageParameters parameters)
+        public static AzureOperationResponse BeginGettingPackageBySlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentGetPackageParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -662,7 +662,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginGettingPackageBySlotAsync(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentGetPackageParameters parameters)
+        public static Task<AzureOperationResponse> BeginGettingPackageBySlotAsync(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentGetPackageParameters parameters)
         {
             return operations.BeginGettingPackageBySlotAsync(serviceName, deploymentSlot, parameters, CancellationToken.None);
         }
@@ -697,7 +697,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginRebootingRoleInstanceByDeploymentName(this IDeploymentOperations operations, string serviceName, string deploymentName, string roleInstanceName)
+        public static AzureOperationResponse BeginRebootingRoleInstanceByDeploymentName(this IDeploymentOperations operations, string serviceName, string deploymentName, string roleInstanceName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -736,7 +736,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginRebootingRoleInstanceByDeploymentNameAsync(this IDeploymentOperations operations, string serviceName, string deploymentName, string roleInstanceName)
+        public static Task<AzureOperationResponse> BeginRebootingRoleInstanceByDeploymentNameAsync(this IDeploymentOperations operations, string serviceName, string deploymentName, string roleInstanceName)
         {
             return operations.BeginRebootingRoleInstanceByDeploymentNameAsync(serviceName, deploymentName, roleInstanceName, CancellationToken.None);
         }
@@ -771,7 +771,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginRebootingRoleInstanceByDeploymentSlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, string roleInstanceName)
+        public static AzureOperationResponse BeginRebootingRoleInstanceByDeploymentSlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, string roleInstanceName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -810,7 +810,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginRebootingRoleInstanceByDeploymentSlotAsync(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, string roleInstanceName)
+        public static Task<AzureOperationResponse> BeginRebootingRoleInstanceByDeploymentSlotAsync(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, string roleInstanceName)
         {
             return operations.BeginRebootingRoleInstanceByDeploymentSlotAsync(serviceName, deploymentSlot, roleInstanceName, CancellationToken.None);
         }
@@ -849,7 +849,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginRebuildingRoleInstanceByDeploymentName(this IDeploymentOperations operations, string serviceName, string deploymentName, string roleInstanceName, string resources)
+        public static AzureOperationResponse BeginRebuildingRoleInstanceByDeploymentName(this IDeploymentOperations operations, string serviceName, string deploymentName, string roleInstanceName, string resources)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -892,7 +892,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginRebuildingRoleInstanceByDeploymentNameAsync(this IDeploymentOperations operations, string serviceName, string deploymentName, string roleInstanceName, string resources)
+        public static Task<AzureOperationResponse> BeginRebuildingRoleInstanceByDeploymentNameAsync(this IDeploymentOperations operations, string serviceName, string deploymentName, string roleInstanceName, string resources)
         {
             return operations.BeginRebuildingRoleInstanceByDeploymentNameAsync(serviceName, deploymentName, roleInstanceName, resources, CancellationToken.None);
         }
@@ -931,7 +931,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginRebuildingRoleInstanceByDeploymentSlot(this IDeploymentOperations operations, string serviceName, string deploymentSlot, string roleInstanceName, string resources)
+        public static AzureOperationResponse BeginRebuildingRoleInstanceByDeploymentSlot(this IDeploymentOperations operations, string serviceName, string deploymentSlot, string roleInstanceName, string resources)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -974,7 +974,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginRebuildingRoleInstanceByDeploymentSlotAsync(this IDeploymentOperations operations, string serviceName, string deploymentSlot, string roleInstanceName, string resources)
+        public static Task<AzureOperationResponse> BeginRebuildingRoleInstanceByDeploymentSlotAsync(this IDeploymentOperations operations, string serviceName, string deploymentSlot, string roleInstanceName, string resources)
         {
             return operations.BeginRebuildingRoleInstanceByDeploymentSlotAsync(serviceName, deploymentSlot, roleInstanceName, resources, CancellationToken.None);
         }
@@ -1009,7 +1009,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginReimagingRoleInstanceByDeploymentName(this IDeploymentOperations operations, string serviceName, string deploymentName, string roleInstanceName)
+        public static AzureOperationResponse BeginReimagingRoleInstanceByDeploymentName(this IDeploymentOperations operations, string serviceName, string deploymentName, string roleInstanceName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -1048,7 +1048,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginReimagingRoleInstanceByDeploymentNameAsync(this IDeploymentOperations operations, string serviceName, string deploymentName, string roleInstanceName)
+        public static Task<AzureOperationResponse> BeginReimagingRoleInstanceByDeploymentNameAsync(this IDeploymentOperations operations, string serviceName, string deploymentName, string roleInstanceName)
         {
             return operations.BeginReimagingRoleInstanceByDeploymentNameAsync(serviceName, deploymentName, roleInstanceName, CancellationToken.None);
         }
@@ -1083,7 +1083,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginReimagingRoleInstanceByDeploymentSlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, string roleInstanceName)
+        public static AzureOperationResponse BeginReimagingRoleInstanceByDeploymentSlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, string roleInstanceName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -1122,7 +1122,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginReimagingRoleInstanceByDeploymentSlotAsync(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, string roleInstanceName)
+        public static Task<AzureOperationResponse> BeginReimagingRoleInstanceByDeploymentSlotAsync(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, string roleInstanceName)
         {
             return operations.BeginReimagingRoleInstanceByDeploymentSlotAsync(serviceName, deploymentSlot, roleInstanceName, CancellationToken.None);
         }
@@ -1155,7 +1155,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginSwapping(this IDeploymentOperations operations, string serviceName, DeploymentSwapParameters parameters)
+        public static AzureOperationResponse BeginSwapping(this IDeploymentOperations operations, string serviceName, DeploymentSwapParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -1192,7 +1192,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginSwappingAsync(this IDeploymentOperations operations, string serviceName, DeploymentSwapParameters parameters)
+        public static Task<AzureOperationResponse> BeginSwappingAsync(this IDeploymentOperations operations, string serviceName, DeploymentSwapParameters parameters)
         {
             return operations.BeginSwappingAsync(serviceName, parameters, CancellationToken.None);
         }
@@ -1228,7 +1228,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginUpdatingStatusByDeploymentName(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentUpdateStatusParameters parameters)
+        public static AzureOperationResponse BeginUpdatingStatusByDeploymentName(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentUpdateStatusParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -1268,7 +1268,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginUpdatingStatusByDeploymentNameAsync(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentUpdateStatusParameters parameters)
+        public static Task<AzureOperationResponse> BeginUpdatingStatusByDeploymentNameAsync(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentUpdateStatusParameters parameters)
         {
             return operations.BeginUpdatingStatusByDeploymentNameAsync(serviceName, deploymentName, parameters, CancellationToken.None);
         }
@@ -1304,7 +1304,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginUpdatingStatusByDeploymentSlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentUpdateStatusParameters parameters)
+        public static AzureOperationResponse BeginUpdatingStatusByDeploymentSlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentUpdateStatusParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -1344,7 +1344,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginUpdatingStatusByDeploymentSlotAsync(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentUpdateStatusParameters parameters)
+        public static Task<AzureOperationResponse> BeginUpdatingStatusByDeploymentSlotAsync(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentUpdateStatusParameters parameters)
         {
             return operations.BeginUpdatingStatusByDeploymentSlotAsync(serviceName, deploymentSlot, parameters, CancellationToken.None);
         }
@@ -1405,7 +1405,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginUpgradingByName(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentUpgradeParameters parameters)
+        public static AzureOperationResponse BeginUpgradingByName(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentUpgradeParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -1470,7 +1470,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginUpgradingByNameAsync(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentUpgradeParameters parameters)
+        public static Task<AzureOperationResponse> BeginUpgradingByNameAsync(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentUpgradeParameters parameters)
         {
             return operations.BeginUpgradingByNameAsync(serviceName, deploymentName, parameters, CancellationToken.None);
         }
@@ -1531,7 +1531,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginUpgradingBySlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentUpgradeParameters parameters)
+        public static AzureOperationResponse BeginUpgradingBySlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentUpgradeParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -1596,7 +1596,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginUpgradingBySlotAsync(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentUpgradeParameters parameters)
+        public static Task<AzureOperationResponse> BeginUpgradingBySlotAsync(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentUpgradeParameters parameters)
         {
             return operations.BeginUpgradingBySlotAsync(serviceName, deploymentSlot, parameters, CancellationToken.None);
         }
@@ -1655,7 +1655,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginWalkingUpgradeDomainByDeploymentName(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentWalkUpgradeDomainParameters parameters)
+        public static AzureOperationResponse BeginWalkingUpgradeDomainByDeploymentName(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentWalkUpgradeDomainParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -1718,7 +1718,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginWalkingUpgradeDomainByDeploymentNameAsync(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentWalkUpgradeDomainParameters parameters)
+        public static Task<AzureOperationResponse> BeginWalkingUpgradeDomainByDeploymentNameAsync(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentWalkUpgradeDomainParameters parameters)
         {
             return operations.BeginWalkingUpgradeDomainByDeploymentNameAsync(serviceName, deploymentName, parameters, CancellationToken.None);
         }
@@ -1777,7 +1777,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginWalkingUpgradeDomainByDeploymentSlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentWalkUpgradeDomainParameters parameters)
+        public static AzureOperationResponse BeginWalkingUpgradeDomainByDeploymentSlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentWalkUpgradeDomainParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -1840,7 +1840,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginWalkingUpgradeDomainByDeploymentSlotAsync(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentWalkUpgradeDomainParameters parameters)
+        public static Task<AzureOperationResponse> BeginWalkingUpgradeDomainByDeploymentSlotAsync(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentWalkUpgradeDomainParameters parameters)
         {
             return operations.BeginWalkingUpgradeDomainByDeploymentSlotAsync(serviceName, deploymentSlot, parameters, CancellationToken.None);
         }
@@ -3387,7 +3387,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse RollbackUpdateOrUpgradeByDeploymentName(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentRollbackUpdateOrUpgradeParameters parameters)
+        public static AzureOperationResponse RollbackUpdateOrUpgradeByDeploymentName(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentRollbackUpdateOrUpgradeParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -3426,7 +3426,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> RollbackUpdateOrUpgradeByDeploymentNameAsync(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentRollbackUpdateOrUpgradeParameters parameters)
+        public static Task<AzureOperationResponse> RollbackUpdateOrUpgradeByDeploymentNameAsync(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentRollbackUpdateOrUpgradeParameters parameters)
         {
             return operations.RollbackUpdateOrUpgradeByDeploymentNameAsync(serviceName, deploymentName, parameters, CancellationToken.None);
         }
@@ -3461,7 +3461,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse RollbackUpdateOrUpgradeByDeploymentSlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentRollbackUpdateOrUpgradeParameters parameters)
+        public static AzureOperationResponse RollbackUpdateOrUpgradeByDeploymentSlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentRollbackUpdateOrUpgradeParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -3500,7 +3500,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> RollbackUpdateOrUpgradeByDeploymentSlotAsync(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentRollbackUpdateOrUpgradeParameters parameters)
+        public static Task<AzureOperationResponse> RollbackUpdateOrUpgradeByDeploymentSlotAsync(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentRollbackUpdateOrUpgradeParameters parameters)
         {
             return operations.RollbackUpdateOrUpgradeByDeploymentSlotAsync(serviceName, deploymentSlot, parameters, CancellationToken.None);
         }

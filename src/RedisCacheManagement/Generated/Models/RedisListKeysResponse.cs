@@ -21,14 +21,14 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.Azure.Management.Redis.Models
 {
     /// <summary>
     /// The response of redis list keys operation.
     /// </summary>
-    public partial class RedisListKeysResponse : OperationResponse
+    public partial class RedisListKeysResponse : AzureOperationResponse
     {
         private string _primaryKey;
         

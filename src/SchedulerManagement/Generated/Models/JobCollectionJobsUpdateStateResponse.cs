@@ -22,8 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Scheduler.Models;
 
 namespace Microsoft.WindowsAzure.Scheduler.Models
@@ -31,7 +31,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
     /// <summary>
     /// The Update Jobs State operation response.
     /// </summary>
-    public partial class JobCollectionJobsUpdateStateResponse : OperationResponse, IEnumerable<Job>
+    public partial class JobCollectionJobsUpdateStateResponse : AzureOperationResponse, IEnumerable<Job>
     {
         private IList<Job> _jobs;
         

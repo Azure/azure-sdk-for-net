@@ -22,16 +22,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Batch.Models;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Management.Batch.Models
 {
     /// <summary>
     /// Values returned by the ListActions operation.
     /// </summary>
-    public partial class BatchAccountListActionsResponse : OperationResponse, IEnumerable<AccountActions>
+    public partial class BatchAccountListActionsResponse : AzureOperationResponse, IEnumerable<AccountActions>
     {
         private IList<AccountActions> _actions;
         

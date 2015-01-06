@@ -23,11 +23,11 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.ServiceBus;
 using Microsoft.WindowsAzure.Management.ServiceBus.Models;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.Management.ServiceBus
 {
     /// <summary>
     /// The Service Bus Management API is a REST API for managing Service Bus
@@ -257,7 +257,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Delete(this INamespaceOperations operations, string namespaceName)
+        public static AzureOperationResponse Delete(this INamespaceOperations operations, string namespaceName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -284,7 +284,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> DeleteAsync(this INamespaceOperations operations, string namespaceName)
+        public static Task<AzureOperationResponse> DeleteAsync(this INamespaceOperations operations, string namespaceName)
         {
             return operations.DeleteAsync(namespaceName, CancellationToken.None);
         }
@@ -307,7 +307,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse DeleteAuthorizationRule(this INamespaceOperations operations, string namespaceName, string ruleName)
+        public static AzureOperationResponse DeleteAuthorizationRule(this INamespaceOperations operations, string namespaceName, string ruleName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -334,15 +334,15 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> DeleteAuthorizationRuleAsync(this INamespaceOperations operations, string namespaceName, string ruleName)
+        public static Task<AzureOperationResponse> DeleteAuthorizationRuleAsync(this INamespaceOperations operations, string namespaceName, string ruleName)
         {
             return operations.DeleteAuthorizationRuleAsync(namespaceName, ruleName, CancellationToken.None);
         }
         
         /// <summary>
         /// Returns the description for the specified namespace.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn140232.aspx
-        /// for more information)
+        /// http://msdn.microsoft.com/library/azure/dn140232.aspx for more
+        /// information)
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -365,8 +365,8 @@ namespace Microsoft.WindowsAzure
         
         /// <summary>
         /// Returns the description for the specified namespace.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn140232.aspx
-        /// for more information)
+        /// http://msdn.microsoft.com/library/azure/dn140232.aspx for more
+        /// information)
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -481,8 +481,8 @@ namespace Microsoft.WindowsAzure
         
         /// <summary>
         /// Lists the available namespaces.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn140232.asp
-        /// for more information)
+        /// http://msdn.microsoft.com/en-us/library/azure/hh780759.aspx for
+        /// more information)
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -502,8 +502,8 @@ namespace Microsoft.WindowsAzure
         
         /// <summary>
         /// Lists the available namespaces.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn140232.asp
-        /// for more information)
+        /// http://msdn.microsoft.com/en-us/library/azure/hh780759.aspx for
+        /// more information)
         /// </summary>
         /// <param name='operations'>
         /// Reference to the

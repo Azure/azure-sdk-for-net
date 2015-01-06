@@ -23,7 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute
@@ -74,7 +74,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginCapturingOSImageAsync(string serviceName, string deploymentName, string virtualMachineName, VirtualMachineCaptureOSImageParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BeginCapturingOSImageAsync(string serviceName, string deploymentName, string virtualMachineName, VirtualMachineCaptureOSImageParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Begin capturing role as VM template.
@@ -98,7 +98,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginCapturingVMImageAsync(string serviceName, string deploymentName, string virtualMachineName, VirtualMachineCaptureVMImageParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BeginCapturingVMImageAsync(string serviceName, string deploymentName, string virtualMachineName, VirtualMachineCaptureVMImageParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Begin Creating Role operation adds a virtual machine to an
@@ -133,7 +133,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginCreatingAsync(string serviceName, string deploymentName, VirtualMachineCreateParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BeginCreatingAsync(string serviceName, string deploymentName, VirtualMachineCreateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Begin Creating Virtual Machine Deployment operation provisions
@@ -161,7 +161,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginCreatingDeploymentAsync(string serviceName, VirtualMachineCreateDeploymentParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BeginCreatingDeploymentAsync(string serviceName, VirtualMachineCreateDeploymentParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Begin Deleting Role operation deletes the specified virtual
@@ -189,7 +189,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginDeletingAsync(string serviceName, string deploymentName, string virtualMachineName, bool deleteFromStorage, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BeginDeletingAsync(string serviceName, string deploymentName, string virtualMachineName, bool deleteFromStorage, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Begin Restarting role operation restarts the specified virtual
@@ -213,7 +213,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginRestartingAsync(string serviceName, string deploymentName, string virtualMachineName, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BeginRestartingAsync(string serviceName, string deploymentName, string virtualMachineName, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Shutdown Role operation shuts down the specified virtual
@@ -240,7 +240,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginShutdownAsync(string serviceName, string deploymentName, string virtualMachineName, VirtualMachineShutdownParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BeginShutdownAsync(string serviceName, string deploymentName, string virtualMachineName, VirtualMachineShutdownParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Begin Shutting Down Roles operation stops the specified set of
@@ -264,7 +264,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginShuttingDownRolesAsync(string serviceName, string deploymentName, VirtualMachineShutdownRolesParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BeginShuttingDownRolesAsync(string serviceName, string deploymentName, VirtualMachineShutdownRolesParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Begin Starting Role operation starts the specified virtual
@@ -288,7 +288,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginStartingAsync(string serviceName, string deploymentName, string virtualMachineName, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BeginStartingAsync(string serviceName, string deploymentName, string virtualMachineName, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Begin Starting Roles operation starts the specified set of
@@ -312,7 +312,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginStartingRolesAsync(string serviceName, string deploymentName, VirtualMachineStartRolesParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BeginStartingRolesAsync(string serviceName, string deploymentName, VirtualMachineStartRolesParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Begin Updating Role operation adds a virtual machine to an
@@ -339,7 +339,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginUpdatingAsync(string serviceName, string deploymentName, string virtualMachineName, VirtualMachineUpdateParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BeginUpdatingAsync(string serviceName, string deploymentName, string virtualMachineName, VirtualMachineUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Begin Updating Load Balanced Endpoint Set operation changes the
@@ -366,7 +366,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginUpdatingLoadBalancedEndpointSetAsync(string serviceName, string deploymentName, VirtualMachineUpdateLoadBalancedSetParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BeginUpdatingLoadBalancedEndpointSetAsync(string serviceName, string deploymentName, VirtualMachineUpdateLoadBalancedSetParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Capture Role operation creates a copy of the operating system

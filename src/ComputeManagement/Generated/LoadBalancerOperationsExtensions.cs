@@ -23,11 +23,11 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Compute;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.Management.Compute
 {
     /// <summary>
     /// The Service Management API provides programmatic access to much of the
@@ -351,7 +351,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Delete(this ILoadBalancerOperations operations, string serviceName, string deploymentName, string loadBalancerName)
+        public static AzureOperationResponse Delete(this ILoadBalancerOperations operations, string serviceName, string deploymentName, string loadBalancerName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -380,7 +380,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> DeleteAsync(this ILoadBalancerOperations operations, string serviceName, string deploymentName, string loadBalancerName)
+        public static Task<AzureOperationResponse> DeleteAsync(this ILoadBalancerOperations operations, string serviceName, string deploymentName, string loadBalancerName)
         {
             return operations.DeleteAsync(serviceName, deploymentName, loadBalancerName, CancellationToken.None);
         }

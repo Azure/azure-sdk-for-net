@@ -22,8 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Scheduler.Models;
 
 namespace Microsoft.WindowsAzure.Management.Scheduler.Models
@@ -31,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
     /// <summary>
     /// Information about a retrieved Cloud Service.
     /// </summary>
-    public partial class CloudServiceGetResponse : OperationResponse
+    public partial class CloudServiceGetResponse : AzureOperationResponse
     {
         private string _geoLocation;
         

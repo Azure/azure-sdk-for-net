@@ -22,8 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.Azure.Insights.Models;
-using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Insights.Models
 {
@@ -43,6 +43,17 @@ namespace Microsoft.Azure.Insights.Models
         {
             get { return this._authorization; }
             set { this._authorization = value; }
+        }
+        
+        private string _caller;
+        
+        /// <summary>
+        /// Optional. Gets or sets the caller
+        /// </summary>
+        public string Caller
+        {
+            get { return this._caller; }
+            set { this._caller = value; }
         }
         
         private IDictionary<string, string> _claims;
@@ -151,6 +162,17 @@ namespace Microsoft.Azure.Insights.Models
         {
             get { return this._httpRequest; }
             set { this._httpRequest = value; }
+        }
+        
+        private string _id;
+        
+        /// <summary>
+        /// Optional. Gets or sets the Id
+        /// </summary>
+        public string Id
+        {
+            get { return this._id; }
+            set { this._id = value; }
         }
         
         private EventLevel _level;

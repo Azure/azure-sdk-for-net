@@ -21,14 +21,14 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
 {
     /// <summary>
     /// The Delete Repository Web Site operation response.
     /// </summary>
-    public partial class WebSiteDeleteRepositoryResponse : OperationResponse
+    public partial class WebSiteDeleteRepositoryResponse : AzureOperationResponse
     {
         private Uri _uri;
         

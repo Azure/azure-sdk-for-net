@@ -22,8 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Network.Models;
 
 namespace Microsoft.WindowsAzure.Management.Network.Models
@@ -31,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
     /// <summary>
     /// The response for the List Client Root Certificates operation.
     /// </summary>
-    public partial class ClientRootCertificateListResponse : OperationResponse, IEnumerable<ClientRootCertificateListResponse.ClientRootCertificate>
+    public partial class ClientRootCertificateListResponse : AzureOperationResponse, IEnumerable<ClientRootCertificateListResponse.ClientRootCertificate>
     {
         private IList<ClientRootCertificateListResponse.ClientRootCertificate> _clientRootCertificates;
         

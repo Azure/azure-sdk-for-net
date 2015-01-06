@@ -21,7 +21,7 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models;
 
 namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
@@ -30,7 +30,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
     /// A standard service response including an HTTP status code and request
     /// ID.
     /// </summary>
-    public partial class AutoscaleSettingGetResponse : OperationResponse
+    public partial class AutoscaleSettingGetResponse : AzureOperationResponse
     {
         private AutoscaleSetting _setting;
         

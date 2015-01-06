@@ -21,15 +21,15 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.WebSites.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
     /// <summary>
     /// List of backups for the website.
     /// </summary>
-    public partial class WebSiteGetBackupsResponse : OperationResponse
+    public partial class WebSiteGetBackupsResponse : AzureOperationResponse
     {
         private BackupItemsEnvelope _backupList;
         

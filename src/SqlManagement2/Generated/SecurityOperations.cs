@@ -28,12 +28,10 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.Management.Sql
@@ -107,20 +105,20 @@ namespace Microsoft.Azure.Management.Sql
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serverName", serverName);
                 tracingParameters.Add("databaseName", databaseName);
-                Tracing.Enter(invocationId, this, "GetAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId) + "/resourceGroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.Sql/servers/" + Uri.EscapeDataString(serverName) + "/databaseSecurityPolicies/" + Uri.EscapeDataString(databaseName) + "?";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourceGroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.Sql/servers/" + Uri.EscapeDataString(serverName) + "/databaseSecurityPolicies/" + Uri.EscapeDataString(databaseName) + "?";
             url = url + "api-version=2014-04-01";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -155,13 +153,13 @@ namespace Microsoft.Azure.Management.Sql
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -170,7 +168,7 @@ namespace Microsoft.Azure.Management.Sql
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -178,186 +176,189 @@ namespace Microsoft.Azure.Management.Sql
                     // Create Result
                     DatabaseSecurityPolicyGetResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new DatabaseSecurityPolicyGetResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new DatabaseSecurityPolicyGetResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            DatabaseSecurityPolicy databaseSecurityPolicyInstance = new DatabaseSecurityPolicy();
+                            result.DatabaseSecurityPolicy = databaseSecurityPolicyInstance;
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                databaseSecurityPolicyInstance.Name = nameInstance;
+                            }
+                            
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                            {
+                                DatabaseSecurityPolicyProperties propertiesInstance = new DatabaseSecurityPolicyProperties();
+                                databaseSecurityPolicyInstance.Properties = propertiesInstance;
+                                
+                                JToken isAuditingEnabledValue = propertiesValue["isAuditingEnabled"];
+                                if (isAuditingEnabledValue != null && isAuditingEnabledValue.Type != JTokenType.Null)
+                                {
+                                    bool isAuditingEnabledInstance = ((bool)isAuditingEnabledValue);
+                                    propertiesInstance.IsAuditingEnabled = isAuditingEnabledInstance;
+                                }
+                                
+                                JToken retentionDaysValue = propertiesValue["retentionDays"];
+                                if (retentionDaysValue != null && retentionDaysValue.Type != JTokenType.Null)
+                                {
+                                    int retentionDaysInstance = ((int)retentionDaysValue);
+                                    propertiesInstance.RetentionDays = retentionDaysInstance;
+                                }
+                                
+                                JToken isEventTypeDataAccessEnabledValue = propertiesValue["isEventTypeDataAccessEnabled"];
+                                if (isEventTypeDataAccessEnabledValue != null && isEventTypeDataAccessEnabledValue.Type != JTokenType.Null)
+                                {
+                                    bool isEventTypeDataAccessEnabledInstance = ((bool)isEventTypeDataAccessEnabledValue);
+                                    propertiesInstance.IsEventTypeDataAccessEnabled = isEventTypeDataAccessEnabledInstance;
+                                }
+                                
+                                JToken isEventTypeSchemaChangeEnabledValue = propertiesValue["isEventTypeSchemaChangeEnabled"];
+                                if (isEventTypeSchemaChangeEnabledValue != null && isEventTypeSchemaChangeEnabledValue.Type != JTokenType.Null)
+                                {
+                                    bool isEventTypeSchemaChangeEnabledInstance = ((bool)isEventTypeSchemaChangeEnabledValue);
+                                    propertiesInstance.IsEventTypeSchemaChangeEnabled = isEventTypeSchemaChangeEnabledInstance;
+                                }
+                                
+                                JToken isEventTypeDataChangesEnabledValue = propertiesValue["isEventTypeDataChangesEnabled"];
+                                if (isEventTypeDataChangesEnabledValue != null && isEventTypeDataChangesEnabledValue.Type != JTokenType.Null)
+                                {
+                                    bool isEventTypeDataChangesEnabledInstance = ((bool)isEventTypeDataChangesEnabledValue);
+                                    propertiesInstance.IsEventTypeDataChangesEnabled = isEventTypeDataChangesEnabledInstance;
+                                }
+                                
+                                JToken isEventTypeSecurityExceptionsEnabledValue = propertiesValue["isEventTypeSecurityExceptionsEnabled"];
+                                if (isEventTypeSecurityExceptionsEnabledValue != null && isEventTypeSecurityExceptionsEnabledValue.Type != JTokenType.Null)
+                                {
+                                    bool isEventTypeSecurityExceptionsEnabledInstance = ((bool)isEventTypeSecurityExceptionsEnabledValue);
+                                    propertiesInstance.IsEventTypeSecurityExceptionsEnabled = isEventTypeSecurityExceptionsEnabledInstance;
+                                }
+                                
+                                JToken isEventTypeGrantRevokePermissionsEnabledValue = propertiesValue["isEventTypeGrantRevokePermissionsEnabled"];
+                                if (isEventTypeGrantRevokePermissionsEnabledValue != null && isEventTypeGrantRevokePermissionsEnabledValue.Type != JTokenType.Null)
+                                {
+                                    bool isEventTypeGrantRevokePermissionsEnabledInstance = ((bool)isEventTypeGrantRevokePermissionsEnabledValue);
+                                    propertiesInstance.IsEventTypeGrantRevokePermissionsEnabled = isEventTypeGrantRevokePermissionsEnabledInstance;
+                                }
+                                
+                                JToken storageAccountNameValue = propertiesValue["storageAccountName"];
+                                if (storageAccountNameValue != null && storageAccountNameValue.Type != JTokenType.Null)
+                                {
+                                    string storageAccountNameInstance = ((string)storageAccountNameValue);
+                                    propertiesInstance.StorageAccountName = storageAccountNameInstance;
+                                }
+                                
+                                JToken storageAccountKeyValue = propertiesValue["storageAccountKey"];
+                                if (storageAccountKeyValue != null && storageAccountKeyValue.Type != JTokenType.Null)
+                                {
+                                    string storageAccountKeyInstance = ((string)storageAccountKeyValue);
+                                    propertiesInstance.StorageAccountKey = storageAccountKeyInstance;
+                                }
+                                
+                                JToken secondaryStorageAccountKeyValue = propertiesValue["secondaryStorageAccountKey"];
+                                if (secondaryStorageAccountKeyValue != null && secondaryStorageAccountKeyValue.Type != JTokenType.Null)
+                                {
+                                    string secondaryStorageAccountKeyInstance = ((string)secondaryStorageAccountKeyValue);
+                                    propertiesInstance.SecondaryStorageAccountKey = secondaryStorageAccountKeyInstance;
+                                }
+                                
+                                JToken storageTableEndpointValue = propertiesValue["storageTableEndpoint"];
+                                if (storageTableEndpointValue != null && storageTableEndpointValue.Type != JTokenType.Null)
+                                {
+                                    string storageTableEndpointInstance = ((string)storageTableEndpointValue);
+                                    propertiesInstance.StorageTableEndpoint = storageTableEndpointInstance;
+                                }
+                                
+                                JToken storageAccountResourceGroupNameValue = propertiesValue["storageAccountResourceGroupName"];
+                                if (storageAccountResourceGroupNameValue != null && storageAccountResourceGroupNameValue.Type != JTokenType.Null)
+                                {
+                                    string storageAccountResourceGroupNameInstance = ((string)storageAccountResourceGroupNameValue);
+                                    propertiesInstance.StorageAccountResourceGroupName = storageAccountResourceGroupNameInstance;
+                                }
+                                
+                                JToken storageAccountSubscriptionIdValue = propertiesValue["storageAccountSubscriptionId"];
+                                if (storageAccountSubscriptionIdValue != null && storageAccountSubscriptionIdValue.Type != JTokenType.Null)
+                                {
+                                    string storageAccountSubscriptionIdInstance = ((string)storageAccountSubscriptionIdValue);
+                                    propertiesInstance.StorageAccountSubscriptionId = storageAccountSubscriptionIdInstance;
+                                }
+                                
+                                JToken proxyDnsNameValue = propertiesValue["proxyDnsName"];
+                                if (proxyDnsNameValue != null && proxyDnsNameValue.Type != JTokenType.Null)
+                                {
+                                    string proxyDnsNameInstance = ((string)proxyDnsNameValue);
+                                    propertiesInstance.ProxyDnsName = proxyDnsNameInstance;
+                                }
+                                
+                                JToken proxyPortValue = propertiesValue["proxyPort"];
+                                if (proxyPortValue != null && proxyPortValue.Type != JTokenType.Null)
+                                {
+                                    string proxyPortInstance = ((string)proxyPortValue);
+                                    propertiesInstance.ProxyPort = proxyPortInstance;
+                                }
+                                
+                                JToken useServerDefaultValue = propertiesValue["useServerDefault"];
+                                if (useServerDefaultValue != null && useServerDefaultValue.Type != JTokenType.Null)
+                                {
+                                    bool useServerDefaultInstance = ((bool)useServerDefaultValue);
+                                    propertiesInstance.UseServerDefault = useServerDefaultInstance;
+                                }
+                                
+                                JToken isBlockDirectAccessEnabledValue = propertiesValue["isBlockDirectAccessEnabled"];
+                                if (isBlockDirectAccessEnabledValue != null && isBlockDirectAccessEnabledValue.Type != JTokenType.Null)
+                                {
+                                    bool isBlockDirectAccessEnabledInstance = ((bool)isBlockDirectAccessEnabledValue);
+                                    propertiesInstance.IsBlockDirectAccessEnabled = isBlockDirectAccessEnabledInstance;
+                                }
+                            }
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                databaseSecurityPolicyInstance.Id = idInstance;
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                databaseSecurityPolicyInstance.Type = typeInstance;
+                            }
+                            
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            {
+                                string locationInstance = ((string)locationValue);
+                                databaseSecurityPolicyInstance.Location = locationInstance;
+                            }
+                            
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property in tagsSequenceElement)
+                                {
+                                    string tagsKey = ((string)property.Name);
+                                    string tagsValue = ((string)property.Value);
+                                    databaseSecurityPolicyInstance.Tags.Add(tagsKey, tagsValue);
+                                }
+                            }
+                        }
+                        
                     }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        DatabaseSecurityPolicy databaseSecurityPolicyInstance = new DatabaseSecurityPolicy();
-                        result.DatabaseSecurityPolicy = databaseSecurityPolicyInstance;
-                        
-                        JToken nameValue = responseDoc["name"];
-                        if (nameValue != null && nameValue.Type != JTokenType.Null)
-                        {
-                            string nameInstance = ((string)nameValue);
-                            databaseSecurityPolicyInstance.Name = nameInstance;
-                        }
-                        
-                        JToken propertiesValue = responseDoc["properties"];
-                        if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                        {
-                            DatabaseSecurityPolicyProperties propertiesInstance = new DatabaseSecurityPolicyProperties();
-                            databaseSecurityPolicyInstance.Properties = propertiesInstance;
-                            
-                            JToken isAuditingEnabledValue = propertiesValue["isAuditingEnabled"];
-                            if (isAuditingEnabledValue != null && isAuditingEnabledValue.Type != JTokenType.Null)
-                            {
-                                bool isAuditingEnabledInstance = ((bool)isAuditingEnabledValue);
-                                propertiesInstance.IsAuditingEnabled = isAuditingEnabledInstance;
-                            }
-                            
-                            JToken retentionDaysValue = propertiesValue["retentionDays"];
-                            if (retentionDaysValue != null && retentionDaysValue.Type != JTokenType.Null)
-                            {
-                                int retentionDaysInstance = ((int)retentionDaysValue);
-                                propertiesInstance.RetentionDays = retentionDaysInstance;
-                            }
-                            
-                            JToken isEventTypeDataAccessEnabledValue = propertiesValue["isEventTypeDataAccessEnabled"];
-                            if (isEventTypeDataAccessEnabledValue != null && isEventTypeDataAccessEnabledValue.Type != JTokenType.Null)
-                            {
-                                bool isEventTypeDataAccessEnabledInstance = ((bool)isEventTypeDataAccessEnabledValue);
-                                propertiesInstance.IsEventTypeDataAccessEnabled = isEventTypeDataAccessEnabledInstance;
-                            }
-                            
-                            JToken isEventTypeSchemaChangeEnabledValue = propertiesValue["isEventTypeSchemaChangeEnabled"];
-                            if (isEventTypeSchemaChangeEnabledValue != null && isEventTypeSchemaChangeEnabledValue.Type != JTokenType.Null)
-                            {
-                                bool isEventTypeSchemaChangeEnabledInstance = ((bool)isEventTypeSchemaChangeEnabledValue);
-                                propertiesInstance.IsEventTypeSchemaChangeEnabled = isEventTypeSchemaChangeEnabledInstance;
-                            }
-                            
-                            JToken isEventTypeDataChangesEnabledValue = propertiesValue["isEventTypeDataChangesEnabled"];
-                            if (isEventTypeDataChangesEnabledValue != null && isEventTypeDataChangesEnabledValue.Type != JTokenType.Null)
-                            {
-                                bool isEventTypeDataChangesEnabledInstance = ((bool)isEventTypeDataChangesEnabledValue);
-                                propertiesInstance.IsEventTypeDataChangesEnabled = isEventTypeDataChangesEnabledInstance;
-                            }
-                            
-                            JToken isEventTypeSecurityExceptionsEnabledValue = propertiesValue["isEventTypeSecurityExceptionsEnabled"];
-                            if (isEventTypeSecurityExceptionsEnabledValue != null && isEventTypeSecurityExceptionsEnabledValue.Type != JTokenType.Null)
-                            {
-                                bool isEventTypeSecurityExceptionsEnabledInstance = ((bool)isEventTypeSecurityExceptionsEnabledValue);
-                                propertiesInstance.IsEventTypeSecurityExceptionsEnabled = isEventTypeSecurityExceptionsEnabledInstance;
-                            }
-                            
-                            JToken isEventTypeGrantRevokePermissionsEnabledValue = propertiesValue["isEventTypeGrantRevokePermissionsEnabled"];
-                            if (isEventTypeGrantRevokePermissionsEnabledValue != null && isEventTypeGrantRevokePermissionsEnabledValue.Type != JTokenType.Null)
-                            {
-                                bool isEventTypeGrantRevokePermissionsEnabledInstance = ((bool)isEventTypeGrantRevokePermissionsEnabledValue);
-                                propertiesInstance.IsEventTypeGrantRevokePermissionsEnabled = isEventTypeGrantRevokePermissionsEnabledInstance;
-                            }
-                            
-                            JToken storageAccountNameValue = propertiesValue["storageAccountName"];
-                            if (storageAccountNameValue != null && storageAccountNameValue.Type != JTokenType.Null)
-                            {
-                                string storageAccountNameInstance = ((string)storageAccountNameValue);
-                                propertiesInstance.StorageAccountName = storageAccountNameInstance;
-                            }
-                            
-                            JToken storageAccountKeyValue = propertiesValue["storageAccountKey"];
-                            if (storageAccountKeyValue != null && storageAccountKeyValue.Type != JTokenType.Null)
-                            {
-                                string storageAccountKeyInstance = ((string)storageAccountKeyValue);
-                                propertiesInstance.StorageAccountKey = storageAccountKeyInstance;
-                            }
-                            
-                            JToken secondaryStorageAccountKeyValue = propertiesValue["secondaryStorageAccountKey"];
-                            if (secondaryStorageAccountKeyValue != null && secondaryStorageAccountKeyValue.Type != JTokenType.Null)
-                            {
-                                string secondaryStorageAccountKeyInstance = ((string)secondaryStorageAccountKeyValue);
-                                propertiesInstance.SecondaryStorageAccountKey = secondaryStorageAccountKeyInstance;
-                            }
-                            
-                            JToken storageTableEndpointValue = propertiesValue["storageTableEndpoint"];
-                            if (storageTableEndpointValue != null && storageTableEndpointValue.Type != JTokenType.Null)
-                            {
-                                string storageTableEndpointInstance = ((string)storageTableEndpointValue);
-                                propertiesInstance.StorageTableEndpoint = storageTableEndpointInstance;
-                            }
-                            
-                            JToken storageAccountResourceGroupNameValue = propertiesValue["storageAccountResourceGroupName"];
-                            if (storageAccountResourceGroupNameValue != null && storageAccountResourceGroupNameValue.Type != JTokenType.Null)
-                            {
-                                string storageAccountResourceGroupNameInstance = ((string)storageAccountResourceGroupNameValue);
-                                propertiesInstance.StorageAccountResourceGroupName = storageAccountResourceGroupNameInstance;
-                            }
-                            
-                            JToken storageAccountSubscriptionIdValue = propertiesValue["storageAccountSubscriptionId"];
-                            if (storageAccountSubscriptionIdValue != null && storageAccountSubscriptionIdValue.Type != JTokenType.Null)
-                            {
-                                string storageAccountSubscriptionIdInstance = ((string)storageAccountSubscriptionIdValue);
-                                propertiesInstance.StorageAccountSubscriptionId = storageAccountSubscriptionIdInstance;
-                            }
-                            
-                            JToken proxyDnsNameValue = propertiesValue["proxyDnsName"];
-                            if (proxyDnsNameValue != null && proxyDnsNameValue.Type != JTokenType.Null)
-                            {
-                                string proxyDnsNameInstance = ((string)proxyDnsNameValue);
-                                propertiesInstance.ProxyDnsName = proxyDnsNameInstance;
-                            }
-                            
-                            JToken proxyPortValue = propertiesValue["proxyPort"];
-                            if (proxyPortValue != null && proxyPortValue.Type != JTokenType.Null)
-                            {
-                                string proxyPortInstance = ((string)proxyPortValue);
-                                propertiesInstance.ProxyPort = proxyPortInstance;
-                            }
-                            
-                            JToken useServerDefaultValue = propertiesValue["useServerDefault"];
-                            if (useServerDefaultValue != null && useServerDefaultValue.Type != JTokenType.Null)
-                            {
-                                bool useServerDefaultInstance = ((bool)useServerDefaultValue);
-                                propertiesInstance.UseServerDefault = useServerDefaultInstance;
-                            }
-                            
-                            JToken isBlockDirectAccessEnabledValue = propertiesValue["isBlockDirectAccessEnabled"];
-                            if (isBlockDirectAccessEnabledValue != null && isBlockDirectAccessEnabledValue.Type != JTokenType.Null)
-                            {
-                                bool isBlockDirectAccessEnabledInstance = ((bool)isBlockDirectAccessEnabledValue);
-                                propertiesInstance.IsBlockDirectAccessEnabled = isBlockDirectAccessEnabledInstance;
-                            }
-                        }
-                        
-                        JToken idValue = responseDoc["id"];
-                        if (idValue != null && idValue.Type != JTokenType.Null)
-                        {
-                            string idInstance = ((string)idValue);
-                            databaseSecurityPolicyInstance.Id = idInstance;
-                        }
-                        
-                        JToken typeValue = responseDoc["type"];
-                        if (typeValue != null && typeValue.Type != JTokenType.Null)
-                        {
-                            string typeInstance = ((string)typeValue);
-                            databaseSecurityPolicyInstance.Type = typeInstance;
-                        }
-                        
-                        JToken locationValue = responseDoc["location"];
-                        if (locationValue != null && locationValue.Type != JTokenType.Null)
-                        {
-                            string locationInstance = ((string)locationValue);
-                            databaseSecurityPolicyInstance.Location = locationInstance;
-                        }
-                        
-                        JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
-                        if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                        {
-                            foreach (JProperty property in tagsSequenceElement)
-                            {
-                                string tagsKey = ((string)property.Name);
-                                string tagsValue = ((string)property.Value);
-                                databaseSecurityPolicyInstance.Tags.Add(tagsKey, tagsValue);
-                            }
-                        }
-                    }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -366,7 +367,7 @@ namespace Microsoft.Azure.Management.Sql
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -412,7 +413,7 @@ namespace Microsoft.Azure.Management.Sql
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> UpdateAsync(string resourceGroupName, string serverName, string databaseName, DatabaseSecurityPolicyUpdateParameters parameters, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> UpdateAsync(string resourceGroupName, string serverName, string databaseName, DatabaseSecurityPolicyUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -437,21 +438,21 @@ namespace Microsoft.Azure.Management.Sql
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serverName", serverName);
                 tracingParameters.Add("databaseName", databaseName);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "UpdateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "UpdateAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId) + "/resourceGroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.Sql/servers/" + Uri.EscapeDataString(serverName) + "/databaseSecurityPolicies/" + Uri.EscapeDataString(databaseName) + "?";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourceGroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.Sql/servers/" + Uri.EscapeDataString(serverName) + "/databaseSecurityPolicies/" + Uri.EscapeDataString(databaseName) + "?";
             url = url + "api-version=2014-04-01";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -548,7 +549,7 @@ namespace Microsoft.Azure.Management.Sql
                 
                 propertiesValue["isBlockDirectAccessEnabled"] = parameters.Properties.IsBlockDirectAccessEnabled;
                 
-                requestContent = requestDoc.ToString(Formatting.Indented);
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
                 
@@ -558,13 +559,13 @@ namespace Microsoft.Azure.Management.Sql
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -573,14 +574,15 @@ namespace Microsoft.Azure.Management.Sql
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
-                    result = new OperationResponse();
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -589,7 +591,7 @@ namespace Microsoft.Azure.Management.Sql
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }

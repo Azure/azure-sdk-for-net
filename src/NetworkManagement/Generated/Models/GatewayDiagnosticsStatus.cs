@@ -21,7 +21,7 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Network.Models;
 
 namespace Microsoft.WindowsAzure.Management.Network.Models
@@ -29,7 +29,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
     /// <summary>
     /// The status of a gateway diagnostics operation.
     /// </summary>
-    public partial class GatewayDiagnosticsStatus : OperationResponse
+    public partial class GatewayDiagnosticsStatus : AzureOperationResponse
     {
         private string _diagnosticsUrl;
         

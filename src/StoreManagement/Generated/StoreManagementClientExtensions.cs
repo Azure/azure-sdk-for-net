@@ -23,10 +23,10 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Store;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.Management.Store
 {
     /// <summary>
     /// The Windows Azure Store API is a REST API for managing Windows Azure

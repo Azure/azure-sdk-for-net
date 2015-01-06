@@ -21,14 +21,14 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
     /// Parameters returned from the Create Virtual Machine Image operation.
     /// </summary>
-    public partial class VirtualMachineOSImageUpdateResponse : OperationResponse
+    public partial class VirtualMachineOSImageUpdateResponse : AzureOperationResponse
     {
         private string _category;
         

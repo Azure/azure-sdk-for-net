@@ -21,14 +21,14 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
     /// <summary>
     /// The website operation response.
     /// </summary>
-    public partial class WebSiteAsyncOperationResponse : OperationResponse
+    public partial class WebSiteAsyncOperationResponse : AzureOperationResponse
     {
         private string _location;
         

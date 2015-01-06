@@ -21,14 +21,14 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
     /// A virtual machine image associated with your subscription.
     /// </summary>
-    public partial class VirtualMachineOSImageGetResponse : OperationResponse
+    public partial class VirtualMachineOSImageGetResponse : AzureOperationResponse
     {
         private string _affinityGroup;
         

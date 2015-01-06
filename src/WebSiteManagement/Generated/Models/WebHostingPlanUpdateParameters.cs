@@ -30,6 +30,18 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
     /// </summary>
     public partial class WebHostingPlanUpdateParameters
     {
+        private string _adminSiteName;
+        
+        /// <summary>
+        /// Optional. The admin site. The admin site is used to deploy site
+        /// extensions or contents shared by all site in the plan.
+        /// </summary>
+        public string AdminSiteName
+        {
+            get { return this._adminSiteName; }
+            set { this._adminSiteName = value; }
+        }
+        
         private int? _numberOfWorkers;
         
         /// <summary>

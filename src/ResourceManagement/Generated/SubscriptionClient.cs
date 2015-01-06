@@ -22,9 +22,8 @@
 using System;
 using System.Linq;
 using System.Net.Http;
+using Hyak.Common;
 using Microsoft.Azure.Subscriptions;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
 
 namespace Microsoft.Azure.Subscriptions
 {
@@ -106,7 +105,7 @@ namespace Microsoft.Azure.Subscriptions
         /// <summary>
         /// Initializes a new instance of the SubscriptionClient class.
         /// </summary>
-        private SubscriptionClient()
+        public SubscriptionClient()
             : base()
         {
             this._subscriptions = new SubscriptionOperations(this);
@@ -169,7 +168,7 @@ namespace Microsoft.Azure.Subscriptions
         /// <param name='httpClient'>
         /// The Http client
         /// </param>
-        private SubscriptionClient(HttpClient httpClient)
+        public SubscriptionClient(HttpClient httpClient)
             : base(httpClient)
         {
             this._subscriptions = new SubscriptionOperations(this);

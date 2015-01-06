@@ -23,9 +23,9 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Automation;
 using Microsoft.Azure.Management.Automation.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Automation
 {
@@ -102,7 +102,7 @@ namespace Microsoft.Azure.Management.Automation
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Delete(this IRunbookOperations operations, string automationAccount, string runbookId)
+        public static AzureOperationResponse Delete(this IRunbookOperations operations, string automationAccount, string runbookId)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -130,7 +130,7 @@ namespace Microsoft.Azure.Management.Automation
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> DeleteAsync(this IRunbookOperations operations, string automationAccount, string runbookId)
+        public static Task<AzureOperationResponse> DeleteAsync(this IRunbookOperations operations, string automationAccount, string runbookId)
         {
             return operations.DeleteAsync(automationAccount, runbookId, CancellationToken.None);
         }
@@ -155,7 +155,7 @@ namespace Microsoft.Azure.Management.Automation
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse DeleteScheduleLink(this IRunbookOperations operations, string automationAccount, RunbookDeleteScheduleLinkParameters parameters)
+        public static AzureOperationResponse DeleteScheduleLink(this IRunbookOperations operations, string automationAccount, RunbookDeleteScheduleLinkParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -184,7 +184,7 @@ namespace Microsoft.Azure.Management.Automation
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> DeleteScheduleLinkAsync(this IRunbookOperations operations, string automationAccount, RunbookDeleteScheduleLinkParameters parameters)
+        public static Task<AzureOperationResponse> DeleteScheduleLinkAsync(this IRunbookOperations operations, string automationAccount, RunbookDeleteScheduleLinkParameters parameters)
         {
             return operations.DeleteScheduleLinkAsync(automationAccount, parameters, CancellationToken.None);
         }
@@ -712,7 +712,7 @@ namespace Microsoft.Azure.Management.Automation
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Update(this IRunbookOperations operations, string automationAccount, RunbookUpdateParameters parameters)
+        public static AzureOperationResponse Update(this IRunbookOperations operations, string automationAccount, RunbookUpdateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -740,7 +740,7 @@ namespace Microsoft.Azure.Management.Automation
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> UpdateAsync(this IRunbookOperations operations, string automationAccount, RunbookUpdateParameters parameters)
+        public static Task<AzureOperationResponse> UpdateAsync(this IRunbookOperations operations, string automationAccount, RunbookUpdateParameters parameters)
         {
             return operations.UpdateAsync(automationAccount, parameters, CancellationToken.None);
         }

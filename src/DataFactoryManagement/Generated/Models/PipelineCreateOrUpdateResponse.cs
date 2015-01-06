@@ -21,15 +21,15 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.DataFactories.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
     /// The create or update pipeline operation response.
     /// </summary>
-    public partial class PipelineCreateOrUpdateResponse : OperationResponse
+    public partial class PipelineCreateOrUpdateResponse : AzureOperationResponse
     {
         private string _location;
         

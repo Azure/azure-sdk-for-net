@@ -21,15 +21,15 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Resources.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Resources.Models
 {
     /// <summary>
     /// A standard service response for long running operations.
     /// </summary>
-    public partial class LongRunningOperationResponse : OperationResponse
+    public partial class LongRunningOperationResponse : AzureOperationResponse
     {
         private ResourceManagementError _error;
         

@@ -23,11 +23,11 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Compute;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.Management.Compute
 {
     /// <summary>
     /// The Service Management API provides programmatic access to much of the
@@ -140,7 +140,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginAddingExtension(this IHostedServiceOperations operations, string serviceName, HostedServiceAddExtensionParameters parameters)
+        public static AzureOperationResponse BeginAddingExtension(this IHostedServiceOperations operations, string serviceName, HostedServiceAddExtensionParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -174,7 +174,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginAddingExtensionAsync(this IHostedServiceOperations operations, string serviceName, HostedServiceAddExtensionParameters parameters)
+        public static Task<AzureOperationResponse> BeginAddingExtensionAsync(this IHostedServiceOperations operations, string serviceName, HostedServiceAddExtensionParameters parameters)
         {
             return operations.BeginAddingExtensionAsync(serviceName, parameters, CancellationToken.None);
         }
@@ -198,7 +198,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginDeletingAll(this IHostedServiceOperations operations, string serviceName)
+        public static AzureOperationResponse BeginDeletingAll(this IHostedServiceOperations operations, string serviceName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -226,7 +226,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginDeletingAllAsync(this IHostedServiceOperations operations, string serviceName)
+        public static Task<AzureOperationResponse> BeginDeletingAllAsync(this IHostedServiceOperations operations, string serviceName)
         {
             return operations.BeginDeletingAllAsync(serviceName, CancellationToken.None);
         }
@@ -252,7 +252,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginDeletingExtension(this IHostedServiceOperations operations, string serviceName, string extensionId)
+        public static AzureOperationResponse BeginDeletingExtension(this IHostedServiceOperations operations, string serviceName, string extensionId)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -282,7 +282,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginDeletingExtensionAsync(this IHostedServiceOperations operations, string serviceName, string extensionId)
+        public static Task<AzureOperationResponse> BeginDeletingExtensionAsync(this IHostedServiceOperations operations, string serviceName, string extensionId)
         {
             return operations.BeginDeletingExtensionAsync(serviceName, extensionId, CancellationToken.None);
         }
@@ -351,7 +351,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Create(this IHostedServiceOperations operations, HostedServiceCreateParameters parameters)
+        public static AzureOperationResponse Create(this IHostedServiceOperations operations, HostedServiceCreateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -378,7 +378,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> CreateAsync(this IHostedServiceOperations operations, HostedServiceCreateParameters parameters)
+        public static Task<AzureOperationResponse> CreateAsync(this IHostedServiceOperations operations, HostedServiceCreateParameters parameters)
         {
             return operations.CreateAsync(parameters, CancellationToken.None);
         }
@@ -400,7 +400,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Delete(this IHostedServiceOperations operations, string serviceName)
+        public static AzureOperationResponse Delete(this IHostedServiceOperations operations, string serviceName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -426,7 +426,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> DeleteAsync(this IHostedServiceOperations operations, string serviceName)
+        public static Task<AzureOperationResponse> DeleteAsync(this IHostedServiceOperations operations, string serviceName)
         {
             return operations.DeleteAsync(serviceName, CancellationToken.None);
         }
@@ -938,7 +938,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Update(this IHostedServiceOperations operations, string serviceName, HostedServiceUpdateParameters parameters)
+        public static AzureOperationResponse Update(this IHostedServiceOperations operations, string serviceName, HostedServiceUpdateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -968,7 +968,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> UpdateAsync(this IHostedServiceOperations operations, string serviceName, HostedServiceUpdateParameters parameters)
+        public static Task<AzureOperationResponse> UpdateAsync(this IHostedServiceOperations operations, string serviceName, HostedServiceUpdateParameters parameters)
         {
             return operations.UpdateAsync(serviceName, parameters, CancellationToken.None);
         }

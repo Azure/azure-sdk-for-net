@@ -23,11 +23,11 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.WebSites;
 using Microsoft.WindowsAzure.Management.WebSites.Models;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.Management.WebSites
 {
     /// <summary>
     /// The Web Sites Management API provides a RESTful set of web services
@@ -128,7 +128,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse RegisterSubscription(this IWebSiteManagementClient operations)
+        public static AzureOperationResponse RegisterSubscription(this IWebSiteManagementClient operations)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -148,7 +148,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> RegisterSubscriptionAsync(this IWebSiteManagementClient operations)
+        public static Task<AzureOperationResponse> RegisterSubscriptionAsync(this IWebSiteManagementClient operations)
         {
             return operations.RegisterSubscriptionAsync(CancellationToken.None);
         }
@@ -164,7 +164,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse UnregisterSubscription(this IWebSiteManagementClient operations)
+        public static AzureOperationResponse UnregisterSubscription(this IWebSiteManagementClient operations)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -184,7 +184,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> UnregisterSubscriptionAsync(this IWebSiteManagementClient operations)
+        public static Task<AzureOperationResponse> UnregisterSubscriptionAsync(this IWebSiteManagementClient operations)
         {
             return operations.UnregisterSubscriptionAsync(CancellationToken.None);
         }

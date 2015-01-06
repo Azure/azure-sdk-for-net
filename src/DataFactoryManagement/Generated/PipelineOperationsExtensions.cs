@@ -23,9 +23,9 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.DataFactories;
 using Microsoft.Azure.Management.DataFactories.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.DataFactories
 {
@@ -551,7 +551,7 @@ namespace Microsoft.Azure.Management.DataFactories
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Resume(this IPipelineOperations operations, string resourceGroupName, string dataFactoryName, string dataPipelineName)
+        public static AzureOperationResponse Resume(this IPipelineOperations operations, string resourceGroupName, string dataFactoryName, string dataPipelineName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -580,7 +580,7 @@ namespace Microsoft.Azure.Management.DataFactories
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> ResumeAsync(this IPipelineOperations operations, string resourceGroupName, string dataFactoryName, string dataPipelineName)
+        public static Task<AzureOperationResponse> ResumeAsync(this IPipelineOperations operations, string resourceGroupName, string dataFactoryName, string dataPipelineName)
         {
             return operations.ResumeAsync(resourceGroupName, dataFactoryName, dataPipelineName, CancellationToken.None);
         }
@@ -609,7 +609,7 @@ namespace Microsoft.Azure.Management.DataFactories
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse SetActivePeriod(this IPipelineOperations operations, string resourceGroupName, string dataFactoryName, string dataPipelineName, PipelineSetActivePeriodParameters parameters)
+        public static AzureOperationResponse SetActivePeriod(this IPipelineOperations operations, string resourceGroupName, string dataFactoryName, string dataPipelineName, PipelineSetActivePeriodParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -642,7 +642,7 @@ namespace Microsoft.Azure.Management.DataFactories
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> SetActivePeriodAsync(this IPipelineOperations operations, string resourceGroupName, string dataFactoryName, string dataPipelineName, PipelineSetActivePeriodParameters parameters)
+        public static Task<AzureOperationResponse> SetActivePeriodAsync(this IPipelineOperations operations, string resourceGroupName, string dataFactoryName, string dataPipelineName, PipelineSetActivePeriodParameters parameters)
         {
             return operations.SetActivePeriodAsync(resourceGroupName, dataFactoryName, dataPipelineName, parameters, CancellationToken.None);
         }
@@ -667,7 +667,7 @@ namespace Microsoft.Azure.Management.DataFactories
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Suspend(this IPipelineOperations operations, string resourceGroupName, string dataFactoryName, string dataPipelineName)
+        public static AzureOperationResponse Suspend(this IPipelineOperations operations, string resourceGroupName, string dataFactoryName, string dataPipelineName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -696,7 +696,7 @@ namespace Microsoft.Azure.Management.DataFactories
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> SuspendAsync(this IPipelineOperations operations, string resourceGroupName, string dataFactoryName, string dataPipelineName)
+        public static Task<AzureOperationResponse> SuspendAsync(this IPipelineOperations operations, string resourceGroupName, string dataFactoryName, string dataPipelineName)
         {
             return operations.SuspendAsync(resourceGroupName, dataFactoryName, dataPipelineName, CancellationToken.None);
         }

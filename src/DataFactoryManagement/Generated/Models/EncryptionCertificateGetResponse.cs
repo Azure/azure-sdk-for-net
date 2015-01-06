@@ -21,14 +21,14 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
     /// The Get encryption certificate operation response.
     /// </summary>
-    public partial class EncryptionCertificateGetResponse : OperationResponse
+    public partial class EncryptionCertificateGetResponse : AzureOperationResponse
     {
         private byte[] _certificateBytes;
         

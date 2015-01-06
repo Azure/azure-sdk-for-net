@@ -21,15 +21,15 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Resources.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Resources.Models
 {
     /// <summary>
     /// Template deployment operation create result.
     /// </summary>
-    public partial class DeploymentOperationsCreateResult : OperationResponse
+    public partial class DeploymentOperationsCreateResult : AzureOperationResponse
     {
         private Deployment _deployment;
         

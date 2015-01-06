@@ -22,8 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
@@ -31,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
     /// <summary>
     /// The Get Virtual Machine operation response.
     /// </summary>
-    public partial class VirtualMachineGetResponse : OperationResponse
+    public partial class VirtualMachineGetResponse : AzureOperationResponse
     {
         private string _availabilitySetName;
         

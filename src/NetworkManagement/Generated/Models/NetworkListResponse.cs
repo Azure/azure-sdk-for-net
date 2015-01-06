@@ -22,8 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Network.Models;
 
 namespace Microsoft.WindowsAzure.Management.Network.Models
@@ -31,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
     /// <summary>
     /// The response structure for the Network Operations List operation.
     /// </summary>
-    public partial class NetworkListResponse : OperationResponse, IEnumerable<NetworkListResponse.VirtualNetworkSite>
+    public partial class NetworkListResponse : AzureOperationResponse, IEnumerable<NetworkListResponse.VirtualNetworkSite>
     {
         private IList<NetworkListResponse.VirtualNetworkSite> _virtualNetworkSites;
         

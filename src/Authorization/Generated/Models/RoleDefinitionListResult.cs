@@ -22,16 +22,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Authorization.Models;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Management.Authorization.Models
 {
     /// <summary>
     /// Role definition list operation result.
     /// </summary>
-    public partial class RoleDefinitionListResult : OperationResponse
+    public partial class RoleDefinitionListResult : AzureOperationResponse
     {
         private IList<RoleDefinition> _roleDefinitions;
         

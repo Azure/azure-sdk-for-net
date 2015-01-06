@@ -23,8 +23,8 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Automation.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Automation
 {
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.Automation
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> DeleteAsync(string automationAccount, string runbookId, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> DeleteAsync(string automationAccount, string runbookId, CancellationToken cancellationToken);
         
         /// <summary>
         /// Delete the runbook schedule link.  (see
@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Management.Automation
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> DeleteScheduleLinkAsync(string automationAccount, RunbookDeleteScheduleLinkParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> DeleteScheduleLinkAsync(string automationAccount, RunbookDeleteScheduleLinkParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Edit the runbook identified by runbookId.  (see
@@ -306,6 +306,6 @@ namespace Microsoft.Azure.Management.Automation
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> UpdateAsync(string automationAccount, RunbookUpdateParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> UpdateAsync(string automationAccount, RunbookUpdateParameters parameters, CancellationToken cancellationToken);
     }
 }
