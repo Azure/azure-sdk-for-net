@@ -22,7 +22,6 @@
   </PropertyGroup>
   <Import Project="..\library.props" />
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="Microsoft.Azure.Common.Dependencies.nuget.proj" />
     <None Include="Microsoft.Azure.Common.Dependencies.nuspec" />
     <None Include="Microsoft.Azure.Common.nuget.proj" />

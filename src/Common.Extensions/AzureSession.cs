@@ -12,11 +12,11 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
+using System;
+using System.IO;
 using Microsoft.Azure.Common.Extensions.Factories;
 using Microsoft.Azure.Common.Extensions.Models;
 using Microsoft.Azure.Common.Extensions.Properties;
-using System;
-using System.IO;
 
 namespace Microsoft.Azure.Common.Extensions
 {
