@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata minClientVersion="2.5">
+    <id>Microsoft.Azure.Common.Extensions</id>
+    <title>Microsoft Azure Common Extensions Library</title>
+    <version>$version$</version>
+    <authors>Microsoft</authors>
+    <owners>azure-sdk, Microsoft</owners>
+    <licenseUrl>http://aka.ms/windowsazureapache2</licenseUrl>
+    <projectUrl>https://github.com/WindowsAzure/azure-sdk-for-net</projectUrl>
+    <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <summary>Provides infrastructure for common authentication and additional convenience APIs for Azure REST clients.</summary>
+    <description>Provides infrastructure for common authentication and additional convenience APIs for Azure REST clients.</description>
+    <copyright>Copyright © Microsoft Corporation</copyright>
+    <tags>Microsoft "Microsoft Azure" Azure cloud REST HTTP client core common azureofficial windowsazureofficial</tags>
+    <dependencies>
+      <dependency id="Microsoft.WindowsAzure.Common" version="1.4.1" />
+      <dependency id="Microsoft.IdentityModel.Clients.ActiveDirectory" version="2.11.10918.1222" />
+      <dependency id="Microsoft.WindowsAzure.Management" version="2.2.2" />
+      <dependency id="Microsoft.Azure.Management.Resources" version="2.7.0-preview" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="..\binaries\net45\Microsoft.Azure.Common.Extensions.dll" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.Azure.Common.Extensions.pdb" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.Azure.Common.Extensions.xml" target="lib\net45" />
+  </files>
+</package>

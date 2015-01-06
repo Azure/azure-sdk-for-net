@@ -32,6 +32,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Hyak.Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c66ce9294aae1300, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Hyak.Common.1.0.0\lib\portable-net403+win+wpa81\Hyak.Common.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Threading.Tasks">
       <HintPath>..\..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.dll</HintPath>
     </Reference>
@@ -40,6 +44,10 @@
     </Reference>
     <Reference Include="Microsoft.Threading.Tasks.Extensions.Desktop">
       <HintPath>..\..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.Desktop.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -76,8 +84,6 @@
     <Compile Include="Internals\ParserHelperTests.cs" />
     <Compile Include="Internals\LazyDictionaryTest.cs" />
     <Compile Include="Internals\LazyListTest.cs" />
-    <Compile Include="OData\FilterStringTest.cs" />
-    <Compile Include="Internals\UriHelperTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TokenCloudCredentialsTest.cs" />
     <Compile Include="ServiceClientTest.cs" />
@@ -86,6 +92,7 @@
     <Compile Include="TransientFaultHandling\GeneralRetryPolicyTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

@@ -13,18 +13,15 @@
 // limitations under the License.
 //
 
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
+using Hyak.Common;
+using Microsoft.Azure.Common;
 using Xunit;
 using Xunit.Extensions;
 
-namespace Microsoft.WindowsAzure.Common.Test
+namespace Microsoft.Azure.Common.Test
 {
     public class CloudExceptionTest
     {
@@ -75,7 +72,6 @@ namespace Microsoft.WindowsAzure.Common.Test
         private string jsonErrorMessageWithParent2 = @"{'error':{'code':'ResourceGroupNotFound','message':
                 'Resource group `ResourceGroup_crosoftAwillAofferAmoreAWebAservicemnopqrstuvwxyz1` could not be found.'}}";
 
-        private string htmlDefaultError = @"<html>error<h1>details</h1></html>";
         private HttpRequestMessage genericMessage;
         private HttpRequestMessage genericMessageWithoutBody;
 
@@ -109,17 +105,6 @@ namespace Microsoft.WindowsAzure.Common.Test
         }
 
         [Fact]
-        public void ExceptionContainsRequestIdAndRoutingRequestId()
-        {
-            var ex = CloudException.Create(genericMessage, genericMessageString, notFoundResponse, "");
-
-            Assert.Null(notFoundResponse.Content.Headers.ContentType);
-            Assert.Equal(ex.RequestId, "content1");
-            Assert.Equal(ex.RoutingRequestId, "content2");
-            Assert.NotNull(ex);
-        }
-
-        [Fact]
         public void ExceptionIsCreatedFromNullResponseString()
         {
             var ex = CloudException.Create(genericMessage, genericMessageString, notFoundResponse, null);
@@ -142,8 +127,8 @@ namespace Microsoft.WindowsAzure.Common.Test
             var ex = CloudException.Create(genericMessage, genericMessageString, serverErrorResponse, jsonErrorMessageString);
 
             Assert.Equal("BadRequest: The provided database ‘foo’ has an invalid username.", ex.Message);
-            Assert.Equal("The provided database ‘foo’ has an invalid username.", ex.ErrorMessage);
-            Assert.Equal("BadRequest", ex.ErrorCode);
+            Assert.Equal("The provided database ‘foo’ has an invalid username.", ex.Error.Message);
+            Assert.Equal("BadRequest", ex.Error.Code);
         }
 
         [Fact]
@@ -153,8 +138,8 @@ namespace Microsoft.WindowsAzure.Common.Test
                                            jsonErrorMessageStringWithCamelCase);
 
             Assert.Equal("BadRequest: The provided database ‘foo’ has an invalid username.", ex.Message);
-            Assert.Equal("The provided database ‘foo’ has an invalid username.", ex.ErrorMessage);
-            Assert.Equal("BadRequest", ex.ErrorCode);
+            Assert.Equal("The provided database ‘foo’ has an invalid username.", ex.Error.Message);
+            Assert.Equal("BadRequest", ex.Error.Code);
         }
 
         [Fact]
@@ -164,8 +149,8 @@ namespace Microsoft.WindowsAzure.Common.Test
                                            jsonErrorMessageWithParent);
 
             Assert.Equal("BadRequest: The provided database ‘foo’ has an invalid username.", ex.Message);
-            Assert.Equal("The provided database ‘foo’ has an invalid username.", ex.ErrorMessage);
-            Assert.Equal("BadRequest", ex.ErrorCode);
+            Assert.Equal("The provided database ‘foo’ has an invalid username.", ex.Error.Message);
+            Assert.Equal("BadRequest", ex.Error.Code);
         }
 
         [Fact]
@@ -174,8 +159,8 @@ namespace Microsoft.WindowsAzure.Common.Test
             var ex = CloudException.Create(genericMessageWithoutBody, null, serverErrorResponseWithParent2, jsonErrorMessageWithParent2);
 
             Assert.Equal("ResourceGroupNotFound: Resource group `ResourceGroup_crosoftAwillAofferAmoreAWebAservicemnopqrstuvwxyz1` could not be found.", ex.Message);
-            Assert.Equal("Resource group `ResourceGroup_crosoftAwillAofferAmoreAWebAservicemnopqrstuvwxyz1` could not be found.", ex.ErrorMessage);
-            Assert.Equal("ResourceGroupNotFound", ex.ErrorCode);
+            Assert.Equal("Resource group `ResourceGroup_crosoftAwillAofferAmoreAWebAservicemnopqrstuvwxyz1` could not be found.", ex.Error.Message);
+            Assert.Equal("ResourceGroupNotFound", ex.Error.Code);
         }
 
         [Fact]

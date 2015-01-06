@@ -21,10 +21,11 @@ using System.Net.Http;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Hyak.Common.Internals;
+using Microsoft.Azure.Common.Internals;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.Azure
 {
     /// <summary>
     /// Credentials using a management certificate to authorize requests.
@@ -62,13 +63,9 @@ namespace Microsoft.WindowsAzure
         /// </param>
         public CertificateCloudCredentials(string subscriptionId, X509Certificate2 managementCertificate)
         {
-            if (subscriptionId == null)
+            if (string.IsNullOrEmpty(subscriptionId))
             {
                 throw new ArgumentNullException("subscriptionId");
-            }
-            else if (subscriptionId.Length == 0)
-            {
-                throw CloudExtensions.CreateArgumentEmptyException("subscriptionId");
             }
             else if (managementCertificate == null)
             {
@@ -87,6 +84,7 @@ namespace Microsoft.WindowsAzure
         /// <returns>
         /// CertificateCloudCredentials is created, null otherwise.
         /// </returns>
+        [Obsolete("Deprecated method. Use public constructor instead.")]
         public static CertificateCloudCredentials Create(IDictionary<string, object> settings)
         {
             if (settings == null)
@@ -94,12 +92,10 @@ namespace Microsoft.WindowsAzure
                 throw new ArgumentNullException("settings");
             }
 
-            string subscriptionId = ConfigurationHelper.GetString(settings, "SubscriptionId", false);
             X509Certificate2 certificate = PlatformConfigurationHelper.GetCertificate(settings, "ManagementCertificate", false);
-
-            if (subscriptionId != null && certificate != null)
+            if (settings.ContainsKey("SubscriptionId"))
             {
-                return new CertificateCloudCredentials(subscriptionId, certificate);
+                return new CertificateCloudCredentials(settings["SubscriptionId"].ToString(), certificate);
             }
 
             return null;

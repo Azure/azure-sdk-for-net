@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
 using Xunit;
 
-namespace Microsoft.WindowsAzure.Common.Test.Internals
+namespace Microsoft.Azure.Common.Test.Internals
 {
     public class LazyListTest
     {
