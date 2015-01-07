@@ -23,8 +23,8 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.DataFactories.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.DataFactories
 {
@@ -97,6 +97,6 @@ namespace Microsoft.Azure.Management.DataFactories
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> SetStatusAsync(string resourceGroupName, string dataFactoryName, string tableName, DataSliceSetStatusParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> SetStatusAsync(string resourceGroupName, string dataFactoryName, string tableName, DataSliceSetStatusParameters parameters, CancellationToken cancellationToken);
     }
 }

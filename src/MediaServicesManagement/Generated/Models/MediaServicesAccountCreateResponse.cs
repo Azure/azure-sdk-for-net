@@ -21,7 +21,7 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.MediaServices.Models;
 
 namespace Microsoft.WindowsAzure.Management.MediaServices.Models
@@ -29,7 +29,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices.Models
     /// <summary>
     /// The Create Media Services Account operation response.
     /// </summary>
-    public partial class MediaServicesAccountCreateResponse : OperationResponse
+    public partial class MediaServicesAccountCreateResponse : AzureOperationResponse
     {
         private MediaServicesCreatedAccount _account;
         

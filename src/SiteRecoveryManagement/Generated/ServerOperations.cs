@@ -28,9 +28,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
 using Microsoft.WindowsAzure.Management.SiteRecovery;
 using Microsoft.WindowsAzure.Management.SiteRecovery.Models;
 
@@ -39,7 +37,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
     /// <summary>
     /// Definition of server operations for the Site Recovery extension.
     /// </summary>
-    internal partial class ServerOperations : IServiceOperations<SiteRecoveryManagementClient>, Microsoft.WindowsAzure.Management.SiteRecovery.IServerOperations
+    internal partial class ServerOperations : IServiceOperations<SiteRecoveryManagementClient>, IServerOperations
     {
         /// <summary>
         /// Initializes a new instance of the ServerOperations class.
@@ -78,7 +76,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
         /// <returns>
         /// The response model for the server object
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.SiteRecovery.Models.ServerResponse> GetAsync(string serverId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<ServerResponse> GetAsync(string serverId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             if (serverId == null)
@@ -87,19 +85,19 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("serverId", serverId);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
-                Tracing.Enter(invocationId, this, "GetAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/WAHyperVRecoveryManager/~/HyperVRecoveryManagerVault/" + this.Client.ResourceName.Trim() + "/Servers/" + serverId.Trim() + "?";
+            string url = (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/cloudservices/" + Uri.EscapeDataString(this.Client.CloudServiceName) + "/resources/WAHyperVRecoveryManager/~/HyperVRecoveryManagerVault/" + Uri.EscapeDataString(this.Client.ResourceName) + "/Servers/" + Uri.EscapeDataString(serverId) + "?";
             url = url + "api-version=2014-10-27";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -137,13 +135,13 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -152,7 +150,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -160,60 +158,63 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                     // Create Result
                     ServerResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new ServerResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement serviceResourceElement = responseDoc.Element(XName.Get("ServiceResource", "http://schemas.microsoft.com/windowsazure"));
-                    if (serviceResourceElement != null)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        Server serviceResourceInstance = new Server();
-                        result.Server = serviceResourceInstance;
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new ServerResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
                         
-                        XElement providerVersionElement = serviceResourceElement.Element(XName.Get("ProviderVersion", "http://schemas.microsoft.com/windowsazure"));
-                        if (providerVersionElement != null)
+                        XElement serviceResourceElement = responseDoc.Element(XName.Get("ServiceResource", "http://schemas.microsoft.com/windowsazure"));
+                        if (serviceResourceElement != null)
                         {
-                            string providerVersionInstance = providerVersionElement.Value;
-                            serviceResourceInstance.ProviderVersion = providerVersionInstance;
+                            Server serviceResourceInstance = new Server();
+                            result.Server = serviceResourceInstance;
+                            
+                            XElement providerVersionElement = serviceResourceElement.Element(XName.Get("ProviderVersion", "http://schemas.microsoft.com/windowsazure"));
+                            if (providerVersionElement != null)
+                            {
+                                string providerVersionInstance = providerVersionElement.Value;
+                                serviceResourceInstance.ProviderVersion = providerVersionInstance;
+                            }
+                            
+                            XElement serverVersionElement = serviceResourceElement.Element(XName.Get("ServerVersion", "http://schemas.microsoft.com/windowsazure"));
+                            if (serverVersionElement != null)
+                            {
+                                string serverVersionInstance = serverVersionElement.Value;
+                                serviceResourceInstance.ServerVersion = serverVersionInstance;
+                            }
+                            
+                            XElement lastHeartbeatElement = serviceResourceElement.Element(XName.Get("LastHeartbeat", "http://schemas.microsoft.com/windowsazure"));
+                            if (lastHeartbeatElement != null)
+                            {
+                                DateTime lastHeartbeatInstance = DateTime.Parse(lastHeartbeatElement.Value, CultureInfo.InvariantCulture);
+                                serviceResourceInstance.LastHeartbeat = lastHeartbeatInstance;
+                            }
+                            
+                            XElement connectedElement = serviceResourceElement.Element(XName.Get("Connected", "http://schemas.microsoft.com/windowsazure"));
+                            if (connectedElement != null)
+                            {
+                                bool connectedInstance = bool.Parse(connectedElement.Value);
+                                serviceResourceInstance.Connected = connectedInstance;
+                            }
+                            
+                            XElement nameElement = serviceResourceElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                            if (nameElement != null)
+                            {
+                                string nameInstance = nameElement.Value;
+                                serviceResourceInstance.Name = nameInstance;
+                            }
+                            
+                            XElement idElement = serviceResourceElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
+                            if (idElement != null)
+                            {
+                                string idInstance = idElement.Value;
+                                serviceResourceInstance.ID = idInstance;
+                            }
                         }
                         
-                        XElement serverVersionElement = serviceResourceElement.Element(XName.Get("ServerVersion", "http://schemas.microsoft.com/windowsazure"));
-                        if (serverVersionElement != null)
-                        {
-                            string serverVersionInstance = serverVersionElement.Value;
-                            serviceResourceInstance.ServerVersion = serverVersionInstance;
-                        }
-                        
-                        XElement lastHeartbeatElement = serviceResourceElement.Element(XName.Get("LastHeartbeat", "http://schemas.microsoft.com/windowsazure"));
-                        if (lastHeartbeatElement != null)
-                        {
-                            DateTime lastHeartbeatInstance = DateTime.Parse(lastHeartbeatElement.Value, CultureInfo.InvariantCulture);
-                            serviceResourceInstance.LastHeartbeat = lastHeartbeatInstance;
-                        }
-                        
-                        XElement connectedElement = serviceResourceElement.Element(XName.Get("Connected", "http://schemas.microsoft.com/windowsazure"));
-                        if (connectedElement != null)
-                        {
-                            bool connectedInstance = bool.Parse(connectedElement.Value);
-                            serviceResourceInstance.Connected = connectedInstance;
-                        }
-                        
-                        XElement nameElement = serviceResourceElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                        if (nameElement != null)
-                        {
-                            string nameInstance = nameElement.Value;
-                            serviceResourceInstance.Name = nameInstance;
-                        }
-                        
-                        XElement idElement = serviceResourceElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
-                        if (idElement != null)
-                        {
-                            string idInstance = idElement.Value;
-                            serviceResourceInstance.ID = idInstance;
-                        }
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -222,7 +223,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -255,23 +256,23 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
         /// <returns>
         /// The response model for the list servers operation.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.SiteRecovery.Models.ServerListResponse> ListAsync(CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<ServerListResponse> ListAsync(CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
-                Tracing.Enter(invocationId, this, "ListAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/WAHyperVRecoveryManager/~/HyperVRecoveryManagerVault/" + this.Client.ResourceName.Trim() + "/Servers?";
+            string url = (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/cloudservices/" + Uri.EscapeDataString(this.Client.CloudServiceName) + "/resources/WAHyperVRecoveryManager/~/HyperVRecoveryManagerVault/" + Uri.EscapeDataString(this.Client.ResourceName) + "/Servers?";
             url = url + "api-version=2014-10-27";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -309,13 +310,13 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -324,7 +325,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -332,63 +333,66 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                     // Create Result
                     ServerListResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new ServerListResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement arrayOfServiceResourceSequenceElement = responseDoc.Element(XName.Get("ArrayOfServiceResource", "http://schemas.microsoft.com/windowsazure"));
-                    if (arrayOfServiceResourceSequenceElement != null)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        foreach (XElement arrayOfServiceResourceElement in arrayOfServiceResourceSequenceElement.Elements(XName.Get("ServiceResource", "http://schemas.microsoft.com/windowsazure")))
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new ServerListResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement arrayOfServiceResourceSequenceElement = responseDoc.Element(XName.Get("ArrayOfServiceResource", "http://schemas.microsoft.com/windowsazure"));
+                        if (arrayOfServiceResourceSequenceElement != null)
                         {
-                            Server serviceResourceInstance = new Server();
-                            result.Servers.Add(serviceResourceInstance);
-                            
-                            XElement providerVersionElement = arrayOfServiceResourceElement.Element(XName.Get("ProviderVersion", "http://schemas.microsoft.com/windowsazure"));
-                            if (providerVersionElement != null)
+                            foreach (XElement arrayOfServiceResourceElement in arrayOfServiceResourceSequenceElement.Elements(XName.Get("ServiceResource", "http://schemas.microsoft.com/windowsazure")))
                             {
-                                string providerVersionInstance = providerVersionElement.Value;
-                                serviceResourceInstance.ProviderVersion = providerVersionInstance;
-                            }
-                            
-                            XElement serverVersionElement = arrayOfServiceResourceElement.Element(XName.Get("ServerVersion", "http://schemas.microsoft.com/windowsazure"));
-                            if (serverVersionElement != null)
-                            {
-                                string serverVersionInstance = serverVersionElement.Value;
-                                serviceResourceInstance.ServerVersion = serverVersionInstance;
-                            }
-                            
-                            XElement lastHeartbeatElement = arrayOfServiceResourceElement.Element(XName.Get("LastHeartbeat", "http://schemas.microsoft.com/windowsazure"));
-                            if (lastHeartbeatElement != null)
-                            {
-                                DateTime lastHeartbeatInstance = DateTime.Parse(lastHeartbeatElement.Value, CultureInfo.InvariantCulture);
-                                serviceResourceInstance.LastHeartbeat = lastHeartbeatInstance;
-                            }
-                            
-                            XElement connectedElement = arrayOfServiceResourceElement.Element(XName.Get("Connected", "http://schemas.microsoft.com/windowsazure"));
-                            if (connectedElement != null)
-                            {
-                                bool connectedInstance = bool.Parse(connectedElement.Value);
-                                serviceResourceInstance.Connected = connectedInstance;
-                            }
-                            
-                            XElement nameElement = arrayOfServiceResourceElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                            if (nameElement != null)
-                            {
-                                string nameInstance = nameElement.Value;
-                                serviceResourceInstance.Name = nameInstance;
-                            }
-                            
-                            XElement idElement = arrayOfServiceResourceElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
-                            if (idElement != null)
-                            {
-                                string idInstance = idElement.Value;
-                                serviceResourceInstance.ID = idInstance;
+                                Server serviceResourceInstance = new Server();
+                                result.Servers.Add(serviceResourceInstance);
+                                
+                                XElement providerVersionElement = arrayOfServiceResourceElement.Element(XName.Get("ProviderVersion", "http://schemas.microsoft.com/windowsazure"));
+                                if (providerVersionElement != null)
+                                {
+                                    string providerVersionInstance = providerVersionElement.Value;
+                                    serviceResourceInstance.ProviderVersion = providerVersionInstance;
+                                }
+                                
+                                XElement serverVersionElement = arrayOfServiceResourceElement.Element(XName.Get("ServerVersion", "http://schemas.microsoft.com/windowsazure"));
+                                if (serverVersionElement != null)
+                                {
+                                    string serverVersionInstance = serverVersionElement.Value;
+                                    serviceResourceInstance.ServerVersion = serverVersionInstance;
+                                }
+                                
+                                XElement lastHeartbeatElement = arrayOfServiceResourceElement.Element(XName.Get("LastHeartbeat", "http://schemas.microsoft.com/windowsazure"));
+                                if (lastHeartbeatElement != null)
+                                {
+                                    DateTime lastHeartbeatInstance = DateTime.Parse(lastHeartbeatElement.Value, CultureInfo.InvariantCulture);
+                                    serviceResourceInstance.LastHeartbeat = lastHeartbeatInstance;
+                                }
+                                
+                                XElement connectedElement = arrayOfServiceResourceElement.Element(XName.Get("Connected", "http://schemas.microsoft.com/windowsazure"));
+                                if (connectedElement != null)
+                                {
+                                    bool connectedInstance = bool.Parse(connectedElement.Value);
+                                    serviceResourceInstance.Connected = connectedInstance;
+                                }
+                                
+                                XElement nameElement = arrayOfServiceResourceElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                if (nameElement != null)
+                                {
+                                    string nameInstance = nameElement.Value;
+                                    serviceResourceInstance.Name = nameInstance;
+                                }
+                                
+                                XElement idElement = arrayOfServiceResourceElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
+                                if (idElement != null)
+                                {
+                                    string idInstance = idElement.Value;
+                                    serviceResourceInstance.ID = idInstance;
+                                }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -397,7 +401,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }

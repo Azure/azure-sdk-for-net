@@ -23,8 +23,8 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Insights.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Insights
 {
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> CreateOrUpdateConfigurationAsync(string resourceUri, MonitoringConfigurationCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> CreateOrUpdateConfigurationAsync(string resourceUri, MonitoringConfigurationCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <param name='resourceUri'>
         /// The resource identifier of the configuration.
@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> UpdateConfigurationAsync(string resourceUri, MonitoringConfigurationCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> UpdateConfigurationAsync(string resourceUri, MonitoringConfigurationCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <param name='resourceUri'>
         /// The resource identifier of the configuration.
@@ -116,6 +116,6 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> UpdateStorageConfigurationAsync(string resourceUri, CreateOrUpdateStorageConfigurationParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> UpdateStorageConfigurationAsync(string resourceUri, CreateOrUpdateStorageConfigurationParameters parameters, CancellationToken cancellationToken);
     }
 }

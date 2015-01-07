@@ -21,15 +21,15 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Subscriptions.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Subscriptions.Models
 {
     /// <summary>
     /// Subscription detailed information.
     /// </summary>
-    public partial class GetSubscriptionResult : OperationResponse
+    public partial class GetSubscriptionResult : AzureOperationResponse
     {
         private Subscription _subscription;
         

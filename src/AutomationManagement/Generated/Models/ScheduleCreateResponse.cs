@@ -21,15 +21,15 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Automation.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
     /// The response model for the create schedule operation.
     /// </summary>
-    public partial class ScheduleCreateResponse : OperationResponse
+    public partial class ScheduleCreateResponse : AzureOperationResponse
     {
         private Schedule _schedule;
         

@@ -22,8 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
@@ -32,7 +32,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
     /// Identifies the list of reboot events due to planned maintenance that
     /// impacted a deployment in the optionally provided timeframe.
     /// </summary>
-    public partial class DeploymentEventListResponse : OperationResponse
+    public partial class DeploymentEventListResponse : AzureOperationResponse
     {
         private string _continuationToken;
         

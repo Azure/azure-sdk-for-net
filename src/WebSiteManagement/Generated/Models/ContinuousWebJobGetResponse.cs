@@ -21,7 +21,7 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.WebSitesExtensions.Models;
 
 namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
@@ -29,7 +29,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
     /// <summary>
     /// The get continuous WebJob Operation Response.
     /// </summary>
-    public partial class ContinuousWebJobGetResponse : OperationResponse
+    public partial class ContinuousWebJobGetResponse : AzureOperationResponse
     {
         private ContinuousWebJob _continuousWebJob;
         

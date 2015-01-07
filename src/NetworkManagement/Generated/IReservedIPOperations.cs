@@ -23,7 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Network.Models;
 
 namespace Microsoft.WindowsAzure.Management.Network
@@ -71,7 +71,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginDeletingAsync(string ipName, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BeginDeletingAsync(string ipName, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Create Reserved IP operation creates a reserved IP from your

@@ -21,14 +21,14 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
     /// The Get Data Disk operation response.
     /// </summary>
-    public partial class VirtualMachineDataDiskGetResponse : OperationResponse
+    public partial class VirtualMachineDataDiskGetResponse : AzureOperationResponse
     {
         private string _hostCaching;
         

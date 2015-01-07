@@ -12,8 +12,8 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
-using Microsoft.Azure.Common.Extensions.Models;
 using System.Security;
+using Microsoft.Azure.Common.Extensions.Models;
 
 namespace Microsoft.Azure.Common.Extensions.Authentication
 {

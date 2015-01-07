@@ -22,9 +22,9 @@
 using System;
 using System.Linq;
 using System.Net.Http;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Authorization;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
 
 namespace Microsoft.Azure.Management.Authorization
 {
@@ -119,7 +119,7 @@ namespace Microsoft.Azure.Management.Authorization
         /// Initializes a new instance of the AuthorizationManagementClient
         /// class.
         /// </summary>
-        private AuthorizationManagementClient()
+        public AuthorizationManagementClient()
             : base()
         {
             this._permissions = new PermissionOperations(this);
@@ -190,7 +190,7 @@ namespace Microsoft.Azure.Management.Authorization
         /// <param name='httpClient'>
         /// The Http client
         /// </param>
-        private AuthorizationManagementClient(HttpClient httpClient)
+        public AuthorizationManagementClient(HttpClient httpClient)
             : base(httpClient)
         {
             this._permissions = new PermissionOperations(this);

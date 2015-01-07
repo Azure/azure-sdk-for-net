@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
-using Microsoft.WindowsAzure.Common.Internals;
+using System.Xml;
 
 namespace Microsoft.Azure.Insights
 {
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Insights
         {
             return string.Format(CultureInfo.InvariantCulture, "{0}timeGrain eq duration'{1}' and startTime eq {2} and endTime eq {3}",
                 filter.Names == null || !filter.Names.Any() ? string.Empty : "(" + GenerateMetricDefinitionFilterString(filter.Names) + ") and ",
-                filter.TimeGrain.To8601String(),
+                XmlConvert.ToString(filter.TimeGrain),
                 filter.StartTime.ToString("O"),
                 filter.EndTime.ToString("O"));
         }

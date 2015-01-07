@@ -75,7 +75,7 @@ function SyncNuspecFile([string]$FolderPath)
 		ForEach ($dependency in $nuspec.package.metadata.dependencies.dependency) {
 			$currentVersion = $dependency.version
 			$realVersion = ($pkgconfig.packages.package | where {$_.id -eq $dependency.id}).version
-			$newVersion = $currentVersion -replace "((?:\d{1,5}\.?){1,5})(?:-\w+)?(,[\d\.]{1,10})?","$($realVersion)`$2"
+			$newVersion = $currentVersion -replace "((?:\d{1,5}\.?){1,5})(?:-\w+)?(,[\d\.]{1,20})?","$($realVersion)`$2"
 			if ($realVersion -eq $null -or $realVersion -eq '') {
 				echo "Version in packages.config $realVersion"
 				echo "Skipping $((Get-Location | Get-Item).Name)..."

@@ -26,11 +26,9 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Hyak.Common;
 using Microsoft.Azure.Subscriptions;
 using Microsoft.Azure.Subscriptions.Models;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
 using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.Subscriptions
@@ -76,13 +74,13 @@ namespace Microsoft.Azure.Subscriptions
             // Validate
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                Tracing.Enter(invocationId, this, "ListAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
             
             // Construct URL
@@ -121,13 +119,13 @@ namespace Microsoft.Azure.Subscriptions
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -136,7 +134,7 @@ namespace Microsoft.Azure.Subscriptions
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -144,42 +142,45 @@ namespace Microsoft.Azure.Subscriptions
                     // Create Result
                     TenantListResult result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new TenantListResult();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        JToken valueArray = responseDoc["value"];
-                        if (valueArray != null && valueArray.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new TenantListResult();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            foreach (JToken valueValue in ((JArray)valueArray))
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
                             {
-                                TenantIdDescription tenantIdDescriptionInstance = new TenantIdDescription();
-                                result.TenantIds.Add(tenantIdDescriptionInstance);
-                                
-                                JToken idValue = valueValue["id"];
-                                if (idValue != null && idValue.Type != JTokenType.Null)
+                                foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    string idInstance = ((string)idValue);
-                                    tenantIdDescriptionInstance.Id = idInstance;
-                                }
-                                
-                                JToken tenantIdValue = valueValue["tenantId"];
-                                if (tenantIdValue != null && tenantIdValue.Type != JTokenType.Null)
-                                {
-                                    string tenantIdInstance = ((string)tenantIdValue);
-                                    tenantIdDescriptionInstance.TenantId = tenantIdInstance;
+                                    TenantIdDescription tenantIdDescriptionInstance = new TenantIdDescription();
+                                    result.TenantIds.Add(tenantIdDescriptionInstance);
+                                    
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    {
+                                        string idInstance = ((string)idValue);
+                                        tenantIdDescriptionInstance.Id = idInstance;
+                                    }
+                                    
+                                    JToken tenantIdValue = valueValue["tenantId"];
+                                    if (tenantIdValue != null && tenantIdValue.Type != JTokenType.Null)
+                                    {
+                                        string tenantIdInstance = ((string)tenantIdValue);
+                                        tenantIdDescriptionInstance.TenantId = tenantIdInstance;
+                                    }
                                 }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -188,7 +189,7 @@ namespace Microsoft.Azure.Subscriptions
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }

@@ -21,15 +21,15 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.DataFactories.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
     /// The retrieve gateway connection information operation response.
     /// </summary>
-    public partial class GatewayConnectionInfoRetrieveResponse : OperationResponse
+    public partial class GatewayConnectionInfoRetrieveResponse : AzureOperationResponse
     {
         private GatewayConnectionInfo _connectionInfo;
         

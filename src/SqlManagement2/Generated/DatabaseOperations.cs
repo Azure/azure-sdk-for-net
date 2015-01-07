@@ -28,12 +28,10 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.Management.Sql
@@ -127,21 +125,21 @@ namespace Microsoft.Azure.Management.Sql
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serverName", serverName);
                 tracingParameters.Add("databaseName", databaseName);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "CreateOrUpdateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "CreateOrUpdateAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId) + "/resourceGroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.Sql/servers/" + Uri.EscapeDataString(serverName) + "/databases/" + Uri.EscapeDataString(databaseName) + "?";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourceGroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.Sql/servers/" + Uri.EscapeDataString(serverName) + "/databases/" + Uri.EscapeDataString(databaseName) + "?";
             url = url + "api-version=2014-04-01";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -214,7 +212,7 @@ namespace Microsoft.Azure.Management.Sql
                     databaseCreateOrUpdateParametersValue["tags"] = tagsDictionary;
                 }
                 
-                requestContent = requestDoc.ToString(Formatting.Indented);
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
                 
@@ -224,13 +222,13 @@ namespace Microsoft.Azure.Management.Sql
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created)
@@ -239,7 +237,7 @@ namespace Microsoft.Azure.Management.Sql
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -247,130 +245,133 @@ namespace Microsoft.Azure.Management.Sql
                     // Create Result
                     DatabaseGetResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new DatabaseGetResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Created)
                     {
-                        responseDoc = JToken.Parse(responseContent);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new DatabaseGetResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            Database databaseInstance = new Database();
+                            result.Database = databaseInstance;
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                databaseInstance.Name = nameInstance;
+                            }
+                            
+                            JToken propertiesValue2 = responseDoc["properties"];
+                            if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                            {
+                                DatabaseProperties propertiesInstance = new DatabaseProperties();
+                                databaseInstance.Properties = propertiesInstance;
+                                
+                                JToken collationValue = propertiesValue2["collation"];
+                                if (collationValue != null && collationValue.Type != JTokenType.Null)
+                                {
+                                    string collationInstance = ((string)collationValue);
+                                    propertiesInstance.Collation = collationInstance;
+                                }
+                                
+                                JToken creationDateValue = propertiesValue2["creationDate"];
+                                if (creationDateValue != null && creationDateValue.Type != JTokenType.Null)
+                                {
+                                    DateTime creationDateInstance = ((DateTime)creationDateValue);
+                                    propertiesInstance.CreationDate = creationDateInstance;
+                                }
+                                
+                                JToken currentServiceObjectiveIdValue = propertiesValue2["currentServiceObjectiveId"];
+                                if (currentServiceObjectiveIdValue != null && currentServiceObjectiveIdValue.Type != JTokenType.Null)
+                                {
+                                    string currentServiceObjectiveIdInstance = ((string)currentServiceObjectiveIdValue);
+                                    propertiesInstance.CurrentServiceObjectiveId = currentServiceObjectiveIdInstance;
+                                }
+                                
+                                JToken databaseIdValue = propertiesValue2["databaseId"];
+                                if (databaseIdValue != null && databaseIdValue.Type != JTokenType.Null)
+                                {
+                                    string databaseIdInstance = ((string)databaseIdValue);
+                                    propertiesInstance.DatabaseId = databaseIdInstance;
+                                }
+                                
+                                JToken editionValue = propertiesValue2["edition"];
+                                if (editionValue != null && editionValue.Type != JTokenType.Null)
+                                {
+                                    string editionInstance = ((string)editionValue);
+                                    propertiesInstance.Edition = editionInstance;
+                                }
+                                
+                                JToken maxSizeBytesValue = propertiesValue2["maxSizeBytes"];
+                                if (maxSizeBytesValue != null && maxSizeBytesValue.Type != JTokenType.Null)
+                                {
+                                    long maxSizeBytesInstance = ((long)maxSizeBytesValue);
+                                    propertiesInstance.MaxSizeBytes = maxSizeBytesInstance;
+                                }
+                                
+                                JToken requestedServiceObjectiveIdValue = propertiesValue2["requestedServiceObjectiveId"];
+                                if (requestedServiceObjectiveIdValue != null && requestedServiceObjectiveIdValue.Type != JTokenType.Null)
+                                {
+                                    string requestedServiceObjectiveIdInstance = ((string)requestedServiceObjectiveIdValue);
+                                    propertiesInstance.RequestedServiceObjectiveId = requestedServiceObjectiveIdInstance;
+                                }
+                                
+                                JToken serviceLevelObjectiveValue = propertiesValue2["serviceLevelObjective"];
+                                if (serviceLevelObjectiveValue != null && serviceLevelObjectiveValue.Type != JTokenType.Null)
+                                {
+                                    string serviceLevelObjectiveInstance = ((string)serviceLevelObjectiveValue);
+                                    propertiesInstance.ServiceObjective = serviceLevelObjectiveInstance;
+                                }
+                                
+                                JToken statusValue = propertiesValue2["status"];
+                                if (statusValue != null && statusValue.Type != JTokenType.Null)
+                                {
+                                    string statusInstance = ((string)statusValue);
+                                    propertiesInstance.Status = statusInstance;
+                                }
+                            }
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                databaseInstance.Id = idInstance;
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                databaseInstance.Type = typeInstance;
+                            }
+                            
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            {
+                                string locationInstance = ((string)locationValue);
+                                databaseInstance.Location = locationInstance;
+                            }
+                            
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property in tagsSequenceElement)
+                                {
+                                    string tagsKey2 = ((string)property.Name);
+                                    string tagsValue2 = ((string)property.Value);
+                                    databaseInstance.Tags.Add(tagsKey2, tagsValue2);
+                                }
+                            }
+                        }
+                        
                     }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        Database databaseInstance = new Database();
-                        result.Database = databaseInstance;
-                        
-                        JToken nameValue = responseDoc["name"];
-                        if (nameValue != null && nameValue.Type != JTokenType.Null)
-                        {
-                            string nameInstance = ((string)nameValue);
-                            databaseInstance.Name = nameInstance;
-                        }
-                        
-                        JToken propertiesValue2 = responseDoc["properties"];
-                        if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
-                        {
-                            DatabaseProperties propertiesInstance = new DatabaseProperties();
-                            databaseInstance.Properties = propertiesInstance;
-                            
-                            JToken collationValue = propertiesValue2["collation"];
-                            if (collationValue != null && collationValue.Type != JTokenType.Null)
-                            {
-                                string collationInstance = ((string)collationValue);
-                                propertiesInstance.Collation = collationInstance;
-                            }
-                            
-                            JToken creationDateValue = propertiesValue2["creationDate"];
-                            if (creationDateValue != null && creationDateValue.Type != JTokenType.Null)
-                            {
-                                DateTime creationDateInstance = ((DateTime)creationDateValue);
-                                propertiesInstance.CreationDate = creationDateInstance;
-                            }
-                            
-                            JToken currentServiceObjectiveIdValue = propertiesValue2["currentServiceObjectiveId"];
-                            if (currentServiceObjectiveIdValue != null && currentServiceObjectiveIdValue.Type != JTokenType.Null)
-                            {
-                                string currentServiceObjectiveIdInstance = ((string)currentServiceObjectiveIdValue);
-                                propertiesInstance.CurrentServiceObjectiveId = currentServiceObjectiveIdInstance;
-                            }
-                            
-                            JToken databaseIdValue = propertiesValue2["databaseId"];
-                            if (databaseIdValue != null && databaseIdValue.Type != JTokenType.Null)
-                            {
-                                string databaseIdInstance = ((string)databaseIdValue);
-                                propertiesInstance.DatabaseId = databaseIdInstance;
-                            }
-                            
-                            JToken editionValue = propertiesValue2["edition"];
-                            if (editionValue != null && editionValue.Type != JTokenType.Null)
-                            {
-                                string editionInstance = ((string)editionValue);
-                                propertiesInstance.Edition = editionInstance;
-                            }
-                            
-                            JToken maxSizeBytesValue = propertiesValue2["maxSizeBytes"];
-                            if (maxSizeBytesValue != null && maxSizeBytesValue.Type != JTokenType.Null)
-                            {
-                                long maxSizeBytesInstance = ((long)maxSizeBytesValue);
-                                propertiesInstance.MaxSizeBytes = maxSizeBytesInstance;
-                            }
-                            
-                            JToken requestedServiceObjectiveIdValue = propertiesValue2["requestedServiceObjectiveId"];
-                            if (requestedServiceObjectiveIdValue != null && requestedServiceObjectiveIdValue.Type != JTokenType.Null)
-                            {
-                                string requestedServiceObjectiveIdInstance = ((string)requestedServiceObjectiveIdValue);
-                                propertiesInstance.RequestedServiceObjectiveId = requestedServiceObjectiveIdInstance;
-                            }
-                            
-                            JToken serviceLevelObjectiveValue = propertiesValue2["serviceLevelObjective"];
-                            if (serviceLevelObjectiveValue != null && serviceLevelObjectiveValue.Type != JTokenType.Null)
-                            {
-                                string serviceLevelObjectiveInstance = ((string)serviceLevelObjectiveValue);
-                                propertiesInstance.ServiceObjective = serviceLevelObjectiveInstance;
-                            }
-                            
-                            JToken statusValue = propertiesValue2["status"];
-                            if (statusValue != null && statusValue.Type != JTokenType.Null)
-                            {
-                                string statusInstance = ((string)statusValue);
-                                propertiesInstance.Status = statusInstance;
-                            }
-                        }
-                        
-                        JToken idValue = responseDoc["id"];
-                        if (idValue != null && idValue.Type != JTokenType.Null)
-                        {
-                            string idInstance = ((string)idValue);
-                            databaseInstance.Id = idInstance;
-                        }
-                        
-                        JToken typeValue = responseDoc["type"];
-                        if (typeValue != null && typeValue.Type != JTokenType.Null)
-                        {
-                            string typeInstance = ((string)typeValue);
-                            databaseInstance.Type = typeInstance;
-                        }
-                        
-                        JToken locationValue = responseDoc["location"];
-                        if (locationValue != null && locationValue.Type != JTokenType.Null)
-                        {
-                            string locationInstance = ((string)locationValue);
-                            databaseInstance.Location = locationInstance;
-                        }
-                        
-                        JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
-                        if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                        {
-                            foreach (JProperty property in tagsSequenceElement)
-                            {
-                                string tagsKey2 = ((string)property.Name);
-                                string tagsValue2 = ((string)property.Value);
-                                databaseInstance.Tags.Add(tagsKey2, tagsValue2);
-                            }
-                        }
-                    }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -379,7 +380,7 @@ namespace Microsoft.Azure.Management.Sql
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -421,7 +422,7 @@ namespace Microsoft.Azure.Management.Sql
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> DeleteAsync(string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> DeleteAsync(string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -438,20 +439,20 @@ namespace Microsoft.Azure.Management.Sql
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serverName", serverName);
                 tracingParameters.Add("databaseName", databaseName);
-                Tracing.Enter(invocationId, this, "DeleteAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "DeleteAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId) + "/resourceGroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.Sql/servers/" + Uri.EscapeDataString(serverName) + "/databases/" + Uri.EscapeDataString(databaseName) + "?";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourceGroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.Sql/servers/" + Uri.EscapeDataString(serverName) + "/databases/" + Uri.EscapeDataString(databaseName) + "?";
             url = url + "api-version=2014-04-01";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -486,13 +487,13 @@ namespace Microsoft.Azure.Management.Sql
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.NoContent)
@@ -501,14 +502,15 @@ namespace Microsoft.Azure.Management.Sql
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
-                    result = new OperationResponse();
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -517,7 +519,7 @@ namespace Microsoft.Azure.Management.Sql
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -575,20 +577,20 @@ namespace Microsoft.Azure.Management.Sql
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serverName", serverName);
                 tracingParameters.Add("databaseName", databaseName);
-                Tracing.Enter(invocationId, this, "GetAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId) + "/resourceGroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.Sql/servers/" + Uri.EscapeDataString(serverName) + "/databases/" + Uri.EscapeDataString(databaseName) + "?";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourceGroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.Sql/servers/" + Uri.EscapeDataString(serverName) + "/databases/" + Uri.EscapeDataString(databaseName) + "?";
             url = url + "api-version=2014-04-01";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -623,13 +625,13 @@ namespace Microsoft.Azure.Management.Sql
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -638,7 +640,7 @@ namespace Microsoft.Azure.Management.Sql
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -646,130 +648,133 @@ namespace Microsoft.Azure.Management.Sql
                     // Create Result
                     DatabaseGetResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new DatabaseGetResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new DatabaseGetResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            Database databaseInstance = new Database();
+                            result.Database = databaseInstance;
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                databaseInstance.Name = nameInstance;
+                            }
+                            
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                            {
+                                DatabaseProperties propertiesInstance = new DatabaseProperties();
+                                databaseInstance.Properties = propertiesInstance;
+                                
+                                JToken collationValue = propertiesValue["collation"];
+                                if (collationValue != null && collationValue.Type != JTokenType.Null)
+                                {
+                                    string collationInstance = ((string)collationValue);
+                                    propertiesInstance.Collation = collationInstance;
+                                }
+                                
+                                JToken creationDateValue = propertiesValue["creationDate"];
+                                if (creationDateValue != null && creationDateValue.Type != JTokenType.Null)
+                                {
+                                    DateTime creationDateInstance = ((DateTime)creationDateValue);
+                                    propertiesInstance.CreationDate = creationDateInstance;
+                                }
+                                
+                                JToken currentServiceObjectiveIdValue = propertiesValue["currentServiceObjectiveId"];
+                                if (currentServiceObjectiveIdValue != null && currentServiceObjectiveIdValue.Type != JTokenType.Null)
+                                {
+                                    string currentServiceObjectiveIdInstance = ((string)currentServiceObjectiveIdValue);
+                                    propertiesInstance.CurrentServiceObjectiveId = currentServiceObjectiveIdInstance;
+                                }
+                                
+                                JToken databaseIdValue = propertiesValue["databaseId"];
+                                if (databaseIdValue != null && databaseIdValue.Type != JTokenType.Null)
+                                {
+                                    string databaseIdInstance = ((string)databaseIdValue);
+                                    propertiesInstance.DatabaseId = databaseIdInstance;
+                                }
+                                
+                                JToken editionValue = propertiesValue["edition"];
+                                if (editionValue != null && editionValue.Type != JTokenType.Null)
+                                {
+                                    string editionInstance = ((string)editionValue);
+                                    propertiesInstance.Edition = editionInstance;
+                                }
+                                
+                                JToken maxSizeBytesValue = propertiesValue["maxSizeBytes"];
+                                if (maxSizeBytesValue != null && maxSizeBytesValue.Type != JTokenType.Null)
+                                {
+                                    long maxSizeBytesInstance = ((long)maxSizeBytesValue);
+                                    propertiesInstance.MaxSizeBytes = maxSizeBytesInstance;
+                                }
+                                
+                                JToken requestedServiceObjectiveIdValue = propertiesValue["requestedServiceObjectiveId"];
+                                if (requestedServiceObjectiveIdValue != null && requestedServiceObjectiveIdValue.Type != JTokenType.Null)
+                                {
+                                    string requestedServiceObjectiveIdInstance = ((string)requestedServiceObjectiveIdValue);
+                                    propertiesInstance.RequestedServiceObjectiveId = requestedServiceObjectiveIdInstance;
+                                }
+                                
+                                JToken serviceLevelObjectiveValue = propertiesValue["serviceLevelObjective"];
+                                if (serviceLevelObjectiveValue != null && serviceLevelObjectiveValue.Type != JTokenType.Null)
+                                {
+                                    string serviceLevelObjectiveInstance = ((string)serviceLevelObjectiveValue);
+                                    propertiesInstance.ServiceObjective = serviceLevelObjectiveInstance;
+                                }
+                                
+                                JToken statusValue = propertiesValue["status"];
+                                if (statusValue != null && statusValue.Type != JTokenType.Null)
+                                {
+                                    string statusInstance = ((string)statusValue);
+                                    propertiesInstance.Status = statusInstance;
+                                }
+                            }
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                databaseInstance.Id = idInstance;
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                databaseInstance.Type = typeInstance;
+                            }
+                            
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            {
+                                string locationInstance = ((string)locationValue);
+                                databaseInstance.Location = locationInstance;
+                            }
+                            
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property in tagsSequenceElement)
+                                {
+                                    string tagsKey = ((string)property.Name);
+                                    string tagsValue = ((string)property.Value);
+                                    databaseInstance.Tags.Add(tagsKey, tagsValue);
+                                }
+                            }
+                        }
+                        
                     }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        Database databaseInstance = new Database();
-                        result.Database = databaseInstance;
-                        
-                        JToken nameValue = responseDoc["name"];
-                        if (nameValue != null && nameValue.Type != JTokenType.Null)
-                        {
-                            string nameInstance = ((string)nameValue);
-                            databaseInstance.Name = nameInstance;
-                        }
-                        
-                        JToken propertiesValue = responseDoc["properties"];
-                        if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                        {
-                            DatabaseProperties propertiesInstance = new DatabaseProperties();
-                            databaseInstance.Properties = propertiesInstance;
-                            
-                            JToken collationValue = propertiesValue["collation"];
-                            if (collationValue != null && collationValue.Type != JTokenType.Null)
-                            {
-                                string collationInstance = ((string)collationValue);
-                                propertiesInstance.Collation = collationInstance;
-                            }
-                            
-                            JToken creationDateValue = propertiesValue["creationDate"];
-                            if (creationDateValue != null && creationDateValue.Type != JTokenType.Null)
-                            {
-                                DateTime creationDateInstance = ((DateTime)creationDateValue);
-                                propertiesInstance.CreationDate = creationDateInstance;
-                            }
-                            
-                            JToken currentServiceObjectiveIdValue = propertiesValue["currentServiceObjectiveId"];
-                            if (currentServiceObjectiveIdValue != null && currentServiceObjectiveIdValue.Type != JTokenType.Null)
-                            {
-                                string currentServiceObjectiveIdInstance = ((string)currentServiceObjectiveIdValue);
-                                propertiesInstance.CurrentServiceObjectiveId = currentServiceObjectiveIdInstance;
-                            }
-                            
-                            JToken databaseIdValue = propertiesValue["databaseId"];
-                            if (databaseIdValue != null && databaseIdValue.Type != JTokenType.Null)
-                            {
-                                string databaseIdInstance = ((string)databaseIdValue);
-                                propertiesInstance.DatabaseId = databaseIdInstance;
-                            }
-                            
-                            JToken editionValue = propertiesValue["edition"];
-                            if (editionValue != null && editionValue.Type != JTokenType.Null)
-                            {
-                                string editionInstance = ((string)editionValue);
-                                propertiesInstance.Edition = editionInstance;
-                            }
-                            
-                            JToken maxSizeBytesValue = propertiesValue["maxSizeBytes"];
-                            if (maxSizeBytesValue != null && maxSizeBytesValue.Type != JTokenType.Null)
-                            {
-                                long maxSizeBytesInstance = ((long)maxSizeBytesValue);
-                                propertiesInstance.MaxSizeBytes = maxSizeBytesInstance;
-                            }
-                            
-                            JToken requestedServiceObjectiveIdValue = propertiesValue["requestedServiceObjectiveId"];
-                            if (requestedServiceObjectiveIdValue != null && requestedServiceObjectiveIdValue.Type != JTokenType.Null)
-                            {
-                                string requestedServiceObjectiveIdInstance = ((string)requestedServiceObjectiveIdValue);
-                                propertiesInstance.RequestedServiceObjectiveId = requestedServiceObjectiveIdInstance;
-                            }
-                            
-                            JToken serviceLevelObjectiveValue = propertiesValue["serviceLevelObjective"];
-                            if (serviceLevelObjectiveValue != null && serviceLevelObjectiveValue.Type != JTokenType.Null)
-                            {
-                                string serviceLevelObjectiveInstance = ((string)serviceLevelObjectiveValue);
-                                propertiesInstance.ServiceObjective = serviceLevelObjectiveInstance;
-                            }
-                            
-                            JToken statusValue = propertiesValue["status"];
-                            if (statusValue != null && statusValue.Type != JTokenType.Null)
-                            {
-                                string statusInstance = ((string)statusValue);
-                                propertiesInstance.Status = statusInstance;
-                            }
-                        }
-                        
-                        JToken idValue = responseDoc["id"];
-                        if (idValue != null && idValue.Type != JTokenType.Null)
-                        {
-                            string idInstance = ((string)idValue);
-                            databaseInstance.Id = idInstance;
-                        }
-                        
-                        JToken typeValue = responseDoc["type"];
-                        if (typeValue != null && typeValue.Type != JTokenType.Null)
-                        {
-                            string typeInstance = ((string)typeValue);
-                            databaseInstance.Type = typeInstance;
-                        }
-                        
-                        JToken locationValue = responseDoc["location"];
-                        if (locationValue != null && locationValue.Type != JTokenType.Null)
-                        {
-                            string locationInstance = ((string)locationValue);
-                            databaseInstance.Location = locationInstance;
-                        }
-                        
-                        JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
-                        if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                        {
-                            foreach (JProperty property in tagsSequenceElement)
-                            {
-                                string tagsKey = ((string)property.Name);
-                                string tagsValue = ((string)property.Value);
-                                databaseInstance.Tags.Add(tagsKey, tagsValue);
-                            }
-                        }
-                    }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -778,7 +783,7 @@ namespace Microsoft.Azure.Management.Sql
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -836,20 +841,20 @@ namespace Microsoft.Azure.Management.Sql
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serverName", serverName);
                 tracingParameters.Add("databaseId", databaseId);
-                Tracing.Enter(invocationId, this, "GetByIdAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetByIdAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId) + "/resourceGroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.Sql/servers/" + Uri.EscapeDataString(serverName) + "/databases?";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourceGroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.Sql/servers/" + Uri.EscapeDataString(serverName) + "/databases?";
             bool appendFilter = true;
             appendFilter = false;
             url = url + "$filter=" + "properties/databaseId eq guid'" + Uri.EscapeDataString(databaseId) + "'";
@@ -887,13 +892,13 @@ namespace Microsoft.Azure.Management.Sql
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -902,7 +907,7 @@ namespace Microsoft.Azure.Management.Sql
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -910,137 +915,140 @@ namespace Microsoft.Azure.Management.Sql
                     // Create Result
                     DatabaseListResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new DatabaseListResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        JToken valueArray = responseDoc["value"];
-                        if (valueArray != null && valueArray.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new DatabaseListResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            foreach (JToken valueValue in ((JArray)valueArray))
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
                             {
-                                Database databaseInstance = new Database();
-                                result.Databases.Add(databaseInstance);
-                                
-                                JToken nameValue = valueValue["name"];
-                                if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    string nameInstance = ((string)nameValue);
-                                    databaseInstance.Name = nameInstance;
-                                }
-                                
-                                JToken propertiesValue = valueValue["properties"];
-                                if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                                {
-                                    DatabaseProperties propertiesInstance = new DatabaseProperties();
-                                    databaseInstance.Properties = propertiesInstance;
+                                    Database databaseInstance = new Database();
+                                    result.Databases.Add(databaseInstance);
                                     
-                                    JToken collationValue = propertiesValue["collation"];
-                                    if (collationValue != null && collationValue.Type != JTokenType.Null)
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
                                     {
-                                        string collationInstance = ((string)collationValue);
-                                        propertiesInstance.Collation = collationInstance;
+                                        string nameInstance = ((string)nameValue);
+                                        databaseInstance.Name = nameInstance;
                                     }
                                     
-                                    JToken creationDateValue = propertiesValue["creationDate"];
-                                    if (creationDateValue != null && creationDateValue.Type != JTokenType.Null)
+                                    JToken propertiesValue = valueValue["properties"];
+                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
-                                        DateTime creationDateInstance = ((DateTime)creationDateValue);
-                                        propertiesInstance.CreationDate = creationDateInstance;
+                                        DatabaseProperties propertiesInstance = new DatabaseProperties();
+                                        databaseInstance.Properties = propertiesInstance;
+                                        
+                                        JToken collationValue = propertiesValue["collation"];
+                                        if (collationValue != null && collationValue.Type != JTokenType.Null)
+                                        {
+                                            string collationInstance = ((string)collationValue);
+                                            propertiesInstance.Collation = collationInstance;
+                                        }
+                                        
+                                        JToken creationDateValue = propertiesValue["creationDate"];
+                                        if (creationDateValue != null && creationDateValue.Type != JTokenType.Null)
+                                        {
+                                            DateTime creationDateInstance = ((DateTime)creationDateValue);
+                                            propertiesInstance.CreationDate = creationDateInstance;
+                                        }
+                                        
+                                        JToken currentServiceObjectiveIdValue = propertiesValue["currentServiceObjectiveId"];
+                                        if (currentServiceObjectiveIdValue != null && currentServiceObjectiveIdValue.Type != JTokenType.Null)
+                                        {
+                                            string currentServiceObjectiveIdInstance = ((string)currentServiceObjectiveIdValue);
+                                            propertiesInstance.CurrentServiceObjectiveId = currentServiceObjectiveIdInstance;
+                                        }
+                                        
+                                        JToken databaseIdValue = propertiesValue["databaseId"];
+                                        if (databaseIdValue != null && databaseIdValue.Type != JTokenType.Null)
+                                        {
+                                            string databaseIdInstance = ((string)databaseIdValue);
+                                            propertiesInstance.DatabaseId = databaseIdInstance;
+                                        }
+                                        
+                                        JToken editionValue = propertiesValue["edition"];
+                                        if (editionValue != null && editionValue.Type != JTokenType.Null)
+                                        {
+                                            string editionInstance = ((string)editionValue);
+                                            propertiesInstance.Edition = editionInstance;
+                                        }
+                                        
+                                        JToken maxSizeBytesValue = propertiesValue["maxSizeBytes"];
+                                        if (maxSizeBytesValue != null && maxSizeBytesValue.Type != JTokenType.Null)
+                                        {
+                                            long maxSizeBytesInstance = ((long)maxSizeBytesValue);
+                                            propertiesInstance.MaxSizeBytes = maxSizeBytesInstance;
+                                        }
+                                        
+                                        JToken requestedServiceObjectiveIdValue = propertiesValue["requestedServiceObjectiveId"];
+                                        if (requestedServiceObjectiveIdValue != null && requestedServiceObjectiveIdValue.Type != JTokenType.Null)
+                                        {
+                                            string requestedServiceObjectiveIdInstance = ((string)requestedServiceObjectiveIdValue);
+                                            propertiesInstance.RequestedServiceObjectiveId = requestedServiceObjectiveIdInstance;
+                                        }
+                                        
+                                        JToken serviceLevelObjectiveValue = propertiesValue["serviceLevelObjective"];
+                                        if (serviceLevelObjectiveValue != null && serviceLevelObjectiveValue.Type != JTokenType.Null)
+                                        {
+                                            string serviceLevelObjectiveInstance = ((string)serviceLevelObjectiveValue);
+                                            propertiesInstance.ServiceObjective = serviceLevelObjectiveInstance;
+                                        }
+                                        
+                                        JToken statusValue = propertiesValue["status"];
+                                        if (statusValue != null && statusValue.Type != JTokenType.Null)
+                                        {
+                                            string statusInstance = ((string)statusValue);
+                                            propertiesInstance.Status = statusInstance;
+                                        }
                                     }
                                     
-                                    JToken currentServiceObjectiveIdValue = propertiesValue["currentServiceObjectiveId"];
-                                    if (currentServiceObjectiveIdValue != null && currentServiceObjectiveIdValue.Type != JTokenType.Null)
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
                                     {
-                                        string currentServiceObjectiveIdInstance = ((string)currentServiceObjectiveIdValue);
-                                        propertiesInstance.CurrentServiceObjectiveId = currentServiceObjectiveIdInstance;
+                                        string idInstance = ((string)idValue);
+                                        databaseInstance.Id = idInstance;
                                     }
                                     
-                                    JToken databaseIdValue = propertiesValue["databaseId"];
-                                    if (databaseIdValue != null && databaseIdValue.Type != JTokenType.Null)
+                                    JToken typeValue = valueValue["type"];
+                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
                                     {
-                                        string databaseIdInstance = ((string)databaseIdValue);
-                                        propertiesInstance.DatabaseId = databaseIdInstance;
+                                        string typeInstance = ((string)typeValue);
+                                        databaseInstance.Type = typeInstance;
                                     }
                                     
-                                    JToken editionValue = propertiesValue["edition"];
-                                    if (editionValue != null && editionValue.Type != JTokenType.Null)
+                                    JToken locationValue = valueValue["location"];
+                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
                                     {
-                                        string editionInstance = ((string)editionValue);
-                                        propertiesInstance.Edition = editionInstance;
+                                        string locationInstance = ((string)locationValue);
+                                        databaseInstance.Location = locationInstance;
                                     }
                                     
-                                    JToken maxSizeBytesValue = propertiesValue["maxSizeBytes"];
-                                    if (maxSizeBytesValue != null && maxSizeBytesValue.Type != JTokenType.Null)
+                                    JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
+                                    if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                                     {
-                                        long maxSizeBytesInstance = ((long)maxSizeBytesValue);
-                                        propertiesInstance.MaxSizeBytes = maxSizeBytesInstance;
-                                    }
-                                    
-                                    JToken requestedServiceObjectiveIdValue = propertiesValue["requestedServiceObjectiveId"];
-                                    if (requestedServiceObjectiveIdValue != null && requestedServiceObjectiveIdValue.Type != JTokenType.Null)
-                                    {
-                                        string requestedServiceObjectiveIdInstance = ((string)requestedServiceObjectiveIdValue);
-                                        propertiesInstance.RequestedServiceObjectiveId = requestedServiceObjectiveIdInstance;
-                                    }
-                                    
-                                    JToken serviceLevelObjectiveValue = propertiesValue["serviceLevelObjective"];
-                                    if (serviceLevelObjectiveValue != null && serviceLevelObjectiveValue.Type != JTokenType.Null)
-                                    {
-                                        string serviceLevelObjectiveInstance = ((string)serviceLevelObjectiveValue);
-                                        propertiesInstance.ServiceObjective = serviceLevelObjectiveInstance;
-                                    }
-                                    
-                                    JToken statusValue = propertiesValue["status"];
-                                    if (statusValue != null && statusValue.Type != JTokenType.Null)
-                                    {
-                                        string statusInstance = ((string)statusValue);
-                                        propertiesInstance.Status = statusInstance;
-                                    }
-                                }
-                                
-                                JToken idValue = valueValue["id"];
-                                if (idValue != null && idValue.Type != JTokenType.Null)
-                                {
-                                    string idInstance = ((string)idValue);
-                                    databaseInstance.Id = idInstance;
-                                }
-                                
-                                JToken typeValue = valueValue["type"];
-                                if (typeValue != null && typeValue.Type != JTokenType.Null)
-                                {
-                                    string typeInstance = ((string)typeValue);
-                                    databaseInstance.Type = typeInstance;
-                                }
-                                
-                                JToken locationValue = valueValue["location"];
-                                if (locationValue != null && locationValue.Type != JTokenType.Null)
-                                {
-                                    string locationInstance = ((string)locationValue);
-                                    databaseInstance.Location = locationInstance;
-                                }
-                                
-                                JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
-                                if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                                {
-                                    foreach (JProperty property in tagsSequenceElement)
-                                    {
-                                        string tagsKey = ((string)property.Name);
-                                        string tagsValue = ((string)property.Value);
-                                        databaseInstance.Tags.Add(tagsKey, tagsValue);
+                                        foreach (JProperty property in tagsSequenceElement)
+                                        {
+                                            string tagsKey = ((string)property.Name);
+                                            string tagsValue = ((string)property.Value);
+                                            databaseInstance.Tags.Add(tagsKey, tagsValue);
+                                        }
                                     }
                                 }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1049,7 +1057,7 @@ namespace Microsoft.Azure.Management.Sql
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -1100,19 +1108,19 @@ namespace Microsoft.Azure.Management.Sql
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serverName", serverName);
-                Tracing.Enter(invocationId, this, "ListAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId) + "/resourceGroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.Sql/servers/" + Uri.EscapeDataString(serverName) + "/databases?";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourceGroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.Sql/servers/" + Uri.EscapeDataString(serverName) + "/databases?";
             url = url + "api-version=2014-04-01";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -1147,13 +1155,13 @@ namespace Microsoft.Azure.Management.Sql
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -1162,7 +1170,7 @@ namespace Microsoft.Azure.Management.Sql
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -1170,137 +1178,140 @@ namespace Microsoft.Azure.Management.Sql
                     // Create Result
                     DatabaseListResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new DatabaseListResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        JToken valueArray = responseDoc["value"];
-                        if (valueArray != null && valueArray.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new DatabaseListResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            foreach (JToken valueValue in ((JArray)valueArray))
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
                             {
-                                Database databaseInstance = new Database();
-                                result.Databases.Add(databaseInstance);
-                                
-                                JToken nameValue = valueValue["name"];
-                                if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    string nameInstance = ((string)nameValue);
-                                    databaseInstance.Name = nameInstance;
-                                }
-                                
-                                JToken propertiesValue = valueValue["properties"];
-                                if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                                {
-                                    DatabaseProperties propertiesInstance = new DatabaseProperties();
-                                    databaseInstance.Properties = propertiesInstance;
+                                    Database databaseInstance = new Database();
+                                    result.Databases.Add(databaseInstance);
                                     
-                                    JToken collationValue = propertiesValue["collation"];
-                                    if (collationValue != null && collationValue.Type != JTokenType.Null)
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
                                     {
-                                        string collationInstance = ((string)collationValue);
-                                        propertiesInstance.Collation = collationInstance;
+                                        string nameInstance = ((string)nameValue);
+                                        databaseInstance.Name = nameInstance;
                                     }
                                     
-                                    JToken creationDateValue = propertiesValue["creationDate"];
-                                    if (creationDateValue != null && creationDateValue.Type != JTokenType.Null)
+                                    JToken propertiesValue = valueValue["properties"];
+                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
-                                        DateTime creationDateInstance = ((DateTime)creationDateValue);
-                                        propertiesInstance.CreationDate = creationDateInstance;
+                                        DatabaseProperties propertiesInstance = new DatabaseProperties();
+                                        databaseInstance.Properties = propertiesInstance;
+                                        
+                                        JToken collationValue = propertiesValue["collation"];
+                                        if (collationValue != null && collationValue.Type != JTokenType.Null)
+                                        {
+                                            string collationInstance = ((string)collationValue);
+                                            propertiesInstance.Collation = collationInstance;
+                                        }
+                                        
+                                        JToken creationDateValue = propertiesValue["creationDate"];
+                                        if (creationDateValue != null && creationDateValue.Type != JTokenType.Null)
+                                        {
+                                            DateTime creationDateInstance = ((DateTime)creationDateValue);
+                                            propertiesInstance.CreationDate = creationDateInstance;
+                                        }
+                                        
+                                        JToken currentServiceObjectiveIdValue = propertiesValue["currentServiceObjectiveId"];
+                                        if (currentServiceObjectiveIdValue != null && currentServiceObjectiveIdValue.Type != JTokenType.Null)
+                                        {
+                                            string currentServiceObjectiveIdInstance = ((string)currentServiceObjectiveIdValue);
+                                            propertiesInstance.CurrentServiceObjectiveId = currentServiceObjectiveIdInstance;
+                                        }
+                                        
+                                        JToken databaseIdValue = propertiesValue["databaseId"];
+                                        if (databaseIdValue != null && databaseIdValue.Type != JTokenType.Null)
+                                        {
+                                            string databaseIdInstance = ((string)databaseIdValue);
+                                            propertiesInstance.DatabaseId = databaseIdInstance;
+                                        }
+                                        
+                                        JToken editionValue = propertiesValue["edition"];
+                                        if (editionValue != null && editionValue.Type != JTokenType.Null)
+                                        {
+                                            string editionInstance = ((string)editionValue);
+                                            propertiesInstance.Edition = editionInstance;
+                                        }
+                                        
+                                        JToken maxSizeBytesValue = propertiesValue["maxSizeBytes"];
+                                        if (maxSizeBytesValue != null && maxSizeBytesValue.Type != JTokenType.Null)
+                                        {
+                                            long maxSizeBytesInstance = ((long)maxSizeBytesValue);
+                                            propertiesInstance.MaxSizeBytes = maxSizeBytesInstance;
+                                        }
+                                        
+                                        JToken requestedServiceObjectiveIdValue = propertiesValue["requestedServiceObjectiveId"];
+                                        if (requestedServiceObjectiveIdValue != null && requestedServiceObjectiveIdValue.Type != JTokenType.Null)
+                                        {
+                                            string requestedServiceObjectiveIdInstance = ((string)requestedServiceObjectiveIdValue);
+                                            propertiesInstance.RequestedServiceObjectiveId = requestedServiceObjectiveIdInstance;
+                                        }
+                                        
+                                        JToken serviceLevelObjectiveValue = propertiesValue["serviceLevelObjective"];
+                                        if (serviceLevelObjectiveValue != null && serviceLevelObjectiveValue.Type != JTokenType.Null)
+                                        {
+                                            string serviceLevelObjectiveInstance = ((string)serviceLevelObjectiveValue);
+                                            propertiesInstance.ServiceObjective = serviceLevelObjectiveInstance;
+                                        }
+                                        
+                                        JToken statusValue = propertiesValue["status"];
+                                        if (statusValue != null && statusValue.Type != JTokenType.Null)
+                                        {
+                                            string statusInstance = ((string)statusValue);
+                                            propertiesInstance.Status = statusInstance;
+                                        }
                                     }
                                     
-                                    JToken currentServiceObjectiveIdValue = propertiesValue["currentServiceObjectiveId"];
-                                    if (currentServiceObjectiveIdValue != null && currentServiceObjectiveIdValue.Type != JTokenType.Null)
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
                                     {
-                                        string currentServiceObjectiveIdInstance = ((string)currentServiceObjectiveIdValue);
-                                        propertiesInstance.CurrentServiceObjectiveId = currentServiceObjectiveIdInstance;
+                                        string idInstance = ((string)idValue);
+                                        databaseInstance.Id = idInstance;
                                     }
                                     
-                                    JToken databaseIdValue = propertiesValue["databaseId"];
-                                    if (databaseIdValue != null && databaseIdValue.Type != JTokenType.Null)
+                                    JToken typeValue = valueValue["type"];
+                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
                                     {
-                                        string databaseIdInstance = ((string)databaseIdValue);
-                                        propertiesInstance.DatabaseId = databaseIdInstance;
+                                        string typeInstance = ((string)typeValue);
+                                        databaseInstance.Type = typeInstance;
                                     }
                                     
-                                    JToken editionValue = propertiesValue["edition"];
-                                    if (editionValue != null && editionValue.Type != JTokenType.Null)
+                                    JToken locationValue = valueValue["location"];
+                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
                                     {
-                                        string editionInstance = ((string)editionValue);
-                                        propertiesInstance.Edition = editionInstance;
+                                        string locationInstance = ((string)locationValue);
+                                        databaseInstance.Location = locationInstance;
                                     }
                                     
-                                    JToken maxSizeBytesValue = propertiesValue["maxSizeBytes"];
-                                    if (maxSizeBytesValue != null && maxSizeBytesValue.Type != JTokenType.Null)
+                                    JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
+                                    if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                                     {
-                                        long maxSizeBytesInstance = ((long)maxSizeBytesValue);
-                                        propertiesInstance.MaxSizeBytes = maxSizeBytesInstance;
-                                    }
-                                    
-                                    JToken requestedServiceObjectiveIdValue = propertiesValue["requestedServiceObjectiveId"];
-                                    if (requestedServiceObjectiveIdValue != null && requestedServiceObjectiveIdValue.Type != JTokenType.Null)
-                                    {
-                                        string requestedServiceObjectiveIdInstance = ((string)requestedServiceObjectiveIdValue);
-                                        propertiesInstance.RequestedServiceObjectiveId = requestedServiceObjectiveIdInstance;
-                                    }
-                                    
-                                    JToken serviceLevelObjectiveValue = propertiesValue["serviceLevelObjective"];
-                                    if (serviceLevelObjectiveValue != null && serviceLevelObjectiveValue.Type != JTokenType.Null)
-                                    {
-                                        string serviceLevelObjectiveInstance = ((string)serviceLevelObjectiveValue);
-                                        propertiesInstance.ServiceObjective = serviceLevelObjectiveInstance;
-                                    }
-                                    
-                                    JToken statusValue = propertiesValue["status"];
-                                    if (statusValue != null && statusValue.Type != JTokenType.Null)
-                                    {
-                                        string statusInstance = ((string)statusValue);
-                                        propertiesInstance.Status = statusInstance;
-                                    }
-                                }
-                                
-                                JToken idValue = valueValue["id"];
-                                if (idValue != null && idValue.Type != JTokenType.Null)
-                                {
-                                    string idInstance = ((string)idValue);
-                                    databaseInstance.Id = idInstance;
-                                }
-                                
-                                JToken typeValue = valueValue["type"];
-                                if (typeValue != null && typeValue.Type != JTokenType.Null)
-                                {
-                                    string typeInstance = ((string)typeValue);
-                                    databaseInstance.Type = typeInstance;
-                                }
-                                
-                                JToken locationValue = valueValue["location"];
-                                if (locationValue != null && locationValue.Type != JTokenType.Null)
-                                {
-                                    string locationInstance = ((string)locationValue);
-                                    databaseInstance.Location = locationInstance;
-                                }
-                                
-                                JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
-                                if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                                {
-                                    foreach (JProperty property in tagsSequenceElement)
-                                    {
-                                        string tagsKey = ((string)property.Name);
-                                        string tagsValue = ((string)property.Value);
-                                        databaseInstance.Tags.Add(tagsKey, tagsValue);
+                                        foreach (JProperty property in tagsSequenceElement)
+                                        {
+                                            string tagsKey = ((string)property.Name);
+                                            string tagsValue = ((string)property.Value);
+                                            databaseInstance.Tags.Add(tagsKey, tagsValue);
+                                        }
                                     }
                                 }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1309,7 +1320,7 @@ namespace Microsoft.Azure.Management.Sql
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }

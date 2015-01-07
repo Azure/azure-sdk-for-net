@@ -22,8 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Sql.Models;
 
 namespace Microsoft.WindowsAzure.Management.Sql.Models
@@ -32,7 +32,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
     /// Represents the response containing the list of database copies for a
     /// given database.
     /// </summary>
-    public partial class DatabaseCopyListResponse : OperationResponse, IEnumerable<DatabaseCopy>
+    public partial class DatabaseCopyListResponse : AzureOperationResponse, IEnumerable<DatabaseCopy>
     {
         private IList<DatabaseCopy> _databaseCopies;
         

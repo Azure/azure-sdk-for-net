@@ -20,6 +20,7 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -47,5 +48,22 @@ namespace Microsoft.Azure.Insights
         /// The List Usage Metric operation response.
         /// </returns>
         Task<UsageMetricListResponse> ListAsync(string resourceUri, string filterString, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The List operation lists the usage metrics for the resource.
+        /// </summary>
+        /// <param name='resourceUri'>
+        /// The resource identifier of the target resource to get usages for.
+        /// </param>
+        /// <param name='metricNames'>
+        /// metric names to return.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Deprecated. The List Usage Metric operation response.
+        /// </returns>
+        Task<UsageMetricListResponseDeprecated> ListDeprecatedAsync(string resourceUri, IList<string> metricNames, CancellationToken cancellationToken);
     }
 }

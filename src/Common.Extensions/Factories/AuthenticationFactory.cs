@@ -12,13 +12,12 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
-using Microsoft.Azure.Common.Extensions.Authentication;
-using Microsoft.Azure.Common.Extensions.Models;
-using Microsoft.Azure.Common.Extensions.Properties;
-using Microsoft.WindowsAzure;
 using System;
 using System.Linq;
 using System.Security;
+using Microsoft.Azure.Common.Extensions.Authentication;
+using Microsoft.Azure.Common.Extensions.Models;
+using Microsoft.Azure.Common.Extensions.Properties;
 
 namespace Microsoft.Azure.Common.Extensions.Factories
 {

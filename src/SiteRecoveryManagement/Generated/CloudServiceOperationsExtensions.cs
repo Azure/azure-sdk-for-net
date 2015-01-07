@@ -26,7 +26,7 @@ using System.Threading.Tasks;
 using Microsoft.WindowsAzure.Management.RecoveryServices;
 using Microsoft.WindowsAzure.Management.RecoveryServices.Models;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.Management.RecoveryServices
 {
     public static partial class CloudServiceOperationsExtensions
     {

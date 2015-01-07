@@ -26,7 +26,7 @@ using System.Threading.Tasks;
 using Microsoft.WindowsAzure.Management.Monitoring.Alerts;
 using Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
 {
     public static partial class IncidentOperationsExtensions
     {

@@ -21,14 +21,14 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
     /// The data slice run get logs operation response.
     /// </summary>
-    public partial class DataSliceRunGetLogsResponse : OperationResponse
+    public partial class DataSliceRunGetLogsResponse : AzureOperationResponse
     {
         private Uri _dataSliceRunLogsSASUri;
         

@@ -12,8 +12,8 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
-using Microsoft.WindowsAzure.Common;
 using System.Collections.Generic;
+using Hyak.Common;
 
 namespace Microsoft.Azure.Common.Extensions
 {

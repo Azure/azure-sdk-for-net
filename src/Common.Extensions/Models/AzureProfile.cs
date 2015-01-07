@@ -12,12 +12,12 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
-using Microsoft.Azure.Common.Extensions.Interfaces;
-using Microsoft.WindowsAzure.Common.Internals;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure.Common.Extensions.Interfaces;
 
 namespace Microsoft.Azure.Common.Extensions.Models
 {
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Common.Extensions.Models
 
                 IProfileSerializer serializer;
 
-                if (ParserHelper.IsXml(contents))
+                if (CloudException.IsXml(contents))
                 {
                     serializer = new XmlProfileSerializer();
                     if (!serializer.Deserialize(contents, this))
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Common.Extensions.Models
                         ProfileLoadErrors.AddRange(serializer.DeserializeErrors);
                     }
                 }
-                else if (ParserHelper.IsJson(contents))
+                else if (CloudException.IsJson(contents))
                 {
                     serializer = new JsonProfileSerializer();
                     if (!serializer.Deserialize(contents, this))

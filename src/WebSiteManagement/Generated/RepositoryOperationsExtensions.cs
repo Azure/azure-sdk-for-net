@@ -23,10 +23,10 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.WebSitesExtensions;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.WebSitesExtensions
 {
     /// <summary>
     /// The websites extensions client manages the web sites deployments, web
@@ -45,7 +45,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Delete(this IRepositoryOperations operations)
+        public static AzureOperationResponse Delete(this IRepositoryOperations operations)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -65,7 +65,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> DeleteAsync(this IRepositoryOperations operations)
+        public static Task<AzureOperationResponse> DeleteAsync(this IRepositoryOperations operations)
         {
             return operations.DeleteAsync(CancellationToken.None);
         }

@@ -20,6 +20,7 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -78,6 +79,52 @@ namespace Microsoft.Azure.Insights
         public static Task<UsageMetricListResponse> ListAsync(this IUsageMetricsOperations operations, string resourceUri, string filterString)
         {
             return operations.ListAsync(resourceUri, filterString, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The List operation lists the usage metrics for the resource.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IUsageMetricsOperations.
+        /// </param>
+        /// <param name='resourceUri'>
+        /// Required. The resource identifier of the target resource to get
+        /// usages for.
+        /// </param>
+        /// <param name='metricNames'>
+        /// Required. metric names to return.
+        /// </param>
+        /// <returns>
+        /// Deprecated. The List Usage Metric operation response.
+        /// </returns>
+        public static UsageMetricListResponseDeprecated ListDeprecated(this IUsageMetricsOperations operations, string resourceUri, IList<string> metricNames)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IUsageMetricsOperations)s).ListDeprecatedAsync(resourceUri, metricNames);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The List operation lists the usage metrics for the resource.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IUsageMetricsOperations.
+        /// </param>
+        /// <param name='resourceUri'>
+        /// Required. The resource identifier of the target resource to get
+        /// usages for.
+        /// </param>
+        /// <param name='metricNames'>
+        /// Required. metric names to return.
+        /// </param>
+        /// <returns>
+        /// Deprecated. The List Usage Metric operation response.
+        /// </returns>
+        public static Task<UsageMetricListResponseDeprecated> ListDeprecatedAsync(this IUsageMetricsOperations operations, string resourceUri, IList<string> metricNames)
+        {
+            return operations.ListDeprecatedAsync(resourceUri, metricNames, CancellationToken.None);
         }
     }
 }

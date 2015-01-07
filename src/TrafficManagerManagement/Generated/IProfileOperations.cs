@@ -23,7 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.TrafficManager.Models;
 
 namespace Microsoft.WindowsAzure.Management.TrafficManager
@@ -70,7 +70,7 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> CreateAsync(string name, string domainName, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> CreateAsync(string name, string domainName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Deletes a profile and all of its definitions. This operation cannot
@@ -88,7 +88,7 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> DeleteAsync(string profileName, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> DeleteAsync(string profileName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Returns profile details, including all definition versions and
@@ -141,6 +141,6 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> UpdateAsync(string profileName, ProfileDefinitionStatus profileStatus, int definitionVersionNumber, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> UpdateAsync(string profileName, ProfileDefinitionStatus profileStatus, int definitionVersionNumber, CancellationToken cancellationToken);
     }
 }

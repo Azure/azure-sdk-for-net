@@ -22,16 +22,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Subscriptions.Models;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Subscriptions.Models
 {
     /// <summary>
     /// Subscription list operation response.
     /// </summary>
-    public partial class SubscriptionListResult : OperationResponse
+    public partial class SubscriptionListResult : AzureOperationResponse
     {
         private IList<Subscription> _subscriptions;
         

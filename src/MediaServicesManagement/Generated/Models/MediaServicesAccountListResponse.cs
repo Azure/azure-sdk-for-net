@@ -22,8 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.MediaServices.Models;
 
 namespace Microsoft.WindowsAzure.Management.MediaServices.Models
@@ -31,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices.Models
     /// <summary>
     /// The List Media Accounts operation response.
     /// </summary>
-    public partial class MediaServicesAccountListResponse : OperationResponse, IEnumerable<MediaServicesAccountListResponse.MediaServiceAccount>
+    public partial class MediaServicesAccountListResponse : AzureOperationResponse, IEnumerable<MediaServicesAccountListResponse.MediaServiceAccount>
     {
         private IList<MediaServicesAccountListResponse.MediaServiceAccount> _accounts;
         

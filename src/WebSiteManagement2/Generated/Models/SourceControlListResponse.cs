@@ -22,16 +22,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.WebSites.Models;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
     /// <summary>
     /// The list source controls operation response.
     /// </summary>
-    public partial class SourceControlListResponse : OperationResponse, IEnumerable<SourceControl>
+    public partial class SourceControlListResponse : AzureOperationResponse, IEnumerable<SourceControl>
     {
         private IList<SourceControl> _sourceControls;
         

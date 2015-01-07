@@ -22,8 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.ExpressRoute.Models;
 
 namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
@@ -31,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
     /// <summary>
     /// The List Dedicated Circuit Service Provider operation response.
     /// </summary>
-    public partial class DedicatedCircuitServiceProviderListResponse : OperationResponse, IEnumerable<AzureDedicatedCircuitServiceProvider>
+    public partial class DedicatedCircuitServiceProviderListResponse : AzureOperationResponse, IEnumerable<AzureDedicatedCircuitServiceProvider>
     {
         private IList<AzureDedicatedCircuitServiceProvider> _dedicatedCircuitServiceProviders;
         

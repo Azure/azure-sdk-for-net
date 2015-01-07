@@ -21,8 +21,8 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Sql.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     /// Represents the response to a get Azure SQL Database security policy
     /// request
     /// </summary>
-    public partial class DatabaseSecurityPolicyGetResponse : OperationResponse
+    public partial class DatabaseSecurityPolicyGetResponse : AzureOperationResponse
     {
         private DatabaseSecurityPolicy _databaseSecurityPolicy;
         

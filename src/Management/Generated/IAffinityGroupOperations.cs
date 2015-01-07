@@ -23,7 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Models;
 
 namespace Microsoft.WindowsAzure.Management
@@ -51,7 +51,7 @@ namespace Microsoft.WindowsAzure.Management
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> CreateAsync(AffinityGroupCreateParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> CreateAsync(AffinityGroupCreateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Delete Affinity Group operation deletes an affinity group in
@@ -69,7 +69,7 @@ namespace Microsoft.WindowsAzure.Management
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> DeleteAsync(string affinityGroupName, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> DeleteAsync(string affinityGroupName, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Get Affinity Group Properties operation returns the system
@@ -123,6 +123,6 @@ namespace Microsoft.WindowsAzure.Management
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> UpdateAsync(string affinityGroupName, AffinityGroupUpdateParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> UpdateAsync(string affinityGroupName, AffinityGroupUpdateParameters parameters, CancellationToken cancellationToken);
     }
 }

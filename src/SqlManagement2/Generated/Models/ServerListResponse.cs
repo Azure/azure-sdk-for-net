@@ -22,16 +22,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Sql.Models;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
     /// <summary>
     /// Represents the response to a Get Database request.
     /// </summary>
-    public partial class ServerListResponse : OperationResponse, IEnumerable<Server>
+    public partial class ServerListResponse : AzureOperationResponse, IEnumerable<Server>
     {
         private IList<Server> _servers;
         

@@ -21,14 +21,14 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
     /// The response body contains the published name of the image.
     /// </summary>
-    public partial class VirtualMachineOSImageReplicateResponse : OperationResponse
+    public partial class VirtualMachineOSImageReplicateResponse : AzureOperationResponse
     {
         private string _publishedName;
         

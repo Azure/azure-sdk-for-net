@@ -23,7 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Models;
 
 namespace Microsoft.WindowsAzure.Management
@@ -56,7 +56,7 @@ namespace Microsoft.WindowsAzure.Management
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> CreateAsync(ManagementCertificateCreateParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> CreateAsync(ManagementCertificateCreateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Delete Management Certificate operation deletes a certificate
@@ -77,7 +77,7 @@ namespace Microsoft.WindowsAzure.Management
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> DeleteAsync(string thumbprint, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> DeleteAsync(string thumbprint, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Get Management Certificate operation retrieves information

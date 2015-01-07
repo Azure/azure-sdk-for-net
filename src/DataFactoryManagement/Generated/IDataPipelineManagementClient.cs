@@ -23,9 +23,9 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.DataFactories;
 using Microsoft.Azure.Management.DataFactories.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.DataFactories
 {

@@ -21,14 +21,14 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
 {
     /// <summary>
     /// The triggered WebJob settings operation response.
     /// </summary>
-    public partial class TriggeredWebJobSettingsResponse : OperationResponse
+    public partial class TriggeredWebJobSettingsResponse : AzureOperationResponse
     {
         private int? _shutdownGraceTimeInSeconds;
         

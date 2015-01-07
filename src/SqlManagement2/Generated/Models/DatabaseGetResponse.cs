@@ -21,15 +21,15 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Sql.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
     /// <summary>
     /// Represents the response to a Get Database request.
     /// </summary>
-    public partial class DatabaseGetResponse : OperationResponse
+    public partial class DatabaseGetResponse : AzureOperationResponse
     {
         private Database _database;
         
