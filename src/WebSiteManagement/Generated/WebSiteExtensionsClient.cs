@@ -22,9 +22,8 @@
 using System;
 using System.Linq;
 using System.Net.Http;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Hyak.Common.Internals;
 using Microsoft.WindowsAzure.WebSitesExtensions;
 using Microsoft.WindowsAzure.WebSitesExtensions.Models;
 
@@ -163,7 +162,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// <summary>
         /// Initializes a new instance of the WebSiteExtensionsClient class.
         /// </summary>
-        private WebSiteExtensionsClient()
+        public WebSiteExtensionsClient()
             : base()
         {
             this._continuousWebJobs = new ContinuousWebJobOperations(this);
@@ -246,7 +245,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// <param name='httpClient'>
         /// The Http client
         /// </param>
-        private WebSiteExtensionsClient(HttpClient httpClient)
+        public WebSiteExtensionsClient(HttpClient httpClient)
             : base(httpClient)
         {
             this._continuousWebJobs = new ContinuousWebJobOperations(this);

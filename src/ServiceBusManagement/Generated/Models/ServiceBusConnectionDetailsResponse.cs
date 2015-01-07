@@ -22,8 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.ServiceBus.Models;
 
 namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
@@ -31,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
     /// <summary>
     /// The set of connection details for a service bus entity.
     /// </summary>
-    public partial class ServiceBusConnectionDetailsResponse : OperationResponse, IEnumerable<ServiceBusConnectionDetail>
+    public partial class ServiceBusConnectionDetailsResponse : AzureOperationResponse, IEnumerable<ServiceBusConnectionDetail>
     {
         private IList<ServiceBusConnectionDetail> _connectionDetails;
         

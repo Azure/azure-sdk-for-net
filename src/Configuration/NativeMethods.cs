@@ -14,12 +14,9 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Runtime.InteropServices;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.Azure
 {
     static internal class NativeMethods
     {

@@ -22,8 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Network.Models;
 
 namespace Microsoft.WindowsAzure.Management.Network.Models
@@ -31,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
     /// <summary>
     /// The List Definitions operation response.
     /// </summary>
-    public partial class NetworkSecurityGroupListResponse : OperationResponse, IEnumerable<NetworkSecurityGroup>
+    public partial class NetworkSecurityGroupListResponse : AzureOperationResponse, IEnumerable<NetworkSecurityGroup>
     {
         private IList<NetworkSecurityGroup> _networkSecurityGroups;
         

@@ -23,7 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.MediaServices.Models;
 
 namespace Microsoft.WindowsAzure.Management.MediaServices
@@ -63,7 +63,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> DeleteAsync(string accountName, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> DeleteAsync(string accountName, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Get Media Services Account operation gets detailed information
@@ -117,6 +117,6 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> RegenerateKeyAsync(string accountName, MediaServicesKeyType keyType, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> RegenerateKeyAsync(string accountName, MediaServicesKeyType keyType, CancellationToken cancellationToken);
     }
 }

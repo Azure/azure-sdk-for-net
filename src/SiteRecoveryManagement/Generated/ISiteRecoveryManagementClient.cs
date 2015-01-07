@@ -21,7 +21,7 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.SiteRecovery;
 
 namespace Microsoft.WindowsAzure.Management.SiteRecovery

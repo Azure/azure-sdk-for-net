@@ -27,14 +27,14 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
     /// <summary>
     /// Possible values for the Gateway Profile.
     /// </summary>
-    public enum GatewayProfile
+    public static partial class GatewayProfile
     {
-        Small = 0,
+        public const string Small = "Small";
         
-        Medium = 1,
+        public const string Medium = "Medium";
         
-        Large = 2,
+        public const string Large = "Large";
         
-        ExtraLarge = 3,
+        public const string ExtraLarge = "ExtraLarge";
     }
 }

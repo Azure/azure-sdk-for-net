@@ -21,7 +21,7 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Sql.Models;
 
 namespace Microsoft.WindowsAzure.Management.Sql.Models
@@ -29,7 +29,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
     /// <summary>
     /// Represents the response structure for the Quota Get operation.
     /// </summary>
-    public partial class QuotaGetResponse : OperationResponse
+    public partial class QuotaGetResponse : AzureOperationResponse
     {
         private Quota _quota;
         

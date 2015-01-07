@@ -18,7 +18,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.WindowsAzure.Common.Test.Fakes
+namespace Microsoft.Azure.Common.Test.Fakes
 {
     public class FakeHttpHandler : HttpClientHandler
     {
@@ -28,15 +28,15 @@ namespace Microsoft.WindowsAzure.Common.Test.Fakes
             NumberOfTimesToFail = int.MaxValue;
         }
 
-        public HttpStatusCode StatusCodeToReturn { get; set; }
-        
         public int NumberOfTimesToFail { get; set; }
 
         public int NumberOfTimesFailedSoFar { get; private set; }
 
+        public HttpStatusCode StatusCodeToReturn { get; set; }
+
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
+            var response = new HttpResponseMessage(HttpStatusCode.OK);
             if (NumberOfTimesToFail > NumberOfTimesFailedSoFar)
             {
                 response = new HttpResponseMessage(StatusCodeToReturn);

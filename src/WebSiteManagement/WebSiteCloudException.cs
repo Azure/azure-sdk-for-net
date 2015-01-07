@@ -19,7 +19,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Xml.Linq;
-using Microsoft.WindowsAzure.Common;
+using Hyak.Common;
 
 namespace Microsoft.WindowsAzure.Management.WebSites
 {
@@ -175,8 +175,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites
 
             // Create the exception
             WebSiteCloudException exception = new WebSiteCloudException(exceptionMessage, innerException);
-            exception.ErrorCode = code;
-            exception.ErrorMessage = message;
+            exception.Error.Code = code;
+            exception.Error.Message = message;
             exception.Request = CloudHttpRequestErrorInfo.Create(request, requestContent);
             exception.Response = CloudHttpResponseErrorInfo.Create(response, responseContent);
             exception.ExtendedErrorCode = extendedErrorCode;

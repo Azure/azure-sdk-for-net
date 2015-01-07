@@ -21,15 +21,15 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Insights.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Insights.Models
 {
     /// <summary>
     /// The List event status count summary operation response.
     /// </summary>
-    public partial class EventStatusCountSummaryListResponse : OperationResponse
+    public partial class EventStatusCountSummaryListResponse : AzureOperationResponse
     {
         private EventStatusCountSummaryItemCollection _eventStatusCountSummaryItemCollection;
         

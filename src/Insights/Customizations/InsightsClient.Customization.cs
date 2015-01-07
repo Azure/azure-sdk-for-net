@@ -13,10 +13,8 @@
 // limitations under the License.
 //
 
-using System;
 using System.Collections.Generic;
 using Microsoft.Azure.Insights.Models;
-using Microsoft.WindowsAzure.Common;
 using System.Net.Http;
 
 namespace Microsoft.Azure.Insights

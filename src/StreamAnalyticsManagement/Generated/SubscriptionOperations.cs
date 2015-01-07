@@ -27,11 +27,9 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Hyak.Common;
 using Microsoft.Azure.Management.StreamAnalytics;
 using Microsoft.Azure.Management.StreamAnalytics.Models;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
 using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.Management.StreamAnalytics
@@ -84,18 +82,18 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("location", location);
-                Tracing.Enter(invocationId, this, "GetQuotasAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetQuotasAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId) + "/providers/Microsoft.StreamAnalytics/locations/" + Uri.EscapeDataString(location) + "/quotas?";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/providers/Microsoft.StreamAnalytics/locations/" + Uri.EscapeDataString(location) + "/quotas?";
             url = url + "api-version=2014-12-01-preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -131,13 +129,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -146,7 +144,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -154,56 +152,59 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     // Create Result
                     SubscriptionQuotasGetResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new SubscriptionQuotasGetResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        JToken valueArray = responseDoc["value"];
-                        if (valueArray != null && valueArray.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new SubscriptionQuotasGetResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            foreach (JToken valueValue in ((JArray)valueArray))
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
                             {
-                                SubscriptionQuotas subscriptionQuotasInstance = new SubscriptionQuotas();
-                                result.Value.Add(subscriptionQuotasInstance);
-                                
-                                JToken nameValue = valueValue["name"];
-                                if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    string nameInstance = ((string)nameValue);
-                                    subscriptionQuotasInstance.Name = nameInstance;
-                                }
-                                
-                                JToken propertiesValue = valueValue["properties"];
-                                if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                                {
-                                    SubscriptionQuotasProperties propertiesInstance = new SubscriptionQuotasProperties();
-                                    subscriptionQuotasInstance.Properties = propertiesInstance;
+                                    SubscriptionQuotas subscriptionQuotasInstance = new SubscriptionQuotas();
+                                    result.Value.Add(subscriptionQuotasInstance);
                                     
-                                    JToken maxCountValue = propertiesValue["maxCount"];
-                                    if (maxCountValue != null && maxCountValue.Type != JTokenType.Null)
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
                                     {
-                                        int maxCountInstance = ((int)maxCountValue);
-                                        propertiesInstance.MaxCount = maxCountInstance;
+                                        string nameInstance = ((string)nameValue);
+                                        subscriptionQuotasInstance.Name = nameInstance;
                                     }
                                     
-                                    JToken currentCountValue = propertiesValue["currentCount"];
-                                    if (currentCountValue != null && currentCountValue.Type != JTokenType.Null)
+                                    JToken propertiesValue = valueValue["properties"];
+                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
-                                        int currentCountInstance = ((int)currentCountValue);
-                                        propertiesInstance.CurrentCount = currentCountInstance;
+                                        SubscriptionQuotasProperties propertiesInstance = new SubscriptionQuotasProperties();
+                                        subscriptionQuotasInstance.Properties = propertiesInstance;
+                                        
+                                        JToken maxCountValue = propertiesValue["maxCount"];
+                                        if (maxCountValue != null && maxCountValue.Type != JTokenType.Null)
+                                        {
+                                            int maxCountInstance = ((int)maxCountValue);
+                                            propertiesInstance.MaxCount = maxCountInstance;
+                                        }
+                                        
+                                        JToken currentCountValue = propertiesValue["currentCount"];
+                                        if (currentCountValue != null && currentCountValue.Type != JTokenType.Null)
+                                        {
+                                            int currentCountInstance = ((int)currentCountValue);
+                                            propertiesInstance.CurrentCount = currentCountInstance;
+                                        }
                                     }
                                 }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("Date"))
                     {
@@ -216,7 +217,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }

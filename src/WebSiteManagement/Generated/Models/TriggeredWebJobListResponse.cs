@@ -22,8 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.WebSitesExtensions.Models;
 
 namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
@@ -31,7 +31,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
     /// <summary>
     /// The list of triggered WebJobs operation response.
     /// </summary>
-    public partial class TriggeredWebJobListResponse : OperationResponse, IEnumerable<TriggeredWebJob>
+    public partial class TriggeredWebJobListResponse : AzureOperationResponse, IEnumerable<TriggeredWebJob>
     {
         private IList<TriggeredWebJob> _triggeredWebJobs;
         

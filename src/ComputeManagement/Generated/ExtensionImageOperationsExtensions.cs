@@ -23,11 +23,11 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Compute;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.Management.Compute
 {
     /// <summary>
     /// The Service Management API provides programmatic access to much of the
@@ -59,7 +59,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginRegistering(this IExtensionImageOperations operations, ExtensionImageRegisterParameters parameters)
+        public static AzureOperationResponse BeginRegistering(this IExtensionImageOperations operations, ExtensionImageRegisterParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -88,7 +88,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginRegisteringAsync(this IExtensionImageOperations operations, ExtensionImageRegisterParameters parameters)
+        public static Task<AzureOperationResponse> BeginRegisteringAsync(this IExtensionImageOperations operations, ExtensionImageRegisterParameters parameters)
         {
             return operations.BeginRegisteringAsync(parameters, CancellationToken.None);
         }
@@ -125,7 +125,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginUnregistering(this IExtensionImageOperations operations, string providerNamespace, string type, string version)
+        public static AzureOperationResponse BeginUnregistering(this IExtensionImageOperations operations, string providerNamespace, string type, string version)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -166,7 +166,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginUnregisteringAsync(this IExtensionImageOperations operations, string providerNamespace, string type, string version)
+        public static Task<AzureOperationResponse> BeginUnregisteringAsync(this IExtensionImageOperations operations, string providerNamespace, string type, string version)
         {
             return operations.BeginUnregisteringAsync(providerNamespace, type, version, CancellationToken.None);
         }
@@ -191,7 +191,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginUpdating(this IExtensionImageOperations operations, ExtensionImageUpdateParameters parameters)
+        public static AzureOperationResponse BeginUpdating(this IExtensionImageOperations operations, ExtensionImageUpdateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -220,7 +220,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginUpdatingAsync(this IExtensionImageOperations operations, ExtensionImageUpdateParameters parameters)
+        public static Task<AzureOperationResponse> BeginUpdatingAsync(this IExtensionImageOperations operations, ExtensionImageUpdateParameters parameters)
         {
             return operations.BeginUpdatingAsync(parameters, CancellationToken.None);
         }

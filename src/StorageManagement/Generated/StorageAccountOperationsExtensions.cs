@@ -23,11 +23,11 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Storage;
 using Microsoft.WindowsAzure.Management.Storage.Models;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.Management.Storage
 {
     /// <summary>
     /// The Service Management API provides programmatic access to much of the
@@ -57,7 +57,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginCreating(this IStorageAccountOperations operations, StorageAccountCreateParameters parameters)
+        public static AzureOperationResponse BeginCreating(this IStorageAccountOperations operations, StorageAccountCreateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -84,7 +84,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginCreatingAsync(this IStorageAccountOperations operations, StorageAccountCreateParameters parameters)
+        public static Task<AzureOperationResponse> BeginCreatingAsync(this IStorageAccountOperations operations, StorageAccountCreateParameters parameters)
         {
             return operations.BeginCreatingAsync(parameters, CancellationToken.None);
         }
@@ -218,7 +218,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Delete(this IStorageAccountOperations operations, string accountName)
+        public static AzureOperationResponse Delete(this IStorageAccountOperations operations, string accountName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -244,7 +244,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> DeleteAsync(this IStorageAccountOperations operations, string accountName)
+        public static Task<AzureOperationResponse> DeleteAsync(this IStorageAccountOperations operations, string accountName)
         {
             return operations.DeleteAsync(accountName, CancellationToken.None);
         }
@@ -449,7 +449,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Update(this IStorageAccountOperations operations, string accountName, StorageAccountUpdateParameters parameters)
+        public static AzureOperationResponse Update(this IStorageAccountOperations operations, string accountName, StorageAccountUpdateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -480,7 +480,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> UpdateAsync(this IStorageAccountOperations operations, string accountName, StorageAccountUpdateParameters parameters)
+        public static Task<AzureOperationResponse> UpdateAsync(this IStorageAccountOperations operations, string accountName, StorageAccountUpdateParameters parameters)
         {
             return operations.UpdateAsync(accountName, parameters, CancellationToken.None);
         }

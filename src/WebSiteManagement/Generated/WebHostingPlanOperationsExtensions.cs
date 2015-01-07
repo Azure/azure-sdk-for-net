@@ -23,11 +23,11 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.WebSites;
 using Microsoft.WindowsAzure.Management.WebSites.Models;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.Management.WebSites
 {
     /// <summary>
     /// The Web Sites Management API provides a RESTful set of web services
@@ -108,7 +108,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Delete(this IWebHostingPlanOperations operations, string webSpaceName, string webHostingPlanName)
+        public static AzureOperationResponse Delete(this IWebHostingPlanOperations operations, string webSpaceName, string webHostingPlanName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -136,7 +136,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> DeleteAsync(this IWebHostingPlanOperations operations, string webSpaceName, string webHostingPlanName)
+        public static Task<AzureOperationResponse> DeleteAsync(this IWebHostingPlanOperations operations, string webSpaceName, string webHostingPlanName)
         {
             return operations.DeleteAsync(webSpaceName, webHostingPlanName, CancellationToken.None);
         }

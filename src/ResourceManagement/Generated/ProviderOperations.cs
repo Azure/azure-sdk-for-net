@@ -26,11 +26,10 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
 using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.Management.Resources
@@ -83,18 +82,18 @@ namespace Microsoft.Azure.Management.Resources
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceProviderNamespace", resourceProviderNamespace);
-                Tracing.Enter(invocationId, this, "GetAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/providers/" + resourceProviderNamespace.Trim() + "?";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/providers/" + Uri.EscapeDataString(resourceProviderNamespace) + "?";
             url = url + "api-version=2014-04-01-preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -129,13 +128,13 @@ namespace Microsoft.Azure.Management.Resources
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -144,7 +143,7 @@ namespace Microsoft.Azure.Management.Resources
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -152,68 +151,71 @@ namespace Microsoft.Azure.Management.Resources
                     // Create Result
                     ProviderGetResult result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new ProviderGetResult();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        Provider providerInstance = new Provider();
-                        result.Provider = providerInstance;
-                        
-                        JToken idValue = responseDoc["id"];
-                        if (idValue != null && idValue.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new ProviderGetResult();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            string idInstance = ((string)idValue);
-                            providerInstance.Id = idInstance;
+                            responseDoc = JToken.Parse(responseContent);
                         }
                         
-                        JToken namespaceValue = responseDoc["namespace"];
-                        if (namespaceValue != null && namespaceValue.Type != JTokenType.Null)
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            string namespaceInstance = ((string)namespaceValue);
-                            providerInstance.Namespace = namespaceInstance;
-                        }
-                        
-                        JToken registrationStateValue = responseDoc["registrationState"];
-                        if (registrationStateValue != null && registrationStateValue.Type != JTokenType.Null)
-                        {
-                            string registrationStateInstance = ((string)registrationStateValue);
-                            providerInstance.RegistrationState = registrationStateInstance;
-                        }
-                        
-                        JToken resourceTypesArray = responseDoc["resourceTypes"];
-                        if (resourceTypesArray != null && resourceTypesArray.Type != JTokenType.Null)
-                        {
-                            foreach (JToken resourceTypesValue in ((JArray)resourceTypesArray))
+                            Provider providerInstance = new Provider();
+                            result.Provider = providerInstance;
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
                             {
-                                ProviderResourceType providerResourceTypeInstance = new ProviderResourceType();
-                                providerInstance.ResourceTypes.Add(providerResourceTypeInstance);
-                                
-                                JToken resourceTypeValue = resourceTypesValue["resourceType"];
-                                if (resourceTypeValue != null && resourceTypeValue.Type != JTokenType.Null)
+                                string idInstance = ((string)idValue);
+                                providerInstance.Id = idInstance;
+                            }
+                            
+                            JToken namespaceValue = responseDoc["namespace"];
+                            if (namespaceValue != null && namespaceValue.Type != JTokenType.Null)
+                            {
+                                string namespaceInstance = ((string)namespaceValue);
+                                providerInstance.Namespace = namespaceInstance;
+                            }
+                            
+                            JToken registrationStateValue = responseDoc["registrationState"];
+                            if (registrationStateValue != null && registrationStateValue.Type != JTokenType.Null)
+                            {
+                                string registrationStateInstance = ((string)registrationStateValue);
+                                providerInstance.RegistrationState = registrationStateInstance;
+                            }
+                            
+                            JToken resourceTypesArray = responseDoc["resourceTypes"];
+                            if (resourceTypesArray != null && resourceTypesArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken resourceTypesValue in ((JArray)resourceTypesArray))
                                 {
-                                    string resourceTypeInstance = ((string)resourceTypeValue);
-                                    providerResourceTypeInstance.Name = resourceTypeInstance;
-                                }
-                                
-                                JToken locationsArray = resourceTypesValue["locations"];
-                                if (locationsArray != null && locationsArray.Type != JTokenType.Null)
-                                {
-                                    foreach (JToken locationsValue in ((JArray)locationsArray))
+                                    ProviderResourceType providerResourceTypeInstance = new ProviderResourceType();
+                                    providerInstance.ResourceTypes.Add(providerResourceTypeInstance);
+                                    
+                                    JToken resourceTypeValue = resourceTypesValue["resourceType"];
+                                    if (resourceTypeValue != null && resourceTypeValue.Type != JTokenType.Null)
                                     {
-                                        providerResourceTypeInstance.Locations.Add(((string)locationsValue));
+                                        string resourceTypeInstance = ((string)resourceTypeValue);
+                                        providerResourceTypeInstance.Name = resourceTypeInstance;
+                                    }
+                                    
+                                    JToken locationsArray = resourceTypesValue["locations"];
+                                    if (locationsArray != null && locationsArray.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken locationsValue in ((JArray)locationsArray))
+                                        {
+                                            providerResourceTypeInstance.Locations.Add(((string)locationsValue));
+                                        }
                                     }
                                 }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -222,7 +224,7 @@ namespace Microsoft.Azure.Management.Resources
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -261,18 +263,18 @@ namespace Microsoft.Azure.Management.Resources
             // Validate
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "ListAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/providers?";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/providers?";
             if (parameters != null && parameters.Top != null)
             {
                 url = url + "$top=" + Uri.EscapeDataString(parameters.Top.Value.ToString());
@@ -311,13 +313,13 @@ namespace Microsoft.Azure.Management.Resources
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -326,7 +328,7 @@ namespace Microsoft.Azure.Management.Resources
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -334,82 +336,85 @@ namespace Microsoft.Azure.Management.Resources
                     // Create Result
                     ProviderListResult result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new ProviderListResult();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        JToken valueArray = responseDoc["value"];
-                        if (valueArray != null && valueArray.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new ProviderListResult();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            foreach (JToken valueValue in ((JArray)valueArray))
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
                             {
-                                Provider providerInstance = new Provider();
-                                result.Providers.Add(providerInstance);
-                                
-                                JToken idValue = valueValue["id"];
-                                if (idValue != null && idValue.Type != JTokenType.Null)
+                                foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    string idInstance = ((string)idValue);
-                                    providerInstance.Id = idInstance;
-                                }
-                                
-                                JToken namespaceValue = valueValue["namespace"];
-                                if (namespaceValue != null && namespaceValue.Type != JTokenType.Null)
-                                {
-                                    string namespaceInstance = ((string)namespaceValue);
-                                    providerInstance.Namespace = namespaceInstance;
-                                }
-                                
-                                JToken registrationStateValue = valueValue["registrationState"];
-                                if (registrationStateValue != null && registrationStateValue.Type != JTokenType.Null)
-                                {
-                                    string registrationStateInstance = ((string)registrationStateValue);
-                                    providerInstance.RegistrationState = registrationStateInstance;
-                                }
-                                
-                                JToken resourceTypesArray = valueValue["resourceTypes"];
-                                if (resourceTypesArray != null && resourceTypesArray.Type != JTokenType.Null)
-                                {
-                                    foreach (JToken resourceTypesValue in ((JArray)resourceTypesArray))
+                                    Provider providerInstance = new Provider();
+                                    result.Providers.Add(providerInstance);
+                                    
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
                                     {
-                                        ProviderResourceType providerResourceTypeInstance = new ProviderResourceType();
-                                        providerInstance.ResourceTypes.Add(providerResourceTypeInstance);
-                                        
-                                        JToken resourceTypeValue = resourceTypesValue["resourceType"];
-                                        if (resourceTypeValue != null && resourceTypeValue.Type != JTokenType.Null)
+                                        string idInstance = ((string)idValue);
+                                        providerInstance.Id = idInstance;
+                                    }
+                                    
+                                    JToken namespaceValue = valueValue["namespace"];
+                                    if (namespaceValue != null && namespaceValue.Type != JTokenType.Null)
+                                    {
+                                        string namespaceInstance = ((string)namespaceValue);
+                                        providerInstance.Namespace = namespaceInstance;
+                                    }
+                                    
+                                    JToken registrationStateValue = valueValue["registrationState"];
+                                    if (registrationStateValue != null && registrationStateValue.Type != JTokenType.Null)
+                                    {
+                                        string registrationStateInstance = ((string)registrationStateValue);
+                                        providerInstance.RegistrationState = registrationStateInstance;
+                                    }
+                                    
+                                    JToken resourceTypesArray = valueValue["resourceTypes"];
+                                    if (resourceTypesArray != null && resourceTypesArray.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken resourceTypesValue in ((JArray)resourceTypesArray))
                                         {
-                                            string resourceTypeInstance = ((string)resourceTypeValue);
-                                            providerResourceTypeInstance.Name = resourceTypeInstance;
-                                        }
-                                        
-                                        JToken locationsArray = resourceTypesValue["locations"];
-                                        if (locationsArray != null && locationsArray.Type != JTokenType.Null)
-                                        {
-                                            foreach (JToken locationsValue in ((JArray)locationsArray))
+                                            ProviderResourceType providerResourceTypeInstance = new ProviderResourceType();
+                                            providerInstance.ResourceTypes.Add(providerResourceTypeInstance);
+                                            
+                                            JToken resourceTypeValue = resourceTypesValue["resourceType"];
+                                            if (resourceTypeValue != null && resourceTypeValue.Type != JTokenType.Null)
                                             {
-                                                providerResourceTypeInstance.Locations.Add(((string)locationsValue));
+                                                string resourceTypeInstance = ((string)resourceTypeValue);
+                                                providerResourceTypeInstance.Name = resourceTypeInstance;
+                                            }
+                                            
+                                            JToken locationsArray = resourceTypesValue["locations"];
+                                            if (locationsArray != null && locationsArray.Type != JTokenType.Null)
+                                            {
+                                                foreach (JToken locationsValue in ((JArray)locationsArray))
+                                                {
+                                                    providerResourceTypeInstance.Locations.Add(((string)locationsValue));
+                                                }
                                             }
                                         }
                                     }
                                 }
                             }
+                            
+                            JToken odatanextLinkValue = responseDoc["@odata.nextLink"];
+                            if (odatanextLinkValue != null && odatanextLinkValue.Type != JTokenType.Null)
+                            {
+                                string odatanextLinkInstance = ((string)odatanextLinkValue);
+                                result.NextLink = odatanextLinkInstance;
+                            }
                         }
                         
-                        JToken odatanextLinkValue = responseDoc["@odata.nextLink"];
-                        if (odatanextLinkValue != null && odatanextLinkValue.Type != JTokenType.Null)
-                        {
-                            string odatanextLinkInstance = ((string)odatanextLinkValue);
-                            result.NextLink = odatanextLinkInstance;
-                        }
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -418,7 +423,7 @@ namespace Microsoft.Azure.Management.Resources
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -461,18 +466,18 @@ namespace Microsoft.Azure.Management.Resources
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("nextLink", nextLink);
-                Tracing.Enter(invocationId, this, "ListNextAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ListNextAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = nextLink.Trim();
+            string url = nextLink;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -494,13 +499,13 @@ namespace Microsoft.Azure.Management.Resources
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -509,7 +514,7 @@ namespace Microsoft.Azure.Management.Resources
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -517,82 +522,85 @@ namespace Microsoft.Azure.Management.Resources
                     // Create Result
                     ProviderListResult result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new ProviderListResult();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        JToken valueArray = responseDoc["value"];
-                        if (valueArray != null && valueArray.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new ProviderListResult();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            foreach (JToken valueValue in ((JArray)valueArray))
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
                             {
-                                Provider providerInstance = new Provider();
-                                result.Providers.Add(providerInstance);
-                                
-                                JToken idValue = valueValue["id"];
-                                if (idValue != null && idValue.Type != JTokenType.Null)
+                                foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    string idInstance = ((string)idValue);
-                                    providerInstance.Id = idInstance;
-                                }
-                                
-                                JToken namespaceValue = valueValue["namespace"];
-                                if (namespaceValue != null && namespaceValue.Type != JTokenType.Null)
-                                {
-                                    string namespaceInstance = ((string)namespaceValue);
-                                    providerInstance.Namespace = namespaceInstance;
-                                }
-                                
-                                JToken registrationStateValue = valueValue["registrationState"];
-                                if (registrationStateValue != null && registrationStateValue.Type != JTokenType.Null)
-                                {
-                                    string registrationStateInstance = ((string)registrationStateValue);
-                                    providerInstance.RegistrationState = registrationStateInstance;
-                                }
-                                
-                                JToken resourceTypesArray = valueValue["resourceTypes"];
-                                if (resourceTypesArray != null && resourceTypesArray.Type != JTokenType.Null)
-                                {
-                                    foreach (JToken resourceTypesValue in ((JArray)resourceTypesArray))
+                                    Provider providerInstance = new Provider();
+                                    result.Providers.Add(providerInstance);
+                                    
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
                                     {
-                                        ProviderResourceType providerResourceTypeInstance = new ProviderResourceType();
-                                        providerInstance.ResourceTypes.Add(providerResourceTypeInstance);
-                                        
-                                        JToken resourceTypeValue = resourceTypesValue["resourceType"];
-                                        if (resourceTypeValue != null && resourceTypeValue.Type != JTokenType.Null)
+                                        string idInstance = ((string)idValue);
+                                        providerInstance.Id = idInstance;
+                                    }
+                                    
+                                    JToken namespaceValue = valueValue["namespace"];
+                                    if (namespaceValue != null && namespaceValue.Type != JTokenType.Null)
+                                    {
+                                        string namespaceInstance = ((string)namespaceValue);
+                                        providerInstance.Namespace = namespaceInstance;
+                                    }
+                                    
+                                    JToken registrationStateValue = valueValue["registrationState"];
+                                    if (registrationStateValue != null && registrationStateValue.Type != JTokenType.Null)
+                                    {
+                                        string registrationStateInstance = ((string)registrationStateValue);
+                                        providerInstance.RegistrationState = registrationStateInstance;
+                                    }
+                                    
+                                    JToken resourceTypesArray = valueValue["resourceTypes"];
+                                    if (resourceTypesArray != null && resourceTypesArray.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken resourceTypesValue in ((JArray)resourceTypesArray))
                                         {
-                                            string resourceTypeInstance = ((string)resourceTypeValue);
-                                            providerResourceTypeInstance.Name = resourceTypeInstance;
-                                        }
-                                        
-                                        JToken locationsArray = resourceTypesValue["locations"];
-                                        if (locationsArray != null && locationsArray.Type != JTokenType.Null)
-                                        {
-                                            foreach (JToken locationsValue in ((JArray)locationsArray))
+                                            ProviderResourceType providerResourceTypeInstance = new ProviderResourceType();
+                                            providerInstance.ResourceTypes.Add(providerResourceTypeInstance);
+                                            
+                                            JToken resourceTypeValue = resourceTypesValue["resourceType"];
+                                            if (resourceTypeValue != null && resourceTypeValue.Type != JTokenType.Null)
                                             {
-                                                providerResourceTypeInstance.Locations.Add(((string)locationsValue));
+                                                string resourceTypeInstance = ((string)resourceTypeValue);
+                                                providerResourceTypeInstance.Name = resourceTypeInstance;
+                                            }
+                                            
+                                            JToken locationsArray = resourceTypesValue["locations"];
+                                            if (locationsArray != null && locationsArray.Type != JTokenType.Null)
+                                            {
+                                                foreach (JToken locationsValue in ((JArray)locationsArray))
+                                                {
+                                                    providerResourceTypeInstance.Locations.Add(((string)locationsValue));
+                                                }
                                             }
                                         }
                                     }
                                 }
                             }
+                            
+                            JToken odatanextLinkValue = responseDoc["@odata.nextLink"];
+                            if (odatanextLinkValue != null && odatanextLinkValue.Type != JTokenType.Null)
+                            {
+                                string odatanextLinkInstance = ((string)odatanextLinkValue);
+                                result.NextLink = odatanextLinkInstance;
+                            }
                         }
                         
-                        JToken odatanextLinkValue = responseDoc["@odata.nextLink"];
-                        if (odatanextLinkValue != null && odatanextLinkValue.Type != JTokenType.Null)
-                        {
-                            string odatanextLinkInstance = ((string)odatanextLinkValue);
-                            result.NextLink = odatanextLinkInstance;
-                        }
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -601,7 +609,7 @@ namespace Microsoft.Azure.Management.Resources
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -635,7 +643,7 @@ namespace Microsoft.Azure.Management.Resources
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> RegisterAsync(string resourceProviderNamespace, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> RegisterAsync(string resourceProviderNamespace, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceProviderNamespace == null)
@@ -644,18 +652,18 @@ namespace Microsoft.Azure.Management.Resources
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceProviderNamespace", resourceProviderNamespace);
-                Tracing.Enter(invocationId, this, "RegisterAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "RegisterAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/providers/" + resourceProviderNamespace.Trim() + "/register?";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/providers/" + Uri.EscapeDataString(resourceProviderNamespace) + "/register?";
             url = url + "api-version=2014-04-01-preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -690,13 +698,13 @@ namespace Microsoft.Azure.Management.Resources
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -705,14 +713,15 @@ namespace Microsoft.Azure.Management.Resources
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
-                    result = new OperationResponse();
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -721,7 +730,7 @@ namespace Microsoft.Azure.Management.Resources
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -755,7 +764,7 @@ namespace Microsoft.Azure.Management.Resources
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> UnregisterAsync(string resourceProviderNamespace, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> UnregisterAsync(string resourceProviderNamespace, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceProviderNamespace == null)
@@ -764,18 +773,18 @@ namespace Microsoft.Azure.Management.Resources
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceProviderNamespace", resourceProviderNamespace);
-                Tracing.Enter(invocationId, this, "UnregisterAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "UnregisterAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/providers/" + resourceProviderNamespace.Trim() + "/unregister?";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/providers/" + Uri.EscapeDataString(resourceProviderNamespace) + "/unregister?";
             url = url + "api-version=2014-04-01-preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -810,13 +819,13 @@ namespace Microsoft.Azure.Management.Resources
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -825,14 +834,15 @@ namespace Microsoft.Azure.Management.Resources
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
-                    result = new OperationResponse();
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -841,7 +851,7 @@ namespace Microsoft.Azure.Management.Resources
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }

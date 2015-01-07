@@ -15,8 +15,9 @@
 
 using System;
 using System.Globalization;
+using Microsoft.WindowsAzure;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.Azure
 {
     /// <summary>
     /// Configuration manager for accessing Microsoft Azure settings.

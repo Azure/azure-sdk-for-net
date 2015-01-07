@@ -23,7 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Scheduler.Models;
 
 namespace Microsoft.WindowsAzure.Scheduler
@@ -77,7 +77,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> DeleteAsync(string jobId, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> DeleteAsync(string jobId, CancellationToken cancellationToken);
         
         /// <summary>
         /// Get the definition and status of a job.

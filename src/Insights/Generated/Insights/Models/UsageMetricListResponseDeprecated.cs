@@ -21,15 +21,15 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Insights.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Insights.Models
 {
     /// <summary>
     /// Deprecated. The List Usage Metric operation response.
     /// </summary>
-    public partial class UsageMetricListResponseDeprecated : OperationResponse
+    public partial class UsageMetricListResponseDeprecated : AzureOperationResponse
     {
         private UsageMetricCollectionDeprecated _usageMetricCollection;
         

@@ -21,8 +21,8 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Gallery;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Gallery
 {

@@ -23,11 +23,11 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Monitoring.Metrics;
 using Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
 {
     public static partial class MetricSettingOperationsExtensions
     {
@@ -46,7 +46,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse CreateOrUpdate(this IMetricSettingOperations operations, MetricSettingsPutParameters parameters)
+        public static AzureOperationResponse CreateOrUpdate(this IMetricSettingOperations operations, MetricSettingsPutParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -70,7 +70,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> CreateOrUpdateAsync(this IMetricSettingOperations operations, MetricSettingsPutParameters parameters)
+        public static Task<AzureOperationResponse> CreateOrUpdateAsync(this IMetricSettingOperations operations, MetricSettingsPutParameters parameters)
         {
             return operations.CreateOrUpdateAsync(parameters, CancellationToken.None);
         }

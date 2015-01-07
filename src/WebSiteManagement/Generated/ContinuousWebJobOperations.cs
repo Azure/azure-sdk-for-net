@@ -29,12 +29,11 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Hyak.Common.Internals;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.WebSitesExtensions;
 using Microsoft.WindowsAzure.WebSitesExtensions.Models;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Microsoft.WindowsAzure.WebSitesExtensions
@@ -42,7 +41,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
     /// <summary>
     /// Operations for managing continuous WebJobs.
     /// </summary>
-    internal partial class ContinuousWebJobOperations : IServiceOperations<WebSiteExtensionsClient>, Microsoft.WindowsAzure.WebSitesExtensions.IContinuousWebJobOperations
+    internal partial class ContinuousWebJobOperations : IServiceOperations<WebSiteExtensionsClient>, IContinuousWebJobOperations
     {
         /// <summary>
         /// Initializes a new instance of the ContinuousWebJobOperations class.
@@ -79,7 +78,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationResponse> DeleteAsync(string jobName, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> DeleteAsync(string jobName, CancellationToken cancellationToken)
         {
             // Validate
             if (jobName == null)
@@ -88,18 +87,18 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("jobName", jobName);
-                Tracing.Enter(invocationId, this, "DeleteAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "DeleteAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/api/jobs/continuous/" + jobName.Trim();
+            string url = "/api/jobs/continuous/" + Uri.EscapeDataString(jobName);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -133,13 +132,13 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -148,14 +147,15 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
-                    result = new OperationResponse();
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -164,7 +164,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -197,7 +197,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// <returns>
         /// The get continuous WebJob Operation Response.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.WebSitesExtensions.Models.ContinuousWebJobGetResponse> GetAsync(string jobName, CancellationToken cancellationToken)
+        public async Task<ContinuousWebJobGetResponse> GetAsync(string jobName, CancellationToken cancellationToken)
         {
             // Validate
             if (jobName == null)
@@ -206,18 +206,18 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("jobName", jobName);
-                Tracing.Enter(invocationId, this, "GetAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/api/jobs/continuous/" + jobName.Trim();
+            string url = "/api/jobs/continuous/" + Uri.EscapeDataString(jobName);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -251,13 +251,13 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -266,7 +266,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -274,91 +274,94 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                     // Create Result
                     ContinuousWebJobGetResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new ContinuousWebJobGetResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new ContinuousWebJobGetResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            ContinuousWebJob continuousWebJobInstance = new ContinuousWebJob();
+                            result.ContinuousWebJob = continuousWebJobInstance;
+                            
+                            JToken logUrlValue = responseDoc["log_url"];
+                            if (logUrlValue != null && logUrlValue.Type != JTokenType.Null)
+                            {
+                                Uri logUrlInstance = TypeConversion.TryParseUri(((string)logUrlValue));
+                                continuousWebJobInstance.LogUrl = logUrlInstance;
+                            }
+                            
+                            JToken statusValue = responseDoc["status"];
+                            if (statusValue != null && statusValue.Type != JTokenType.Null)
+                            {
+                                string statusInstance = ((string)statusValue);
+                                continuousWebJobInstance.Status = statusInstance;
+                            }
+                            
+                            JToken detailedStatusValue = responseDoc["detailed_status"];
+                            if (detailedStatusValue != null && detailedStatusValue.Type != JTokenType.Null)
+                            {
+                                string detailedStatusInstance = ((string)detailedStatusValue);
+                                continuousWebJobInstance.DetailedStatus = detailedStatusInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                continuousWebJobInstance.Name = nameInstance;
+                            }
+                            
+                            JToken runCommandValue = responseDoc["run_command"];
+                            if (runCommandValue != null && runCommandValue.Type != JTokenType.Null)
+                            {
+                                string runCommandInstance = ((string)runCommandValue);
+                                continuousWebJobInstance.RunCommand = runCommandInstance;
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                WebJobType typeInstance = WebSiteExtensionsClient.ParseWebJobType(((string)typeValue));
+                                continuousWebJobInstance.Type = typeInstance;
+                            }
+                            
+                            JToken urlValue = responseDoc["url"];
+                            if (urlValue != null && urlValue.Type != JTokenType.Null)
+                            {
+                                Uri urlInstance = TypeConversion.TryParseUri(((string)urlValue));
+                                continuousWebJobInstance.Url = urlInstance;
+                            }
+                            
+                            JToken extraInfoUrlValue = responseDoc["extra_info_url"];
+                            if (extraInfoUrlValue != null && extraInfoUrlValue.Type != JTokenType.Null)
+                            {
+                                string extraInfoUrlInstance = ((string)extraInfoUrlValue);
+                                continuousWebJobInstance.ExtraInfoUrl = extraInfoUrlInstance;
+                            }
+                            
+                            JToken errorValue = responseDoc["error"];
+                            if (errorValue != null && errorValue.Type != JTokenType.Null)
+                            {
+                                string errorInstance = ((string)errorValue);
+                                continuousWebJobInstance.Error = errorInstance;
+                            }
+                            
+                            JToken usingSdkValue = responseDoc["using_sdk"];
+                            if (usingSdkValue != null && usingSdkValue.Type != JTokenType.Null)
+                            {
+                                bool usingSdkInstance = ((bool)usingSdkValue);
+                                continuousWebJobInstance.UsingSdk = usingSdkInstance;
+                            }
+                        }
+                        
                     }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        ContinuousWebJob continuousWebJobInstance = new ContinuousWebJob();
-                        result.ContinuousWebJob = continuousWebJobInstance;
-                        
-                        JToken logUrlValue = responseDoc["log_url"];
-                        if (logUrlValue != null && logUrlValue.Type != JTokenType.Null)
-                        {
-                            Uri logUrlInstance = TypeConversion.TryParseUri(((string)logUrlValue));
-                            continuousWebJobInstance.LogUrl = logUrlInstance;
-                        }
-                        
-                        JToken statusValue = responseDoc["status"];
-                        if (statusValue != null && statusValue.Type != JTokenType.Null)
-                        {
-                            string statusInstance = ((string)statusValue);
-                            continuousWebJobInstance.Status = statusInstance;
-                        }
-                        
-                        JToken detailedStatusValue = responseDoc["detailed_status"];
-                        if (detailedStatusValue != null && detailedStatusValue.Type != JTokenType.Null)
-                        {
-                            string detailedStatusInstance = ((string)detailedStatusValue);
-                            continuousWebJobInstance.DetailedStatus = detailedStatusInstance;
-                        }
-                        
-                        JToken nameValue = responseDoc["name"];
-                        if (nameValue != null && nameValue.Type != JTokenType.Null)
-                        {
-                            string nameInstance = ((string)nameValue);
-                            continuousWebJobInstance.Name = nameInstance;
-                        }
-                        
-                        JToken runCommandValue = responseDoc["run_command"];
-                        if (runCommandValue != null && runCommandValue.Type != JTokenType.Null)
-                        {
-                            string runCommandInstance = ((string)runCommandValue);
-                            continuousWebJobInstance.RunCommand = runCommandInstance;
-                        }
-                        
-                        JToken typeValue = responseDoc["type"];
-                        if (typeValue != null && typeValue.Type != JTokenType.Null)
-                        {
-                            WebJobType typeInstance = WebSiteExtensionsClient.ParseWebJobType(((string)typeValue));
-                            continuousWebJobInstance.Type = typeInstance;
-                        }
-                        
-                        JToken urlValue = responseDoc["url"];
-                        if (urlValue != null && urlValue.Type != JTokenType.Null)
-                        {
-                            Uri urlInstance = TypeConversion.TryParseUri(((string)urlValue));
-                            continuousWebJobInstance.Url = urlInstance;
-                        }
-                        
-                        JToken extraInfoUrlValue = responseDoc["extra_info_url"];
-                        if (extraInfoUrlValue != null && extraInfoUrlValue.Type != JTokenType.Null)
-                        {
-                            string extraInfoUrlInstance = ((string)extraInfoUrlValue);
-                            continuousWebJobInstance.ExtraInfoUrl = extraInfoUrlInstance;
-                        }
-                        
-                        JToken errorValue = responseDoc["error"];
-                        if (errorValue != null && errorValue.Type != JTokenType.Null)
-                        {
-                            string errorInstance = ((string)errorValue);
-                            continuousWebJobInstance.Error = errorInstance;
-                        }
-                        
-                        JToken usingSdkValue = responseDoc["using_sdk"];
-                        if (usingSdkValue != null && usingSdkValue.Type != JTokenType.Null)
-                        {
-                            bool usingSdkInstance = ((bool)usingSdkValue);
-                            continuousWebJobInstance.UsingSdk = usingSdkInstance;
-                        }
-                    }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -367,7 +370,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -400,7 +403,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// <returns>
         /// The continuous WebJob settings operation response.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.WebSitesExtensions.Models.ContinuousWebJobSettingsResponse> GetSettingsAsync(string jobName, CancellationToken cancellationToken)
+        public async Task<ContinuousWebJobSettingsResponse> GetSettingsAsync(string jobName, CancellationToken cancellationToken)
         {
             // Validate
             if (jobName == null)
@@ -409,18 +412,18 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("jobName", jobName);
-                Tracing.Enter(invocationId, this, "GetSettingsAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetSettingsAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/api/jobs/continuous/" + jobName.Trim() + "/settings";
+            string url = "/api/jobs/continuous/" + Uri.EscapeDataString(jobName) + "/settings";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -454,13 +457,13 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -469,7 +472,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -477,32 +480,35 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                     // Create Result
                     ContinuousWebJobSettingsResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new ContinuousWebJobSettingsResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        JToken isSingletonValue = responseDoc["IsSingleton"];
-                        if (isSingletonValue != null && isSingletonValue.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new ContinuousWebJobSettingsResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            bool isSingletonInstance = ((bool)isSingletonValue);
-                            result.IsSingleton = isSingletonInstance;
+                            responseDoc = JToken.Parse(responseContent);
                         }
                         
-                        JToken shutdownGraceTimeInSecondsValue = responseDoc["ShutdownGraceTimeInSeconds"];
-                        if (shutdownGraceTimeInSecondsValue != null && shutdownGraceTimeInSecondsValue.Type != JTokenType.Null)
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            int shutdownGraceTimeInSecondsInstance = ((int)shutdownGraceTimeInSecondsValue);
-                            result.ShutdownGraceTimeInSeconds = shutdownGraceTimeInSecondsInstance;
+                            JToken isSingletonValue = responseDoc["IsSingleton"];
+                            if (isSingletonValue != null && isSingletonValue.Type != JTokenType.Null)
+                            {
+                                bool isSingletonInstance = ((bool)isSingletonValue);
+                                result.IsSingleton = isSingletonInstance;
+                            }
+                            
+                            JToken shutdownGraceTimeInSecondsValue = responseDoc["ShutdownGraceTimeInSeconds"];
+                            if (shutdownGraceTimeInSecondsValue != null && shutdownGraceTimeInSecondsValue.Type != JTokenType.Null)
+                            {
+                                int shutdownGraceTimeInSecondsInstance = ((int)shutdownGraceTimeInSecondsValue);
+                                result.ShutdownGraceTimeInSeconds = shutdownGraceTimeInSecondsInstance;
+                            }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -511,7 +517,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -541,18 +547,18 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// <returns>
         /// The list of continuous WebJobs operation response.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.WebSitesExtensions.Models.ContinuousWebJobListResponse> ListAsync(CancellationToken cancellationToken)
+        public async Task<ContinuousWebJobListResponse> ListAsync(CancellationToken cancellationToken)
         {
             // Validate
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                Tracing.Enter(invocationId, this, "ListAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
             
             // Construct URL
@@ -590,13 +596,13 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -605,7 +611,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -613,98 +619,101 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                     // Create Result
                     ContinuousWebJobListResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new ContinuousWebJobListResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        JToken continuousWebJobsArray = responseDoc;
-                        if (continuousWebJobsArray != null && continuousWebJobsArray.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new ContinuousWebJobListResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            foreach (JToken continuousWebJobsValue in ((JArray)continuousWebJobsArray))
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken continuousWebJobsArray = responseDoc;
+                            if (continuousWebJobsArray != null && continuousWebJobsArray.Type != JTokenType.Null)
                             {
-                                ContinuousWebJob continuousWebJobInstance = new ContinuousWebJob();
-                                result.ContinuousWebJobs.Add(continuousWebJobInstance);
-                                
-                                JToken logUrlValue = continuousWebJobsValue["log_url"];
-                                if (logUrlValue != null && logUrlValue.Type != JTokenType.Null)
+                                foreach (JToken continuousWebJobsValue in ((JArray)continuousWebJobsArray))
                                 {
-                                    Uri logUrlInstance = TypeConversion.TryParseUri(((string)logUrlValue));
-                                    continuousWebJobInstance.LogUrl = logUrlInstance;
-                                }
-                                
-                                JToken statusValue = continuousWebJobsValue["status"];
-                                if (statusValue != null && statusValue.Type != JTokenType.Null)
-                                {
-                                    string statusInstance = ((string)statusValue);
-                                    continuousWebJobInstance.Status = statusInstance;
-                                }
-                                
-                                JToken detailedStatusValue = continuousWebJobsValue["detailed_status"];
-                                if (detailedStatusValue != null && detailedStatusValue.Type != JTokenType.Null)
-                                {
-                                    string detailedStatusInstance = ((string)detailedStatusValue);
-                                    continuousWebJobInstance.DetailedStatus = detailedStatusInstance;
-                                }
-                                
-                                JToken nameValue = continuousWebJobsValue["name"];
-                                if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                {
-                                    string nameInstance = ((string)nameValue);
-                                    continuousWebJobInstance.Name = nameInstance;
-                                }
-                                
-                                JToken runCommandValue = continuousWebJobsValue["run_command"];
-                                if (runCommandValue != null && runCommandValue.Type != JTokenType.Null)
-                                {
-                                    string runCommandInstance = ((string)runCommandValue);
-                                    continuousWebJobInstance.RunCommand = runCommandInstance;
-                                }
-                                
-                                JToken typeValue = continuousWebJobsValue["type"];
-                                if (typeValue != null && typeValue.Type != JTokenType.Null)
-                                {
-                                    WebJobType typeInstance = WebSiteExtensionsClient.ParseWebJobType(((string)typeValue));
-                                    continuousWebJobInstance.Type = typeInstance;
-                                }
-                                
-                                JToken urlValue = continuousWebJobsValue["url"];
-                                if (urlValue != null && urlValue.Type != JTokenType.Null)
-                                {
-                                    Uri urlInstance = TypeConversion.TryParseUri(((string)urlValue));
-                                    continuousWebJobInstance.Url = urlInstance;
-                                }
-                                
-                                JToken extraInfoUrlValue = continuousWebJobsValue["extra_info_url"];
-                                if (extraInfoUrlValue != null && extraInfoUrlValue.Type != JTokenType.Null)
-                                {
-                                    string extraInfoUrlInstance = ((string)extraInfoUrlValue);
-                                    continuousWebJobInstance.ExtraInfoUrl = extraInfoUrlInstance;
-                                }
-                                
-                                JToken errorValue = continuousWebJobsValue["error"];
-                                if (errorValue != null && errorValue.Type != JTokenType.Null)
-                                {
-                                    string errorInstance = ((string)errorValue);
-                                    continuousWebJobInstance.Error = errorInstance;
-                                }
-                                
-                                JToken usingSdkValue = continuousWebJobsValue["using_sdk"];
-                                if (usingSdkValue != null && usingSdkValue.Type != JTokenType.Null)
-                                {
-                                    bool usingSdkInstance = ((bool)usingSdkValue);
-                                    continuousWebJobInstance.UsingSdk = usingSdkInstance;
+                                    ContinuousWebJob continuousWebJobInstance = new ContinuousWebJob();
+                                    result.ContinuousWebJobs.Add(continuousWebJobInstance);
+                                    
+                                    JToken logUrlValue = continuousWebJobsValue["log_url"];
+                                    if (logUrlValue != null && logUrlValue.Type != JTokenType.Null)
+                                    {
+                                        Uri logUrlInstance = TypeConversion.TryParseUri(((string)logUrlValue));
+                                        continuousWebJobInstance.LogUrl = logUrlInstance;
+                                    }
+                                    
+                                    JToken statusValue = continuousWebJobsValue["status"];
+                                    if (statusValue != null && statusValue.Type != JTokenType.Null)
+                                    {
+                                        string statusInstance = ((string)statusValue);
+                                        continuousWebJobInstance.Status = statusInstance;
+                                    }
+                                    
+                                    JToken detailedStatusValue = continuousWebJobsValue["detailed_status"];
+                                    if (detailedStatusValue != null && detailedStatusValue.Type != JTokenType.Null)
+                                    {
+                                        string detailedStatusInstance = ((string)detailedStatusValue);
+                                        continuousWebJobInstance.DetailedStatus = detailedStatusInstance;
+                                    }
+                                    
+                                    JToken nameValue = continuousWebJobsValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance = ((string)nameValue);
+                                        continuousWebJobInstance.Name = nameInstance;
+                                    }
+                                    
+                                    JToken runCommandValue = continuousWebJobsValue["run_command"];
+                                    if (runCommandValue != null && runCommandValue.Type != JTokenType.Null)
+                                    {
+                                        string runCommandInstance = ((string)runCommandValue);
+                                        continuousWebJobInstance.RunCommand = runCommandInstance;
+                                    }
+                                    
+                                    JToken typeValue = continuousWebJobsValue["type"];
+                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                    {
+                                        WebJobType typeInstance = WebSiteExtensionsClient.ParseWebJobType(((string)typeValue));
+                                        continuousWebJobInstance.Type = typeInstance;
+                                    }
+                                    
+                                    JToken urlValue = continuousWebJobsValue["url"];
+                                    if (urlValue != null && urlValue.Type != JTokenType.Null)
+                                    {
+                                        Uri urlInstance = TypeConversion.TryParseUri(((string)urlValue));
+                                        continuousWebJobInstance.Url = urlInstance;
+                                    }
+                                    
+                                    JToken extraInfoUrlValue = continuousWebJobsValue["extra_info_url"];
+                                    if (extraInfoUrlValue != null && extraInfoUrlValue.Type != JTokenType.Null)
+                                    {
+                                        string extraInfoUrlInstance = ((string)extraInfoUrlValue);
+                                        continuousWebJobInstance.ExtraInfoUrl = extraInfoUrlInstance;
+                                    }
+                                    
+                                    JToken errorValue = continuousWebJobsValue["error"];
+                                    if (errorValue != null && errorValue.Type != JTokenType.Null)
+                                    {
+                                        string errorInstance = ((string)errorValue);
+                                        continuousWebJobInstance.Error = errorInstance;
+                                    }
+                                    
+                                    JToken usingSdkValue = continuousWebJobsValue["using_sdk"];
+                                    if (usingSdkValue != null && usingSdkValue.Type != JTokenType.Null)
+                                    {
+                                        bool usingSdkInstance = ((bool)usingSdkValue);
+                                        continuousWebJobInstance.UsingSdk = usingSdkInstance;
+                                    }
                                 }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -713,7 +722,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -751,7 +760,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationResponse> SetSettingsAsync(string jobName, ContinuousWebJobSettingsUpdateParameters settings, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> SetSettingsAsync(string jobName, ContinuousWebJobSettingsUpdateParameters settings, CancellationToken cancellationToken)
         {
             // Validate
             if (jobName == null)
@@ -764,19 +773,19 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("jobName", jobName);
                 tracingParameters.Add("settings", settings);
-                Tracing.Enter(invocationId, this, "SetSettingsAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "SetSettingsAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/api/jobs/continuous/" + jobName.Trim() + "/settings";
+            string url = "/api/jobs/continuous/" + Uri.EscapeDataString(jobName) + "/settings";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -820,7 +829,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                     requestDoc["ShutdownGraceTimeInSeconds"] = settings.ShutdownGraceTimeInSeconds.Value;
                 }
                 
-                requestContent = requestDoc.ToString(Formatting.Indented);
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
                 
@@ -830,13 +839,13 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -845,14 +854,15 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
-                    result = new OperationResponse();
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -861,7 +871,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -895,7 +905,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationResponse> StartAsync(string jobName, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> StartAsync(string jobName, CancellationToken cancellationToken)
         {
             // Validate
             if (jobName == null)
@@ -904,18 +914,18 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("jobName", jobName);
-                Tracing.Enter(invocationId, this, "StartAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "StartAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/api/jobs/continuous/" + jobName.Trim() + "/start";
+            string url = "/api/jobs/continuous/" + Uri.EscapeDataString(jobName) + "/start";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -949,13 +959,13 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -964,14 +974,15 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
-                    result = new OperationResponse();
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -980,7 +991,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -1014,7 +1025,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationResponse> StopAsync(string jobName, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> StopAsync(string jobName, CancellationToken cancellationToken)
         {
             // Validate
             if (jobName == null)
@@ -1023,18 +1034,18 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("jobName", jobName);
-                Tracing.Enter(invocationId, this, "StopAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "StopAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/api/jobs/continuous/" + jobName.Trim() + "/stop";
+            string url = "/api/jobs/continuous/" + Uri.EscapeDataString(jobName) + "/stop";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1068,13 +1079,13 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -1083,14 +1094,15 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
-                    result = new OperationResponse();
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1099,7 +1111,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -1140,7 +1152,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationResponse> UploadFileAsync(string jobName, string fileName, Stream jobContent, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> UploadFileAsync(string jobName, string fileName, Stream jobContent, CancellationToken cancellationToken)
         {
             // Validate
             if (jobName == null)
@@ -1157,20 +1169,20 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("jobName", jobName);
                 tracingParameters.Add("fileName", fileName);
                 tracingParameters.Add("jobContent", jobContent);
-                Tracing.Enter(invocationId, this, "UploadFileAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "UploadFileAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/api/jobs/continuous/" + jobName.Trim();
+            string url = "/api/jobs/continuous/" + Uri.EscapeDataString(jobName);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1210,13 +1222,13 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -1225,14 +1237,15 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
-                    result = new OperationResponse();
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1241,7 +1254,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -1282,7 +1295,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationResponse> UploadZipAsync(string jobName, string fileName, Stream jobContent, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> UploadZipAsync(string jobName, string fileName, Stream jobContent, CancellationToken cancellationToken)
         {
             // Validate
             if (jobName == null)
@@ -1299,20 +1312,20 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("jobName", jobName);
                 tracingParameters.Add("fileName", fileName);
                 tracingParameters.Add("jobContent", jobContent);
-                Tracing.Enter(invocationId, this, "UploadZipAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "UploadZipAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/api/jobs/continuous/" + jobName.Trim();
+            string url = "/api/jobs/continuous/" + Uri.EscapeDataString(jobName);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1352,13 +1365,13 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -1367,14 +1380,15 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
-                    result = new OperationResponse();
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1383,7 +1397,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }

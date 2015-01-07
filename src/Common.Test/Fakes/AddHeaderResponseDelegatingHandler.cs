@@ -13,23 +13,22 @@
 // limitations under the License.
 //
 
-using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Microsoft.WindowsAzure.Common.Test.Fakes
+namespace Microsoft.Azure.Common.Test.Fakes
 {
     public class AddHeaderResponseDelegatingHandler : DelegatingHandler
     {
+        public string HeaderName { get; set; }
+
+        public string HeaderValue { get; set; }
+
         public AddHeaderResponseDelegatingHandler(string headerName, string headerValue)
         {
             HeaderName = headerName;
             HeaderValue = headerValue;
         }
-
-        public string HeaderName { get; set; }
-        
-        public string HeaderValue { get; set; }
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, System.Threading.CancellationToken cancellationToken)
         {

@@ -22,8 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.WebSites.Models;
 
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
@@ -31,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
     /// <summary>
     /// The Get Configuration Web Site operation response.
     /// </summary>
-    public partial class WebSiteGetConfigurationResponse : OperationResponse
+    public partial class WebSiteGetConfigurationResponse : AzureOperationResponse
     {
         private bool? _alwaysOn;
         
@@ -176,6 +176,17 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         {
             get { return this._javaVersion; }
             set { this._javaVersion = value; }
+        }
+        
+        private WebSiteGetConfigurationResponse.SiteLimits _limits;
+        
+        /// <summary>
+        /// Optional. The per site limits.
+        /// </summary>
+        public WebSiteGetConfigurationResponse.SiteLimits Limits
+        {
+            get { return this._limits; }
+            set { this._limits = value; }
         }
         
         private int? _logsDirectorySizeLimit;
@@ -342,6 +353,30 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             set { this._scmType = value; }
         }
         
+        private bool? _siteAuthEnabled;
+        
+        /// <summary>
+        /// Optional. Gets or sets a value indicating whether the site's
+        /// Authentication / Authorization feature is enabled.
+        /// </summary>
+        public bool? SiteAuthEnabled
+        {
+            get { return this._siteAuthEnabled; }
+            set { this._siteAuthEnabled = value; }
+        }
+        
+        private SiteAuthSettings _siteAuthSettings;
+        
+        /// <summary>
+        /// Optional. Gets or sets the Authentication / Authorization settings
+        /// of a web site.
+        /// </summary>
+        public SiteAuthSettings SiteAuthSettings
+        {
+            get { return this._siteAuthSettings; }
+            set { this._siteAuthSettings = value; }
+        }
+        
         private bool? _use32BitWorkerProcess;
         
         /// <summary>
@@ -475,6 +510,52 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             /// Initializes a new instance of the HandlerMapping class.
             /// </summary>
             public HandlerMapping()
+            {
+            }
+        }
+        
+        /// <summary>
+        /// Per site limits
+        /// </summary>
+        public partial class SiteLimits
+        {
+            private long? _maxDiskSizeInMb;
+            
+            /// <summary>
+            /// Optional. Maximum disk size allowed in MB
+            /// </summary>
+            public long? MaxDiskSizeInMb
+            {
+                get { return this._maxDiskSizeInMb; }
+                set { this._maxDiskSizeInMb = value; }
+            }
+            
+            private long? _maxMemoryInMb;
+            
+            /// <summary>
+            /// Optional. Maximum memory allowed in MB
+            /// </summary>
+            public long? MaxMemoryInMb
+            {
+                get { return this._maxMemoryInMb; }
+                set { this._maxMemoryInMb = value; }
+            }
+            
+            private double? _maxPercentageCpu;
+            
+            /// <summary>
+            /// Optional. The name of the pair.
+            /// </summary>
+            public double? MaxPercentageCpu
+            {
+                get { return this._maxPercentageCpu; }
+                set { this._maxPercentageCpu = value; }
+            }
+            
+            /// <summary>
+            /// Initializes a new instance of the SiteLimits class.
+            /// </summary>
+            public SiteLimits()
             {
             }
         }

@@ -21,7 +21,7 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Sql.Models;
 
 namespace Microsoft.WindowsAzure.Management.Sql.Models
@@ -29,7 +29,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
     /// <summary>
     /// Contains the response to the Get Recoverable Database request.
     /// </summary>
-    public partial class RecoverableDatabaseGetResponse : OperationResponse
+    public partial class RecoverableDatabaseGetResponse : AzureOperationResponse
     {
         private RecoverableDatabase _database;
         

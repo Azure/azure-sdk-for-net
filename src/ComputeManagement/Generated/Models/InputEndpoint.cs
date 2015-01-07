@@ -117,7 +117,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private int? _localPort;
         
         /// <summary>
-        /// Optional. Specifies the private port on which the virtual machine
+        /// Optional. Specifies the internal port on which the virtual machine
         /// is listening to serve the endpoint. This element is only listed
         /// for Virtual Machine deployments.
         /// </summary>
@@ -142,8 +142,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private int? _port;
         
         /// <summary>
-        /// Optional. Specifies the public port which will listen for inbound
-        /// requests to the endpoint.
+        /// Optional. The size of the role instance.
         /// </summary>
         public int? Port
         {

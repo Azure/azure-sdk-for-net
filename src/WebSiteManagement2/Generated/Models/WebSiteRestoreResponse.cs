@@ -21,14 +21,14 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
     /// <summary>
     /// Restore operation information.
     /// </summary>
-    public partial class WebSiteRestoreResponse : OperationResponse
+    public partial class WebSiteRestoreResponse : AzureOperationResponse
     {
         private string _operationId;
         

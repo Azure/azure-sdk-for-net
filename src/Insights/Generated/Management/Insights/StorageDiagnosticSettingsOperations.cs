@@ -28,12 +28,11 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml;
+using Hyak.Common;
+using Hyak.Common.Internals;
 using Microsoft.Azure.Management.Insights;
 using Microsoft.Azure.Management.Insights.Models;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.Management.Insights
@@ -88,18 +87,18 @@ namespace Microsoft.Azure.Management.Insights
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceUri", resourceUri);
-                Tracing.Enter(invocationId, this, "GetAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + resourceUri.Trim() + "/diagnosticSettings/storage?";
+            string url = "/" + Uri.EscapeDataString(resourceUri) + "/diagnosticSettings/storage?";
             url = url + "api-version=2014-04-01";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -135,13 +134,13 @@ namespace Microsoft.Azure.Management.Insights
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -150,7 +149,7 @@ namespace Microsoft.Azure.Management.Insights
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -158,112 +157,115 @@ namespace Microsoft.Azure.Management.Insights
                     // Create Result
                     StorageDiagnosticSettingsGetResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new StorageDiagnosticSettingsGetResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        JToken nameValue = responseDoc["name"];
-                        if (nameValue != null && nameValue.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new StorageDiagnosticSettingsGetResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            string nameInstance = ((string)nameValue);
-                            result.Name = nameInstance;
+                            responseDoc = JToken.Parse(responseContent);
                         }
                         
-                        JToken locationValue = responseDoc["location"];
-                        if (locationValue != null && locationValue.Type != JTokenType.Null)
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            string locationInstance = ((string)locationValue);
-                            result.Location = locationInstance;
-                        }
-                        
-                        JToken propertiesValue = responseDoc["properties"];
-                        if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                        {
-                            StorageDiagnosticSettings propertiesInstance = new StorageDiagnosticSettings();
-                            result.Properties = propertiesInstance;
-                            
-                            JToken loggingValue = propertiesValue["logging"];
-                            if (loggingValue != null && loggingValue.Type != JTokenType.Null)
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
                             {
-                                StorageLoggingDiagnosticSettings loggingInstance = new StorageLoggingDiagnosticSettings();
-                                propertiesInstance.LoggingDiagnosticSettings = loggingInstance;
-                                
-                                JToken deleteValue = loggingValue["delete"];
-                                if (deleteValue != null && deleteValue.Type != JTokenType.Null)
-                                {
-                                    bool deleteInstance = ((bool)deleteValue);
-                                    loggingInstance.Delete = deleteInstance;
-                                }
-                                
-                                JToken readValue = loggingValue["read"];
-                                if (readValue != null && readValue.Type != JTokenType.Null)
-                                {
-                                    bool readInstance = ((bool)readValue);
-                                    loggingInstance.Read = readInstance;
-                                }
-                                
-                                JToken writeValue = loggingValue["write"];
-                                if (writeValue != null && writeValue.Type != JTokenType.Null)
-                                {
-                                    bool writeInstance = ((bool)writeValue);
-                                    loggingInstance.Write = writeInstance;
-                                }
-                                
-                                JToken retentionValue = loggingValue["retention"];
-                                if (retentionValue != null && retentionValue.Type != JTokenType.Null)
-                                {
-                                    TimeSpan retentionInstance = TypeConversion.From8601TimeSpan(((string)retentionValue));
-                                    loggingInstance.Retention = retentionInstance;
-                                }
+                                string nameInstance = ((string)nameValue);
+                                result.Name = nameInstance;
                             }
                             
-                            JToken metricsValue = propertiesValue["metrics"];
-                            if (metricsValue != null && metricsValue.Type != JTokenType.Null)
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
                             {
-                                StorageMetricDiagnosticSettings metricsInstance = new StorageMetricDiagnosticSettings();
-                                propertiesInstance.MetricDiagnosticSettings = metricsInstance;
+                                string locationInstance = ((string)locationValue);
+                                result.Location = locationInstance;
+                            }
+                            
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                            {
+                                StorageDiagnosticSettings propertiesInstance = new StorageDiagnosticSettings();
+                                result.Properties = propertiesInstance;
                                 
-                                JToken aggregationsArray = metricsValue["aggregations"];
-                                if (aggregationsArray != null && aggregationsArray.Type != JTokenType.Null)
+                                JToken loggingValue = propertiesValue["logging"];
+                                if (loggingValue != null && loggingValue.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken aggregationsValue in ((JArray)aggregationsArray))
+                                    StorageLoggingDiagnosticSettings loggingInstance = new StorageLoggingDiagnosticSettings();
+                                    propertiesInstance.LoggingDiagnosticSettings = loggingInstance;
+                                    
+                                    JToken deleteValue = loggingValue["delete"];
+                                    if (deleteValue != null && deleteValue.Type != JTokenType.Null)
                                     {
-                                        StorageMetricAggregation storageMetricAggregationInstance = new StorageMetricAggregation();
-                                        metricsInstance.MetricAggregations.Add(storageMetricAggregationInstance);
-                                        
-                                        JToken scheduledTransferPeriodValue = aggregationsValue["scheduledTransferPeriod"];
-                                        if (scheduledTransferPeriodValue != null && scheduledTransferPeriodValue.Type != JTokenType.Null)
+                                        bool deleteInstance = ((bool)deleteValue);
+                                        loggingInstance.Delete = deleteInstance;
+                                    }
+                                    
+                                    JToken readValue = loggingValue["read"];
+                                    if (readValue != null && readValue.Type != JTokenType.Null)
+                                    {
+                                        bool readInstance = ((bool)readValue);
+                                        loggingInstance.Read = readInstance;
+                                    }
+                                    
+                                    JToken writeValue = loggingValue["write"];
+                                    if (writeValue != null && writeValue.Type != JTokenType.Null)
+                                    {
+                                        bool writeInstance = ((bool)writeValue);
+                                        loggingInstance.Write = writeInstance;
+                                    }
+                                    
+                                    JToken retentionValue = loggingValue["retention"];
+                                    if (retentionValue != null && retentionValue.Type != JTokenType.Null)
+                                    {
+                                        TimeSpan retentionInstance = XmlConvert.ToTimeSpan(((string)retentionValue));
+                                        loggingInstance.Retention = retentionInstance;
+                                    }
+                                }
+                                
+                                JToken metricsValue = propertiesValue["metrics"];
+                                if (metricsValue != null && metricsValue.Type != JTokenType.Null)
+                                {
+                                    StorageMetricDiagnosticSettings metricsInstance = new StorageMetricDiagnosticSettings();
+                                    propertiesInstance.MetricDiagnosticSettings = metricsInstance;
+                                    
+                                    JToken aggregationsArray = metricsValue["aggregations"];
+                                    if (aggregationsArray != null && aggregationsArray.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken aggregationsValue in ((JArray)aggregationsArray))
                                         {
-                                            TimeSpan scheduledTransferPeriodInstance = TypeConversion.From8601TimeSpan(((string)scheduledTransferPeriodValue));
-                                            storageMetricAggregationInstance.ScheduledTransferPeriod = scheduledTransferPeriodInstance;
-                                        }
-                                        
-                                        JToken retentionValue2 = aggregationsValue["retention"];
-                                        if (retentionValue2 != null && retentionValue2.Type != JTokenType.Null)
-                                        {
-                                            TimeSpan retentionInstance2 = TypeConversion.From8601TimeSpan(((string)retentionValue2));
-                                            storageMetricAggregationInstance.Retention = retentionInstance2;
-                                        }
-                                        
-                                        JToken levelValue = aggregationsValue["level"];
-                                        if (levelValue != null && levelValue.Type != JTokenType.Null)
-                                        {
-                                            StorageMetricLevel levelInstance = ((StorageMetricLevel)Enum.Parse(typeof(StorageMetricLevel), ((string)levelValue), true));
-                                            storageMetricAggregationInstance.Level = levelInstance;
+                                            StorageMetricAggregation storageMetricAggregationInstance = new StorageMetricAggregation();
+                                            metricsInstance.MetricAggregations.Add(storageMetricAggregationInstance);
+                                            
+                                            JToken scheduledTransferPeriodValue = aggregationsValue["scheduledTransferPeriod"];
+                                            if (scheduledTransferPeriodValue != null && scheduledTransferPeriodValue.Type != JTokenType.Null)
+                                            {
+                                                TimeSpan scheduledTransferPeriodInstance = XmlConvert.ToTimeSpan(((string)scheduledTransferPeriodValue));
+                                                storageMetricAggregationInstance.ScheduledTransferPeriod = scheduledTransferPeriodInstance;
+                                            }
+                                            
+                                            JToken retentionValue2 = aggregationsValue["retention"];
+                                            if (retentionValue2 != null && retentionValue2.Type != JTokenType.Null)
+                                            {
+                                                TimeSpan retentionInstance2 = XmlConvert.ToTimeSpan(((string)retentionValue2));
+                                                storageMetricAggregationInstance.Retention = retentionInstance2;
+                                            }
+                                            
+                                            JToken levelValue = aggregationsValue["level"];
+                                            if (levelValue != null && levelValue.Type != JTokenType.Null)
+                                            {
+                                                StorageMetricLevel levelInstance = ((StorageMetricLevel)Enum.Parse(typeof(StorageMetricLevel), ((string)levelValue), true));
+                                                storageMetricAggregationInstance.Level = levelInstance;
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -272,7 +274,7 @@ namespace Microsoft.Azure.Management.Insights
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -323,19 +325,19 @@ namespace Microsoft.Azure.Management.Insights
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceUri", resourceUri);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "PutAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "PutAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + resourceUri.Trim() + "/diagnosticSettings/storage?";
+            string url = "/" + Uri.EscapeDataString(resourceUri) + "/diagnosticSettings/storage?";
             url = url + "api-version=2014-04-01";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -388,7 +390,7 @@ namespace Microsoft.Azure.Management.Insights
                         
                         loggingValue["write"] = parameters.Properties.LoggingDiagnosticSettings.Write;
                         
-                        loggingValue["retention"] = TypeConversion.To8601String(parameters.Properties.LoggingDiagnosticSettings.Retention);
+                        loggingValue["retention"] = XmlConvert.ToString(parameters.Properties.LoggingDiagnosticSettings.Retention);
                     }
                     
                     if (parameters.Properties.MetricDiagnosticSettings != null)
@@ -406,9 +408,9 @@ namespace Microsoft.Azure.Management.Insights
                                     JObject storageMetricAggregationValue = new JObject();
                                     aggregationsArray.Add(storageMetricAggregationValue);
                                     
-                                    storageMetricAggregationValue["scheduledTransferPeriod"] = TypeConversion.To8601String(aggregationsItem.ScheduledTransferPeriod);
+                                    storageMetricAggregationValue["scheduledTransferPeriod"] = XmlConvert.ToString(aggregationsItem.ScheduledTransferPeriod);
                                     
-                                    storageMetricAggregationValue["retention"] = TypeConversion.To8601String(aggregationsItem.Retention);
+                                    storageMetricAggregationValue["retention"] = XmlConvert.ToString(aggregationsItem.Retention);
                                     
                                     storageMetricAggregationValue["level"] = aggregationsItem.Level.ToString();
                                 }
@@ -418,7 +420,7 @@ namespace Microsoft.Azure.Management.Insights
                     }
                 }
                 
-                requestContent = requestDoc.ToString(Formatting.Indented);
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
                 
@@ -428,13 +430,13 @@ namespace Microsoft.Azure.Management.Insights
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created && statusCode != HttpStatusCode.Accepted)
@@ -443,7 +445,7 @@ namespace Microsoft.Azure.Management.Insights
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -451,19 +453,22 @@ namespace Microsoft.Azure.Management.Insights
                     // Create Result
                     EmptyResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new EmptyResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Created || statusCode == HttpStatusCode.Accepted)
                     {
-                        responseDoc = JToken.Parse(responseContent);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new EmptyResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                        }
+                        
                     }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                    }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -472,7 +477,7 @@ namespace Microsoft.Azure.Management.Insights
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }

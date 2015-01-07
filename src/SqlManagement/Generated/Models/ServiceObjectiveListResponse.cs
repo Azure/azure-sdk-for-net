@@ -22,8 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Sql.Models;
 
 namespace Microsoft.WindowsAzure.Management.Sql.Models
@@ -32,7 +32,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
     /// Response containing the list of service objective for a given server.
     /// This is returnedfrom a call to List Service Objectives.
     /// </summary>
-    public partial class ServiceObjectiveListResponse : OperationResponse, IEnumerable<ServiceObjective>
+    public partial class ServiceObjectiveListResponse : AzureOperationResponse, IEnumerable<ServiceObjective>
     {
         private IList<ServiceObjective> _serviceObjectives;
         

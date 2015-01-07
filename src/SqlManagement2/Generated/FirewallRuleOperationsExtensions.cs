@@ -23,9 +23,9 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Sql
 {
@@ -123,7 +123,7 @@ namespace Microsoft.Azure.Management.Sql
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Delete(this IFirewallRuleOperations operations, string resourceGroupName, string serverName, string firewallRule)
+        public static AzureOperationResponse Delete(this IFirewallRuleOperations operations, string resourceGroupName, string serverName, string firewallRule)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -154,7 +154,7 @@ namespace Microsoft.Azure.Management.Sql
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> DeleteAsync(this IFirewallRuleOperations operations, string resourceGroupName, string serverName, string firewallRule)
+        public static Task<AzureOperationResponse> DeleteAsync(this IFirewallRuleOperations operations, string resourceGroupName, string serverName, string firewallRule)
         {
             return operations.DeleteAsync(resourceGroupName, serverName, firewallRule, CancellationToken.None);
         }

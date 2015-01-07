@@ -14,8 +14,7 @@
 //
 
 using System;
-using Microsoft.SqlServer.Server;
-using Microsoft.WindowsAzure.Common.OData;
+using Microsoft.Azure.Common.OData;
 
 namespace Microsoft.Azure.Insights
 {

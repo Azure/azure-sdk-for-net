@@ -21,14 +21,14 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
 {
     /// <summary>
     /// The continuous WebJob settings operation response.
     /// </summary>
-    public partial class ContinuousWebJobSettingsResponse : OperationResponse
+    public partial class ContinuousWebJobSettingsResponse : AzureOperationResponse
     {
         private bool? _isSingleton;
         

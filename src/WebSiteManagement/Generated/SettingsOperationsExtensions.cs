@@ -23,11 +23,11 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.WebSitesExtensions;
 using Microsoft.WindowsAzure.WebSitesExtensions.Models;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.WebSitesExtensions
 {
     /// <summary>
     /// The websites extensions client manages the web sites deployments, web
@@ -49,7 +49,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Delete(this ISettingsOperations operations, string settingId)
+        public static AzureOperationResponse Delete(this ISettingsOperations operations, string settingId)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -72,7 +72,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> DeleteAsync(this ISettingsOperations operations, string settingId)
+        public static Task<AzureOperationResponse> DeleteAsync(this ISettingsOperations operations, string settingId)
         {
             return operations.DeleteAsync(settingId, CancellationToken.None);
         }
@@ -165,7 +165,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Update(this ISettingsOperations operations, SettingsUpdateParameters parameters)
+        public static AzureOperationResponse Update(this ISettingsOperations operations, SettingsUpdateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -188,7 +188,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> UpdateAsync(this ISettingsOperations operations, SettingsUpdateParameters parameters)
+        public static Task<AzureOperationResponse> UpdateAsync(this ISettingsOperations operations, SettingsUpdateParameters parameters)
         {
             return operations.UpdateAsync(parameters, CancellationToken.None);
         }

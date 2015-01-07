@@ -22,16 +22,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.StreamAnalytics.Models;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Management.StreamAnalytics.Models
 {
     /// <summary>
     /// The response of the get stream analytics quotas operation.
     /// </summary>
-    public partial class SubscriptionQuotasGetResponse : OperationResponse
+    public partial class SubscriptionQuotasGetResponse : AzureOperationResponse
     {
         private DateTime _date;
         

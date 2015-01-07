@@ -23,9 +23,9 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Redis;
 using Microsoft.Azure.Management.Redis.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Redis
 {
@@ -103,7 +103,7 @@ namespace Microsoft.Azure.Management.Redis
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Delete(this IRedisOperations operations, string resourceGroupName, string name)
+        public static AzureOperationResponse Delete(this IRedisOperations operations, string resourceGroupName, string name)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -128,7 +128,7 @@ namespace Microsoft.Azure.Management.Redis
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> DeleteAsync(this IRedisOperations operations, string resourceGroupName, string name)
+        public static Task<AzureOperationResponse> DeleteAsync(this IRedisOperations operations, string resourceGroupName, string name)
         {
             return operations.DeleteAsync(resourceGroupName, name, CancellationToken.None);
         }
@@ -323,7 +323,7 @@ namespace Microsoft.Azure.Management.Redis
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse RegenerateKey(this IRedisOperations operations, string resourceGroupName, string name, RedisRegenerateKeyParameters parameters)
+        public static AzureOperationResponse RegenerateKey(this IRedisOperations operations, string resourceGroupName, string name, RedisRegenerateKeyParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -352,7 +352,7 @@ namespace Microsoft.Azure.Management.Redis
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> RegenerateKeyAsync(this IRedisOperations operations, string resourceGroupName, string name, RedisRegenerateKeyParameters parameters)
+        public static Task<AzureOperationResponse> RegenerateKeyAsync(this IRedisOperations operations, string resourceGroupName, string name, RedisRegenerateKeyParameters parameters)
         {
             return operations.RegenerateKeyAsync(resourceGroupName, name, parameters, CancellationToken.None);
         }

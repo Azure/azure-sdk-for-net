@@ -23,7 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models;
 
 namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
@@ -46,7 +46,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> CreateOrUpdateAsync(string resourceId, AutoscaleSettingCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> CreateOrUpdateAsync(string resourceId, AutoscaleSettingCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <param name='resourceId'>
         /// The resource ID.
@@ -58,7 +58,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> DeleteAsync(string resourceId, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> DeleteAsync(string resourceId, CancellationToken cancellationToken);
         
         /// <param name='resourceId'>
         /// The resource ID.

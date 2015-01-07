@@ -23,8 +23,8 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Automation.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Automation
 {
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.Automation
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> DeleteAsync(string automationAccount, string scheduleId, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> DeleteAsync(string automationAccount, string scheduleId, CancellationToken cancellationToken);
         
         /// <summary>
         /// Retrieve the schedule identified by scheduleId.  (see
@@ -149,6 +149,6 @@ namespace Microsoft.Azure.Management.Automation
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> UpdateAsync(string automationAccount, ScheduleUpdateParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> UpdateAsync(string automationAccount, ScheduleUpdateParameters parameters, CancellationToken cancellationToken);
     }
 }

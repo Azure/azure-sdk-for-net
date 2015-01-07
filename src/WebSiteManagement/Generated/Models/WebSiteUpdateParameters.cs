@@ -22,7 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
 using Microsoft.WindowsAzure.Management.WebSites.Models;
 
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
@@ -155,7 +155,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             /// Initializes a new instance of the WebSiteHostNameSslState class
             /// with required arguments.
             /// </summary>
-            public WebSiteHostNameSslState(string name, WebSiteSslState sslState, bool toUpdate)
+            public WebSiteHostNameSslState(string name, WebSiteSslState? sslState, bool toUpdate)
                 : this()
             {
                 if (name == null)

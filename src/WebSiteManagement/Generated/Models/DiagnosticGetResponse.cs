@@ -22,15 +22,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Microsoft.Azure;
 
 namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
 {
     /// <summary>
     /// The get diagnostic settings operation response.
     /// </summary>
-    public partial class DiagnosticGetResponse : OperationResponse
+    public partial class DiagnosticGetResponse : AzureOperationResponse
     {
         private IDictionary<string, string> _settings;
         

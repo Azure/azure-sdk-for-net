@@ -30,9 +30,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Network;
 using Microsoft.WindowsAzure.Management.Network.Models;
 
@@ -42,7 +41,7 @@ namespace Microsoft.WindowsAzure.Management.Network
     /// The Network Management API includes operations for managing the Network
     /// Security Groups for your subscription.
     /// </summary>
-    internal partial class NetworkSecurityGroupOperations : IServiceOperations<NetworkManagementClient>, Microsoft.WindowsAzure.Management.Network.INetworkSecurityGroupOperations
+    internal partial class NetworkSecurityGroupOperations : IServiceOperations<NetworkManagementClient>, INetworkSecurityGroupOperations
     {
         /// <summary>
         /// Initializes a new instance of the NetworkSecurityGroupOperations
@@ -94,91 +93,78 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationStatusResponse> AddToSubnetAsync(string virtualNetworkName, string subnetName, NetworkSecurityGroupAddToSubnetParameters parameters, CancellationToken cancellationToken)
+        public async Task<OperationStatusResponse> AddToSubnetAsync(string virtualNetworkName, string subnetName, NetworkSecurityGroupAddToSubnetParameters parameters, CancellationToken cancellationToken)
         {
             NetworkManagementClient client = this.Client;
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("virtualNetworkName", virtualNetworkName);
                 tracingParameters.Add("subnetName", subnetName);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "AddToSubnetAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "AddToSubnetAsync", tracingParameters);
             }
-            try
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            OperationStatusResponse response = await client.NetworkSecurityGroups.BeginAddingToSubnetAsync(virtualNetworkName, subnetName, parameters, cancellationToken).ConfigureAwait(false);
+            if (response.Status == OperationStatus.Succeeded)
             {
-                if (shouldTrace)
-                {
-                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
-                }
-                
-                cancellationToken.ThrowIfCancellationRequested();
-                OperationStatusResponse response = await client.NetworkSecurityGroups.BeginAddingToSubnetAsync(virtualNetworkName, subnetName, parameters, cancellationToken).ConfigureAwait(false);
-                if (response.Status == OperationStatus.Succeeded)
-                {
-                    return response;
-                }
-                cancellationToken.ThrowIfCancellationRequested();
-                OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
-                int delayInSeconds = 30;
-                if (client.LongRunningOperationInitialTimeout >= 0)
-                {
-                    delayInSeconds = client.LongRunningOperationInitialTimeout;
-                }
-                while ((result.Status != OperationStatus.InProgress) == false)
-                {
-                    cancellationToken.ThrowIfCancellationRequested();
-                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
-                    delayInSeconds = 30;
-                    if (client.LongRunningOperationRetryTimeout >= 0)
-                    {
-                        delayInSeconds = client.LongRunningOperationRetryTimeout;
-                    }
-                }
-                
-                if (shouldTrace)
-                {
-                    Tracing.Exit(invocationId, result);
-                }
-                
-                if (result.Status != OperationStatus.Succeeded)
-                {
-                    if (result.Error != null)
-                    {
-                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                        ex.ErrorCode = result.Error.Code;
-                        ex.ErrorMessage = result.Error.Message;
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    else
-                    {
-                        CloudException ex = new CloudException("");
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                }
-                
-                return result;
+                return response;
             }
-            finally
+            cancellationToken.ThrowIfCancellationRequested();
+            OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 30;
+            if (client.LongRunningOperationInitialTimeout >= 0)
             {
-                if (client != null && shouldTrace)
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
+            }
+            while ((result.Status != OperationStatus.InProgress) == false)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 30;
+                if (client.LongRunningOperationRetryTimeout >= 0)
                 {
-                    client.Dispose();
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
                 }
             }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            if (result.Status != OperationStatus.Succeeded)
+            {
+                if (result.Error != null)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.Error = new CloudError();
+                    ex.Error.Code = result.Error.Code;
+                    ex.Error.Message = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                else
+                {
+                    CloudException ex = new CloudException("");
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+            }
+            
+            return result;
         }
         
         /// <summary>
@@ -208,7 +194,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationStatusResponse> BeginAddingToSubnetAsync(string virtualNetworkName, string subnetName, NetworkSecurityGroupAddToSubnetParameters parameters, CancellationToken cancellationToken)
+        public async Task<OperationStatusResponse> BeginAddingToSubnetAsync(string virtualNetworkName, string subnetName, NetworkSecurityGroupAddToSubnetParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (virtualNetworkName == null)
@@ -229,20 +215,20 @@ namespace Microsoft.WindowsAzure.Management.Network
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("virtualNetworkName", virtualNetworkName);
                 tracingParameters.Add("subnetName", subnetName);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "BeginAddingToSubnetAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "BeginAddingToSubnetAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/networking/virtualnetwork/" + virtualNetworkName.Trim() + "/subnets/" + subnetName.Trim() + "/networksecuritygroups";
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/networking/virtualnetwork/" + Uri.EscapeDataString(virtualNetworkName) + "/subnets/" + Uri.EscapeDataString(subnetName) + "/networksecuritygroups";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -292,13 +278,13 @@ namespace Microsoft.WindowsAzure.Management.Network
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.Accepted)
@@ -307,13 +293,14 @@ namespace Microsoft.WindowsAzure.Management.Network
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
                     OperationStatusResponse result = null;
+                    // Deserialize Response
                     result = new OperationStatusResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -323,7 +310,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -365,7 +352,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationStatusResponse> BeginCreatingAsync(NetworkSecurityGroupCreateParameters parameters, CancellationToken cancellationToken)
+        public async Task<OperationStatusResponse> BeginCreatingAsync(NetworkSecurityGroupCreateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
@@ -382,18 +369,18 @@ namespace Microsoft.WindowsAzure.Management.Network
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "BeginCreatingAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "BeginCreatingAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/networking/networksecuritygroups";
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/networking/networksecuritygroups";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -454,13 +441,13 @@ namespace Microsoft.WindowsAzure.Management.Network
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.Accepted)
@@ -469,13 +456,14 @@ namespace Microsoft.WindowsAzure.Management.Network
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
                     OperationStatusResponse result = null;
+                    // Deserialize Response
                     result = new OperationStatusResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -485,7 +473,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -529,7 +517,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationStatusResponse> BeginDeletingAsync(string networkSecurityGroupName, CancellationToken cancellationToken)
+        public async Task<OperationStatusResponse> BeginDeletingAsync(string networkSecurityGroupName, CancellationToken cancellationToken)
         {
             // Validate
             if (networkSecurityGroupName == null)
@@ -538,18 +526,18 @@ namespace Microsoft.WindowsAzure.Management.Network
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("networkSecurityGroupName", networkSecurityGroupName);
-                Tracing.Enter(invocationId, this, "BeginDeletingAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "BeginDeletingAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/networking/networksecuritygroups/" + networkSecurityGroupName.Trim();
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/networking/networksecuritygroups/" + Uri.EscapeDataString(networkSecurityGroupName);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -584,13 +572,13 @@ namespace Microsoft.WindowsAzure.Management.Network
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.Accepted)
@@ -599,13 +587,14 @@ namespace Microsoft.WindowsAzure.Management.Network
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
                     OperationStatusResponse result = null;
+                    // Deserialize Response
                     result = new OperationStatusResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -615,7 +604,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -659,7 +648,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationStatusResponse> BeginDeletingRuleAsync(string networkSecurityGroupName, string ruleName, CancellationToken cancellationToken)
+        public async Task<OperationStatusResponse> BeginDeletingRuleAsync(string networkSecurityGroupName, string ruleName, CancellationToken cancellationToken)
         {
             // Validate
             if (networkSecurityGroupName == null)
@@ -672,19 +661,19 @@ namespace Microsoft.WindowsAzure.Management.Network
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("networkSecurityGroupName", networkSecurityGroupName);
                 tracingParameters.Add("ruleName", ruleName);
-                Tracing.Enter(invocationId, this, "BeginDeletingRuleAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "BeginDeletingRuleAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/networking/networksecuritygroups/" + networkSecurityGroupName.Trim() + "/rules/" + ruleName.Trim();
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/networking/networksecuritygroups/" + Uri.EscapeDataString(networkSecurityGroupName) + "/rules/" + Uri.EscapeDataString(ruleName);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -719,13 +708,13 @@ namespace Microsoft.WindowsAzure.Management.Network
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.Accepted)
@@ -734,13 +723,14 @@ namespace Microsoft.WindowsAzure.Management.Network
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
                     OperationStatusResponse result = null;
+                    // Deserialize Response
                     result = new OperationStatusResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -750,7 +740,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -797,7 +787,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationStatusResponse> BeginRemovingFromSubnetAsync(string virtualNetworkName, string subnetName, string networkSecurityGroupName, CancellationToken cancellationToken)
+        public async Task<OperationStatusResponse> BeginRemovingFromSubnetAsync(string virtualNetworkName, string subnetName, string networkSecurityGroupName, CancellationToken cancellationToken)
         {
             // Validate
             if (virtualNetworkName == null)
@@ -814,20 +804,20 @@ namespace Microsoft.WindowsAzure.Management.Network
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("virtualNetworkName", virtualNetworkName);
                 tracingParameters.Add("subnetName", subnetName);
                 tracingParameters.Add("networkSecurityGroupName", networkSecurityGroupName);
-                Tracing.Enter(invocationId, this, "BeginRemovingFromSubnetAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "BeginRemovingFromSubnetAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/networking/virtualnetwork/" + virtualNetworkName.Trim() + "/subnets/" + subnetName.Trim() + "/networksecuritygroups/" + networkSecurityGroupName.Trim();
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/networking/virtualnetwork/" + Uri.EscapeDataString(virtualNetworkName) + "/subnets/" + Uri.EscapeDataString(subnetName) + "/networksecuritygroups/" + Uri.EscapeDataString(networkSecurityGroupName);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -862,13 +852,13 @@ namespace Microsoft.WindowsAzure.Management.Network
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.Accepted)
@@ -877,13 +867,14 @@ namespace Microsoft.WindowsAzure.Management.Network
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
                     OperationStatusResponse result = null;
+                    // Deserialize Response
                     result = new OperationStatusResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -893,7 +884,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -941,7 +932,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationStatusResponse> BeginSettingRuleAsync(string networkSecurityGroupName, string ruleName, NetworkSecuritySetRuleParameters parameters, CancellationToken cancellationToken)
+        public async Task<OperationStatusResponse> BeginSettingRuleAsync(string networkSecurityGroupName, string ruleName, NetworkSecuritySetRuleParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
@@ -978,20 +969,20 @@ namespace Microsoft.WindowsAzure.Management.Network
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("networkSecurityGroupName", networkSecurityGroupName);
                 tracingParameters.Add("ruleName", ruleName);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "BeginSettingRuleAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "BeginSettingRuleAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/networking/networksecuritygroups/" + (networkSecurityGroupName != null ? networkSecurityGroupName.Trim() : "") + "/rules/" + (ruleName != null ? ruleName.Trim() : "");
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/networking/networksecuritygroups/" + (networkSecurityGroupName == null ? "" : Uri.EscapeDataString(networkSecurityGroupName)) + "/rules/" + (ruleName == null ? "" : Uri.EscapeDataString(ruleName));
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1069,13 +1060,13 @@ namespace Microsoft.WindowsAzure.Management.Network
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.Accepted)
@@ -1084,13 +1075,14 @@ namespace Microsoft.WindowsAzure.Management.Network
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
                     OperationStatusResponse result = null;
+                    // Deserialize Response
                     result = new OperationStatusResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1100,7 +1092,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -1142,89 +1134,76 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationStatusResponse> CreateAsync(NetworkSecurityGroupCreateParameters parameters, CancellationToken cancellationToken)
+        public async Task<OperationStatusResponse> CreateAsync(NetworkSecurityGroupCreateParameters parameters, CancellationToken cancellationToken)
         {
             NetworkManagementClient client = this.Client;
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "CreateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "CreateAsync", tracingParameters);
             }
-            try
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            OperationStatusResponse response = await client.NetworkSecurityGroups.BeginCreatingAsync(parameters, cancellationToken).ConfigureAwait(false);
+            if (response.Status == OperationStatus.Succeeded)
             {
-                if (shouldTrace)
-                {
-                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
-                }
-                
-                cancellationToken.ThrowIfCancellationRequested();
-                OperationStatusResponse response = await client.NetworkSecurityGroups.BeginCreatingAsync(parameters, cancellationToken).ConfigureAwait(false);
-                if (response.Status == OperationStatus.Succeeded)
-                {
-                    return response;
-                }
-                cancellationToken.ThrowIfCancellationRequested();
-                OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
-                int delayInSeconds = 30;
-                if (client.LongRunningOperationInitialTimeout >= 0)
-                {
-                    delayInSeconds = client.LongRunningOperationInitialTimeout;
-                }
-                while ((result.Status != OperationStatus.InProgress) == false)
-                {
-                    cancellationToken.ThrowIfCancellationRequested();
-                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
-                    delayInSeconds = 30;
-                    if (client.LongRunningOperationRetryTimeout >= 0)
-                    {
-                        delayInSeconds = client.LongRunningOperationRetryTimeout;
-                    }
-                }
-                
-                if (shouldTrace)
-                {
-                    Tracing.Exit(invocationId, result);
-                }
-                
-                if (result.Status != OperationStatus.Succeeded)
-                {
-                    if (result.Error != null)
-                    {
-                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                        ex.ErrorCode = result.Error.Code;
-                        ex.ErrorMessage = result.Error.Message;
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    else
-                    {
-                        CloudException ex = new CloudException("");
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                }
-                
-                return result;
+                return response;
             }
-            finally
+            cancellationToken.ThrowIfCancellationRequested();
+            OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 30;
+            if (client.LongRunningOperationInitialTimeout >= 0)
             {
-                if (client != null && shouldTrace)
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
+            }
+            while ((result.Status != OperationStatus.InProgress) == false)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 30;
+                if (client.LongRunningOperationRetryTimeout >= 0)
                 {
-                    client.Dispose();
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
                 }
             }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            if (result.Status != OperationStatus.Succeeded)
+            {
+                if (result.Error != null)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.Error = new CloudError();
+                    ex.Error.Code = result.Error.Code;
+                    ex.Error.Message = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                else
+                {
+                    CloudException ex = new CloudException("");
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+            }
+            
+            return result;
         }
         
         /// <summary>
@@ -1251,89 +1230,76 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationStatusResponse> DeleteAsync(string networkSecurityGroupName, CancellationToken cancellationToken)
+        public async Task<OperationStatusResponse> DeleteAsync(string networkSecurityGroupName, CancellationToken cancellationToken)
         {
             NetworkManagementClient client = this.Client;
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("networkSecurityGroupName", networkSecurityGroupName);
-                Tracing.Enter(invocationId, this, "DeleteAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "DeleteAsync", tracingParameters);
             }
-            try
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            OperationStatusResponse response = await client.NetworkSecurityGroups.BeginDeletingAsync(networkSecurityGroupName, cancellationToken).ConfigureAwait(false);
+            if (response.Status == OperationStatus.Succeeded)
             {
-                if (shouldTrace)
-                {
-                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
-                }
-                
-                cancellationToken.ThrowIfCancellationRequested();
-                OperationStatusResponse response = await client.NetworkSecurityGroups.BeginDeletingAsync(networkSecurityGroupName, cancellationToken).ConfigureAwait(false);
-                if (response.Status == OperationStatus.Succeeded)
-                {
-                    return response;
-                }
-                cancellationToken.ThrowIfCancellationRequested();
-                OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
-                int delayInSeconds = 30;
-                if (client.LongRunningOperationInitialTimeout >= 0)
-                {
-                    delayInSeconds = client.LongRunningOperationInitialTimeout;
-                }
-                while ((result.Status != OperationStatus.InProgress) == false)
-                {
-                    cancellationToken.ThrowIfCancellationRequested();
-                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
-                    delayInSeconds = 30;
-                    if (client.LongRunningOperationRetryTimeout >= 0)
-                    {
-                        delayInSeconds = client.LongRunningOperationRetryTimeout;
-                    }
-                }
-                
-                if (shouldTrace)
-                {
-                    Tracing.Exit(invocationId, result);
-                }
-                
-                if (result.Status != OperationStatus.Succeeded)
-                {
-                    if (result.Error != null)
-                    {
-                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                        ex.ErrorCode = result.Error.Code;
-                        ex.ErrorMessage = result.Error.Message;
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    else
-                    {
-                        CloudException ex = new CloudException("");
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                }
-                
-                return result;
+                return response;
             }
-            finally
+            cancellationToken.ThrowIfCancellationRequested();
+            OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 30;
+            if (client.LongRunningOperationInitialTimeout >= 0)
             {
-                if (client != null && shouldTrace)
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
+            }
+            while ((result.Status != OperationStatus.InProgress) == false)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 30;
+                if (client.LongRunningOperationRetryTimeout >= 0)
                 {
-                    client.Dispose();
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
                 }
             }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            if (result.Status != OperationStatus.Succeeded)
+            {
+                if (result.Error != null)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.Error = new CloudError();
+                    ex.Error.Code = result.Error.Code;
+                    ex.Error.Message = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                else
+                {
+                    CloudException ex = new CloudException("");
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+            }
+            
+            return result;
         }
         
         /// <summary>
@@ -1360,90 +1326,77 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationStatusResponse> DeleteRuleAsync(string networkSecurityGroupName, string ruleName, CancellationToken cancellationToken)
+        public async Task<OperationStatusResponse> DeleteRuleAsync(string networkSecurityGroupName, string ruleName, CancellationToken cancellationToken)
         {
             NetworkManagementClient client = this.Client;
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("networkSecurityGroupName", networkSecurityGroupName);
                 tracingParameters.Add("ruleName", ruleName);
-                Tracing.Enter(invocationId, this, "DeleteRuleAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "DeleteRuleAsync", tracingParameters);
             }
-            try
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            OperationStatusResponse response = await client.NetworkSecurityGroups.BeginDeletingRuleAsync(networkSecurityGroupName, ruleName, cancellationToken).ConfigureAwait(false);
+            if (response.Status == OperationStatus.Succeeded)
             {
-                if (shouldTrace)
-                {
-                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
-                }
-                
-                cancellationToken.ThrowIfCancellationRequested();
-                OperationStatusResponse response = await client.NetworkSecurityGroups.BeginDeletingRuleAsync(networkSecurityGroupName, ruleName, cancellationToken).ConfigureAwait(false);
-                if (response.Status == OperationStatus.Succeeded)
-                {
-                    return response;
-                }
-                cancellationToken.ThrowIfCancellationRequested();
-                OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
-                int delayInSeconds = 30;
-                if (client.LongRunningOperationInitialTimeout >= 0)
-                {
-                    delayInSeconds = client.LongRunningOperationInitialTimeout;
-                }
-                while ((result.Status != OperationStatus.InProgress) == false)
-                {
-                    cancellationToken.ThrowIfCancellationRequested();
-                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
-                    delayInSeconds = 30;
-                    if (client.LongRunningOperationRetryTimeout >= 0)
-                    {
-                        delayInSeconds = client.LongRunningOperationRetryTimeout;
-                    }
-                }
-                
-                if (shouldTrace)
-                {
-                    Tracing.Exit(invocationId, result);
-                }
-                
-                if (result.Status != OperationStatus.Succeeded)
-                {
-                    if (result.Error != null)
-                    {
-                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                        ex.ErrorCode = result.Error.Code;
-                        ex.ErrorMessage = result.Error.Message;
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    else
-                    {
-                        CloudException ex = new CloudException("");
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                }
-                
-                return result;
+                return response;
             }
-            finally
+            cancellationToken.ThrowIfCancellationRequested();
+            OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 30;
+            if (client.LongRunningOperationInitialTimeout >= 0)
             {
-                if (client != null && shouldTrace)
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
+            }
+            while ((result.Status != OperationStatus.InProgress) == false)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 30;
+                if (client.LongRunningOperationRetryTimeout >= 0)
                 {
-                    client.Dispose();
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
                 }
             }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            if (result.Status != OperationStatus.Succeeded)
+            {
+                if (result.Error != null)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.Error = new CloudError();
+                    ex.Error.Code = result.Error.Code;
+                    ex.Error.Message = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                else
+                {
+                    CloudException ex = new CloudException("");
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+            }
+            
+            return result;
         }
         
         /// <summary>
@@ -1462,7 +1415,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// <returns>
         /// A Network Security Group associated with your subscription.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.NetworkSecurityGroupGetResponse> GetAsync(string networkSecurityGroupName, string detailLevel, CancellationToken cancellationToken)
+        public async Task<NetworkSecurityGroupGetResponse> GetAsync(string networkSecurityGroupName, string detailLevel, CancellationToken cancellationToken)
         {
             // Validate
             if (networkSecurityGroupName == null)
@@ -1471,22 +1424,22 @@ namespace Microsoft.WindowsAzure.Management.Network
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("networkSecurityGroupName", networkSecurityGroupName);
                 tracingParameters.Add("detailLevel", detailLevel);
-                Tracing.Enter(invocationId, this, "GetAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/networking/networksecuritygroups/" + networkSecurityGroupName.Trim() + "?";
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/networking/networksecuritygroups/" + Uri.EscapeDataString(networkSecurityGroupName) + "?";
             if (detailLevel != null)
             {
-                url = url + "detaillevel=" + Uri.EscapeDataString(detailLevel != null ? detailLevel.Trim() : "");
+                url = url + "detaillevel=" + Uri.EscapeDataString(detailLevel);
             }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -1522,13 +1475,13 @@ namespace Microsoft.WindowsAzure.Management.Network
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -1537,7 +1490,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -1545,123 +1498,126 @@ namespace Microsoft.WindowsAzure.Management.Network
                     // Create Result
                     NetworkSecurityGroupGetResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new NetworkSecurityGroupGetResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement networkSecurityGroupElement = responseDoc.Element(XName.Get("NetworkSecurityGroup", "http://schemas.microsoft.com/windowsazure"));
-                    if (networkSecurityGroupElement != null)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        XElement nameElement = networkSecurityGroupElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                        if (nameElement != null)
-                        {
-                            string nameInstance = nameElement.Value;
-                            result.Name = nameInstance;
-                        }
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new NetworkSecurityGroupGetResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
                         
-                        XElement labelElement = networkSecurityGroupElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
-                        if (labelElement != null)
+                        XElement networkSecurityGroupElement = responseDoc.Element(XName.Get("NetworkSecurityGroup", "http://schemas.microsoft.com/windowsazure"));
+                        if (networkSecurityGroupElement != null)
                         {
-                            string labelInstance = labelElement.Value;
-                            result.Label = labelInstance;
-                        }
-                        
-                        XElement locationElement = networkSecurityGroupElement.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
-                        if (locationElement != null)
-                        {
-                            string locationInstance = locationElement.Value;
-                            result.Location = locationInstance;
-                        }
-                        
-                        XElement rulesSequenceElement = networkSecurityGroupElement.Element(XName.Get("Rules", "http://schemas.microsoft.com/windowsazure"));
-                        if (rulesSequenceElement != null)
-                        {
-                            foreach (XElement rulesElement in rulesSequenceElement.Elements(XName.Get("Rule", "http://schemas.microsoft.com/windowsazure")))
+                            XElement nameElement = networkSecurityGroupElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                            if (nameElement != null)
                             {
-                                NetworkSecurityRule ruleInstance = new NetworkSecurityRule();
-                                result.Rules.Add(ruleInstance);
-                                
-                                XElement nameElement2 = rulesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                                if (nameElement2 != null)
+                                string nameInstance = nameElement.Value;
+                                result.Name = nameInstance;
+                            }
+                            
+                            XElement labelElement = networkSecurityGroupElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
+                            if (labelElement != null)
+                            {
+                                string labelInstance = labelElement.Value;
+                                result.Label = labelInstance;
+                            }
+                            
+                            XElement locationElement = networkSecurityGroupElement.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
+                            if (locationElement != null)
+                            {
+                                string locationInstance = locationElement.Value;
+                                result.Location = locationInstance;
+                            }
+                            
+                            XElement rulesSequenceElement = networkSecurityGroupElement.Element(XName.Get("Rules", "http://schemas.microsoft.com/windowsazure"));
+                            if (rulesSequenceElement != null)
+                            {
+                                foreach (XElement rulesElement in rulesSequenceElement.Elements(XName.Get("Rule", "http://schemas.microsoft.com/windowsazure")))
                                 {
-                                    string nameInstance2 = nameElement2.Value;
-                                    ruleInstance.Name = nameInstance2;
-                                }
-                                
-                                XElement typeElement = rulesElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
-                                if (typeElement != null)
-                                {
-                                    string typeInstance = typeElement.Value;
-                                    ruleInstance.Type = typeInstance;
-                                }
-                                
-                                XElement priorityElement = rulesElement.Element(XName.Get("Priority", "http://schemas.microsoft.com/windowsazure"));
-                                if (priorityElement != null)
-                                {
-                                    int priorityInstance = int.Parse(priorityElement.Value, CultureInfo.InvariantCulture);
-                                    ruleInstance.Priority = priorityInstance;
-                                }
-                                
-                                XElement actionElement = rulesElement.Element(XName.Get("Action", "http://schemas.microsoft.com/windowsazure"));
-                                if (actionElement != null)
-                                {
-                                    string actionInstance = actionElement.Value;
-                                    ruleInstance.Action = actionInstance;
-                                }
-                                
-                                XElement sourceAddressPrefixElement = rulesElement.Element(XName.Get("SourceAddressPrefix", "http://schemas.microsoft.com/windowsazure"));
-                                if (sourceAddressPrefixElement != null)
-                                {
-                                    string sourceAddressPrefixInstance = sourceAddressPrefixElement.Value;
-                                    ruleInstance.SourceAddressPrefix = sourceAddressPrefixInstance;
-                                }
-                                
-                                XElement sourcePortRangeElement = rulesElement.Element(XName.Get("SourcePortRange", "http://schemas.microsoft.com/windowsazure"));
-                                if (sourcePortRangeElement != null)
-                                {
-                                    string sourcePortRangeInstance = sourcePortRangeElement.Value;
-                                    ruleInstance.SourcePortRange = sourcePortRangeInstance;
-                                }
-                                
-                                XElement destinationAddressPrefixElement = rulesElement.Element(XName.Get("DestinationAddressPrefix", "http://schemas.microsoft.com/windowsazure"));
-                                if (destinationAddressPrefixElement != null)
-                                {
-                                    string destinationAddressPrefixInstance = destinationAddressPrefixElement.Value;
-                                    ruleInstance.DestinationAddressPrefix = destinationAddressPrefixInstance;
-                                }
-                                
-                                XElement destinationPortRangeElement = rulesElement.Element(XName.Get("DestinationPortRange", "http://schemas.microsoft.com/windowsazure"));
-                                if (destinationPortRangeElement != null)
-                                {
-                                    string destinationPortRangeInstance = destinationPortRangeElement.Value;
-                                    ruleInstance.DestinationPortRange = destinationPortRangeInstance;
-                                }
-                                
-                                XElement protocolElement = rulesElement.Element(XName.Get("Protocol", "http://schemas.microsoft.com/windowsazure"));
-                                if (protocolElement != null)
-                                {
-                                    string protocolInstance = protocolElement.Value;
-                                    ruleInstance.Protocol = protocolInstance;
-                                }
-                                
-                                XElement stateElement = rulesElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
-                                if (stateElement != null)
-                                {
-                                    string stateInstance = stateElement.Value;
-                                    ruleInstance.State = stateInstance;
-                                }
-                                
-                                XElement isDefaultElement = rulesElement.Element(XName.Get("IsDefault", "http://schemas.microsoft.com/windowsazure"));
-                                if (isDefaultElement != null)
-                                {
-                                    bool isDefaultInstance = bool.Parse(isDefaultElement.Value);
-                                    ruleInstance.IsDefault = isDefaultInstance;
+                                    NetworkSecurityRule ruleInstance = new NetworkSecurityRule();
+                                    result.Rules.Add(ruleInstance);
+                                    
+                                    XElement nameElement2 = rulesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                    if (nameElement2 != null)
+                                    {
+                                        string nameInstance2 = nameElement2.Value;
+                                        ruleInstance.Name = nameInstance2;
+                                    }
+                                    
+                                    XElement typeElement = rulesElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
+                                    if (typeElement != null)
+                                    {
+                                        string typeInstance = typeElement.Value;
+                                        ruleInstance.Type = typeInstance;
+                                    }
+                                    
+                                    XElement priorityElement = rulesElement.Element(XName.Get("Priority", "http://schemas.microsoft.com/windowsazure"));
+                                    if (priorityElement != null)
+                                    {
+                                        int priorityInstance = int.Parse(priorityElement.Value, CultureInfo.InvariantCulture);
+                                        ruleInstance.Priority = priorityInstance;
+                                    }
+                                    
+                                    XElement actionElement = rulesElement.Element(XName.Get("Action", "http://schemas.microsoft.com/windowsazure"));
+                                    if (actionElement != null)
+                                    {
+                                        string actionInstance = actionElement.Value;
+                                        ruleInstance.Action = actionInstance;
+                                    }
+                                    
+                                    XElement sourceAddressPrefixElement = rulesElement.Element(XName.Get("SourceAddressPrefix", "http://schemas.microsoft.com/windowsazure"));
+                                    if (sourceAddressPrefixElement != null)
+                                    {
+                                        string sourceAddressPrefixInstance = sourceAddressPrefixElement.Value;
+                                        ruleInstance.SourceAddressPrefix = sourceAddressPrefixInstance;
+                                    }
+                                    
+                                    XElement sourcePortRangeElement = rulesElement.Element(XName.Get("SourcePortRange", "http://schemas.microsoft.com/windowsazure"));
+                                    if (sourcePortRangeElement != null)
+                                    {
+                                        string sourcePortRangeInstance = sourcePortRangeElement.Value;
+                                        ruleInstance.SourcePortRange = sourcePortRangeInstance;
+                                    }
+                                    
+                                    XElement destinationAddressPrefixElement = rulesElement.Element(XName.Get("DestinationAddressPrefix", "http://schemas.microsoft.com/windowsazure"));
+                                    if (destinationAddressPrefixElement != null)
+                                    {
+                                        string destinationAddressPrefixInstance = destinationAddressPrefixElement.Value;
+                                        ruleInstance.DestinationAddressPrefix = destinationAddressPrefixInstance;
+                                    }
+                                    
+                                    XElement destinationPortRangeElement = rulesElement.Element(XName.Get("DestinationPortRange", "http://schemas.microsoft.com/windowsazure"));
+                                    if (destinationPortRangeElement != null)
+                                    {
+                                        string destinationPortRangeInstance = destinationPortRangeElement.Value;
+                                        ruleInstance.DestinationPortRange = destinationPortRangeInstance;
+                                    }
+                                    
+                                    XElement protocolElement = rulesElement.Element(XName.Get("Protocol", "http://schemas.microsoft.com/windowsazure"));
+                                    if (protocolElement != null)
+                                    {
+                                        string protocolInstance = protocolElement.Value;
+                                        ruleInstance.Protocol = protocolInstance;
+                                    }
+                                    
+                                    XElement stateElement = rulesElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                                    if (stateElement != null)
+                                    {
+                                        string stateInstance = stateElement.Value;
+                                        ruleInstance.State = stateInstance;
+                                    }
+                                    
+                                    XElement isDefaultElement = rulesElement.Element(XName.Get("IsDefault", "http://schemas.microsoft.com/windowsazure"));
+                                    if (isDefaultElement != null)
+                                    {
+                                        bool isDefaultInstance = bool.Parse(isDefaultElement.Value);
+                                        ruleInstance.IsDefault = isDefaultInstance;
+                                    }
                                 }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1670,7 +1626,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -1706,7 +1662,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// <returns>
         /// The Network Security Group associated with a subnet.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.NetworkSecurityGroupGetForSubnetResponse> GetForSubnetAsync(string virtualNetworkName, string subnetName, CancellationToken cancellationToken)
+        public async Task<NetworkSecurityGroupGetForSubnetResponse> GetForSubnetAsync(string virtualNetworkName, string subnetName, CancellationToken cancellationToken)
         {
             // Validate
             if (virtualNetworkName == null)
@@ -1719,19 +1675,19 @@ namespace Microsoft.WindowsAzure.Management.Network
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("virtualNetworkName", virtualNetworkName);
                 tracingParameters.Add("subnetName", subnetName);
-                Tracing.Enter(invocationId, this, "GetForSubnetAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetForSubnetAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/networking/virtualnetwork/" + virtualNetworkName.Trim() + "/subnets/" + subnetName.Trim() + "/networksecuritygroups";
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/networking/virtualnetwork/" + Uri.EscapeDataString(virtualNetworkName) + "/subnets/" + Uri.EscapeDataString(subnetName) + "/networksecuritygroups";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1766,13 +1722,13 @@ namespace Microsoft.WindowsAzure.Management.Network
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -1781,7 +1737,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -1789,29 +1745,32 @@ namespace Microsoft.WindowsAzure.Management.Network
                     // Create Result
                     NetworkSecurityGroupGetForSubnetResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new NetworkSecurityGroupGetForSubnetResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement networkSecurityGroupElement = responseDoc.Element(XName.Get("NetworkSecurityGroup", "http://schemas.microsoft.com/windowsazure"));
-                    if (networkSecurityGroupElement != null)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        XElement nameElement = networkSecurityGroupElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                        if (nameElement != null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new NetworkSecurityGroupGetForSubnetResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement networkSecurityGroupElement = responseDoc.Element(XName.Get("NetworkSecurityGroup", "http://schemas.microsoft.com/windowsazure"));
+                        if (networkSecurityGroupElement != null)
                         {
-                            string nameInstance = nameElement.Value;
-                            result.Name = nameInstance;
+                            XElement nameElement = networkSecurityGroupElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                            if (nameElement != null)
+                            {
+                                string nameInstance = nameElement.Value;
+                                result.Name = nameInstance;
+                            }
+                            
+                            XElement stateElement = networkSecurityGroupElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                            if (stateElement != null)
+                            {
+                                string stateInstance = stateElement.Value;
+                                result.State = stateInstance;
+                            }
                         }
                         
-                        XElement stateElement = networkSecurityGroupElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
-                        if (stateElement != null)
-                        {
-                            string stateInstance = stateElement.Value;
-                            result.State = stateInstance;
-                        }
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1820,7 +1779,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -1850,22 +1809,22 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// <returns>
         /// The List Definitions operation response.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.NetworkSecurityGroupListResponse> ListAsync(CancellationToken cancellationToken)
+        public async Task<NetworkSecurityGroupListResponse> ListAsync(CancellationToken cancellationToken)
         {
             // Validate
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                Tracing.Enter(invocationId, this, "ListAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/networking/networksecuritygroups";
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/networking/networksecuritygroups";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1900,13 +1859,13 @@ namespace Microsoft.WindowsAzure.Management.Network
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -1915,7 +1874,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -1923,42 +1882,45 @@ namespace Microsoft.WindowsAzure.Management.Network
                     // Create Result
                     NetworkSecurityGroupListResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new NetworkSecurityGroupListResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement networkSecurityGroupsSequenceElement = responseDoc.Element(XName.Get("NetworkSecurityGroups", "http://schemas.microsoft.com/windowsazure"));
-                    if (networkSecurityGroupsSequenceElement != null)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        foreach (XElement networkSecurityGroupsElement in networkSecurityGroupsSequenceElement.Elements(XName.Get("NetworkSecurityGroup", "http://schemas.microsoft.com/windowsazure")))
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new NetworkSecurityGroupListResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement networkSecurityGroupsSequenceElement = responseDoc.Element(XName.Get("NetworkSecurityGroups", "http://schemas.microsoft.com/windowsazure"));
+                        if (networkSecurityGroupsSequenceElement != null)
                         {
-                            NetworkSecurityGroup networkSecurityGroupInstance = new NetworkSecurityGroup();
-                            result.NetworkSecurityGroups.Add(networkSecurityGroupInstance);
-                            
-                            XElement nameElement = networkSecurityGroupsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                            if (nameElement != null)
+                            foreach (XElement networkSecurityGroupsElement in networkSecurityGroupsSequenceElement.Elements(XName.Get("NetworkSecurityGroup", "http://schemas.microsoft.com/windowsazure")))
                             {
-                                string nameInstance = nameElement.Value;
-                                networkSecurityGroupInstance.Name = nameInstance;
-                            }
-                            
-                            XElement labelElement = networkSecurityGroupsElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
-                            if (labelElement != null)
-                            {
-                                string labelInstance = labelElement.Value;
-                                networkSecurityGroupInstance.Label = labelInstance;
-                            }
-                            
-                            XElement locationElement = networkSecurityGroupsElement.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
-                            if (locationElement != null)
-                            {
-                                string locationInstance = locationElement.Value;
-                                networkSecurityGroupInstance.Location = locationInstance;
+                                NetworkSecurityGroup networkSecurityGroupInstance = new NetworkSecurityGroup();
+                                result.NetworkSecurityGroups.Add(networkSecurityGroupInstance);
+                                
+                                XElement nameElement = networkSecurityGroupsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                if (nameElement != null)
+                                {
+                                    string nameInstance = nameElement.Value;
+                                    networkSecurityGroupInstance.Name = nameInstance;
+                                }
+                                
+                                XElement labelElement = networkSecurityGroupsElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
+                                if (labelElement != null)
+                                {
+                                    string labelInstance = labelElement.Value;
+                                    networkSecurityGroupInstance.Label = labelInstance;
+                                }
+                                
+                                XElement locationElement = networkSecurityGroupsElement.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
+                                if (locationElement != null)
+                                {
+                                    string locationInstance = locationElement.Value;
+                                    networkSecurityGroupInstance.Location = locationInstance;
+                                }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1967,7 +1929,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -2014,91 +1976,78 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationStatusResponse> RemoveFromSubnetAsync(string virtualNetworkName, string subnetName, string networkSecurityGroupName, CancellationToken cancellationToken)
+        public async Task<OperationStatusResponse> RemoveFromSubnetAsync(string virtualNetworkName, string subnetName, string networkSecurityGroupName, CancellationToken cancellationToken)
         {
             NetworkManagementClient client = this.Client;
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("virtualNetworkName", virtualNetworkName);
                 tracingParameters.Add("subnetName", subnetName);
                 tracingParameters.Add("networkSecurityGroupName", networkSecurityGroupName);
-                Tracing.Enter(invocationId, this, "RemoveFromSubnetAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "RemoveFromSubnetAsync", tracingParameters);
             }
-            try
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            OperationStatusResponse response = await client.NetworkSecurityGroups.BeginRemovingFromSubnetAsync(virtualNetworkName, subnetName, networkSecurityGroupName, cancellationToken).ConfigureAwait(false);
+            if (response.Status == OperationStatus.Succeeded)
             {
-                if (shouldTrace)
-                {
-                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
-                }
-                
-                cancellationToken.ThrowIfCancellationRequested();
-                OperationStatusResponse response = await client.NetworkSecurityGroups.BeginRemovingFromSubnetAsync(virtualNetworkName, subnetName, networkSecurityGroupName, cancellationToken).ConfigureAwait(false);
-                if (response.Status == OperationStatus.Succeeded)
-                {
-                    return response;
-                }
-                cancellationToken.ThrowIfCancellationRequested();
-                OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
-                int delayInSeconds = 30;
-                if (client.LongRunningOperationInitialTimeout >= 0)
-                {
-                    delayInSeconds = client.LongRunningOperationInitialTimeout;
-                }
-                while ((result.Status != OperationStatus.InProgress) == false)
-                {
-                    cancellationToken.ThrowIfCancellationRequested();
-                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
-                    delayInSeconds = 30;
-                    if (client.LongRunningOperationRetryTimeout >= 0)
-                    {
-                        delayInSeconds = client.LongRunningOperationRetryTimeout;
-                    }
-                }
-                
-                if (shouldTrace)
-                {
-                    Tracing.Exit(invocationId, result);
-                }
-                
-                if (result.Status != OperationStatus.Succeeded)
-                {
-                    if (result.Error != null)
-                    {
-                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                        ex.ErrorCode = result.Error.Code;
-                        ex.ErrorMessage = result.Error.Message;
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    else
-                    {
-                        CloudException ex = new CloudException("");
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                }
-                
-                return result;
+                return response;
             }
-            finally
+            cancellationToken.ThrowIfCancellationRequested();
+            OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 30;
+            if (client.LongRunningOperationInitialTimeout >= 0)
             {
-                if (client != null && shouldTrace)
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
+            }
+            while ((result.Status != OperationStatus.InProgress) == false)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 30;
+                if (client.LongRunningOperationRetryTimeout >= 0)
                 {
-                    client.Dispose();
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
                 }
             }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            if (result.Status != OperationStatus.Succeeded)
+            {
+                if (result.Error != null)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.Error = new CloudError();
+                    ex.Error.Code = result.Error.Code;
+                    ex.Error.Message = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                else
+                {
+                    CloudException ex = new CloudException("");
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+            }
+            
+            return result;
         }
         
         /// <summary>
@@ -2128,91 +2077,78 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationStatusResponse> SetRuleAsync(string networkSecurityGroupName, string ruleName, NetworkSecuritySetRuleParameters parameters, CancellationToken cancellationToken)
+        public async Task<OperationStatusResponse> SetRuleAsync(string networkSecurityGroupName, string ruleName, NetworkSecuritySetRuleParameters parameters, CancellationToken cancellationToken)
         {
             NetworkManagementClient client = this.Client;
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("networkSecurityGroupName", networkSecurityGroupName);
                 tracingParameters.Add("ruleName", ruleName);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "SetRuleAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "SetRuleAsync", tracingParameters);
             }
-            try
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            OperationStatusResponse response = await client.NetworkSecurityGroups.BeginSettingRuleAsync(networkSecurityGroupName, ruleName, parameters, cancellationToken).ConfigureAwait(false);
+            if (response.Status == OperationStatus.Succeeded)
             {
-                if (shouldTrace)
-                {
-                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
-                }
-                
-                cancellationToken.ThrowIfCancellationRequested();
-                OperationStatusResponse response = await client.NetworkSecurityGroups.BeginSettingRuleAsync(networkSecurityGroupName, ruleName, parameters, cancellationToken).ConfigureAwait(false);
-                if (response.Status == OperationStatus.Succeeded)
-                {
-                    return response;
-                }
-                cancellationToken.ThrowIfCancellationRequested();
-                OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
-                int delayInSeconds = 30;
-                if (client.LongRunningOperationInitialTimeout >= 0)
-                {
-                    delayInSeconds = client.LongRunningOperationInitialTimeout;
-                }
-                while ((result.Status != OperationStatus.InProgress) == false)
-                {
-                    cancellationToken.ThrowIfCancellationRequested();
-                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
-                    delayInSeconds = 30;
-                    if (client.LongRunningOperationRetryTimeout >= 0)
-                    {
-                        delayInSeconds = client.LongRunningOperationRetryTimeout;
-                    }
-                }
-                
-                if (shouldTrace)
-                {
-                    Tracing.Exit(invocationId, result);
-                }
-                
-                if (result.Status != OperationStatus.Succeeded)
-                {
-                    if (result.Error != null)
-                    {
-                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                        ex.ErrorCode = result.Error.Code;
-                        ex.ErrorMessage = result.Error.Message;
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    else
-                    {
-                        CloudException ex = new CloudException("");
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                }
-                
-                return result;
+                return response;
             }
-            finally
+            cancellationToken.ThrowIfCancellationRequested();
+            OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 30;
+            if (client.LongRunningOperationInitialTimeout >= 0)
             {
-                if (client != null && shouldTrace)
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
+            }
+            while ((result.Status != OperationStatus.InProgress) == false)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 30;
+                if (client.LongRunningOperationRetryTimeout >= 0)
                 {
-                    client.Dispose();
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
                 }
             }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            if (result.Status != OperationStatus.Succeeded)
+            {
+                if (result.Error != null)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.Error = new CloudError();
+                    ex.Error.Code = result.Error.Code;
+                    ex.Error.Message = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                else
+                {
+                    CloudException ex = new CloudException("");
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+            }
+            
+            return result;
         }
     }
 }

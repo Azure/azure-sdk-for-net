@@ -21,14 +21,14 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.Azure.Management.Insights.Models
 {
     /// <summary>
     /// Generic empty response. We only pass it to ensure json error handling
     /// </summary>
-    public partial class EmptyResponse : OperationResponse
+    public partial class EmptyResponse : AzureOperationResponse
     {
         /// <summary>
         /// Initializes a new instance of the EmptyResponse class.

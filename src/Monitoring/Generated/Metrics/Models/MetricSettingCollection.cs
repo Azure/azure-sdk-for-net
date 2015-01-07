@@ -22,7 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
 using Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models;
 
 namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models

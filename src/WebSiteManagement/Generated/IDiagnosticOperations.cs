@@ -23,7 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.WebSitesExtensions.Models;
 
 namespace Microsoft.WindowsAzure.WebSitesExtensions
@@ -57,6 +57,6 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> UpdateSettingsAsync(DiagnosticUpdateParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> UpdateSettingsAsync(DiagnosticUpdateParameters parameters, CancellationToken cancellationToken);
     }
 }
