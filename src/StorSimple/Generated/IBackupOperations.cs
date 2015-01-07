@@ -28,17 +28,13 @@ using Microsoft.WindowsAzure.Management.StorSimple.Models;
 namespace Microsoft.WindowsAzure.Management.StorSimple
 {
     /// <summary>
-    /// All Operations related to Backup  (see
-    /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx for
-    /// more information)
+    /// All Operations related to Backup
     /// </summary>
     public partial interface IBackupOperations
     {
         /// <summary>
         /// Begin a backup operation for the policyId and backupRequest
-        /// specified.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/hh264518.aspx
-        /// for more information)
+        /// specified.
         /// </summary>
         /// <param name='deviceId'>
         /// The device id for which the call will be made.
@@ -62,9 +58,6 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         
         /// <summary>
         /// Begin deleting a backup set represented by the backSetId provided.
-        /// (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/hh264518.aspx
-        /// for more information)
         /// </summary>
         /// <param name='deviceId'>
         /// The device id for which the call will be made.
@@ -84,9 +77,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         Task<TaskResponse> BeginDeletingAsync(string deviceId, string backupSetId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Begin restoring a backup set.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/hh264518.aspx
-        /// for more information)
+        /// Begin restoring a backup set.
         /// </summary>
         /// <param name='deviceId'>
         /// The device id for which the call will be made.
@@ -178,9 +169,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         Task<GetBackupResponse> GetAsync(string deviceId, string filterType, string isAllSelected, string filterValue, string startTime, string endTime, string skip, string top, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Restore a backup set.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/hh264518.aspx
-        /// for more information)
+        /// Restore a backup set.
         /// </summary>
         /// <param name='deviceId'>
         /// The device id for which the call will be made.

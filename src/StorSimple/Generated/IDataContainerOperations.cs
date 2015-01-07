@@ -28,23 +28,20 @@ using Microsoft.WindowsAzure.Management.StorSimple.Models;
 namespace Microsoft.WindowsAzure.Management.StorSimple
 {
     /// <summary>
-    /// All Operations related to Volume Containers  (see
-    /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx for
-    /// more information)
+    /// All Operations related to Volume Containers
     /// </summary>
     public partial interface IDataContainerOperations
     {
         /// <summary>
-        /// The Begin Creating Storage Account operation creates a new storage
-        /// account in Azure.  (see
-        /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx
-        /// for more information)
+        /// The Begin Creating Volume Container operation creates a new volume
+        /// container.
         /// </summary>
         /// <param name='deviceId'>
         /// device id
         /// </param>
         /// <param name='containerDetails'>
-        /// Parameters supplied to the Begin Creating Storage Account operation.
+        /// Parameters supplied to the Begin Creating Volume Container
+        /// operation.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// The Custom Request Headers which client must use.
@@ -58,10 +55,8 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         Task<TaskResponse> BeginCreatingAsync(string deviceId, DataContainerRequest containerDetails, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
-        /// The Begin Creating Storage Account operation creates a new storage
-        /// account in Azure.  (see
-        /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx
-        /// for more information)
+        /// The Begin Deleting Volume Container operation deletes the specified
+        /// volume container.
         /// </summary>
         /// <param name='deviceId'>
         /// device id
@@ -84,7 +79,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         /// device id
         /// </param>
         /// <param name='containerDetails'>
-        /// Parameters supplied to the Create Storage Account operation.
+        /// Parameters supplied to the Create Volume Container operation.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// The Custom Request Headers which client must use.

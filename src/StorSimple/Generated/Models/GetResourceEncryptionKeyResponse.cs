@@ -21,7 +21,7 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.StorSimple.Models;
 
 namespace Microsoft.WindowsAzure.Management.StorSimple.Models
@@ -29,7 +29,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple.Models
     /// <summary>
     /// The response model for Resource Encryption Key.
     /// </summary>
-    public partial class GetResourceEncryptionKeyResponse : OperationResponse
+    public partial class GetResourceEncryptionKeyResponse : AzureOperationResponse
     {
         private ResourceEncryptionKeys _resourceEncryptionKeys;
         

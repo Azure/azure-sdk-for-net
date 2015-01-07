@@ -28,9 +28,7 @@ using Microsoft.WindowsAzure.Management.StorSimple.Models;
 namespace Microsoft.WindowsAzure.Management.StorSimple
 {
     /// <summary>
-    /// All Operations related to Device Details  (see
-    /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx for
-    /// more information)
+    /// All Operations related to Device Details
     /// </summary>
     public partial interface IDeviceDetailsOperations
     {

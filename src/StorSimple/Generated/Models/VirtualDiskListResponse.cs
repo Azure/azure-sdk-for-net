@@ -22,7 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.StorSimple.Models;
 
 namespace Microsoft.WindowsAzure.Management.StorSimple.Models
@@ -31,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple.Models
     /// The response model for the list of virtual disks for a given data
     /// container.
     /// </summary>
-    public partial class VirtualDiskListResponse : OperationResponse, IEnumerable<VirtualDisk>
+    public partial class VirtualDiskListResponse : AzureOperationResponse, IEnumerable<VirtualDisk>
     {
         private IList<VirtualDisk> _listofVirtualDisks;
         

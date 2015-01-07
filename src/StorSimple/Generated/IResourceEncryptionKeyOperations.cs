@@ -28,9 +28,7 @@ using Microsoft.WindowsAzure.Management.StorSimple.Models;
 namespace Microsoft.WindowsAzure.Management.StorSimple
 {
     /// <summary>
-    /// All Operations related to Crypto keys  (see
-    /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx for
-    /// more information)
+    /// All Operations related to Crypto keys
     /// </summary>
     public partial interface IResourceEncryptionKeyOperations
     {

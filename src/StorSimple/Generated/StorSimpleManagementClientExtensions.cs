@@ -26,12 +26,10 @@ using System.Threading.Tasks;
 using Microsoft.WindowsAzure.Management.StorSimple;
 using Microsoft.WindowsAzure.Management.StorSimple.Models;
 
-namespace Microsoft.Azure
+namespace Microsoft.WindowsAzure.Management.StorSimple
 {
     /// <summary>
-    /// This is an RESTFul API to manage you StorSimple Objects  (see
-    /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx for
-    /// more information)
+    /// This is an RESTFul API to manage you StorSimple Objects
     /// </summary>
     public static partial class StorSimpleManagementClientExtensions
     {
@@ -39,9 +37,7 @@ namespace Microsoft.Azure
         /// The Get Task Status returns the status of the specified task id.
         /// After calling an asynchronous task, you can call Get Task Status
         /// to determine whether the task has succeeded, failed, or is still
-        /// in progress.  (see
-        /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx
-        /// for more information)
+        /// in progress.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -66,9 +62,7 @@ namespace Microsoft.Azure
         /// The Get Task Status returns the status of the specified task id.
         /// After calling an asynchronous task, you can call Get Task Status
         /// to determine whether the task has succeeded, failed, or is still
-        /// in progress.  (see
-        /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx
-        /// for more information)
+        /// in progress.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the

@@ -21,14 +21,14 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.WindowsAzure.Management.StorSimple.Models
 {
     /// <summary>
     /// This is the Task Response for all Async Calls
     /// </summary>
-    public partial class TaskResponse : OperationResponse
+    public partial class TaskResponse : AzureOperationResponse
     {
         private string _taskId;
         

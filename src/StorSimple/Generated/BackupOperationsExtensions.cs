@@ -26,20 +26,16 @@ using System.Threading.Tasks;
 using Microsoft.WindowsAzure.Management.StorSimple;
 using Microsoft.WindowsAzure.Management.StorSimple.Models;
 
-namespace Microsoft.Azure
+namespace Microsoft.WindowsAzure.Management.StorSimple
 {
     /// <summary>
-    /// This is an RESTFul API to manage you StorSimple Objects  (see
-    /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx for
-    /// more information)
+    /// This is an RESTFul API to manage you StorSimple Objects
     /// </summary>
     public static partial class BackupOperationsExtensions
     {
         /// <summary>
         /// Begin a backup operation for the policyId and backupRequest
-        /// specified.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/hh264518.aspx
-        /// for more information)
+        /// specified.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -71,9 +67,7 @@ namespace Microsoft.Azure
         
         /// <summary>
         /// Begin a backup operation for the policyId and backupRequest
-        /// specified.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/hh264518.aspx
-        /// for more information)
+        /// specified.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -101,9 +95,6 @@ namespace Microsoft.Azure
         
         /// <summary>
         /// Begin deleting a backup set represented by the backSetId provided.
-        /// (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/hh264518.aspx
-        /// for more information)
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -132,9 +123,6 @@ namespace Microsoft.Azure
         
         /// <summary>
         /// Begin deleting a backup set represented by the backSetId provided.
-        /// (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/hh264518.aspx
-        /// for more information)
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -158,9 +146,7 @@ namespace Microsoft.Azure
         }
         
         /// <summary>
-        /// Begin restoring a backup set.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/hh264518.aspx
-        /// for more information)
+        /// Begin restoring a backup set.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -188,9 +174,7 @@ namespace Microsoft.Azure
         }
         
         /// <summary>
-        /// Begin restoring a backup set.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/hh264518.aspx
-        /// for more information)
+        /// Begin restoring a backup set.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -398,9 +382,7 @@ namespace Microsoft.Azure
         }
         
         /// <summary>
-        /// Restore a backup set.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/hh264518.aspx
-        /// for more information)
+        /// Restore a backup set.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -428,9 +410,7 @@ namespace Microsoft.Azure
         }
         
         /// <summary>
-        /// Restore a backup set.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/hh264518.aspx
-        /// for more information)
+        /// Restore a backup set.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the

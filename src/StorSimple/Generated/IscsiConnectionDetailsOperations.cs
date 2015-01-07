@@ -27,20 +27,16 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
 using Microsoft.WindowsAzure.Management.StorSimple;
 using Microsoft.WindowsAzure.Management.StorSimple.Models;
 
 namespace Microsoft.WindowsAzure.Management.StorSimple
 {
     /// <summary>
-    /// All Operations related to iscsi connection  (see
-    /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx for
-    /// more information)
+    /// All Operations related to iscsi connection
     /// </summary>
-    internal partial class IscsiConnectionDetailsOperations : IServiceOperations<StorSimpleManagementClient>, Microsoft.WindowsAzure.Management.StorSimple.IIscsiConnectionDetailsOperations
+    internal partial class IscsiConnectionDetailsOperations : IServiceOperations<StorSimpleManagementClient>, IIscsiConnectionDetailsOperations
     {
         /// <summary>
         /// Initializes a new instance of the IscsiConnectionDetailsOperations
@@ -77,7 +73,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         /// <returns>
         /// The response model for the list of iscsi connection details.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.StorSimple.Models.IscsiConnectionResponse> GetAsync(string deviceId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<IscsiConnectionResponse> GetAsync(string deviceId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             if (deviceId == null)
@@ -90,19 +86,19 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("deviceId", deviceId);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
-                Tracing.Enter(invocationId, this, "GetAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/" + this.Client.ResourceNamespace.Trim() + "/~/CiSVault/" + this.Client.ResourceName.Trim() + "/api/devices/" + deviceId.Trim() + "/iscsiconnections?";
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/cloudservices/" + Uri.EscapeDataString(this.Client.CloudServiceName) + "/resources/" + Uri.EscapeDataString(this.Client.ResourceNamespace) + "/~/CiSVault/" + Uri.EscapeDataString(this.Client.ResourceName) + "/api/devices/" + Uri.EscapeDataString(deviceId) + "/iscsiconnections?";
             url = url + "api-version=2014-01-01.1.0";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -141,13 +137,13 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -156,7 +152,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -164,65 +160,68 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                     // Create Result
                     IscsiConnectionResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new IscsiConnectionResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement arrayOfIscsiConnectionSequenceElement = responseDoc.Element(XName.Get("ArrayOfIscsiConnection", "http://windowscloudbackup.com/CiS/V2013_03"));
-                    if (arrayOfIscsiConnectionSequenceElement != null)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        foreach (XElement arrayOfIscsiConnectionElement in arrayOfIscsiConnectionSequenceElement.Elements(XName.Get("IscsiConnection", "http://windowscloudbackup.com/CiS/V2013_03")))
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new IscsiConnectionResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement arrayOfIscsiConnectionSequenceElement = responseDoc.Element(XName.Get("ArrayOfIscsiConnection", "http://windowscloudbackup.com/CiS/V2013_03"));
+                        if (arrayOfIscsiConnectionSequenceElement != null)
                         {
-                            IscsiConnection iscsiConnectionInstance = new IscsiConnection();
-                            result.IscsiConnections.Add(iscsiConnectionInstance);
-                            
-                            XElement iscsiConnectionIdElement = arrayOfIscsiConnectionElement.Element(XName.Get("IscsiConnectionId", "http://windowscloudbackup.com/CiS/V2013_03"));
-                            if (iscsiConnectionIdElement != null)
+                            foreach (XElement arrayOfIscsiConnectionElement in arrayOfIscsiConnectionSequenceElement.Elements(XName.Get("IscsiConnection", "http://windowscloudbackup.com/CiS/V2013_03")))
                             {
-                                string iscsiConnectionIdInstance = iscsiConnectionIdElement.Value;
-                                iscsiConnectionInstance.IscsiConnectionId = iscsiConnectionIdInstance;
-                            }
-                            
-                            XElement acrInstanceIdElement = arrayOfIscsiConnectionElement.Element(XName.Get("AcrInstanceId", "http://windowscloudbackup.com/CiS/V2013_03"));
-                            if (acrInstanceIdElement != null)
-                            {
-                                string acrInstanceIdInstance = acrInstanceIdElement.Value;
-                                iscsiConnectionInstance.AcrInstanceId = acrInstanceIdInstance;
-                            }
-                            
-                            XElement acrNameElement = arrayOfIscsiConnectionElement.Element(XName.Get("AcrName", "http://windowscloudbackup.com/CiS/V2013_03"));
-                            if (acrNameElement != null)
-                            {
-                                string acrNameInstance = acrNameElement.Value;
-                                iscsiConnectionInstance.AcrName = acrNameInstance;
-                            }
-                            
-                            XElement initiatorAddressElement = arrayOfIscsiConnectionElement.Element(XName.Get("InitiatorAddress", "http://windowscloudbackup.com/CiS/V2013_03"));
-                            if (initiatorAddressElement != null)
-                            {
-                                string initiatorAddressInstance = initiatorAddressElement.Value;
-                                iscsiConnectionInstance.InitiatorAddress = initiatorAddressInstance;
-                            }
-                            
-                            XElement iqnElement = arrayOfIscsiConnectionElement.Element(XName.Get("Iqn", "http://windowscloudbackup.com/CiS/V2013_03"));
-                            if (iqnElement != null)
-                            {
-                                string iqnInstance = iqnElement.Value;
-                                iscsiConnectionInstance.Iqn = iqnInstance;
-                            }
-                            
-                            XElement allowedVolumeNamesSequenceElement = arrayOfIscsiConnectionElement.Element(XName.Get("AllowedVolumeNames", "http://windowscloudbackup.com/CiS/V2013_03"));
-                            if (allowedVolumeNamesSequenceElement != null)
-                            {
-                                foreach (XElement allowedVolumeNamesElement in allowedVolumeNamesSequenceElement.Elements(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/Arrays")))
+                                IscsiConnection iscsiConnectionInstance = new IscsiConnection();
+                                result.IscsiConnections.Add(iscsiConnectionInstance);
+                                
+                                XElement iscsiConnectionIdElement = arrayOfIscsiConnectionElement.Element(XName.Get("IscsiConnectionId", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                if (iscsiConnectionIdElement != null)
                                 {
-                                    iscsiConnectionInstance.AllowedVolumeNames.Add(allowedVolumeNamesElement.Value);
+                                    string iscsiConnectionIdInstance = iscsiConnectionIdElement.Value;
+                                    iscsiConnectionInstance.IscsiConnectionId = iscsiConnectionIdInstance;
+                                }
+                                
+                                XElement acrInstanceIdElement = arrayOfIscsiConnectionElement.Element(XName.Get("AcrInstanceId", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                if (acrInstanceIdElement != null)
+                                {
+                                    string acrInstanceIdInstance = acrInstanceIdElement.Value;
+                                    iscsiConnectionInstance.AcrInstanceId = acrInstanceIdInstance;
+                                }
+                                
+                                XElement acrNameElement = arrayOfIscsiConnectionElement.Element(XName.Get("AcrName", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                if (acrNameElement != null)
+                                {
+                                    string acrNameInstance = acrNameElement.Value;
+                                    iscsiConnectionInstance.AcrName = acrNameInstance;
+                                }
+                                
+                                XElement initiatorAddressElement = arrayOfIscsiConnectionElement.Element(XName.Get("InitiatorAddress", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                if (initiatorAddressElement != null)
+                                {
+                                    string initiatorAddressInstance = initiatorAddressElement.Value;
+                                    iscsiConnectionInstance.InitiatorAddress = initiatorAddressInstance;
+                                }
+                                
+                                XElement iqnElement = arrayOfIscsiConnectionElement.Element(XName.Get("Iqn", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                if (iqnElement != null)
+                                {
+                                    string iqnInstance = iqnElement.Value;
+                                    iscsiConnectionInstance.Iqn = iqnInstance;
+                                }
+                                
+                                XElement allowedVolumeNamesSequenceElement = arrayOfIscsiConnectionElement.Element(XName.Get("AllowedVolumeNames", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                if (allowedVolumeNamesSequenceElement != null)
+                                {
+                                    foreach (XElement allowedVolumeNamesElement in allowedVolumeNamesSequenceElement.Elements(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/Arrays")))
+                                    {
+                                        iscsiConnectionInstance.AllowedVolumeNames.Add(allowedVolumeNamesElement.Value);
+                                    }
                                 }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -231,7 +230,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }

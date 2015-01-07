@@ -22,7 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.StorSimple.Models;
 
 namespace Microsoft.WindowsAzure.Management.StorSimple.Models
@@ -30,7 +30,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple.Models
     /// <summary>
     /// The response model for the list of BackupSets.
     /// </summary>
-    public partial class GetBackupResponse : OperationResponse
+    public partial class GetBackupResponse : AzureOperationResponse
     {
         private IList<Backup> _backupSetsList;
         

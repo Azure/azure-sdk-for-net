@@ -27,20 +27,17 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.StorSimple;
 using Microsoft.WindowsAzure.Management.StorSimple.Models;
 
 namespace Microsoft.WindowsAzure.Management.StorSimple
 {
     /// <summary>
-    /// This is an RESTFul API to manage you StorSimple Objects  (see
-    /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx for
-    /// more information)
+    /// This is an RESTFul API to manage you StorSimple Objects
     /// </summary>
-    public partial class StorSimpleManagementClient : ServiceClient<StorSimpleManagementClient>, Microsoft.WindowsAzure.Management.StorSimple.IStorSimpleManagementClient
+    public partial class StorSimpleManagementClient : ServiceClient<StorSimpleManagementClient>, IStorSimpleManagementClient
     {
         private string _apiVersion;
         
@@ -139,9 +136,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         private IBackupOperations _backup;
         
         /// <summary>
-        /// All Operations related to Backup  (see
-        /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx
-        /// for more information)
+        /// All Operations related to Backup
         /// </summary>
         public virtual IBackupOperations Backup
         {
@@ -151,9 +146,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         private IBackupPolicyOperations _backupPolicy;
         
         /// <summary>
-        /// All Operations related to Backup policies  (see
-        /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx
-        /// for more information)
+        /// All Operations related to Backup policies
         /// </summary>
         public virtual IBackupPolicyOperations BackupPolicy
         {
@@ -163,9 +156,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         private IDataContainerOperations _dataContainer;
         
         /// <summary>
-        /// All Operations related to Volume Containers  (see
-        /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx
-        /// for more information)
+        /// All Operations related to Volume Containers
         /// </summary>
         public virtual IDataContainerOperations DataContainer
         {
@@ -175,9 +166,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         private IDeviceDetailsOperations _deviceDetails;
         
         /// <summary>
-        /// All Operations related to Device Details  (see
-        /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx
-        /// for more information)
+        /// All Operations related to Device Details
         /// </summary>
         public virtual IDeviceDetailsOperations DeviceDetails
         {
@@ -187,9 +176,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         private IDeviceOperations _devices;
         
         /// <summary>
-        /// All Operations related to Devices  (see
-        /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx
-        /// for more information)
+        /// All Operations related to Devices
         /// </summary>
         public virtual IDeviceOperations Devices
         {
@@ -199,9 +186,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         private IIscsiConnectionDetailsOperations _iscsiConnection;
         
         /// <summary>
-        /// All Operations related to iscsi connection  (see
-        /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx
-        /// for more information)
+        /// All Operations related to iscsi connection
         /// </summary>
         public virtual IIscsiConnectionDetailsOperations IscsiConnection
         {
@@ -211,9 +196,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         private IResourceEncryptionKeyOperations _resourceEncryptionKeys;
         
         /// <summary>
-        /// All Operations related to Crypto keys  (see
-        /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx
-        /// for more information)
+        /// All Operations related to Crypto keys
         /// </summary>
         public virtual IResourceEncryptionKeyOperations ResourceEncryptionKeys
         {
@@ -223,9 +206,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         private IServiceConfigurationOperations _serviceConfig;
         
         /// <summary>
-        /// All Operations related to Service configurations  (see
-        /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx
-        /// for more information)
+        /// All Operations related to Service configurations
         /// </summary>
         public virtual IServiceConfigurationOperations ServiceConfig
         {
@@ -235,9 +216,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         private IVirtualDiskOperations _virtualDisk;
         
         /// <summary>
-        /// All Operations related to virtual disk  (see
-        /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx
-        /// for more information)
+        /// All Operations related to virtual disk
         /// </summary>
         public virtual IVirtualDiskOperations VirtualDisk
         {
@@ -247,7 +226,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         /// <summary>
         /// Initializes a new instance of the StorSimpleManagementClient class.
         /// </summary>
-        private StorSimpleManagementClient()
+        public StorSimpleManagementClient()
             : base()
         {
             this._backup = new BackupOperations(this);
@@ -401,7 +380,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         /// <param name='httpClient'>
         /// The Http client
         /// </param>
-        private StorSimpleManagementClient(HttpClient httpClient)
+        public StorSimpleManagementClient(HttpClient httpClient)
             : base(httpClient)
         {
             this._backup = new BackupOperations(this);
@@ -589,9 +568,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         /// The Get Task Status returns the status of the specified task id.
         /// After calling an asynchronous task, you can call Get Task Status
         /// to determine whether the task has succeeded, failed, or is still
-        /// in progress.  (see
-        /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx
-        /// for more information)
+        /// in progress.
         /// </summary>
         /// <param name='taskId'>
         /// Required. The task Id for the request you wish to track.
@@ -602,7 +579,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         /// <returns>
         /// Info about the async task
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.StorSimple.Models.TaskStatusInfo> GetOperationStatusAsync(string taskId, CancellationToken cancellationToken)
+        public async Task<TaskStatusInfo> GetOperationStatusAsync(string taskId, CancellationToken cancellationToken)
         {
             // Validate
             if (taskId == null)
@@ -611,18 +588,18 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("taskId", taskId);
-                Tracing.Enter(invocationId, this, "GetOperationStatusAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetOperationStatusAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Credentials.SubscriptionId != null ? this.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/" + this.CloudServiceName.Trim() + "/resources/" + this.ResourceNamespace.Trim() + "/~/CiSVault/" + this.ResourceName.Trim() + "/api/jobs/" + taskId.Trim() + "?";
+            string url = "/" + (this.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Credentials.SubscriptionId)) + "/cloudservices/" + Uri.EscapeDataString(this.CloudServiceName) + "/resources/" + Uri.EscapeDataString(this.ResourceNamespace) + "/~/CiSVault/" + Uri.EscapeDataString(this.ResourceName) + "/api/jobs/" + Uri.EscapeDataString(taskId) + "?";
             url = url + "api-version=2014-01-01.1.0";
             string baseUrl = this.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -659,13 +636,13 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -674,7 +651,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -682,109 +659,112 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                     // Create Result
                     TaskStatusInfo result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new TaskStatusInfo();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement jobStatusInfoElement = responseDoc.Element(XName.Get("JobStatusInfo", "http://windowscloudbackup.com/CiS/V2013_03"));
-                    if (jobStatusInfoElement != null)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        XElement jobIdElement = jobStatusInfoElement.Element(XName.Get("JobId", "http://windowscloudbackup.com/CiS/V2013_03"));
-                        if (jobIdElement != null)
-                        {
-                            string jobIdInstance = jobIdElement.Value;
-                            result.TaskId = jobIdInstance;
-                        }
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new TaskStatusInfo();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
                         
-                        XElement statusElement = jobStatusInfoElement.Element(XName.Get("Status", "http://windowscloudbackup.com/CiS/V2013_03"));
-                        if (statusElement != null)
+                        XElement jobStatusInfoElement = responseDoc.Element(XName.Get("JobStatusInfo", "http://windowscloudbackup.com/CiS/V2013_03"));
+                        if (jobStatusInfoElement != null)
                         {
-                            AsyncTaskStatus statusInstance = ((AsyncTaskStatus)Enum.Parse(typeof(AsyncTaskStatus), statusElement.Value, true));
-                            result.Status = statusInstance;
-                        }
-                        
-                        XElement resultElement = jobStatusInfoElement.Element(XName.Get("Result", "http://windowscloudbackup.com/CiS/V2013_03"));
-                        if (resultElement != null)
-                        {
-                            AsyncTaskResult resultInstance = ((AsyncTaskResult)Enum.Parse(typeof(AsyncTaskResult), resultElement.Value, true));
-                            result.Result = resultInstance;
-                        }
-                        
-                        XElement errorElement = jobStatusInfoElement.Element(XName.Get("Error", "http://windowscloudbackup.com/CiS/V2013_03"));
-                        if (errorElement != null)
-                        {
-                            ErrorDetails errorInstance = new ErrorDetails();
-                            result.Error = errorInstance;
-                            
-                            XElement codeElement = errorElement.Element(XName.Get("Code", "http://schemas.microsoft.com/wars"));
-                            if (codeElement != null)
+                            XElement jobIdElement = jobStatusInfoElement.Element(XName.Get("JobId", "http://windowscloudbackup.com/CiS/V2013_03"));
+                            if (jobIdElement != null)
                             {
-                                string codeInstance = codeElement.Value;
-                                errorInstance.Code = codeInstance;
+                                string jobIdInstance = jobIdElement.Value;
+                                result.TaskId = jobIdInstance;
                             }
                             
-                            XElement messageElement = errorElement.Element(XName.Get("Message", "http://schemas.microsoft.com/wars"));
-                            if (messageElement != null)
+                            XElement statusElement = jobStatusInfoElement.Element(XName.Get("Status", "http://windowscloudbackup.com/CiS/V2013_03"));
+                            if (statusElement != null)
                             {
-                                string messageInstance = messageElement.Value;
-                                errorInstance.Message = messageInstance;
+                                AsyncTaskStatus statusInstance = ((AsyncTaskStatus)Enum.Parse(typeof(AsyncTaskStatus), statusElement.Value, true));
+                                result.Status = statusInstance;
+                            }
+                            
+                            XElement resultElement = jobStatusInfoElement.Element(XName.Get("Result", "http://windowscloudbackup.com/CiS/V2013_03"));
+                            if (resultElement != null)
+                            {
+                                AsyncTaskResult resultInstance = ((AsyncTaskResult)Enum.Parse(typeof(AsyncTaskResult), resultElement.Value, true));
+                                result.Result = resultInstance;
+                            }
+                            
+                            XElement errorElement = jobStatusInfoElement.Element(XName.Get("Error", "http://windowscloudbackup.com/CiS/V2013_03"));
+                            if (errorElement != null)
+                            {
+                                ErrorDetails errorInstance = new ErrorDetails();
+                                result.Error = errorInstance;
+                                
+                                XElement codeElement = errorElement.Element(XName.Get("Code", "http://schemas.microsoft.com/wars"));
+                                if (codeElement != null)
+                                {
+                                    string codeInstance = codeElement.Value;
+                                    errorInstance.Code = codeInstance;
+                                }
+                                
+                                XElement messageElement = errorElement.Element(XName.Get("Message", "http://schemas.microsoft.com/wars"));
+                                if (messageElement != null)
+                                {
+                                    string messageInstance = messageElement.Value;
+                                    errorInstance.Message = messageInstance;
+                                }
+                            }
+                            
+                            XElement taskResultElement = jobStatusInfoElement.Element(XName.Get("TaskResult", "http://windowscloudbackup.com/CiS/V2013_03"));
+                            if (taskResultElement != null)
+                            {
+                                AsyncTaskAggregatedResult taskResultInstance = ((AsyncTaskAggregatedResult)Enum.Parse(typeof(AsyncTaskAggregatedResult), taskResultElement.Value, true));
+                                result.AsyncTaskAggregatedResult = taskResultInstance;
+                            }
+                            
+                            XElement jobStepsSequenceElement = jobStatusInfoElement.Element(XName.Get("JobSteps", "http://windowscloudbackup.com/CiS/V2013_03"));
+                            if (jobStepsSequenceElement != null)
+                            {
+                                foreach (XElement jobStepsElement in jobStepsSequenceElement.Elements(XName.Get("JobStep", "http://windowscloudbackup.com/CiS/V2013_03")))
+                                {
+                                    TaskStep jobStepInstance = new TaskStep();
+                                    result.TaskSteps.Add(jobStepInstance);
+                                    
+                                    XElement messageElement2 = jobStepsElement.Element(XName.Get("Message", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                    if (messageElement2 != null)
+                                    {
+                                        string messageInstance2 = messageElement2.Value;
+                                        jobStepInstance.Message = messageInstance2;
+                                    }
+                                    
+                                    XElement statusElement2 = jobStepsElement.Element(XName.Get("Status", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                    if (statusElement2 != null)
+                                    {
+                                        AsyncTaskStatus statusInstance2 = ((AsyncTaskStatus)Enum.Parse(typeof(AsyncTaskStatus), statusElement2.Value, true));
+                                        jobStepInstance.Status = statusInstance2;
+                                    }
+                                    
+                                    XElement resultElement2 = jobStepsElement.Element(XName.Get("Result", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                    if (resultElement2 != null)
+                                    {
+                                        AsyncTaskResult resultInstance2 = ((AsyncTaskResult)Enum.Parse(typeof(AsyncTaskResult), resultElement2.Value, true));
+                                        jobStepInstance.Result = resultInstance2;
+                                    }
+                                    
+                                    XElement detailElement = jobStepsElement.Element(XName.Get("Detail", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                    if (detailElement != null)
+                                    {
+                                        string detailInstance = detailElement.Value;
+                                        jobStepInstance.Detail = detailInstance;
+                                    }
+                                    
+                                    XElement errorCodeElement = jobStepsElement.Element(XName.Get("ErrorCode", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                    if (errorCodeElement != null)
+                                    {
+                                        string errorCodeInstance = errorCodeElement.Value;
+                                        jobStepInstance.ErrorCode = errorCodeInstance;
+                                    }
+                                }
                             }
                         }
                         
-                        XElement taskResultElement = jobStatusInfoElement.Element(XName.Get("TaskResult", "http://windowscloudbackup.com/CiS/V2013_03"));
-                        if (taskResultElement != null)
-                        {
-                            AsyncTaskAggregatedResult taskResultInstance = ((AsyncTaskAggregatedResult)Enum.Parse(typeof(AsyncTaskAggregatedResult), taskResultElement.Value, true));
-                            result.AsyncTaskAggregatedResult = taskResultInstance;
-                        }
-                        
-                        XElement jobStepsSequenceElement = jobStatusInfoElement.Element(XName.Get("JobSteps", "http://windowscloudbackup.com/CiS/V2013_03"));
-                        if (jobStepsSequenceElement != null)
-                        {
-                            foreach (XElement jobStepsElement in jobStepsSequenceElement.Elements(XName.Get("JobStep", "http://windowscloudbackup.com/CiS/V2013_03")))
-                            {
-                                TaskStep jobStepInstance = new TaskStep();
-                                result.TaskSteps.Add(jobStepInstance);
-                                
-                                XElement messageElement2 = jobStepsElement.Element(XName.Get("Message", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                if (messageElement2 != null)
-                                {
-                                    string messageInstance2 = messageElement2.Value;
-                                    jobStepInstance.Message = messageInstance2;
-                                }
-                                
-                                XElement statusElement2 = jobStepsElement.Element(XName.Get("Status", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                if (statusElement2 != null)
-                                {
-                                    AsyncTaskStatus statusInstance2 = ((AsyncTaskStatus)Enum.Parse(typeof(AsyncTaskStatus), statusElement2.Value, true));
-                                    jobStepInstance.Status = statusInstance2;
-                                }
-                                
-                                XElement resultElement2 = jobStepsElement.Element(XName.Get("Result", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                if (resultElement2 != null)
-                                {
-                                    AsyncTaskResult resultInstance2 = ((AsyncTaskResult)Enum.Parse(typeof(AsyncTaskResult), resultElement2.Value, true));
-                                    jobStepInstance.Result = resultInstance2;
-                                }
-                                
-                                XElement detailElement = jobStepsElement.Element(XName.Get("Detail", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                if (detailElement != null)
-                                {
-                                    string detailInstance = detailElement.Value;
-                                    jobStepInstance.Detail = detailInstance;
-                                }
-                                
-                                XElement errorCodeElement = jobStepsElement.Element(XName.Get("ErrorCode", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                if (errorCodeElement != null)
-                                {
-                                    string errorCodeInstance = errorCodeElement.Value;
-                                    jobStepInstance.ErrorCode = errorCodeInstance;
-                                }
-                            }
-                        }
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -793,7 +773,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }

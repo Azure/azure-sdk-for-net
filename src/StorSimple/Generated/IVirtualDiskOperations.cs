@@ -28,17 +28,12 @@ using Microsoft.WindowsAzure.Management.StorSimple.Models;
 namespace Microsoft.WindowsAzure.Management.StorSimple
 {
     /// <summary>
-    /// All Operations related to virtual disk  (see
-    /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx for
-    /// more information)
+    /// All Operations related to virtual disk
     /// </summary>
     public partial interface IVirtualDiskOperations
     {
         /// <summary>
-        /// The Begin Creating Storage Account operation creates a new storage
-        /// account in Azure.  (see
-        /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx
-        /// for more information)
+        /// The Begin Creating Volume operation creates a new volume.
         /// </summary>
         /// <param name='deviceId'>
         /// device id
@@ -58,16 +53,13 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         Task<GuidTaskResponse> BeginCreatingAsync(string deviceId, VirtualDiskRequest diskDetails, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
-        /// The Begin Creating Storage Account operation creates a new storage
-        /// account in Azure.  (see
-        /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx
-        /// for more information)
+        /// The Begin Deleteing Volume operation deletes the specified volume.
         /// </summary>
         /// <param name='deviceId'>
         /// device id
         /// </param>
         /// <param name='diskId'>
-        /// Parameters supplied to the Create virtual disk operation.
+        /// Instance id of the virtual disk to be deleted.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// The Custom Request Headers which client must use.
@@ -81,10 +73,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         Task<GuidTaskResponse> BeginDeletingAsync(string deviceId, string diskId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
-        /// The Begin Creating Storage Account operation creates a new storage
-        /// account in Azure.  (see
-        /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx
-        /// for more information)
+        /// The Begin updating Volume operation updates an existing volume.
         /// </summary>
         /// <param name='deviceId'>
         /// device id
@@ -93,7 +82,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         /// disk id
         /// </param>
         /// <param name='diskDetails'>
-        /// Parameters supplied to the Create virtual disk operation.
+        /// Parameters supplied to the update virtual disk operation.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// The Custom Request Headers which client must use.
@@ -164,7 +153,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         /// disk id
         /// </param>
         /// <param name='diskDetails'>
-        /// Parameters supplied to the Create virtual disk operation.
+        /// Parameters supplied to the update virtual disk operation.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// The Custom Request Headers which client must use.

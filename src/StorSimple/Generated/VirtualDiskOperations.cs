@@ -30,20 +30,16 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
 using Microsoft.WindowsAzure.Management.StorSimple;
 using Microsoft.WindowsAzure.Management.StorSimple.Models;
 
 namespace Microsoft.WindowsAzure.Management.StorSimple
 {
     /// <summary>
-    /// All Operations related to virtual disk  (see
-    /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx for
-    /// more information)
+    /// All Operations related to virtual disk
     /// </summary>
-    internal partial class VirtualDiskOperations : IServiceOperations<StorSimpleManagementClient>, Microsoft.WindowsAzure.Management.StorSimple.IVirtualDiskOperations
+    internal partial class VirtualDiskOperations : IServiceOperations<StorSimpleManagementClient>, IVirtualDiskOperations
     {
         /// <summary>
         /// Initializes a new instance of the VirtualDiskOperations class.
@@ -68,10 +64,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         }
         
         /// <summary>
-        /// The Begin Creating Storage Account operation creates a new storage
-        /// account in Azure.  (see
-        /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx
-        /// for more information)
+        /// The Begin Creating Volume operation creates a new volume.
         /// </summary>
         /// <param name='deviceId'>
         /// Required. device id
@@ -88,7 +81,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         /// <returns>
         /// This is the Task Response for all Async Calls
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.StorSimple.Models.GuidTaskResponse> BeginCreatingAsync(string deviceId, VirtualDiskRequest diskDetails, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<GuidTaskResponse> BeginCreatingAsync(string deviceId, VirtualDiskRequest diskDetails, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             if (deviceId == null)
@@ -151,20 +144,20 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("deviceId", deviceId);
                 tracingParameters.Add("diskDetails", diskDetails);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
-                Tracing.Enter(invocationId, this, "BeginCreatingAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "BeginCreatingAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/" + this.Client.ResourceNamespace.Trim() + "/~/CiSVault/" + this.Client.ResourceName.Trim() + "/api/devices/" + deviceId.Trim() + "/virtualdisks?";
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/cloudservices/" + Uri.EscapeDataString(this.Client.CloudServiceName) + "/resources/" + Uri.EscapeDataString(this.Client.ResourceNamespace) + "/~/CiSVault/" + Uri.EscapeDataString(this.Client.ResourceName) + "/api/devices/" + Uri.EscapeDataString(deviceId) + "/virtualdisks?";
             url = url + "api-version=2014-01-01.1.0";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -451,13 +444,13 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.Accepted)
@@ -466,7 +459,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -474,18 +467,21 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                     // Create Result
                     GuidTaskResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new GuidTaskResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement guidElement = responseDoc.Element(XName.Get("guid", "http://schemas.microsoft.com/2003/10/Serialization/"));
-                    if (guidElement != null)
+                    if (statusCode == HttpStatusCode.Accepted)
                     {
-                        string guidInstance = guidElement.Value;
-                        result.TaskId = guidInstance;
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new GuidTaskResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement guidElement = responseDoc.Element(XName.Get("guid", "http://schemas.microsoft.com/2003/10/Serialization/"));
+                        if (guidElement != null)
+                        {
+                            string guidInstance = guidElement.Value;
+                            result.TaskId = guidInstance;
+                        }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -494,7 +490,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -516,16 +512,13 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         }
         
         /// <summary>
-        /// The Begin Creating Storage Account operation creates a new storage
-        /// account in Azure.  (see
-        /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx
-        /// for more information)
+        /// The Begin Deleteing Volume operation deletes the specified volume.
         /// </summary>
         /// <param name='deviceId'>
         /// Required. device id
         /// </param>
         /// <param name='diskId'>
-        /// Required. Parameters supplied to the Create virtual disk operation.
+        /// Required. Instance id of the virtual disk to be deleted.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Required. The Custom Request Headers which client must use.
@@ -536,7 +529,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         /// <returns>
         /// This is the Task Response for all Async Calls
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.StorSimple.Models.GuidTaskResponse> BeginDeletingAsync(string deviceId, string diskId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<GuidTaskResponse> BeginDeletingAsync(string deviceId, string diskId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             if (deviceId == null)
@@ -553,20 +546,20 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("deviceId", deviceId);
                 tracingParameters.Add("diskId", diskId);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
-                Tracing.Enter(invocationId, this, "BeginDeletingAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "BeginDeletingAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/" + this.Client.ResourceNamespace.Trim() + "/~/CiSVault/" + this.Client.ResourceName.Trim() + "/api/devices/" + deviceId.Trim() + "/virtualdisks/" + diskId.Trim() + "?";
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/cloudservices/" + Uri.EscapeDataString(this.Client.CloudServiceName) + "/resources/" + Uri.EscapeDataString(this.Client.ResourceNamespace) + "/~/CiSVault/" + Uri.EscapeDataString(this.Client.ResourceName) + "/api/devices/" + Uri.EscapeDataString(deviceId) + "/virtualdisks/" + Uri.EscapeDataString(diskId) + "?";
             url = url + "api-version=2014-01-01.1.0";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -605,13 +598,13 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.Accepted)
@@ -620,7 +613,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -628,18 +621,21 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                     // Create Result
                     GuidTaskResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new GuidTaskResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement guidElement = responseDoc.Element(XName.Get("guid", "http://schemas.microsoft.com/2003/10/Serialization/"));
-                    if (guidElement != null)
+                    if (statusCode == HttpStatusCode.Accepted)
                     {
-                        string guidInstance = guidElement.Value;
-                        result.TaskId = guidInstance;
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new GuidTaskResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement guidElement = responseDoc.Element(XName.Get("guid", "http://schemas.microsoft.com/2003/10/Serialization/"));
+                        if (guidElement != null)
+                        {
+                            string guidInstance = guidElement.Value;
+                            result.TaskId = guidInstance;
+                        }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -648,7 +644,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -670,10 +666,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         }
         
         /// <summary>
-        /// The Begin Creating Storage Account operation creates a new storage
-        /// account in Azure.  (see
-        /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx
-        /// for more information)
+        /// The Begin updating Volume operation updates an existing volume.
         /// </summary>
         /// <param name='deviceId'>
         /// Required. device id
@@ -682,7 +675,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         /// Required. disk id
         /// </param>
         /// <param name='diskDetails'>
-        /// Required. Parameters supplied to the Create virtual disk operation.
+        /// Required. Parameters supplied to the update virtual disk operation.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Required. The Custom Request Headers which client must use.
@@ -693,7 +686,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         /// <returns>
         /// This is the Task Response for all Async Calls
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.StorSimple.Models.GuidTaskResponse> BeginUpdatingAsync(string deviceId, string diskId, VirtualDisk diskDetails, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<GuidTaskResponse> BeginUpdatingAsync(string deviceId, string diskId, VirtualDisk diskDetails, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             if (deviceId == null)
@@ -760,21 +753,21 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("deviceId", deviceId);
                 tracingParameters.Add("diskId", diskId);
                 tracingParameters.Add("diskDetails", diskDetails);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
-                Tracing.Enter(invocationId, this, "BeginUpdatingAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "BeginUpdatingAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/" + this.Client.ResourceNamespace.Trim() + "/~/CiSVault/" + this.Client.ResourceName.Trim() + "/api/devices/" + deviceId.Trim() + "/virtualdisks/" + diskId.Trim() + "?";
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/cloudservices/" + Uri.EscapeDataString(this.Client.CloudServiceName) + "/resources/" + Uri.EscapeDataString(this.Client.ResourceNamespace) + "/~/CiSVault/" + Uri.EscapeDataString(this.Client.ResourceName) + "/api/devices/" + Uri.EscapeDataString(deviceId) + "/virtualdisks/" + Uri.EscapeDataString(diskId) + "?";
             url = url + "api-version=2014-01-01.1.0";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -1061,13 +1054,13 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.Accepted)
@@ -1076,7 +1069,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -1084,18 +1077,21 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                     // Create Result
                     GuidTaskResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new GuidTaskResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement guidElement = responseDoc.Element(XName.Get("guid", "http://schemas.microsoft.com/2003/10/Serialization/"));
-                    if (guidElement != null)
+                    if (statusCode == HttpStatusCode.Accepted)
                     {
-                        string guidInstance = guidElement.Value;
-                        result.TaskId = guidInstance;
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new GuidTaskResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement guidElement = responseDoc.Element(XName.Get("guid", "http://schemas.microsoft.com/2003/10/Serialization/"));
+                        if (guidElement != null)
+                        {
+                            string guidInstance = guidElement.Value;
+                            result.TaskId = guidInstance;
+                        }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1104,7 +1100,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -1140,87 +1136,74 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         /// <returns>
         /// Info about the async task
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.StorSimple.Models.TaskStatusInfo> CreateAsync(string deviceId, VirtualDiskRequest diskDetails, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<TaskStatusInfo> CreateAsync(string deviceId, VirtualDiskRequest diskDetails, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             StorSimpleManagementClient client = this.Client;
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("deviceId", deviceId);
                 tracingParameters.Add("diskDetails", diskDetails);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
-                Tracing.Enter(invocationId, this, "CreateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "CreateAsync", tracingParameters);
             }
-            try
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            GuidTaskResponse response = await client.VirtualDisk.BeginCreatingAsync(deviceId, diskDetails, customRequestHeaders, cancellationToken).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested();
+            TaskStatusInfo result = await client.GetOperationStatusAsync(response.TaskId, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 5;
+            if (client.LongRunningOperationInitialTimeout >= 0)
             {
-                if (shouldTrace)
-                {
-                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
-                }
-                
-                cancellationToken.ThrowIfCancellationRequested();
-                GuidTaskResponse response = await client.VirtualDisk.BeginCreatingAsync(deviceId, diskDetails, customRequestHeaders, cancellationToken).ConfigureAwait(false);
-                cancellationToken.ThrowIfCancellationRequested();
-                TaskStatusInfo result = await client.GetOperationStatusAsync(response.TaskId, cancellationToken).ConfigureAwait(false);
-                int delayInSeconds = 5;
-                if (client.LongRunningOperationInitialTimeout >= 0)
-                {
-                    delayInSeconds = client.LongRunningOperationInitialTimeout;
-                }
-                while ((result.AsyncTaskAggregatedResult != AsyncTaskAggregatedResult.InProgress) == false)
-                {
-                    cancellationToken.ThrowIfCancellationRequested();
-                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    result = await client.GetOperationStatusAsync(response.TaskId, cancellationToken).ConfigureAwait(false);
-                    delayInSeconds = 5;
-                    if (client.LongRunningOperationRetryTimeout >= 0)
-                    {
-                        delayInSeconds = client.LongRunningOperationRetryTimeout;
-                    }
-                }
-                
-                if (shouldTrace)
-                {
-                    Tracing.Exit(invocationId, result);
-                }
-                
-                if (result.AsyncTaskAggregatedResult != AsyncTaskAggregatedResult.Succeeded)
-                {
-                    if (result.Error != null)
-                    {
-                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                        ex.ErrorCode = result.Error.Code;
-                        ex.ErrorMessage = result.Error.Message;
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    else
-                    {
-                        CloudException ex = new CloudException("");
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                }
-                
-                return result;
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            finally
+            while ((result.AsyncTaskAggregatedResult != AsyncTaskAggregatedResult.InProgress) == false)
             {
-                if (client != null && shouldTrace)
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.GetOperationStatusAsync(response.TaskId, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 5;
+                if (client.LongRunningOperationRetryTimeout >= 0)
                 {
-                    client.Dispose();
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
                 }
             }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            if (result.AsyncTaskAggregatedResult != AsyncTaskAggregatedResult.Succeeded)
+            {
+                if (result.Error != null)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.Error = new CloudError();
+                    ex.Error.Code = result.Error.Code;
+                    ex.Error.Message = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                else
+                {
+                    CloudException ex = new CloudException("");
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+            }
+            
+            return result;
         }
         
         /// <param name='deviceId'>
@@ -1238,87 +1221,74 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         /// <returns>
         /// Info about the async task
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.StorSimple.Models.TaskStatusInfo> DeleteAsync(string deviceId, string diskId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<TaskStatusInfo> DeleteAsync(string deviceId, string diskId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             StorSimpleManagementClient client = this.Client;
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("deviceId", deviceId);
                 tracingParameters.Add("diskId", diskId);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
-                Tracing.Enter(invocationId, this, "DeleteAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "DeleteAsync", tracingParameters);
             }
-            try
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            GuidTaskResponse response = await client.VirtualDisk.BeginDeletingAsync(deviceId, diskId, customRequestHeaders, cancellationToken).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested();
+            TaskStatusInfo result = await client.GetOperationStatusAsync(response.TaskId, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 5;
+            if (client.LongRunningOperationInitialTimeout >= 0)
             {
-                if (shouldTrace)
-                {
-                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
-                }
-                
-                cancellationToken.ThrowIfCancellationRequested();
-                GuidTaskResponse response = await client.VirtualDisk.BeginDeletingAsync(deviceId, diskId, customRequestHeaders, cancellationToken).ConfigureAwait(false);
-                cancellationToken.ThrowIfCancellationRequested();
-                TaskStatusInfo result = await client.GetOperationStatusAsync(response.TaskId, cancellationToken).ConfigureAwait(false);
-                int delayInSeconds = 5;
-                if (client.LongRunningOperationInitialTimeout >= 0)
-                {
-                    delayInSeconds = client.LongRunningOperationInitialTimeout;
-                }
-                while ((result.AsyncTaskAggregatedResult != AsyncTaskAggregatedResult.InProgress) == false)
-                {
-                    cancellationToken.ThrowIfCancellationRequested();
-                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    result = await client.GetOperationStatusAsync(response.TaskId, cancellationToken).ConfigureAwait(false);
-                    delayInSeconds = 5;
-                    if (client.LongRunningOperationRetryTimeout >= 0)
-                    {
-                        delayInSeconds = client.LongRunningOperationRetryTimeout;
-                    }
-                }
-                
-                if (shouldTrace)
-                {
-                    Tracing.Exit(invocationId, result);
-                }
-                
-                if (result.AsyncTaskAggregatedResult != AsyncTaskAggregatedResult.Succeeded)
-                {
-                    if (result.Error != null)
-                    {
-                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                        ex.ErrorCode = result.Error.Code;
-                        ex.ErrorMessage = result.Error.Message;
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    else
-                    {
-                        CloudException ex = new CloudException("");
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                }
-                
-                return result;
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            finally
+            while ((result.AsyncTaskAggregatedResult != AsyncTaskAggregatedResult.InProgress) == false)
             {
-                if (client != null && shouldTrace)
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.GetOperationStatusAsync(response.TaskId, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 5;
+                if (client.LongRunningOperationRetryTimeout >= 0)
                 {
-                    client.Dispose();
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
                 }
             }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            if (result.AsyncTaskAggregatedResult != AsyncTaskAggregatedResult.Succeeded)
+            {
+                if (result.Error != null)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.Error = new CloudError();
+                    ex.Error.Code = result.Error.Code;
+                    ex.Error.Message = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                else
+                {
+                    CloudException ex = new CloudException("");
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+            }
+            
+            return result;
         }
         
         /// <param name='deviceId'>
@@ -1336,28 +1306,28 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         /// <returns>
         /// The response model for the get of virtual disk.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.StorSimple.Models.VirtualDiskGetResponse> GetByNameAsync(string deviceId, string diskName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<VirtualDiskGetResponse> GetByNameAsync(string deviceId, string diskName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("deviceId", deviceId);
                 tracingParameters.Add("diskName", diskName);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
-                Tracing.Enter(invocationId, this, "GetByNameAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetByNameAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/" + this.Client.ResourceNamespace.Trim() + "/~/CiSVault/" + this.Client.ResourceName.Trim() + "/api/devices/" + (deviceId != null ? deviceId.Trim() : "") + "/virtualdisks?";
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/cloudservices/" + Uri.EscapeDataString(this.Client.CloudServiceName) + "/resources/" + Uri.EscapeDataString(this.Client.ResourceNamespace) + "/~/CiSVault/" + Uri.EscapeDataString(this.Client.ResourceName) + "/api/devices/" + (deviceId == null ? "" : Uri.EscapeDataString(deviceId)) + "/virtualdisks?";
             if (diskName != null)
             {
-                url = url + "diskName=" + Uri.EscapeDataString(diskName != null ? diskName.Trim() : "");
+                url = url + "diskName=" + Uri.EscapeDataString(diskName);
             }
             url = url + "&api-version=2014-01-01.1.0";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
@@ -1397,13 +1367,13 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -1412,7 +1382,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -1420,509 +1390,48 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                     // Create Result
                     VirtualDiskGetResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new VirtualDiskGetResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement virtualDiskElement = responseDoc.Element(XName.Get("VirtualDisk", "http://windowscloudbackup.com/CiS/V2013_03"));
-                    if (virtualDiskElement != null)
-                    {
-                        VirtualDisk virtualDiskInstance = new VirtualDisk();
-                        result.VirtualDiskInfo = virtualDiskInstance;
-                        
-                        XElement instanceIdElement = virtualDiskElement.Element(XName.Get("InstanceId", "http://windowscloudbackup.com/CiS/V2013_03"));
-                        if (instanceIdElement != null)
-                        {
-                            string instanceIdInstance = instanceIdElement.Value;
-                            virtualDiskInstance.InstanceId = instanceIdInstance;
-                        }
-                        
-                        XElement nameElement = virtualDiskElement.Element(XName.Get("Name", "http://windowscloudbackup.com/CiS/V2013_03"));
-                        if (nameElement != null)
-                        {
-                            string nameInstance = nameElement.Value;
-                            virtualDiskInstance.Name = nameInstance;
-                        }
-                        
-                        XElement operationInProgressElement = virtualDiskElement.Element(XName.Get("OperationInProgress", "http://windowscloudbackup.com/CiS/V2013_03"));
-                        if (operationInProgressElement != null)
-                        {
-                            OperationInProgress operationInProgressInstance = ((OperationInProgress)Enum.Parse(typeof(OperationInProgress), operationInProgressElement.Value, true));
-                            virtualDiskInstance.OperationInProgress = operationInProgressInstance;
-                        }
-                        
-                        XElement accessTypeElement = virtualDiskElement.Element(XName.Get("AccessType", "http://windowscloudbackup.com/CiS/V2013_03"));
-                        if (accessTypeElement != null)
-                        {
-                            AccessType accessTypeInstance = ((AccessType)Enum.Parse(typeof(AccessType), accessTypeElement.Value, true));
-                            virtualDiskInstance.AccessType = accessTypeInstance;
-                        }
-                        
-                        XElement acrListSequenceElement = virtualDiskElement.Element(XName.Get("AcrList", "http://windowscloudbackup.com/CiS/V2013_03"));
-                        if (acrListSequenceElement != null)
-                        {
-                            foreach (XElement acrListElement in acrListSequenceElement.Elements(XName.Get("AccessControlRecord", "http://windowscloudbackup.com/CiS/V2013_03")))
-                            {
-                                AccessControlRecord accessControlRecordInstance = new AccessControlRecord();
-                                virtualDiskInstance.AcrList.Add(accessControlRecordInstance);
-                                
-                                XElement instanceIdElement2 = acrListElement.Element(XName.Get("InstanceId", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                if (instanceIdElement2 != null)
-                                {
-                                    string instanceIdInstance2 = instanceIdElement2.Value;
-                                    accessControlRecordInstance.InstanceId = instanceIdInstance2;
-                                }
-                                
-                                XElement nameElement2 = acrListElement.Element(XName.Get("Name", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                if (nameElement2 != null)
-                                {
-                                    string nameInstance2 = nameElement2.Value;
-                                    accessControlRecordInstance.Name = nameInstance2;
-                                }
-                                
-                                XElement initiatorNameElement = acrListElement.Element(XName.Get("InitiatorName", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                if (initiatorNameElement != null)
-                                {
-                                    string initiatorNameInstance = initiatorNameElement.Value;
-                                    accessControlRecordInstance.InitiatorName = initiatorNameInstance;
-                                }
-                                
-                                XElement volumeCountElement = acrListElement.Element(XName.Get("VolumeCount", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                if (volumeCountElement != null)
-                                {
-                                    int volumeCountInstance = int.Parse(volumeCountElement.Value, CultureInfo.InvariantCulture);
-                                    accessControlRecordInstance.VolumeCount = volumeCountInstance;
-                                }
-                                
-                                XElement globalIdElement = acrListElement.Element(XName.Get("GlobalId", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                if (globalIdElement != null)
-                                {
-                                    string globalIdInstance = globalIdElement.Value;
-                                    accessControlRecordInstance.GlobalId = globalIdInstance;
-                                }
-                                
-                                XElement operationInProgressElement2 = acrListElement.Element(XName.Get("OperationInProgress", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                if (operationInProgressElement2 != null)
-                                {
-                                    OperationInProgress operationInProgressInstance2 = ((OperationInProgress)Enum.Parse(typeof(OperationInProgress), operationInProgressElement2.Value, true));
-                                    accessControlRecordInstance.OperationInProgress = operationInProgressInstance2;
-                                }
-                            }
-                        }
-                        
-                        XElement appTypeElement = virtualDiskElement.Element(XName.Get("AppType", "http://windowscloudbackup.com/CiS/V2013_03"));
-                        if (appTypeElement != null)
-                        {
-                            AppType appTypeInstance = ((AppType)Enum.Parse(typeof(AppType), appTypeElement.Value, true));
-                            virtualDiskInstance.AppType = appTypeInstance;
-                        }
-                        
-                        XElement dataContainerElement = virtualDiskElement.Element(XName.Get("DataContainer", "http://windowscloudbackup.com/CiS/V2013_03"));
-                        if (dataContainerElement != null)
-                        {
-                            DataContainer dataContainerInstance = new DataContainer();
-                            virtualDiskInstance.DataContainer = dataContainerInstance;
-                            
-                            XElement instanceIdElement3 = dataContainerElement.Element(XName.Get("InstanceId", "http://windowscloudbackup.com/CiS/V2013_03"));
-                            if (instanceIdElement3 != null)
-                            {
-                                string instanceIdInstance3 = instanceIdElement3.Value;
-                                dataContainerInstance.InstanceId = instanceIdInstance3;
-                            }
-                            
-                            XElement nameElement3 = dataContainerElement.Element(XName.Get("Name", "http://windowscloudbackup.com/CiS/V2013_03"));
-                            if (nameElement3 != null)
-                            {
-                                string nameInstance3 = nameElement3.Value;
-                                dataContainerInstance.Name = nameInstance3;
-                            }
-                            
-                            XElement operationInProgressElement3 = dataContainerElement.Element(XName.Get("OperationInProgress", "http://windowscloudbackup.com/CiS/V2013_03"));
-                            if (operationInProgressElement3 != null)
-                            {
-                                OperationInProgress operationInProgressInstance3 = ((OperationInProgress)Enum.Parse(typeof(OperationInProgress), operationInProgressElement3.Value, true));
-                                dataContainerInstance.OperationInProgress = operationInProgressInstance3;
-                            }
-                            
-                            XElement bandwidthRateElement = dataContainerElement.Element(XName.Get("BandwidthRate", "http://windowscloudbackup.com/CiS/V2013_03"));
-                            if (bandwidthRateElement != null)
-                            {
-                                int bandwidthRateInstance = int.Parse(bandwidthRateElement.Value, CultureInfo.InvariantCulture);
-                                dataContainerInstance.BandwidthRate = bandwidthRateInstance;
-                            }
-                            
-                            XElement encryptionKeyElement = dataContainerElement.Element(XName.Get("EncryptionKey", "http://windowscloudbackup.com/CiS/V2013_03"));
-                            if (encryptionKeyElement != null)
-                            {
-                                string encryptionKeyInstance = encryptionKeyElement.Value;
-                                dataContainerInstance.EncryptionKey = encryptionKeyInstance;
-                            }
-                            
-                            XElement isDefaultElement = dataContainerElement.Element(XName.Get("IsDefault", "http://windowscloudbackup.com/CiS/V2013_03"));
-                            if (isDefaultElement != null)
-                            {
-                                bool isDefaultInstance = bool.Parse(isDefaultElement.Value);
-                                dataContainerInstance.IsDefault = isDefaultInstance;
-                            }
-                            
-                            XElement isEncryptionEnabledElement = dataContainerElement.Element(XName.Get("IsEncryptionEnabled", "http://windowscloudbackup.com/CiS/V2013_03"));
-                            if (isEncryptionEnabledElement != null)
-                            {
-                                bool isEncryptionEnabledInstance = bool.Parse(isEncryptionEnabledElement.Value);
-                                dataContainerInstance.IsEncryptionEnabled = isEncryptionEnabledInstance;
-                            }
-                            
-                            XElement ownedElement = dataContainerElement.Element(XName.Get("Owned", "http://windowscloudbackup.com/CiS/V2013_03"));
-                            if (ownedElement != null)
-                            {
-                                bool ownedInstance = bool.Parse(ownedElement.Value);
-                                dataContainerInstance.Owned = ownedInstance;
-                            }
-                            
-                            XElement primaryStorageAccountCredentialElement = dataContainerElement.Element(XName.Get("PrimaryStorageAccountCredential", "http://windowscloudbackup.com/CiS/V2013_03"));
-                            if (primaryStorageAccountCredentialElement != null)
-                            {
-                                StorageAccountCredentialResponse primaryStorageAccountCredentialInstance = new StorageAccountCredentialResponse();
-                                dataContainerInstance.PrimaryStorageAccountCredential = primaryStorageAccountCredentialInstance;
-                                
-                                XElement instanceIdElement4 = primaryStorageAccountCredentialElement.Element(XName.Get("InstanceId", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                if (instanceIdElement4 != null)
-                                {
-                                    string instanceIdInstance4 = instanceIdElement4.Value;
-                                    primaryStorageAccountCredentialInstance.InstanceId = instanceIdInstance4;
-                                }
-                                
-                                XElement nameElement4 = primaryStorageAccountCredentialElement.Element(XName.Get("Name", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                if (nameElement4 != null)
-                                {
-                                    string nameInstance4 = nameElement4.Value;
-                                    primaryStorageAccountCredentialInstance.Name = nameInstance4;
-                                }
-                                
-                                XElement operationInProgressElement4 = primaryStorageAccountCredentialElement.Element(XName.Get("OperationInProgress", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                if (operationInProgressElement4 != null)
-                                {
-                                    OperationInProgress operationInProgressInstance4 = ((OperationInProgress)Enum.Parse(typeof(OperationInProgress), operationInProgressElement4.Value, true));
-                                    primaryStorageAccountCredentialInstance.OperationInProgress = operationInProgressInstance4;
-                                }
-                                
-                                XElement cloudTypeElement = primaryStorageAccountCredentialElement.Element(XName.Get("CloudType", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                if (cloudTypeElement != null)
-                                {
-                                    CloudType cloudTypeInstance = ((CloudType)Enum.Parse(typeof(CloudType), cloudTypeElement.Value, true));
-                                    primaryStorageAccountCredentialInstance.CloudType = cloudTypeInstance;
-                                }
-                                
-                                XElement hostnameElement = primaryStorageAccountCredentialElement.Element(XName.Get("Hostname", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                if (hostnameElement != null)
-                                {
-                                    string hostnameInstance = hostnameElement.Value;
-                                    primaryStorageAccountCredentialInstance.Hostname = hostnameInstance;
-                                }
-                                
-                                XElement isDefaultElement2 = primaryStorageAccountCredentialElement.Element(XName.Get("IsDefault", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                if (isDefaultElement2 != null)
-                                {
-                                    bool isDefaultInstance2 = bool.Parse(isDefaultElement2.Value);
-                                    primaryStorageAccountCredentialInstance.IsDefault = isDefaultInstance2;
-                                }
-                                
-                                XElement locationElement = primaryStorageAccountCredentialElement.Element(XName.Get("Location", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                if (locationElement != null)
-                                {
-                                    string locationInstance = locationElement.Value;
-                                    primaryStorageAccountCredentialInstance.Location = locationInstance;
-                                }
-                                
-                                XElement loginElement = primaryStorageAccountCredentialElement.Element(XName.Get("Login", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                if (loginElement != null)
-                                {
-                                    string loginInstance = loginElement.Value;
-                                    primaryStorageAccountCredentialInstance.Login = loginInstance;
-                                }
-                                
-                                XElement passwordElement = primaryStorageAccountCredentialElement.Element(XName.Get("Password", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                if (passwordElement != null)
-                                {
-                                    string passwordInstance = passwordElement.Value;
-                                    primaryStorageAccountCredentialInstance.Password = passwordInstance;
-                                }
-                                
-                                XElement useSSLElement = primaryStorageAccountCredentialElement.Element(XName.Get("UseSSL", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                if (useSSLElement != null)
-                                {
-                                    bool useSSLInstance = bool.Parse(useSSLElement.Value);
-                                    primaryStorageAccountCredentialInstance.UseSSL = useSSLInstance;
-                                }
-                                
-                                XElement volumeCountElement2 = primaryStorageAccountCredentialElement.Element(XName.Get("VolumeCount", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                if (volumeCountElement2 != null)
-                                {
-                                    int volumeCountInstance2 = int.Parse(volumeCountElement2.Value, CultureInfo.InvariantCulture);
-                                    primaryStorageAccountCredentialInstance.VolumeCount = volumeCountInstance2;
-                                }
-                                
-                                XElement passwordEncryptionCertThumbprintElement = primaryStorageAccountCredentialElement.Element(XName.Get("PasswordEncryptionCertThumbprint", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                if (passwordEncryptionCertThumbprintElement != null)
-                                {
-                                    bool isNil = false;
-                                    XAttribute nilAttribute = passwordEncryptionCertThumbprintElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                    if (nilAttribute != null)
-                                    {
-                                        isNil = nilAttribute.Value == "true";
-                                    }
-                                    if (isNil == false)
-                                    {
-                                        string passwordEncryptionCertThumbprintInstance = passwordEncryptionCertThumbprintElement.Value;
-                                        primaryStorageAccountCredentialInstance.PasswordEncryptionCertThumbprint = passwordEncryptionCertThumbprintInstance;
-                                    }
-                                }
-                            }
-                            
-                            XElement secretsEncryptionThumbprintElement = dataContainerElement.Element(XName.Get("SecretsEncryptionThumbprint", "http://windowscloudbackup.com/CiS/V2013_03"));
-                            if (secretsEncryptionThumbprintElement != null)
-                            {
-                                string secretsEncryptionThumbprintInstance = secretsEncryptionThumbprintElement.Value;
-                                dataContainerInstance.SecretsEncryptionThumbprint = secretsEncryptionThumbprintInstance;
-                            }
-                            
-                            XElement volumeCountElement3 = dataContainerElement.Element(XName.Get("VolumeCount", "http://windowscloudbackup.com/CiS/V2013_03"));
-                            if (volumeCountElement3 != null)
-                            {
-                                int volumeCountInstance3 = int.Parse(volumeCountElement3.Value, CultureInfo.InvariantCulture);
-                                dataContainerInstance.VolumeCount = volumeCountInstance3;
-                            }
-                        }
-                        
-                        XElement dataContainerIdElement = virtualDiskElement.Element(XName.Get("DataContainerId", "http://windowscloudbackup.com/CiS/V2013_03"));
-                        if (dataContainerIdElement != null)
-                        {
-                            string dataContainerIdInstance = dataContainerIdElement.Value;
-                            virtualDiskInstance.DataContainerId = dataContainerIdInstance;
-                        }
-                        
-                        XElement internalInstanceIdElement = virtualDiskElement.Element(XName.Get("InternalInstanceId", "http://windowscloudbackup.com/CiS/V2013_03"));
-                        if (internalInstanceIdElement != null)
-                        {
-                            string internalInstanceIdInstance = internalInstanceIdElement.Value;
-                            virtualDiskInstance.InternalInstanceId = internalInstanceIdInstance;
-                        }
-                        
-                        XElement isBackupEnabledElement = virtualDiskElement.Element(XName.Get("IsBackupEnabled", "http://windowscloudbackup.com/CiS/V2013_03"));
-                        if (isBackupEnabledElement != null)
-                        {
-                            bool isBackupEnabledInstance = bool.Parse(isBackupEnabledElement.Value);
-                            virtualDiskInstance.IsBackupEnabled = isBackupEnabledInstance;
-                        }
-                        
-                        XElement isDefaultBackupEnabledElement = virtualDiskElement.Element(XName.Get("IsDefaultBackupEnabled", "http://windowscloudbackup.com/CiS/V2013_03"));
-                        if (isDefaultBackupEnabledElement != null)
-                        {
-                            bool isDefaultBackupEnabledInstance = bool.Parse(isDefaultBackupEnabledElement.Value);
-                            virtualDiskInstance.IsDefaultBackupEnabled = isDefaultBackupEnabledInstance;
-                        }
-                        
-                        XElement isMonitoringEnabledElement = virtualDiskElement.Element(XName.Get("IsMonitoringEnabled", "http://windowscloudbackup.com/CiS/V2013_03"));
-                        if (isMonitoringEnabledElement != null)
-                        {
-                            bool isMonitoringEnabledInstance = bool.Parse(isMonitoringEnabledElement.Value);
-                            virtualDiskInstance.IsMonitoringEnabled = isMonitoringEnabledInstance;
-                        }
-                        
-                        XElement onlineElement = virtualDiskElement.Element(XName.Get("Online", "http://windowscloudbackup.com/CiS/V2013_03"));
-                        if (onlineElement != null)
-                        {
-                            bool onlineInstance = bool.Parse(onlineElement.Value);
-                            virtualDiskInstance.Online = onlineInstance;
-                        }
-                        
-                        XElement sizeInBytesElement = virtualDiskElement.Element(XName.Get("SizeInBytes", "http://windowscloudbackup.com/CiS/V2013_03"));
-                        if (sizeInBytesElement != null)
-                        {
-                            long sizeInBytesInstance = long.Parse(sizeInBytesElement.Value, CultureInfo.InvariantCulture);
-                            virtualDiskInstance.SizeInBytes = sizeInBytesInstance;
-                        }
-                        
-                        XElement vSNElement = virtualDiskElement.Element(XName.Get("VSN", "http://windowscloudbackup.com/CiS/V2013_03"));
-                        if (vSNElement != null)
-                        {
-                            string vSNInstance = vSNElement.Value;
-                            virtualDiskInstance.VSN = vSNInstance;
-                        }
-                    }
-                    
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        Tracing.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <param name='deviceId'>
-        /// Optional.
-        /// </param>
-        /// <param name='dataContainerId'>
-        /// Optional.
-        /// </param>
-        /// <param name='customRequestHeaders'>
-        /// Optional.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The response model for the list of virtual disks for a given data
-        /// container.
-        /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.StorSimple.Models.VirtualDiskListResponse> ListAsync(string deviceId, string dataContainerId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
-        {
-            // Validate
-            
-            // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = Tracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("deviceId", deviceId);
-                tracingParameters.Add("dataContainerId", dataContainerId);
-                tracingParameters.Add("customRequestHeaders", customRequestHeaders);
-                Tracing.Enter(invocationId, this, "ListAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/" + this.Client.ResourceNamespace.Trim() + "/~/CiSVault/" + this.Client.ResourceName.Trim() + "/api/devices/" + (deviceId != null ? deviceId.Trim() : "") + "/virtualdisks?";
-            if (dataContainerId != null)
-            {
-                url = url + "dataContainerId=" + Uri.EscapeDataString(dataContainerId != null ? dataContainerId.Trim() : "");
-            }
-            url = url + "&api-version=2014-01-01.1.0";
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            // Trim '/' character from the end of baseUrl and beginning of url.
-            if (baseUrl[baseUrl.Length - 1] == '/')
-            {
-                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
-            }
-            if (url[0] == '/')
-            {
-                url = url.Substring(1);
-            }
-            url = baseUrl + "/" + url;
-            url = url.Replace(" ", "%20");
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("Accept", "application/xml");
-                httpRequest.Headers.Add("Accept-Language", customRequestHeaders.Language);
-                httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
-                httpRequest.Headers.Add("x-ms-version", "2014-01-01");
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        Tracing.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    VirtualDiskListResponse result = null;
-                    // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new VirtualDiskListResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement arrayOfVirtualDiskSequenceElement = responseDoc.Element(XName.Get("ArrayOfVirtualDisk", "http://windowscloudbackup.com/CiS/V2013_03"));
-                    if (arrayOfVirtualDiskSequenceElement != null)
-                    {
-                        foreach (XElement arrayOfVirtualDiskElement in arrayOfVirtualDiskSequenceElement.Elements(XName.Get("VirtualDisk", "http://windowscloudbackup.com/CiS/V2013_03")))
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new VirtualDiskGetResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement virtualDiskElement = responseDoc.Element(XName.Get("VirtualDisk", "http://windowscloudbackup.com/CiS/V2013_03"));
+                        if (virtualDiskElement != null)
                         {
                             VirtualDisk virtualDiskInstance = new VirtualDisk();
-                            result.ListofVirtualDisks.Add(virtualDiskInstance);
+                            result.VirtualDiskInfo = virtualDiskInstance;
                             
-                            XElement instanceIdElement = arrayOfVirtualDiskElement.Element(XName.Get("InstanceId", "http://windowscloudbackup.com/CiS/V2013_03"));
+                            XElement instanceIdElement = virtualDiskElement.Element(XName.Get("InstanceId", "http://windowscloudbackup.com/CiS/V2013_03"));
                             if (instanceIdElement != null)
                             {
                                 string instanceIdInstance = instanceIdElement.Value;
                                 virtualDiskInstance.InstanceId = instanceIdInstance;
                             }
                             
-                            XElement nameElement = arrayOfVirtualDiskElement.Element(XName.Get("Name", "http://windowscloudbackup.com/CiS/V2013_03"));
+                            XElement nameElement = virtualDiskElement.Element(XName.Get("Name", "http://windowscloudbackup.com/CiS/V2013_03"));
                             if (nameElement != null)
                             {
                                 string nameInstance = nameElement.Value;
                                 virtualDiskInstance.Name = nameInstance;
                             }
                             
-                            XElement operationInProgressElement = arrayOfVirtualDiskElement.Element(XName.Get("OperationInProgress", "http://windowscloudbackup.com/CiS/V2013_03"));
+                            XElement operationInProgressElement = virtualDiskElement.Element(XName.Get("OperationInProgress", "http://windowscloudbackup.com/CiS/V2013_03"));
                             if (operationInProgressElement != null)
                             {
                                 OperationInProgress operationInProgressInstance = ((OperationInProgress)Enum.Parse(typeof(OperationInProgress), operationInProgressElement.Value, true));
                                 virtualDiskInstance.OperationInProgress = operationInProgressInstance;
                             }
                             
-                            XElement accessTypeElement = arrayOfVirtualDiskElement.Element(XName.Get("AccessType", "http://windowscloudbackup.com/CiS/V2013_03"));
+                            XElement accessTypeElement = virtualDiskElement.Element(XName.Get("AccessType", "http://windowscloudbackup.com/CiS/V2013_03"));
                             if (accessTypeElement != null)
                             {
                                 AccessType accessTypeInstance = ((AccessType)Enum.Parse(typeof(AccessType), accessTypeElement.Value, true));
                                 virtualDiskInstance.AccessType = accessTypeInstance;
                             }
                             
-                            XElement acrListSequenceElement = arrayOfVirtualDiskElement.Element(XName.Get("AcrList", "http://windowscloudbackup.com/CiS/V2013_03"));
+                            XElement acrListSequenceElement = virtualDiskElement.Element(XName.Get("AcrList", "http://windowscloudbackup.com/CiS/V2013_03"));
                             if (acrListSequenceElement != null)
                             {
                                 foreach (XElement acrListElement in acrListSequenceElement.Elements(XName.Get("AccessControlRecord", "http://windowscloudbackup.com/CiS/V2013_03")))
@@ -1974,14 +1483,14 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                                 }
                             }
                             
-                            XElement appTypeElement = arrayOfVirtualDiskElement.Element(XName.Get("AppType", "http://windowscloudbackup.com/CiS/V2013_03"));
+                            XElement appTypeElement = virtualDiskElement.Element(XName.Get("AppType", "http://windowscloudbackup.com/CiS/V2013_03"));
                             if (appTypeElement != null)
                             {
                                 AppType appTypeInstance = ((AppType)Enum.Parse(typeof(AppType), appTypeElement.Value, true));
                                 virtualDiskInstance.AppType = appTypeInstance;
                             }
                             
-                            XElement dataContainerElement = arrayOfVirtualDiskElement.Element(XName.Get("DataContainer", "http://windowscloudbackup.com/CiS/V2013_03"));
+                            XElement dataContainerElement = virtualDiskElement.Element(XName.Get("DataContainer", "http://windowscloudbackup.com/CiS/V2013_03"));
                             if (dataContainerElement != null)
                             {
                                 DataContainer dataContainerInstance = new DataContainer();
@@ -2158,64 +1667,64 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                                 }
                             }
                             
-                            XElement dataContainerIdElement = arrayOfVirtualDiskElement.Element(XName.Get("DataContainerId", "http://windowscloudbackup.com/CiS/V2013_03"));
+                            XElement dataContainerIdElement = virtualDiskElement.Element(XName.Get("DataContainerId", "http://windowscloudbackup.com/CiS/V2013_03"));
                             if (dataContainerIdElement != null)
                             {
                                 string dataContainerIdInstance = dataContainerIdElement.Value;
                                 virtualDiskInstance.DataContainerId = dataContainerIdInstance;
                             }
                             
-                            XElement internalInstanceIdElement = arrayOfVirtualDiskElement.Element(XName.Get("InternalInstanceId", "http://windowscloudbackup.com/CiS/V2013_03"));
+                            XElement internalInstanceIdElement = virtualDiskElement.Element(XName.Get("InternalInstanceId", "http://windowscloudbackup.com/CiS/V2013_03"));
                             if (internalInstanceIdElement != null)
                             {
                                 string internalInstanceIdInstance = internalInstanceIdElement.Value;
                                 virtualDiskInstance.InternalInstanceId = internalInstanceIdInstance;
                             }
                             
-                            XElement isBackupEnabledElement = arrayOfVirtualDiskElement.Element(XName.Get("IsBackupEnabled", "http://windowscloudbackup.com/CiS/V2013_03"));
+                            XElement isBackupEnabledElement = virtualDiskElement.Element(XName.Get("IsBackupEnabled", "http://windowscloudbackup.com/CiS/V2013_03"));
                             if (isBackupEnabledElement != null)
                             {
                                 bool isBackupEnabledInstance = bool.Parse(isBackupEnabledElement.Value);
                                 virtualDiskInstance.IsBackupEnabled = isBackupEnabledInstance;
                             }
                             
-                            XElement isDefaultBackupEnabledElement = arrayOfVirtualDiskElement.Element(XName.Get("IsDefaultBackupEnabled", "http://windowscloudbackup.com/CiS/V2013_03"));
+                            XElement isDefaultBackupEnabledElement = virtualDiskElement.Element(XName.Get("IsDefaultBackupEnabled", "http://windowscloudbackup.com/CiS/V2013_03"));
                             if (isDefaultBackupEnabledElement != null)
                             {
                                 bool isDefaultBackupEnabledInstance = bool.Parse(isDefaultBackupEnabledElement.Value);
                                 virtualDiskInstance.IsDefaultBackupEnabled = isDefaultBackupEnabledInstance;
                             }
                             
-                            XElement isMonitoringEnabledElement = arrayOfVirtualDiskElement.Element(XName.Get("IsMonitoringEnabled", "http://windowscloudbackup.com/CiS/V2013_03"));
+                            XElement isMonitoringEnabledElement = virtualDiskElement.Element(XName.Get("IsMonitoringEnabled", "http://windowscloudbackup.com/CiS/V2013_03"));
                             if (isMonitoringEnabledElement != null)
                             {
                                 bool isMonitoringEnabledInstance = bool.Parse(isMonitoringEnabledElement.Value);
                                 virtualDiskInstance.IsMonitoringEnabled = isMonitoringEnabledInstance;
                             }
                             
-                            XElement onlineElement = arrayOfVirtualDiskElement.Element(XName.Get("Online", "http://windowscloudbackup.com/CiS/V2013_03"));
+                            XElement onlineElement = virtualDiskElement.Element(XName.Get("Online", "http://windowscloudbackup.com/CiS/V2013_03"));
                             if (onlineElement != null)
                             {
                                 bool onlineInstance = bool.Parse(onlineElement.Value);
                                 virtualDiskInstance.Online = onlineInstance;
                             }
                             
-                            XElement sizeInBytesElement = arrayOfVirtualDiskElement.Element(XName.Get("SizeInBytes", "http://windowscloudbackup.com/CiS/V2013_03"));
+                            XElement sizeInBytesElement = virtualDiskElement.Element(XName.Get("SizeInBytes", "http://windowscloudbackup.com/CiS/V2013_03"));
                             if (sizeInBytesElement != null)
                             {
                                 long sizeInBytesInstance = long.Parse(sizeInBytesElement.Value, CultureInfo.InvariantCulture);
                                 virtualDiskInstance.SizeInBytes = sizeInBytesInstance;
                             }
                             
-                            XElement vSNElement = arrayOfVirtualDiskElement.Element(XName.Get("VSN", "http://windowscloudbackup.com/CiS/V2013_03"));
+                            XElement vSNElement = virtualDiskElement.Element(XName.Get("VSN", "http://windowscloudbackup.com/CiS/V2013_03"));
                             if (vSNElement != null)
                             {
                                 string vSNInstance = vSNElement.Value;
                                 virtualDiskInstance.VSN = vSNInstance;
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -2224,7 +1733,474 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <param name='deviceId'>
+        /// Optional.
+        /// </param>
+        /// <param name='dataContainerId'>
+        /// Optional.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response model for the list of virtual disks for a given data
+        /// container.
+        /// </returns>
+        public async Task<VirtualDiskListResponse> ListAsync(string deviceId, string dataContainerId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        {
+            // Validate
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("deviceId", deviceId);
+                tracingParameters.Add("dataContainerId", dataContainerId);
+                tracingParameters.Add("customRequestHeaders", customRequestHeaders);
+                TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/cloudservices/" + Uri.EscapeDataString(this.Client.CloudServiceName) + "/resources/" + Uri.EscapeDataString(this.Client.ResourceNamespace) + "/~/CiSVault/" + Uri.EscapeDataString(this.Client.ResourceName) + "/api/devices/" + (deviceId == null ? "" : Uri.EscapeDataString(deviceId)) + "/virtualdisks?";
+            if (dataContainerId != null)
+            {
+                url = url + "dataContainerId=" + Uri.EscapeDataString(dataContainerId);
+            }
+            url = url + "&api-version=2014-01-01.1.0";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("Accept", "application/xml");
+                httpRequest.Headers.Add("Accept-Language", customRequestHeaders.Language);
+                httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
+                httpRequest.Headers.Add("x-ms-version", "2014-01-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    VirtualDiskListResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new VirtualDiskListResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement arrayOfVirtualDiskSequenceElement = responseDoc.Element(XName.Get("ArrayOfVirtualDisk", "http://windowscloudbackup.com/CiS/V2013_03"));
+                        if (arrayOfVirtualDiskSequenceElement != null)
+                        {
+                            foreach (XElement arrayOfVirtualDiskElement in arrayOfVirtualDiskSequenceElement.Elements(XName.Get("VirtualDisk", "http://windowscloudbackup.com/CiS/V2013_03")))
+                            {
+                                VirtualDisk virtualDiskInstance = new VirtualDisk();
+                                result.ListofVirtualDisks.Add(virtualDiskInstance);
+                                
+                                XElement instanceIdElement = arrayOfVirtualDiskElement.Element(XName.Get("InstanceId", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                if (instanceIdElement != null)
+                                {
+                                    string instanceIdInstance = instanceIdElement.Value;
+                                    virtualDiskInstance.InstanceId = instanceIdInstance;
+                                }
+                                
+                                XElement nameElement = arrayOfVirtualDiskElement.Element(XName.Get("Name", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                if (nameElement != null)
+                                {
+                                    string nameInstance = nameElement.Value;
+                                    virtualDiskInstance.Name = nameInstance;
+                                }
+                                
+                                XElement operationInProgressElement = arrayOfVirtualDiskElement.Element(XName.Get("OperationInProgress", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                if (operationInProgressElement != null)
+                                {
+                                    OperationInProgress operationInProgressInstance = ((OperationInProgress)Enum.Parse(typeof(OperationInProgress), operationInProgressElement.Value, true));
+                                    virtualDiskInstance.OperationInProgress = operationInProgressInstance;
+                                }
+                                
+                                XElement accessTypeElement = arrayOfVirtualDiskElement.Element(XName.Get("AccessType", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                if (accessTypeElement != null)
+                                {
+                                    AccessType accessTypeInstance = ((AccessType)Enum.Parse(typeof(AccessType), accessTypeElement.Value, true));
+                                    virtualDiskInstance.AccessType = accessTypeInstance;
+                                }
+                                
+                                XElement acrListSequenceElement = arrayOfVirtualDiskElement.Element(XName.Get("AcrList", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                if (acrListSequenceElement != null)
+                                {
+                                    foreach (XElement acrListElement in acrListSequenceElement.Elements(XName.Get("AccessControlRecord", "http://windowscloudbackup.com/CiS/V2013_03")))
+                                    {
+                                        AccessControlRecord accessControlRecordInstance = new AccessControlRecord();
+                                        virtualDiskInstance.AcrList.Add(accessControlRecordInstance);
+                                        
+                                        XElement instanceIdElement2 = acrListElement.Element(XName.Get("InstanceId", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                        if (instanceIdElement2 != null)
+                                        {
+                                            string instanceIdInstance2 = instanceIdElement2.Value;
+                                            accessControlRecordInstance.InstanceId = instanceIdInstance2;
+                                        }
+                                        
+                                        XElement nameElement2 = acrListElement.Element(XName.Get("Name", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                        if (nameElement2 != null)
+                                        {
+                                            string nameInstance2 = nameElement2.Value;
+                                            accessControlRecordInstance.Name = nameInstance2;
+                                        }
+                                        
+                                        XElement initiatorNameElement = acrListElement.Element(XName.Get("InitiatorName", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                        if (initiatorNameElement != null)
+                                        {
+                                            string initiatorNameInstance = initiatorNameElement.Value;
+                                            accessControlRecordInstance.InitiatorName = initiatorNameInstance;
+                                        }
+                                        
+                                        XElement volumeCountElement = acrListElement.Element(XName.Get("VolumeCount", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                        if (volumeCountElement != null)
+                                        {
+                                            int volumeCountInstance = int.Parse(volumeCountElement.Value, CultureInfo.InvariantCulture);
+                                            accessControlRecordInstance.VolumeCount = volumeCountInstance;
+                                        }
+                                        
+                                        XElement globalIdElement = acrListElement.Element(XName.Get("GlobalId", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                        if (globalIdElement != null)
+                                        {
+                                            string globalIdInstance = globalIdElement.Value;
+                                            accessControlRecordInstance.GlobalId = globalIdInstance;
+                                        }
+                                        
+                                        XElement operationInProgressElement2 = acrListElement.Element(XName.Get("OperationInProgress", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                        if (operationInProgressElement2 != null)
+                                        {
+                                            OperationInProgress operationInProgressInstance2 = ((OperationInProgress)Enum.Parse(typeof(OperationInProgress), operationInProgressElement2.Value, true));
+                                            accessControlRecordInstance.OperationInProgress = operationInProgressInstance2;
+                                        }
+                                    }
+                                }
+                                
+                                XElement appTypeElement = arrayOfVirtualDiskElement.Element(XName.Get("AppType", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                if (appTypeElement != null)
+                                {
+                                    AppType appTypeInstance = ((AppType)Enum.Parse(typeof(AppType), appTypeElement.Value, true));
+                                    virtualDiskInstance.AppType = appTypeInstance;
+                                }
+                                
+                                XElement dataContainerElement = arrayOfVirtualDiskElement.Element(XName.Get("DataContainer", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                if (dataContainerElement != null)
+                                {
+                                    DataContainer dataContainerInstance = new DataContainer();
+                                    virtualDiskInstance.DataContainer = dataContainerInstance;
+                                    
+                                    XElement instanceIdElement3 = dataContainerElement.Element(XName.Get("InstanceId", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                    if (instanceIdElement3 != null)
+                                    {
+                                        string instanceIdInstance3 = instanceIdElement3.Value;
+                                        dataContainerInstance.InstanceId = instanceIdInstance3;
+                                    }
+                                    
+                                    XElement nameElement3 = dataContainerElement.Element(XName.Get("Name", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                    if (nameElement3 != null)
+                                    {
+                                        string nameInstance3 = nameElement3.Value;
+                                        dataContainerInstance.Name = nameInstance3;
+                                    }
+                                    
+                                    XElement operationInProgressElement3 = dataContainerElement.Element(XName.Get("OperationInProgress", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                    if (operationInProgressElement3 != null)
+                                    {
+                                        OperationInProgress operationInProgressInstance3 = ((OperationInProgress)Enum.Parse(typeof(OperationInProgress), operationInProgressElement3.Value, true));
+                                        dataContainerInstance.OperationInProgress = operationInProgressInstance3;
+                                    }
+                                    
+                                    XElement bandwidthRateElement = dataContainerElement.Element(XName.Get("BandwidthRate", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                    if (bandwidthRateElement != null)
+                                    {
+                                        int bandwidthRateInstance = int.Parse(bandwidthRateElement.Value, CultureInfo.InvariantCulture);
+                                        dataContainerInstance.BandwidthRate = bandwidthRateInstance;
+                                    }
+                                    
+                                    XElement encryptionKeyElement = dataContainerElement.Element(XName.Get("EncryptionKey", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                    if (encryptionKeyElement != null)
+                                    {
+                                        string encryptionKeyInstance = encryptionKeyElement.Value;
+                                        dataContainerInstance.EncryptionKey = encryptionKeyInstance;
+                                    }
+                                    
+                                    XElement isDefaultElement = dataContainerElement.Element(XName.Get("IsDefault", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                    if (isDefaultElement != null)
+                                    {
+                                        bool isDefaultInstance = bool.Parse(isDefaultElement.Value);
+                                        dataContainerInstance.IsDefault = isDefaultInstance;
+                                    }
+                                    
+                                    XElement isEncryptionEnabledElement = dataContainerElement.Element(XName.Get("IsEncryptionEnabled", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                    if (isEncryptionEnabledElement != null)
+                                    {
+                                        bool isEncryptionEnabledInstance = bool.Parse(isEncryptionEnabledElement.Value);
+                                        dataContainerInstance.IsEncryptionEnabled = isEncryptionEnabledInstance;
+                                    }
+                                    
+                                    XElement ownedElement = dataContainerElement.Element(XName.Get("Owned", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                    if (ownedElement != null)
+                                    {
+                                        bool ownedInstance = bool.Parse(ownedElement.Value);
+                                        dataContainerInstance.Owned = ownedInstance;
+                                    }
+                                    
+                                    XElement primaryStorageAccountCredentialElement = dataContainerElement.Element(XName.Get("PrimaryStorageAccountCredential", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                    if (primaryStorageAccountCredentialElement != null)
+                                    {
+                                        StorageAccountCredentialResponse primaryStorageAccountCredentialInstance = new StorageAccountCredentialResponse();
+                                        dataContainerInstance.PrimaryStorageAccountCredential = primaryStorageAccountCredentialInstance;
+                                        
+                                        XElement instanceIdElement4 = primaryStorageAccountCredentialElement.Element(XName.Get("InstanceId", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                        if (instanceIdElement4 != null)
+                                        {
+                                            string instanceIdInstance4 = instanceIdElement4.Value;
+                                            primaryStorageAccountCredentialInstance.InstanceId = instanceIdInstance4;
+                                        }
+                                        
+                                        XElement nameElement4 = primaryStorageAccountCredentialElement.Element(XName.Get("Name", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                        if (nameElement4 != null)
+                                        {
+                                            string nameInstance4 = nameElement4.Value;
+                                            primaryStorageAccountCredentialInstance.Name = nameInstance4;
+                                        }
+                                        
+                                        XElement operationInProgressElement4 = primaryStorageAccountCredentialElement.Element(XName.Get("OperationInProgress", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                        if (operationInProgressElement4 != null)
+                                        {
+                                            OperationInProgress operationInProgressInstance4 = ((OperationInProgress)Enum.Parse(typeof(OperationInProgress), operationInProgressElement4.Value, true));
+                                            primaryStorageAccountCredentialInstance.OperationInProgress = operationInProgressInstance4;
+                                        }
+                                        
+                                        XElement cloudTypeElement = primaryStorageAccountCredentialElement.Element(XName.Get("CloudType", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                        if (cloudTypeElement != null)
+                                        {
+                                            CloudType cloudTypeInstance = ((CloudType)Enum.Parse(typeof(CloudType), cloudTypeElement.Value, true));
+                                            primaryStorageAccountCredentialInstance.CloudType = cloudTypeInstance;
+                                        }
+                                        
+                                        XElement hostnameElement = primaryStorageAccountCredentialElement.Element(XName.Get("Hostname", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                        if (hostnameElement != null)
+                                        {
+                                            string hostnameInstance = hostnameElement.Value;
+                                            primaryStorageAccountCredentialInstance.Hostname = hostnameInstance;
+                                        }
+                                        
+                                        XElement isDefaultElement2 = primaryStorageAccountCredentialElement.Element(XName.Get("IsDefault", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                        if (isDefaultElement2 != null)
+                                        {
+                                            bool isDefaultInstance2 = bool.Parse(isDefaultElement2.Value);
+                                            primaryStorageAccountCredentialInstance.IsDefault = isDefaultInstance2;
+                                        }
+                                        
+                                        XElement locationElement = primaryStorageAccountCredentialElement.Element(XName.Get("Location", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                        if (locationElement != null)
+                                        {
+                                            string locationInstance = locationElement.Value;
+                                            primaryStorageAccountCredentialInstance.Location = locationInstance;
+                                        }
+                                        
+                                        XElement loginElement = primaryStorageAccountCredentialElement.Element(XName.Get("Login", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                        if (loginElement != null)
+                                        {
+                                            string loginInstance = loginElement.Value;
+                                            primaryStorageAccountCredentialInstance.Login = loginInstance;
+                                        }
+                                        
+                                        XElement passwordElement = primaryStorageAccountCredentialElement.Element(XName.Get("Password", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                        if (passwordElement != null)
+                                        {
+                                            string passwordInstance = passwordElement.Value;
+                                            primaryStorageAccountCredentialInstance.Password = passwordInstance;
+                                        }
+                                        
+                                        XElement useSSLElement = primaryStorageAccountCredentialElement.Element(XName.Get("UseSSL", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                        if (useSSLElement != null)
+                                        {
+                                            bool useSSLInstance = bool.Parse(useSSLElement.Value);
+                                            primaryStorageAccountCredentialInstance.UseSSL = useSSLInstance;
+                                        }
+                                        
+                                        XElement volumeCountElement2 = primaryStorageAccountCredentialElement.Element(XName.Get("VolumeCount", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                        if (volumeCountElement2 != null)
+                                        {
+                                            int volumeCountInstance2 = int.Parse(volumeCountElement2.Value, CultureInfo.InvariantCulture);
+                                            primaryStorageAccountCredentialInstance.VolumeCount = volumeCountInstance2;
+                                        }
+                                        
+                                        XElement passwordEncryptionCertThumbprintElement = primaryStorageAccountCredentialElement.Element(XName.Get("PasswordEncryptionCertThumbprint", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                        if (passwordEncryptionCertThumbprintElement != null)
+                                        {
+                                            bool isNil = false;
+                                            XAttribute nilAttribute = passwordEncryptionCertThumbprintElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
+                                            if (nilAttribute != null)
+                                            {
+                                                isNil = nilAttribute.Value == "true";
+                                            }
+                                            if (isNil == false)
+                                            {
+                                                string passwordEncryptionCertThumbprintInstance = passwordEncryptionCertThumbprintElement.Value;
+                                                primaryStorageAccountCredentialInstance.PasswordEncryptionCertThumbprint = passwordEncryptionCertThumbprintInstance;
+                                            }
+                                        }
+                                    }
+                                    
+                                    XElement secretsEncryptionThumbprintElement = dataContainerElement.Element(XName.Get("SecretsEncryptionThumbprint", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                    if (secretsEncryptionThumbprintElement != null)
+                                    {
+                                        string secretsEncryptionThumbprintInstance = secretsEncryptionThumbprintElement.Value;
+                                        dataContainerInstance.SecretsEncryptionThumbprint = secretsEncryptionThumbprintInstance;
+                                    }
+                                    
+                                    XElement volumeCountElement3 = dataContainerElement.Element(XName.Get("VolumeCount", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                    if (volumeCountElement3 != null)
+                                    {
+                                        int volumeCountInstance3 = int.Parse(volumeCountElement3.Value, CultureInfo.InvariantCulture);
+                                        dataContainerInstance.VolumeCount = volumeCountInstance3;
+                                    }
+                                }
+                                
+                                XElement dataContainerIdElement = arrayOfVirtualDiskElement.Element(XName.Get("DataContainerId", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                if (dataContainerIdElement != null)
+                                {
+                                    string dataContainerIdInstance = dataContainerIdElement.Value;
+                                    virtualDiskInstance.DataContainerId = dataContainerIdInstance;
+                                }
+                                
+                                XElement internalInstanceIdElement = arrayOfVirtualDiskElement.Element(XName.Get("InternalInstanceId", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                if (internalInstanceIdElement != null)
+                                {
+                                    string internalInstanceIdInstance = internalInstanceIdElement.Value;
+                                    virtualDiskInstance.InternalInstanceId = internalInstanceIdInstance;
+                                }
+                                
+                                XElement isBackupEnabledElement = arrayOfVirtualDiskElement.Element(XName.Get("IsBackupEnabled", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                if (isBackupEnabledElement != null)
+                                {
+                                    bool isBackupEnabledInstance = bool.Parse(isBackupEnabledElement.Value);
+                                    virtualDiskInstance.IsBackupEnabled = isBackupEnabledInstance;
+                                }
+                                
+                                XElement isDefaultBackupEnabledElement = arrayOfVirtualDiskElement.Element(XName.Get("IsDefaultBackupEnabled", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                if (isDefaultBackupEnabledElement != null)
+                                {
+                                    bool isDefaultBackupEnabledInstance = bool.Parse(isDefaultBackupEnabledElement.Value);
+                                    virtualDiskInstance.IsDefaultBackupEnabled = isDefaultBackupEnabledInstance;
+                                }
+                                
+                                XElement isMonitoringEnabledElement = arrayOfVirtualDiskElement.Element(XName.Get("IsMonitoringEnabled", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                if (isMonitoringEnabledElement != null)
+                                {
+                                    bool isMonitoringEnabledInstance = bool.Parse(isMonitoringEnabledElement.Value);
+                                    virtualDiskInstance.IsMonitoringEnabled = isMonitoringEnabledInstance;
+                                }
+                                
+                                XElement onlineElement = arrayOfVirtualDiskElement.Element(XName.Get("Online", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                if (onlineElement != null)
+                                {
+                                    bool onlineInstance = bool.Parse(onlineElement.Value);
+                                    virtualDiskInstance.Online = onlineInstance;
+                                }
+                                
+                                XElement sizeInBytesElement = arrayOfVirtualDiskElement.Element(XName.Get("SizeInBytes", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                if (sizeInBytesElement != null)
+                                {
+                                    long sizeInBytesInstance = long.Parse(sizeInBytesElement.Value, CultureInfo.InvariantCulture);
+                                    virtualDiskInstance.SizeInBytes = sizeInBytesInstance;
+                                }
+                                
+                                XElement vSNElement = arrayOfVirtualDiskElement.Element(XName.Get("VSN", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                if (vSNElement != null)
+                                {
+                                    string vSNInstance = vSNElement.Value;
+                                    virtualDiskInstance.VSN = vSNInstance;
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -2252,7 +2228,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         /// Required. disk id
         /// </param>
         /// <param name='diskDetails'>
-        /// Required. Parameters supplied to the Create virtual disk operation.
+        /// Required. Parameters supplied to the update virtual disk operation.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Required. The Custom Request Headers which client must use.
@@ -2263,88 +2239,75 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         /// <returns>
         /// Info about the async task
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.StorSimple.Models.TaskStatusInfo> UpdateAsync(string deviceId, string diskId, VirtualDisk diskDetails, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<TaskStatusInfo> UpdateAsync(string deviceId, string diskId, VirtualDisk diskDetails, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             StorSimpleManagementClient client = this.Client;
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("deviceId", deviceId);
                 tracingParameters.Add("diskId", diskId);
                 tracingParameters.Add("diskDetails", diskDetails);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
-                Tracing.Enter(invocationId, this, "UpdateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "UpdateAsync", tracingParameters);
             }
-            try
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            GuidTaskResponse response = await client.VirtualDisk.BeginUpdatingAsync(deviceId, diskId, diskDetails, customRequestHeaders, cancellationToken).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested();
+            TaskStatusInfo result = await client.GetOperationStatusAsync(response.TaskId, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 5;
+            if (client.LongRunningOperationInitialTimeout >= 0)
             {
-                if (shouldTrace)
-                {
-                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
-                }
-                
-                cancellationToken.ThrowIfCancellationRequested();
-                GuidTaskResponse response = await client.VirtualDisk.BeginUpdatingAsync(deviceId, diskId, diskDetails, customRequestHeaders, cancellationToken).ConfigureAwait(false);
-                cancellationToken.ThrowIfCancellationRequested();
-                TaskStatusInfo result = await client.GetOperationStatusAsync(response.TaskId, cancellationToken).ConfigureAwait(false);
-                int delayInSeconds = 5;
-                if (client.LongRunningOperationInitialTimeout >= 0)
-                {
-                    delayInSeconds = client.LongRunningOperationInitialTimeout;
-                }
-                while ((result.AsyncTaskAggregatedResult != AsyncTaskAggregatedResult.InProgress) == false)
-                {
-                    cancellationToken.ThrowIfCancellationRequested();
-                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    result = await client.GetOperationStatusAsync(response.TaskId, cancellationToken).ConfigureAwait(false);
-                    delayInSeconds = 5;
-                    if (client.LongRunningOperationRetryTimeout >= 0)
-                    {
-                        delayInSeconds = client.LongRunningOperationRetryTimeout;
-                    }
-                }
-                
-                if (shouldTrace)
-                {
-                    Tracing.Exit(invocationId, result);
-                }
-                
-                if (result.AsyncTaskAggregatedResult != AsyncTaskAggregatedResult.Succeeded)
-                {
-                    if (result.Error != null)
-                    {
-                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                        ex.ErrorCode = result.Error.Code;
-                        ex.ErrorMessage = result.Error.Message;
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    else
-                    {
-                        CloudException ex = new CloudException("");
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                }
-                
-                return result;
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            finally
+            while ((result.AsyncTaskAggregatedResult != AsyncTaskAggregatedResult.InProgress) == false)
             {
-                if (client != null && shouldTrace)
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.GetOperationStatusAsync(response.TaskId, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 5;
+                if (client.LongRunningOperationRetryTimeout >= 0)
                 {
-                    client.Dispose();
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
                 }
             }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            if (result.AsyncTaskAggregatedResult != AsyncTaskAggregatedResult.Succeeded)
+            {
+                if (result.Error != null)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.Error = new CloudError();
+                    ex.Error.Code = result.Error.Code;
+                    ex.Error.Message = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                else
+                {
+                    CloudException ex = new CloudException("");
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+            }
+            
+            return result;
         }
     }
 }

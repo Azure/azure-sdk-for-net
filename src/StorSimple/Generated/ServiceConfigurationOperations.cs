@@ -30,20 +30,16 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
 using Microsoft.WindowsAzure.Management.StorSimple;
 using Microsoft.WindowsAzure.Management.StorSimple.Models;
 
 namespace Microsoft.WindowsAzure.Management.StorSimple
 {
     /// <summary>
-    /// All Operations related to Service configurations  (see
-    /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx for
-    /// more information)
+    /// All Operations related to Service configurations
     /// </summary>
-    internal partial class ServiceConfigurationOperations : IServiceOperations<StorSimpleManagementClient>, Microsoft.WindowsAzure.Management.StorSimple.IServiceConfigurationOperations
+    internal partial class ServiceConfigurationOperations : IServiceOperations<StorSimpleManagementClient>, IServiceConfigurationOperations
     {
         /// <summary>
         /// Initializes a new instance of the ServiceConfigurationOperations
@@ -70,9 +66,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         
         /// <summary>
         /// The Begin Creating Storage Account operation creates a new storage
-        /// account in Azure.  (see
-        /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx
-        /// for more information)
+        /// account in Azure.
         /// </summary>
         /// <param name='serviceConfiguration'>
         /// Required. Parameters supplied to the Begin Creating Storage Account
@@ -87,7 +81,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         /// <returns>
         /// This is the Task Response for all Async Calls
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.StorSimple.Models.TaskResponse> BeginCreatingAsync(ServiceConfiguration serviceConfiguration, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<TaskResponse> BeginCreatingAsync(ServiceConfiguration serviceConfiguration, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceConfiguration == null)
@@ -170,19 +164,19 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("serviceConfiguration", serviceConfiguration);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
-                Tracing.Enter(invocationId, this, "BeginCreatingAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "BeginCreatingAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/" + this.Client.ResourceNamespace.Trim() + "/~/CiSVault/" + this.Client.ResourceName.Trim() + "/api/?";
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/cloudservices/" + Uri.EscapeDataString(this.Client.CloudServiceName) + "/resources/" + Uri.EscapeDataString(this.Client.ResourceNamespace) + "/~/CiSVault/" + Uri.EscapeDataString(this.Client.ResourceName) + "/api/?";
             url = url + "api-version=2014-01-01.2.0";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -512,13 +506,13 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.Accepted)
@@ -527,7 +521,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -535,18 +529,21 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                     // Create Result
                     TaskResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new TaskResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement stringElement = responseDoc.Element(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/"));
-                    if (stringElement != null)
+                    if (statusCode == HttpStatusCode.Accepted)
                     {
-                        string stringInstance = stringElement.Value;
-                        result.TaskId = stringInstance;
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new TaskResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement stringElement = responseDoc.Element(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/"));
+                        if (stringElement != null)
+                        {
+                            string stringInstance = stringElement.Value;
+                            result.TaskId = stringInstance;
+                        }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -555,7 +552,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -589,86 +586,73 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         /// <returns>
         /// Info about the async task
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.StorSimple.Models.TaskStatusInfo> CreateAsync(ServiceConfiguration serviceConfiguration, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<TaskStatusInfo> CreateAsync(ServiceConfiguration serviceConfiguration, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             StorSimpleManagementClient client = this.Client;
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("serviceConfiguration", serviceConfiguration);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
-                Tracing.Enter(invocationId, this, "CreateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "CreateAsync", tracingParameters);
             }
-            try
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            TaskResponse response = await client.ServiceConfig.BeginCreatingAsync(serviceConfiguration, customRequestHeaders, cancellationToken).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested();
+            TaskStatusInfo result = await client.GetOperationStatusAsync(response.TaskId, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 5;
+            if (client.LongRunningOperationInitialTimeout >= 0)
             {
-                if (shouldTrace)
-                {
-                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
-                }
-                
-                cancellationToken.ThrowIfCancellationRequested();
-                TaskResponse response = await client.ServiceConfig.BeginCreatingAsync(serviceConfiguration, customRequestHeaders, cancellationToken).ConfigureAwait(false);
-                cancellationToken.ThrowIfCancellationRequested();
-                TaskStatusInfo result = await client.GetOperationStatusAsync(response.TaskId, cancellationToken).ConfigureAwait(false);
-                int delayInSeconds = 5;
-                if (client.LongRunningOperationInitialTimeout >= 0)
-                {
-                    delayInSeconds = client.LongRunningOperationInitialTimeout;
-                }
-                while ((result.AsyncTaskAggregatedResult != AsyncTaskAggregatedResult.InProgress) == false)
-                {
-                    cancellationToken.ThrowIfCancellationRequested();
-                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    result = await client.GetOperationStatusAsync(response.TaskId, cancellationToken).ConfigureAwait(false);
-                    delayInSeconds = 5;
-                    if (client.LongRunningOperationRetryTimeout >= 0)
-                    {
-                        delayInSeconds = client.LongRunningOperationRetryTimeout;
-                    }
-                }
-                
-                if (shouldTrace)
-                {
-                    Tracing.Exit(invocationId, result);
-                }
-                
-                if (result.AsyncTaskAggregatedResult != AsyncTaskAggregatedResult.Succeeded)
-                {
-                    if (result.Error != null)
-                    {
-                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                        ex.ErrorCode = result.Error.Code;
-                        ex.ErrorMessage = result.Error.Message;
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    else
-                    {
-                        CloudException ex = new CloudException("");
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                }
-                
-                return result;
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            finally
+            while ((result.AsyncTaskAggregatedResult != AsyncTaskAggregatedResult.InProgress) == false)
             {
-                if (client != null && shouldTrace)
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.GetOperationStatusAsync(response.TaskId, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 5;
+                if (client.LongRunningOperationRetryTimeout >= 0)
                 {
-                    client.Dispose();
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
                 }
             }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            if (result.AsyncTaskAggregatedResult != AsyncTaskAggregatedResult.Succeeded)
+            {
+                if (result.Error != null)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.Error = new CloudError();
+                    ex.Error.Code = result.Error.Code;
+                    ex.Error.Message = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                else
+                {
+                    CloudException ex = new CloudException("");
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+            }
+            
+            return result;
         }
         
         /// <param name='customeRequestHeaders'>
@@ -680,23 +664,23 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         /// <returns>
         /// Info about the service configuration regarding the resource
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.StorSimple.Models.ServiceConfigurationResponse> GetAsync(CustomRequestHeaders customeRequestHeaders, CancellationToken cancellationToken)
+        public async Task<ServiceConfigurationResponse> GetAsync(CustomRequestHeaders customeRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("customeRequestHeaders", customeRequestHeaders);
-                Tracing.Enter(invocationId, this, "GetAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/" + this.Client.ResourceNamespace.Trim() + "/~/CiSVault/" + this.Client.ResourceName.Trim() + "/api/?";
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/cloudservices/" + Uri.EscapeDataString(this.Client.CloudServiceName) + "/resources/" + Uri.EscapeDataString(this.Client.ResourceNamespace) + "/~/CiSVault/" + Uri.EscapeDataString(this.Client.ResourceName) + "/api/?";
             url = url + "api-version=2014-01-01.1.0";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -734,13 +718,13 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -749,7 +733,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -757,364 +741,367 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                     // Create Result
                     ServiceConfigurationResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new ServiceConfigurationResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement serviceConfigurationBaseElement = responseDoc.Element(XName.Get("ServiceConfiguration_Base", "http://windowscloudbackup.com/CiS/V2013_03"));
-                    if (serviceConfigurationBaseElement != null)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        XElement acrChangeListElement = serviceConfigurationBaseElement.Element(XName.Get("AcrChangeList", "http://windowscloudbackup.com/CiS/V2013_03"));
-                        if (acrChangeListElement != null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new ServiceConfigurationResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement serviceConfigurationBaseElement = responseDoc.Element(XName.Get("ServiceConfiguration_Base", "http://windowscloudbackup.com/CiS/V2013_03"));
+                        if (serviceConfigurationBaseElement != null)
                         {
-                            AcrChangeList acrChangeListInstance = new AcrChangeList();
-                            result.AcrChangeList = acrChangeListInstance;
-                            
-                            XElement addedSequenceElement = acrChangeListElement.Element(XName.Get("Added", "http://windowscloudbackup.com/CiS/V2013_03"));
-                            if (addedSequenceElement != null)
+                            XElement acrChangeListElement = serviceConfigurationBaseElement.Element(XName.Get("AcrChangeList", "http://windowscloudbackup.com/CiS/V2013_03"));
+                            if (acrChangeListElement != null)
                             {
-                                foreach (XElement addedElement in addedSequenceElement.Elements(XName.Get("AccessControlRecord", "http://windowscloudbackup.com/CiS/V2013_03")))
+                                AcrChangeList acrChangeListInstance = new AcrChangeList();
+                                result.AcrChangeList = acrChangeListInstance;
+                                
+                                XElement addedSequenceElement = acrChangeListElement.Element(XName.Get("Added", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                if (addedSequenceElement != null)
                                 {
-                                    AccessControlRecord accessControlRecordInstance = new AccessControlRecord();
-                                    acrChangeListInstance.Added.Add(accessControlRecordInstance);
-                                    
-                                    XElement instanceIdElement = addedElement.Element(XName.Get("InstanceId", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                    if (instanceIdElement != null)
+                                    foreach (XElement addedElement in addedSequenceElement.Elements(XName.Get("AccessControlRecord", "http://windowscloudbackup.com/CiS/V2013_03")))
                                     {
-                                        string instanceIdInstance = instanceIdElement.Value;
-                                        accessControlRecordInstance.InstanceId = instanceIdInstance;
+                                        AccessControlRecord accessControlRecordInstance = new AccessControlRecord();
+                                        acrChangeListInstance.Added.Add(accessControlRecordInstance);
+                                        
+                                        XElement instanceIdElement = addedElement.Element(XName.Get("InstanceId", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                        if (instanceIdElement != null)
+                                        {
+                                            string instanceIdInstance = instanceIdElement.Value;
+                                            accessControlRecordInstance.InstanceId = instanceIdInstance;
+                                        }
+                                        
+                                        XElement nameElement = addedElement.Element(XName.Get("Name", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                        if (nameElement != null)
+                                        {
+                                            string nameInstance = nameElement.Value;
+                                            accessControlRecordInstance.Name = nameInstance;
+                                        }
+                                        
+                                        XElement initiatorNameElement = addedElement.Element(XName.Get("InitiatorName", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                        if (initiatorNameElement != null)
+                                        {
+                                            string initiatorNameInstance = initiatorNameElement.Value;
+                                            accessControlRecordInstance.InitiatorName = initiatorNameInstance;
+                                        }
+                                        
+                                        XElement volumeCountElement = addedElement.Element(XName.Get("VolumeCount", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                        if (volumeCountElement != null)
+                                        {
+                                            int volumeCountInstance = int.Parse(volumeCountElement.Value, CultureInfo.InvariantCulture);
+                                            accessControlRecordInstance.VolumeCount = volumeCountInstance;
+                                        }
+                                        
+                                        XElement globalIdElement = addedElement.Element(XName.Get("GlobalId", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                        if (globalIdElement != null)
+                                        {
+                                            string globalIdInstance = globalIdElement.Value;
+                                            accessControlRecordInstance.GlobalId = globalIdInstance;
+                                        }
+                                        
+                                        XElement operationInProgressElement = addedElement.Element(XName.Get("OperationInProgress", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                        if (operationInProgressElement != null)
+                                        {
+                                            OperationInProgress operationInProgressInstance = ((OperationInProgress)Enum.Parse(typeof(OperationInProgress), operationInProgressElement.Value, true));
+                                            accessControlRecordInstance.OperationInProgress = operationInProgressInstance;
+                                        }
                                     }
-                                    
-                                    XElement nameElement = addedElement.Element(XName.Get("Name", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                    if (nameElement != null)
+                                }
+                                
+                                XElement deletedSequenceElement = acrChangeListElement.Element(XName.Get("Deleted", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                if (deletedSequenceElement != null)
+                                {
+                                    foreach (XElement deletedElement in deletedSequenceElement.Elements(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/Arrays")))
                                     {
-                                        string nameInstance = nameElement.Value;
-                                        accessControlRecordInstance.Name = nameInstance;
+                                        acrChangeListInstance.Deleted.Add(deletedElement.Value);
                                     }
-                                    
-                                    XElement initiatorNameElement = addedElement.Element(XName.Get("InitiatorName", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                    if (initiatorNameElement != null)
+                                }
+                                
+                                XElement updatedSequenceElement = acrChangeListElement.Element(XName.Get("Updated", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                if (updatedSequenceElement != null)
+                                {
+                                    foreach (XElement updatedElement in updatedSequenceElement.Elements(XName.Get("AccessControlRecord", "http://windowscloudbackup.com/CiS/V2013_03")))
                                     {
-                                        string initiatorNameInstance = initiatorNameElement.Value;
-                                        accessControlRecordInstance.InitiatorName = initiatorNameInstance;
-                                    }
-                                    
-                                    XElement volumeCountElement = addedElement.Element(XName.Get("VolumeCount", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                    if (volumeCountElement != null)
-                                    {
-                                        int volumeCountInstance = int.Parse(volumeCountElement.Value, CultureInfo.InvariantCulture);
-                                        accessControlRecordInstance.VolumeCount = volumeCountInstance;
-                                    }
-                                    
-                                    XElement globalIdElement = addedElement.Element(XName.Get("GlobalId", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                    if (globalIdElement != null)
-                                    {
-                                        string globalIdInstance = globalIdElement.Value;
-                                        accessControlRecordInstance.GlobalId = globalIdInstance;
-                                    }
-                                    
-                                    XElement operationInProgressElement = addedElement.Element(XName.Get("OperationInProgress", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                    if (operationInProgressElement != null)
-                                    {
-                                        OperationInProgress operationInProgressInstance = ((OperationInProgress)Enum.Parse(typeof(OperationInProgress), operationInProgressElement.Value, true));
-                                        accessControlRecordInstance.OperationInProgress = operationInProgressInstance;
+                                        AccessControlRecord accessControlRecordInstance2 = new AccessControlRecord();
+                                        acrChangeListInstance.Updated.Add(accessControlRecordInstance2);
+                                        
+                                        XElement instanceIdElement2 = updatedElement.Element(XName.Get("InstanceId", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                        if (instanceIdElement2 != null)
+                                        {
+                                            string instanceIdInstance2 = instanceIdElement2.Value;
+                                            accessControlRecordInstance2.InstanceId = instanceIdInstance2;
+                                        }
+                                        
+                                        XElement nameElement2 = updatedElement.Element(XName.Get("Name", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                        if (nameElement2 != null)
+                                        {
+                                            string nameInstance2 = nameElement2.Value;
+                                            accessControlRecordInstance2.Name = nameInstance2;
+                                        }
+                                        
+                                        XElement initiatorNameElement2 = updatedElement.Element(XName.Get("InitiatorName", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                        if (initiatorNameElement2 != null)
+                                        {
+                                            string initiatorNameInstance2 = initiatorNameElement2.Value;
+                                            accessControlRecordInstance2.InitiatorName = initiatorNameInstance2;
+                                        }
+                                        
+                                        XElement volumeCountElement2 = updatedElement.Element(XName.Get("VolumeCount", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                        if (volumeCountElement2 != null)
+                                        {
+                                            int volumeCountInstance2 = int.Parse(volumeCountElement2.Value, CultureInfo.InvariantCulture);
+                                            accessControlRecordInstance2.VolumeCount = volumeCountInstance2;
+                                        }
+                                        
+                                        XElement globalIdElement2 = updatedElement.Element(XName.Get("GlobalId", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                        if (globalIdElement2 != null)
+                                        {
+                                            string globalIdInstance2 = globalIdElement2.Value;
+                                            accessControlRecordInstance2.GlobalId = globalIdInstance2;
+                                        }
+                                        
+                                        XElement operationInProgressElement2 = updatedElement.Element(XName.Get("OperationInProgress", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                        if (operationInProgressElement2 != null)
+                                        {
+                                            OperationInProgress operationInProgressInstance2 = ((OperationInProgress)Enum.Parse(typeof(OperationInProgress), operationInProgressElement2.Value, true));
+                                            accessControlRecordInstance2.OperationInProgress = operationInProgressInstance2;
+                                        }
                                     }
                                 }
                             }
                             
-                            XElement deletedSequenceElement = acrChangeListElement.Element(XName.Get("Deleted", "http://windowscloudbackup.com/CiS/V2013_03"));
-                            if (deletedSequenceElement != null)
+                            XElement credentialChangeListElement = serviceConfigurationBaseElement.Element(XName.Get("CredentialChangeList", "http://windowscloudbackup.com/CiS/V2013_03"));
+                            if (credentialChangeListElement != null)
                             {
-                                foreach (XElement deletedElement in deletedSequenceElement.Elements(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/Arrays")))
+                                SacChangeListResponse credentialChangeListInstance = new SacChangeListResponse();
+                                result.CredentialChangeList = credentialChangeListInstance;
+                                
+                                XElement addedSequenceElement2 = credentialChangeListElement.Element(XName.Get("Added", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                if (addedSequenceElement2 != null)
                                 {
-                                    acrChangeListInstance.Deleted.Add(deletedElement.Value);
+                                    foreach (XElement addedElement2 in addedSequenceElement2.Elements(XName.Get("StorageAccountCredential", "http://windowscloudbackup.com/CiS/V2013_03")))
+                                    {
+                                        StorageAccountCredentialResponse storageAccountCredentialInstance = new StorageAccountCredentialResponse();
+                                        credentialChangeListInstance.Added.Add(storageAccountCredentialInstance);
+                                        
+                                        XElement instanceIdElement3 = addedElement2.Element(XName.Get("InstanceId", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                        if (instanceIdElement3 != null)
+                                        {
+                                            string instanceIdInstance3 = instanceIdElement3.Value;
+                                            storageAccountCredentialInstance.InstanceId = instanceIdInstance3;
+                                        }
+                                        
+                                        XElement nameElement3 = addedElement2.Element(XName.Get("Name", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                        if (nameElement3 != null)
+                                        {
+                                            string nameInstance3 = nameElement3.Value;
+                                            storageAccountCredentialInstance.Name = nameInstance3;
+                                        }
+                                        
+                                        XElement operationInProgressElement3 = addedElement2.Element(XName.Get("OperationInProgress", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                        if (operationInProgressElement3 != null)
+                                        {
+                                            OperationInProgress operationInProgressInstance3 = ((OperationInProgress)Enum.Parse(typeof(OperationInProgress), operationInProgressElement3.Value, true));
+                                            storageAccountCredentialInstance.OperationInProgress = operationInProgressInstance3;
+                                        }
+                                        
+                                        XElement cloudTypeElement = addedElement2.Element(XName.Get("CloudType", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                        if (cloudTypeElement != null)
+                                        {
+                                            CloudType cloudTypeInstance = ((CloudType)Enum.Parse(typeof(CloudType), cloudTypeElement.Value, true));
+                                            storageAccountCredentialInstance.CloudType = cloudTypeInstance;
+                                        }
+                                        
+                                        XElement hostnameElement = addedElement2.Element(XName.Get("Hostname", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                        if (hostnameElement != null)
+                                        {
+                                            string hostnameInstance = hostnameElement.Value;
+                                            storageAccountCredentialInstance.Hostname = hostnameInstance;
+                                        }
+                                        
+                                        XElement isDefaultElement = addedElement2.Element(XName.Get("IsDefault", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                        if (isDefaultElement != null)
+                                        {
+                                            bool isDefaultInstance = bool.Parse(isDefaultElement.Value);
+                                            storageAccountCredentialInstance.IsDefault = isDefaultInstance;
+                                        }
+                                        
+                                        XElement locationElement = addedElement2.Element(XName.Get("Location", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                        if (locationElement != null)
+                                        {
+                                            string locationInstance = locationElement.Value;
+                                            storageAccountCredentialInstance.Location = locationInstance;
+                                        }
+                                        
+                                        XElement loginElement = addedElement2.Element(XName.Get("Login", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                        if (loginElement != null)
+                                        {
+                                            string loginInstance = loginElement.Value;
+                                            storageAccountCredentialInstance.Login = loginInstance;
+                                        }
+                                        
+                                        XElement passwordElement = addedElement2.Element(XName.Get("Password", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                        if (passwordElement != null)
+                                        {
+                                            string passwordInstance = passwordElement.Value;
+                                            storageAccountCredentialInstance.Password = passwordInstance;
+                                        }
+                                        
+                                        XElement useSSLElement = addedElement2.Element(XName.Get("UseSSL", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                        if (useSSLElement != null)
+                                        {
+                                            bool useSSLInstance = bool.Parse(useSSLElement.Value);
+                                            storageAccountCredentialInstance.UseSSL = useSSLInstance;
+                                        }
+                                        
+                                        XElement volumeCountElement3 = addedElement2.Element(XName.Get("VolumeCount", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                        if (volumeCountElement3 != null)
+                                        {
+                                            int volumeCountInstance3 = int.Parse(volumeCountElement3.Value, CultureInfo.InvariantCulture);
+                                            storageAccountCredentialInstance.VolumeCount = volumeCountInstance3;
+                                        }
+                                        
+                                        XElement passwordEncryptionCertThumbprintElement = addedElement2.Element(XName.Get("PasswordEncryptionCertThumbprint", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                        if (passwordEncryptionCertThumbprintElement != null)
+                                        {
+                                            bool isNil = false;
+                                            XAttribute nilAttribute = passwordEncryptionCertThumbprintElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
+                                            if (nilAttribute != null)
+                                            {
+                                                isNil = nilAttribute.Value == "true";
+                                            }
+                                            if (isNil == false)
+                                            {
+                                                string passwordEncryptionCertThumbprintInstance = passwordEncryptionCertThumbprintElement.Value;
+                                                storageAccountCredentialInstance.PasswordEncryptionCertThumbprint = passwordEncryptionCertThumbprintInstance;
+                                            }
+                                        }
+                                    }
+                                }
+                                
+                                XElement deletedSequenceElement2 = credentialChangeListElement.Element(XName.Get("Deleted", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                if (deletedSequenceElement2 != null)
+                                {
+                                    foreach (XElement deletedElement2 in deletedSequenceElement2.Elements(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/Arrays")))
+                                    {
+                                        credentialChangeListInstance.Deleted.Add(deletedElement2.Value);
+                                    }
+                                }
+                                
+                                XElement updatedSequenceElement2 = credentialChangeListElement.Element(XName.Get("Updated", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                if (updatedSequenceElement2 != null)
+                                {
+                                    foreach (XElement updatedElement2 in updatedSequenceElement2.Elements(XName.Get("StorageAccountCredential", "http://windowscloudbackup.com/CiS/V2013_03")))
+                                    {
+                                        StorageAccountCredentialResponse storageAccountCredentialInstance2 = new StorageAccountCredentialResponse();
+                                        credentialChangeListInstance.Updated.Add(storageAccountCredentialInstance2);
+                                        
+                                        XElement instanceIdElement4 = updatedElement2.Element(XName.Get("InstanceId", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                        if (instanceIdElement4 != null)
+                                        {
+                                            string instanceIdInstance4 = instanceIdElement4.Value;
+                                            storageAccountCredentialInstance2.InstanceId = instanceIdInstance4;
+                                        }
+                                        
+                                        XElement nameElement4 = updatedElement2.Element(XName.Get("Name", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                        if (nameElement4 != null)
+                                        {
+                                            string nameInstance4 = nameElement4.Value;
+                                            storageAccountCredentialInstance2.Name = nameInstance4;
+                                        }
+                                        
+                                        XElement operationInProgressElement4 = updatedElement2.Element(XName.Get("OperationInProgress", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                        if (operationInProgressElement4 != null)
+                                        {
+                                            OperationInProgress operationInProgressInstance4 = ((OperationInProgress)Enum.Parse(typeof(OperationInProgress), operationInProgressElement4.Value, true));
+                                            storageAccountCredentialInstance2.OperationInProgress = operationInProgressInstance4;
+                                        }
+                                        
+                                        XElement cloudTypeElement2 = updatedElement2.Element(XName.Get("CloudType", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                        if (cloudTypeElement2 != null)
+                                        {
+                                            CloudType cloudTypeInstance2 = ((CloudType)Enum.Parse(typeof(CloudType), cloudTypeElement2.Value, true));
+                                            storageAccountCredentialInstance2.CloudType = cloudTypeInstance2;
+                                        }
+                                        
+                                        XElement hostnameElement2 = updatedElement2.Element(XName.Get("Hostname", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                        if (hostnameElement2 != null)
+                                        {
+                                            string hostnameInstance2 = hostnameElement2.Value;
+                                            storageAccountCredentialInstance2.Hostname = hostnameInstance2;
+                                        }
+                                        
+                                        XElement isDefaultElement2 = updatedElement2.Element(XName.Get("IsDefault", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                        if (isDefaultElement2 != null)
+                                        {
+                                            bool isDefaultInstance2 = bool.Parse(isDefaultElement2.Value);
+                                            storageAccountCredentialInstance2.IsDefault = isDefaultInstance2;
+                                        }
+                                        
+                                        XElement locationElement2 = updatedElement2.Element(XName.Get("Location", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                        if (locationElement2 != null)
+                                        {
+                                            string locationInstance2 = locationElement2.Value;
+                                            storageAccountCredentialInstance2.Location = locationInstance2;
+                                        }
+                                        
+                                        XElement loginElement2 = updatedElement2.Element(XName.Get("Login", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                        if (loginElement2 != null)
+                                        {
+                                            string loginInstance2 = loginElement2.Value;
+                                            storageAccountCredentialInstance2.Login = loginInstance2;
+                                        }
+                                        
+                                        XElement passwordElement2 = updatedElement2.Element(XName.Get("Password", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                        if (passwordElement2 != null)
+                                        {
+                                            string passwordInstance2 = passwordElement2.Value;
+                                            storageAccountCredentialInstance2.Password = passwordInstance2;
+                                        }
+                                        
+                                        XElement useSSLElement2 = updatedElement2.Element(XName.Get("UseSSL", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                        if (useSSLElement2 != null)
+                                        {
+                                            bool useSSLInstance2 = bool.Parse(useSSLElement2.Value);
+                                            storageAccountCredentialInstance2.UseSSL = useSSLInstance2;
+                                        }
+                                        
+                                        XElement volumeCountElement4 = updatedElement2.Element(XName.Get("VolumeCount", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                        if (volumeCountElement4 != null)
+                                        {
+                                            int volumeCountInstance4 = int.Parse(volumeCountElement4.Value, CultureInfo.InvariantCulture);
+                                            storageAccountCredentialInstance2.VolumeCount = volumeCountInstance4;
+                                        }
+                                        
+                                        XElement passwordEncryptionCertThumbprintElement2 = updatedElement2.Element(XName.Get("PasswordEncryptionCertThumbprint", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                        if (passwordEncryptionCertThumbprintElement2 != null)
+                                        {
+                                            bool isNil2 = false;
+                                            XAttribute nilAttribute2 = passwordEncryptionCertThumbprintElement2.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
+                                            if (nilAttribute2 != null)
+                                            {
+                                                isNil2 = nilAttribute2.Value == "true";
+                                            }
+                                            if (isNil2 == false)
+                                            {
+                                                string passwordEncryptionCertThumbprintInstance2 = passwordEncryptionCertThumbprintElement2.Value;
+                                                storageAccountCredentialInstance2.PasswordEncryptionCertThumbprint = passwordEncryptionCertThumbprintInstance2;
+                                            }
+                                        }
+                                    }
                                 }
                             }
                             
-                            XElement updatedSequenceElement = acrChangeListElement.Element(XName.Get("Updated", "http://windowscloudbackup.com/CiS/V2013_03"));
-                            if (updatedSequenceElement != null)
+                            XElement operationInProgressElement5 = serviceConfigurationBaseElement.Element(XName.Get("OperationInProgress", "http://windowscloudbackup.com/CiS/V2013_03"));
+                            if (operationInProgressElement5 != null)
                             {
-                                foreach (XElement updatedElement in updatedSequenceElement.Elements(XName.Get("AccessControlRecord", "http://windowscloudbackup.com/CiS/V2013_03")))
-                                {
-                                    AccessControlRecord accessControlRecordInstance2 = new AccessControlRecord();
-                                    acrChangeListInstance.Updated.Add(accessControlRecordInstance2);
-                                    
-                                    XElement instanceIdElement2 = updatedElement.Element(XName.Get("InstanceId", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                    if (instanceIdElement2 != null)
-                                    {
-                                        string instanceIdInstance2 = instanceIdElement2.Value;
-                                        accessControlRecordInstance2.InstanceId = instanceIdInstance2;
-                                    }
-                                    
-                                    XElement nameElement2 = updatedElement.Element(XName.Get("Name", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                    if (nameElement2 != null)
-                                    {
-                                        string nameInstance2 = nameElement2.Value;
-                                        accessControlRecordInstance2.Name = nameInstance2;
-                                    }
-                                    
-                                    XElement initiatorNameElement2 = updatedElement.Element(XName.Get("InitiatorName", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                    if (initiatorNameElement2 != null)
-                                    {
-                                        string initiatorNameInstance2 = initiatorNameElement2.Value;
-                                        accessControlRecordInstance2.InitiatorName = initiatorNameInstance2;
-                                    }
-                                    
-                                    XElement volumeCountElement2 = updatedElement.Element(XName.Get("VolumeCount", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                    if (volumeCountElement2 != null)
-                                    {
-                                        int volumeCountInstance2 = int.Parse(volumeCountElement2.Value, CultureInfo.InvariantCulture);
-                                        accessControlRecordInstance2.VolumeCount = volumeCountInstance2;
-                                    }
-                                    
-                                    XElement globalIdElement2 = updatedElement.Element(XName.Get("GlobalId", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                    if (globalIdElement2 != null)
-                                    {
-                                        string globalIdInstance2 = globalIdElement2.Value;
-                                        accessControlRecordInstance2.GlobalId = globalIdInstance2;
-                                    }
-                                    
-                                    XElement operationInProgressElement2 = updatedElement.Element(XName.Get("OperationInProgress", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                    if (operationInProgressElement2 != null)
-                                    {
-                                        OperationInProgress operationInProgressInstance2 = ((OperationInProgress)Enum.Parse(typeof(OperationInProgress), operationInProgressElement2.Value, true));
-                                        accessControlRecordInstance2.OperationInProgress = operationInProgressInstance2;
-                                    }
-                                }
+                                bool operationInProgressInstance5 = bool.Parse(operationInProgressElement5.Value);
+                                result.OperationInProgress = operationInProgressInstance5;
                             }
                         }
                         
-                        XElement credentialChangeListElement = serviceConfigurationBaseElement.Element(XName.Get("CredentialChangeList", "http://windowscloudbackup.com/CiS/V2013_03"));
-                        if (credentialChangeListElement != null)
-                        {
-                            SacChangeListResponse credentialChangeListInstance = new SacChangeListResponse();
-                            result.CredentialChangeList = credentialChangeListInstance;
-                            
-                            XElement addedSequenceElement2 = credentialChangeListElement.Element(XName.Get("Added", "http://windowscloudbackup.com/CiS/V2013_03"));
-                            if (addedSequenceElement2 != null)
-                            {
-                                foreach (XElement addedElement2 in addedSequenceElement2.Elements(XName.Get("StorageAccountCredential", "http://windowscloudbackup.com/CiS/V2013_03")))
-                                {
-                                    StorageAccountCredentialResponse storageAccountCredentialInstance = new StorageAccountCredentialResponse();
-                                    credentialChangeListInstance.Added.Add(storageAccountCredentialInstance);
-                                    
-                                    XElement instanceIdElement3 = addedElement2.Element(XName.Get("InstanceId", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                    if (instanceIdElement3 != null)
-                                    {
-                                        string instanceIdInstance3 = instanceIdElement3.Value;
-                                        storageAccountCredentialInstance.InstanceId = instanceIdInstance3;
-                                    }
-                                    
-                                    XElement nameElement3 = addedElement2.Element(XName.Get("Name", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                    if (nameElement3 != null)
-                                    {
-                                        string nameInstance3 = nameElement3.Value;
-                                        storageAccountCredentialInstance.Name = nameInstance3;
-                                    }
-                                    
-                                    XElement operationInProgressElement3 = addedElement2.Element(XName.Get("OperationInProgress", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                    if (operationInProgressElement3 != null)
-                                    {
-                                        OperationInProgress operationInProgressInstance3 = ((OperationInProgress)Enum.Parse(typeof(OperationInProgress), operationInProgressElement3.Value, true));
-                                        storageAccountCredentialInstance.OperationInProgress = operationInProgressInstance3;
-                                    }
-                                    
-                                    XElement cloudTypeElement = addedElement2.Element(XName.Get("CloudType", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                    if (cloudTypeElement != null)
-                                    {
-                                        CloudType cloudTypeInstance = ((CloudType)Enum.Parse(typeof(CloudType), cloudTypeElement.Value, true));
-                                        storageAccountCredentialInstance.CloudType = cloudTypeInstance;
-                                    }
-                                    
-                                    XElement hostnameElement = addedElement2.Element(XName.Get("Hostname", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                    if (hostnameElement != null)
-                                    {
-                                        string hostnameInstance = hostnameElement.Value;
-                                        storageAccountCredentialInstance.Hostname = hostnameInstance;
-                                    }
-                                    
-                                    XElement isDefaultElement = addedElement2.Element(XName.Get("IsDefault", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                    if (isDefaultElement != null)
-                                    {
-                                        bool isDefaultInstance = bool.Parse(isDefaultElement.Value);
-                                        storageAccountCredentialInstance.IsDefault = isDefaultInstance;
-                                    }
-                                    
-                                    XElement locationElement = addedElement2.Element(XName.Get("Location", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                    if (locationElement != null)
-                                    {
-                                        string locationInstance = locationElement.Value;
-                                        storageAccountCredentialInstance.Location = locationInstance;
-                                    }
-                                    
-                                    XElement loginElement = addedElement2.Element(XName.Get("Login", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                    if (loginElement != null)
-                                    {
-                                        string loginInstance = loginElement.Value;
-                                        storageAccountCredentialInstance.Login = loginInstance;
-                                    }
-                                    
-                                    XElement passwordElement = addedElement2.Element(XName.Get("Password", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                    if (passwordElement != null)
-                                    {
-                                        string passwordInstance = passwordElement.Value;
-                                        storageAccountCredentialInstance.Password = passwordInstance;
-                                    }
-                                    
-                                    XElement useSSLElement = addedElement2.Element(XName.Get("UseSSL", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                    if (useSSLElement != null)
-                                    {
-                                        bool useSSLInstance = bool.Parse(useSSLElement.Value);
-                                        storageAccountCredentialInstance.UseSSL = useSSLInstance;
-                                    }
-                                    
-                                    XElement volumeCountElement3 = addedElement2.Element(XName.Get("VolumeCount", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                    if (volumeCountElement3 != null)
-                                    {
-                                        int volumeCountInstance3 = int.Parse(volumeCountElement3.Value, CultureInfo.InvariantCulture);
-                                        storageAccountCredentialInstance.VolumeCount = volumeCountInstance3;
-                                    }
-                                    
-                                    XElement passwordEncryptionCertThumbprintElement = addedElement2.Element(XName.Get("PasswordEncryptionCertThumbprint", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                    if (passwordEncryptionCertThumbprintElement != null)
-                                    {
-                                        bool isNil = false;
-                                        XAttribute nilAttribute = passwordEncryptionCertThumbprintElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                        if (nilAttribute != null)
-                                        {
-                                            isNil = nilAttribute.Value == "true";
-                                        }
-                                        if (isNil == false)
-                                        {
-                                            string passwordEncryptionCertThumbprintInstance = passwordEncryptionCertThumbprintElement.Value;
-                                            storageAccountCredentialInstance.PasswordEncryptionCertThumbprint = passwordEncryptionCertThumbprintInstance;
-                                        }
-                                    }
-                                }
-                            }
-                            
-                            XElement deletedSequenceElement2 = credentialChangeListElement.Element(XName.Get("Deleted", "http://windowscloudbackup.com/CiS/V2013_03"));
-                            if (deletedSequenceElement2 != null)
-                            {
-                                foreach (XElement deletedElement2 in deletedSequenceElement2.Elements(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/Arrays")))
-                                {
-                                    credentialChangeListInstance.Deleted.Add(deletedElement2.Value);
-                                }
-                            }
-                            
-                            XElement updatedSequenceElement2 = credentialChangeListElement.Element(XName.Get("Updated", "http://windowscloudbackup.com/CiS/V2013_03"));
-                            if (updatedSequenceElement2 != null)
-                            {
-                                foreach (XElement updatedElement2 in updatedSequenceElement2.Elements(XName.Get("StorageAccountCredential", "http://windowscloudbackup.com/CiS/V2013_03")))
-                                {
-                                    StorageAccountCredentialResponse storageAccountCredentialInstance2 = new StorageAccountCredentialResponse();
-                                    credentialChangeListInstance.Updated.Add(storageAccountCredentialInstance2);
-                                    
-                                    XElement instanceIdElement4 = updatedElement2.Element(XName.Get("InstanceId", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                    if (instanceIdElement4 != null)
-                                    {
-                                        string instanceIdInstance4 = instanceIdElement4.Value;
-                                        storageAccountCredentialInstance2.InstanceId = instanceIdInstance4;
-                                    }
-                                    
-                                    XElement nameElement4 = updatedElement2.Element(XName.Get("Name", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                    if (nameElement4 != null)
-                                    {
-                                        string nameInstance4 = nameElement4.Value;
-                                        storageAccountCredentialInstance2.Name = nameInstance4;
-                                    }
-                                    
-                                    XElement operationInProgressElement4 = updatedElement2.Element(XName.Get("OperationInProgress", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                    if (operationInProgressElement4 != null)
-                                    {
-                                        OperationInProgress operationInProgressInstance4 = ((OperationInProgress)Enum.Parse(typeof(OperationInProgress), operationInProgressElement4.Value, true));
-                                        storageAccountCredentialInstance2.OperationInProgress = operationInProgressInstance4;
-                                    }
-                                    
-                                    XElement cloudTypeElement2 = updatedElement2.Element(XName.Get("CloudType", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                    if (cloudTypeElement2 != null)
-                                    {
-                                        CloudType cloudTypeInstance2 = ((CloudType)Enum.Parse(typeof(CloudType), cloudTypeElement2.Value, true));
-                                        storageAccountCredentialInstance2.CloudType = cloudTypeInstance2;
-                                    }
-                                    
-                                    XElement hostnameElement2 = updatedElement2.Element(XName.Get("Hostname", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                    if (hostnameElement2 != null)
-                                    {
-                                        string hostnameInstance2 = hostnameElement2.Value;
-                                        storageAccountCredentialInstance2.Hostname = hostnameInstance2;
-                                    }
-                                    
-                                    XElement isDefaultElement2 = updatedElement2.Element(XName.Get("IsDefault", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                    if (isDefaultElement2 != null)
-                                    {
-                                        bool isDefaultInstance2 = bool.Parse(isDefaultElement2.Value);
-                                        storageAccountCredentialInstance2.IsDefault = isDefaultInstance2;
-                                    }
-                                    
-                                    XElement locationElement2 = updatedElement2.Element(XName.Get("Location", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                    if (locationElement2 != null)
-                                    {
-                                        string locationInstance2 = locationElement2.Value;
-                                        storageAccountCredentialInstance2.Location = locationInstance2;
-                                    }
-                                    
-                                    XElement loginElement2 = updatedElement2.Element(XName.Get("Login", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                    if (loginElement2 != null)
-                                    {
-                                        string loginInstance2 = loginElement2.Value;
-                                        storageAccountCredentialInstance2.Login = loginInstance2;
-                                    }
-                                    
-                                    XElement passwordElement2 = updatedElement2.Element(XName.Get("Password", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                    if (passwordElement2 != null)
-                                    {
-                                        string passwordInstance2 = passwordElement2.Value;
-                                        storageAccountCredentialInstance2.Password = passwordInstance2;
-                                    }
-                                    
-                                    XElement useSSLElement2 = updatedElement2.Element(XName.Get("UseSSL", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                    if (useSSLElement2 != null)
-                                    {
-                                        bool useSSLInstance2 = bool.Parse(useSSLElement2.Value);
-                                        storageAccountCredentialInstance2.UseSSL = useSSLInstance2;
-                                    }
-                                    
-                                    XElement volumeCountElement4 = updatedElement2.Element(XName.Get("VolumeCount", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                    if (volumeCountElement4 != null)
-                                    {
-                                        int volumeCountInstance4 = int.Parse(volumeCountElement4.Value, CultureInfo.InvariantCulture);
-                                        storageAccountCredentialInstance2.VolumeCount = volumeCountInstance4;
-                                    }
-                                    
-                                    XElement passwordEncryptionCertThumbprintElement2 = updatedElement2.Element(XName.Get("PasswordEncryptionCertThumbprint", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                    if (passwordEncryptionCertThumbprintElement2 != null)
-                                    {
-                                        bool isNil2 = false;
-                                        XAttribute nilAttribute2 = passwordEncryptionCertThumbprintElement2.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                        if (nilAttribute2 != null)
-                                        {
-                                            isNil2 = nilAttribute2.Value == "true";
-                                        }
-                                        if (isNil2 == false)
-                                        {
-                                            string passwordEncryptionCertThumbprintInstance2 = passwordEncryptionCertThumbprintElement2.Value;
-                                            storageAccountCredentialInstance2.PasswordEncryptionCertThumbprint = passwordEncryptionCertThumbprintInstance2;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        
-                        XElement operationInProgressElement5 = serviceConfigurationBaseElement.Element(XName.Get("OperationInProgress", "http://windowscloudbackup.com/CiS/V2013_03"));
-                        if (operationInProgressElement5 != null)
-                        {
-                            bool operationInProgressInstance5 = bool.Parse(operationInProgressElement5.Value);
-                            result.OperationInProgress = operationInProgressInstance5;
-                        }
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1123,7 +1110,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }

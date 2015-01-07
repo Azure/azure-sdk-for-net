@@ -28,17 +28,13 @@ using Microsoft.WindowsAzure.Management.StorSimple.Models;
 namespace Microsoft.WindowsAzure.Management.StorSimple
 {
     /// <summary>
-    /// All Operations related to Service configurations  (see
-    /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx for
-    /// more information)
+    /// All Operations related to Service configurations
     /// </summary>
     public partial interface IServiceConfigurationOperations
     {
         /// <summary>
         /// The Begin Creating Storage Account operation creates a new storage
-        /// account in Azure.  (see
-        /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx
-        /// for more information)
+        /// account in Azure.
         /// </summary>
         /// <param name='serviceConfiguration'>
         /// Parameters supplied to the Begin Creating Storage Account operation.

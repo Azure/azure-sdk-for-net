@@ -27,20 +27,16 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
 using Microsoft.WindowsAzure.Management.StorSimple;
 using Microsoft.WindowsAzure.Management.StorSimple.Models;
 
 namespace Microsoft.WindowsAzure.Management.StorSimple
 {
     /// <summary>
-    /// All Operations related to Crypto keys  (see
-    /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx for
-    /// more information)
+    /// All Operations related to Crypto keys
     /// </summary>
-    internal partial class ResourceEncryptionKeyOperations : IServiceOperations<StorSimpleManagementClient>, Microsoft.WindowsAzure.Management.StorSimple.IResourceEncryptionKeyOperations
+    internal partial class ResourceEncryptionKeyOperations : IServiceOperations<StorSimpleManagementClient>, IResourceEncryptionKeyOperations
     {
         /// <summary>
         /// Initializes a new instance of the ResourceEncryptionKeyOperations
@@ -74,7 +70,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         /// <returns>
         /// The response model for Resource Encryption Key.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.StorSimple.Models.GetResourceEncryptionKeyResponse> GetAsync(CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<GetResourceEncryptionKeyResponse> GetAsync(CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             if (customRequestHeaders == null)
@@ -83,18 +79,18 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
-                Tracing.Enter(invocationId, this, "GetAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/" + this.Client.ResourceNamespace.Trim() + "/~/CiSVault/" + this.Client.ResourceName.Trim() + "/stamps/" + this.Client.CisStampId.Trim() + "/secretmanagement/publickey?";
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/cloudservices/" + Uri.EscapeDataString(this.Client.CloudServiceName) + "/resources/" + Uri.EscapeDataString(this.Client.ResourceNamespace) + "/~/CiSVault/" + Uri.EscapeDataString(this.Client.ResourceName) + "/stamps/" + Uri.EscapeDataString(this.Client.CisStampId) + "/secretmanagement/publickey?";
             url = url + "api-version=2014-01-01.1.0";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -133,13 +129,13 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -148,7 +144,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -156,48 +152,51 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                     // Create Result
                     GetResourceEncryptionKeyResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new GetResourceEncryptionKeyResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement resourceEncryptionKeysEncryptedElement = responseDoc.Element(XName.Get("ResourceEncryptionKeysEncrypted", "http://windowscloudbackup.com/CiS/V2013_03"));
-                    if (resourceEncryptionKeysEncryptedElement != null)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        ResourceEncryptionKeys resourceEncryptionKeysEncryptedInstance = new ResourceEncryptionKeys();
-                        result.ResourceEncryptionKeys = resourceEncryptionKeysEncryptedInstance;
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new GetResourceEncryptionKeyResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
                         
-                        XElement encodedEncryptedPublicKeyElement = resourceEncryptionKeysEncryptedElement.Element(XName.Get("EncodedEncryptedPublicKey", "http://windowscloudbackup.com/CiS/V2013_03"));
-                        if (encodedEncryptedPublicKeyElement != null)
+                        XElement resourceEncryptionKeysEncryptedElement = responseDoc.Element(XName.Get("ResourceEncryptionKeysEncrypted", "http://windowscloudbackup.com/CiS/V2013_03"));
+                        if (resourceEncryptionKeysEncryptedElement != null)
                         {
-                            string encodedEncryptedPublicKeyInstance = encodedEncryptedPublicKeyElement.Value;
-                            resourceEncryptionKeysEncryptedInstance.EncodedEncryptedPublicKey = encodedEncryptedPublicKeyInstance;
-                        }
-                        
-                        XElement resourceNameElement = resourceEncryptionKeysEncryptedElement.Element(XName.Get("ResourceName", "http://windowscloudbackup.com/CiS/V2013_03"));
-                        if (resourceNameElement != null)
-                        {
-                            bool isNil = false;
-                            XAttribute nilAttribute = resourceNameElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                            if (nilAttribute != null)
+                            ResourceEncryptionKeys resourceEncryptionKeysEncryptedInstance = new ResourceEncryptionKeys();
+                            result.ResourceEncryptionKeys = resourceEncryptionKeysEncryptedInstance;
+                            
+                            XElement encodedEncryptedPublicKeyElement = resourceEncryptionKeysEncryptedElement.Element(XName.Get("EncodedEncryptedPublicKey", "http://windowscloudbackup.com/CiS/V2013_03"));
+                            if (encodedEncryptedPublicKeyElement != null)
                             {
-                                isNil = nilAttribute.Value == "true";
+                                string encodedEncryptedPublicKeyInstance = encodedEncryptedPublicKeyElement.Value;
+                                resourceEncryptionKeysEncryptedInstance.EncodedEncryptedPublicKey = encodedEncryptedPublicKeyInstance;
                             }
-                            if (isNil == false)
+                            
+                            XElement resourceNameElement = resourceEncryptionKeysEncryptedElement.Element(XName.Get("ResourceName", "http://windowscloudbackup.com/CiS/V2013_03"));
+                            if (resourceNameElement != null)
                             {
-                                string resourceNameInstance = resourceNameElement.Value;
-                                resourceEncryptionKeysEncryptedInstance.ResourceName = resourceNameInstance;
+                                bool isNil = false;
+                                XAttribute nilAttribute = resourceNameElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
+                                if (nilAttribute != null)
+                                {
+                                    isNil = nilAttribute.Value == "true";
+                                }
+                                if (isNil == false)
+                                {
+                                    string resourceNameInstance = resourceNameElement.Value;
+                                    resourceEncryptionKeysEncryptedInstance.ResourceName = resourceNameInstance;
+                                }
+                            }
+                            
+                            XElement thumbprintElement = resourceEncryptionKeysEncryptedElement.Element(XName.Get("Thumbprint", "http://windowscloudbackup.com/CiS/V2013_03"));
+                            if (thumbprintElement != null)
+                            {
+                                string thumbprintInstance = thumbprintElement.Value;
+                                resourceEncryptionKeysEncryptedInstance.Thumbprint = thumbprintInstance;
                             }
                         }
                         
-                        XElement thumbprintElement = resourceEncryptionKeysEncryptedElement.Element(XName.Get("Thumbprint", "http://windowscloudbackup.com/CiS/V2013_03"));
-                        if (thumbprintElement != null)
-                        {
-                            string thumbprintInstance = thumbprintElement.Value;
-                            resourceEncryptionKeysEncryptedInstance.Thumbprint = thumbprintInstance;
-                        }
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -206,7 +205,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }

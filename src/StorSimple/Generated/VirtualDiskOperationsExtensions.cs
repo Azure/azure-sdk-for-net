@@ -26,20 +26,15 @@ using System.Threading.Tasks;
 using Microsoft.WindowsAzure.Management.StorSimple;
 using Microsoft.WindowsAzure.Management.StorSimple.Models;
 
-namespace Microsoft.Azure
+namespace Microsoft.WindowsAzure.Management.StorSimple
 {
     /// <summary>
-    /// This is an RESTFul API to manage you StorSimple Objects  (see
-    /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx for
-    /// more information)
+    /// This is an RESTFul API to manage you StorSimple Objects
     /// </summary>
     public static partial class VirtualDiskOperationsExtensions
     {
         /// <summary>
-        /// The Begin Creating Storage Account operation creates a new storage
-        /// account in Azure.  (see
-        /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx
-        /// for more information)
+        /// The Begin Creating Volume operation creates a new volume.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -67,10 +62,7 @@ namespace Microsoft.Azure
         }
         
         /// <summary>
-        /// The Begin Creating Storage Account operation creates a new storage
-        /// account in Azure.  (see
-        /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx
-        /// for more information)
+        /// The Begin Creating Volume operation creates a new volume.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -94,10 +86,7 @@ namespace Microsoft.Azure
         }
         
         /// <summary>
-        /// The Begin Creating Storage Account operation creates a new storage
-        /// account in Azure.  (see
-        /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx
-        /// for more information)
+        /// The Begin Deleteing Volume operation deletes the specified volume.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -107,7 +96,7 @@ namespace Microsoft.Azure
         /// Required. device id
         /// </param>
         /// <param name='diskId'>
-        /// Required. Parameters supplied to the Create virtual disk operation.
+        /// Required. Instance id of the virtual disk to be deleted.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Required. The Custom Request Headers which client must use.
@@ -125,10 +114,7 @@ namespace Microsoft.Azure
         }
         
         /// <summary>
-        /// The Begin Creating Storage Account operation creates a new storage
-        /// account in Azure.  (see
-        /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx
-        /// for more information)
+        /// The Begin Deleteing Volume operation deletes the specified volume.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -138,7 +124,7 @@ namespace Microsoft.Azure
         /// Required. device id
         /// </param>
         /// <param name='diskId'>
-        /// Required. Parameters supplied to the Create virtual disk operation.
+        /// Required. Instance id of the virtual disk to be deleted.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Required. The Custom Request Headers which client must use.
@@ -152,10 +138,7 @@ namespace Microsoft.Azure
         }
         
         /// <summary>
-        /// The Begin Creating Storage Account operation creates a new storage
-        /// account in Azure.  (see
-        /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx
-        /// for more information)
+        /// The Begin updating Volume operation updates an existing volume.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -168,7 +151,7 @@ namespace Microsoft.Azure
         /// Required. disk id
         /// </param>
         /// <param name='diskDetails'>
-        /// Required. Parameters supplied to the Create virtual disk operation.
+        /// Required. Parameters supplied to the update virtual disk operation.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Required. The Custom Request Headers which client must use.
@@ -186,10 +169,7 @@ namespace Microsoft.Azure
         }
         
         /// <summary>
-        /// The Begin Creating Storage Account operation creates a new storage
-        /// account in Azure.  (see
-        /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx
-        /// for more information)
+        /// The Begin updating Volume operation updates an existing volume.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -202,7 +182,7 @@ namespace Microsoft.Azure
         /// Required. disk id
         /// </param>
         /// <param name='diskDetails'>
-        /// Required. Parameters supplied to the Create virtual disk operation.
+        /// Required. Parameters supplied to the update virtual disk operation.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Required. The Custom Request Headers which client must use.
@@ -412,7 +392,7 @@ namespace Microsoft.Azure
         /// Required. disk id
         /// </param>
         /// <param name='diskDetails'>
-        /// Required. Parameters supplied to the Create virtual disk operation.
+        /// Required. Parameters supplied to the update virtual disk operation.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Required. The Custom Request Headers which client must use.
@@ -440,7 +420,7 @@ namespace Microsoft.Azure
         /// Required. disk id
         /// </param>
         /// <param name='diskDetails'>
-        /// Required. Parameters supplied to the Create virtual disk operation.
+        /// Required. Parameters supplied to the update virtual disk operation.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Required. The Custom Request Headers which client must use.

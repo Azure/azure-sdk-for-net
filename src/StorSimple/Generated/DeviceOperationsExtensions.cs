@@ -26,12 +26,10 @@ using System.Threading.Tasks;
 using Microsoft.WindowsAzure.Management.StorSimple;
 using Microsoft.WindowsAzure.Management.StorSimple.Models;
 
-namespace Microsoft.Azure
+namespace Microsoft.WindowsAzure.Management.StorSimple
 {
     /// <summary>
-    /// This is an RESTFul API to manage you StorSimple Objects  (see
-    /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx for
-    /// more information)
+    /// This is an RESTFul API to manage you StorSimple Objects
     /// </summary>
     public static partial class DeviceOperationsExtensions
     {

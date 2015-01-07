@@ -23,16 +23,14 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.StorSimple;
 using Microsoft.WindowsAzure.Management.StorSimple.Models;
 
 namespace Microsoft.WindowsAzure.Management.StorSimple
 {
     /// <summary>
-    /// This is an RESTFul API to manage you StorSimple Objects  (see
-    /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx for
-    /// more information)
+    /// This is an RESTFul API to manage you StorSimple Objects
     /// </summary>
     public partial interface IStorSimpleManagementClient : IDisposable
     {
@@ -104,9 +102,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         }
         
         /// <summary>
-        /// All Operations related to Backup  (see
-        /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx
-        /// for more information)
+        /// All Operations related to Backup
         /// </summary>
         IBackupOperations Backup
         {
@@ -114,9 +110,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         }
         
         /// <summary>
-        /// All Operations related to Backup policies  (see
-        /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx
-        /// for more information)
+        /// All Operations related to Backup policies
         /// </summary>
         IBackupPolicyOperations BackupPolicy
         {
@@ -124,9 +118,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         }
         
         /// <summary>
-        /// All Operations related to Volume Containers  (see
-        /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx
-        /// for more information)
+        /// All Operations related to Volume Containers
         /// </summary>
         IDataContainerOperations DataContainer
         {
@@ -134,9 +126,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         }
         
         /// <summary>
-        /// All Operations related to Device Details  (see
-        /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx
-        /// for more information)
+        /// All Operations related to Device Details
         /// </summary>
         IDeviceDetailsOperations DeviceDetails
         {
@@ -144,9 +134,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         }
         
         /// <summary>
-        /// All Operations related to Devices  (see
-        /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx
-        /// for more information)
+        /// All Operations related to Devices
         /// </summary>
         IDeviceOperations Devices
         {
@@ -154,9 +142,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         }
         
         /// <summary>
-        /// All Operations related to iscsi connection  (see
-        /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx
-        /// for more information)
+        /// All Operations related to iscsi connection
         /// </summary>
         IIscsiConnectionDetailsOperations IscsiConnection
         {
@@ -164,9 +150,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         }
         
         /// <summary>
-        /// All Operations related to Crypto keys  (see
-        /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx
-        /// for more information)
+        /// All Operations related to Crypto keys
         /// </summary>
         IResourceEncryptionKeyOperations ResourceEncryptionKeys
         {
@@ -174,9 +158,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         }
         
         /// <summary>
-        /// All Operations related to Service configurations  (see
-        /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx
-        /// for more information)
+        /// All Operations related to Service configurations
         /// </summary>
         IServiceConfigurationOperations ServiceConfig
         {
@@ -184,9 +166,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         }
         
         /// <summary>
-        /// All Operations related to virtual disk  (see
-        /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx
-        /// for more information)
+        /// All Operations related to virtual disk
         /// </summary>
         IVirtualDiskOperations VirtualDisk
         {
@@ -197,9 +177,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         /// The Get Task Status returns the status of the specified task id.
         /// After calling an asynchronous task, you can call Get Task Status
         /// to determine whether the task has succeeded, failed, or is still
-        /// in progress.  (see
-        /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx
-        /// for more information)
+        /// in progress.
         /// </summary>
         /// <param name='taskId'>
         /// The task Id for the request you wish to track.

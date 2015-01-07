@@ -28,17 +28,13 @@ using Microsoft.WindowsAzure.Management.StorSimple.Models;
 namespace Microsoft.WindowsAzure.Management.StorSimple
 {
     /// <summary>
-    /// All Operations related to Backup policies  (see
-    /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx for
-    /// more information)
+    /// All Operations related to Backup policies
     /// </summary>
     public partial interface IBackupPolicyOperations
     {
         /// <summary>
         /// The BeginCreatingBackupPolicy operation creates a new backup policy
-        /// for this given volume with the given schedules.  (see
-        /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx
-        /// for more information)
+        /// for this given volume with the given schedules.
         /// </summary>
         /// <param name='deviceId'>
         /// The device id for which the call will be made.
@@ -58,10 +54,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         Task<TaskResponse> BeginCreatingBackupPolicyAsync(string deviceId, NewBackupPolicyConfig backupPolicy, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Begin deleting a backup policy represented by the policyId
-        /// provided.  (see
-        /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx
-        /// for more information)
+        /// Begin deleting a backup policy represented by the policyId provided.
         /// </summary>
         /// <param name='deviceId'>
         /// The device id for which the call will be made.
@@ -83,9 +76,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         /// <summary>
         /// The BeginUpdatingBackupPolicy operation updates a backup policy
         /// represented by policyId for this given volume with the given
-        /// schedules.  (see
-        /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx
-        /// for more information)
+        /// schedules.
         /// </summary>
         /// <param name='deviceId'>
         /// The device id for which the call will be made.

@@ -26,20 +26,16 @@ using System.Threading.Tasks;
 using Microsoft.WindowsAzure.Management.StorSimple;
 using Microsoft.WindowsAzure.Management.StorSimple.Models;
 
-namespace Microsoft.Azure
+namespace Microsoft.WindowsAzure.Management.StorSimple
 {
     /// <summary>
-    /// This is an RESTFul API to manage you StorSimple Objects  (see
-    /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx for
-    /// more information)
+    /// This is an RESTFul API to manage you StorSimple Objects
     /// </summary>
     public static partial class ServiceConfigurationOperationsExtensions
     {
         /// <summary>
         /// The Begin Creating Storage Account operation creates a new storage
-        /// account in Azure.  (see
-        /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx
-        /// for more information)
+        /// account in Azure.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -66,9 +62,7 @@ namespace Microsoft.Azure
         
         /// <summary>
         /// The Begin Creating Storage Account operation creates a new storage
-        /// account in Azure.  (see
-        /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx
-        /// for more information)
+        /// account in Azure.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the

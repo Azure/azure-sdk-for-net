@@ -26,20 +26,16 @@ using System.Threading.Tasks;
 using Microsoft.WindowsAzure.Management.StorSimple;
 using Microsoft.WindowsAzure.Management.StorSimple.Models;
 
-namespace Microsoft.Azure
+namespace Microsoft.WindowsAzure.Management.StorSimple
 {
     /// <summary>
-    /// This is an RESTFul API to manage you StorSimple Objects  (see
-    /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx for
-    /// more information)
+    /// This is an RESTFul API to manage you StorSimple Objects
     /// </summary>
     public static partial class DataContainerOperationsExtensions
     {
         /// <summary>
-        /// The Begin Creating Storage Account operation creates a new storage
-        /// account in Azure.  (see
-        /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx
-        /// for more information)
+        /// The Begin Creating Volume Container operation creates a new volume
+        /// container.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -49,8 +45,8 @@ namespace Microsoft.Azure
         /// Required. device id
         /// </param>
         /// <param name='containerDetails'>
-        /// Required. Parameters supplied to the Begin Creating Storage Account
-        /// operation.
+        /// Required. Parameters supplied to the Begin Creating Volume
+        /// Container operation.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Required. The Custom Request Headers which client must use.
@@ -68,10 +64,8 @@ namespace Microsoft.Azure
         }
         
         /// <summary>
-        /// The Begin Creating Storage Account operation creates a new storage
-        /// account in Azure.  (see
-        /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx
-        /// for more information)
+        /// The Begin Creating Volume Container operation creates a new volume
+        /// container.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -81,8 +75,8 @@ namespace Microsoft.Azure
         /// Required. device id
         /// </param>
         /// <param name='containerDetails'>
-        /// Required. Parameters supplied to the Begin Creating Storage Account
-        /// operation.
+        /// Required. Parameters supplied to the Begin Creating Volume
+        /// Container operation.
         /// </param>
         /// <param name='customRequestHeaders'>
         /// Required. The Custom Request Headers which client must use.
@@ -96,10 +90,8 @@ namespace Microsoft.Azure
         }
         
         /// <summary>
-        /// The Begin Creating Storage Account operation creates a new storage
-        /// account in Azure.  (see
-        /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx
-        /// for more information)
+        /// The Begin Deleting Volume Container operation deletes the specified
+        /// volume container.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -127,10 +119,8 @@ namespace Microsoft.Azure
         }
         
         /// <summary>
-        /// The Begin Creating Storage Account operation creates a new storage
-        /// account in Azure.  (see
-        /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx
-        /// for more information)
+        /// The Begin Deleting Volume Container operation deletes the specified
+        /// volume container.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -161,7 +151,7 @@ namespace Microsoft.Azure
         /// Required. device id
         /// </param>
         /// <param name='containerDetails'>
-        /// Required. Parameters supplied to the Create Storage Account
+        /// Required. Parameters supplied to the Create Volume Container
         /// operation.
         /// </param>
         /// <param name='customRequestHeaders'>
@@ -187,7 +177,7 @@ namespace Microsoft.Azure
         /// Required. device id
         /// </param>
         /// <param name='containerDetails'>
-        /// Required. Parameters supplied to the Create Storage Account
+        /// Required. Parameters supplied to the Create Volume Container
         /// operation.
         /// </param>
         /// <param name='customRequestHeaders'>

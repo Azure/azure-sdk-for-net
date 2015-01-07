@@ -21,7 +21,7 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.StorSimple.Models;
 
 namespace Microsoft.WindowsAzure.Management.StorSimple.Models
@@ -29,7 +29,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple.Models
     /// <summary>
     /// Info about the service configuration regarding the resource
     /// </summary>
-    public partial class ServiceConfigurationResponse : OperationResponse
+    public partial class ServiceConfigurationResponse : AzureOperationResponse
     {
         private AcrChangeList _acrChangeList;
         

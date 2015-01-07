@@ -30,20 +30,17 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Hyak.Common.Internals;
 using Microsoft.WindowsAzure.Management.StorSimple;
 using Microsoft.WindowsAzure.Management.StorSimple.Models;
 
 namespace Microsoft.WindowsAzure.Management.StorSimple
 {
     /// <summary>
-    /// All Operations related to Backup  (see
-    /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx for
-    /// more information)
+    /// All Operations related to Backup
     /// </summary>
-    internal partial class BackupOperations : IServiceOperations<StorSimpleManagementClient>, Microsoft.WindowsAzure.Management.StorSimple.IBackupOperations
+    internal partial class BackupOperations : IServiceOperations<StorSimpleManagementClient>, IBackupOperations
     {
         /// <summary>
         /// Initializes a new instance of the BackupOperations class.
@@ -69,9 +66,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         
         /// <summary>
         /// Begin a backup operation for the policyId and backupRequest
-        /// specified.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/hh264518.aspx
-        /// for more information)
+        /// specified.
         /// </summary>
         /// <param name='deviceId'>
         /// Required. The device id for which the call will be made.
@@ -91,7 +86,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         /// <returns>
         /// This is the Task Response for all Async Calls
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.StorSimple.Models.TaskResponse> BeginCreatingBackupAsync(string deviceId, string policyId, BackupNowRequest backupRequest, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<TaskResponse> BeginCreatingBackupAsync(string deviceId, string policyId, BackupNowRequest backupRequest, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             if (deviceId == null)
@@ -112,21 +107,21 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("deviceId", deviceId);
                 tracingParameters.Add("policyId", policyId);
                 tracingParameters.Add("backupRequest", backupRequest);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
-                Tracing.Enter(invocationId, this, "BeginCreatingBackupAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "BeginCreatingBackupAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/" + this.Client.ResourceNamespace.Trim() + "/~/CiSVault/" + this.Client.ResourceName.Trim() + "/api/devices/" + deviceId.Trim() + "/policies/" + policyId.Trim() + "?";
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/cloudservices/" + Uri.EscapeDataString(this.Client.CloudServiceName) + "/resources/" + Uri.EscapeDataString(this.Client.ResourceNamespace) + "/~/CiSVault/" + Uri.EscapeDataString(this.Client.ResourceName) + "/api/devices/" + Uri.EscapeDataString(deviceId) + "/policies/" + Uri.EscapeDataString(policyId) + "?";
             url = url + "api-version=2014-01-01.1.0";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -180,13 +175,13 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.Accepted)
@@ -195,7 +190,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -203,18 +198,21 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                     // Create Result
                     TaskResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new TaskResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement stringElement = responseDoc.Element(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/"));
-                    if (stringElement != null)
+                    if (statusCode == HttpStatusCode.Accepted)
                     {
-                        string stringInstance = stringElement.Value;
-                        result.TaskId = stringInstance;
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new TaskResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement stringElement = responseDoc.Element(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/"));
+                        if (stringElement != null)
+                        {
+                            string stringInstance = stringElement.Value;
+                            result.TaskId = stringInstance;
+                        }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -223,7 +221,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -246,9 +244,6 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         
         /// <summary>
         /// Begin deleting a backup set represented by the backSetId provided.
-        /// (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/hh264518.aspx
-        /// for more information)
         /// </summary>
         /// <param name='deviceId'>
         /// Required. The device id for which the call will be made.
@@ -265,7 +260,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         /// <returns>
         /// This is the Task Response for all Async Calls
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.StorSimple.Models.TaskResponse> BeginDeletingAsync(string deviceId, string backupSetId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<TaskResponse> BeginDeletingAsync(string deviceId, string backupSetId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             if (deviceId == null)
@@ -282,20 +277,20 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("deviceId", deviceId);
                 tracingParameters.Add("backupSetId", backupSetId);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
-                Tracing.Enter(invocationId, this, "BeginDeletingAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "BeginDeletingAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/" + this.Client.ResourceNamespace.Trim() + "/~/CiSVault/" + this.Client.ResourceName.Trim() + "/api/devices/" + deviceId.Trim() + "/backups/" + backupSetId.Trim() + "?";
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/cloudservices/" + Uri.EscapeDataString(this.Client.CloudServiceName) + "/resources/" + Uri.EscapeDataString(this.Client.ResourceNamespace) + "/~/CiSVault/" + Uri.EscapeDataString(this.Client.ResourceName) + "/api/devices/" + Uri.EscapeDataString(deviceId) + "/backups/" + Uri.EscapeDataString(backupSetId) + "?";
             url = url + "api-version=2014-01-01.1.0";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -334,13 +329,13 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.Accepted)
@@ -349,7 +344,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -357,18 +352,21 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                     // Create Result
                     TaskResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new TaskResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement stringElement = responseDoc.Element(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/"));
-                    if (stringElement != null)
+                    if (statusCode == HttpStatusCode.Accepted)
                     {
-                        string stringInstance = stringElement.Value;
-                        result.TaskId = stringInstance;
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new TaskResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement stringElement = responseDoc.Element(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/"));
+                        if (stringElement != null)
+                        {
+                            string stringInstance = stringElement.Value;
+                            result.TaskId = stringInstance;
+                        }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -377,7 +375,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -399,9 +397,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         }
         
         /// <summary>
-        /// Begin restoring a backup set.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/hh264518.aspx
-        /// for more information)
+        /// Begin restoring a backup set.
         /// </summary>
         /// <param name='deviceId'>
         /// Required. The device id for which the call will be made.
@@ -418,7 +414,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         /// <returns>
         /// This is the Task Response for all Async Calls
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.StorSimple.Models.TaskResponse> BeginRestoringAsync(string deviceId, RestoreBackupRequest backupDetailsForRestore, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<TaskResponse> BeginRestoringAsync(string deviceId, RestoreBackupRequest backupDetailsForRestore, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             if (deviceId == null)
@@ -439,20 +435,20 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("deviceId", deviceId);
                 tracingParameters.Add("backupDetailsForRestore", backupDetailsForRestore);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
-                Tracing.Enter(invocationId, this, "BeginRestoringAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "BeginRestoringAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/" + this.Client.ResourceNamespace.Trim() + "/~/CiSVault/" + this.Client.ResourceName.Trim() + "/api/devices/" + deviceId.Trim() + "/backups?";
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/cloudservices/" + Uri.EscapeDataString(this.Client.CloudServiceName) + "/resources/" + Uri.EscapeDataString(this.Client.ResourceNamespace) + "/~/CiSVault/" + Uri.EscapeDataString(this.Client.ResourceName) + "/api/devices/" + Uri.EscapeDataString(deviceId) + "/backups?";
             url = url + "api-version=2014-01-01.1.0";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -521,13 +517,13 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.Accepted)
@@ -536,7 +532,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -544,18 +540,21 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                     // Create Result
                     TaskResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new TaskResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement stringElement = responseDoc.Element(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/"));
-                    if (stringElement != null)
+                    if (statusCode == HttpStatusCode.Accepted)
                     {
-                        string stringInstance = stringElement.Value;
-                        result.TaskId = stringInstance;
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new TaskResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement stringElement = responseDoc.Element(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/"));
+                        if (stringElement != null)
+                        {
+                            string stringInstance = stringElement.Value;
+                            result.TaskId = stringInstance;
+                        }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -564,7 +563,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -603,88 +602,75 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         /// <returns>
         /// Info about the async task
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.StorSimple.Models.TaskStatusInfo> CreateAsync(string deviceId, string policyId, BackupNowRequest backupRequest, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<TaskStatusInfo> CreateAsync(string deviceId, string policyId, BackupNowRequest backupRequest, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             StorSimpleManagementClient client = this.Client;
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("deviceId", deviceId);
                 tracingParameters.Add("policyId", policyId);
                 tracingParameters.Add("backupRequest", backupRequest);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
-                Tracing.Enter(invocationId, this, "CreateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "CreateAsync", tracingParameters);
             }
-            try
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            TaskResponse response = await client.Backup.BeginCreatingBackupAsync(deviceId, policyId, backupRequest, customRequestHeaders, cancellationToken).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested();
+            TaskStatusInfo result = await client.GetOperationStatusAsync(response.TaskId, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 5;
+            if (client.LongRunningOperationInitialTimeout >= 0)
             {
-                if (shouldTrace)
-                {
-                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
-                }
-                
-                cancellationToken.ThrowIfCancellationRequested();
-                TaskResponse response = await client.Backup.BeginCreatingBackupAsync(deviceId, policyId, backupRequest, customRequestHeaders, cancellationToken).ConfigureAwait(false);
-                cancellationToken.ThrowIfCancellationRequested();
-                TaskStatusInfo result = await client.GetOperationStatusAsync(response.TaskId, cancellationToken).ConfigureAwait(false);
-                int delayInSeconds = 5;
-                if (client.LongRunningOperationInitialTimeout >= 0)
-                {
-                    delayInSeconds = client.LongRunningOperationInitialTimeout;
-                }
-                while ((result.AsyncTaskAggregatedResult != AsyncTaskAggregatedResult.InProgress) == false)
-                {
-                    cancellationToken.ThrowIfCancellationRequested();
-                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    result = await client.GetOperationStatusAsync(response.TaskId, cancellationToken).ConfigureAwait(false);
-                    delayInSeconds = 5;
-                    if (client.LongRunningOperationRetryTimeout >= 0)
-                    {
-                        delayInSeconds = client.LongRunningOperationRetryTimeout;
-                    }
-                }
-                
-                if (shouldTrace)
-                {
-                    Tracing.Exit(invocationId, result);
-                }
-                
-                if (result.AsyncTaskAggregatedResult != AsyncTaskAggregatedResult.Succeeded)
-                {
-                    if (result.Error != null)
-                    {
-                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                        ex.ErrorCode = result.Error.Code;
-                        ex.ErrorMessage = result.Error.Message;
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    else
-                    {
-                        CloudException ex = new CloudException("");
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                }
-                
-                return result;
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            finally
+            while ((result.AsyncTaskAggregatedResult != AsyncTaskAggregatedResult.InProgress) == false)
             {
-                if (client != null && shouldTrace)
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.GetOperationStatusAsync(response.TaskId, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 5;
+                if (client.LongRunningOperationRetryTimeout >= 0)
                 {
-                    client.Dispose();
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
                 }
             }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            if (result.AsyncTaskAggregatedResult != AsyncTaskAggregatedResult.Succeeded)
+            {
+                if (result.Error != null)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.Error = new CloudError();
+                    ex.Error.Code = result.Error.Code;
+                    ex.Error.Message = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                else
+                {
+                    CloudException ex = new CloudException("");
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+            }
+            
+            return result;
         }
         
         /// <param name='deviceId'>
@@ -702,87 +688,74 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         /// <returns>
         /// Info about the async task
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.StorSimple.Models.TaskStatusInfo> DeleteAsync(string deviceId, string backupSetId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<TaskStatusInfo> DeleteAsync(string deviceId, string backupSetId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             StorSimpleManagementClient client = this.Client;
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("deviceId", deviceId);
                 tracingParameters.Add("backupSetId", backupSetId);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
-                Tracing.Enter(invocationId, this, "DeleteAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "DeleteAsync", tracingParameters);
             }
-            try
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            TaskResponse response = await client.Backup.BeginDeletingAsync(deviceId, backupSetId, customRequestHeaders, cancellationToken).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested();
+            TaskStatusInfo result = await client.GetOperationStatusAsync(response.TaskId, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 5;
+            if (client.LongRunningOperationInitialTimeout >= 0)
             {
-                if (shouldTrace)
-                {
-                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
-                }
-                
-                cancellationToken.ThrowIfCancellationRequested();
-                TaskResponse response = await client.Backup.BeginDeletingAsync(deviceId, backupSetId, customRequestHeaders, cancellationToken).ConfigureAwait(false);
-                cancellationToken.ThrowIfCancellationRequested();
-                TaskStatusInfo result = await client.GetOperationStatusAsync(response.TaskId, cancellationToken).ConfigureAwait(false);
-                int delayInSeconds = 5;
-                if (client.LongRunningOperationInitialTimeout >= 0)
-                {
-                    delayInSeconds = client.LongRunningOperationInitialTimeout;
-                }
-                while ((result.AsyncTaskAggregatedResult != AsyncTaskAggregatedResult.InProgress) == false)
-                {
-                    cancellationToken.ThrowIfCancellationRequested();
-                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    result = await client.GetOperationStatusAsync(response.TaskId, cancellationToken).ConfigureAwait(false);
-                    delayInSeconds = 5;
-                    if (client.LongRunningOperationRetryTimeout >= 0)
-                    {
-                        delayInSeconds = client.LongRunningOperationRetryTimeout;
-                    }
-                }
-                
-                if (shouldTrace)
-                {
-                    Tracing.Exit(invocationId, result);
-                }
-                
-                if (result.AsyncTaskAggregatedResult != AsyncTaskAggregatedResult.Succeeded)
-                {
-                    if (result.Error != null)
-                    {
-                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                        ex.ErrorCode = result.Error.Code;
-                        ex.ErrorMessage = result.Error.Message;
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    else
-                    {
-                        CloudException ex = new CloudException("");
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                }
-                
-                return result;
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            finally
+            while ((result.AsyncTaskAggregatedResult != AsyncTaskAggregatedResult.InProgress) == false)
             {
-                if (client != null && shouldTrace)
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.GetOperationStatusAsync(response.TaskId, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 5;
+                if (client.LongRunningOperationRetryTimeout >= 0)
                 {
-                    client.Dispose();
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
                 }
             }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            if (result.AsyncTaskAggregatedResult != AsyncTaskAggregatedResult.Succeeded)
+            {
+                if (result.Error != null)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.Error = new CloudError();
+                    ex.Error.Code = result.Error.Code;
+                    ex.Error.Message = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                else
+                {
+                    CloudException ex = new CloudException("");
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+            }
+            
+            return result;
         }
         
         /// <param name='deviceId'>
@@ -820,7 +793,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         /// <returns>
         /// The response model for the list of BackupSets.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.StorSimple.Models.GetBackupResponse> GetAsync(string deviceId, string filterType, string isAllSelected, string filterValue, string startTime, string endTime, string skip, string top, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<GetBackupResponse> GetAsync(string deviceId, string filterType, string isAllSelected, string filterValue, string startTime, string endTime, string skip, string top, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             // Validate
             if (deviceId == null)
@@ -837,11 +810,11 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("deviceId", deviceId);
                 tracingParameters.Add("filterType", filterType);
@@ -852,35 +825,35 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                 tracingParameters.Add("skip", skip);
                 tracingParameters.Add("top", top);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
-                Tracing.Enter(invocationId, this, "GetAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/" + this.Client.ResourceNamespace.Trim() + "/~/CiSVault/" + this.Client.ResourceName.Trim() + "/api/devices/" + deviceId.Trim() + "/backups?";
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/cloudservices/" + Uri.EscapeDataString(this.Client.CloudServiceName) + "/resources/" + Uri.EscapeDataString(this.Client.ResourceNamespace) + "/~/CiSVault/" + Uri.EscapeDataString(this.Client.ResourceName) + "/api/devices/" + Uri.EscapeDataString(deviceId) + "/backups?";
             if (filterType != null)
             {
-                url = url + "filterType=" + Uri.EscapeDataString(filterType != null ? filterType.Trim() : "");
+                url = url + "filterType=" + Uri.EscapeDataString(filterType);
             }
-            url = url + "&isAllSelected=" + Uri.EscapeDataString(isAllSelected.Trim());
+            url = url + "&isAllSelected=" + Uri.EscapeDataString(isAllSelected);
             if (filterValue != null)
             {
-                url = url + "&filterValue=" + Uri.EscapeDataString(filterValue != null ? filterValue.Trim() : "");
+                url = url + "&filterValue=" + Uri.EscapeDataString(filterValue);
             }
             if (startTime != null)
             {
-                url = url + "&startTime=" + Uri.EscapeDataString(startTime != null ? startTime.Trim() : "");
+                url = url + "&startTime=" + Uri.EscapeDataString(startTime);
             }
             if (endTime != null)
             {
-                url = url + "&endTime=" + Uri.EscapeDataString(endTime != null ? endTime.Trim() : "");
+                url = url + "&endTime=" + Uri.EscapeDataString(endTime);
             }
             if (skip != null)
             {
-                url = url + "&skip=" + Uri.EscapeDataString(skip != null ? skip.Trim() : "");
+                url = url + "&skip=" + Uri.EscapeDataString(skip);
             }
             if (top != null)
             {
-                url = url + "&top=" + Uri.EscapeDataString(top != null ? top.Trim() : "");
+                url = url + "&top=" + Uri.EscapeDataString(top);
             }
             url = url + "&api-version=2014-01-01.1.0";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
@@ -920,13 +893,13 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -935,7 +908,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -943,147 +916,150 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                     // Create Result
                     GetBackupResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new GetBackupResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement backupSetsQueryResultV2Element = responseDoc.Element(XName.Get("BackupSetsQueryResult_V2", "http://windowscloudbackup.com/CiS/V2013_03"));
-                    if (backupSetsQueryResultV2Element != null)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        XElement backupSetsListSequenceElement = backupSetsQueryResultV2Element.Element(XName.Get("BackupSetsList", "http://windowscloudbackup.com/CiS/V2013_03"));
-                        if (backupSetsListSequenceElement != null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new GetBackupResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement backupSetsQueryResultV2Element = responseDoc.Element(XName.Get("BackupSetsQueryResult_V2", "http://windowscloudbackup.com/CiS/V2013_03"));
+                        if (backupSetsQueryResultV2Element != null)
                         {
-                            foreach (XElement backupSetsListElement in backupSetsListSequenceElement.Elements(XName.Get("BackupSetInfo", "http://windowscloudbackup.com/CiS/V2013_03")))
+                            XElement backupSetsListSequenceElement = backupSetsQueryResultV2Element.Element(XName.Get("BackupSetsList", "http://windowscloudbackup.com/CiS/V2013_03"));
+                            if (backupSetsListSequenceElement != null)
                             {
-                                Backup backupSetInfoInstance = new Backup();
-                                result.BackupSetsList.Add(backupSetInfoInstance);
-                                
-                                XElement backupJobCreationTypeElement = backupSetsListElement.Element(XName.Get("BackupJobCreationType", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                if (backupJobCreationTypeElement != null)
+                                foreach (XElement backupSetsListElement in backupSetsListSequenceElement.Elements(XName.Get("BackupSetInfo", "http://windowscloudbackup.com/CiS/V2013_03")))
                                 {
-                                    BackupJobCreationType backupJobCreationTypeInstance = ((BackupJobCreationType)Enum.Parse(typeof(BackupJobCreationType), backupJobCreationTypeElement.Value, true));
-                                    backupSetInfoInstance.BackupJobCreationType = backupJobCreationTypeInstance;
-                                }
-                                
-                                XElement createdOnElement = backupSetsListElement.Element(XName.Get("CreatedOn", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                if (createdOnElement != null)
-                                {
-                                    DateTime createdOnInstance = DateTime.Parse(createdOnElement.Value, CultureInfo.InvariantCulture);
-                                    backupSetInfoInstance.CreatedOn = createdOnInstance;
-                                }
-                                
-                                XElement sSMHostNameElement = backupSetsListElement.Element(XName.Get("SSMHostName", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                if (sSMHostNameElement != null)
-                                {
-                                    string sSMHostNameInstance = sSMHostNameElement.Value;
-                                    backupSetInfoInstance.SSMHostName = sSMHostNameInstance;
-                                }
-                                
-                                XElement sizeInBytesElement = backupSetsListElement.Element(XName.Get("SizeInBytes", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                if (sizeInBytesElement != null)
-                                {
-                                    long sizeInBytesInstance = long.Parse(sizeInBytesElement.Value, CultureInfo.InvariantCulture);
-                                    backupSetInfoInstance.SizeInBytes = sizeInBytesInstance;
-                                }
-                                
-                                XElement snapshotsSequenceElement = backupSetsListElement.Element(XName.Get("Snapshots", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                if (snapshotsSequenceElement != null)
-                                {
-                                    foreach (XElement snapshotsElement in snapshotsSequenceElement.Elements(XName.Get("Snapshot", "http://windowscloudbackup.com/CiS/V2013_03")))
+                                    Backup backupSetInfoInstance = new Backup();
+                                    result.BackupSetsList.Add(backupSetInfoInstance);
+                                    
+                                    XElement backupJobCreationTypeElement = backupSetsListElement.Element(XName.Get("BackupJobCreationType", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                    if (backupJobCreationTypeElement != null)
                                     {
-                                        Snapshot snapshotInstance = new Snapshot();
-                                        backupSetInfoInstance.Snapshots.Add(snapshotInstance);
-                                        
-                                        XElement dataContainerIdElement = snapshotsElement.Element(XName.Get("DataContainerId", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                        if (dataContainerIdElement != null)
+                                        BackupJobCreationType backupJobCreationTypeInstance = ((BackupJobCreationType)Enum.Parse(typeof(BackupJobCreationType), backupJobCreationTypeElement.Value, true));
+                                        backupSetInfoInstance.BackupJobCreationType = backupJobCreationTypeInstance;
+                                    }
+                                    
+                                    XElement createdOnElement = backupSetsListElement.Element(XName.Get("CreatedOn", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                    if (createdOnElement != null)
+                                    {
+                                        DateTime createdOnInstance = DateTime.Parse(createdOnElement.Value, CultureInfo.InvariantCulture);
+                                        backupSetInfoInstance.CreatedOn = createdOnInstance;
+                                    }
+                                    
+                                    XElement sSMHostNameElement = backupSetsListElement.Element(XName.Get("SSMHostName", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                    if (sSMHostNameElement != null)
+                                    {
+                                        string sSMHostNameInstance = sSMHostNameElement.Value;
+                                        backupSetInfoInstance.SSMHostName = sSMHostNameInstance;
+                                    }
+                                    
+                                    XElement sizeInBytesElement = backupSetsListElement.Element(XName.Get("SizeInBytes", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                    if (sizeInBytesElement != null)
+                                    {
+                                        long sizeInBytesInstance = long.Parse(sizeInBytesElement.Value, CultureInfo.InvariantCulture);
+                                        backupSetInfoInstance.SizeInBytes = sizeInBytesInstance;
+                                    }
+                                    
+                                    XElement snapshotsSequenceElement = backupSetsListElement.Element(XName.Get("Snapshots", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                    if (snapshotsSequenceElement != null)
+                                    {
+                                        foreach (XElement snapshotsElement in snapshotsSequenceElement.Elements(XName.Get("Snapshot", "http://windowscloudbackup.com/CiS/V2013_03")))
                                         {
-                                            string dataContainerIdInstance = dataContainerIdElement.Value;
-                                            snapshotInstance.DataContainerId = dataContainerIdInstance;
-                                        }
-                                        
-                                        XElement idElement = snapshotsElement.Element(XName.Get("Id", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                        if (idElement != null)
-                                        {
-                                            string idInstance = idElement.Value;
-                                            snapshotInstance.Id = idInstance;
-                                        }
-                                        
-                                        XElement nameElement = snapshotsElement.Element(XName.Get("Name", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                        if (nameElement != null)
-                                        {
-                                            string nameInstance = nameElement.Value;
-                                            snapshotInstance.Name = nameInstance;
-                                        }
-                                        
-                                        XElement sizeInBytesElement2 = snapshotsElement.Element(XName.Get("SizeInBytes", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                        if (sizeInBytesElement2 != null)
-                                        {
-                                            long sizeInBytesInstance2 = long.Parse(sizeInBytesElement2.Value, CultureInfo.InvariantCulture);
-                                            snapshotInstance.SizeInBytes = sizeInBytesInstance2;
-                                        }
-                                        
-                                        XElement volumeIdElement = snapshotsElement.Element(XName.Get("VolumeId", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                        if (volumeIdElement != null)
-                                        {
-                                            string volumeIdInstance = volumeIdElement.Value;
-                                            snapshotInstance.VolumeId = volumeIdInstance;
+                                            Snapshot snapshotInstance = new Snapshot();
+                                            backupSetInfoInstance.Snapshots.Add(snapshotInstance);
+                                            
+                                            XElement dataContainerIdElement = snapshotsElement.Element(XName.Get("DataContainerId", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                            if (dataContainerIdElement != null)
+                                            {
+                                                string dataContainerIdInstance = dataContainerIdElement.Value;
+                                                snapshotInstance.DataContainerId = dataContainerIdInstance;
+                                            }
+                                            
+                                            XElement idElement = snapshotsElement.Element(XName.Get("Id", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                            if (idElement != null)
+                                            {
+                                                string idInstance = idElement.Value;
+                                                snapshotInstance.Id = idInstance;
+                                            }
+                                            
+                                            XElement nameElement = snapshotsElement.Element(XName.Get("Name", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                            if (nameElement != null)
+                                            {
+                                                string nameInstance = nameElement.Value;
+                                                snapshotInstance.Name = nameInstance;
+                                            }
+                                            
+                                            XElement sizeInBytesElement2 = snapshotsElement.Element(XName.Get("SizeInBytes", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                            if (sizeInBytesElement2 != null)
+                                            {
+                                                long sizeInBytesInstance2 = long.Parse(sizeInBytesElement2.Value, CultureInfo.InvariantCulture);
+                                                snapshotInstance.SizeInBytes = sizeInBytesInstance2;
+                                            }
+                                            
+                                            XElement volumeIdElement = snapshotsElement.Element(XName.Get("VolumeId", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                            if (volumeIdElement != null)
+                                            {
+                                                string volumeIdInstance = volumeIdElement.Value;
+                                                snapshotInstance.VolumeId = volumeIdInstance;
+                                            }
                                         }
                                     }
+                                    
+                                    XElement typeElement = backupSetsListElement.Element(XName.Get("Type", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                    if (typeElement != null)
+                                    {
+                                        BackupType typeInstance = ((BackupType)Enum.Parse(typeof(BackupType), typeElement.Value, true));
+                                        backupSetInfoInstance.Type = typeInstance;
+                                    }
+                                    
+                                    XElement nameElement2 = backupSetsListElement.Element(XName.Get("Name", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                    if (nameElement2 != null)
+                                    {
+                                        string nameInstance2 = nameElement2.Value;
+                                        backupSetInfoInstance.Name = nameInstance2;
+                                    }
+                                    
+                                    XElement instanceIdElement = backupSetsListElement.Element(XName.Get("InstanceId", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                    if (instanceIdElement != null)
+                                    {
+                                        string instanceIdInstance = instanceIdElement.Value;
+                                        backupSetInfoInstance.InstanceId = instanceIdInstance;
+                                    }
+                                    
+                                    XElement operationInProgressElement = backupSetsListElement.Element(XName.Get("OperationInProgress", "http://windowscloudbackup.com/CiS/V2013_03"));
+                                    if (operationInProgressElement != null)
+                                    {
+                                        OperationInProgress operationInProgressInstance = ((OperationInProgress)Enum.Parse(typeof(OperationInProgress), operationInProgressElement.Value, true));
+                                        backupSetInfoInstance.OperationInProgress = operationInProgressInstance;
+                                    }
                                 }
-                                
-                                XElement typeElement = backupSetsListElement.Element(XName.Get("Type", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                if (typeElement != null)
-                                {
-                                    BackupType typeInstance = ((BackupType)Enum.Parse(typeof(BackupType), typeElement.Value, true));
-                                    backupSetInfoInstance.Type = typeInstance;
-                                }
-                                
-                                XElement nameElement2 = backupSetsListElement.Element(XName.Get("Name", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                if (nameElement2 != null)
-                                {
-                                    string nameInstance2 = nameElement2.Value;
-                                    backupSetInfoInstance.Name = nameInstance2;
-                                }
-                                
-                                XElement instanceIdElement = backupSetsListElement.Element(XName.Get("InstanceId", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                if (instanceIdElement != null)
-                                {
-                                    string instanceIdInstance = instanceIdElement.Value;
-                                    backupSetInfoInstance.InstanceId = instanceIdInstance;
-                                }
-                                
-                                XElement operationInProgressElement = backupSetsListElement.Element(XName.Get("OperationInProgress", "http://windowscloudbackup.com/CiS/V2013_03"));
-                                if (operationInProgressElement != null)
-                                {
-                                    OperationInProgress operationInProgressInstance = ((OperationInProgress)Enum.Parse(typeof(OperationInProgress), operationInProgressElement.Value, true));
-                                    backupSetInfoInstance.OperationInProgress = operationInProgressInstance;
-                                }
+                            }
+                            
+                            XElement totalBackupSetCountElement = backupSetsQueryResultV2Element.Element(XName.Get("TotalBackupSetCount", "http://windowscloudbackup.com/CiS/V2013_03"));
+                            if (totalBackupSetCountElement != null)
+                            {
+                                long totalBackupSetCountInstance = long.Parse(totalBackupSetCountElement.Value, CultureInfo.InvariantCulture);
+                                result.TotalBackupCount = totalBackupSetCountInstance;
+                            }
+                            
+                            XElement nextPageStartIdentifierElement = backupSetsQueryResultV2Element.Element(XName.Get("NextPageStartIdentifier", "http://windowscloudbackup.com/CiS/V2013_03"));
+                            if (nextPageStartIdentifierElement != null)
+                            {
+                                string nextPageStartIdentifierInstance = nextPageStartIdentifierElement.Value;
+                                result.NextPageStartIdentifier = nextPageStartIdentifierInstance;
+                            }
+                            
+                            XElement nextPageUriElement = backupSetsQueryResultV2Element.Element(XName.Get("NextPageUri", "http://windowscloudbackup.com/CiS/V2013_03"));
+                            if (nextPageUriElement != null)
+                            {
+                                Uri nextPageUriInstance = TypeConversion.TryParseUri(nextPageUriElement.Value);
+                                result.NextPageUri = nextPageUriInstance;
                             }
                         }
                         
-                        XElement totalBackupSetCountElement = backupSetsQueryResultV2Element.Element(XName.Get("TotalBackupSetCount", "http://windowscloudbackup.com/CiS/V2013_03"));
-                        if (totalBackupSetCountElement != null)
-                        {
-                            long totalBackupSetCountInstance = long.Parse(totalBackupSetCountElement.Value, CultureInfo.InvariantCulture);
-                            result.TotalBackupCount = totalBackupSetCountInstance;
-                        }
-                        
-                        XElement nextPageStartIdentifierElement = backupSetsQueryResultV2Element.Element(XName.Get("NextPageStartIdentifier", "http://windowscloudbackup.com/CiS/V2013_03"));
-                        if (nextPageStartIdentifierElement != null)
-                        {
-                            string nextPageStartIdentifierInstance = nextPageStartIdentifierElement.Value;
-                            result.NextPageStartIdentifier = nextPageStartIdentifierInstance;
-                        }
-                        
-                        XElement nextPageUriElement = backupSetsQueryResultV2Element.Element(XName.Get("NextPageUri", "http://windowscloudbackup.com/CiS/V2013_03"));
-                        if (nextPageUriElement != null)
-                        {
-                            Uri nextPageUriInstance = TypeConversion.TryParseUri(nextPageUriElement.Value);
-                            result.NextPageUri = nextPageUriInstance;
-                        }
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1092,7 +1068,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -1114,9 +1090,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         }
         
         /// <summary>
-        /// Restore a backup set.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/hh264518.aspx
-        /// for more information)
+        /// Restore a backup set.
         /// </summary>
         /// <param name='deviceId'>
         /// Required. The device id for which the call will be made.
@@ -1133,87 +1107,74 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
         /// <returns>
         /// Info about the async task
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.StorSimple.Models.TaskStatusInfo> RestoreAsync(string deviceId, RestoreBackupRequest backupDetailsForRestore, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
+        public async Task<TaskStatusInfo> RestoreAsync(string deviceId, RestoreBackupRequest backupDetailsForRestore, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken)
         {
             StorSimpleManagementClient client = this.Client;
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("deviceId", deviceId);
                 tracingParameters.Add("backupDetailsForRestore", backupDetailsForRestore);
                 tracingParameters.Add("customRequestHeaders", customRequestHeaders);
-                Tracing.Enter(invocationId, this, "RestoreAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "RestoreAsync", tracingParameters);
             }
-            try
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            TaskResponse response = await client.Backup.BeginRestoringAsync(deviceId, backupDetailsForRestore, customRequestHeaders, cancellationToken).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested();
+            TaskStatusInfo result = await client.GetOperationStatusAsync(response.TaskId, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 5;
+            if (client.LongRunningOperationInitialTimeout >= 0)
             {
-                if (shouldTrace)
-                {
-                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
-                }
-                
-                cancellationToken.ThrowIfCancellationRequested();
-                TaskResponse response = await client.Backup.BeginRestoringAsync(deviceId, backupDetailsForRestore, customRequestHeaders, cancellationToken).ConfigureAwait(false);
-                cancellationToken.ThrowIfCancellationRequested();
-                TaskStatusInfo result = await client.GetOperationStatusAsync(response.TaskId, cancellationToken).ConfigureAwait(false);
-                int delayInSeconds = 5;
-                if (client.LongRunningOperationInitialTimeout >= 0)
-                {
-                    delayInSeconds = client.LongRunningOperationInitialTimeout;
-                }
-                while ((result.AsyncTaskAggregatedResult != AsyncTaskAggregatedResult.InProgress) == false)
-                {
-                    cancellationToken.ThrowIfCancellationRequested();
-                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    result = await client.GetOperationStatusAsync(response.TaskId, cancellationToken).ConfigureAwait(false);
-                    delayInSeconds = 5;
-                    if (client.LongRunningOperationRetryTimeout >= 0)
-                    {
-                        delayInSeconds = client.LongRunningOperationRetryTimeout;
-                    }
-                }
-                
-                if (shouldTrace)
-                {
-                    Tracing.Exit(invocationId, result);
-                }
-                
-                if (result.AsyncTaskAggregatedResult != AsyncTaskAggregatedResult.Succeeded)
-                {
-                    if (result.Error != null)
-                    {
-                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                        ex.ErrorCode = result.Error.Code;
-                        ex.ErrorMessage = result.Error.Message;
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    else
-                    {
-                        CloudException ex = new CloudException("");
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                }
-                
-                return result;
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            finally
+            while ((result.AsyncTaskAggregatedResult != AsyncTaskAggregatedResult.InProgress) == false)
             {
-                if (client != null && shouldTrace)
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.GetOperationStatusAsync(response.TaskId, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 5;
+                if (client.LongRunningOperationRetryTimeout >= 0)
                 {
-                    client.Dispose();
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
                 }
             }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            if (result.AsyncTaskAggregatedResult != AsyncTaskAggregatedResult.Succeeded)
+            {
+                if (result.Error != null)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.Error = new CloudError();
+                    ex.Error.Code = result.Error.Code;
+                    ex.Error.Message = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                else
+                {
+                    CloudException ex = new CloudException("");
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+            }
+            
+            return result;
         }
     }
 }

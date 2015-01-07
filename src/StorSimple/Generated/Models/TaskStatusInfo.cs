@@ -22,7 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.StorSimple.Models;
 
 namespace Microsoft.WindowsAzure.Management.StorSimple.Models
@@ -30,7 +30,7 @@ namespace Microsoft.WindowsAzure.Management.StorSimple.Models
     /// <summary>
     /// Info about the async task
     /// </summary>
-    public partial class TaskStatusInfo : OperationResponse
+    public partial class TaskStatusInfo : AzureOperationResponse
     {
         private AsyncTaskAggregatedResult _asyncTaskAggregatedResult;
         

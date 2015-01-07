@@ -26,20 +26,16 @@ using System.Threading.Tasks;
 using Microsoft.WindowsAzure.Management.StorSimple;
 using Microsoft.WindowsAzure.Management.StorSimple.Models;
 
-namespace Microsoft.Azure
+namespace Microsoft.WindowsAzure.Management.StorSimple
 {
     /// <summary>
-    /// This is an RESTFul API to manage you StorSimple Objects  (see
-    /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx for
-    /// more information)
+    /// This is an RESTFul API to manage you StorSimple Objects
     /// </summary>
     public static partial class BackupPolicyOperationsExtensions
     {
         /// <summary>
         /// The BeginCreatingBackupPolicy operation creates a new backup policy
-        /// for this given volume with the given schedules.  (see
-        /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx
-        /// for more information)
+        /// for this given volume with the given schedules.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -68,9 +64,7 @@ namespace Microsoft.Azure
         
         /// <summary>
         /// The BeginCreatingBackupPolicy operation creates a new backup policy
-        /// for this given volume with the given schedules.  (see
-        /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx
-        /// for more information)
+        /// for this given volume with the given schedules.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -94,10 +88,7 @@ namespace Microsoft.Azure
         }
         
         /// <summary>
-        /// Begin deleting a backup policy represented by the policyId
-        /// provided.  (see
-        /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx
-        /// for more information)
+        /// Begin deleting a backup policy represented by the policyId provided.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -125,10 +116,7 @@ namespace Microsoft.Azure
         }
         
         /// <summary>
-        /// Begin deleting a backup policy represented by the policyId
-        /// provided.  (see
-        /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx
-        /// for more information)
+        /// Begin deleting a backup policy represented by the policyId provided.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -154,9 +142,7 @@ namespace Microsoft.Azure
         /// <summary>
         /// The BeginUpdatingBackupPolicy operation updates a backup policy
         /// represented by policyId for this given volume with the given
-        /// schedules.  (see
-        /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx
-        /// for more information)
+        /// schedules.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -189,9 +175,7 @@ namespace Microsoft.Azure
         /// <summary>
         /// The BeginUpdatingBackupPolicy operation updates a backup policy
         /// represented by policyId for this given volume with the given
-        /// schedules.  (see
-        /// http://msdn.microsoft.com/en-us/library/azure/FILLTHISPART.aspx
-        /// for more information)
+        /// schedules.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
