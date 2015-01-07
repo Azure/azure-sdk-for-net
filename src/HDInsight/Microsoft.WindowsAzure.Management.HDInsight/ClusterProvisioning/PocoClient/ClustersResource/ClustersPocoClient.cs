@@ -199,7 +199,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
         /// </summary>
         /// <param name="clusterCreateParameters">The cluster create parameters.</param>
         /// <returns>A task.</returns>
-        public async Task CreateContainer(HDInsight.ClusterCreateParameters clusterCreateParameters)
+        public async Task CreateContainer(HDInsight.ClusterCreateParameters2 clusterCreateParameters)
         {
             if (clusterCreateParameters == null)
             {

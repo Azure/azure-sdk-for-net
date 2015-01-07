@@ -351,7 +351,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.Scenario
             var client = HDInsightClient.Connect(new HDInsightCertificateCredential(credentials.SubscriptionId, credentials.Certificate));
             client.PollingInterval = TimeSpan.FromMilliseconds(100);
 
-            ClusterCreateParameters cluster = GetRandomCluster();
+            ClusterCreateParameters2 cluster = GetRandomCluster();
             cluster.DefaultStorageContainer = "thiscontainerdoesnotexist";
             client.CreateClusterAsync(cluster).WaitForResult();
 
@@ -882,7 +882,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.Scenario
             Assert.AreEqual(jobDetailsObject.JobId, "job_201307101453_0189");
         }
 
-        private void TestValidAdvancedCluster(Func<ICollection<ClusterDetails>> getClusters, Func<string, ClusterDetails> getCluster, Func<ClusterCreateParameters, ClusterDetails> createCluster, Action<string> deleteCluster)
+        private void TestValidAdvancedCluster(Func<ICollection<ClusterDetails>> getClusters, Func<string, ClusterDetails> getCluster, Func<ClusterCreateParameters2, ClusterDetails> createCluster, Action<string> deleteCluster)
         {
             // ClusterName
             var cluster = GetRandomCluster();
@@ -991,7 +991,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.Scenario
             //return testCluster;
         }
 
-        private void TestClusterEndToEnd(ClusterCreateParameters cluster, Func<ICollection<ClusterDetails>> getClusters, Func<string, ClusterDetails> getCluster, Func<ClusterCreateParameters, ClusterDetails> createCluster, Action<string> deleteCluster)
+        private void TestClusterEndToEnd(ClusterCreateParameters2 cluster, Func<ICollection<ClusterDetails>> getClusters, Func<string, ClusterDetails> getCluster, Func<ClusterCreateParameters2, ClusterDetails> createCluster, Action<string> deleteCluster)
         {
             // TODO: DROP ALL THE TABLES IN THE METASTORE TABLES
 

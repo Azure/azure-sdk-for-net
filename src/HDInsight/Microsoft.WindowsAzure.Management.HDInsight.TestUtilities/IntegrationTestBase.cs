@@ -330,10 +330,10 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities
             return retval;
         }
 
-        public static ClusterCreateParameters GetRandomCluster()
+        public static ClusterCreateParameters2 GetRandomCluster()
         {
             // Creates the cluster
-            return new ClusterCreateParameters
+            return new ClusterCreateParameters2
             {
                 Name = GetRandomClusterName(),
                 UserName = TestCredentials.AzureUserName,

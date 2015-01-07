@@ -86,6 +86,13 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         Task<ClusterDetails> CreateClusterAsync(ClusterCreateParameters clusterCreateParameters);
 
         /// <summary>
+        /// Submits a request to create an HDInsight cluster and waits for it to complete.
+        /// </summary>
+        /// <param name="clusterCreateParameters">Request object that encapsulates all the configurations.</param>
+        /// <returns>Object that will manage the deployment and returns an object that represents the HDInsight Cluster created.</returns>
+        Task<ClusterDetails> CreateClusterAsync(ClusterCreateParameters2 clusterCreateParameters);
+
+        /// <summary>
         /// Submits a request to delete an HDInsight cluster.
         /// </summary>
         /// <param name="name">Name of the HDInsight cluster.</param>

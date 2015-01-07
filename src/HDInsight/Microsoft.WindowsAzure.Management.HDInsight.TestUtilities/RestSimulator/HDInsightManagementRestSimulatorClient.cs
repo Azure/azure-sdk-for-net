@@ -553,7 +553,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities.RestSimulato
                     select s).Any();
         }
 
-        public async Task<IHttpResponseMessageAbstraction> CreateContainer(string dnsName, string location, string clusterPayload, int schemaVersion=2)
+        public async Task<IHttpResponseMessageAbstraction> CreateContainer(string dnsName, string location, string clusterPayload, int schemaVersion=3)
         {
             this.LogMessage("Creating cluster '{0}' in location {1}", dnsName, location);
             this.ValidateConnection();

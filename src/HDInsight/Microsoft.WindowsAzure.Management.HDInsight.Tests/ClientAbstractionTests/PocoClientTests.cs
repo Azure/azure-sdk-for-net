@@ -739,7 +739,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
             }
         }
 
-        internal static void ValidateClusterConfiguration(ClusterDetails testCluster, ClusterCreateParameters cluster)
+        internal static void ValidateClusterConfiguration(ClusterDetails testCluster, ClusterCreateParameters2 cluster)
         {
             var remoteCreds = new BasicAuthCredential()
             {
@@ -777,12 +777,12 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
             }
         }
 
-        private async Task ValidateCreateClusterSucceeds(ClusterCreateParameters cluster)
+        private async Task ValidateCreateClusterSucceeds(ClusterCreateParameters2 cluster)
         {
             await ValidateCreateClusterSucceeds(cluster, null);
         }
 
-        private async Task ValidateCreateClusterSucceeds(ClusterCreateParameters cluster, Action<ClusterDetails> postCreateValidation)
+        private async Task ValidateCreateClusterSucceeds(ClusterCreateParameters2 cluster, Action<ClusterDetails> postCreateValidation)
         {
             IHDInsightCertificateCredential credentials = IntegrationTestBase.GetValidCredentials();
             using (var client = ServiceLocator.Instance.Locate<IHDInsightManagementPocoClientFactory>().Create(credentials, GetAbstractionContext(), false))
@@ -1044,7 +1044,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
             }
         }
 
-        private async Task ValidateCreateClusterFailsWithError(ClusterCreateParameters cluster)
+        private async Task ValidateCreateClusterFailsWithError(ClusterCreateParameters2 cluster)
         {
             IHDInsightCertificateCredential credentials = IntegrationTestBase.GetValidCredentials();
             var client = ServiceLocator.Instance.Locate<IHDInsightManagementPocoClientFactory>().Create(credentials, GetAbstractionContext(), false);

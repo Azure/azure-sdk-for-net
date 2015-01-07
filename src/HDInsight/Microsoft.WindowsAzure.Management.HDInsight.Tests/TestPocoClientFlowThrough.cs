@@ -30,7 +30,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests
     internal class TestPocoClientFlowThrough : DisposableObject, IHDInsightManagementPocoClient
     {
         private IHDInsightManagementPocoClient underlying;
-        public ClusterCreateParameters LastCreateRequest { get; private set; }
+        public ClusterCreateParameters2 LastCreateRequest { get; private set; }
 
         public TestPocoClientFlowThrough(IHDInsightManagementPocoClient underlying)
         {
@@ -64,7 +64,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests
             return underlying.ListContainer(dnsName, location);
         }
         
-        public Task CreateContainer(ClusterCreateParameters details)
+        public Task CreateContainer(ClusterCreateParameters2 details)
         {
             this.LastCreateRequest = details;
             return underlying.CreateContainer(details);

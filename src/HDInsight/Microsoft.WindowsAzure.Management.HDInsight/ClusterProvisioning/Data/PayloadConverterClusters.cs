@@ -15,7 +15,7 @@
     using Microsoft.WindowsAzure.Management.HDInsight.Contracts.May2014.Networking;
     using Microsoft.WindowsAzure.Management.HDInsight.Contracts.May2014.Resources.CredentialBackedResources;
     using Microsoft.WindowsAzure.Management.HDInsight.Framework.ServiceLocation;
-    using UserClusterCreateParameters = Microsoft.WindowsAzure.Management.HDInsight.ClusterCreateParameters;
+    using UserClusterCreateParameters = Microsoft.WindowsAzure.Management.HDInsight.ClusterCreateParameters2;
 
     internal class PayloadConverterClusters
     {

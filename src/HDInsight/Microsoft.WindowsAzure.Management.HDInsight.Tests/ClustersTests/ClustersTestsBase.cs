@@ -48,7 +48,7 @@
 
         internal void CreateCluster(string dnsName, string location)
         {
-            var clusterCreateParameters = new HDInsight.ClusterCreateParameters
+            var clusterCreateParameters = new HDInsight.ClusterCreateParameters2
             {
                 Name = dnsName,
                 DefaultStorageAccountKey = "storageaccountkey",
@@ -78,7 +78,7 @@
 
         internal void CreateClusterWithoutCapability(string dnsName, string location)
         {
-            var clusterCreateParameters = new HDInsight.ClusterCreateParameters
+            var clusterCreateParameters = new HDInsight.ClusterCreateParameters2
             {
                 Name = dnsName,
                 DefaultStorageAccountKey = "storageaccountkey",
@@ -105,7 +105,7 @@
             }
         }
 
-        private static Cluster CreateClusterFromCreateParameters(HDInsight.ClusterCreateParameters clusterCreateParameters)
+        private static Cluster CreateClusterFromCreateParameters(HDInsight.ClusterCreateParameters2 clusterCreateParameters)
         {
             var clusterCreateParams = HDInsightClusterRequestGenerator.Create3XClusterFromMapReduceTemplate(clusterCreateParameters);
             var cluster = new Cluster

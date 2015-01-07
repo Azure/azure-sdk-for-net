@@ -267,7 +267,7 @@
             var clustersPocoClient = new ClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient);
             try
             {
-                var clusterCreateParameters = new HDInsight.ClusterCreateParameters
+                var clusterCreateParameters = new HDInsight.ClusterCreateParameters2
                 {
                     Name = "ConfigActionTest",
                     DefaultStorageAccountKey = IntegrationTestBase.TestCredentials.Environments[0].DefaultStorageAccount.Key,

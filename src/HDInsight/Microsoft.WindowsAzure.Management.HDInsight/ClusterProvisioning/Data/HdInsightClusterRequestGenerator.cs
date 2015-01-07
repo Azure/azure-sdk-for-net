@@ -35,14 +35,14 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Data
         /// </summary>
         /// <param name="inputs">The inputs.</param>
         /// <returns>An instance of the cluster create parameters.</returns>
-        internal static ClusterCreateParameters Create1XClusterForMapReduceTemplate(HDInsight.ClusterCreateParameters inputs)
+        internal static ClusterCreateParameters Create1XClusterForMapReduceTemplate(HDInsight.ClusterCreateParameters2 inputs)
         {
             if (inputs == null)
             {
                 throw new ArgumentNullException("inputs");
             }
 
-            if (inputs.HeadNodeSize == NodeVMSize.Large)
+            if (inputs.HeadNodeSize.Equals(VmSize.Large.ToString()))
             {
                 throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Version 1.X('{0}') clusters can only contain ExtraLarge headnodes.", inputs.Version));
             }
@@ -61,7 +61,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Data
         /// </summary>
         /// <param name="inputs">Cluster creation parameter inputs.</param>
         /// <returns>The corresponding ClusterCreateParameter object.</returns>
-        internal static ClusterCreateParameters Create2XClusterForMapReduceTemplate(HDInsight.ClusterCreateParameters inputs)
+        internal static ClusterCreateParameters Create2XClusterForMapReduceTemplate(HDInsight.ClusterCreateParameters2 inputs)
         {
             if (inputs == null)
             {
@@ -73,19 +73,19 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Data
             {
                 FriendlyName = "HeadNodeRole",
                 InstanceCount = 2,
-                VMSize = inputs.HeadNodeSize.ToVmSize(),
+                VMSizeAsString = inputs.HeadNodeSize,
             };
             var workernodeRole = new ClusterRole
             {
                 InstanceCount = inputs.ClusterSizeInNodes,
                 FriendlyName = "WorkerNodeRole",
-                VMSize = VmSize.Large
+                VMSizeAsString = inputs.DataNodeSize
             };
             var zookeeperRole = new ClusterRole
             {
                 InstanceCount = 3,
                 FriendlyName = "ZKRole",
-                VMSize = VmSize.Small
+                VMSizeAsString = inputs.ZookeeperNodeSize,
             };
 
             cluster.ClusterRoleCollection.Add(headnodeRole);
@@ -143,7 +143,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Data
         /// </summary>
         /// <param name="inputs">Cluster creation parameter inputs.</param>
         /// <returns>The corresponding ClusterCreateParameter object.</returns>
-        internal static ClusterCreateParameters Create3XClusterFromMapReduceTemplate(HDInsight.ClusterCreateParameters inputs)
+        internal static ClusterCreateParameters Create3XClusterFromMapReduceTemplate(HDInsight.ClusterCreateParameters2 inputs)
         {
             if (inputs == null) 
             {
@@ -159,19 +159,19 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Data
             {
                 FriendlyName = "HeadNodeRole",
                 InstanceCount = 2,
-                VMSize = inputs.HeadNodeSize.ToVmSize()
+                VMSizeAsString = inputs.HeadNodeSize,
             };
             var workernodeRole = new ClusterRole
             {
                 InstanceCount = inputs.ClusterSizeInNodes,
                 FriendlyName = "WorkerNodeRole",
-                VMSize = VmSize.Large
+                VMSizeAsString = inputs.DataNodeSize,
             };
             var zookeeperRole = new ClusterRole
             {
                 InstanceCount = 3,
                 FriendlyName = "ZKRole",
-                VMSize = VmSize.Small
+                VMSizeAsString = inputs.ZookeeperNodeSize,
             };
             cluster.ClusterRoleCollection.Add(headnodeRole);
             cluster.ClusterRoleCollection.Add(workernodeRole);
@@ -234,7 +234,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Data
         /// </summary>
         /// <param name="inputs">Cluster creation parameter inputs.</param>
         /// <returns>The corresponding ClusterCreateParameter object.</returns>
-        internal static ClusterCreateParameters Create3XClusterForMapReduceAndHBaseTemplate(HDInsight.ClusterCreateParameters inputs)
+        internal static ClusterCreateParameters Create3XClusterForMapReduceAndHBaseTemplate(HDInsight.ClusterCreateParameters2 inputs)
          {
             if (inputs == null)
             {
@@ -264,7 +264,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Data
         /// </summary>
         /// <param name="inputs">Cluster creation parameter inputs.</param>
         /// <returns>The corresponding ClusterCreateParameter object.</returns>
-        internal static ClusterCreateParameters Create3XClusterForMapReduceAndStormTemplate(HDInsight.ClusterCreateParameters inputs)
+        internal static ClusterCreateParameters Create3XClusterForMapReduceAndStormTemplate(HDInsight.ClusterCreateParameters2 inputs)
         {
             if (inputs == null)
             {
@@ -288,7 +288,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Data
             return cluster;
         }
 
-        private static void ConfigHiveComponent(HiveComponent hive, HDInsight.ClusterCreateParameters inputs)
+        private static void ConfigHiveComponent(HiveComponent hive, HDInsight.ClusterCreateParameters2 inputs)
         {
             hive.HiveSiteXmlProperties.AddRange(
                 inputs.HiveConfiguration.ConfigurationCollection.Select(prop => new Property { Name = prop.Key, Value = prop.Value }));
@@ -314,7 +314,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Data
             }
         }
 
-        private static void AddConfigActionComponent(CustomActionComponent configAction, HDInsight.ClusterCreateParameters inputs, ClusterRole headnodeRole, ClusterRole workernodeRole)
+        private static void AddConfigActionComponent(CustomActionComponent configAction, HDInsight.ClusterCreateParameters2 inputs, ClusterRole headnodeRole, ClusterRole workernodeRole)
         {
             configAction.CustomActions = new CustomActionList();
 
@@ -363,7 +363,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Data
             }
         }
 
-        private static void ConfigOozieComponent(OozieComponent oozie, HDInsight.ClusterCreateParameters inputs)
+        private static void ConfigOozieComponent(OozieComponent oozie, HDInsight.ClusterCreateParameters2 inputs)
         {
             oozie.Configuration.AddRange(
                 inputs.OozieConfiguration.ConfigurationCollection.Select(prop => new Property { Name = prop.Key, Value = prop.Value }));
@@ -400,17 +400,17 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Data
             }
         }
 
-        private static void ConfigHdfsComponent(HdfsComponent hdfs, HDInsight.ClusterCreateParameters inputs)
+        private static void ConfigHdfsComponent(HdfsComponent hdfs, HDInsight.ClusterCreateParameters2 inputs)
         {
             hdfs.HdfsSiteXmlProperties.AddRange(inputs.HdfsConfiguration.Select(prop => new Property { Name = prop.Key, Value = prop.Value }));
         }
 
-        private static void ConfigHadoopCoreComponent(HadoopCoreComponent hadoopCore, HDInsight.ClusterCreateParameters inputs)
+        private static void ConfigHadoopCoreComponent(HadoopCoreComponent hadoopCore, HDInsight.ClusterCreateParameters2 inputs)
         {
             hadoopCore.CoreSiteXmlProperties.AddRange(inputs.CoreConfiguration.Select(prop => new Property { Name = prop.Key, Value = prop.Value }));
         }
 
-        private static void ConfigMapReduceComponent(MapReduceComponent mapReduce, HDInsight.ClusterCreateParameters inputs)
+        private static void ConfigMapReduceComponent(MapReduceComponent mapReduce, HDInsight.ClusterCreateParameters2 inputs)
         {
             mapReduce.MapRedConfXmlProperties.AddRange(
                 inputs.MapReduceConfiguration.ConfigurationCollection.Select(prop => new Property { Name = prop.Key, Value = prop.Value }));
@@ -440,7 +440,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Data
             }
         }
 
-        private static void ConfigMapReduceApplication(MapReduceApplication mapReduceApp, HDInsight.ClusterCreateParameters inputs)
+        private static void ConfigMapReduceApplication(MapReduceApplication mapReduceApp, HDInsight.ClusterCreateParameters2 inputs)
         {
             mapReduceApp.MapRedSiteXmlProperties.AddRange(
                 inputs.MapReduceConfiguration.ConfigurationCollection.Select(prop => new Property { Name = prop.Key, Value = prop.Value }));
@@ -470,12 +470,12 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Data
             }
         }
 
-        private static void ConfigYarnComponent(YarnComponent yarn, HDInsight.ClusterCreateParameters inputs)
+        private static void ConfigYarnComponent(YarnComponent yarn, HDInsight.ClusterCreateParameters2 inputs)
         {
             yarn.Configuration.AddRange(inputs.YarnConfiguration.Select(prop => new Property { Name = prop.Key, Value = prop.Value }));
         }
 
-        private static void ConfigHBaseComponent(HBaseComponent hbase, HDInsight.ClusterCreateParameters inputs)
+        private static void ConfigHBaseComponent(HBaseComponent hbase, HDInsight.ClusterCreateParameters2 inputs)
         {
             hbase.HBaseConfXmlProperties.AddRange(
                 inputs.HBaseConfiguration.ConfigurationCollection.Select(prop => new Property { Name = prop.Key, Value = prop.Value }));
@@ -491,12 +491,12 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Data
             }
         }
 
-        private static void ConfigStormComponent(StormComponent storm, HDInsight.ClusterCreateParameters inputs)
+        private static void ConfigStormComponent(StormComponent storm, HDInsight.ClusterCreateParameters2 inputs)
         {
             storm.StormConfiguration.AddRange(inputs.StormConfiguration.Select(prop => new Property { Name = prop.Key, Value = prop.Value }));
         }
 
-        private static void ConfigVirtualNetwork(ClusterCreateParameters cluster, HDInsight.ClusterCreateParameters inputs)
+        private static void ConfigVirtualNetwork(ClusterCreateParameters cluster, HDInsight.ClusterCreateParameters2 inputs)
         {
             // Check if the virtual network configuration is partially set
             if (string.IsNullOrEmpty(inputs.VirtualNetworkId) ^ string.IsNullOrEmpty(inputs.SubnetName))

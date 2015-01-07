@@ -223,9 +223,21 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
                 return null;
             }
         }
-        
-        /// <inheritdoc />
+
         public async Task<ClusterDetails> CreateClusterAsync(ClusterCreateParameters clusterCreateParameters)
+        {
+            if (clusterCreateParameters == null)
+            {
+                throw new ArgumentNullException("clusterCreateParameters");
+            }
+
+            var createParamsV2 = new ClusterCreateParameters2(clusterCreateParameters);
+
+            return await CreateClusterAsync(createParamsV2);
+        }
+
+        /// <inheritdoc />
+        public async Task<ClusterDetails> CreateClusterAsync(ClusterCreateParameters2 clusterCreateParameters)
         {
             if (clusterCreateParameters == null)
             {
@@ -355,7 +367,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
             return this.CreateContainersPocoClient();
         }
 
-        private static void HandleCreateHttpLayerException(ClusterCreateParameters clusterCreateParameters, HttpLayerException e)
+        private static void HandleCreateHttpLayerException(ClusterCreateParameters2 clusterCreateParameters, HttpLayerException e)
         {
             if (e.RequestContent.Contains(ClusterAlreadyExistsError) && e.RequestStatusCode == HttpStatusCode.BadRequest)
             {
@@ -505,11 +517,21 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         /// <inheritdoc />
         public ClusterDetails CreateCluster(ClusterCreateParameters cluster)
         {
-            return this.CreateClusterAsync(cluster).WaitForResult();
+            return this.CreateClusterAsync(new ClusterCreateParameters2(cluster)).WaitForResult();
         }
 
         /// <inheritdoc />
         public ClusterDetails CreateCluster(ClusterCreateParameters cluster, TimeSpan timeout)
+        {
+            return this.CreateClusterAsync(new ClusterCreateParameters2(cluster)).WaitForResult(timeout);
+        }
+
+        public ClusterDetails CreateCluster(ClusterCreateParameters2 cluster)
+        {
+            return this.CreateClusterAsync(cluster).WaitForResult();
+        }
+
+        public ClusterDetails CreateCluster(ClusterCreateParameters2 cluster, TimeSpan timeout)
         {
             return this.CreateClusterAsync(cluster).WaitForResult(timeout);
         }
@@ -657,7 +679,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
             this.AssertSupportedVersion(cluster.VersionNumber);
         }
 
-        private async Task ValidateClusterVersion(ClusterCreateParameters cluster)
+        private async Task ValidateClusterVersion(ClusterCreateParameters2 cluster)
         {
             var overrideHandlers = ServiceLocator.Instance.Locate<IHDInsightClusterOverrideManager>().GetHandlers(this.credentials, this.Context, this.IgnoreSslErrors);
 

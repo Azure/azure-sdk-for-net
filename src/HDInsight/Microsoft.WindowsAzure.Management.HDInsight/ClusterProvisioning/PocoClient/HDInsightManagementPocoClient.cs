@@ -100,7 +100,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
             return result;
         }
 
-        public async Task CreateContainer(ClusterCreateParameters details)
+        public async Task CreateContainer(ClusterCreateParameters2 details)
         {
             this.LogMessage("Create Cluster Requested", Severity.Informational, Verbosity.Diagnostic);
             // Validates that the AzureStorage Configurations are valid and optionally append FQDN suffix to the storage account name

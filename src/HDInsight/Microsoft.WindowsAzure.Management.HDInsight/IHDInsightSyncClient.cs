@@ -67,6 +67,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         /// </summary>
         /// <param name="cluster">Request object that encapsulates all the configurations.</param>
         /// <returns>Object that represents the HDInsight Cluster created.</returns>
+        [Obsolete]
         ClusterDetails CreateCluster(ClusterCreateParameters cluster);
 
         /// <summary>
@@ -76,6 +77,21 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         /// <param name="timeout">Timeout interval for the operation.</param>
         /// <returns>Object that represents the HDInsight Cluster created.</returns>
         ClusterDetails CreateCluster(ClusterCreateParameters cluster, TimeSpan timeout);
+
+        /// <summary>
+        /// Submits a request to create an HDInsight cluster and waits for it to complete.
+        /// </summary>
+        /// <param name="cluster">Request object that encapsulates all the configurations.</param>
+        /// <returns>Object that represents the HDInsight Cluster created.</returns>
+        ClusterDetails CreateCluster(ClusterCreateParameters2 cluster);
+
+        /// <summary>
+        /// Submits a request to create an HDInsight cluster and waits for it to complete.
+        /// </summary>
+        /// <param name="cluster">Request object that encapsulates all the configurations.</param>
+        /// <param name="timeout">Timeout interval for the operation.</param>
+        /// <returns>Object that represents the HDInsight Cluster created.</returns>
+        ClusterDetails CreateCluster(ClusterCreateParameters2 cluster, TimeSpan timeout);
 
         /// <summary>
         /// Submits a request to delete an HDInsight cluster and waits for it to complete.

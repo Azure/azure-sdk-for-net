@@ -12,6 +12,9 @@
 // 
 // See the Apache Version 2.0 License for specific language governing
 // permissions and limitations under the License.
+
+using Microsoft.WindowsAzure.Management.HDInsight.Contracts.May2014;
+
 namespace Microsoft.WindowsAzure.Management.HDInsight
 {
     using System;
@@ -70,7 +73,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         private const string HttpPassword = "Http_Password";
         private const string BlobContainersElementName = "BlobContainers";
         private const string Create = "Create";
-        private const string SchemaVersion20 = "2.0";
+        private const string SchemaVersion30 = "3.0";
         private const string WorkerNodeRoleName = "WorkerNodeRole";
         private const string HeadNodeRoleName = "HeadNodeRole";
         private const string ClusterTypePropertyName = "Type";
@@ -242,7 +245,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         }
 
         /// <inheritdoc />
-        public string SerializeClusterCreateRequestV3(ClusterCreateParameters cluster)
+        public string SerializeClusterCreateRequestV3(ClusterCreateParameters2 cluster)
         {
             Contracts.May2014.ClusterCreateParameters ccp = null;
             if (cluster.ClusterType == ClusterType.HBase)
@@ -265,24 +268,24 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         }
 
         /// <inheritdoc />
-        public string SerializeClusterCreateRequest(ClusterCreateParameters cluster)
+        public string SerializeClusterCreateRequest(ClusterCreateParameters2 cluster)
         {
             return this.CreateClusterRequest_ToInternal(cluster);
         }
 
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity",
             Justification = "This is a result of interface flowing and not a true measure of complexity.")]
-        private string CreateClusterRequest_ToInternal(ClusterCreateParameters cluster)
+        private string CreateClusterRequest_ToInternal(ClusterCreateParameters2 cluster)
         {
             dynamic dynaXml = DynaXmlBuilder.Create(false, Formatting.None);
             // The RP translates 1 XL into 2 L for SU 4 and up.
             // This is done as part of the HA improvement where in the RP would never
             // create clusters without 2 nodes for SU 4 release (May '14) and up.
-            var headnodeCount = cluster.HeadNodeSize == NodeVMSize.Default ? 1 : 2;
+            var headnodeCount = cluster.HeadNodeSize.Equals(VmSize.ExtraLarge.ToString()) ? 1 : 2; // don't understand this!
             dynaXml.xmlns("http://schemas.microsoft.com/windowsazure")
                    .Resource
                    .b
-                     .SchemaVersion(SchemaVersion20)
+                     .SchemaVersion(SchemaVersion30)
                      .IntrinsicSettings
                      .b
                        .xmlns(May2013)
@@ -301,13 +304,13 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
                              .b
                                .Count(headnodeCount)
                                .RoleType(ClusterRoleType.HeadNode)
-                               .VMSize(cluster.HeadNodeSize.ToNodeVMSize())
+                               .VMSize(cluster.HeadNodeSize)
                              .d
                              .ClusterRole
                              .b
                                .Count(cluster.ClusterSizeInNodes)
                                .RoleType(ClusterRoleType.DataNode)
-                               .VMSize(NodeVMSizeInternal.Large)
+                               .VMSize(cluster.DataNodeSize)
                              .d
                            .d
                          .Version(cluster.Version)
@@ -426,7 +429,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
             }
         }
 
-        private void SerializeHiveConfiguration(ClusterCreateParameters cluster, dynamic dynaXml)
+        private void SerializeHiveConfiguration(ClusterCreateParameters2 cluster, dynamic dynaXml)
         {
             if (cluster.HiveConfiguration.AdditionalLibraries != null)
             {
@@ -448,7 +451,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
             }
         }
 
-        private void SerializeOozieConfiguration(ClusterCreateParameters cluster, dynamic dynaXml)
+        private void SerializeOozieConfiguration(ClusterCreateParameters2 cluster, dynamic dynaXml)
         {
             this.AddConfigurationOptions(dynaXml, cluster.OozieConfiguration.ConfigurationCollection, "ooziesettings");
             if (cluster.OozieConfiguration.AdditionalSharedLibraries != null)
@@ -476,7 +479,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
             this.SerializeOozieMetastore(cluster, dynaXml);
         }
 
-        private void SerializeOozieMetastore(ClusterCreateParameters cluster, dynamic dynaXml)
+        private void SerializeOozieMetastore(ClusterCreateParameters2 cluster, dynamic dynaXml)
         {
             if (cluster.OozieMetastore != null)
             {

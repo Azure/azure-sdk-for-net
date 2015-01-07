@@ -49,7 +49,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
         /// Validates, appends the FQDN suffix if required to storage accounts and creates the default cluster specified in <paramref name="details"/>.
         /// </summary>
         /// <param name="details">The details.</param>
-        public static void ValidateAndResolveAsvAccountsAndPrep(ClusterCreateParameters details)
+        public static void ValidateAndResolveAsvAccountsAndPrep(ClusterCreateParameters2 details)
         {
             var defaultStorageAccount = new WabStorageAccountConfiguration(
                 details.DefaultStorageAccountName, details.DefaultStorageAccountKey, details.DefaultStorageContainer);
