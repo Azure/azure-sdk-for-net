@@ -21,14 +21,14 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
 {
     /// <summary>
     /// The xml output for the recoveryplan object.
     /// </summary>
-    public partial class RecoveryPlanXmlOuput : OperationResponse
+    public partial class RecoveryPlanXmlOuput : AzureOperationResponse
     {
         private string _recoveryPlanXml;
         

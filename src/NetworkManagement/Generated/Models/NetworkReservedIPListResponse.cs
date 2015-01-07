@@ -22,8 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Network.Models;
 
 namespace Microsoft.WindowsAzure.Management.Network.Models
@@ -31,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
     /// <summary>
     /// The response structure for the Server List operation.
     /// </summary>
-    public partial class NetworkReservedIPListResponse : OperationResponse, IEnumerable<NetworkReservedIPListResponse.ReservedIP>
+    public partial class NetworkReservedIPListResponse : AzureOperationResponse, IEnumerable<NetworkReservedIPListResponse.ReservedIP>
     {
         private IList<NetworkReservedIPListResponse.ReservedIP> _reservedIPs;
         

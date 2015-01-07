@@ -23,7 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute
@@ -91,7 +91,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginAddingExtensionAsync(string serviceName, HostedServiceAddExtensionParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BeginAddingExtensionAsync(string serviceName, HostedServiceAddExtensionParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The DeleteAll Hosted Service operation deletes the specified cloud
@@ -111,7 +111,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginDeletingAllAsync(string serviceName, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BeginDeletingAllAsync(string serviceName, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Begin Deleting Extension operation deletes the specified
@@ -133,7 +133,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginDeletingExtensionAsync(string serviceName, string extensionId, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BeginDeletingExtensionAsync(string serviceName, string extensionId, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Check Hosted Service Name Availability operation checks for the
@@ -168,7 +168,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> CreateAsync(HostedServiceCreateParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> CreateAsync(HostedServiceCreateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Delete Hosted Service operation deletes the specified cloud
@@ -186,7 +186,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> DeleteAsync(string serviceName, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> DeleteAsync(string serviceName, CancellationToken cancellationToken);
         
         /// <summary>
         /// The DeleteAll Hosted Service operation deletes the specified cloud
@@ -396,6 +396,6 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> UpdateAsync(string serviceName, HostedServiceUpdateParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> UpdateAsync(string serviceName, HostedServiceUpdateParameters parameters, CancellationToken cancellationToken);
     }
 }

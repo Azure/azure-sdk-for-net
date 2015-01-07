@@ -355,7 +355,7 @@
         DestinationPath="binaries\"
         SigningLogPath="binaries\signing.log"
         ToolsPath="$(OnPremiseBuildTasks)" />
-    <Error Condition=" !Exists('binaries\Microsoft.WindowsAzure.Common.dll') " Text="The Microsoft.WindowsAzure.Common.dll binary is not in the .\binaries\ folder. Code signing likely failed." />
+    <Error Condition=" !Exists('binaries\Microsoft.Azure.Common.dll') " Text="The Microsoft.Azure.Common.dll binary is not in the .\binaries\ folder. Code signing likely failed." />
 
     <Message Text="Signing .NET Framework 4.0 assemblies..." />
     <CodeSigningTask
@@ -365,7 +365,7 @@
       DestinationPath="binaries\net40\"
       SigningLogPath="binaries\net40\signing.log"
       ToolsPath="$(OnPremiseBuildTasks)" />
-    <Error Condition=" !Exists('binaries\net40\Microsoft.WindowsAzure.Common.dll') " Text="The Microsoft.WindowsAzure.Common.dll binary is not in the .\binaries\ folder. .NET 4.0 code signing likely failed." />
+    <Error Condition=" !Exists('binaries\net40\Microsoft.Azure.Common.dll') " Text="The Microsoft.Azure.Common.dll binary is not in the .\binaries\ folder. .NET 4.0 code signing likely failed." />
 
     <Message Text="Signing .NET Framework 4.5 assemblies..." />
     <CodeSigningTask
@@ -375,7 +375,7 @@
       DestinationPath="binaries\net45\"
       SigningLogPath="binaries\net45\signing.log"
       ToolsPath="$(OnPremiseBuildTasks)" />
-    <Error Condition=" !Exists('binaries\net45\Microsoft.WindowsAzure.Common.dll') " Text="The Microsoft.WindowsAzure.Common.dll binary is not in the .\binaries\ folder. .NET 4.5 code signing likely failed." />
+    <Error Condition=" !Exists('binaries\net45\Microsoft.Azure.Common.dll') " Text="The Microsoft.Azure.Common.dll binary is not in the .\binaries\ folder. .NET 4.5 code signing likely failed." />
 
     <Message Text="Validate the signed files" />
     <CallTarget Targets="ValidateOfficialBuildBinaries" />

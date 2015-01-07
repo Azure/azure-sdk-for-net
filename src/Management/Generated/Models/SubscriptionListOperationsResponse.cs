@@ -22,8 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Models;
 
 namespace Microsoft.WindowsAzure.Management.Models
@@ -31,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.Models
     /// <summary>
     /// The List Subscription Operations operation response.
     /// </summary>
-    public partial class SubscriptionListOperationsResponse : OperationResponse
+    public partial class SubscriptionListOperationsResponse : AzureOperationResponse
     {
         private string _continuationToken;
         

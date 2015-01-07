@@ -21,7 +21,7 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Sql.Models;
 
 namespace Microsoft.WindowsAzure.Management.Sql.Models
@@ -29,7 +29,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
     /// <summary>
     /// Contains the response to a Get Database request.
     /// </summary>
-    public partial class DatabaseGetResponse : OperationResponse
+    public partial class DatabaseGetResponse : AzureOperationResponse
     {
         private Database _database;
         

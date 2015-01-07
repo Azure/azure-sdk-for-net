@@ -21,15 +21,15 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Resources.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Resources.Models
 {
     /// <summary>
     /// Resource group information.
     /// </summary>
-    public partial class ResourceGroupCreateOrUpdateResult : OperationResponse
+    public partial class ResourceGroupCreateOrUpdateResult : AzureOperationResponse
     {
         private ResourceGroup _resourceGroup;
         

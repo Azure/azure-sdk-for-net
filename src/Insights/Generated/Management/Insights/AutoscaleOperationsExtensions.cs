@@ -23,9 +23,9 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Insights;
 using Microsoft.Azure.Management.Insights.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Insights
 {
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse CreateOrUpdateSetting(this IAutoscaleOperations operations, string resourceGroupName, string autoscaleSettingName, AutoscaleSettingCreateOrUpdateParameters parameters)
+        public static AzureOperationResponse CreateOrUpdateSetting(this IAutoscaleOperations operations, string resourceGroupName, string autoscaleSettingName, AutoscaleSettingCreateOrUpdateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> CreateOrUpdateSettingAsync(this IAutoscaleOperations operations, string resourceGroupName, string autoscaleSettingName, AutoscaleSettingCreateOrUpdateParameters parameters)
+        public static Task<AzureOperationResponse> CreateOrUpdateSettingAsync(this IAutoscaleOperations operations, string resourceGroupName, string autoscaleSettingName, AutoscaleSettingCreateOrUpdateParameters parameters)
         {
             return operations.CreateOrUpdateSettingAsync(resourceGroupName, autoscaleSettingName, parameters, CancellationToken.None);
         }
@@ -93,7 +93,7 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse DeleteSetting(this IAutoscaleOperations operations, string resourceGroupName, string autoscaleSettingName)
+        public static AzureOperationResponse DeleteSetting(this IAutoscaleOperations operations, string resourceGroupName, string autoscaleSettingName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -116,7 +116,7 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> DeleteSettingAsync(this IAutoscaleOperations operations, string resourceGroupName, string autoscaleSettingName)
+        public static Task<AzureOperationResponse> DeleteSettingAsync(this IAutoscaleOperations operations, string resourceGroupName, string autoscaleSettingName)
         {
             return operations.DeleteSettingAsync(resourceGroupName, autoscaleSettingName, CancellationToken.None);
         }
@@ -222,7 +222,7 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse UpdateSetting(this IAutoscaleOperations operations, string resourceGroupName, string autoscaleSettingName, AutoscaleSettingCreateOrUpdateParameters parameters)
+        public static AzureOperationResponse UpdateSetting(this IAutoscaleOperations operations, string resourceGroupName, string autoscaleSettingName, AutoscaleSettingCreateOrUpdateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -248,7 +248,7 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> UpdateSettingAsync(this IAutoscaleOperations operations, string resourceGroupName, string autoscaleSettingName, AutoscaleSettingCreateOrUpdateParameters parameters)
+        public static Task<AzureOperationResponse> UpdateSettingAsync(this IAutoscaleOperations operations, string resourceGroupName, string autoscaleSettingName, AutoscaleSettingCreateOrUpdateParameters parameters)
         {
             return operations.UpdateSettingAsync(resourceGroupName, autoscaleSettingName, parameters, CancellationToken.None);
         }

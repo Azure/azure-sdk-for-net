@@ -23,9 +23,9 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Sql
 {
@@ -122,7 +122,7 @@ namespace Microsoft.Azure.Management.Sql
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Update(this ISecurityOperations operations, string resourceGroupName, string serverName, string databaseName, DatabaseSecurityPolicyUpdateParameters parameters)
+        public static AzureOperationResponse Update(this ISecurityOperations operations, string resourceGroupName, string serverName, string databaseName, DatabaseSecurityPolicyUpdateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -156,7 +156,7 @@ namespace Microsoft.Azure.Management.Sql
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> UpdateAsync(this ISecurityOperations operations, string resourceGroupName, string serverName, string databaseName, DatabaseSecurityPolicyUpdateParameters parameters)
+        public static Task<AzureOperationResponse> UpdateAsync(this ISecurityOperations operations, string resourceGroupName, string serverName, string databaseName, DatabaseSecurityPolicyUpdateParameters parameters)
         {
             return operations.UpdateAsync(resourceGroupName, serverName, databaseName, parameters, CancellationToken.None);
         }

@@ -22,8 +22,8 @@
 using System;
 using System.Linq;
 using System.Net.Http;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.MediaServices;
 
 namespace Microsoft.WindowsAzure.Management.MediaServices
@@ -95,7 +95,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
         /// Initializes a new instance of the MediaServicesManagementClient
         /// class.
         /// </summary>
-        private MediaServicesManagementClient()
+        public MediaServicesManagementClient()
             : base()
         {
             this._accounts = new AccountOperations(this);
@@ -164,7 +164,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
         /// <param name='httpClient'>
         /// The Http client
         /// </param>
-        private MediaServicesManagementClient(HttpClient httpClient)
+        public MediaServicesManagementClient(HttpClient httpClient)
             : base(httpClient)
         {
             this._accounts = new AccountOperations(this);

@@ -23,7 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute
@@ -65,7 +65,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginChangingConfigurationByNameAsync(string serviceName, string deploymentName, DeploymentChangeConfigurationParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BeginChangingConfigurationByNameAsync(string serviceName, string deploymentName, DeploymentChangeConfigurationParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Begin Changing Deployment Configuration By Slot operation
@@ -96,7 +96,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginChangingConfigurationBySlotAsync(string serviceName, DeploymentSlot deploymentSlot, DeploymentChangeConfigurationParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BeginChangingConfigurationBySlotAsync(string serviceName, DeploymentSlot deploymentSlot, DeploymentChangeConfigurationParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Begin Creating Deployment operation uploads a new service
@@ -127,7 +127,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginCreatingAsync(string serviceName, DeploymentSlot deploymentSlot, DeploymentCreateParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BeginCreatingAsync(string serviceName, DeploymentSlot deploymentSlot, DeploymentCreateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Begin Deleting Deployment By Name operation deletes the
@@ -158,7 +158,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginDeletingByNameAsync(string serviceName, string deploymentName, bool deleteFromStorage, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BeginDeletingByNameAsync(string serviceName, string deploymentName, bool deleteFromStorage, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Begin Deleting Deployment By Slot operation deletes the
@@ -185,7 +185,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginDeletingBySlotAsync(string serviceName, DeploymentSlot deploymentSlot, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BeginDeletingBySlotAsync(string serviceName, DeploymentSlot deploymentSlot, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Delete Role Instances operation deletes a role instance from a
@@ -209,7 +209,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginDeletingRoleInstanceByBeploymentSlotAsync(string serviceName, string deploymentSlot, DeploymentDeleteRoleInstanceParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BeginDeletingRoleInstanceByBeploymentSlotAsync(string serviceName, string deploymentSlot, DeploymentDeleteRoleInstanceParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Delete Role Instances operation deletes a role instance from a
@@ -233,7 +233,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginDeletingRoleInstanceByDeploymentNameAsync(string serviceName, string deploymentName, DeploymentDeleteRoleInstanceParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BeginDeletingRoleInstanceByDeploymentNameAsync(string serviceName, string deploymentName, DeploymentDeleteRoleInstanceParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Get Package By Name operation retrieves a cloud service package
@@ -263,7 +263,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginGettingPackageByNameAsync(string serviceName, string deploymentName, DeploymentGetPackageParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BeginGettingPackageByNameAsync(string serviceName, string deploymentName, DeploymentGetPackageParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Get Package By Slot operation retrieves a cloud service package
@@ -293,7 +293,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginGettingPackageBySlotAsync(string serviceName, DeploymentSlot deploymentSlot, DeploymentGetPackageParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BeginGettingPackageBySlotAsync(string serviceName, DeploymentSlot deploymentSlot, DeploymentGetPackageParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Begin Rebooting Role Instance By Deployment Name operation
@@ -324,7 +324,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginRebootingRoleInstanceByDeploymentNameAsync(string serviceName, string deploymentName, string roleInstanceName, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BeginRebootingRoleInstanceByDeploymentNameAsync(string serviceName, string deploymentName, string roleInstanceName, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Begin Rebooting Role Instance By Deployment Slot operation
@@ -355,7 +355,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginRebootingRoleInstanceByDeploymentSlotAsync(string serviceName, DeploymentSlot deploymentSlot, string roleInstanceName, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BeginRebootingRoleInstanceByDeploymentSlotAsync(string serviceName, DeploymentSlot deploymentSlot, string roleInstanceName, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Rebuild Role Instance asynchronous operation reinstalls the
@@ -390,7 +390,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginRebuildingRoleInstanceByDeploymentNameAsync(string serviceName, string deploymentName, string roleInstanceName, string resources, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BeginRebuildingRoleInstanceByDeploymentNameAsync(string serviceName, string deploymentName, string roleInstanceName, string resources, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Rebuild Role Instance asynchronous operation reinstalls the
@@ -425,7 +425,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginRebuildingRoleInstanceByDeploymentSlotAsync(string serviceName, string deploymentSlot, string roleInstanceName, string resources, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BeginRebuildingRoleInstanceByDeploymentSlotAsync(string serviceName, string deploymentSlot, string roleInstanceName, string resources, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Begin Reimaging Role Instance By Deployment Name operation
@@ -456,7 +456,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginReimagingRoleInstanceByDeploymentNameAsync(string serviceName, string deploymentName, string roleInstanceName, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BeginReimagingRoleInstanceByDeploymentNameAsync(string serviceName, string deploymentName, string roleInstanceName, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Begin Reimaging Role Instance By Deployment Slot operation
@@ -487,7 +487,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginReimagingRoleInstanceByDeploymentSlotAsync(string serviceName, DeploymentSlot deploymentSlot, string roleInstanceName, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BeginReimagingRoleInstanceByDeploymentSlotAsync(string serviceName, DeploymentSlot deploymentSlot, string roleInstanceName, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Begin Swapping Deployment operation initiates a virtual IP
@@ -515,7 +515,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginSwappingAsync(string serviceName, DeploymentSwapParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BeginSwappingAsync(string serviceName, DeploymentSwapParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Begin Updating Deployment Status By Deployment Name operation
@@ -547,7 +547,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginUpdatingStatusByDeploymentNameAsync(string serviceName, string deploymentName, DeploymentUpdateStatusParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BeginUpdatingStatusByDeploymentNameAsync(string serviceName, string deploymentName, DeploymentUpdateStatusParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Begin Updating Deployment Status By Deployment Slot operation
@@ -579,7 +579,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginUpdatingStatusByDeploymentSlotAsync(string serviceName, DeploymentSlot deploymentSlot, DeploymentUpdateStatusParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BeginUpdatingStatusByDeploymentSlotAsync(string serviceName, DeploymentSlot deploymentSlot, DeploymentUpdateStatusParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Begin Upgrading Deployment By Name operation initiates an
@@ -636,7 +636,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginUpgradingByNameAsync(string serviceName, string deploymentName, DeploymentUpgradeParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BeginUpgradingByNameAsync(string serviceName, string deploymentName, DeploymentUpgradeParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Begin Upgrading Deployment By Slot operation initiates an
@@ -693,7 +693,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginUpgradingBySlotAsync(string serviceName, DeploymentSlot deploymentSlot, DeploymentUpgradeParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BeginUpgradingBySlotAsync(string serviceName, DeploymentSlot deploymentSlot, DeploymentUpgradeParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Begin Walking Upgrade Domain By Deployment Name operation
@@ -748,7 +748,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginWalkingUpgradeDomainByDeploymentNameAsync(string serviceName, string deploymentName, DeploymentWalkUpgradeDomainParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BeginWalkingUpgradeDomainByDeploymentNameAsync(string serviceName, string deploymentName, DeploymentWalkUpgradeDomainParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Begin Walking Upgrade Domain By Deployment Slot operation
@@ -803,7 +803,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginWalkingUpgradeDomainByDeploymentSlotAsync(string serviceName, DeploymentSlot deploymentSlot, DeploymentWalkUpgradeDomainParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BeginWalkingUpgradeDomainByDeploymentSlotAsync(string serviceName, DeploymentSlot deploymentSlot, DeploymentWalkUpgradeDomainParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Change Deployment Configuration By Name operation initiates a
@@ -1476,7 +1476,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> RollbackUpdateOrUpgradeByDeploymentNameAsync(string serviceName, string deploymentName, DeploymentRollbackUpdateOrUpgradeParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> RollbackUpdateOrUpgradeByDeploymentNameAsync(string serviceName, string deploymentName, DeploymentRollbackUpdateOrUpgradeParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Rollback Update Or Upgrade By Deployment Slot operation cancels
@@ -1507,7 +1507,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> RollbackUpdateOrUpgradeByDeploymentSlotAsync(string serviceName, DeploymentSlot deploymentSlot, DeploymentRollbackUpdateOrUpgradeParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> RollbackUpdateOrUpgradeByDeploymentSlotAsync(string serviceName, DeploymentSlot deploymentSlot, DeploymentRollbackUpdateOrUpgradeParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Swap Deployment operation initiates a virtual IP address swap

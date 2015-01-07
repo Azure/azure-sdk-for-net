@@ -22,7 +22,7 @@
 using System;
 using System.Linq;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.Management.TrafficManager
 {
     /// <summary>
     /// The Windows Azure Traffic Manager management API provides a RESTful set

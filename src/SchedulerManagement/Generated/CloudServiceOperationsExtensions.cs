@@ -23,11 +23,11 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Scheduler;
 using Microsoft.WindowsAzure.Management.Scheduler.Models;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.Management.Scheduler
 {
     public static partial class CloudServiceOperationsExtensions
     {
@@ -48,7 +48,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginCreating(this ICloudServiceOperations operations, string cloudServiceName, CloudServiceCreateParameters parameters)
+        public static AzureOperationResponse BeginCreating(this ICloudServiceOperations operations, string cloudServiceName, CloudServiceCreateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -74,7 +74,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginCreatingAsync(this ICloudServiceOperations operations, string cloudServiceName, CloudServiceCreateParameters parameters)
+        public static Task<AzureOperationResponse> BeginCreatingAsync(this ICloudServiceOperations operations, string cloudServiceName, CloudServiceCreateParameters parameters)
         {
             return operations.BeginCreatingAsync(cloudServiceName, parameters, CancellationToken.None);
         }
@@ -93,7 +93,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginDeleting(this ICloudServiceOperations operations, string cloudServiceName)
+        public static AzureOperationResponse BeginDeleting(this ICloudServiceOperations operations, string cloudServiceName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -116,7 +116,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginDeletingAsync(this ICloudServiceOperations operations, string cloudServiceName)
+        public static Task<AzureOperationResponse> BeginDeletingAsync(this ICloudServiceOperations operations, string cloudServiceName)
         {
             return operations.BeginDeletingAsync(cloudServiceName, CancellationToken.None);
         }

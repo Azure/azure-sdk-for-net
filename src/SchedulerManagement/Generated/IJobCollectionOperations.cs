@@ -23,7 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Scheduler.Models;
 
 namespace Microsoft.WindowsAzure.Management.Scheduler
@@ -66,7 +66,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginDeletingAsync(string cloudServiceName, string jobCollectionName, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BeginDeletingAsync(string cloudServiceName, string jobCollectionName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Update a job collection.

@@ -22,8 +22,8 @@
 using System;
 using System.Linq;
 using System.Net.Http;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Sql;
 
 namespace Microsoft.WindowsAzure.Management.Sql
@@ -234,7 +234,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// <summary>
         /// Initializes a new instance of the SqlManagementClient class.
         /// </summary>
-        private SqlManagementClient()
+        public SqlManagementClient()
             : base()
         {
             this._dac = new DacOperations(this);
@@ -311,7 +311,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// <param name='httpClient'>
         /// The Http client
         /// </param>
-        private SqlManagementClient(HttpClient httpClient)
+        public SqlManagementClient(HttpClient httpClient)
             : base(httpClient)
         {
             this._dac = new DacOperations(this);

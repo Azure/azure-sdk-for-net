@@ -21,7 +21,7 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.WebSites.Models;
 
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
@@ -29,7 +29,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
     /// <summary>
     /// The Create Web Hosting Plan operation response.
     /// </summary>
-    public partial class WebHostingPlanUpdateResponse : OperationResponse
+    public partial class WebHostingPlanUpdateResponse : AzureOperationResponse
     {
         private WebHostingPlan _webHostingPlan;
         

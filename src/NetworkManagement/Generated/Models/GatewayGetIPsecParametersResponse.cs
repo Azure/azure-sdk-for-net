@@ -21,7 +21,7 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Network.Models;
 
 namespace Microsoft.WindowsAzure.Management.Network.Models
@@ -30,7 +30,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
     /// The response that will be returned from a GetIPsecParameters request.
     /// This contains the IPsec parameters for the specified connection.
     /// </summary>
-    public partial class GatewayGetIPsecParametersResponse : OperationResponse
+    public partial class GatewayGetIPsecParametersResponse : AzureOperationResponse
     {
         private IPsecParameters _iPsecParameters;
         

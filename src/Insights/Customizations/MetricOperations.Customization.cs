@@ -5,9 +5,8 @@ using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using Hyak.Common;
 using Microsoft.Azure.Insights.Models;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Insights
 {
@@ -37,7 +36,7 @@ namespace Microsoft.Azure.Insights
 
             // Get Passthru definitions
             List<Metric> passthruMetrics = new List<Metric>();
-            string invocationId = Tracing.NextInvocationId.ToString(CultureInfo.InvariantCulture);
+            string invocationId = TracingAdapter.NextInvocationId.ToString(CultureInfo.InvariantCulture);
             this.LogStartGetMetrics(invocationId, resourceUri, filterString, passthruDefinitions);
             if (passthruDefinitions.Any())
             {
@@ -120,7 +119,7 @@ namespace Microsoft.Azure.Insights
                 throw new ArgumentNullException("definitions");
             }
 
-            string invocationId = Tracing.NextInvocationId.ToString(CultureInfo.InvariantCulture);
+            string invocationId = TracingAdapter.NextInvocationId.ToString(CultureInfo.InvariantCulture);
             this.LogStartGetMetrics(invocationId, resourceUri, filterString, definitions);
 
             // If no definitions provided, return empty collection
@@ -211,30 +210,30 @@ namespace Microsoft.Azure.Insights
 
         private void LogMetricCountFromResponses(string invocationId, int metricsCount)
         {
-            if (CloudContext.Configuration.Tracing.IsEnabled)
+            if (TracingAdapter.IsEnabled)
             {
-                Tracing.Information("InvocationId: {0}. Total number of metrics in all resposes: {1}", invocationId, metricsCount);
+                TracingAdapter.Information("InvocationId: {0}. Total number of metrics in all resposes: {1}", invocationId, metricsCount);
             }
         }
 
         private void LogEndGetMetrics(string invocationId, MetricListResponse result)
         {
-            if (CloudContext.Configuration.Tracing.IsEnabled)
+            if (TracingAdapter.IsEnabled)
             {
-                Tracing.Exit(invocationId, result);
+                TracingAdapter.Exit(invocationId, result);
             }
         }
 
         private void LogStartGetMetrics(string invocationId, string resourceUri, string filterString, IEnumerable<MetricDefinition> definitions)
         {
-            if (CloudContext.Configuration.Tracing.IsEnabled)
+            if (TracingAdapter.IsEnabled)
             {
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceUri", resourceUri);
                 tracingParameters.Add("filterString", filterString);
                 tracingParameters.Add("definitions", string.Concat(definitions.Select(d => d.Name)));
 
-                Tracing.Enter(invocationId, this, "GetMetricsAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetMetricsAsync", tracingParameters);
             }
         }
 

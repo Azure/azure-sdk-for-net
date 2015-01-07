@@ -23,11 +23,11 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Compute;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.Management.Compute
 {
     /// <summary>
     /// The Service Management API provides programmatic access to much of the
@@ -82,7 +82,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginCreatingDataDisk(this IVirtualMachineDiskOperations operations, string serviceName, string deploymentName, string roleName, VirtualMachineDataDiskCreateParameters parameters)
+        public static AzureOperationResponse BeginCreatingDataDisk(this IVirtualMachineDiskOperations operations, string serviceName, string deploymentName, string roleName, VirtualMachineDataDiskCreateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -134,7 +134,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginCreatingDataDiskAsync(this IVirtualMachineDiskOperations operations, string serviceName, string deploymentName, string roleName, VirtualMachineDataDiskCreateParameters parameters)
+        public static Task<AzureOperationResponse> BeginCreatingDataDiskAsync(this IVirtualMachineDiskOperations operations, string serviceName, string deploymentName, string roleName, VirtualMachineDataDiskCreateParameters parameters)
         {
             return operations.BeginCreatingDataDiskAsync(serviceName, deploymentName, roleName, parameters, CancellationToken.None);
         }
@@ -169,7 +169,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginDeletingDataDisk(this IVirtualMachineDiskOperations operations, string serviceName, string deploymentName, string roleName, int logicalUnitNumber, bool deleteFromStorage)
+        public static AzureOperationResponse BeginDeletingDataDisk(this IVirtualMachineDiskOperations operations, string serviceName, string deploymentName, string roleName, int logicalUnitNumber, bool deleteFromStorage)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -208,7 +208,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginDeletingDataDiskAsync(this IVirtualMachineDiskOperations operations, string serviceName, string deploymentName, string roleName, int logicalUnitNumber, bool deleteFromStorage)
+        public static Task<AzureOperationResponse> BeginDeletingDataDiskAsync(this IVirtualMachineDiskOperations operations, string serviceName, string deploymentName, string roleName, int logicalUnitNumber, bool deleteFromStorage)
         {
             return operations.BeginDeletingDataDiskAsync(serviceName, deploymentName, roleName, logicalUnitNumber, deleteFromStorage, CancellationToken.None);
         }
@@ -484,7 +484,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse DeleteDisk(this IVirtualMachineDiskOperations operations, string name, bool deleteFromStorage)
+        public static AzureOperationResponse DeleteDisk(this IVirtualMachineDiskOperations operations, string name, bool deleteFromStorage)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -514,7 +514,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> DeleteDiskAsync(this IVirtualMachineDiskOperations operations, string name, bool deleteFromStorage)
+        public static Task<AzureOperationResponse> DeleteDiskAsync(this IVirtualMachineDiskOperations operations, string name, bool deleteFromStorage)
         {
             return operations.DeleteDiskAsync(name, deleteFromStorage, CancellationToken.None);
         }
@@ -701,7 +701,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse UpdateDataDisk(this IVirtualMachineDiskOperations operations, string serviceName, string deploymentName, string roleName, int logicalUnitNumber, VirtualMachineDataDiskUpdateParameters parameters)
+        public static AzureOperationResponse UpdateDataDisk(this IVirtualMachineDiskOperations operations, string serviceName, string deploymentName, string roleName, int logicalUnitNumber, VirtualMachineDataDiskUpdateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -740,7 +740,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> UpdateDataDiskAsync(this IVirtualMachineDiskOperations operations, string serviceName, string deploymentName, string roleName, int logicalUnitNumber, VirtualMachineDataDiskUpdateParameters parameters)
+        public static Task<AzureOperationResponse> UpdateDataDiskAsync(this IVirtualMachineDiskOperations operations, string serviceName, string deploymentName, string roleName, int logicalUnitNumber, VirtualMachineDataDiskUpdateParameters parameters)
         {
             return operations.UpdateDataDiskAsync(serviceName, deploymentName, roleName, logicalUnitNumber, parameters, CancellationToken.None);
         }

@@ -23,11 +23,11 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.SiteRecovery;
 using Microsoft.WindowsAzure.Management.SiteRecovery.Models;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.Management.SiteRecovery
 {
     public static partial class JobOperationsExtensions
     {
@@ -48,7 +48,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Cancel(this IJobOperations operations, string jobId, CustomRequestHeaders customRequestHeaders)
+        public static AzureOperationResponse Cancel(this IJobOperations operations, string jobId, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -74,7 +74,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> CancelAsync(this IJobOperations operations, string jobId, CustomRequestHeaders customRequestHeaders)
+        public static Task<AzureOperationResponse> CancelAsync(this IJobOperations operations, string jobId, CustomRequestHeaders customRequestHeaders)
         {
             return operations.CancelAsync(jobId, customRequestHeaders, CancellationToken.None);
         }

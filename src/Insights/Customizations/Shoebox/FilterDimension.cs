@@ -11,9 +11,9 @@ using System.Text;
 namespace Microsoft.Azure.Insights
 {
     /// <summary>
-    /// MetricFilterDimension class represents a dimension name and corresponding (optional) dimension values
+    /// FilterDimension class represents a dimension name and corresponding (optional) dimension values
     /// </summary>
-    internal class Dimension
+    internal class FilterDimension
     {
         private string name;
         private IEnumerable<string> values;

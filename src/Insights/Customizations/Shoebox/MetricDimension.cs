@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Insights
     internal class MetricDimension
     {
         private string name;
-        private IEnumerable<Dimension> dimensions;
+        private IEnumerable<FilterDimension> dimensions;
 
         /// <summary>
         /// Gets or sets the Name of the dimension
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Insights
         /// <summary>
         /// Gets or sets the Values of the dimension
         /// </summary>
-        public IEnumerable<Dimension> Dimensions
+        public IEnumerable<FilterDimension> Dimensions
         {
             get
             {

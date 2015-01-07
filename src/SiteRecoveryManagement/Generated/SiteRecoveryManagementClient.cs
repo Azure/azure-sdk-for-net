@@ -22,8 +22,8 @@
 using System;
 using System.Linq;
 using System.Net.Http;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.SiteRecovery;
 
 namespace Microsoft.WindowsAzure.Management.SiteRecovery
@@ -179,7 +179,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
         /// Initializes a new instance of the SiteRecoveryManagementClient
         /// class.
         /// </summary>
-        private SiteRecoveryManagementClient()
+        public SiteRecoveryManagementClient()
             : base()
         {
             this._jobs = new JobOperations(this);
@@ -286,7 +286,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
         /// <param name='httpClient'>
         /// The Http client
         /// </param>
-        private SiteRecoveryManagementClient(HttpClient httpClient)
+        public SiteRecoveryManagementClient(HttpClient httpClient)
             : base(httpClient)
         {
             this._jobs = new JobOperations(this);

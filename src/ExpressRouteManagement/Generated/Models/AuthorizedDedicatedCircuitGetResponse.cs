@@ -21,7 +21,7 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.ExpressRoute.Models;
 
 namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
@@ -29,7 +29,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
     /// <summary>
     /// The Get Authorized Dedicated Circuit operation response.
     /// </summary>
-    public partial class AuthorizedDedicatedCircuitGetResponse : OperationResponse
+    public partial class AuthorizedDedicatedCircuitGetResponse : AzureOperationResponse
     {
         private AzureAuthorizedDedicatedCircuit _authorizedDedicatedCircuit;
         

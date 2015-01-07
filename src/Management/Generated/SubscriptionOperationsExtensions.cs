@@ -23,11 +23,11 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management;
 using Microsoft.WindowsAzure.Management.Models;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.Management
 {
     /// <summary>
     /// The Service Management API provides programmatic access to much of the
@@ -143,7 +143,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse RegisterResource(this ISubscriptionOperations operations, string resourceName)
+        public static AzureOperationResponse RegisterResource(this ISubscriptionOperations operations, string resourceName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -166,7 +166,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> RegisterResourceAsync(this ISubscriptionOperations operations, string resourceName)
+        public static Task<AzureOperationResponse> RegisterResourceAsync(this ISubscriptionOperations operations, string resourceName)
         {
             return operations.RegisterResourceAsync(resourceName, CancellationToken.None);
         }
@@ -185,7 +185,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse UnregisterResource(this ISubscriptionOperations operations, string resourceName)
+        public static AzureOperationResponse UnregisterResource(this ISubscriptionOperations operations, string resourceName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -208,7 +208,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> UnregisterResourceAsync(this ISubscriptionOperations operations, string resourceName)
+        public static Task<AzureOperationResponse> UnregisterResourceAsync(this ISubscriptionOperations operations, string resourceName)
         {
             return operations.UnregisterResourceAsync(resourceName, CancellationToken.None);
         }

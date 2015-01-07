@@ -13,20 +13,19 @@
 // limitations under the License.
 //
 
-using Microsoft.WindowsAzure.Common;
-using System.Net.Http;
-
-namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
+namespace Microsoft.Azure
 {
-    public partial class AlertsClient
+    /// <summary>
+    /// Class for token based credentials associated with a particular subscription.
+    /// </summary>
+    public class AnonymousCloudCredentials : SubscriptionCloudCredentials
     {
         /// <summary>
-        /// Get an instance of the AlertsClient class that uses the handler while initiating web requests.
+        /// Gets an empty subscription Id.
         /// </summary>
-        /// <param name="handler">the handler</param>
-        public override AlertsClient WithHandler(DelegatingHandler handler)
+        public override string SubscriptionId
         {
-            return WithHandler(new AlertsClient(), handler);
+            get { return string.Empty; }
         }
     }
 }

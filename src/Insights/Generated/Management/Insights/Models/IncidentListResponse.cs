@@ -22,16 +22,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Insights.Models;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Management.Insights.Models
 {
     /// <summary>
     /// The List incidents operation response.
     /// </summary>
-    public partial class IncidentListResponse : OperationResponse, IEnumerable<Incident>
+    public partial class IncidentListResponse : AzureOperationResponse, IEnumerable<Incident>
     {
         private IList<Incident> _value;
         

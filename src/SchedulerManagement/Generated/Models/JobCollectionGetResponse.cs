@@ -22,7 +22,7 @@
 using System;
 using System.Linq;
 using System.Net;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Scheduler.Models;
 
 namespace Microsoft.WindowsAzure.Management.Scheduler.Models
@@ -30,7 +30,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
     /// <summary>
     /// The Get Job Collection operation response.
     /// </summary>
-    public partial class JobCollectionGetResponse : OperationResponse
+    public partial class JobCollectionGetResponse : AzureOperationResponse
     {
         private string _eTag;
         

@@ -21,14 +21,14 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
     /// The Virtual Machine Template Capture Role operation response.
     /// </summary>
-    public partial class VirtualMachineCaptureVMImageParameters : OperationResponse
+    public partial class VirtualMachineCaptureVMImageParameters : AzureOperationResponse
     {
         private string _operationType;
         

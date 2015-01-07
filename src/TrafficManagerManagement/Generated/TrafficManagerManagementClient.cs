@@ -22,8 +22,8 @@
 using System;
 using System.Linq;
 using System.Net.Http;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.TrafficManager;
 using Microsoft.WindowsAzure.Management.TrafficManager.Models;
 
@@ -119,7 +119,7 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
         /// Initializes a new instance of the TrafficManagerManagementClient
         /// class.
         /// </summary>
-        private TrafficManagerManagementClient()
+        public TrafficManagerManagementClient()
             : base()
         {
             this._definitions = new DefinitionOperations(this);
@@ -189,7 +189,7 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
         /// <param name='httpClient'>
         /// The Http client
         /// </param>
-        private TrafficManagerManagementClient(HttpClient httpClient)
+        public TrafficManagerManagementClient(HttpClient httpClient)
             : base(httpClient)
         {
             this._definitions = new DefinitionOperations(this);

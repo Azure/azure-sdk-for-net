@@ -22,9 +22,9 @@
 using System;
 using System.Linq;
 using System.Net.Http;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Redis;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
 
 namespace Microsoft.Azure.Management.Redis
 {
@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Management.Redis
         /// <summary>
         /// Initializes a new instance of the RedisManagementClient class.
         /// </summary>
-        private RedisManagementClient()
+        public RedisManagementClient()
             : base()
         {
             this._redis = new RedisOperations(this);
@@ -167,7 +167,7 @@ namespace Microsoft.Azure.Management.Redis
         /// <param name='httpClient'>
         /// The Http client
         /// </param>
-        private RedisManagementClient(HttpClient httpClient)
+        public RedisManagementClient(HttpClient httpClient)
             : base(httpClient)
         {
             this._redis = new RedisOperations(this);

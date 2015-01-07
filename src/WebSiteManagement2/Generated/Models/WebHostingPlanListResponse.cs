@@ -22,16 +22,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.WebSites.Models;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
     /// <summary>
     /// The List Web Hosting Plans operation response.
     /// </summary>
-    public partial class WebHostingPlanListResponse : OperationResponse, IEnumerable<WebHostingPlan>
+    public partial class WebHostingPlanListResponse : AzureOperationResponse, IEnumerable<WebHostingPlan>
     {
         private IList<WebHostingPlan> _webHostingPlans;
         

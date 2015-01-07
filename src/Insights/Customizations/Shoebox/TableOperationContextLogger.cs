@@ -5,8 +5,7 @@
 using System;
 using System.Globalization;
 using System.Net;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
 using Microsoft.WindowsAzure.Storage;
 
 namespace Microsoft.Azure.Insights
@@ -71,7 +70,7 @@ namespace Microsoft.Azure.Insights
 
         private void OperationContextResponseReceived(object sender, RequestEventArgs e)
         {
-            if (!CloudContext.Configuration.Tracing.IsEnabled)
+            if (!TracingAdapter.IsEnabled)
             {
                 return;
             }
@@ -122,7 +121,7 @@ namespace Microsoft.Azure.Insights
 
         private void OperationContextSendingRequest(object sender, RequestEventArgs e)
         {
-            if (!CloudContext.Configuration.Tracing.IsEnabled)
+            if (!TracingAdapter.IsEnabled)
             {
                 return;
             }
@@ -157,7 +156,7 @@ namespace Microsoft.Azure.Insights
                 contentLength,
                 storageAccountName);
 
-            Tracing.Information(message);
+            TracingAdapter.Information(message);
         }
 
         private void LogTableStorageOperationCompletedInvoking(
@@ -184,7 +183,7 @@ namespace Microsoft.Azure.Insights
                 contentLength,
                 storageAccountName);
 
-            Tracing.Information(message);
+            TracingAdapter.Information(message);
         }
 
         private void LogTableStorageOperationInvoking(
@@ -203,7 +202,7 @@ namespace Microsoft.Azure.Insights
                 contentLength,
                 storageAccountName);
 
-            Tracing.Information(message);
+            TracingAdapter.Information(message);
         }
     }
 }

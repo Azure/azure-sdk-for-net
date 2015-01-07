@@ -22,7 +22,7 @@
 using System;
 using System.Linq;
 using System.Net;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.ExpressRoute.Models;
 
 namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
@@ -37,7 +37,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
     /// failed, the response body includes the HTTP status code for the failed
     /// request, and also includes error information regarding the failure.
     /// </summary>
-    public partial class ExpressRouteOperationStatusResponse : OperationResponse
+    public partial class ExpressRouteOperationStatusResponse : AzureOperationResponse
     {
         private string _data;
         

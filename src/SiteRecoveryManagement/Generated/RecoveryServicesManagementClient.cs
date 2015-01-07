@@ -22,8 +22,8 @@
 using System;
 using System.Linq;
 using System.Net.Http;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.RecoveryServices;
 
 namespace Microsoft.WindowsAzure.Management.RecoveryServices
@@ -99,7 +99,7 @@ namespace Microsoft.WindowsAzure.Management.RecoveryServices
         /// Initializes a new instance of the RecoveryServicesManagementClient
         /// class.
         /// </summary>
-        private RecoveryServicesManagementClient()
+        public RecoveryServicesManagementClient()
             : base()
         {
             this._cloudServices = new CloudServiceOperations(this);
@@ -168,7 +168,7 @@ namespace Microsoft.WindowsAzure.Management.RecoveryServices
         /// <param name='httpClient'>
         /// The Http client
         /// </param>
-        private RecoveryServicesManagementClient(HttpClient httpClient)
+        public RecoveryServicesManagementClient(HttpClient httpClient)
             : base(httpClient)
         {
             this._cloudServices = new CloudServiceOperations(this);

@@ -22,7 +22,7 @@
 using System;
 using System.Linq;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.Management.RecoveryServices
 {
     public static partial class RecoveryServicesManagementClientExtensions
     {

@@ -13,20 +13,27 @@
 // limitations under the License.
 //
 
-using Microsoft.WindowsAzure.Common;
-using System.Net.Http;
+using System;
+using System.Linq.Expressions;
 
-namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
+namespace Microsoft.Azure.Common.OData
 {
-    public partial class AutoscaleClient
+    /// <summary>
+    /// Handles OData filter generation.
+    /// </summary>
+    public class FilterString
     {
         /// <summary>
-        /// Get an instance of the AlertsClient class that uses the handler while initiating web requests.
+        /// Generates an OData filter from a specified Linq expression.
         /// </summary>
-        /// <param name="handler">the handler</param>
-        public override AutoscaleClient WithHandler(DelegatingHandler handler)
+        /// <typeparam name="T">Filter type</typeparam>
+        /// <param name="filter">Entity to use for filter generation</param>
+        /// <returns></returns>
+        public static string Generate<T>(Expression<Func<T, bool>> filter)
         {
-            return WithHandler(new AutoscaleClient(), handler);
+            UrlExpressionVisitor visitor = new UrlExpressionVisitor();
+            visitor.Visit(filter);
+            return visitor.ToString();
         }
     }
 }

@@ -478,7 +478,7 @@ namespace Microsoft.Azure.Insights
                     DimensionFilters = expression.MetricDimensions == null ? null : expression.MetricDimensions.ExpressionElements.Select(md => new MetricDimension()
                     {
                         Name = md.Name,
-                        Dimensions = md.Dimensions == null ? null : md.Dimensions.ExpressionElements.Select(d => new Dimension()
+                        Dimensions = md.Dimensions == null ? null : md.Dimensions.ExpressionElements.Select(d => new FilterDimension()
                         {
                             Name = d.Name,
                             Values = d.Values

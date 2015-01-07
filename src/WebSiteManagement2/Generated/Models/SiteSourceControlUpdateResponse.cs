@@ -21,15 +21,15 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.WebSites.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
     /// <summary>
     /// The link site to source control operation response.
     /// </summary>
-    public partial class SiteSourceControlUpdateResponse : OperationResponse
+    public partial class SiteSourceControlUpdateResponse : AzureOperationResponse
     {
         private SiteSourceControl _siteSourceControl;
         

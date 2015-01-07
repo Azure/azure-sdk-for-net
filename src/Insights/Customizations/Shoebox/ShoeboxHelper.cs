@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
-using Microsoft.WindowsAzure.Common.Internals;
+using System.Xml;
 
 namespace Microsoft.Azure.Insights
 {
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Insights
         {
             return string.Format(CultureInfo.InvariantCulture, "{0}timeGrain eq duration'{1}' and startTime eq {2} and endTime eq {3}",
                 IsNullOrEmpty(filter.DimensionFilters) ? string.Empty : "(" + GenerateMetricDimensionFilterString(filter.DimensionFilters) + ") and ",
-                filter.TimeGrain.To8601String(),
+                XmlConvert.ToString(filter.TimeGrain),
                 filter.StartTime.ToString("O"),
                 filter.EndTime.ToString("O"));
         }
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Insights
                 .Aggregate((a, b) => a + " or " + b);
         }
 
-        private static string GenerateDimensionFilterString(IEnumerable<Dimension> dimensions)
+        private static string GenerateDimensionFilterString(IEnumerable<FilterDimension> dimensions)
         {
             return IsNullOrEmpty(dimensions) ? null : dimensions.Select(d => string.Format(CultureInfo.InvariantCulture, "dimensionName.value eq '{0}'{1}",
                 d.Name,

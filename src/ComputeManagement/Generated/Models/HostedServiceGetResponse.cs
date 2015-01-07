@@ -21,7 +21,7 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
@@ -29,7 +29,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
     /// <summary>
     /// The Get Hosted Service operation response.
     /// </summary>
-    public partial class HostedServiceGetResponse : OperationResponse
+    public partial class HostedServiceGetResponse : AzureOperationResponse
     {
         private ComputeCapabilities _computeCapabilities;
         

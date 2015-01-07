@@ -22,16 +22,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Authorization.Models;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Management.Authorization.Models
 {
     /// <summary>
     /// Role assignment list operation result.
     /// </summary>
-    public partial class RoleAssignmentListResult : OperationResponse
+    public partial class RoleAssignmentListResult : AzureOperationResponse
     {
         private IList<RoleAssignment> _roleAssignments;
         
