@@ -281,7 +281,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
             // The RP translates 1 XL into 2 L for SU 4 and up.
             // This is done as part of the HA improvement where in the RP would never
             // create clusters without 2 nodes for SU 4 release (May '14) and up.
-            var headnodeCount = cluster.HeadNodeSize.Equals(VmSize.ExtraLarge.ToString()) ? 1 : 2; // don't understand this!
+            var headnodeCount = cluster.HeadNodeSize.Equals(VmSize.ExtraLarge.ToString()) ? 1 : 2;
             dynaXml.xmlns("http://schemas.microsoft.com/windowsazure")
                    .Resource
                    .b
