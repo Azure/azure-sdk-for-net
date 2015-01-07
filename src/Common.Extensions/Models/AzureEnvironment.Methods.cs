@@ -96,6 +96,8 @@ namespace Microsoft.Azure.Common.Extensions.Models
                         { AzureEnvironment.Endpoint.SqlDatabaseDnsSuffix, AzureEnvironmentConstants.AzureSqlDatabaseDnsSuffix },
                         { AzureEnvironment.Endpoint.Graph, AzureEnvironmentConstants.AzureGraphEndpoint },
                         { AzureEnvironment.Endpoint.TrafficManagerDnsSuffix, AzureEnvironmentConstants.AzureTrafficManagerDnsSuffix },
+                        { AzureEnvironment.Endpoint.AzureKeyVaultDnsSuffix, AzureEnvironmentConstants.AzureKeyVaultDnsSuffix},
+                        { AzureEnvironment.Endpoint.AzureKeyVaultServiceEndpointResourceId, AzureEnvironmentConstants.AzureKeyVaultServiceEndpointResourceId}
                     }
                 }
             },
@@ -117,6 +119,8 @@ namespace Microsoft.Azure.Common.Extensions.Models
                         { AzureEnvironment.Endpoint.SqlDatabaseDnsSuffix, AzureEnvironmentConstants.ChinaSqlDatabaseDnsSuffix },
                         { AzureEnvironment.Endpoint.Graph, null },
                         { AzureEnvironment.Endpoint.TrafficManagerDnsSuffix, AzureEnvironmentConstants.ChinaTrafficManagerDnsSuffix },
+                        { AzureEnvironment.Endpoint.AzureKeyVaultDnsSuffix, null},
+                        { AzureEnvironment.Endpoint.AzureKeyVaultServiceEndpointResourceId, null}
                     }
                 }
             }
@@ -277,6 +281,10 @@ namespace Microsoft.Azure.Common.Extensions.Models
             Graph,
 
             TrafficManagerDnsSuffix,
+
+            AzureKeyVaultDnsSuffix,
+
+            AzureKeyVaultServiceEndpointResourceId
         }
     }
 
@@ -322,5 +330,9 @@ namespace Microsoft.Azure.Common.Extensions.Models
         public const string AzureTrafficManagerDnsSuffix = "trafficmanager.net";
 
         public const string ChinaTrafficManagerDnsSuffix = "trafficmanager.cn";
+
+        public const string AzureKeyVaultDnsSuffix = "vault.azure.net";
+
+        public const string AzureKeyVaultServiceEndpointResourceId = "https://vault.azure.net";
     }
 }
