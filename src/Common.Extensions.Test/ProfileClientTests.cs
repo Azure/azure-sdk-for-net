@@ -12,17 +12,16 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
+using Microsoft.Azure.Common.Extensions;
+using Microsoft.Azure.Common.Extensions.Authentication;
+using Microsoft.Azure.Common.Extensions.Models;
+using Microsoft.Azure.Subscriptions.Models;
+using Microsoft.WindowsAzure.Commands.Common.Test.Mocks;
+using Microsoft.WindowsAzure.Subscriptions.Models;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using Microsoft.Azure.Subscriptions.Models;
-using Microsoft.Azure.Common.Extensions.Models;
-using Microsoft.WindowsAzure.Commands.Common.Test.Mocks;
-using Microsoft.Azure.Common.Extensions.Authentication;
 using Xunit;
-using Microsoft.Azure.Common.Extensions;
-using Microsoft.WindowsAzure.Subscriptions.Models;
 using CSMSubscription = Microsoft.Azure.Subscriptions.Models.Subscription;
 using RDFESubscription = Microsoft.WindowsAzure.Subscriptions.Models.SubscriptionListOperationResponse.Subscription;
 
