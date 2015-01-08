@@ -12,8 +12,8 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
-using System.Collections.Generic;
 using Microsoft.Azure.Common.Extensions.Utilities;
+using System.Collections.Generic;
 
 namespace Microsoft.Azure.Common.Extensions.Models
 {

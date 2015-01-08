@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-using System.Net.Http;
 using Hyak.Common.Platform;
+using System.Net.Http;
 
 namespace Microsoft.Azure.Common.Platform
 {

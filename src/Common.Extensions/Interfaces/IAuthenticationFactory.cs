@@ -12,9 +12,9 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
-using System.Security;
 using Microsoft.Azure.Common.Extensions.Authentication;
 using Microsoft.Azure.Common.Extensions.Models;
+using System.Security;
 
 namespace Microsoft.Azure.Common.Extensions
 {
@@ -29,7 +29,8 @@ namespace Microsoft.Azure.Common.Extensions
         /// <param name="password"></param>
         /// <param name="promptBehavior"></param>
         /// <returns></returns>
-        IAccessToken Authenticate(AzureAccount account, AzureEnvironment environment, string tenant, SecureString password, ShowDialog promptBehavior);
+        IAccessToken Authenticate(AzureAccount account, AzureEnvironment environment, string tenant, SecureString password, ShowDialog promptBehavior,
+            AzureEnvironment.Endpoint resourceId = AzureEnvironment.Endpoint.ActiveDirectoryServiceEndpointResourceId);
 
         SubscriptionCloudCredentials GetSubscriptionCloudCredentials(AzureContext context);
     }
