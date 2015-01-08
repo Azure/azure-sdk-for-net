@@ -16,6 +16,9 @@
     <copyright>Copyright © Microsoft Corporation</copyright>
     <tags>Microsoft Azure Api Management Service management REST HTTP client windowsazureofficial</tags>
     <references>
+      <group targetFramework="portable-net45+wp8+wpa81+win">
+        <reference file="Microsoft.Azure.Management.ApiManagement.dll" />
+      </group>
       <group targetFramework="net40">
         <reference file="Microsoft.Azure.Management.ApiManagement.dll" />
       </group>
@@ -26,9 +29,9 @@
   </metadata>
   <files>
     <file src="ApiManagementManagement\**\*.cs" target="src" />
-    <file src="..\binaries\Microsoft.Azure.Management.ApiManagement.dll" target="lib\net45" />
-    <file src="..\binaries\Microsoft.Azure.Management.ApiManagement.pdb" target="lib\net45" />
-    <file src="..\binaries\Microsoft.Azure.Management.ApiManagement.xml" target="lib\net45" />
+    <file src="..\binaries\Microsoft.Azure.Management.ApiManagement.dll" target="lib\portable-net45+wp8+wpa81+win" />
+    <file src="..\binaries\Microsoft.Azure.Management.ApiManagement.pdb" target="lib\portable-net45+wp8+wpa81+win" />
+    <file src="..\binaries\Microsoft.Azure.Management.ApiManagement.xml" target="lib\portable-net45+wp8+wpa81+win" />
     <file src="..\binaries\net40\Microsoft.Azure.Management.ApiManagement.dll" target="lib\net40" />
     <file src="..\binaries\net40\Microsoft.Azure.Management.ApiManagement.pdb" target="lib\net40" />
     <file src="..\binaries\net40\Microsoft.Azure.Management.ApiManagement.xml" target="lib\net40" />
