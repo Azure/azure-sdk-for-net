@@ -93,7 +93,7 @@
       <HintPath>..\..\packages\Hyak.Common.1.0.1\lib\portable-net403+win+wpa81\Hyak.Common.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Azure.ResourceManager">
-      <HintPath>..\..\packages\Microsoft.Azure.Management.Resources.2.11.0-preview\lib\net40\Microsoft.Azure.ResourceManager.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.Azure.Management.Resources.2.12.0-preview\lib\net40\Microsoft.Azure.ResourceManager.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory">
       <HintPath>..\..\packages\Microsoft.IdentityModel.Clients.ActiveDirectory.2.11.10918.1222\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.dll</HintPath>
@@ -108,7 +108,7 @@
       <HintPath>..\..\packages\Microsoft.Azure.Common.2.0.1\lib\net45\Microsoft.Azure.Common.NetFramework.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.WindowsAzure.Management">
-      <HintPath>..\..\packages\Microsoft.WindowsAzure.Management.3.0.0\lib\net40\Microsoft.WindowsAzure.Management.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.WindowsAzure.Management.4.0.0\lib\net40\Microsoft.WindowsAzure.Management.dll</HintPath>
     </Reference>
     <Reference Include="System.Security" />
     <Reference Include="System.Windows.Forms" />
