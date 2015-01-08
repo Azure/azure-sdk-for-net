@@ -12,8 +12,8 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
-using System.Collections.Generic;
 using Hyak.Common;
+using System.Collections.Generic;
 
 namespace Microsoft.Azure.Common.Extensions
 {
@@ -52,7 +52,8 @@ namespace Microsoft.Azure.Common.Extensions
                     "microsoft.visualstudio",
                     "microsoft.insights",
                     "successbricks.cleardb",
-                    "microsoft.cache" };
+                    "microsoft.cache",
+                    "Microsoft.KeyVault" };
             }
             if (typeof(T).FullName.EndsWith("BatchManagementClient"))
             {

@@ -12,15 +12,15 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
+using Microsoft.Azure;
+using Microsoft.Azure.Common.Extensions;
+using Microsoft.Azure.Common.Extensions.Factories;
+using Microsoft.Azure.Common.Extensions.Models;
+using Microsoft.Azure.Utilities.HttpRecorder;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using Microsoft.Azure;
-using Microsoft.Azure.Utilities.HttpRecorder;
-using Microsoft.Azure.Common.Extensions.Factories;
-using Microsoft.Azure.Common.Extensions.Models;
-using Microsoft.Azure.Common.Extensions;
 
 namespace Microsoft.WindowsAzure.Commands.Common.Test.Mocks
 {

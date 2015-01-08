@@ -12,13 +12,13 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
+using Hyak.Common;
+using Microsoft.Azure.Management.Resources;
+using Microsoft.WindowsAzure.Management;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
-using Hyak.Common;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.WindowsAzure.Management;
 
 namespace Microsoft.Azure.Common.Extensions.Models
 {

@@ -12,11 +12,11 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
+using Microsoft.Azure.Common.Extensions.Models;
+using Microsoft.Azure.Common.Extensions.Properties;
 using System;
 using System.Security;
 using System.Windows.Forms;
-using Microsoft.Azure.Common.Extensions.Models;
-using Microsoft.Azure.Common.Extensions.Properties;
 
 namespace Microsoft.Azure.Common.Extensions.Authentication
 {

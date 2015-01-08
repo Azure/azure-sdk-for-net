@@ -12,8 +12,8 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
-using System;
 using Microsoft.Azure.Common.Extensions.Authentication;
+using System;
 
 namespace Microsoft.WindowsAzure.Commands.Common.Test.Mocks
 {
