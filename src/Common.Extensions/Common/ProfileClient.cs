@@ -12,12 +12,6 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Security;
-using System.Security.Cryptography.X509Certificates;
 using Hyak.Common;
 using Microsoft.Azure.Common.Extensions.Authentication;
 using Microsoft.Azure.Common.Extensions.Factories;
@@ -26,6 +20,12 @@ using Microsoft.Azure.Common.Extensions.Models;
 using Microsoft.Azure.Common.Extensions.Properties;
 using Microsoft.Azure.Subscriptions;
 using Microsoft.WindowsAzure.Subscriptions;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Security;
+using System.Security.Cryptography.X509Certificates;
 using CSMSubscriptionClient = Microsoft.Azure.Subscriptions.SubscriptionClient;
 using RDFESubscriptionClient = Microsoft.WindowsAzure.Subscriptions.SubscriptionClient;
 

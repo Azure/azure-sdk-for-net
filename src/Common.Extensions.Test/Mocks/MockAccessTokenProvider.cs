@@ -12,10 +12,10 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
-using System.Security;
+using Microsoft.Azure.Common.Extensions.Authentication;
 using Microsoft.Azure.Common.Extensions.Models;
 using Microsoft.WindowsAzure.Commands.Common.Test.Mocks;
-using Microsoft.Azure.Common.Extensions.Authentication;
+using System.Security;
 
 namespace Microsoft.WindowsAzure.Commands.Test.Utilities.Common
 {

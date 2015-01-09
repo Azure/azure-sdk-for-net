@@ -12,12 +12,12 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
+using Hyak.Common;
+using Microsoft.Azure.Common.Extensions.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Hyak.Common;
-using Microsoft.Azure.Common.Extensions.Interfaces;
 
 namespace Microsoft.Azure.Common.Extensions.Models
 {

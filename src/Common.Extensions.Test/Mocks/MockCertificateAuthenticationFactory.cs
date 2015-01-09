@@ -12,12 +12,12 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
+using Microsoft.Azure;
+using Microsoft.Azure.Common.Extensions;
+using Microsoft.Azure.Common.Extensions.Authentication;
+using Microsoft.Azure.Common.Extensions.Models;
 using System.Security;
 using System.Security.Cryptography.X509Certificates;
-using Microsoft.Azure;
-using Microsoft.Azure.Common.Extensions.Models;
-using Microsoft.Azure.Common.Extensions.Authentication;
-using Microsoft.Azure.Common.Extensions;
 
 namespace Microsoft.WindowsAzure.Commands.Common.Test.Mocks
 {
@@ -35,7 +35,8 @@ namespace Microsoft.WindowsAzure.Commands.Common.Test.Mocks
             Certificate = certificate;
         }
 
-        public IAccessToken Authenticate(AzureAccount account, AzureEnvironment environment, string tenant, SecureString password, ShowDialog promptBehavior)
+        public IAccessToken Authenticate(AzureAccount account, AzureEnvironment environment, string tenant, SecureString password, ShowDialog promptBehavior,
+            AzureEnvironment.Endpoint resourceId = AzureEnvironment.Endpoint.ActiveDirectoryServiceEndpointResourceId)
         {
             if (account.Id == null)
             {

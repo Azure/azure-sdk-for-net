@@ -12,13 +12,13 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
-using System.Collections.Generic;
-using Xunit;
-using System;
-using Microsoft.Azure.Common.Extensions.Factories;
 using Microsoft.Azure.Common.Extensions.Authentication;
+using Microsoft.Azure.Common.Extensions.Factories;
 using Microsoft.Azure.Common.Extensions.Models;
 using Microsoft.WindowsAzure.Commands.Test.Utilities.Common;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace Common.Extensions.Test
 {

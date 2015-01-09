@@ -12,6 +12,9 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
+using Hyak.Common;
+using Microsoft.Azure;
+using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,9 +22,6 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Hyak.Common;
-using Microsoft.Azure;
-using Moq;
 
 namespace Microsoft.WindowsAzure.Commands.Common.Test.Mocks
 {
