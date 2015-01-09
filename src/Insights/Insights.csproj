@@ -12,7 +12,7 @@
     <AssemblyName>Microsoft.Azure.Insights</AssemblyName>
     <OutputType>Library</OutputType>
     <RestorePackages>true</RestorePackages>
-    <NuGetPackageImportStamp>663ade02</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>3dfbcbcd</NuGetPackageImportStamp>
   </PropertyGroup>
   <Import Project="..\library.props" />
   <ItemGroup>
