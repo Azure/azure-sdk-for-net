@@ -115,7 +115,7 @@ namespace Microsoft.Azure.Management.Authorization
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/" + Uri.EscapeDataString(identity.ResourceProviderNamespace) + "/" + (identity.ParentResourcePath == null ? "" : Uri.EscapeDataString(identity.ParentResourcePath)) + "/" + Uri.EscapeDataString(identity.ResourceType) + "/" + Uri.EscapeDataString(identity.ResourceName) + "/providers/Microsoft.Authorization/permissions?";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/" + Uri.EscapeDataString(identity.ResourceProviderNamespace) + "/" + identity.ParentResourcePath + "/" + identity.ResourceType + "/" + Uri.EscapeDataString(identity.ResourceName) + "/providers/Microsoft.Authorization/permissions?";
             url = url + "api-version=2014-07-01-preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
