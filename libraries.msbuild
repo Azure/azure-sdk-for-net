@@ -182,6 +182,12 @@
              Targets="Rebuild" />
   </Target>
 
+  <Target Name="AzureCommonPortableBuild" DependsOnTargets="BuildEngineeringDependencies">
+    <MSBuild Projects="@(CommonProjects)"
+             Properties="$(DeveloperBuildProperties)"
+             Targets="Rebuild" />
+  </Target>
+
   <!--
   Clean produced binaries and object files
   -->
@@ -481,7 +487,7 @@
     PRIVATE_FEED_USER_NAME: User name for access to the feed
     PRIVATE_FEED_PASSWORD: Password for access to the feed
   -->
-  <Target Name="ForceRestorePackages" Condition=" '$(GenerateHydraSpecs)' == 'true' ">
+  <Target Name="ForceRestorePackages" Condition=" '$(GenerateHydraSpecs)' == 'true' or '$(SkipRestorePackages)' != 'true' ">
     <PropertyGroup>
       <NuGetRestoreConfigFile>$(MSBuildProjectDirectory)\restore.config</NuGetRestoreConfigFile>
       <NuGetRestoreConfigSwitch>-ConfigFile &quot;$(NuGetRestoreConfigFile)&quot;</NuGetRestoreConfigSwitch>
