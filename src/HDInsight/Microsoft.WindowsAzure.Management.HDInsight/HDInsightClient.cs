@@ -78,7 +78,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         public TimeSpan PollingInterval { get; set; }
 
         /// <inheritdoc />
-        internal static TimeSpan DefaultPollingInterval = TimeSpan.FromSeconds(15);
+        internal static TimeSpan DefaultPollingInterval = TimeSpan.FromSeconds(30);
 
         /// <summary>
         /// Initializes a new instance of the HDInsightClient class.
