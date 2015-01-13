@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
@@ -89,13 +90,37 @@ namespace Microsoft.Azure.Management.DataFactories
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
+            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
             if (dataFactoryName == null)
             {
                 throw new ArgumentNullException("dataFactoryName");
             }
+            if (dataFactoryName != null && dataFactoryName.Length > 63)
+            {
+                throw new ArgumentOutOfRangeException("dataFactoryName");
+            }
+            if (Regex.IsMatch(dataFactoryName, "^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$") == false)
+            {
+                throw new ArgumentOutOfRangeException("dataFactoryName");
+            }
             if (pipelineName == null)
             {
                 throw new ArgumentNullException("pipelineName");
+            }
+            if (pipelineName != null && pipelineName.Length > 63)
+            {
+                throw new ArgumentOutOfRangeException("pipelineName");
+            }
+            if (Regex.IsMatch(pipelineName, "^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$") == false)
+            {
+                throw new ArgumentOutOfRangeException("pipelineName");
             }
             if (parameters == null)
             {
@@ -134,7 +159,7 @@ namespace Microsoft.Azure.Management.DataFactories
             url = url + "&start=" + Uri.EscapeDataString(parameters.RunRangeStartTime.ToString());
             url = url + "&end=" + Uri.EscapeDataString(parameters.RunRangeEndTime.ToString());
             url = url + "&status=" + Uri.EscapeDataString(parameters.RunRecordStatus.ToString());
-            url = url + "&api-version=2014-12-01-preview";
+            url = url + "&api-version=2015-01-01-preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')

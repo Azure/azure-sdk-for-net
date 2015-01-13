@@ -26,6 +26,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
@@ -87,6 +88,14 @@ namespace Microsoft.Azure.Management.DataFactories
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
+            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
             if (parameters == null)
             {
                 throw new ArgumentNullException("parameters");
@@ -100,6 +109,14 @@ namespace Microsoft.Azure.Management.DataFactories
                 if (parameters.DataFactory.Name == null)
                 {
                     throw new ArgumentNullException("parameters.DataFactory.Name");
+                }
+                if (parameters.DataFactory.Name != null && parameters.DataFactory.Name.Length > 63)
+                {
+                    throw new ArgumentOutOfRangeException("parameters.DataFactory.Name");
+                }
+                if (Regex.IsMatch(parameters.DataFactory.Name, "^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$") == false)
+                {
+                    throw new ArgumentOutOfRangeException("parameters.DataFactory.Name");
                 }
             }
             
@@ -117,7 +134,7 @@ namespace Microsoft.Azure.Management.DataFactories
             
             // Construct URL
             string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.DataFactory/datafactories/" + (parameters.DataFactory.Name == null ? "" : Uri.EscapeDataString(parameters.DataFactory.Name)) + "?";
-            url = url + "api-version=2014-12-01-preview";
+            url = url + "api-version=2015-01-01-preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -409,9 +426,25 @@ namespace Microsoft.Azure.Management.DataFactories
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
+            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
             if (dataFactoryName == null)
             {
                 throw new ArgumentNullException("dataFactoryName");
+            }
+            if (dataFactoryName != null && dataFactoryName.Length > 63)
+            {
+                throw new ArgumentOutOfRangeException("dataFactoryName");
+            }
+            if (Regex.IsMatch(dataFactoryName, "^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$") == false)
+            {
+                throw new ArgumentOutOfRangeException("dataFactoryName");
             }
             
             // Tracing
@@ -428,7 +461,7 @@ namespace Microsoft.Azure.Management.DataFactories
             
             // Construct URL
             string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.DataFactory/datafactories/" + Uri.EscapeDataString(dataFactoryName) + "?";
-            url = url + "api-version=2014-12-01-preview";
+            url = url + "api-version=2015-01-01-preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -538,9 +571,25 @@ namespace Microsoft.Azure.Management.DataFactories
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
+            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
             if (dataFactoryName == null)
             {
                 throw new ArgumentNullException("dataFactoryName");
+            }
+            if (dataFactoryName != null && dataFactoryName.Length > 63)
+            {
+                throw new ArgumentOutOfRangeException("dataFactoryName");
+            }
+            if (Regex.IsMatch(dataFactoryName, "^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$") == false)
+            {
+                throw new ArgumentOutOfRangeException("dataFactoryName");
             }
             
             // Tracing
@@ -557,7 +606,7 @@ namespace Microsoft.Azure.Management.DataFactories
             
             // Construct URL
             string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.DataFactory/datafactories/" + Uri.EscapeDataString(dataFactoryName) + "?";
-            url = url + "api-version=2014-12-01-preview";
+            url = url + "api-version=2015-01-01-preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -762,7 +811,7 @@ namespace Microsoft.Azure.Management.DataFactories
                 
                 // Set Headers
                 httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
-                httpRequest.Headers.Add("x-ms-version", "2014-12-01-preview");
+                httpRequest.Headers.Add("x-ms-version", "2015-01-01-preview");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -926,6 +975,14 @@ namespace Microsoft.Azure.Management.DataFactories
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
+            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
             
             // Tracing
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -940,7 +997,7 @@ namespace Microsoft.Azure.Management.DataFactories
             
             // Construct URL
             string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.DataFactory/datafactories?";
-            url = url + "api-version=2014-12-01-preview";
+            url = url + "api-version=2015-01-01-preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
