@@ -16,17 +16,20 @@
   </PropertyGroup>
   <Import Project="..\library.props" />
   <ItemGroup>
+    <Compile Include="Customizations\EventStatusCountSummaryListResponse.Customizations.cs" />
     <Compile Include="Customizations\FilterParameterAttribute.cs" />
     <Compile Include="Customizations\FilterString.cs" />
     <Compile Include="Customizations\IMetricOperations.Customization.cs" />
     <Compile Include="Customizations\InsightsClient.Customization.cs" />
-    <Compile Include="Customizations\InsightsClient.GetEventCountSummaryParameters.Customization.cs" />
     <Compile Include="Customizations\InsightsClient.ListEventsParameter.Customization.cs" />
+    <Compile Include="Customizations\InsightsClient.ListStatusCountSummaryItemsParameters.Customization.cs" />
     <Compile Include="Customizations\InsightsManagementClient.Customization.cs" />
     <Compile Include="Customizations\MetricDefinitionOperations.Customization.cs" />
     <Compile Include="Customizations\MetricOperations.Customization.cs" />
     <Compile Include="Customizations\MetricOperationsExtensions.Customization.cs" />
+    <Compile Include="Customizations\Shoebox\FilterDimension.cs" />
     <Compile Include="Customizations\Shoebox\MetricDefinitionFilterParser.cs" />
+    <Compile Include="Customizations\Shoebox\MetricDimension.cs" />
     <Compile Include="Customizations\Shoebox\MetricFilter.cs" />
     <Compile Include="Customizations\Shoebox\MetricFilterExpressionParser.cs" />
     <Compile Include="Customizations\Shoebox\MetricFilterRegexParser.cs" />
@@ -54,14 +57,14 @@
     <Compile Include="Generated\Management\Insights\Models\CreateOrUpdateStorageConfigurationParameters.cs" />
     <Compile Include="Generated\Management\Insights\Models\DiagnosticSettingsStatus.cs" />
     <Compile Include="Generated\Management\Insights\Models\EmptyResponse.cs" />
-    <Compile Include="Generated\Management\Insights\Models\ManagementEventAggregationCondition.cs" />
-    <Compile Include="Generated\Management\Insights\Models\ManagementEventRuleCondition.cs" />
     <Compile Include="Generated\Management\Insights\Models\MonitoringConfigurationCreateOrUpdateResponse.cs" />
-    <Compile Include="Generated\Management\Insights\Models\RuleManagementEventClaimsDataSource.cs" />
-    <Compile Include="Generated\Management\Insights\Models\RuleManagementEventDataSource.cs" />
     <Compile Include="Generated\Management\Insights\Models\ServiceDiagnosticSettings.cs" />
     <Compile Include="Generated\Management\Insights\Models\ServiceDiagnosticSettingsGetResponse.cs" />
     <Compile Include="Generated\Management\Insights\Models\ServiceDiagnosticSettingsPutParameters.cs" />
+    <Compile Include="Generated\Management\Insights\Models\ManagementEventAggregationCondition.cs" />
+    <Compile Include="Generated\Management\Insights\Models\ManagementEventRuleCondition.cs" />
+    <Compile Include="Generated\Management\Insights\Models\RuleManagementEventClaimsDataSource.cs" />
+    <Compile Include="Generated\Management\Insights\Models\RuleManagementEventDataSource.cs" />
     <Compile Include="Generated\Management\Insights\Models\StorageConfiguration.cs" />
     <Compile Include="Generated\Management\Insights\Models\StorageConfigurationGetResponse.cs" />
     <Compile Include="Generated\Management\Insights\Models\StorageDiagnosticSettings.cs" />
@@ -247,6 +250,12 @@
   <Import Project="$(SolutionDir)\src\library.targets" />
   <Import Project="GenerateCode.props" />
   <Import Project="..\..\packages\Hyak.Generator.1.0.5478.27459-prerelease\build\Hyak.Generator.targets" Condition="Exists('..\..\packages\Hyak.Generator.1.0.5478.27459-prerelease\build\Hyak.Generator.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\Hyak.Generator.1.0.5478.27459-prerelease\build\Hyak.Generator.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Hyak.Generator.1.0.5478.27459-prerelease\build\Hyak.Generator.targets'))" />
+  </Target>
   <Target Name="DoSpecGeneration" DependsOnTargets="RestorePackages" BeforeTargets="BeforeBuild">
     <CallTarget Targets="GenerateCodeFromSpecs" Condition="'$(HydraGeneratorImported)' != ''" />
     <Error Text="The Hyak code generator package was restored from nuget. Build the project again to do code generation." Condition="Exists('..\..\packages\Hyak.Generator.1.0.5478.27459-prerelease\build\Hyak.Generator.targets') And '$(HydraGeneratorImported)' == ''" />

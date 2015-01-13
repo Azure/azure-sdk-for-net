@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Common.OData
     /// <summary>
     /// Parameter attribute used with OData filters.
     /// </summary>
-    public class FilterParameterAttribute : Attribute
+    internal class FilterParameterAttribute : Attribute
     {
         /// <summary>
         /// Property name to use in the filter.

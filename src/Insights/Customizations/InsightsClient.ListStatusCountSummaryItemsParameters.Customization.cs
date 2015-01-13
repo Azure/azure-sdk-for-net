@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Insights
     /// <summary>
     /// The parameters to get the events for a subscription
     /// </summary>
-    public class GetCountSummaryParameters
+    public class ListStatusCountItemCollectionParameters
     {
         /// <summary>
         /// Gets or sets the start time
@@ -34,12 +34,24 @@ namespace Microsoft.Azure.Insights
         /// </summary>
         [FilterParameter("endTime", "O")]
         public DateTime? EndTime { get; set; }
+
+        /// <summary>
+        /// Gets or sets the status
+        /// </summary>
+        [FilterParameter("status")]
+        public string Status { get; set; }
+
+        /// <summary>
+        /// Gets or sets the caller
+        /// </summary>
+        [FilterParameter("caller")]
+        public string Caller { get; set; }
     }
 
     /// <summary>
-    /// The parameters to get the event count summary for an event source
+    /// The parameters to get the event status count summary for an event source
     /// </summary>
-    public class GetCountSummaryForEventSourceParameters : GetCountSummaryParameters
+    public class ListStatusCountItemCollectionForEventSourceParameters : ListStatusCountItemCollectionParameters
     {
         /// <summary>
         /// Gets or sets the event source
@@ -49,9 +61,9 @@ namespace Microsoft.Azure.Insights
     }
 
     /// <summary>
-    /// The parameters to get the event count summary for a resource
+    /// The parameters to get the event status count summary for a resource
     /// </summary>
-    public class GetCountSummaryForResourceParameters : GetCountSummaryParameters
+    public class ListStatusCountItemCollectionForResourceParameters : ListStatusCountItemCollectionParameters
     {
         /// <summary>
         /// Gets or sets the resource uri
@@ -61,9 +73,9 @@ namespace Microsoft.Azure.Insights
     }
 
     /// <summary>
-    /// The parameters to get the event count summary for a resource group
+    /// The parameters to get the event status count summary for a resource group
     /// </summary>
-    public class GetCountSummaryForResourceGroupParameters : GetCountSummaryParameters
+    public class ListStatusCountItemCollectionForResourceGroupParameters : ListStatusCountItemCollectionParameters
     {
         /// <summary>
         /// Gets or sets the resource group name
@@ -73,9 +85,9 @@ namespace Microsoft.Azure.Insights
     }
 
     /// <summary>
-    /// The parameters to get the event count summary for a resource provider
+    /// The parameters to get the event status count summary for a resource provider
     /// </summary>
-    public class GetCountSummaryForResourceProviderParameters : GetCountSummaryParameters
+    public class ListStatusCountItemCollectionForResourceProviderParameters : ListStatusCountItemCollectionParameters
     {
         /// <summary>
         /// Gets or sets the resource provider

@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Common.OData
     /// <summary>
     /// Expression visitor class that generates OData style $filter parameter.
     /// </summary>
-    public class UrlExpressionVisitor : ExpressionVisitor
+    internal class UrlExpressionVisitor : ExpressionVisitor
     {
         private const string DefaultDateTimeFormat = "yyyy-MM-ddTHH:mm:ssZ";
         private StringBuilder _generatedUrl = new StringBuilder();
