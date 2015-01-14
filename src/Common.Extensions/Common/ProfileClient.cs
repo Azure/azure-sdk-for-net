@@ -952,7 +952,7 @@ namespace Microsoft.Azure.Common.Extensions
                     AddOrSetAccount(tenantAccount);
 
                 }
-                catch (CloudException cEx)
+                catch (HttpOperationException cEx)
                 {
                     WriteOrThrowAadExceptionMessage(cEx);
                 }
@@ -1023,7 +1023,7 @@ namespace Microsoft.Azure.Common.Extensions
 
                     AddOrSetAccount(tenantAccount);
                 }
-                catch (CloudException cEx)
+                catch (HttpOperationException cEx)
                 {
                     WriteOrThrowAadExceptionMessage(cEx);
                 }
@@ -1052,7 +1052,7 @@ namespace Microsoft.Azure.Common.Extensions
             }
         }
 
-        private void WriteOrThrowAadExceptionMessage(CloudException aadEx)
+        private void WriteOrThrowAadExceptionMessage(HttpOperationException aadEx)
         {
             WriteDebugMessage(aadEx.Message);
         }

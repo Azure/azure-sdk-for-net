@@ -55,9 +55,9 @@ namespace Microsoft.WindowsAzure.Commands.Common.Test.Mocks
             return mockCreds.Object;
         }
 
-        public static CloudException Make404Exception()
+        public static HttpOperationException Make404Exception()
     {
-            return CloudException.Create(
+            return HttpOperationException.Create(
                 new HttpRequestMessage(),
                 null,
                 new HttpResponseMessage(HttpStatusCode.NotFound),

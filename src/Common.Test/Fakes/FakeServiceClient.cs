@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Common.Test.Fakes
             // Prevent base constructor from executing
         }
 
-        public FakeServiceClient(HttpMessageHandler httpMessageHandler)
+        public FakeServiceClient(HttpClientHandler httpMessageHandler)
             : this()
         {
             InitializeHttpClient(httpMessageHandler);
@@ -59,9 +59,9 @@ namespace Microsoft.Azure.Common.Test.Fakes
         /// Get an instance of the FakeServiceClient class that uses the handler while initiating web requests.
         /// </summary>
         /// <param name="handler">the handler</param>
-        public override FakeServiceClient WithHandler(DelegatingHandler handler)
+        public void WithHandler(DelegatingHandler handler)
         {
-            return WithHandler(new FakeServiceClient(), handler);
+            InitializeHttpPipeline(handler);
         }
     }
 }

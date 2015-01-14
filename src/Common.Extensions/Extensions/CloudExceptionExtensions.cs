@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Common
 {
     public static class CloudExceptionExtensions
     {
-        public static string GetRequestId(this CloudException exception)
+        public static string GetRequestId(this HttpOperationException exception)
         {
             if(exception == null || 
                exception.Response == null || 
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Common
             return exception.Response.Headers["x-ms-request-id"].FirstOrDefault();
 
         }
-        public static string GetRoutingRequestId(this CloudException exception)
+        public static string GetRoutingRequestId(this HttpOperationException exception)
         {
             if (exception == null ||
                exception.Response == null ||

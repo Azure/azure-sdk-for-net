@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Common.Extensions.Models
                         {
                             client.Subscriptions.RegisterResource(provider);
                         }
-                        catch (CloudException ex)
+                        catch (HttpOperationException ex)
                         {
                             if (ex.Response.StatusCode != HttpStatusCode.Conflict && ex.Response.StatusCode != HttpStatusCode.NotFound)
                             {

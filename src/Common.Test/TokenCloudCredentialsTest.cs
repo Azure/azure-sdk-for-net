@@ -26,7 +26,8 @@ namespace Microsoft.Azure.Common.Test
         {
             var tokenCredentials = new TokenCloudCredentials("123","abc");
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
-            var fakeClient = new FakeServiceClientWithCredentials(tokenCredentials).WithHandler(handler);
+            var fakeClient = new FakeServiceClientWithCredentials(tokenCredentials);
+            fakeClient.WithHandler(handler);
             fakeClient.DoStuff().Wait();
 
             Assert.Equal("Bearer", handler.RequestHeaders.Authorization.Scheme);
@@ -38,7 +39,8 @@ namespace Microsoft.Azure.Common.Test
         {
             var tokenCredentials = new TokenCloudCredentials("abc");
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
-            var fakeClient = new FakeServiceClientWithCredentials(tokenCredentials).WithHandler(handler);
+            var fakeClient = new FakeServiceClientWithCredentials(tokenCredentials);
+            fakeClient.WithHandler(handler);
             fakeClient.DoStuff().Wait();
 
             Assert.Null(fakeClient.Credentials.SubscriptionId);
@@ -51,7 +53,8 @@ namespace Microsoft.Azure.Common.Test
         {
             var credentials = new TokenCloudCredentials("123", "abc");
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
-            var fakeClient = new FakeServiceClientWithCredentials(credentials).WithHandler(handler);
+            var fakeClient = new FakeServiceClientWithCredentials(credentials);
+            fakeClient.WithHandler(handler);
             fakeClient.DoStuff().Wait();
 
             Assert.Equal("Bearer", handler.RequestHeaders.Authorization.Scheme);

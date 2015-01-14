@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Common.Test.Internals
         [InlineData(null, false)]
         public void IsJsonWorksWithoutValidation(string body, bool expectedResult)
         {
-            Assert.Equal(expectedResult, CloudException.IsJson(body));
+            Assert.Equal(expectedResult, HttpOperationException.IsJson(body));
         }
 
         [Theory]
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Common.Test.Internals
         [InlineData(null, false)]
         public void IsJsonWorksWithValidation(string body, bool expectedResult)
         {
-            Assert.Equal(expectedResult, CloudException.IsJson(body, true));
+            Assert.Equal(expectedResult, HttpOperationException.IsJson(body, true));
         }
 
         [Theory]
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Common.Test.Internals
         [InlineData(null, false)]
         public void IsXmlWorksWithoutValidation(string body, bool expectedResult)
         {
-            Assert.Equal(expectedResult, CloudException.IsXml(body));
+            Assert.Equal(expectedResult, HttpOperationException.IsXml(body));
         }
 
         [Theory]
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Common.Test.Internals
         [InlineData(null, false)]
         public void IsXmlWorksWithValidation(string body, bool expectedResult)
         {
-            Assert.Equal(expectedResult, CloudException.IsXml(body, true));
+            Assert.Equal(expectedResult, HttpOperationException.IsXml(body, true));
         }
     }
 }

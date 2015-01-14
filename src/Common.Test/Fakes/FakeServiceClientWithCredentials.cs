@@ -116,9 +116,9 @@ namespace Microsoft.Azure.Common.Test.Fakes
             return await HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
         }
 
-        public override FakeServiceClientWithCredentials WithHandler(DelegatingHandler handler)
+        public void WithHandler(DelegatingHandler handler)
         {
-            return (FakeServiceClientWithCredentials)WithHandler(new FakeServiceClientWithCredentials(), handler);
+            InitializeHttpPipeline(handler);
         }
     }
 }

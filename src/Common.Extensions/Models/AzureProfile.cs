@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Common.Extensions.Models
 
                 IProfileSerializer serializer;
 
-                if (CloudException.IsXml(contents))
+                if (HttpOperationException.IsXml(contents))
                 {
                     serializer = new XmlProfileSerializer();
                     if (!serializer.Deserialize(contents, this))
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Common.Extensions.Models
                         ProfileLoadErrors.AddRange(serializer.DeserializeErrors);
                     }
                 }
-                else if (CloudException.IsJson(contents))
+                else if (HttpOperationException.IsJson(contents))
                 {
                     serializer = new JsonProfileSerializer();
                     if (!serializer.Deserialize(contents, this))

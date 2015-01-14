@@ -21,7 +21,7 @@ namespace Microsoft.Azure
     /// Base class for credentials associated with a particular subscription.
     /// </summary>
     public abstract class SubscriptionCloudCredentials
-        : CloudCredentials
+        : ServiceClientCredentials
     {
         /// <summary>
         /// Gets subscription ID which uniquely identifies Microsoft Azure 
