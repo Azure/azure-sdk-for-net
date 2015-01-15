@@ -26,11 +26,10 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Authorization;
 using Microsoft.Azure.Management.Authorization.Models;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
 using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.Management.Authorization
@@ -92,31 +91,31 @@ namespace Microsoft.Azure.Management.Authorization
             }
             if (identity.ResourceName == null)
             {
-                throw new ArgumentNullException("identity.ResourceName");
+                throw new ArgumentNullException("identity.");
             }
             if (identity.ResourceProviderNamespace == null)
             {
-                throw new ArgumentNullException("identity.ResourceProviderNamespace");
+                throw new ArgumentNullException("identity.");
             }
             if (identity.ResourceType == null)
             {
-                throw new ArgumentNullException("identity.ResourceType");
+                throw new ArgumentNullException("identity.");
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("identity", identity);
-                Tracing.Enter(invocationId, this, "ListForResourceAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ListForResourceAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/" + identity.ResourceProviderNamespace.Trim() + "/" + (identity.ParentResourcePath != null ? identity.ParentResourcePath.Trim() : "") + "/" + identity.ResourceType.Trim() + "/" + identity.ResourceName.Trim() + "/providers/Microsoft.Authorization/permissions?";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/" + Uri.EscapeDataString(identity.ResourceProviderNamespace) + "/" + identity.ParentResourcePath + "/" + identity.ResourceType + "/" + Uri.EscapeDataString(identity.ResourceName) + "/providers/Microsoft.Authorization/permissions?";
             url = url + "api-version=2014-07-01-preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -151,13 +150,13 @@ namespace Microsoft.Azure.Management.Authorization
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -166,7 +165,7 @@ namespace Microsoft.Azure.Management.Authorization
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -174,46 +173,49 @@ namespace Microsoft.Azure.Management.Authorization
                     // Create Result
                     PermissionGetResult result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new PermissionGetResult();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        JToken valueArray = responseDoc["value"];
-                        if (valueArray != null && valueArray.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new PermissionGetResult();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            foreach (JToken valueValue in ((JArray)valueArray))
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
                             {
-                                Permission permissionInstance = new Permission();
-                                result.Permissions.Add(permissionInstance);
-                                
-                                JToken actionsArray = valueValue["actions"];
-                                if (actionsArray != null && actionsArray.Type != JTokenType.Null)
+                                foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    foreach (JToken actionsValue in ((JArray)actionsArray))
+                                    Permission permissionInstance = new Permission();
+                                    result.Permissions.Add(permissionInstance);
+                                    
+                                    JToken actionsArray = valueValue["actions"];
+                                    if (actionsArray != null && actionsArray.Type != JTokenType.Null)
                                     {
-                                        permissionInstance.Actions.Add(((string)actionsValue));
+                                        foreach (JToken actionsValue in ((JArray)actionsArray))
+                                        {
+                                            permissionInstance.Actions.Add(((string)actionsValue));
+                                        }
                                     }
-                                }
-                                
-                                JToken notActionsArray = valueValue["notActions"];
-                                if (notActionsArray != null && notActionsArray.Type != JTokenType.Null)
-                                {
-                                    foreach (JToken notActionsValue in ((JArray)notActionsArray))
+                                    
+                                    JToken notActionsArray = valueValue["notActions"];
+                                    if (notActionsArray != null && notActionsArray.Type != JTokenType.Null)
                                     {
-                                        permissionInstance.NotActions.Add(((string)notActionsValue));
+                                        foreach (JToken notActionsValue in ((JArray)notActionsArray))
+                                        {
+                                            permissionInstance.NotActions.Add(((string)notActionsValue));
+                                        }
                                     }
                                 }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -222,7 +224,7 @@ namespace Microsoft.Azure.Management.Authorization
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -265,18 +267,18 @@ namespace Microsoft.Azure.Management.Authorization
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                Tracing.Enter(invocationId, this, "ListForResourceGroupAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ListForResourceGroupAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/Microsoft.Authorization/permissions?";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.Authorization/permissions?";
             url = url + "api-version=2014-07-01-preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -311,13 +313,13 @@ namespace Microsoft.Azure.Management.Authorization
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -326,7 +328,7 @@ namespace Microsoft.Azure.Management.Authorization
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -334,46 +336,49 @@ namespace Microsoft.Azure.Management.Authorization
                     // Create Result
                     PermissionGetResult result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new PermissionGetResult();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        JToken valueArray = responseDoc["value"];
-                        if (valueArray != null && valueArray.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new PermissionGetResult();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            foreach (JToken valueValue in ((JArray)valueArray))
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
                             {
-                                Permission permissionInstance = new Permission();
-                                result.Permissions.Add(permissionInstance);
-                                
-                                JToken actionsArray = valueValue["actions"];
-                                if (actionsArray != null && actionsArray.Type != JTokenType.Null)
+                                foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    foreach (JToken actionsValue in ((JArray)actionsArray))
+                                    Permission permissionInstance = new Permission();
+                                    result.Permissions.Add(permissionInstance);
+                                    
+                                    JToken actionsArray = valueValue["actions"];
+                                    if (actionsArray != null && actionsArray.Type != JTokenType.Null)
                                     {
-                                        permissionInstance.Actions.Add(((string)actionsValue));
+                                        foreach (JToken actionsValue in ((JArray)actionsArray))
+                                        {
+                                            permissionInstance.Actions.Add(((string)actionsValue));
+                                        }
                                     }
-                                }
-                                
-                                JToken notActionsArray = valueValue["notActions"];
-                                if (notActionsArray != null && notActionsArray.Type != JTokenType.Null)
-                                {
-                                    foreach (JToken notActionsValue in ((JArray)notActionsArray))
+                                    
+                                    JToken notActionsArray = valueValue["notActions"];
+                                    if (notActionsArray != null && notActionsArray.Type != JTokenType.Null)
                                     {
-                                        permissionInstance.NotActions.Add(((string)notActionsValue));
+                                        foreach (JToken notActionsValue in ((JArray)notActionsArray))
+                                        {
+                                            permissionInstance.NotActions.Add(((string)notActionsValue));
+                                        }
                                     }
                                 }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -382,7 +387,7 @@ namespace Microsoft.Azure.Management.Authorization
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }

@@ -21,7 +21,6 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure.Management.Network.Models;
 
 namespace Microsoft.WindowsAzure.Management.Network.Models
 {
@@ -30,12 +29,24 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
     /// </summary>
     public partial class GatewayCreateParameters
     {
-        private GatewayType _gatewayType;
+        private string _gatewaySKU;
+        
+        /// <summary>
+        /// Optional. The SKU of this virtual network gateway. Valid values are
+        /// Default and HighPerformance.
+        /// </summary>
+        public string GatewaySKU
+        {
+            get { return this._gatewaySKU; }
+            set { this._gatewaySKU = value; }
+        }
+        
+        private string _gatewayType;
         
         /// <summary>
         /// Optional. The routing type for this virtual network gateway.
         /// </summary>
-        public GatewayType GatewayType
+        public string GatewayType
         {
             get { return this._gatewayType; }
             set { this._gatewayType = value; }

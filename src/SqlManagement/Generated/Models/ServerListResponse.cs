@@ -22,7 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Sql.Models;
 
 namespace Microsoft.WindowsAzure.Management.Sql.Models
@@ -31,7 +32,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
     /// The response structure for the Server List operation.  Contains a list
     /// of all the servers in a subscription.
     /// </summary>
-    public partial class ServerListResponse : OperationResponse, IEnumerable<Server>
+    public partial class ServerListResponse : AzureOperationResponse, IEnumerable<Server>
     {
         private IList<Server> _servers;
         
@@ -50,7 +51,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public ServerListResponse()
         {
-            this.Servers = new List<Server>();
+            this.Servers = new LazyList<Server>();
         }
         
         /// <summary>

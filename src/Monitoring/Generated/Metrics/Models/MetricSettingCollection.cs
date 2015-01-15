@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models;
 
 namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
@@ -47,7 +48,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         /// </summary>
         public MetricSettingCollection()
         {
-            this.Value = new List<MetricSetting>();
+            this.Value = new LazyList<MetricSetting>();
         }
     }
 }

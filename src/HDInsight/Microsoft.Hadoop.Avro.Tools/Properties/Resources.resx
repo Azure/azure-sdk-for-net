@@ -1,0 +1,286 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="InvalidArgsErrorMessage" xml:space="preserve">
+    <value>Invalid Argument.</value>
+  </data>
+  <data name="NoSchemataForGeneration" xml:space="preserve">
+    <value>No code generation is done. All provided schemata can be expressed by using either C# built-in data types or Avro generic records.</value>
+  </data>
+  <data name="GenerationInfoMessage" xml:space="preserve">
+    <value>Generating {0} [ok]</value>
+  </data>
+  <data name="GenerationError" xml:space="preserve">
+    <value>Code generation error, more information below:
+{0}</value>
+    <comment>{0} (string) exception's message</comment>
+  </data>
+  <data name="GenerationFinishedMessage" xml:space="preserve">
+    <value>Finished</value>
+  </data>
+  <data name="CodeGenerationCommandSynopsis" xml:space="preserve">
+    <value>Generates C# types from Avro schema files.</value>
+  </data>
+  <data name="CodeGenerationCommandDescription" xml:space="preserve">
+    <value>SYNOPSIS:
+ {0} 
+
+SYNTAX:
+ {1}
+    Where:
+    {2}   Comma-separated list of input files.
+    {3}   Output directory (will be created if it does not exist).
+    {4}   Default namespace, used for named schemas that do not have a 
+    namespace property. /N is optional, if missing then (Avro.CodeGen) is used. 
+    use /NF to enforce using the provided namespace and ignore the one defined 
+    in schema.
+
+EXAMPLE:
+  {5} /I:schema.avsc /O:. /N:Custom.Name.Space
+    -- reads schema.avsc and generates source files into current directory where
+       the default namespace is set to Custom.Name.Space
+
+DESCRIPTION:
+Code generation is applied only to Avro record schema and enum schema because
+other schemata can be expressed either by using equivalent C# data types (e.g.
+Avro int is equivalent to C# int) or using generic records (e.g. for union and
+fixed).
+The root schema is searched recursively for record and enum schemata. If Avro
+enum is found a corresponding C# enum is generated. For record schema a C# class
+is generated. The following table shows how Avro types are mapped to C# types
+for each record field:
+(if a named schema lacks namespace then the parent schema namespace (Parent.NS)
+is used. The default namespace (Default.NS) is used if parent schema namespace
+is not found. Default values can be used to initialize fields)
+- null : Object
+- boolean : Boolean
+- int : Int32
+- long : Int64
+- float : Single
+- double : Double
+- string : String
+- bytes: Byte[]
+- {{type": "enum", "name": "E", "namespace":"N", "symbols":["A"]}} : N.E{{A}}
+- {{"type": "enum", "name": "E", "symbols" : ["A", "B"]}} :
+  (Parent.NS|Default.NS).E {{A, B}}
+- {{"type": "record", "name":"R", "namespace":"N"}} : N.R
+- {{"type": "record", "name":"R"}} : (Parent.NS|Default.NS).R
+- {{"type": "array", "items": "int"}} : List&lt;Int32&gt;
+- {{"type": "map", "values": "int"}} : Dictionary&lt;String, Int32&gt;
+- {{"type": "fixed", "size": 10, "name":"F", "namespace":"N"}} : Byte[]
+  attributed with [AvroFixed(10, "F", "N")]
+- {{"type": "fixed", "size": 10, "name":"F"}} : Byte[]
+  attributed with [AvroFixed(10, "F", "(Parent.NS|Default.NS)")]
+- ["null", "int"] : Nullable&lt;Int32&gt;
+- ["null", "string"] : String
+- ["null", "bytes"] : Byte[]
+- ["int", "null", "string"] : Object
+  attributed with AvroUnion of corresponding types</value>
+    <comment>{0} (string) CodeGenerationCommandSynopsis, {1} (string) CodeGenerationCommandSyntax, {2} (string) input argument prefix, {3} (string) output argument prefix, {4} (string) namespace argument prefix, {5} (string) CodeGenerationCommand name.</comment>
+  </data>
+  <data name="CodeGenerationCommandSyntax" xml:space="preserve">
+    <value> {0} {1}&lt;JSON Schema File&gt; {2}&lt;Output Directory&gt; [{3}&lt;Namespace&gt;]</value>
+    <comment>{0} (string) CodeGenerationCommand Name, {1} (string) input argument prefix, {2} (string) output argument prefix, {3} (string) namespace argument prefix</comment>
+  </data>
+  <data name="MissingArgumentsError" xml:space="preserve">
+    <value>Missing argument(s).</value>
+  </data>
+  <data name="ErrorTooManyArguments" xml:space="preserve">
+    <value>Too many arguments.</value>
+  </data>
+  <data name="ErrorMissingInputArguments" xml:space="preserve">
+    <value>Missing input argument.</value>
+  </data>
+  <data name="ErrorMissingOutputArguments" xml:space="preserve">
+    <value>Missing output argument.</value>
+  </data>
+  <data name="ErrorSomeArgumentsInvalid" xml:space="preserve">
+    <value>Some arguments are invalid.</value>
+  </data>
+  <data name="ErrorArgumentMissingItsValue" xml:space="preserve">
+    <value>Argument '{0}' is missing its value.</value>
+    <comment>{0} (string) the argument</comment>
+  </data>
+  <data name="ErrorReadFile" xml:space="preserve">
+    <value>Could not read some of the input files '{0}', more information about the error below:
+{1}</value>
+    <comment>{0} (string) input file name, {1} (string) exception's message</comment>
+  </data>
+  <data name="ErrorWriteDirectory" xml:space="preserve">
+    <value>Error with output directory '{0}', more information about the error below:
+
+{1}</value>
+    <comment>{0} (string) directory name, {1} (string) exception's message.</comment>
+  </data>
+  <data name="Syntax" xml:space="preserve">
+    <value>SYNTAX: </value>
+  </data>
+  <data name="ErrorPathDoesNotExist" xml:space="preserve">
+    <value>ERROR: '{0}' does not exist.</value>
+    <comment>{0} (string) path name</comment>
+  </data>
+  <data name="ErrorCouldNotReadPath" xml:space="preserve">
+    <value>ERROR: could not read '{0}'.</value>
+    <comment>{0} (string) the path</comment>
+  </data>
+  <data name="ErrorProvidedTypeIsNotValid" xml:space="preserve">
+    <value>the provided type is not valid.</value>
+  </data>
+  <data name="ErrorNoNameForCommand" xml:space="preserve">
+    <value>No name is defined for command {0}.</value>
+    <comment>{0} (string) command name</comment>
+  </data>
+  <data name="HelpCommandExecListCommands" xml:space="preserve">
+    <value>Avro tools offer a set of commands for Avro schemas.
+SYNTAX:
+  {0} &lt;command&gt;
+  Where &lt;command&gt; is one of the following:
+{1}</value>
+    <comment>{0} (string) Application name, {1} (string) Commands Information</comment>
+  </data>
+  <data name="HelpCommandExecHowTo" xml:space="preserve">
+    <value>For more information about a particular command type:
+   {0} {1}  /C:&lt;command&gt;</value>
+    <comment>{0} (string) application name, {1} (string) command name</comment>
+  </data>
+  <data name="HelpCommandSynopsis" xml:space="preserve">
+    <value>Provides help about AvroTools commands.</value>
+  </data>
+  <data name="HelpCommandSyntax" xml:space="preserve">
+    <value> {0} [{1}Command]</value>
+    <comment>{0} (string) Help command name. {1} (string) command prefix</comment>
+  </data>
+  <data name="HelpCommandUsage" xml:space="preserve">
+    <value>SYNOPSIS:
+   {0}
+
+SYNTAX:
+  {1}  Where
+    {2}   Name of the command (optional).
+
+EXAMPLE:
+  {3} {4}{5}
+  -- prints {6} command help.</value>
+    <comment>{0} (string) HelpCommandSynopsis, {1} (string) HelpCommandSyntax, {2} (string) command prefix, {3} (string) HelpCommand name, {4} (string) command prefix, {5} and {6} (string) CodeGenerationCommand name.</comment>
+  </data>
+  <data name="HelpCommandExecListCommandsListLineFormat" xml:space="preserve">
+    <value>  {0,8} : {1,-66}</value>
+    <comment>{0} (string) command name, {1} (string) command synopsis</comment>
+  </data>
+</root>

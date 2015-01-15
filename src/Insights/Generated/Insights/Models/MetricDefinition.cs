@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.Azure.Insights.Models;
 
 namespace Microsoft.Azure.Insights.Models
@@ -31,6 +32,18 @@ namespace Microsoft.Azure.Insights.Models
     /// </summary>
     public partial class MetricDefinition
     {
+        private IList<Dimension> _dimensions;
+        
+        /// <summary>
+        /// Optional. Collection of availability information defining what
+        /// timeGrains are available to be queried.
+        /// </summary>
+        public IList<Dimension> Dimensions
+        {
+            get { return this._dimensions; }
+            set { this._dimensions = value; }
+        }
+        
         private IList<MetricAvailability> _metricAvailabilities;
         
         /// <summary>
@@ -66,12 +79,12 @@ namespace Microsoft.Azure.Insights.Models
             set { this._primaryAggregationType = value; }
         }
         
-        private Dictionary<string, string> _properties;
+        private IDictionary<string, string> _properties;
         
         /// <summary>
         /// Optional. Collection of extended properties.
         /// </summary>
-        public Dictionary<string, string> Properties
+        public IDictionary<string, string> Properties
         {
             get { return this._properties; }
             set { this._properties = value; }
@@ -105,8 +118,9 @@ namespace Microsoft.Azure.Insights.Models
         /// </summary>
         public MetricDefinition()
         {
-            this.MetricAvailabilities = new List<MetricAvailability>();
-            this.Properties = new Dictionary<string, string>();
+            this.Dimensions = new LazyList<Dimension>();
+            this.MetricAvailabilities = new LazyList<MetricAvailability>();
+            this.Properties = new LazyDictionary<string, string>();
         }
     }
 }

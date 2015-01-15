@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.Azure.Management.Insights.Models;
 
 namespace Microsoft.Azure.Management.Insights.Models
@@ -48,7 +49,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         /// </summary>
         public PerformanceCounters()
         {
-            this.Counters = new List<PerformanceCounterConfiguration>();
+            this.Counters = new LazyList<PerformanceCounterConfiguration>();
         }
     }
 }

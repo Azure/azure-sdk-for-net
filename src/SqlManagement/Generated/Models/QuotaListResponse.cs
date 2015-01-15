@@ -22,7 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Sql.Models;
 
 namespace Microsoft.WindowsAzure.Management.Sql.Models
@@ -30,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
     /// <summary>
     /// Represents the response structure for the Quota List operation.
     /// </summary>
-    public partial class QuotaListResponse : OperationResponse, IEnumerable<Quota>
+    public partial class QuotaListResponse : AzureOperationResponse, IEnumerable<Quota>
     {
         private IList<Quota> _quotas;
         
@@ -49,7 +50,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public QuotaListResponse()
         {
-            this.Quotas = new List<Quota>();
+            this.Quotas = new LazyList<Quota>();
         }
         
         /// <summary>

@@ -23,11 +23,11 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Scheduler;
 using Microsoft.WindowsAzure.Management.Scheduler.Models;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.Management.Scheduler
 {
     public static partial class CloudServiceManagementClientExtensions
     {
@@ -47,7 +47,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse EntitleResource(this ICloudServiceManagementClient operations, EntitleResourceParameters parameters)
+        public static AzureOperationResponse EntitleResource(this ICloudServiceManagementClient operations, EntitleResourceParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -72,7 +72,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> EntitleResourceAsync(this ICloudServiceManagementClient operations, EntitleResourceParameters parameters)
+        public static Task<AzureOperationResponse> EntitleResourceAsync(this ICloudServiceManagementClient operations, EntitleResourceParameters parameters)
         {
             return operations.EntitleResourceAsync(parameters, CancellationToken.None);
         }

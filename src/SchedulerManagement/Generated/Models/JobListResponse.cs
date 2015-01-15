@@ -22,7 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Scheduler.Models;
 
 namespace Microsoft.WindowsAzure.Scheduler.Models
@@ -30,7 +31,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
     /// <summary>
     /// The List Jobs operation response.
     /// </summary>
-    public partial class JobListResponse : OperationResponse, IEnumerable<Job>
+    public partial class JobListResponse : AzureOperationResponse, IEnumerable<Job>
     {
         private IList<Job> _jobs;
         
@@ -48,7 +49,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         /// </summary>
         public JobListResponse()
         {
-            this.Jobs = new List<Job>();
+            this.Jobs = new LazyList<Job>();
         }
         
         /// <summary>

@@ -21,14 +21,14 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.WindowsAzure.Management.Models
 {
     /// <summary>
     /// The Get Management Certificate operation response.
     /// </summary>
-    public partial class ManagementCertificateGetResponse : OperationResponse
+    public partial class ManagementCertificateGetResponse : AzureOperationResponse
     {
         private DateTime _created;
         

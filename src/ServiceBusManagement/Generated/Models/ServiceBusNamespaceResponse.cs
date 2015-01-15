@@ -21,7 +21,7 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.ServiceBus.Models;
 
 namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
@@ -29,7 +29,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
     /// <summary>
     /// The response to a request for a particular namespace.
     /// </summary>
-    public partial class ServiceBusNamespaceResponse : OperationResponse
+    public partial class ServiceBusNamespaceResponse : AzureOperationResponse
     {
         private ServiceBusNamespace _namespace;
         

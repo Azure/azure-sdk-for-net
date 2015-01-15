@@ -22,9 +22,9 @@
 using System;
 using System.Linq;
 using System.Net.Http;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Sql;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
 
 namespace Microsoft.Azure.Management.Sql
 {
@@ -142,7 +142,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <summary>
         /// Initializes a new instance of the SqlManagementClient class.
         /// </summary>
-        private SqlManagementClient()
+        public SqlManagementClient()
             : base()
         {
             this._databases = new DatabaseOperations(this);
@@ -164,7 +164,7 @@ namespace Microsoft.Azure.Management.Sql
         /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Gets the URI used as the base for all cloud service
+        /// Optional. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
         public SqlManagementClient(SubscriptionCloudCredentials credentials, Uri baseUri)
@@ -211,7 +211,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <param name='httpClient'>
         /// The Http client
         /// </param>
-        private SqlManagementClient(HttpClient httpClient)
+        public SqlManagementClient(HttpClient httpClient)
             : base(httpClient)
         {
             this._databases = new DatabaseOperations(this);
@@ -233,7 +233,7 @@ namespace Microsoft.Azure.Management.Sql
         /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Gets the URI used as the base for all cloud service
+        /// Optional. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
         /// <param name='httpClient'>

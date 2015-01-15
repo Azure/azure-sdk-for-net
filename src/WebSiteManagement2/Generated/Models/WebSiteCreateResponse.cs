@@ -21,15 +21,15 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.WebSites.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
     /// <summary>
     /// The Create Web Space operation response.
     /// </summary>
-    public partial class WebSiteCreateResponse : OperationResponse
+    public partial class WebSiteCreateResponse : AzureOperationResponse
     {
         private WebSite _webSite;
         

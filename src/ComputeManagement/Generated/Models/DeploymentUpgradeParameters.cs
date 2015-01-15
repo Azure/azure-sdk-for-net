@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
@@ -156,7 +157,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public DeploymentUpgradeParameters()
         {
-            this.ExtendedProperties = new Dictionary<string, string>();
+            this.ExtendedProperties = new LazyDictionary<string, string>();
         }
     }
 }

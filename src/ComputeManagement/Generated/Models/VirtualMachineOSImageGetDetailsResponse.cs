@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
@@ -59,7 +60,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public VirtualMachineOSImageGetDetailsResponse()
         {
-            this.ReplicationProgress = new List<VirtualMachineOSImageGetDetailsResponse.ReplicationProgressElement>();
+            this.ReplicationProgress = new LazyList<VirtualMachineOSImageGetDetailsResponse.ReplicationProgressElement>();
         }
         
         /// <summary>

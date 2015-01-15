@@ -23,7 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Scheduler;
 using Microsoft.WindowsAzure.Management.Scheduler.Models;
 
@@ -128,7 +128,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> RegisterResourceProviderAsync(CancellationToken cancellationToken);
+        Task<AzureOperationResponse> RegisterResourceProviderAsync(CancellationToken cancellationToken);
         
         /// <summary>
         /// Unregister the Scheduler resource provider with your subscription.
@@ -140,6 +140,6 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> UnregisterResourceProviderAsync(CancellationToken cancellationToken);
+        Task<AzureOperationResponse> UnregisterResourceProviderAsync(CancellationToken cancellationToken);
     }
 }

@@ -23,9 +23,9 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Authorization;
 using Microsoft.Azure.Management.Authorization.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Authorization
 {
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Management.Authorization
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> DeleteAsync(string scope, Guid roleAssignmentName, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> DeleteAsync(string scope, Guid roleAssignmentName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Delete role assignment.
@@ -102,7 +102,7 @@ namespace Microsoft.Azure.Management.Authorization
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> DeleteByIdAsync(string roleAssignmentId, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> DeleteByIdAsync(string roleAssignmentId, CancellationToken cancellationToken);
         
         /// <summary>
         /// Get single role assignment.

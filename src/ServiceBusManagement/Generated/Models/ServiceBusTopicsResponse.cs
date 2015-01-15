@@ -22,7 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.ServiceBus.Models;
 
 namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
@@ -30,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
     /// <summary>
     /// A response to a request for a list of topics.
     /// </summary>
-    public partial class ServiceBusTopicsResponse : OperationResponse, IEnumerable<ServiceBusTopic>
+    public partial class ServiceBusTopicsResponse : AzureOperationResponse, IEnumerable<ServiceBusTopic>
     {
         private IList<ServiceBusTopic> _topics;
         
@@ -48,7 +49,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         /// </summary>
         public ServiceBusTopicsResponse()
         {
-            this.Topics = new List<ServiceBusTopic>();
+            this.Topics = new LazyList<ServiceBusTopic>();
         }
         
         /// <summary>

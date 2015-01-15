@@ -22,15 +22,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Authorization.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Authorization.Models
 {
     /// <summary>
     /// Permissions information.
     /// </summary>
-    public partial class PermissionGetResult : OperationResponse
+    public partial class PermissionGetResult : AzureOperationResponse
     {
         private IList<Permission> _permissions;
         
@@ -48,7 +49,7 @@ namespace Microsoft.Azure.Management.Authorization.Models
         /// </summary>
         public PermissionGetResult()
         {
-            this.Permissions = new List<Permission>();
+            this.Permissions = new LazyList<Permission>();
         }
     }
 }

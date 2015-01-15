@@ -22,7 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.WebSites.Models;
 
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
@@ -30,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
     /// <summary>
     /// The Get Historical Usage Metrics Web hosting plan operation response.
     /// </summary>
-    public partial class WebHostingPlanGetHistoricalUsageMetricsResponse : OperationResponse, IEnumerable<HistoricalUsageMetric>
+    public partial class WebHostingPlanGetHistoricalUsageMetricsResponse : AzureOperationResponse, IEnumerable<HistoricalUsageMetric>
     {
         private IList<HistoricalUsageMetric> _usageMetrics;
         
@@ -49,7 +50,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public WebHostingPlanGetHistoricalUsageMetricsResponse()
         {
-            this.UsageMetrics = new List<HistoricalUsageMetric>();
+            this.UsageMetrics = new LazyList<HistoricalUsageMetric>();
         }
         
         /// <summary>

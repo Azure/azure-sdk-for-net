@@ -23,7 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.WebSites.Models;
 
 namespace Microsoft.WindowsAzure.Management.WebSites
@@ -70,7 +70,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> DeleteAsync(string webSpaceName, string webHostingPlanName, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> DeleteAsync(string webSpaceName, string webHostingPlanName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Gets details of an existing Web Hosting Plan  (see

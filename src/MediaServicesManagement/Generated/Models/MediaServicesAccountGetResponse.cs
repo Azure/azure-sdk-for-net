@@ -21,7 +21,7 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.MediaServices.Models;
 
 namespace Microsoft.WindowsAzure.Management.MediaServices.Models
@@ -29,7 +29,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices.Models
     /// <summary>
     /// The Get Media Services Account operation response.
     /// </summary>
-    public partial class MediaServicesAccountGetResponse : OperationResponse
+    public partial class MediaServicesAccountGetResponse : AzureOperationResponse
     {
         private MediaServicesAccount _account;
         

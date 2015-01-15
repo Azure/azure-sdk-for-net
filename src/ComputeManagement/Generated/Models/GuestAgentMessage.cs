@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
@@ -57,7 +58,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public GuestAgentMessage()
         {
-            this.ParamList = new List<string>();
+            this.ParamList = new LazyList<string>();
         }
     }
 }

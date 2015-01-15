@@ -14,14 +14,10 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.WindowsAzure.Common.TransientFaultHandling;
 using Xunit;
+using Hyak.Common.TransientFaultHandling;
 
-namespace Microsoft.WindowsAzure.Common.Test.TransientFaultHandling
+namespace Microsoft.Azure.Common.Test.TransientFaultHandling
 {
     /// <summary>
     /// Implements general test cases for retry policies.

@@ -21,14 +21,14 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.WindowsAzure.Management.Storage.Models
 {
     /// <summary>
     /// The primary and secondary access keys for a storage account.
     /// </summary>
-    public partial class StorageAccountRegenerateKeysResponse : OperationResponse
+    public partial class StorageAccountRegenerateKeysResponse : AzureOperationResponse
     {
         private string _primaryKey;
         

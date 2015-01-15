@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.WindowsAzure.Management.WebSites.Models;
 
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
@@ -52,6 +53,18 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         {
             get { return this._appSettings; }
             set { this._appSettings = value; }
+        }
+        
+        private string _autoSwapSlotName;
+        
+        /// <summary>
+        /// Optional. Sets the slot name to swap with after successful
+        /// deployment.
+        /// </summary>
+        public string AutoSwapSlotName
+        {
+            get { return this._autoSwapSlotName; }
+            set { this._autoSwapSlotName = value; }
         }
         
         private IList<WebSiteUpdateConfigurationParameters.ConnectionStringInfo> _connectionStrings;
@@ -125,6 +138,54 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         {
             get { return this._httpLoggingEnabled; }
             set { this._httpLoggingEnabled = value; }
+        }
+        
+        private string _javaContainer;
+        
+        /// <summary>
+        /// Optional. The web site Java Container. Supported values are TOMCAT,
+        /// JETTY
+        /// </summary>
+        public string JavaContainer
+        {
+            get { return this._javaContainer; }
+            set { this._javaContainer = value; }
+        }
+        
+        private string _javaContainerVersion;
+        
+        /// <summary>
+        /// Optional. The web site Java Container Version. Supported values are
+        /// 7.0.50 if Java Container is TOMCAT and 9.1.0.20131115 if Java
+        /// Container is JETTY
+        /// </summary>
+        public string JavaContainerVersion
+        {
+            get { return this._javaContainerVersion; }
+            set { this._javaContainerVersion = value; }
+        }
+        
+        private string _javaVersion;
+        
+        /// <summary>
+        /// Optional. The web site JDK version. Supported values are an empty
+        /// string (an empty string disables Java), 1.7.0_51
+        /// </summary>
+        public string JavaVersion
+        {
+            get { return this._javaVersion; }
+            set { this._javaVersion = value; }
+        }
+        
+        private WebSiteUpdateConfigurationParameters.SiteLimits _limits;
+        
+        /// <summary>
+        /// Optional. The per site limits.
+        /// </summary>
+        public WebSiteUpdateConfigurationParameters.SiteLimits Limits
+        {
+            get { return this._limits; }
+            set { this._limits = value; }
         }
         
         private int? _logsDirectorySizeLimit;
@@ -266,6 +327,30 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             set { this._scmType = value; }
         }
         
+        private bool? _siteAuthEnabled;
+        
+        /// <summary>
+        /// Optional. Gets or sets a value indicating whether the site's
+        /// Authentication / Authorization feature is enabled.
+        /// </summary>
+        public bool? SiteAuthEnabled
+        {
+            get { return this._siteAuthEnabled; }
+            set { this._siteAuthEnabled = value; }
+        }
+        
+        private SiteAuthSettings _siteAuthSettings;
+        
+        /// <summary>
+        /// Optional. Gets or sets the Authentication / Authorization settings
+        /// of a web site.
+        /// </summary>
+        public SiteAuthSettings SiteAuthSettings
+        {
+            get { return this._siteAuthSettings; }
+            set { this._siteAuthSettings = value; }
+        }
+        
         private bool? _use32BitWorkerProcess;
         
         /// <summary>
@@ -294,12 +379,12 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public WebSiteUpdateConfigurationParameters()
         {
-            this.AppSettings = new Dictionary<string, string>();
-            this.ConnectionStrings = new List<WebSiteUpdateConfigurationParameters.ConnectionStringInfo>();
-            this.DefaultDocuments = new List<string>();
-            this.HandlerMappings = new List<WebSiteUpdateConfigurationParameters.HandlerMapping>();
-            this.Metadata = new Dictionary<string, string>();
-            this.RoutingRules = new List<RoutingRule>();
+            this.AppSettings = new LazyDictionary<string, string>();
+            this.ConnectionStrings = new LazyList<WebSiteUpdateConfigurationParameters.ConnectionStringInfo>();
+            this.DefaultDocuments = new LazyList<string>();
+            this.HandlerMappings = new LazyList<WebSiteUpdateConfigurationParameters.HandlerMapping>();
+            this.Metadata = new LazyDictionary<string, string>();
+            this.RoutingRules = new LazyList<RoutingRule>();
         }
         
         /// <summary>
@@ -399,6 +484,52 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             /// Initializes a new instance of the HandlerMapping class.
             /// </summary>
             public HandlerMapping()
+            {
+            }
+        }
+        
+        /// <summary>
+        /// Per site limits
+        /// </summary>
+        public partial class SiteLimits
+        {
+            private long? _maxDiskSizeInMb;
+            
+            /// <summary>
+            /// Optional. Maximum disk size allowed in MB
+            /// </summary>
+            public long? MaxDiskSizeInMb
+            {
+                get { return this._maxDiskSizeInMb; }
+                set { this._maxDiskSizeInMb = value; }
+            }
+            
+            private long? _maxMemoryInMb;
+            
+            /// <summary>
+            /// Optional. Maximum memory allowed in MB
+            /// </summary>
+            public long? MaxMemoryInMb
+            {
+                get { return this._maxMemoryInMb; }
+                set { this._maxMemoryInMb = value; }
+            }
+            
+            private double? _maxPercentageCpu;
+            
+            /// <summary>
+            /// Optional. The name of the pair.
+            /// </summary>
+            public double? MaxPercentageCpu
+            {
+                get { return this._maxPercentageCpu; }
+                set { this._maxPercentageCpu = value; }
+            }
+            
+            /// <summary>
+            /// Initializes a new instance of the SiteLimits class.
+            /// </summary>
+            public SiteLimits()
             {
             }
         }

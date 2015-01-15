@@ -22,8 +22,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Insights.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Insights.Models
 {
@@ -31,7 +32,7 @@ namespace Microsoft.Azure.Management.Insights.Models
     /// A standard service response including an HTTP status code and request
     /// ID.
     /// </summary>
-    public partial class AutoscaleSettingGetResponse : OperationResponse
+    public partial class AutoscaleSettingGetResponse : AzureOperationResponse
     {
         private string _id;
         
@@ -93,7 +94,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         /// </summary>
         public AutoscaleSettingGetResponse()
         {
-            this.Tags = new Dictionary<string, string>();
+            this.Tags = new LazyDictionary<string, string>();
         }
     }
 }

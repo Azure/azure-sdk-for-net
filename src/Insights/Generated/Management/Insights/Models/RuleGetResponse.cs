@@ -22,15 +22,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Insights.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Insights.Models
 {
     /// <summary>
     /// The Get Rule operation response.
     /// </summary>
-    public partial class RuleGetResponse : OperationResponse
+    public partial class RuleGetResponse : AzureOperationResponse
     {
         private string _id;
         
@@ -92,7 +93,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         /// </summary>
         public RuleGetResponse()
         {
-            this.Tags = new Dictionary<string, string>();
+            this.Tags = new LazyDictionary<string, string>();
         }
     }
 }

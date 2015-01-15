@@ -22,7 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.ExpressRoute.Models;
 
 namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
@@ -30,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
     /// <summary>
     /// The List Cross Connection operation response.
     /// </summary>
-    public partial class CrossConnectionListResponse : OperationResponse, IEnumerable<AzureCrossConnection>
+    public partial class CrossConnectionListResponse : AzureOperationResponse, IEnumerable<AzureCrossConnection>
     {
         private IList<AzureCrossConnection> _crossConnections;
         
@@ -48,7 +49,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         /// </summary>
         public CrossConnectionListResponse()
         {
-            this.CrossConnections = new List<AzureCrossConnection>();
+            this.CrossConnections = new LazyList<AzureCrossConnection>();
         }
         
         /// <summary>

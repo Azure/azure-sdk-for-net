@@ -22,9 +22,9 @@
 using System;
 using System.Linq;
 using System.Net.Http;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Authorization;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
 
 namespace Microsoft.Azure.Management.Authorization
 {
@@ -119,7 +119,7 @@ namespace Microsoft.Azure.Management.Authorization
         /// Initializes a new instance of the AuthorizationManagementClient
         /// class.
         /// </summary>
-        private AuthorizationManagementClient()
+        public AuthorizationManagementClient()
             : base()
         {
             this._permissions = new PermissionOperations(this);
@@ -141,7 +141,7 @@ namespace Microsoft.Azure.Management.Authorization
         /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Gets the URI used as the base for all cloud service
+        /// Optional. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
         public AuthorizationManagementClient(SubscriptionCloudCredentials credentials, Uri baseUri)
@@ -190,7 +190,7 @@ namespace Microsoft.Azure.Management.Authorization
         /// <param name='httpClient'>
         /// The Http client
         /// </param>
-        private AuthorizationManagementClient(HttpClient httpClient)
+        public AuthorizationManagementClient(HttpClient httpClient)
             : base(httpClient)
         {
             this._permissions = new PermissionOperations(this);
@@ -212,7 +212,7 @@ namespace Microsoft.Azure.Management.Authorization
         /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Gets the URI used as the base for all cloud service
+        /// Optional. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
         /// <param name='httpClient'>

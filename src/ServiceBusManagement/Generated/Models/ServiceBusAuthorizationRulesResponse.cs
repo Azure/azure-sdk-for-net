@@ -22,7 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.ServiceBus.Models;
 
 namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
@@ -30,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
     /// <summary>
     /// A response to a request for a list of authorization rules.
     /// </summary>
-    public partial class ServiceBusAuthorizationRulesResponse : OperationResponse, IEnumerable<ServiceBusSharedAccessAuthorizationRule>
+    public partial class ServiceBusAuthorizationRulesResponse : AzureOperationResponse, IEnumerable<ServiceBusSharedAccessAuthorizationRule>
     {
         private IList<ServiceBusSharedAccessAuthorizationRule> _authorizationRules;
         
@@ -49,7 +50,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         /// </summary>
         public ServiceBusAuthorizationRulesResponse()
         {
-            this.AuthorizationRules = new List<ServiceBusSharedAccessAuthorizationRule>();
+            this.AuthorizationRules = new LazyList<ServiceBusSharedAccessAuthorizationRule>();
         }
         
         /// <summary>

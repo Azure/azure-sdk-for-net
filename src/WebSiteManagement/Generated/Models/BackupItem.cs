@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.WindowsAzure.Management.WebSites.Models;
 
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
@@ -175,7 +176,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public BackupItem()
         {
-            this.Databases = new List<DatabaseBackupSetting>();
+            this.Databases = new LazyList<DatabaseBackupSetting>();
         }
     }
 }

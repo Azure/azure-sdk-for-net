@@ -23,9 +23,9 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Automation;
 using Microsoft.Azure.Management.Automation.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Automation
 {
@@ -100,7 +100,7 @@ namespace Microsoft.Azure.Management.Automation
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Delete(this IScheduleOperations operations, string automationAccount, string scheduleId)
+        public static AzureOperationResponse Delete(this IScheduleOperations operations, string automationAccount, string scheduleId)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -128,7 +128,7 @@ namespace Microsoft.Azure.Management.Automation
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> DeleteAsync(this IScheduleOperations operations, string automationAccount, string scheduleId)
+        public static Task<AzureOperationResponse> DeleteAsync(this IScheduleOperations operations, string automationAccount, string scheduleId)
         {
             return operations.DeleteAsync(automationAccount, scheduleId, CancellationToken.None);
         }
@@ -302,7 +302,7 @@ namespace Microsoft.Azure.Management.Automation
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Update(this IScheduleOperations operations, string automationAccount, ScheduleUpdateParameters parameters)
+        public static AzureOperationResponse Update(this IScheduleOperations operations, string automationAccount, ScheduleUpdateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -330,7 +330,7 @@ namespace Microsoft.Azure.Management.Automation
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> UpdateAsync(this IScheduleOperations operations, string automationAccount, ScheduleUpdateParameters parameters)
+        public static Task<AzureOperationResponse> UpdateAsync(this IScheduleOperations operations, string automationAccount, ScheduleUpdateParameters parameters)
         {
             return operations.UpdateAsync(automationAccount, parameters, CancellationToken.None);
         }

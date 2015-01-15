@@ -22,7 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.WebSites.Models;
 
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
@@ -30,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
     /// <summary>
     /// The List Publishing Users operation response.
     /// </summary>
-    public partial class WebSpacesListPublishingUsersResponse : OperationResponse, IEnumerable<WebSpacesListPublishingUsersResponse.User>
+    public partial class WebSpacesListPublishingUsersResponse : AzureOperationResponse, IEnumerable<WebSpacesListPublishingUsersResponse.User>
     {
         private IList<WebSpacesListPublishingUsersResponse.User> _users;
         
@@ -49,7 +50,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public WebSpacesListPublishingUsersResponse()
         {
-            this.Users = new List<WebSpacesListPublishingUsersResponse.User>();
+            this.Users = new LazyList<WebSpacesListPublishingUsersResponse.User>();
         }
         
         /// <summary>

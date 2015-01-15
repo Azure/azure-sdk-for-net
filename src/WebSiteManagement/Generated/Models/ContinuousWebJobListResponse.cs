@@ -22,7 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.WebSitesExtensions.Models;
 
 namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
@@ -30,7 +31,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
     /// <summary>
     /// The list of continuous WebJobs operation response.
     /// </summary>
-    public partial class ContinuousWebJobListResponse : OperationResponse, IEnumerable<ContinuousWebJob>
+    public partial class ContinuousWebJobListResponse : AzureOperationResponse, IEnumerable<ContinuousWebJob>
     {
         private IList<ContinuousWebJob> _continuousWebJobs;
         
@@ -49,7 +50,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         /// </summary>
         public ContinuousWebJobListResponse()
         {
-            this.ContinuousWebJobs = new List<ContinuousWebJob>();
+            this.ContinuousWebJobs = new LazyList<ContinuousWebJob>();
         }
         
         /// <summary>

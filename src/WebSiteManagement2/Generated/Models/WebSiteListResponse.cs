@@ -22,15 +22,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.WebSites.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
     /// <summary>
     /// The List Web Sites operation response.
     /// </summary>
-    public partial class WebSiteListResponse : OperationResponse, IEnumerable<WebSite>
+    public partial class WebSiteListResponse : AzureOperationResponse, IEnumerable<WebSite>
     {
         private IList<WebSite> _webSites;
         
@@ -48,7 +49,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         public WebSiteListResponse()
         {
-            this.WebSites = new List<WebSite>();
+            this.WebSites = new LazyList<WebSite>();
         }
         
         /// <summary>

@@ -1,0 +1,87 @@
+﻿<#+ private void GenerateDefaultValue(TypeSchema typeSchema, object defaultValue)
+        {
+            if (typeSchema is IntSchema || typeSchema is LongSchema || typeSchema is BooleanSchema)
+            {
+                #><#= defaultValue.ToString().ToLowerInvariant() #><#+
+            }
+            else if(typeSchema is NullSchema)
+            {
+                #>null<#+
+            }
+            else if(typeSchema is StringSchema)
+            {
+                #>"<#= defaultValue #>"<#+
+            }
+            else if(typeSchema is FloatSchema)
+            {
+                #>(float)<#= ((float) defaultValue).ToString(CultureInfo.InvariantCulture) #><#+
+            }
+            else if(typeSchema is DoubleSchema)
+            {
+                #><#= ((double) defaultValue).ToString(CultureInfo.InvariantCulture) #><#+
+            }
+            else if(typeSchema is BytesSchema || typeSchema is FixedSchema)
+            {
+                #>new byte[] {<#+
+                var asArray = defaultValue as byte[];
+                for (int i = 0; i < asArray.Length; i++)
+                {
+                    #> <#= asArray[i].ToString(CultureInfo.InvariantCulture) #><#+
+                    if(i < asArray.Length - 1){
+                        #>,<#+
+                    }
+                }
+                #> }<#+
+            }
+            else if (typeSchema is EnumSchema)
+            {
+                var enumSchema = typeSchema as EnumSchema;
+                #><#= Utilities.Validate(string.Concat(Utilities.GetNamespace(this, enumSchema.Namespace), ".", enumSchema.Name)) #>.<#= (defaultValue as AvroEnum).Value #><#+
+            }
+            else if(typeSchema is UnionSchema)
+            {
+                GenerateDefaultValue((dynamic) (typeSchema as UnionSchema).Schemas[0], defaultValue);
+            }
+            else
+            {
+                #>new <#+ GenerateType((dynamic)typeSchema, true, false, true); #>{ <#+
+                if (typeSchema is ArraySchema)
+                {
+                    var arrayDefaultValues = defaultValue as Array;
+                    for (int i = 0; i < arrayDefaultValues.Length; i++)
+                    {
+                        GenerateDefaultValue(((dynamic) typeSchema).ItemSchema, arrayDefaultValues.GetValue(i));
+                        if(i < arrayDefaultValues.Length - 1){
+                            #>,<#+
+                        }
+                        #> <#+
+                    }
+                }
+                else if (typeSchema is MapSchema)
+                {
+                    var asDictionary = defaultValue as IDictionary<string, object>;
+                    int i = 0;
+                    foreach (var item in asDictionary)
+                    {
+                        #>{ <#+ GenerateDefaultValue(((dynamic) typeSchema).KeySchema, item.Key); #>, <#+ GenerateDefaultValue(((dynamic) typeSchema).ValueSchema, item.Value); #> }<#+
+                        if (++i < asDictionary.Count)
+                        {
+                            #>,<#+
+                        }
+                    }
+                }
+                else if (typeSchema is RecordSchema)
+                {
+                    var fields = ((dynamic)defaultValue).Schema.Fields;
+                    for (int i = 0; i < fields.Count; i++)
+                    {
+                        #><#= Utilities.Validate(fields[i].Name) #> = <#+ GenerateDefaultValue((dynamic) fields[i].TypeSchema, ((dynamic)defaultValue)[fields[i].Name]);
+                        if(i < fields.Count - 1){
+                            #>,<#+
+                        }
+                    }
+                }
+                #>}<#+
+            }
+        }
+#>

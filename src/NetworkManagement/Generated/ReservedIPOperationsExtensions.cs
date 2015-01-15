@@ -23,11 +23,11 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Network;
 using Microsoft.WindowsAzure.Management.Network.Models;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.Management.Network
 {
     /// <summary>
     /// The Service Management API includes operations for managing the virtual
@@ -112,7 +112,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginDeleting(this IReservedIPOperations operations, string ipName)
+        public static AzureOperationResponse BeginDeleting(this IReservedIPOperations operations, string ipName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -136,7 +136,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginDeletingAsync(this IReservedIPOperations operations, string ipName)
+        public static Task<AzureOperationResponse> BeginDeletingAsync(this IReservedIPOperations operations, string ipName)
         {
             return operations.BeginDeletingAsync(ipName, CancellationToken.None);
         }

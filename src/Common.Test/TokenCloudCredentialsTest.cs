@@ -14,10 +14,10 @@
 //
 
 using System.Net;
-using Microsoft.WindowsAzure.Common.Test.Fakes;
+using Microsoft.Azure.Common.Test.Fakes;
 using Xunit;
 
-namespace Microsoft.WindowsAzure.Common.Test
+namespace Microsoft.Azure.Common.Test
 {
     public class TokenCloudCredentialsTest
     {

@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 
 namespace Microsoft.Azure.Management.Insights.Models
 {
@@ -81,9 +82,9 @@ namespace Microsoft.Azure.Management.Insights.Models
         /// </summary>
         public RecurrentSchedule()
         {
-            this.Days = new List<string>();
-            this.Hours = new List<int>();
-            this.Minutes = new List<int>();
+            this.Days = new LazyList<string>();
+            this.Hours = new LazyList<int>();
+            this.Minutes = new LazyList<int>();
         }
     }
 }

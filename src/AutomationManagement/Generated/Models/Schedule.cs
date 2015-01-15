@@ -54,7 +54,8 @@ namespace Microsoft.Azure.Management.Automation.Models
         private int? _dayInterval;
         
         /// <summary>
-        /// Optional. The next run time of the schedule.
+        /// Optional. How often the schedule will fire, in days. The day
+        /// interval should only be set if the schedule type is daily schedule.
         /// </summary>
         public int? DayInterval
         {
@@ -82,6 +83,19 @@ namespace Microsoft.Azure.Management.Automation.Models
         {
             get { return this._expiryTime; }
             set { this._expiryTime = value; }
+        }
+        
+        private int? _hourInterval;
+        
+        /// <summary>
+        /// Optional. How often the schedule will fire, in hours. The hour
+        /// interval should only be set if the schedule type is hourly
+        /// schedule.
+        /// </summary>
+        public int? HourInterval
+        {
+            get { return this._hourInterval; }
+            set { this._hourInterval = value; }
         }
         
         private string _id;

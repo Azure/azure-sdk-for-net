@@ -22,7 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Sql.Models;
 
 namespace Microsoft.WindowsAzure.Management.Sql.Models
@@ -31,7 +32,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
     /// Contains a collection of databases for a given Azure SQL Database
     /// Server.
     /// </summary>
-    public partial class DatabaseListResponse : OperationResponse, IEnumerable<Database>
+    public partial class DatabaseListResponse : AzureOperationResponse, IEnumerable<Database>
     {
         private IList<Database> _databases;
         
@@ -50,7 +51,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public DatabaseListResponse()
         {
-            this.Databases = new List<Database>();
+            this.Databases = new LazyList<Database>();
         }
         
         /// <summary>

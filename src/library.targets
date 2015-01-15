@@ -123,15 +123,16 @@
   <Target Name="SyncPackageVersions" BeforeTargets="BeforeBuild">
     <PropertyGroup>
       <PowerShellExe Condition=" '$(PowerShellExe)'=='' ">%WINDIR%\System32\WindowsPowerShell\v1.0\powershell.exe</PowerShellExe>   
-      <NuSpecSyncScript>$(SolutionDir)\tools\Sync-NuspecDependencies.ps1</NuSpecSyncScript>	  
+      <NuSpecSyncScript>$(SolutionDir)\tools\Sync-NuspecDependencies.ps1</NuSpecSyncScript>	 
+	  <ProductSourceFolder Condition="$(ProductSourceFolder) == ''">$(MSBuildThisFileDirectory)$(ProductSourceFolderPath)</ProductSourceFolder>
     </PropertyGroup>
-	
-	<!-- Update all explicit references to dependent versions. -->
-    <Exec Command="$(PowerShellExe) -NonInteractive -ExecutionPolicy bypass -Command &quot;&amp; { &amp;&apos;$(NuSpecSyncScript)&apos; &apos;$(MSBuildProjectDirectory)&apos; }&quot;" />
+
+  <!-- Update all explicit references to dependent versions. -->
+    <Exec Command="$(PowerShellExe) -NonInteractive -ExecutionPolicy bypass -Command &quot;&amp; { &amp;&apos;$(NuSpecSyncScript)&apos; &apos;$(MSBuildProjectDirectory)&apos; -BasePath &apos;$(ProductSourceFolder)&apos; }&quot;" />
   </Target>
 
   <Target Name="BeforeCodeGen" BeforeTargets="GenerateCodeFromSpecs" Condition=" '$(GenerateHydraSpecs)' == 'true' ">
     <Message Text="Removing Hydra generated files before building project $(ProjectFileName)"/>
-    <RemoveDir Directories="Generated" />
+    <RemoveDir Directories="Generated" ContinueOnError="True" />
   </Target>
 </Project>

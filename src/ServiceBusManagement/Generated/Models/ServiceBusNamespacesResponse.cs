@@ -22,7 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.ServiceBus.Models;
 
 namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
@@ -30,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
     /// <summary>
     /// The response to the request for a listing of namespaces.
     /// </summary>
-    public partial class ServiceBusNamespacesResponse : OperationResponse, IEnumerable<ServiceBusNamespace>
+    public partial class ServiceBusNamespacesResponse : AzureOperationResponse, IEnumerable<ServiceBusNamespace>
     {
         private IList<ServiceBusNamespace> _namespaces;
         
@@ -49,7 +50,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         /// </summary>
         public ServiceBusNamespacesResponse()
         {
-            this.Namespaces = new List<ServiceBusNamespace>();
+            this.Namespaces = new LazyList<ServiceBusNamespace>();
         }
         
         /// <summary>

@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 
 namespace Microsoft.Azure.Management.Authorization.Models
 {
@@ -57,8 +58,8 @@ namespace Microsoft.Azure.Management.Authorization.Models
         /// </summary>
         public Permission()
         {
-            this.Actions = new List<string>();
-            this.NotActions = new List<string>();
+            this.Actions = new LazyList<string>();
+            this.NotActions = new LazyList<string>();
         }
     }
 }

@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 
 namespace Microsoft.Azure.Management.Resources.Models
 {
@@ -82,7 +83,7 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         public BasicResourceGroup()
         {
-            this.Tags = new Dictionary<string, string>();
+            this.Tags = new LazyDictionary<string, string>();
         }
         
         /// <summary>

@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.Azure.Management.Insights.Models;
 
 namespace Microsoft.Azure.Management.Insights.Models
@@ -73,7 +74,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         /// </summary>
         public Directories()
         {
-            this.DataSources = new List<DirectoryConfiguration>();
+            this.DataSources = new LazyList<DirectoryConfiguration>();
         }
     }
 }

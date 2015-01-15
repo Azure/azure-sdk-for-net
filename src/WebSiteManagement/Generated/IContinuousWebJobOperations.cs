@@ -24,7 +24,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.WebSitesExtensions.Models;
 
 namespace Microsoft.WindowsAzure.WebSitesExtensions
@@ -47,7 +47,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> DeleteAsync(string jobName, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> DeleteAsync(string jobName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Get a continuous WebJob.
@@ -105,7 +105,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> SetSettingsAsync(string jobName, ContinuousWebJobSettingsUpdateParameters settings, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> SetSettingsAsync(string jobName, ContinuousWebJobSettingsUpdateParameters settings, CancellationToken cancellationToken);
         
         /// <summary>
         /// Start a continuous WebJob.
@@ -120,7 +120,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> StartAsync(string jobName, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> StartAsync(string jobName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Stop a continuous WebJob.
@@ -135,7 +135,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> StopAsync(string jobName, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> StopAsync(string jobName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Create or replace a continuous WebJob with a script file (.exe,
@@ -157,7 +157,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> UploadFileAsync(string jobName, string fileName, Stream jobContent, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> UploadFileAsync(string jobName, string fileName, Stream jobContent, CancellationToken cancellationToken);
         
         /// <summary>
         /// Create or replace a continuous WebJob with a zip file (containing
@@ -179,6 +179,6 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> UploadZipAsync(string jobName, string fileName, Stream jobContent, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> UploadZipAsync(string jobName, string fileName, Stream jobContent, CancellationToken cancellationToken);
     }
 }

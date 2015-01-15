@@ -21,7 +21,7 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Network.Models;
 
 namespace Microsoft.WindowsAzure.Management.Network.Models
@@ -30,14 +30,36 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
     /// A standard service response including an HTTP status code and request
     /// ID.
     /// </summary>
-    public partial class GatewayGetResponse : OperationResponse
+    public partial class GatewayGetResponse : AzureOperationResponse
     {
-        private GatewayType _gatewayType;
+        private GatewayDefaultSite _defaultSite;
+        
+        /// <summary>
+        /// Optional. The default site on the gateway.
+        /// </summary>
+        public GatewayDefaultSite DefaultSite
+        {
+            get { return this._defaultSite; }
+            set { this._defaultSite = value; }
+        }
+        
+        private string _gatewaySKU;
+        
+        /// <summary>
+        /// Optional. The SKU for this virtual network gateway.
+        /// </summary>
+        public string GatewaySKU
+        {
+            get { return this._gatewaySKU; }
+            set { this._gatewaySKU = value; }
+        }
+        
+        private string _gatewayType;
         
         /// <summary>
         /// Optional. The type of gateway routing used for this virtual network.
         /// </summary>
-        public GatewayType GatewayType
+        public string GatewayType
         {
             get { return this._gatewayType; }
             set { this._gatewayType = value; }

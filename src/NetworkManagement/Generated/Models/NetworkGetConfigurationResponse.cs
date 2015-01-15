@@ -21,14 +21,14 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.WindowsAzure.Management.Network.Models
 {
     /// <summary>
     /// The Get Network Configuration operation response.
     /// </summary>
-    public partial class NetworkGetConfigurationResponse : OperationResponse
+    public partial class NetworkGetConfigurationResponse : AzureOperationResponse
     {
         private string _configuration;
         

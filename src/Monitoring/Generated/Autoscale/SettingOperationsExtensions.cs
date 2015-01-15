@@ -23,11 +23,11 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Monitoring.Autoscale;
 using Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
 {
     public static partial class SettingOperationsExtensions
     {
@@ -45,7 +45,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse CreateOrUpdate(this ISettingOperations operations, string resourceId, AutoscaleSettingCreateOrUpdateParameters parameters)
+        public static AzureOperationResponse CreateOrUpdate(this ISettingOperations operations, string resourceId, AutoscaleSettingCreateOrUpdateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -68,7 +68,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> CreateOrUpdateAsync(this ISettingOperations operations, string resourceId, AutoscaleSettingCreateOrUpdateParameters parameters)
+        public static Task<AzureOperationResponse> CreateOrUpdateAsync(this ISettingOperations operations, string resourceId, AutoscaleSettingCreateOrUpdateParameters parameters)
         {
             return operations.CreateOrUpdateAsync(resourceId, parameters, CancellationToken.None);
         }
@@ -84,7 +84,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Delete(this ISettingOperations operations, string resourceId)
+        public static AzureOperationResponse Delete(this ISettingOperations operations, string resourceId)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -104,7 +104,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> DeleteAsync(this ISettingOperations operations, string resourceId)
+        public static Task<AzureOperationResponse> DeleteAsync(this ISettingOperations operations, string resourceId)
         {
             return operations.DeleteAsync(resourceId, CancellationToken.None);
         }

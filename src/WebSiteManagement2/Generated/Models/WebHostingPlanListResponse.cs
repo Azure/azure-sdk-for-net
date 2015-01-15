@@ -22,15 +22,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.WebSites.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
     /// <summary>
     /// The List Web Hosting Plans operation response.
     /// </summary>
-    public partial class WebHostingPlanListResponse : OperationResponse, IEnumerable<WebHostingPlan>
+    public partial class WebHostingPlanListResponse : AzureOperationResponse, IEnumerable<WebHostingPlan>
     {
         private IList<WebHostingPlan> _webHostingPlans;
         
@@ -49,7 +50,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         public WebHostingPlanListResponse()
         {
-            this.WebHostingPlans = new List<WebHostingPlan>();
+            this.WebHostingPlans = new LazyList<WebHostingPlan>();
         }
         
         /// <summary>

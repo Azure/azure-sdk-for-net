@@ -21,7 +21,7 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Scheduler.Models;
 
 namespace Microsoft.WindowsAzure.Scheduler.Models
@@ -29,7 +29,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
     /// <summary>
     /// The CreateOrUpdate Job operation response.
     /// </summary>
-    public partial class JobCreateOrUpdateResponse : OperationResponse
+    public partial class JobCreateOrUpdateResponse : AzureOperationResponse
     {
         private Job _job;
         

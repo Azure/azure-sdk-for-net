@@ -23,7 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.ExpressRoute;
 using Microsoft.WindowsAzure.Management.ExpressRoute.Models;
 
@@ -82,12 +82,27 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             get; set; 
         }
         
+        IAuthorizedDedicatedCircuitOperations AuthorizedDedicatedCircuits
+        {
+            get; 
+        }
+        
         IBorderGatewayProtocolPeeringOperations BorderGatewayProtocolPeerings
         {
             get; 
         }
         
         ICrossConnectionOperations CrossConnections
+        {
+            get; 
+        }
+        
+        IDedicatedCircuitLinkAuthorizationMicrosoftIdOperations DedicatedCircuitLinkAuthorizationMicrosoftIds
+        {
+            get; 
+        }
+        
+        IDedicatedCircuitLinkAuthorizationOperations DedicatedCircuitLinkAuthorizations
         {
             get; 
         }
