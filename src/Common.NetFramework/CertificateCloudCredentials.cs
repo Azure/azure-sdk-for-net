@@ -22,7 +22,6 @@ using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
-using Hyak.Common.Internals;
 using Microsoft.Azure.Common.Internals;
 
 namespace Microsoft.Azure

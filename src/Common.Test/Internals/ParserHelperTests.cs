@@ -14,7 +14,6 @@
 //
 
 using Hyak.Common;
-using Hyak.Common.Internals;
 using Xunit;
 using Xunit.Extensions;
 
