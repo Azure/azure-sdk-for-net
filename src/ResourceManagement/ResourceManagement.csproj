@@ -114,8 +114,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="hyak.xml" />
-    <Content Include="readme.txt" />
+    <Content Include="hyak.xml" />    
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Hyak.Common">
