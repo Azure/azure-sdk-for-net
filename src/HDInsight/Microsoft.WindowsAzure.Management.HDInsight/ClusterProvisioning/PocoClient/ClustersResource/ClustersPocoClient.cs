@@ -169,7 +169,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
                 if (invalidExpectedStatusCodeException.ReceivedStatusCode == HttpStatusCode.BadRequest)
                 {
                     var str = invalidExpectedStatusCodeException.Response.Content != null
-                        ? invalidExpectedStatusCodeException.Response.Content.ReadAsStringAsync().Result : String.Empty;
+                        ? invalidExpectedStatusCodeException.Response.Content.ReadAsStringAsync().Result : string.Empty;
 
                     if (str.IndexOf(ResourceAlreadyExists, StringComparison.OrdinalIgnoreCase) != -1)
                     {
@@ -210,12 +210,12 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
                 throw new ArgumentNullException("clusterCreateParameters");
             }
 
-            if (String.IsNullOrEmpty(clusterCreateParameters.Name))
+            if (string.IsNullOrEmpty(clusterCreateParameters.Name))
             {
                 throw new ArgumentException("ClusterCreateParameters.Name cannot be null or empty", "clusterCreateParameters");
             }
 
-            if (String.IsNullOrEmpty(clusterCreateParameters.Location))
+            if (string.IsNullOrEmpty(clusterCreateParameters.Location))
             {
                 throw new ArgumentException("ClusterCreateParameters.Location cannot be null or empty", "clusterCreateParameters");
             }
@@ -255,10 +255,10 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
                 var availableLocations = locationClient.ListAvailableLocations(capabilities);
                 if (!availableLocations.Contains(clusterCreateParameters.Location, StringComparer.OrdinalIgnoreCase))
                 {
-                    throw new InvalidOperationException(String.Format(
+                    throw new InvalidOperationException(string.Format(
                             "Cannot create a cluster in '{0}'. Available Locations for your subscription are: {1}",
                             clusterCreateParameters.Location,
-                            String.Join(",", availableLocations)));
+                            string.Join(",", availableLocations)));
                 }
 
                 await this.RegisterSubscriptionIfExistsAsync();
@@ -278,7 +278,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
             }
             catch (InvalidExpectedStatusCodeException iEx)
             {
-                string content = iEx.Response.Content != null ? iEx.Response.Content.ReadAsStringAsync().Result : String.Empty;
+                string content = iEx.Response.Content != null ? iEx.Response.Content.ReadAsStringAsync().Result : string.Empty;
                 throw new HttpLayerException(iEx.ReceivedStatusCode, content);
             }
         }
@@ -313,7 +313,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
             }
             catch (InvalidExpectedStatusCodeException iEx)
             {
-                string content = iEx.Response.Content != null ? iEx.Response.Content.ReadAsStringAsync().Result : String.Empty;
+                string content = iEx.Response.Content != null ? iEx.Response.Content.ReadAsStringAsync().Result : string.Empty;
                 throw new HttpLayerException(iEx.ReceivedStatusCode, content);
             }
         }
@@ -328,7 +328,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
         /// </returns>
         public async Task DeleteContainer(string dnsName)
         {
-            if (String.IsNullOrEmpty(dnsName))
+            if (string.IsNullOrEmpty(dnsName))
             {
                 throw new ArgumentNullException("dnsName");
             }
@@ -352,7 +352,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
 
                 if (servicesHoldingTheService.Count > 1)
                 {
-                    throw new InvalidOperationException(String.Format("Multiple clusters found with dnsname '{0}'. Please specify dnsname and location", dnsName));
+                    throw new InvalidOperationException(string.Format("Multiple clusters found with dnsname '{0}'. Please specify dnsname and location", dnsName));
                 }
 
                 foreach (var service in servicesHoldingTheService)
@@ -368,7 +368,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
             }
             catch (InvalidExpectedStatusCodeException iEx)
             {
-                string content = iEx.Response.Content != null ? iEx.Response.Content.ReadAsStringAsync().Result : String.Empty;
+                string content = iEx.Response.Content != null ? iEx.Response.Content.ReadAsStringAsync().Result : string.Empty;
                 throw new HttpLayerException(iEx.ReceivedStatusCode, content);
             }
         }
@@ -383,12 +383,12 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
         /// </returns>
         public async Task DeleteContainer(string dnsName, string location)
         {
-            if (String.IsNullOrEmpty(dnsName))
+            if (string.IsNullOrEmpty(dnsName))
             {
                 throw new ArgumentNullException("dnsName");
             }
 
-            if (String.IsNullOrEmpty(location))
+            if (string.IsNullOrEmpty(location))
             {
                 throw new ArgumentNullException("location");
             }
@@ -404,7 +404,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
             }
             catch (InvalidExpectedStatusCodeException iEx)
             {
-                string content = iEx.Response.Content != null ? iEx.Response.Content.ReadAsStringAsync().Result : String.Empty;
+                string content = iEx.Response.Content != null ? iEx.Response.Content.ReadAsStringAsync().Result : string.Empty;
                 throw new HttpLayerException(iEx.ReceivedStatusCode, content);
             }
         }
@@ -412,7 +412,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
         /// <inheritdoc />
         public async Task<Guid> ChangeClusterSize(string dnsName, string location, int newSize)
         {
-            if (String.IsNullOrEmpty(dnsName))
+            if (string.IsNullOrEmpty(dnsName))
             {
                 throw new ArgumentNullException("dnsName", "The dns name cannot be null or empty.");
             }
@@ -424,7 +424,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
 
             try
             {
-                var clusterResult = String.IsNullOrEmpty(location) ? await this.GetCluster(dnsName) : await this.GetCluster(dnsName, location);
+                var clusterResult = string.IsNullOrEmpty(location) ? await this.GetCluster(dnsName) : await this.GetCluster(dnsName, location);
                 var cloudServiceName = this.GetCloudServiceName(clusterResult.ClusterDetails.Location);
 
                 var cluster = clusterResult.ResultOfGetClusterCall;
@@ -463,7 +463,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
                 var operationId = Guid.Parse(resp.OperationId);
                 if (resp.Status.Equals(OperationStatus.Failed))
                 {
-                    var message = String.Format("ChangeClusterSize operation with operation ID {0} failed with the following response:\n{1}", operationId, resp.ErrorDetails.ErrorMessage);
+                    var message = string.Format("ChangeClusterSize operation with operation ID {0} failed with the following response:\n{1}", operationId, resp.ErrorDetails.ErrorMessage);
                     this.LogMessage(message, Severity.Error, Verbosity.Detailed);
                     throw new InvalidOperationException(message);
                 }
@@ -472,7 +472,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
             catch (InvalidExpectedStatusCodeException iEx)
             {
                 this.LogException(iEx);
-                string content = iEx.Response.Content != null ? iEx.Response.Content.ReadAsStringAsync().Result : String.Empty;
+                string content = iEx.Response.Content != null ? iEx.Response.Content.ReadAsStringAsync().Result : string.Empty;
                 throw new HttpLayerException(iEx.ReceivedStatusCode, content);
             }
         }
@@ -529,12 +529,12 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
         /// </returns>
         public async Task<bool> IsComplete(string dnsName, string location, Guid operationId)
         {
-            if (String.IsNullOrEmpty(dnsName))
+            if (string.IsNullOrEmpty(dnsName))
             {
                 throw new ArgumentNullException("dnsName");
             }
 
-            if (String.IsNullOrEmpty(location))
+            if (string.IsNullOrEmpty(location))
             {
                 throw new ArgumentNullException("location");
             }
@@ -545,7 +545,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
             }
             catch (InvalidExpectedStatusCodeException iEx)
             {
-                string content = iEx.Response.Content != null ? iEx.Response.Content.ReadAsStringAsync().Result : String.Empty;
+                string content = iEx.Response.Content != null ? iEx.Response.Content.ReadAsStringAsync().Result : string.Empty;
                 throw new HttpLayerException(iEx.ReceivedStatusCode, content);
             }
         }
@@ -561,12 +561,12 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
         /// </returns>
         public async Task<UserChangeRequestStatus> GetStatus(string dnsName, string location, Guid operationId)
         {
-            if (String.IsNullOrEmpty(dnsName))
+            if (string.IsNullOrEmpty(dnsName))
             {
                 throw new ArgumentNullException("dnsName");
             }
 
-            if (String.IsNullOrEmpty(location))
+            if (string.IsNullOrEmpty(location))
             {
                 throw new ArgumentNullException("location");
             }
@@ -604,7 +604,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
             }
             catch (InvalidExpectedStatusCodeException iEx)
             {
-                string content = iEx.Response.Content != null ? iEx.Response.Content.ReadAsStringAsync().Result : String.Empty;
+                string content = iEx.Response.Content != null ? iEx.Response.Content.ReadAsStringAsync().Result : string.Empty;
                 throw new HttpLayerException(iEx.ReceivedStatusCode, content);
             }
         }
@@ -734,7 +734,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
         /// </returns>
         public async Task<ClusterDetails> ListContainer(string dnsName)
         {
-            if (String.IsNullOrEmpty(dnsName))
+            if (string.IsNullOrEmpty(dnsName))
             {
                 throw new ArgumentNullException("dnsName");
             }
@@ -745,7 +745,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
             }
             catch (InvalidExpectedStatusCodeException iEx)
             {
-                var content = iEx.Response.Content != null ? iEx.Response.Content.ReadAsStringAsync().Result : String.Empty;
+                var content = iEx.Response.Content != null ? iEx.Response.Content.ReadAsStringAsync().Result : string.Empty;
                 throw new HttpLayerException(iEx.ReceivedStatusCode, content);
             }
         }
@@ -760,11 +760,11 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
         /// </returns>
         public async Task<ClusterDetails> ListContainer(string dnsName, string location)
         {
-            if (String.IsNullOrEmpty(dnsName))
+            if (string.IsNullOrEmpty(dnsName))
             {
                 throw new ArgumentNullException("dnsName");
             }
-            if (String.IsNullOrEmpty(location))
+            if (string.IsNullOrEmpty(location))
             {
                 throw new ArgumentNullException("location");
             }
@@ -775,7 +775,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
             }
             catch (InvalidExpectedStatusCodeException iEx)
             {
-                var content = iEx.Response.Content != null ? iEx.Response.Content.ReadAsStringAsync().Result : String.Empty;
+                var content = iEx.Response.Content != null ? iEx.Response.Content.ReadAsStringAsync().Result : string.Empty;
                 throw new HttpLayerException(iEx.ReceivedStatusCode, content);
             }
         }
@@ -811,7 +811,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
         /// </exception>
         public async Task<Guid> EnableDisableHttp(string dnsName, string username, string password, bool enable)
         {
-            if (String.IsNullOrEmpty(dnsName))
+            if (string.IsNullOrEmpty(dnsName))
             {
                 throw new ArgumentException("dnsName cannot be null or empty.", "dnsName");
             }
@@ -843,12 +843,12 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
                 var gw = clusterResult.ResultOfGetClusterCall.Components.OfType<GatewayComponent>().SingleOrDefault();
                 if (enable)
                 {
-                    if (String.IsNullOrEmpty(username))
+                    if (string.IsNullOrEmpty(username))
                     {
                         throw new ArgumentException("Http username cannot be null or empty.", username);
                     }
 
-                    if (String.IsNullOrEmpty(password))
+                    if (string.IsNullOrEmpty(password))
                     {
                         throw new ArgumentException("Http password cannot be null or empty.", username);
                     }
@@ -877,7 +877,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
             }
             catch (InvalidExpectedStatusCodeException iEx)
             {
-                string content = iEx.Response.Content != null ? iEx.Response.Content.ReadAsStringAsync().Result : String.Empty;
+                string content = iEx.Response.Content != null ? iEx.Response.Content.ReadAsStringAsync().Result : string.Empty;
                 throw new HttpLayerException(iEx.ReceivedStatusCode, content);
             }
         }
