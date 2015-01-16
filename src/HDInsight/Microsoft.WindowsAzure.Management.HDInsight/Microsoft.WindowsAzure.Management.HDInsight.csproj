@@ -48,6 +48,7 @@
     <Compile Include="ClusterProvisioning\PocoClient\AsvValidationHelper.cs" />
     <Compile Include="ClusterProvisioning\PocoClient\ClustersResource\ClustersPocoClient.cs" />
     <Compile Include="ClusterProvisioning\PocoClient\ClustersResource\Extensions\WabStorageAccountConfigurationExtensions.cs" />
+    <Compile Include="ClusterProvisioning\PocoClient\SchemaVersionUtils.cs" />
     <Compile Include="ClusterProvisioning\PocoClient\UriEndpointValidator.cs" />
     <Compile Include="ClusterProvisioning\ResourceTypeFinder\IRdfeResourceTypeFinderFactory.cs" />
     <Compile Include="ClusterProvisioning\ResourceTypeFinder\IRdfeResourceTypeFinderClient.cs" />

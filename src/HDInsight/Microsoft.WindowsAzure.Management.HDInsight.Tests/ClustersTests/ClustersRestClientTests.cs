@@ -1,4 +1,6 @@
-﻿namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClustersTests
+﻿using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoClient;
+
+namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClustersTests
 {
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoClient.ClustersResource;
@@ -25,7 +27,7 @@
         public void CanCreateRestClient()
         {
             var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
-                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, ClustersPocoClient.GetSchemaVersion(Capabilities));
+                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(Capabilities));
             Assert.IsNotNull(restClient);
         }
 

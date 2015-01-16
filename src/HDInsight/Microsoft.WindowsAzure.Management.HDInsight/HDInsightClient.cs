@@ -57,15 +57,13 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         ///     Default HDInsight version.
         /// </summary>
         internal const string DEFAULTHDINSIGHTVERSION = "default";
-        internal const string ClustersContractCapabilityVersion1 = "CAPABILITY_FEATURE_CLUSTERS_CONTRACT_1_SDK";
-        internal static string ClustersContractCapabilityVersion2 = "CAPABILITY_FEATURE_CLUSTERS_CONTRACT_2_SDK";
         internal const string ClusterAlreadyExistsError = "The condition specified by the ETag is not satisfied.";
 
         private IHDInsightSubscriptionCredentials credentials;
         private ClusterDetails currentDetails;
         private const string DefaultSchemaVersion = "1.0";
         private TimeSpan defaultResizeTimeout = TimeSpan.FromHours(1);
-
+        
         /// <summary>
         /// Gets the connection credential.
         /// </summary>
@@ -318,7 +316,9 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
             MessageId = "Microsoft.WindowsAzure.Management.HDInsight.Logging.LogProviderExtensions.LogMessage(Microsoft.WindowsAzure.Management.HDInsight.Logging.ILogProvider,System.String,Microsoft.WindowsAzure.Management.HDInsight.Logging.Severity,Microsoft.WindowsAzure.Management.HDInsight.Logging.Verbosity)")]
         private bool CanUseClustersContract()
         {
-            bool retval = this.capabilities.Value.Contains(ClustersContractCapabilityVersion1);
+            string clustersCapability;
+            SchemaVersionUtils.SupportedSchemaVersions.TryGetValue(1, out clustersCapability);
+            bool retval = this.capabilities.Value.Contains(clustersCapability);
             this.LogMessage(string.Format(CultureInfo.InvariantCulture, "Clusters resource type is enabled '{0}'", retval), Severity.Critical, Verbosity.Detailed);
             
             return retval;
@@ -561,17 +561,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
             newSize.ArgumentNotNull("newSize");
             location.ArgumentNotNull("location");
 
-            if (!this.canUseClustersContract.Value)
-            {
-                throw new NotSupportedException(
-                    string.Format(CultureInfo.CurrentCulture, "This subscription is missing the capability {0} and therefore does not support a change cluster size operation.", ClustersContractCapabilityVersion1));
-            }
-
-            if (!this.capabilities.Value.Contains(ClustersContractCapabilityVersion2))
-            {
-                throw new NotSupportedException(
-                    string.Format(CultureInfo.CurrentCulture, "This subscription is missing the capability {0} and therefore does not support a change cluster size operation.", ClustersContractCapabilityVersion2));
-            }
+            SchemaVersionUtils.EnsureSchemaVersionSupportsResize(this.capabilities.Value, this.canUseClustersContract.Value);
 
             var client = this.CreateClustersPocoClient(this.capabilities.Value);
 

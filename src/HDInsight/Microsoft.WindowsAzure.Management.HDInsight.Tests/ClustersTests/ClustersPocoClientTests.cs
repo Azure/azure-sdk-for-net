@@ -33,7 +33,7 @@
         public void CanCreatePocoClient()
         {
             var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
-                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, ClustersPocoClient.GetSchemaVersion(Capabilities));
+                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(Capabilities));
             Assert.IsNotNull(restClient);
 
             using (var clustersPocoClient = new ClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient))
@@ -47,7 +47,7 @@
         public void CanListCloudServicesEmpty()
         {
             var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
-                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, ClustersPocoClient.GetSchemaVersion(Capabilities));
+                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(Capabilities));
             using (var clustersPocoClient = new ClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient))
             {
                 var containersList = clustersPocoClient.ListContainers().Result;
@@ -60,7 +60,7 @@
         public void CanListCloudServices()
         {
             var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
-                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, ClustersPocoClient.GetSchemaVersion(Capabilities));
+                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(Capabilities));
             using (var clustersPocoClient = new ClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient))
             {
                 CreateCluster("testcluster1", "West US");
@@ -79,7 +79,7 @@
         public void CanListCloudServicesWithDuplicateNames()
         {
             var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
-                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, ClustersPocoClient.GetSchemaVersion(Capabilities));
+                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(Capabilities));
             using (var clustersPocoClient = new ClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient))
             {
                 CreateCluster("testcluster1", "West US");
@@ -96,7 +96,7 @@
         public void CanGetCloudServicesWithDuplicateNames()
         {
             var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
-                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, ClustersPocoClient.GetSchemaVersion(Capabilities));
+                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(Capabilities));
             using (var clustersPocoClient = new ClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient))
             {
                 CreateCluster("testcluster1", "West US");
@@ -119,7 +119,7 @@
         public void CanDeleteCloudServicesWithDuplicateNames()
         {
             var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
-                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, ClustersPocoClient.GetSchemaVersion(Capabilities));
+                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(Capabilities));
             using (var clustersPocoClient = new ClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient))
             {
                 CreateCluster("testcluster1", "West US");
@@ -148,7 +148,7 @@
         public void CanDeleteCloudServiceWithRegionWithDuplicateNames()
         {
             var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
-                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, ClustersPocoClient.GetSchemaVersion(Capabilities));
+                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(Capabilities));
             using (var clustersPocoClient = new ClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient))
             {
                 CreateCluster("testcluster1", "West US");
@@ -170,7 +170,7 @@
         public async Task CannotDeserializeClusterWithoutClusterCapability()
         {
             var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
-                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, ClustersPocoClient.GetSchemaVersion(Capabilities));
+                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(Capabilities));
             var clustersPocoClient = new ClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient);
             CreateClusterWithoutCapability("testcluster", "West US");
             var cluster = clustersPocoClient.ListContainer("testcluster").Result;
@@ -188,7 +188,7 @@
         public async Task CanResizeCluster()
         {
             var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
-                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, ClustersPocoClient.GetSchemaVersion(Capabilities));
+                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(Capabilities));
             var clustersPocoClient = new ClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient);
             CreateCluster("testcluster", "West US");
             var cluster = clustersPocoClient.ListContainer("testcluster").Result;
@@ -206,7 +206,7 @@
         public async Task ResizeToSameSizeReturnsEmptyGuidOperationId()
         {
             var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
-                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, ClustersPocoClient.GetSchemaVersion(Capabilities));
+                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(Capabilities));
             var clustersPocoClient = new ClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient);
             CreateCluster("testcluster", "West US");
             var cluster = clustersPocoClient.ListContainer("testcluster").Result;
@@ -223,7 +223,7 @@
             var capabilities = new List<string>();
             capabilities.Add("CAPABILITY_FEATURE_CLUSTERS_CONTRACT_1_SDK");
             var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
-                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, ClustersPocoClient.GetSchemaVersion(capabilities));
+                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(capabilities));
             var clustersPocoClient = new ClustersPocoClient(this.HdInsightCertCred, false, this.Context, capabilities, restClient);
             CreateCluster("testcluster", "West US");
             try
@@ -241,7 +241,7 @@
         public async Task CannotResizeClusterToLessThanOne()
         {
             var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
-                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, ClustersPocoClient.GetSchemaVersion(Capabilities));
+                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(Capabilities));
             var clustersPocoClient = new ClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient);
             CreateCluster("testcluster", "West US");
             var cluster = clustersPocoClient.ListContainer("testcluster").Result;
@@ -263,7 +263,7 @@
         public async Task CannotCreateCustomizedClusterWithoutCapability()
         {
             var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
-                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, ClustersPocoClient.GetSchemaVersion(Capabilities));
+                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(Capabilities));
             var clustersPocoClient = new ClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient);
             try
             {

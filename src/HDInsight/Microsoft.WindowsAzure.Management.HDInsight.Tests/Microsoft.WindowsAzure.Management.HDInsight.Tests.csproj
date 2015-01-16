@@ -88,6 +88,7 @@
     <Compile Include="HadoopClientTests\ApiSecurityPocoClientTests.cs" />
     <Compile Include="HadoopClientTests\PayloadConverterTests.cs" />
     <Compile Include="HadoopClientTests\RemoteHadoopRestLayer.cs" />
+    <Compile Include="SchemaVersionTests.cs" />
     <Compile Include="ServiceLocation\EchoServiceForTest.cs" />
     <Compile Include="ServiceLocation\IEchoServiceForTest.cs" />
     <Compile Include="ServiceLocation\ServiceLocationForTestRegistrar.cs" />
