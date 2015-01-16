@@ -43,6 +43,8 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities
     using Microsoft.WindowsAzure.Management.HDInsight.Tests.RestSimulator;
     using Microsoft.WindowsAzure.Management.HDInsight.TestUtilities.RestSimulator;
 
+    [DeploymentItem("cert/sdkcli.cer")]
+    [TestClass]
     public class IntegrationTestBase : TestsBase
     {
         public IntegrationTestBase()
@@ -255,7 +257,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities
             }
 
             // Sets the certificate
-            var defaultCertificate = new X509Certificate2(IntegrationTestBase.TestCredentials.Certificate); ;
+            var defaultCertificate = new X509Certificate2("sdkcli.cer");
 
 
             // Sets the test static properties
