@@ -257,8 +257,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities
             }
 
             // Sets the certificate
-            var defaultCertificate = new X509Certificate2("sdkcli.cer");
-
+            var defaultCertificate = new X509Certificate2("certs/sdkcli.cer");
 
             // Sets the test static properties
             IntegrationTestBase.ClusterPrefix = string.Format("CLITest-{0}", Environment.GetEnvironmentVariable("computername") ?? "unknown");
