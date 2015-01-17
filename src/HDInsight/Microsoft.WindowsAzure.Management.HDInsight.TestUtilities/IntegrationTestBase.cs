@@ -44,6 +44,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities
     using Microsoft.WindowsAzure.Management.HDInsight.TestUtilities.RestSimulator;
 
     [DeploymentItem("cert/sdkcli.cer")]
+    [DeploymentItem("cert/invalid.cer")]
     [TestClass]
     public class IntegrationTestBase : TestsBase
     {
@@ -279,7 +280,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities
             tempCredentials = new HDInsightCertificateCredential()
             {
                 SubscriptionId = TestCredentials.SubscriptionId,
-                Certificate = new X509Certificate2(TestCredentials.InvalidCertificate),
+                Certificate = new X509Certificate2("certs/invalid.cer"),
                 Endpoint = new Uri(TestCredentials.Endpoint)
             };
             IntegrationTestBase.invalidCertificate = ServiceLocator.Instance
