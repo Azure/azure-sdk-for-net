@@ -23,11 +23,11 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.WebSites;
 using Microsoft.WindowsAzure.Management.WebSites.Models;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.Management.WebSites
 {
     /// <summary>
     /// The Web Sites Management API provides a RESTful set of web services
@@ -39,6 +39,54 @@ namespace Microsoft.WindowsAzure
     /// </summary>
     public static partial class WebSiteOperationsExtensions
     {
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <param name='targetSwapSlot'>
+        /// Required. The name of the target slot to be swapped with.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static AzureOperationResponse ApplySlotConfiguration(this IWebSiteOperations operations, string webSpaceName, string webSiteName, string targetSwapSlot)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IWebSiteOperations)s).ApplySlotConfigurationAsync(webSpaceName, webSiteName, targetSwapSlot);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <param name='targetSwapSlot'>
+        /// Required. The name of the target slot to be swapped with.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<AzureOperationResponse> ApplySlotConfigurationAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName, string targetSwapSlot)
+        {
+            return operations.ApplySlotConfigurationAsync(webSpaceName, webSiteName, targetSwapSlot, CancellationToken.None);
+        }
+        
         /// <summary>
         /// Backups a site on-demand.
         /// </summary>
@@ -216,6 +264,60 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
+        /// Creates an association to a hybrid connection for a web site.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='siteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Create Hybrid Connection
+        /// operation.
+        /// </param>
+        /// <returns>
+        /// The Create Hybrid Connection operation response.
+        /// </returns>
+        public static HybridConnectionCreateResponse CreateHybridConnection(this IWebSiteOperations operations, string webSpaceName, string siteName, HybridConnectionCreateParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IWebSiteOperations)s).CreateHybridConnectionAsync(webSpaceName, siteName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Creates an association to a hybrid connection for a web site.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='siteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Create Hybrid Connection
+        /// operation.
+        /// </param>
+        /// <returns>
+        /// The Create Hybrid Connection operation response.
+        /// </returns>
+        public static Task<HybridConnectionCreateResponse> CreateHybridConnectionAsync(this IWebSiteOperations operations, string webSpaceName, string siteName, HybridConnectionCreateParameters parameters)
+        {
+            return operations.CreateHybridConnectionAsync(webSpaceName, siteName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// A web site repository is essentially a Git repository that you can
         /// use to manage your web site content. By using Git source control
         /// tools, you can push or pull version-controlled changes to your
@@ -237,7 +339,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse CreateRepository(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
+        public static AzureOperationResponse CreateRepository(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -268,7 +370,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> CreateRepositoryAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
+        public static Task<AzureOperationResponse> CreateRepositoryAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
         {
             return operations.CreateRepositoryAsync(webSpaceName, webSiteName, CancellationToken.None);
         }
@@ -298,7 +400,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Delete(this IWebSiteOperations operations, string webSpaceName, string webSiteName, WebSiteDeleteParameters parameters)
+        public static AzureOperationResponse Delete(this IWebSiteOperations operations, string webSpaceName, string webSiteName, WebSiteDeleteParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -332,9 +434,63 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> DeleteAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName, WebSiteDeleteParameters parameters)
+        public static Task<AzureOperationResponse> DeleteAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName, WebSiteDeleteParameters parameters)
         {
             return operations.DeleteAsync(webSpaceName, webSiteName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Deletes a hybrid connection on a specific site.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <param name='hybridConnectionName'>
+        /// Required. The name of the hybrid connection entity
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static AzureOperationResponse DeleteHybridConnection(this IWebSiteOperations operations, string webSpaceName, string webSiteName, string hybridConnectionName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IWebSiteOperations)s).DeleteHybridConnectionAsync(webSpaceName, webSiteName, hybridConnectionName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Deletes a hybrid connection on a specific site.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <param name='hybridConnectionName'>
+        /// Required. The name of the hybrid connection entity
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<AzureOperationResponse> DeleteHybridConnectionAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName, string hybridConnectionName)
+        {
+            return operations.DeleteHybridConnectionAsync(webSpaceName, webSiteName, hybridConnectionName, CancellationToken.None);
         }
         
         /// <summary>
@@ -476,7 +632,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse GeneratePassword(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
+        public static AzureOperationResponse GeneratePassword(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -510,7 +666,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> GeneratePasswordAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
+        public static Task<AzureOperationResponse> GeneratePasswordAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
         {
             return operations.GeneratePasswordAsync(webSpaceName, webSiteName, CancellationToken.None);
         }
@@ -732,6 +888,60 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
+        /// Retrieves a particular hybrid connection that belongs to a specific
+        /// site.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <param name='hybridConnectionName'>
+        /// Required. The name of the hybrid connection entity
+        /// </param>
+        /// <returns>
+        /// The Get Hybrid Connection operation response.
+        /// </returns>
+        public static HybridConnectionGetResponse GetHybridConnection(this IWebSiteOperations operations, string webSpaceName, string webSiteName, string hybridConnectionName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IWebSiteOperations)s).GetHybridConnectionAsync(webSpaceName, webSiteName, hybridConnectionName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Retrieves a particular hybrid connection that belongs to a specific
+        /// site.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <param name='hybridConnectionName'>
+        /// Required. The name of the hybrid connection entity
+        /// </param>
+        /// <returns>
+        /// The Get Hybrid Connection operation response.
+        /// </returns>
+        public static Task<HybridConnectionGetResponse> GetHybridConnectionAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName, string hybridConnectionName)
+        {
+            return operations.GetHybridConnectionAsync(webSpaceName, webSiteName, hybridConnectionName, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// You can retrieve the list of active instances by ids for a web site
         /// by issuing an HTTP GET request.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166981.aspx
@@ -891,6 +1101,48 @@ namespace Microsoft.WindowsAzure
             return operations.GetRepositoryAsync(webSpaceName, webSiteName, CancellationToken.None);
         }
         
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static SlotConfigNames GetSlotConfigNames(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IWebSiteOperations)s).GetSlotConfigNamesAsync(webSpaceName, webSiteName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<SlotConfigNames> GetSlotConfigNamesAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
+        {
+            return operations.GetSlotConfigNamesAsync(webSpaceName, webSiteName, CancellationToken.None);
+        }
+        
         /// <summary>
         /// You can retrieve current usage metrics for a site by issuing an
         /// HTTP GET request. The metrics returned include CPU Time, Data In,
@@ -1036,6 +1288,94 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
+        /// Retrieves a list of all hybrid connections on a specific web site.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <returns>
+        /// The List Hybrid Connection operation response.
+        /// </returns>
+        public static HybridConnectionListResponse ListHybridConnections(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IWebSiteOperations)s).ListHybridConnectionsAsync(webSpaceName, webSiteName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Retrieves a list of all hybrid connections on a specific web site.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <returns>
+        /// The List Hybrid Connection operation response.
+        /// </returns>
+        public static Task<HybridConnectionListResponse> ListHybridConnectionsAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
+        {
+            return operations.ListHybridConnectionsAsync(webSpaceName, webSiteName, CancellationToken.None);
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static AzureOperationResponse ResetSlotConfiguration(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IWebSiteOperations)s).ResetSlotConfigurationAsync(webSpaceName, webSiteName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<AzureOperationResponse> ResetSlotConfigurationAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
+        {
+            return operations.ResetSlotConfigurationAsync(webSpaceName, webSiteName, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// You can restart a web site by issuing an HTTP POST request.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn236425.aspx
         /// for more information)
@@ -1054,7 +1394,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Restart(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
+        public static AzureOperationResponse Restart(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -1082,7 +1422,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> RestartAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
+        public static Task<AzureOperationResponse> RestartAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
         {
             return operations.RestartAsync(webSpaceName, webSiteName, CancellationToken.None);
         }
@@ -1233,7 +1573,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse SyncRepository(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
+        public static AzureOperationResponse SyncRepository(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -1264,7 +1604,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> SyncRepositoryAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
+        public static Task<AzureOperationResponse> SyncRepositoryAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
         {
             return operations.SyncRepositoryAsync(webSpaceName, webSiteName, CancellationToken.None);
         }
@@ -1347,7 +1687,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse UpdateBackupConfiguration(this IWebSiteOperations operations, string webSpaceName, string webSiteName, BackupRequest backupRequest)
+        public static AzureOperationResponse UpdateBackupConfiguration(this IWebSiteOperations operations, string webSpaceName, string webSiteName, BackupRequest backupRequest)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -1376,7 +1716,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> UpdateBackupConfigurationAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName, BackupRequest backupRequest)
+        public static Task<AzureOperationResponse> UpdateBackupConfigurationAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName, BackupRequest backupRequest)
         {
             return operations.UpdateBackupConfigurationAsync(webSpaceName, webSiteName, backupRequest, CancellationToken.None);
         }
@@ -1405,7 +1745,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse UpdateConfiguration(this IWebSiteOperations operations, string webSpaceName, string webSiteName, WebSiteUpdateConfigurationParameters parameters)
+        public static AzureOperationResponse UpdateConfiguration(this IWebSiteOperations operations, string webSpaceName, string webSiteName, WebSiteUpdateConfigurationParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -1438,9 +1778,113 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> UpdateConfigurationAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName, WebSiteUpdateConfigurationParameters parameters)
+        public static Task<AzureOperationResponse> UpdateConfigurationAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName, WebSiteUpdateConfigurationParameters parameters)
         {
             return operations.UpdateConfigurationAsync(webSpaceName, webSiteName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Updates an association to a hybrid connection for a web site.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='siteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Create Hybrid Connection
+        /// operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static AzureOperationResponse UpdateHybridConnection(this IWebSiteOperations operations, string webSpaceName, string siteName, HybridConnectionUpdateParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IWebSiteOperations)s).UpdateHybridConnectionAsync(webSpaceName, siteName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Updates an association to a hybrid connection for a web site.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='siteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Create Hybrid Connection
+        /// operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<AzureOperationResponse> UpdateHybridConnectionAsync(this IWebSiteOperations operations, string webSpaceName, string siteName, HybridConnectionUpdateParameters parameters)
+        {
+            return operations.UpdateHybridConnectionAsync(webSpaceName, siteName, parameters, CancellationToken.None);
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static AzureOperationResponse UpdateSlotConfigNames(this IWebSiteOperations operations, string webSpaceName, string webSiteName, SlotConfigNamesUpdate parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IWebSiteOperations)s).UpdateSlotConfigNamesAsync(webSpaceName, webSiteName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<AzureOperationResponse> UpdateSlotConfigNamesAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName, SlotConfigNamesUpdate parameters)
+        {
+            return operations.UpdateSlotConfigNamesAsync(webSpaceName, webSiteName, parameters, CancellationToken.None);
         }
     }
 }

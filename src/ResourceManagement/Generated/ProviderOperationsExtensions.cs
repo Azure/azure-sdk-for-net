@@ -23,9 +23,9 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Resources
 {
@@ -169,7 +169,7 @@ namespace Microsoft.Azure.Management.Resources
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Register(this IProviderOperations operations, string resourceProviderNamespace)
+        public static AzureOperationResponse Register(this IProviderOperations operations, string resourceProviderNamespace)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -192,7 +192,7 @@ namespace Microsoft.Azure.Management.Resources
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> RegisterAsync(this IProviderOperations operations, string resourceProviderNamespace)
+        public static Task<AzureOperationResponse> RegisterAsync(this IProviderOperations operations, string resourceProviderNamespace)
         {
             return operations.RegisterAsync(resourceProviderNamespace, CancellationToken.None);
         }
@@ -211,7 +211,7 @@ namespace Microsoft.Azure.Management.Resources
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Unregister(this IProviderOperations operations, string resourceProviderNamespace)
+        public static AzureOperationResponse Unregister(this IProviderOperations operations, string resourceProviderNamespace)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -234,7 +234,7 @@ namespace Microsoft.Azure.Management.Resources
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> UnregisterAsync(this IProviderOperations operations, string resourceProviderNamespace)
+        public static Task<AzureOperationResponse> UnregisterAsync(this IProviderOperations operations, string resourceProviderNamespace)
         {
             return operations.UnregisterAsync(resourceProviderNamespace, CancellationToken.None);
         }

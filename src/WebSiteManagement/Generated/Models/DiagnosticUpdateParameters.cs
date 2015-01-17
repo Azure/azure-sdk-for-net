@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 
 namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
 {
@@ -46,7 +47,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         /// </summary>
         public DiagnosticUpdateParameters()
         {
-            this.Settings = new Dictionary<string, string>();
+            this.Settings = new LazyDictionary<string, string>();
         }
     }
 }

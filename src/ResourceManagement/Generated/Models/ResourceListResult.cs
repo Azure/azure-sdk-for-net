@@ -22,15 +22,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Resources.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Resources.Models
 {
     /// <summary>
     /// List of resource groups.
     /// </summary>
-    public partial class ResourceListResult : OperationResponse
+    public partial class ResourceListResult : AzureOperationResponse
     {
         private string _nextLink;
         
@@ -59,7 +60,7 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         public ResourceListResult()
         {
-            this.Resources = new List<Resource>();
+            this.Resources = new LazyList<Resource>();
         }
         
         /// <summary>

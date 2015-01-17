@@ -21,7 +21,7 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.WebSites.Models;
 
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
@@ -29,7 +29,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
     /// <summary>
     /// The Update Web Site operation response.
     /// </summary>
-    public partial class WebSiteUpdateResponse : OperationResponse
+    public partial class WebSiteUpdateResponse : AzureOperationResponse
     {
         private WebSite _webSite;
         

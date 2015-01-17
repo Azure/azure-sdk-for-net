@@ -22,15 +22,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.WebSites.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
     /// <summary>
     /// The Get Web Site Historical Usage Metrics operation response.
     /// </summary>
-    public partial class WebSiteGetHistoricalUsageMetricsResponse : OperationResponse, IEnumerable<HistoricalUsageMetric>
+    public partial class WebSiteGetHistoricalUsageMetricsResponse : AzureOperationResponse, IEnumerable<HistoricalUsageMetric>
     {
         private IList<HistoricalUsageMetric> _usageMetrics;
         
@@ -49,7 +50,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         public WebSiteGetHistoricalUsageMetricsResponse()
         {
-            this.UsageMetrics = new List<HistoricalUsageMetric>();
+            this.UsageMetrics = new LazyList<HistoricalUsageMetric>();
         }
         
         /// <summary>

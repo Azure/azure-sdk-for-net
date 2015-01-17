@@ -19,7 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Microsoft.Azure.Management.Resources.Models
+namespace Microsoft.Azure
 {
     public partial class ResourceIdentity
     {

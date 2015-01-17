@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.WindowsAzure.Management.ServiceBus.Models;
 
 namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
@@ -66,7 +67,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         /// </summary>
         public ServiceBusNotificationHub()
         {
-            this.AuthorizationRules = new List<ServiceBusSharedAccessAuthorizationRule>();
+            this.AuthorizationRules = new LazyList<ServiceBusSharedAccessAuthorizationRule>();
         }
     }
 }

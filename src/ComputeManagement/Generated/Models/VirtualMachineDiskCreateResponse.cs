@@ -21,7 +21,7 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
@@ -29,7 +29,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
     /// <summary>
     /// A virtual machine disk associated with your subscription.
     /// </summary>
-    public partial class VirtualMachineDiskCreateResponse : OperationResponse
+    public partial class VirtualMachineDiskCreateResponse : AzureOperationResponse
     {
         private string _affinityGroup;
         
@@ -43,6 +43,17 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         {
             get { return this._affinityGroup; }
             set { this._affinityGroup = value; }
+        }
+        
+        private string _iOType;
+        
+        /// <summary>
+        /// Optional. Gets or sets the IO type.
+        /// </summary>
+        public string IOType
+        {
+            get { return this._iOType; }
+            set { this._iOType = value; }
         }
         
         private bool? _isPremium;

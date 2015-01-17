@@ -22,7 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.WebSites.Models;
 
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
@@ -30,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
     /// <summary>
     /// The Get Publish Profile Web Site operation response.
     /// </summary>
-    public partial class WebSiteGetPublishProfileResponse : OperationResponse, IEnumerable<WebSiteGetPublishProfileResponse.PublishProfile>
+    public partial class WebSiteGetPublishProfileResponse : AzureOperationResponse, IEnumerable<WebSiteGetPublishProfileResponse.PublishProfile>
     {
         private IList<WebSiteGetPublishProfileResponse.PublishProfile> _publishProfiles;
         
@@ -49,7 +50,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public WebSiteGetPublishProfileResponse()
         {
-            this.PublishProfiles = new List<WebSiteGetPublishProfileResponse.PublishProfile>();
+            this.PublishProfiles = new LazyList<WebSiteGetPublishProfileResponse.PublishProfile>();
         }
         
         /// <summary>
@@ -288,7 +289,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             /// </summary>
             public PublishProfile()
             {
-                this.Databases = new List<WebSiteGetPublishProfileResponse.Database>();
+                this.Databases = new LazyList<WebSiteGetPublishProfileResponse.Database>();
             }
         }
     }

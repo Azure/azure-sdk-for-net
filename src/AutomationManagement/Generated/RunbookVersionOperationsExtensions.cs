@@ -24,9 +24,9 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Automation;
 using Microsoft.Azure.Management.Automation.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Automation
 {
@@ -310,7 +310,7 @@ namespace Microsoft.Azure.Management.Automation
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse UpdateRunbookDefinition(this IRunbookVersionOperations operations, string automationAccount, RunbookVersionUpdateRunbookDefinitionParameters parameters)
+        public static AzureOperationResponse UpdateRunbookDefinition(this IRunbookVersionOperations operations, string automationAccount, RunbookVersionUpdateRunbookDefinitionParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -339,7 +339,7 @@ namespace Microsoft.Azure.Management.Automation
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> UpdateRunbookDefinitionAsync(this IRunbookVersionOperations operations, string automationAccount, RunbookVersionUpdateRunbookDefinitionParameters parameters)
+        public static Task<AzureOperationResponse> UpdateRunbookDefinitionAsync(this IRunbookVersionOperations operations, string automationAccount, RunbookVersionUpdateRunbookDefinitionParameters parameters)
         {
             return operations.UpdateRunbookDefinitionAsync(automationAccount, parameters, CancellationToken.None);
         }

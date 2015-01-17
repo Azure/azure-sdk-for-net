@@ -22,7 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
@@ -30,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
     /// <summary>
     /// The List Operating System Families operation response.
     /// </summary>
-    public partial class OperatingSystemListFamiliesResponse : OperationResponse, IEnumerable<OperatingSystemListFamiliesResponse.OperatingSystemFamily>
+    public partial class OperatingSystemListFamiliesResponse : AzureOperationResponse, IEnumerable<OperatingSystemListFamiliesResponse.OperatingSystemFamily>
     {
         private IList<OperatingSystemListFamiliesResponse.OperatingSystemFamily> _operatingSystemFamilies;
         
@@ -50,7 +51,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public OperatingSystemListFamiliesResponse()
         {
-            this.OperatingSystemFamilies = new List<OperatingSystemListFamiliesResponse.OperatingSystemFamily>();
+            this.OperatingSystemFamilies = new LazyList<OperatingSystemListFamiliesResponse.OperatingSystemFamily>();
         }
         
         /// <summary>
@@ -199,7 +200,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             /// </summary>
             public OperatingSystemFamily()
             {
-                this.OperatingSystems = new List<OperatingSystemListFamiliesResponse.OperatingSystem>();
+                this.OperatingSystems = new LazyList<OperatingSystemListFamiliesResponse.OperatingSystem>();
             }
         }
     }

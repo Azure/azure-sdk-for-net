@@ -29,9 +29,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Hyak.Common.Internals;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Compute;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
@@ -43,7 +43,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
     /// http://msdn.microsoft.com/en-us/library/windowsazure/ee795178.aspx for
     /// more information)
     /// </summary>
-    internal partial class ServiceCertificateOperations : IServiceOperations<ComputeManagementClient>, Microsoft.WindowsAzure.Management.Compute.IServiceCertificateOperations
+    internal partial class ServiceCertificateOperations : IServiceOperations<ComputeManagementClient>, IServiceCertificateOperations
     {
         /// <summary>
         /// Initializes a new instance of the ServiceCertificateOperations
@@ -90,7 +90,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationResponse> BeginCreatingAsync(string serviceName, ServiceCertificateCreateParameters parameters, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> BeginCreatingAsync(string serviceName, ServiceCertificateCreateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -108,19 +108,19 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("serviceName", serviceName);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "BeginCreatingAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "BeginCreatingAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/hostedservices/" + serviceName.Trim() + "/certificates";
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/hostedservices/" + Uri.EscapeDataString(serviceName) + "/certificates";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -143,7 +143,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -181,13 +181,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.Accepted)
@@ -196,14 +196,15 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
-                    result = new OperationResponse();
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -212,7 +213,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -253,7 +254,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationResponse> BeginDeletingAsync(ServiceCertificateDeleteParameters parameters, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> BeginDeletingAsync(ServiceCertificateDeleteParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
@@ -275,18 +276,18 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "BeginDeletingAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "BeginDeletingAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/hostedservices/" + parameters.ServiceName.Trim() + "/certificates/" + parameters.ThumbprintAlgorithm.Trim() + "-" + parameters.Thumbprint.Trim();
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/hostedservices/" + Uri.EscapeDataString(parameters.ServiceName) + "/certificates/" + Uri.EscapeDataString(parameters.ThumbprintAlgorithm) + "-" + Uri.EscapeDataString(parameters.Thumbprint);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -309,7 +310,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -321,13 +322,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.Accepted)
@@ -336,14 +337,15 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
-                    result = new OperationResponse();
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -352,7 +354,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -402,86 +404,73 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request and error information regarding
         /// the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationStatusResponse> CreateAsync(string serviceName, ServiceCertificateCreateParameters parameters, CancellationToken cancellationToken)
+        public async Task<OperationStatusResponse> CreateAsync(string serviceName, ServiceCertificateCreateParameters parameters, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("serviceName", serviceName);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "CreateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "CreateAsync", tracingParameters);
             }
-            try
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            AzureOperationResponse response = await client.ServiceCertificates.BeginCreatingAsync(serviceName, parameters, cancellationToken).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested();
+            OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 30;
+            if (client.LongRunningOperationInitialTimeout >= 0)
             {
-                if (shouldTrace)
-                {
-                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
-                }
-                
-                cancellationToken.ThrowIfCancellationRequested();
-                OperationResponse response = await client.ServiceCertificates.BeginCreatingAsync(serviceName, parameters, cancellationToken).ConfigureAwait(false);
-                cancellationToken.ThrowIfCancellationRequested();
-                OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
-                int delayInSeconds = 30;
-                if (client.LongRunningOperationInitialTimeout >= 0)
-                {
-                    delayInSeconds = client.LongRunningOperationInitialTimeout;
-                }
-                while ((result.Status != OperationStatus.InProgress) == false)
-                {
-                    cancellationToken.ThrowIfCancellationRequested();
-                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
-                    delayInSeconds = 30;
-                    if (client.LongRunningOperationRetryTimeout >= 0)
-                    {
-                        delayInSeconds = client.LongRunningOperationRetryTimeout;
-                    }
-                }
-                
-                if (shouldTrace)
-                {
-                    Tracing.Exit(invocationId, result);
-                }
-                
-                if (result.Status != OperationStatus.Succeeded)
-                {
-                    if (result.Error != null)
-                    {
-                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                        ex.ErrorCode = result.Error.Code;
-                        ex.ErrorMessage = result.Error.Message;
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    else
-                    {
-                        CloudException ex = new CloudException("");
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                }
-                
-                return result;
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            finally
+            while ((result.Status != OperationStatus.InProgress) == false)
             {
-                if (client != null && shouldTrace)
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 30;
+                if (client.LongRunningOperationRetryTimeout >= 0)
                 {
-                    client.Dispose();
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
                 }
             }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            if (result.Status != OperationStatus.Succeeded)
+            {
+                if (result.Error != null)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.Error = new CloudError();
+                    ex.Error.Code = result.Error.Code;
+                    ex.Error.Message = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                else
+                {
+                    CloudException ex = new CloudException("");
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+            }
+            
+            return result;
         }
         
         /// <summary>
@@ -511,85 +500,72 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request and error information regarding
         /// the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationStatusResponse> DeleteAsync(ServiceCertificateDeleteParameters parameters, CancellationToken cancellationToken)
+        public async Task<OperationStatusResponse> DeleteAsync(ServiceCertificateDeleteParameters parameters, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "DeleteAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "DeleteAsync", tracingParameters);
             }
-            try
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            AzureOperationResponse response = await client.ServiceCertificates.BeginDeletingAsync(parameters, cancellationToken).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested();
+            OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 30;
+            if (client.LongRunningOperationInitialTimeout >= 0)
             {
-                if (shouldTrace)
-                {
-                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
-                }
-                
-                cancellationToken.ThrowIfCancellationRequested();
-                OperationResponse response = await client.ServiceCertificates.BeginDeletingAsync(parameters, cancellationToken).ConfigureAwait(false);
-                cancellationToken.ThrowIfCancellationRequested();
-                OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
-                int delayInSeconds = 30;
-                if (client.LongRunningOperationInitialTimeout >= 0)
-                {
-                    delayInSeconds = client.LongRunningOperationInitialTimeout;
-                }
-                while ((result.Status != OperationStatus.InProgress) == false)
-                {
-                    cancellationToken.ThrowIfCancellationRequested();
-                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
-                    delayInSeconds = 30;
-                    if (client.LongRunningOperationRetryTimeout >= 0)
-                    {
-                        delayInSeconds = client.LongRunningOperationRetryTimeout;
-                    }
-                }
-                
-                if (shouldTrace)
-                {
-                    Tracing.Exit(invocationId, result);
-                }
-                
-                if (result.Status != OperationStatus.Succeeded)
-                {
-                    if (result.Error != null)
-                    {
-                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                        ex.ErrorCode = result.Error.Code;
-                        ex.ErrorMessage = result.Error.Message;
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    else
-                    {
-                        CloudException ex = new CloudException("");
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                }
-                
-                return result;
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            finally
+            while ((result.Status != OperationStatus.InProgress) == false)
             {
-                if (client != null && shouldTrace)
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 30;
+                if (client.LongRunningOperationRetryTimeout >= 0)
                 {
-                    client.Dispose();
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
                 }
             }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            if (result.Status != OperationStatus.Succeeded)
+            {
+                if (result.Error != null)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.Error = new CloudError();
+                    ex.Error.Code = result.Error.Code;
+                    ex.Error.Message = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                else
+                {
+                    CloudException ex = new CloudException("");
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+            }
+            
+            return result;
         }
         
         /// <summary>
@@ -609,7 +585,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// The Get Service Certificate operation response.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.ServiceCertificateGetResponse> GetAsync(ServiceCertificateGetParameters parameters, CancellationToken cancellationToken)
+        public async Task<ServiceCertificateGetResponse> GetAsync(ServiceCertificateGetParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
@@ -631,18 +607,18 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "GetAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/hostedservices/" + parameters.ServiceName.Trim() + "/certificates/" + parameters.ThumbprintAlgorithm.Trim() + "-" + parameters.Thumbprint.Trim();
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/hostedservices/" + Uri.EscapeDataString(parameters.ServiceName) + "/certificates/" + Uri.EscapeDataString(parameters.ThumbprintAlgorithm) + "-" + Uri.EscapeDataString(parameters.Thumbprint);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -665,7 +641,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -677,13 +653,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -692,7 +668,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -700,22 +676,25 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     // Create Result
                     ServiceCertificateGetResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new ServiceCertificateGetResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement certificateElement = responseDoc.Element(XName.Get("Certificate", "http://schemas.microsoft.com/windowsazure"));
-                    if (certificateElement != null)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        XElement dataElement = certificateElement.Element(XName.Get("Data", "http://schemas.microsoft.com/windowsazure"));
-                        if (dataElement != null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new ServiceCertificateGetResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement certificateElement = responseDoc.Element(XName.Get("Certificate", "http://schemas.microsoft.com/windowsazure"));
+                        if (certificateElement != null)
                         {
-                            byte[] dataInstance = Convert.FromBase64String(dataElement.Value);
-                            result.Data = dataInstance;
+                            XElement dataElement = certificateElement.Element(XName.Get("Data", "http://schemas.microsoft.com/windowsazure"));
+                            if (dataElement != null)
+                            {
+                                byte[] dataInstance = Convert.FromBase64String(dataElement.Value);
+                                result.Data = dataInstance;
+                            }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -724,7 +703,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -760,7 +739,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// The List Service Certificates operation response.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.ServiceCertificateListResponse> ListAsync(string serviceName, CancellationToken cancellationToken)
+        public async Task<ServiceCertificateListResponse> ListAsync(string serviceName, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -770,18 +749,18 @@ namespace Microsoft.WindowsAzure.Management.Compute
             // TODO: Validate serviceName is a valid DNS name.
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("serviceName", serviceName);
-                Tracing.Enter(invocationId, this, "ListAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/hostedservices/" + serviceName.Trim() + "/certificates";
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/hostedservices/" + Uri.EscapeDataString(serviceName) + "/certificates";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -804,7 +783,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -816,13 +795,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -831,7 +810,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -839,49 +818,52 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     // Create Result
                     ServiceCertificateListResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new ServiceCertificateListResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement certificatesSequenceElement = responseDoc.Element(XName.Get("Certificates", "http://schemas.microsoft.com/windowsazure"));
-                    if (certificatesSequenceElement != null)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        foreach (XElement certificatesElement in certificatesSequenceElement.Elements(XName.Get("Certificate", "http://schemas.microsoft.com/windowsazure")))
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new ServiceCertificateListResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement certificatesSequenceElement = responseDoc.Element(XName.Get("Certificates", "http://schemas.microsoft.com/windowsazure"));
+                        if (certificatesSequenceElement != null)
                         {
-                            ServiceCertificateListResponse.Certificate certificateInstance = new ServiceCertificateListResponse.Certificate();
-                            result.Certificates.Add(certificateInstance);
-                            
-                            XElement certificateUrlElement = certificatesElement.Element(XName.Get("CertificateUrl", "http://schemas.microsoft.com/windowsazure"));
-                            if (certificateUrlElement != null)
+                            foreach (XElement certificatesElement in certificatesSequenceElement.Elements(XName.Get("Certificate", "http://schemas.microsoft.com/windowsazure")))
                             {
-                                Uri certificateUrlInstance = TypeConversion.TryParseUri(certificateUrlElement.Value);
-                                certificateInstance.CertificateUri = certificateUrlInstance;
-                            }
-                            
-                            XElement thumbprintElement = certificatesElement.Element(XName.Get("Thumbprint", "http://schemas.microsoft.com/windowsazure"));
-                            if (thumbprintElement != null)
-                            {
-                                string thumbprintInstance = thumbprintElement.Value;
-                                certificateInstance.Thumbprint = thumbprintInstance;
-                            }
-                            
-                            XElement thumbprintAlgorithmElement = certificatesElement.Element(XName.Get("ThumbprintAlgorithm", "http://schemas.microsoft.com/windowsazure"));
-                            if (thumbprintAlgorithmElement != null)
-                            {
-                                string thumbprintAlgorithmInstance = thumbprintAlgorithmElement.Value;
-                                certificateInstance.ThumbprintAlgorithm = thumbprintAlgorithmInstance;
-                            }
-                            
-                            XElement dataElement = certificatesElement.Element(XName.Get("Data", "http://schemas.microsoft.com/windowsazure"));
-                            if (dataElement != null)
-                            {
-                                byte[] dataInstance = Convert.FromBase64String(dataElement.Value);
-                                certificateInstance.Data = dataInstance;
+                                ServiceCertificateListResponse.Certificate certificateInstance = new ServiceCertificateListResponse.Certificate();
+                                result.Certificates.Add(certificateInstance);
+                                
+                                XElement certificateUrlElement = certificatesElement.Element(XName.Get("CertificateUrl", "http://schemas.microsoft.com/windowsazure"));
+                                if (certificateUrlElement != null)
+                                {
+                                    Uri certificateUrlInstance = TypeConversion.TryParseUri(certificateUrlElement.Value);
+                                    certificateInstance.CertificateUri = certificateUrlInstance;
+                                }
+                                
+                                XElement thumbprintElement = certificatesElement.Element(XName.Get("Thumbprint", "http://schemas.microsoft.com/windowsazure"));
+                                if (thumbprintElement != null)
+                                {
+                                    string thumbprintInstance = thumbprintElement.Value;
+                                    certificateInstance.Thumbprint = thumbprintInstance;
+                                }
+                                
+                                XElement thumbprintAlgorithmElement = certificatesElement.Element(XName.Get("ThumbprintAlgorithm", "http://schemas.microsoft.com/windowsazure"));
+                                if (thumbprintAlgorithmElement != null)
+                                {
+                                    string thumbprintAlgorithmInstance = thumbprintAlgorithmElement.Value;
+                                    certificateInstance.ThumbprintAlgorithm = thumbprintAlgorithmInstance;
+                                }
+                                
+                                XElement dataElement = certificatesElement.Element(XName.Get("Data", "http://schemas.microsoft.com/windowsazure"));
+                                if (dataElement != null)
+                                {
+                                    byte[] dataInstance = Convert.FromBase64String(dataElement.Value);
+                                    certificateInstance.Data = dataInstance;
+                                }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -890,7 +872,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }

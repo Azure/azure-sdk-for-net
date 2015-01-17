@@ -14,8 +14,9 @@
 //
 
 using System.Net.Http;
+using Hyak.Common.Platform;
 
-namespace Microsoft.WindowsAzure.Common.Platform
+namespace Microsoft.Azure.Common.Platform
 {
     internal class HttpTransportHandlerProvider : IHttpTransportHandlerProvider
     {

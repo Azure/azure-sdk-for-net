@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Hyak>
+    <Assembly>Microsoft.Azure.Management.DataFactories.Specification.dll</Assembly>
+    <OutputDirectory>Generated</OutputDirectory>
+  
+    <Specification>
+        <Type>Microsoft.Azure.Management.DataFactories.DataPipelineManagementClient</Type>
+
+        <Platform>
+            <Flavor>CSharp.Azure</Flavor>
+            <OutputDirectory></OutputDirectory>
+            <BaseNamespace>Microsoft.Azure.Management.DataFactories</BaseNamespace>
+            <Split>Namespace</Split>
+        </Platform>
+    </Specification>
+</Hyak>

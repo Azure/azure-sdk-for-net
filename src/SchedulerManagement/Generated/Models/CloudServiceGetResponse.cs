@@ -22,7 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Scheduler.Models;
 
 namespace Microsoft.WindowsAzure.Management.Scheduler.Models
@@ -30,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
     /// <summary>
     /// Information about a retrieved Cloud Service.
     /// </summary>
-    public partial class CloudServiceGetResponse : OperationResponse
+    public partial class CloudServiceGetResponse : AzureOperationResponse
     {
         private string _geoLocation;
         
@@ -59,7 +60,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
         /// </summary>
         public CloudServiceGetResponse()
         {
-            this.Resources = new List<CloudServiceGetResponse.Resource>();
+            this.Resources = new LazyList<CloudServiceGetResponse.Resource>();
         }
         
         /// <summary>
@@ -186,7 +187,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
             /// </summary>
             public Resource()
             {
-                this.OutputItems = new Dictionary<string, string>();
+                this.OutputItems = new LazyDictionary<string, string>();
             }
         }
     }

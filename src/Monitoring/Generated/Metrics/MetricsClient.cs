@@ -22,8 +22,8 @@
 using System;
 using System.Linq;
 using System.Net.Http;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Monitoring.Metrics;
 
 namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
@@ -108,7 +108,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         /// <summary>
         /// Initializes a new instance of the MetricsClient class.
         /// </summary>
-        private MetricsClient()
+        public MetricsClient()
             : base()
         {
             this._metricDefinitions = new MetricDefinitionOperations(this);
@@ -129,7 +129,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Gets the URI used as the base for all cloud service
+        /// Optional. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
         public MetricsClient(SubscriptionCloudCredentials credentials, Uri baseUri)
@@ -176,7 +176,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         /// <param name='httpClient'>
         /// The Http client
         /// </param>
-        private MetricsClient(HttpClient httpClient)
+        public MetricsClient(HttpClient httpClient)
             : base(httpClient)
         {
             this._metricDefinitions = new MetricDefinitionOperations(this);
@@ -197,7 +197,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Gets the URI used as the base for all cloud service
+        /// Optional. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
         /// <param name='httpClient'>

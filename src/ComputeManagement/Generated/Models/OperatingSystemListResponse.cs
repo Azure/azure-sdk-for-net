@@ -22,7 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
@@ -30,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
     /// <summary>
     /// The List Operating Systems operation response.
     /// </summary>
-    public partial class OperatingSystemListResponse : OperationResponse, IEnumerable<OperatingSystemListResponse.OperatingSystem>
+    public partial class OperatingSystemListResponse : AzureOperationResponse, IEnumerable<OperatingSystemListResponse.OperatingSystem>
     {
         private IList<OperatingSystemListResponse.OperatingSystem> _operatingSystems;
         
@@ -49,7 +50,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public OperatingSystemListResponse()
         {
-            this.OperatingSystems = new List<OperatingSystemListResponse.OperatingSystem>();
+            this.OperatingSystems = new LazyList<OperatingSystemListResponse.OperatingSystem>();
         }
         
         /// <summary>

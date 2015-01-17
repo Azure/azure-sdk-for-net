@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
@@ -118,7 +119,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         public WebSiteGetHistoricalUsageMetricsParameters()
         {
-            this.MetricNames = new List<string>();
+            this.MetricNames = new LazyList<string>();
         }
     }
 }

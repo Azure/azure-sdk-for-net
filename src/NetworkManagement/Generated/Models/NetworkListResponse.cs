@@ -22,7 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Network.Models;
 
 namespace Microsoft.WindowsAzure.Management.Network.Models
@@ -30,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
     /// <summary>
     /// The response structure for the Network Operations List operation.
     /// </summary>
-    public partial class NetworkListResponse : OperationResponse, IEnumerable<NetworkListResponse.VirtualNetworkSite>
+    public partial class NetworkListResponse : AzureOperationResponse, IEnumerable<NetworkListResponse.VirtualNetworkSite>
     {
         private IList<NetworkListResponse.VirtualNetworkSite> _virtualNetworkSites;
         
@@ -48,7 +49,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         /// </summary>
         public NetworkListResponse()
         {
-            this.VirtualNetworkSites = new List<NetworkListResponse.VirtualNetworkSite>();
+            this.VirtualNetworkSites = new LazyList<NetworkListResponse.VirtualNetworkSite>();
         }
         
         /// <summary>
@@ -85,7 +86,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             /// </summary>
             public AddressSpace()
             {
-                this.AddressPrefixes = new List<string>();
+                this.AddressPrefixes = new LazyList<string>();
             }
         }
         
@@ -96,12 +97,12 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         /// </summary>
         public partial class Connection
         {
-            private LocalNetworkConnectionType _type;
+            private string _type;
             
             /// <summary>
             /// Optional.
             /// </summary>
-            public LocalNetworkConnectionType Type
+            public string Type
             {
                 get { return this._type; }
                 set { this._type = value; }
@@ -153,12 +154,12 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         /// </summary>
         public partial class Gateway
         {
-            private GatewayProfile _profile;
+            private string _profile;
             
             /// <summary>
             /// Optional. The gateway connection size.
             /// </summary>
-            public GatewayProfile Profile
+            public string Profile
             {
                 get { return this._profile; }
                 set { this._profile = value; }
@@ -194,7 +195,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             /// </summary>
             public Gateway()
             {
-                this.Sites = new List<NetworkListResponse.LocalNetworkSite>();
+                this.Sites = new LazyList<NetworkListResponse.LocalNetworkSite>();
             }
         }
         
@@ -253,7 +254,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             /// </summary>
             public LocalNetworkSite()
             {
-                this.Connections = new List<NetworkListResponse.Connection>();
+                this.Connections = new LazyList<NetworkListResponse.Connection>();
             }
         }
         
@@ -280,6 +281,18 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             {
                 get { return this._name; }
                 set { this._name = value; }
+            }
+            
+            private string _networkSecurityGroup;
+            
+            /// <summary>
+            /// Optional. Name of Network Security Group associated with this
+            /// subnet.
+            /// </summary>
+            public string NetworkSecurityGroup
+            {
+                get { return this._networkSecurityGroup; }
+                set { this._networkSecurityGroup = value; }
             }
             
             /// <summary>
@@ -370,6 +383,17 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
                 set { this._label = value; }
             }
             
+            private string _location;
+            
+            /// <summary>
+            /// Optional. Gets or sets the virtual network location.
+            /// </summary>
+            public string Location
+            {
+                get { return this._location; }
+                set { this._location = value; }
+            }
+            
             private string _name;
             
             /// <summary>
@@ -411,8 +435,8 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             /// </summary>
             public VirtualNetworkSite()
             {
-                this.DnsServers = new List<NetworkListResponse.DnsServer>();
-                this.Subnets = new List<NetworkListResponse.Subnet>();
+                this.DnsServers = new LazyList<NetworkListResponse.DnsServer>();
+                this.Subnets = new LazyList<NetworkListResponse.Subnet>();
             }
         }
         
@@ -439,7 +463,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             /// </summary>
             public VPNClientAddressPool()
             {
-                this.AddressPrefixes = new List<string>();
+                this.AddressPrefixes = new LazyList<string>();
             }
         }
     }

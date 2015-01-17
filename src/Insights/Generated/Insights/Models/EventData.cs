@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.Azure.Insights.Models;
 
 namespace Microsoft.Azure.Insights.Models
@@ -44,12 +45,23 @@ namespace Microsoft.Azure.Insights.Models
             set { this._authorization = value; }
         }
         
-        private Dictionary<string, string> _claims;
+        private string _caller;
+        
+        /// <summary>
+        /// Optional. Gets or sets the caller
+        /// </summary>
+        public string Caller
+        {
+            get { return this._caller; }
+            set { this._caller = value; }
+        }
+        
+        private IDictionary<string, string> _claims;
         
         /// <summary>
         /// Optional. Gets or sets the claims
         /// </summary>
-        public Dictionary<string, string> Claims
+        public IDictionary<string, string> Claims
         {
             get { return this._claims; }
             set { this._claims = value; }
@@ -152,6 +164,17 @@ namespace Microsoft.Azure.Insights.Models
             set { this._httpRequest = value; }
         }
         
+        private string _id;
+        
+        /// <summary>
+        /// Optional. Gets or sets the Id
+        /// </summary>
+        public string Id
+        {
+            get { return this._id; }
+            set { this._id = value; }
+        }
+        
         private EventLevel _level;
         
         /// <summary>
@@ -186,12 +209,12 @@ namespace Microsoft.Azure.Insights.Models
             set { this._operationName = value; }
         }
         
-        private Dictionary<string, string> _properties;
+        private IDictionary<string, string> _properties;
         
         /// <summary>
         /// Optional. Gets or sets the property bag
         /// </summary>
-        public Dictionary<string, string> Properties
+        public IDictionary<string, string> Properties
         {
             get { return this._properties; }
             set { this._properties = value; }
@@ -290,8 +313,8 @@ namespace Microsoft.Azure.Insights.Models
         /// </summary>
         public EventData()
         {
-            this.Claims = new Dictionary<string, string>();
-            this.Properties = new Dictionary<string, string>();
+            this.Claims = new LazyDictionary<string, string>();
+            this.Properties = new LazyDictionary<string, string>();
         }
     }
 }

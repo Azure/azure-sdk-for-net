@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.WindowsAzure.Management.WebSites.Models;
 
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
@@ -127,7 +128,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public HistoricalUsageMetricData()
         {
-            this.Values = new List<HistoricalUsageMetricSample>();
+            this.Values = new LazyList<HistoricalUsageMetricSample>();
         }
     }
 }

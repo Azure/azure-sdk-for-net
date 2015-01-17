@@ -21,14 +21,14 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
     /// The Get Data Disk operation response.
     /// </summary>
-    public partial class VirtualMachineDataDiskGetResponse : OperationResponse
+    public partial class VirtualMachineDataDiskGetResponse : AzureOperationResponse
     {
         private string _hostCaching;
         
@@ -41,6 +41,17 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         {
             get { return this._hostCaching; }
             set { this._hostCaching = value; }
+        }
+        
+        private string _iOType;
+        
+        /// <summary>
+        /// Optional. Gets or sets the IO type.
+        /// </summary>
+        public string IOType
+        {
+            get { return this._iOType; }
+            set { this._iOType = value; }
         }
         
         private string _label;

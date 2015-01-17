@@ -22,7 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models;
 
 namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
@@ -30,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
     /// <summary>
     /// The List incidents operation response.
     /// </summary>
-    public partial class IncidentListResponse : OperationResponse, IEnumerable<Incident>
+    public partial class IncidentListResponse : AzureOperationResponse, IEnumerable<Incident>
     {
         private IList<Incident> _value;
         
@@ -48,7 +49,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         /// </summary>
         public IncidentListResponse()
         {
-            this.Value = new List<Incident>();
+            this.Value = new LazyList<Incident>();
         }
         
         /// <summary>

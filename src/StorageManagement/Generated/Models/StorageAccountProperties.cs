@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.WindowsAzure.Management.Storage.Models;
 
 namespace Microsoft.WindowsAzure.Management.Storage.Models
@@ -188,7 +189,7 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         /// </summary>
         public StorageAccountProperties()
         {
-            this.Endpoints = new List<Uri>();
+            this.Endpoints = new LazyList<Uri>();
         }
     }
 }

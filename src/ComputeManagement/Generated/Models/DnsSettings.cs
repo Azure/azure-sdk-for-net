@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
@@ -48,7 +49,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public DnsSettings()
         {
-            this.DnsServers = new List<DnsServer>();
+            this.DnsServers = new LazyList<DnsServer>();
         }
     }
 }

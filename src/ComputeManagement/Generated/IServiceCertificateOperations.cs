@@ -23,7 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute
@@ -58,7 +58,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginCreatingAsync(string serviceName, ServiceCertificateCreateParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BeginCreatingAsync(string serviceName, ServiceCertificateCreateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Begin Deleting Service Certificate operation deletes a service
@@ -80,7 +80,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginDeletingAsync(ServiceCertificateDeleteParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BeginDeletingAsync(ServiceCertificateDeleteParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Create Service Certificate operation adds a certificate to a

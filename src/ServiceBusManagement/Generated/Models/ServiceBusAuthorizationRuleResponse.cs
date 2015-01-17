@@ -21,7 +21,7 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.ServiceBus.Models;
 
 namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
@@ -29,7 +29,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
     /// <summary>
     /// A response to a request for a particular authorization rule.
     /// </summary>
-    public partial class ServiceBusAuthorizationRuleResponse : OperationResponse
+    public partial class ServiceBusAuthorizationRuleResponse : AzureOperationResponse
     {
         private ServiceBusSharedAccessAuthorizationRule _authorizationRule;
         

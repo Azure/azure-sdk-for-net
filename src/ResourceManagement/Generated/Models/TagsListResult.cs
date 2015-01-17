@@ -22,15 +22,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Resources.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Resources.Models
 {
     /// <summary>
     /// List of subscription tags.
     /// </summary>
-    public partial class TagsListResult : OperationResponse
+    public partial class TagsListResult : AzureOperationResponse
     {
         private string _nextLink;
         
@@ -59,7 +60,7 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         public TagsListResult()
         {
-            this.Tags = new List<TagDetails>();
+            this.Tags = new LazyList<TagDetails>();
         }
         
         /// <summary>

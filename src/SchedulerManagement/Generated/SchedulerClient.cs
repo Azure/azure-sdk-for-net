@@ -22,8 +22,8 @@
 using System;
 using System.Linq;
 using System.Net.Http;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Scheduler;
 using Microsoft.WindowsAzure.Scheduler.Models;
 
@@ -111,7 +111,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// <summary>
         /// Initializes a new instance of the SchedulerClient class.
         /// </summary>
-        private SchedulerClient()
+        public SchedulerClient()
             : base()
         {
             this._jobs = new JobOperations(this);
@@ -136,7 +136,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Gets the URI used as the base for all cloud service
+        /// Optional. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
         public SchedulerClient(string cloudServiceName, string jobCollectionName, SubscriptionCloudCredentials credentials, Uri baseUri)
@@ -209,7 +209,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// <param name='httpClient'>
         /// The Http client
         /// </param>
-        private SchedulerClient(HttpClient httpClient)
+        public SchedulerClient(HttpClient httpClient)
             : base(httpClient)
         {
             this._jobs = new JobOperations(this);
@@ -234,7 +234,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Gets the URI used as the base for all cloud service
+        /// Optional. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
         /// <param name='httpClient'>
@@ -332,6 +332,66 @@ namespace Microsoft.WindowsAzure.Scheduler
                 
                 clonedClient.Credentials.InitializeServiceClient(clonedClient);
             }
+        }
+        
+        /// <summary>
+        /// Parse enum values for type HttpAuthenticationType.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to parse.
+        /// </param>
+        /// <returns>
+        /// The enum value.
+        /// </returns>
+        internal static HttpAuthenticationType ParseHttpAuthenticationType(string value)
+        {
+            if ("NotSpecified".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return HttpAuthenticationType.NotSpecified;
+            }
+            if ("ClientCertificate".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return HttpAuthenticationType.ClientCertificate;
+            }
+            if ("ActiveDirectoryOAuth".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return HttpAuthenticationType.ActiveDirectoryOAuth;
+            }
+            if ("Basic".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return HttpAuthenticationType.Basic;
+            }
+            throw new ArgumentOutOfRangeException("value");
+        }
+        
+        /// <summary>
+        /// Convert an enum of type HttpAuthenticationType to a string.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to convert to a string.
+        /// </param>
+        /// <returns>
+        /// The enum value as a string.
+        /// </returns>
+        internal static string HttpAuthenticationTypeToString(HttpAuthenticationType value)
+        {
+            if (value == HttpAuthenticationType.NotSpecified)
+            {
+                return "NotSpecified";
+            }
+            if (value == HttpAuthenticationType.ClientCertificate)
+            {
+                return "ClientCertificate";
+            }
+            if (value == HttpAuthenticationType.ActiveDirectoryOAuth)
+            {
+                return "ActiveDirectoryOAuth";
+            }
+            if (value == HttpAuthenticationType.Basic)
+            {
+                return "Basic";
+            }
+            throw new ArgumentOutOfRangeException("value");
         }
         
         /// <summary>

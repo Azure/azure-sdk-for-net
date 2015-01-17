@@ -28,9 +28,8 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Hyak.Common.Internals;
 using Microsoft.WindowsAzure.Management.Compute;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
@@ -42,7 +41,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
     /// http://msdn.microsoft.com/en-us/library/windowsazure/ff684169.aspx for
     /// more information)
     /// </summary>
-    internal partial class OperatingSystemOperations : IServiceOperations<ComputeManagementClient>, Microsoft.WindowsAzure.Management.Compute.IOperatingSystemOperations
+    internal partial class OperatingSystemOperations : IServiceOperations<ComputeManagementClient>, IOperatingSystemOperations
     {
         /// <summary>
         /// Initializes a new instance of the OperatingSystemOperations class.
@@ -84,22 +83,22 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// The List Operating Systems operation response.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.OperatingSystemListResponse> ListAsync(CancellationToken cancellationToken)
+        public async Task<OperatingSystemListResponse> ListAsync(CancellationToken cancellationToken)
         {
             // Validate
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                Tracing.Enter(invocationId, this, "ListAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/operatingsystems";
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/operatingsystems";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -122,7 +121,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -134,13 +133,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -149,7 +148,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -157,63 +156,66 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     // Create Result
                     OperatingSystemListResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new OperatingSystemListResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement operatingSystemsSequenceElement = responseDoc.Element(XName.Get("OperatingSystems", "http://schemas.microsoft.com/windowsazure"));
-                    if (operatingSystemsSequenceElement != null)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        foreach (XElement operatingSystemsElement in operatingSystemsSequenceElement.Elements(XName.Get("OperatingSystem", "http://schemas.microsoft.com/windowsazure")))
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new OperatingSystemListResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement operatingSystemsSequenceElement = responseDoc.Element(XName.Get("OperatingSystems", "http://schemas.microsoft.com/windowsazure"));
+                        if (operatingSystemsSequenceElement != null)
                         {
-                            OperatingSystemListResponse.OperatingSystem operatingSystemInstance = new OperatingSystemListResponse.OperatingSystem();
-                            result.OperatingSystems.Add(operatingSystemInstance);
-                            
-                            XElement versionElement = operatingSystemsElement.Element(XName.Get("Version", "http://schemas.microsoft.com/windowsazure"));
-                            if (versionElement != null)
+                            foreach (XElement operatingSystemsElement in operatingSystemsSequenceElement.Elements(XName.Get("OperatingSystem", "http://schemas.microsoft.com/windowsazure")))
                             {
-                                string versionInstance = versionElement.Value;
-                                operatingSystemInstance.Version = versionInstance;
-                            }
-                            
-                            XElement labelElement = operatingSystemsElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
-                            if (labelElement != null)
-                            {
-                                string labelInstance = TypeConversion.FromBase64String(labelElement.Value);
-                                operatingSystemInstance.Label = labelInstance;
-                            }
-                            
-                            XElement isDefaultElement = operatingSystemsElement.Element(XName.Get("IsDefault", "http://schemas.microsoft.com/windowsazure"));
-                            if (isDefaultElement != null)
-                            {
-                                bool isDefaultInstance = bool.Parse(isDefaultElement.Value);
-                                operatingSystemInstance.IsDefault = isDefaultInstance;
-                            }
-                            
-                            XElement isActiveElement = operatingSystemsElement.Element(XName.Get("IsActive", "http://schemas.microsoft.com/windowsazure"));
-                            if (isActiveElement != null)
-                            {
-                                bool isActiveInstance = bool.Parse(isActiveElement.Value);
-                                operatingSystemInstance.IsActive = isActiveInstance;
-                            }
-                            
-                            XElement familyElement = operatingSystemsElement.Element(XName.Get("Family", "http://schemas.microsoft.com/windowsazure"));
-                            if (familyElement != null)
-                            {
-                                int familyInstance = int.Parse(familyElement.Value, CultureInfo.InvariantCulture);
-                                operatingSystemInstance.Family = familyInstance;
-                            }
-                            
-                            XElement familyLabelElement = operatingSystemsElement.Element(XName.Get("FamilyLabel", "http://schemas.microsoft.com/windowsazure"));
-                            if (familyLabelElement != null)
-                            {
-                                string familyLabelInstance = TypeConversion.FromBase64String(familyLabelElement.Value);
-                                operatingSystemInstance.FamilyLabel = familyLabelInstance;
+                                OperatingSystemListResponse.OperatingSystem operatingSystemInstance = new OperatingSystemListResponse.OperatingSystem();
+                                result.OperatingSystems.Add(operatingSystemInstance);
+                                
+                                XElement versionElement = operatingSystemsElement.Element(XName.Get("Version", "http://schemas.microsoft.com/windowsazure"));
+                                if (versionElement != null)
+                                {
+                                    string versionInstance = versionElement.Value;
+                                    operatingSystemInstance.Version = versionInstance;
+                                }
+                                
+                                XElement labelElement = operatingSystemsElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
+                                if (labelElement != null)
+                                {
+                                    string labelInstance = TypeConversion.FromBase64String(labelElement.Value);
+                                    operatingSystemInstance.Label = labelInstance;
+                                }
+                                
+                                XElement isDefaultElement = operatingSystemsElement.Element(XName.Get("IsDefault", "http://schemas.microsoft.com/windowsazure"));
+                                if (isDefaultElement != null)
+                                {
+                                    bool isDefaultInstance = bool.Parse(isDefaultElement.Value);
+                                    operatingSystemInstance.IsDefault = isDefaultInstance;
+                                }
+                                
+                                XElement isActiveElement = operatingSystemsElement.Element(XName.Get("IsActive", "http://schemas.microsoft.com/windowsazure"));
+                                if (isActiveElement != null)
+                                {
+                                    bool isActiveInstance = bool.Parse(isActiveElement.Value);
+                                    operatingSystemInstance.IsActive = isActiveInstance;
+                                }
+                                
+                                XElement familyElement = operatingSystemsElement.Element(XName.Get("Family", "http://schemas.microsoft.com/windowsazure"));
+                                if (familyElement != null)
+                                {
+                                    int familyInstance = int.Parse(familyElement.Value, CultureInfo.InvariantCulture);
+                                    operatingSystemInstance.Family = familyInstance;
+                                }
+                                
+                                XElement familyLabelElement = operatingSystemsElement.Element(XName.Get("FamilyLabel", "http://schemas.microsoft.com/windowsazure"));
+                                if (familyLabelElement != null)
+                                {
+                                    string familyLabelInstance = TypeConversion.FromBase64String(familyLabelElement.Value);
+                                    operatingSystemInstance.FamilyLabel = familyLabelInstance;
+                                }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -222,7 +224,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -260,22 +262,22 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// The List Operating System Families operation response.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.OperatingSystemListFamiliesResponse> ListFamiliesAsync(CancellationToken cancellationToken)
+        public async Task<OperatingSystemListFamiliesResponse> ListFamiliesAsync(CancellationToken cancellationToken)
         {
             // Validate
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                Tracing.Enter(invocationId, this, "ListFamiliesAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ListFamiliesAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/operatingsystemfamilies";
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/operatingsystemfamilies";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -298,7 +300,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -310,13 +312,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -325,7 +327,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -333,73 +335,76 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     // Create Result
                     OperatingSystemListFamiliesResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new OperatingSystemListFamiliesResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement operatingSystemFamiliesSequenceElement = responseDoc.Element(XName.Get("OperatingSystemFamilies", "http://schemas.microsoft.com/windowsazure"));
-                    if (operatingSystemFamiliesSequenceElement != null)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        foreach (XElement operatingSystemFamiliesElement in operatingSystemFamiliesSequenceElement.Elements(XName.Get("OperatingSystemFamily", "http://schemas.microsoft.com/windowsazure")))
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new OperatingSystemListFamiliesResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement operatingSystemFamiliesSequenceElement = responseDoc.Element(XName.Get("OperatingSystemFamilies", "http://schemas.microsoft.com/windowsazure"));
+                        if (operatingSystemFamiliesSequenceElement != null)
                         {
-                            OperatingSystemListFamiliesResponse.OperatingSystemFamily operatingSystemFamilyInstance = new OperatingSystemListFamiliesResponse.OperatingSystemFamily();
-                            result.OperatingSystemFamilies.Add(operatingSystemFamilyInstance);
-                            
-                            XElement nameElement = operatingSystemFamiliesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                            if (nameElement != null)
+                            foreach (XElement operatingSystemFamiliesElement in operatingSystemFamiliesSequenceElement.Elements(XName.Get("OperatingSystemFamily", "http://schemas.microsoft.com/windowsazure")))
                             {
-                                int nameInstance = int.Parse(nameElement.Value, CultureInfo.InvariantCulture);
-                                operatingSystemFamilyInstance.Name = nameInstance;
-                            }
-                            
-                            XElement labelElement = operatingSystemFamiliesElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
-                            if (labelElement != null)
-                            {
-                                string labelInstance = TypeConversion.FromBase64String(labelElement.Value);
-                                operatingSystemFamilyInstance.Label = labelInstance;
-                            }
-                            
-                            XElement operatingSystemsSequenceElement = operatingSystemFamiliesElement.Element(XName.Get("OperatingSystems", "http://schemas.microsoft.com/windowsazure"));
-                            if (operatingSystemsSequenceElement != null)
-                            {
-                                foreach (XElement operatingSystemsElement in operatingSystemsSequenceElement.Elements(XName.Get("OperatingSystem", "http://schemas.microsoft.com/windowsazure")))
+                                OperatingSystemListFamiliesResponse.OperatingSystemFamily operatingSystemFamilyInstance = new OperatingSystemListFamiliesResponse.OperatingSystemFamily();
+                                result.OperatingSystemFamilies.Add(operatingSystemFamilyInstance);
+                                
+                                XElement nameElement = operatingSystemFamiliesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                if (nameElement != null)
                                 {
-                                    OperatingSystemListFamiliesResponse.OperatingSystem operatingSystemInstance = new OperatingSystemListFamiliesResponse.OperatingSystem();
-                                    operatingSystemFamilyInstance.OperatingSystems.Add(operatingSystemInstance);
-                                    
-                                    XElement versionElement = operatingSystemsElement.Element(XName.Get("Version", "http://schemas.microsoft.com/windowsazure"));
-                                    if (versionElement != null)
+                                    int nameInstance = int.Parse(nameElement.Value, CultureInfo.InvariantCulture);
+                                    operatingSystemFamilyInstance.Name = nameInstance;
+                                }
+                                
+                                XElement labelElement = operatingSystemFamiliesElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
+                                if (labelElement != null)
+                                {
+                                    string labelInstance = TypeConversion.FromBase64String(labelElement.Value);
+                                    operatingSystemFamilyInstance.Label = labelInstance;
+                                }
+                                
+                                XElement operatingSystemsSequenceElement = operatingSystemFamiliesElement.Element(XName.Get("OperatingSystems", "http://schemas.microsoft.com/windowsazure"));
+                                if (operatingSystemsSequenceElement != null)
+                                {
+                                    foreach (XElement operatingSystemsElement in operatingSystemsSequenceElement.Elements(XName.Get("OperatingSystem", "http://schemas.microsoft.com/windowsazure")))
                                     {
-                                        string versionInstance = versionElement.Value;
-                                        operatingSystemInstance.Version = versionInstance;
-                                    }
-                                    
-                                    XElement labelElement2 = operatingSystemsElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
-                                    if (labelElement2 != null)
-                                    {
-                                        string labelInstance2 = TypeConversion.FromBase64String(labelElement2.Value);
-                                        operatingSystemInstance.Label = labelInstance2;
-                                    }
-                                    
-                                    XElement isDefaultElement = operatingSystemsElement.Element(XName.Get("IsDefault", "http://schemas.microsoft.com/windowsazure"));
-                                    if (isDefaultElement != null)
-                                    {
-                                        bool isDefaultInstance = bool.Parse(isDefaultElement.Value);
-                                        operatingSystemInstance.IsDefault = isDefaultInstance;
-                                    }
-                                    
-                                    XElement isActiveElement = operatingSystemsElement.Element(XName.Get("IsActive", "http://schemas.microsoft.com/windowsazure"));
-                                    if (isActiveElement != null)
-                                    {
-                                        bool isActiveInstance = bool.Parse(isActiveElement.Value);
-                                        operatingSystemInstance.IsActive = isActiveInstance;
+                                        OperatingSystemListFamiliesResponse.OperatingSystem operatingSystemInstance = new OperatingSystemListFamiliesResponse.OperatingSystem();
+                                        operatingSystemFamilyInstance.OperatingSystems.Add(operatingSystemInstance);
+                                        
+                                        XElement versionElement = operatingSystemsElement.Element(XName.Get("Version", "http://schemas.microsoft.com/windowsazure"));
+                                        if (versionElement != null)
+                                        {
+                                            string versionInstance = versionElement.Value;
+                                            operatingSystemInstance.Version = versionInstance;
+                                        }
+                                        
+                                        XElement labelElement2 = operatingSystemsElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
+                                        if (labelElement2 != null)
+                                        {
+                                            string labelInstance2 = TypeConversion.FromBase64String(labelElement2.Value);
+                                            operatingSystemInstance.Label = labelInstance2;
+                                        }
+                                        
+                                        XElement isDefaultElement = operatingSystemsElement.Element(XName.Get("IsDefault", "http://schemas.microsoft.com/windowsazure"));
+                                        if (isDefaultElement != null)
+                                        {
+                                            bool isDefaultInstance = bool.Parse(isDefaultElement.Value);
+                                            operatingSystemInstance.IsDefault = isDefaultInstance;
+                                        }
+                                        
+                                        XElement isActiveElement = operatingSystemsElement.Element(XName.Get("IsActive", "http://schemas.microsoft.com/windowsazure"));
+                                        if (isActiveElement != null)
+                                        {
+                                            bool isActiveInstance = bool.Parse(isActiveElement.Value);
+                                            operatingSystemInstance.IsActive = isActiveInstance;
+                                        }
                                     }
                                 }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -408,7 +413,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }

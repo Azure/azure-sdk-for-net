@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.Azure.Management.Automation.Models;
 
 namespace Microsoft.Azure.Management.Automation.Models
@@ -113,7 +114,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         public JobContext()
         {
-            this.JobParameters = new List<JobParameter>();
+            this.JobParameters = new LazyList<JobParameter>();
         }
     }
 }

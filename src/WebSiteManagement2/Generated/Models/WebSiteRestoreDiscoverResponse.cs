@@ -21,15 +21,15 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.WebSites.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
     /// <summary>
     /// The information gathered about a backup storaged in a storage account.
     /// </summary>
-    public partial class WebSiteRestoreDiscoverResponse : OperationResponse
+    public partial class WebSiteRestoreDiscoverResponse : AzureOperationResponse
     {
         private WebSiteRestoreDiscover _envelope;
         

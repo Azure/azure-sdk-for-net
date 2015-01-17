@@ -21,14 +21,14 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
 {
     /// <summary>
     /// The Get DNS Suffix operation response.
     /// </summary>
-    public partial class WebSpacesGetDnsSuffixResponse : OperationResponse
+    public partial class WebSpacesGetDnsSuffixResponse : AzureOperationResponse
     {
         private string _dnsSuffix;
         

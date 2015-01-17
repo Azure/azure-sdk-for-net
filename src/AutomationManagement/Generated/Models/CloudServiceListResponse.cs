@@ -22,15 +22,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Automation.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
     /// The response model for the list cloud service operation.
     /// </summary>
-    public partial class CloudServiceListResponse : OperationResponse, IEnumerable<CloudService>
+    public partial class CloudServiceListResponse : AzureOperationResponse, IEnumerable<CloudService>
     {
         private IList<CloudService> _cloudServices;
         
@@ -48,7 +49,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         public CloudServiceListResponse()
         {
-            this.CloudServices = new List<CloudService>();
+            this.CloudServices = new LazyList<CloudService>();
         }
         
         /// <summary>

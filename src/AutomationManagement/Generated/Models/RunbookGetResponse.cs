@@ -21,15 +21,15 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Automation.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
     /// The response model for the get runbook operation.
     /// </summary>
-    public partial class RunbookGetResponse : OperationResponse
+    public partial class RunbookGetResponse : AzureOperationResponse
     {
         private Runbook _runbook;
         

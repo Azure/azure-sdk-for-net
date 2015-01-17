@@ -24,10 +24,10 @@ using System.Linq;
 
 namespace Microsoft.WindowsAzure.Management.Network.Models
 {
-    public enum GatewayType
+    public static partial class GatewayType
     {
-        StaticRouting = 0,
+        public const string StaticRouting = "StaticRouting";
         
-        DynamicRouting = 1,
+        public const string DynamicRouting = "DynamicRouting";
     }
 }

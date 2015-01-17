@@ -22,7 +22,7 @@
 using System;
 using System.Linq;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.WebSitesExtensions
 {
     /// <summary>
     /// The websites extensions client manages the web sites deployments, web

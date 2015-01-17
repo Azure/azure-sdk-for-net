@@ -22,7 +22,7 @@
 using System;
 using System.Linq;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.Scheduler
 {
     public static partial class SchedulerClientExtensions
     {

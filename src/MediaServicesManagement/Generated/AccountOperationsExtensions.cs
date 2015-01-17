@@ -23,11 +23,11 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.MediaServices;
 using Microsoft.WindowsAzure.Management.MediaServices.Models;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.Management.MediaServices
 {
     public static partial class AccountOperationsExtensions
     {
@@ -96,7 +96,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Delete(this IAccountOperations operations, string accountName)
+        public static AzureOperationResponse Delete(this IAccountOperations operations, string accountName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -122,7 +122,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> DeleteAsync(this IAccountOperations operations, string accountName)
+        public static Task<AzureOperationResponse> DeleteAsync(this IAccountOperations operations, string accountName)
         {
             return operations.DeleteAsync(accountName, CancellationToken.None);
         }
@@ -236,7 +236,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse RegenerateKey(this IAccountOperations operations, string accountName, MediaServicesKeyType keyType)
+        public static AzureOperationResponse RegenerateKey(this IAccountOperations operations, string accountName, MediaServicesKeyType keyType)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -266,7 +266,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> RegenerateKeyAsync(this IAccountOperations operations, string accountName, MediaServicesKeyType keyType)
+        public static Task<AzureOperationResponse> RegenerateKeyAsync(this IAccountOperations operations, string accountName, MediaServicesKeyType keyType)
         {
             return operations.RegenerateKeyAsync(accountName, keyType, CancellationToken.None);
         }

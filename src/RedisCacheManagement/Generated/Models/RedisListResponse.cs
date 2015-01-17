@@ -22,15 +22,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Redis.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Redis.Models
 {
     /// <summary>
     /// The response of list redis operation.
     /// </summary>
-    public partial class RedisListResponse : OperationResponse
+    public partial class RedisListResponse : AzureOperationResponse
     {
         private string _nextLink;
         
@@ -59,7 +60,7 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// </summary>
         public RedisListResponse()
         {
-            this.Value = new List<RedisResource>();
+            this.Value = new LazyList<RedisResource>();
         }
     }
 }

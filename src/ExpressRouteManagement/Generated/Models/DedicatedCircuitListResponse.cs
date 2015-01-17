@@ -22,7 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.ExpressRoute.Models;
 
 namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
@@ -30,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
     /// <summary>
     /// The List Dedicated Circuit operation response.
     /// </summary>
-    public partial class DedicatedCircuitListResponse : OperationResponse, IEnumerable<AzureDedicatedCircuit>
+    public partial class DedicatedCircuitListResponse : AzureOperationResponse, IEnumerable<AzureDedicatedCircuit>
     {
         private IList<AzureDedicatedCircuit> _dedicatedCircuits;
         
@@ -49,7 +50,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         /// </summary>
         public DedicatedCircuitListResponse()
         {
-            this.DedicatedCircuits = new List<AzureDedicatedCircuit>();
+            this.DedicatedCircuits = new LazyList<AzureDedicatedCircuit>();
         }
         
         /// <summary>

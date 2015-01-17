@@ -53,14 +53,14 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager.Models
             set { this._location = value; }
         }
         
-        private int _minChildEndpoints;
+        private int? _minChildEndpoints;
         
         /// <summary>
         /// Optional. Specifies the minimum amount of child endpoints in a
         /// nested profile that has to be online for the endpoint to be
         /// considered online.
         /// </summary>
-        public int MinChildEndpoints
+        public int? MinChildEndpoints
         {
             get { return this._minChildEndpoints; }
             set { this._minChildEndpoints = value; }
@@ -99,13 +99,13 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager.Models
             set { this._type = value; }
         }
         
-        private int _weight;
+        private int? _weight;
         
         /// <summary>
         /// Optional. Specifies the weight of an endpoint in a weighted round
         /// robin policy.
         /// </summary>
-        public int Weight
+        public int? Weight
         {
             get { return this._weight; }
             set { this._weight = value; }

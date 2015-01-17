@@ -22,7 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Sql.Models;
 
 namespace Microsoft.WindowsAzure.Management.Sql.Models
@@ -31,7 +32,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
     /// Represents the response containing the list of database operations for
     /// a given server or database.
     /// </summary>
-    public partial class DatabaseOperationListResponse : OperationResponse, IEnumerable<DatabaseOperation>
+    public partial class DatabaseOperationListResponse : AzureOperationResponse, IEnumerable<DatabaseOperation>
     {
         private IList<DatabaseOperation> _databaseOperations;
         
@@ -51,7 +52,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public DatabaseOperationListResponse()
         {
-            this.DatabaseOperations = new List<DatabaseOperation>();
+            this.DatabaseOperations = new LazyList<DatabaseOperation>();
         }
         
         /// <summary>

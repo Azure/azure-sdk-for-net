@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models;
 
 namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
@@ -60,8 +61,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         /// </summary>
         public AvailabilityMetricSettingValue()
         {
-            this.AvailableLocations = new List<NameConfig>();
-            this.Endpoints = new List<EndpointConfig>();
+            this.AvailableLocations = new LazyList<NameConfig>();
+            this.Endpoints = new LazyList<EndpointConfig>();
         }
         
         /// <summary>

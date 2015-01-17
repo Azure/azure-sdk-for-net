@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 
 namespace Microsoft.WindowsAzure.Management.Storage.Models
 {
@@ -96,7 +97,7 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         /// </summary>
         public StorageAccountUpdateParameters()
         {
-            this.ExtendedProperties = new Dictionary<string, string>();
+            this.ExtendedProperties = new LazyDictionary<string, string>();
         }
     }
 }

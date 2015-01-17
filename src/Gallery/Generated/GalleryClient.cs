@@ -22,9 +22,9 @@
 using System;
 using System.Linq;
 using System.Net.Http;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Gallery;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
 
 namespace Microsoft.Azure.Gallery
 {
@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Gallery
         /// <summary>
         /// Initializes a new instance of the GalleryClient class.
         /// </summary>
-        private GalleryClient()
+        public GalleryClient()
             : base()
         {
             this._items = new ItemOperations(this);
@@ -116,7 +116,7 @@ namespace Microsoft.Azure.Gallery
         /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Gets the URI used as the base for all cloud service
+        /// Optional. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
         public GalleryClient(SubscriptionCloudCredentials credentials, Uri baseUri)
@@ -163,7 +163,7 @@ namespace Microsoft.Azure.Gallery
         /// <param name='httpClient'>
         /// The Http client
         /// </param>
-        private GalleryClient(HttpClient httpClient)
+        public GalleryClient(HttpClient httpClient)
             : base(httpClient)
         {
             this._items = new ItemOperations(this);
@@ -182,7 +182,7 @@ namespace Microsoft.Azure.Gallery
         /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Gets the URI used as the base for all cloud service
+        /// Optional. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
         /// <param name='httpClient'>

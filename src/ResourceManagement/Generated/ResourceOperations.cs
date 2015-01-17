@@ -29,12 +29,11 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Hyak.Common;
+using Hyak.Common.Internals;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.Management.Resources
@@ -119,20 +118,20 @@ namespace Microsoft.Azure.Management.Resources
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("identity", identity);
-                Tracing.Enter(invocationId, this, "CheckExistenceAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "CheckExistenceAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/" + identity.ResourceProviderNamespace.Trim() + "/" + (identity.ParentResourcePath != null ? identity.ParentResourcePath.Trim() : "") + "/" + identity.ResourceType.Trim() + "/" + identity.ResourceName.Trim() + "?";
-            url = url + "api-version=" + Uri.EscapeDataString(identity.ResourceProviderApiVersion.Trim());
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/" + Uri.EscapeDataString(identity.ResourceProviderNamespace) + "/" + identity.ParentResourcePath + "/" + identity.ResourceType + "/" + Uri.EscapeDataString(identity.ResourceName) + "?";
+            url = url + "api-version=" + Uri.EscapeDataString(identity.ResourceProviderApiVersion);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -166,13 +165,13 @@ namespace Microsoft.Azure.Management.Resources
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.NotFound)
@@ -181,13 +180,14 @@ namespace Microsoft.Azure.Management.Resources
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
                     ResourceExistsResult result = null;
+                    // Deserialize Response
                     result = new ResourceExistsResult();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -205,7 +205,7 @@ namespace Microsoft.Azure.Management.Resources
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -290,21 +290,21 @@ namespace Microsoft.Azure.Management.Resources
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("identity", identity);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "CreateOrUpdateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "CreateOrUpdateAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/" + identity.ResourceProviderNamespace.Trim() + "/" + (identity.ParentResourcePath != null ? identity.ParentResourcePath.Trim() : "") + "/" + identity.ResourceType.Trim() + "/" + identity.ResourceName.Trim() + "?";
-            url = url + "api-version=" + Uri.EscapeDataString(identity.ResourceProviderApiVersion.Trim());
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/" + Uri.EscapeDataString(identity.ResourceProviderNamespace) + "/" + identity.ParentResourcePath + "/" + identity.ResourceType + "/" + Uri.EscapeDataString(identity.ResourceName) + "?";
+            url = url + "api-version=" + Uri.EscapeDataString(identity.ResourceProviderApiVersion);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -346,24 +346,53 @@ namespace Microsoft.Azure.Management.Resources
                     basicResourceValue["properties"] = JObject.Parse(parameters.Properties);
                 }
                 
-                JObject tagsDictionary = new JObject();
                 if (parameters.Tags != null)
                 {
-                    foreach (KeyValuePair<string, string> pair in parameters.Tags)
+                    if (parameters.Tags is ILazyCollection == false || ((ILazyCollection)parameters.Tags).IsInitialized)
                     {
-                        string tagsKey = pair.Key;
-                        string tagsValue = pair.Value;
-                        tagsDictionary[tagsKey] = tagsValue;
+                        JObject tagsDictionary = new JObject();
+                        foreach (KeyValuePair<string, string> pair in parameters.Tags)
+                        {
+                            string tagsKey = pair.Key;
+                            string tagsValue = pair.Value;
+                            tagsDictionary[tagsKey] = tagsValue;
+                        }
+                        basicResourceValue["tags"] = tagsDictionary;
                     }
                 }
-                basicResourceValue["tags"] = tagsDictionary;
+                
+                if (parameters.Plan != null)
+                {
+                    JObject planValue = new JObject();
+                    basicResourceValue["plan"] = planValue;
+                    
+                    if (parameters.Plan.Name != null)
+                    {
+                        planValue["name"] = parameters.Plan.Name;
+                    }
+                    
+                    if (parameters.Plan.Publisher != null)
+                    {
+                        planValue["publisher"] = parameters.Plan.Publisher;
+                    }
+                    
+                    if (parameters.Plan.Product != null)
+                    {
+                        planValue["product"] = parameters.Plan.Product;
+                    }
+                    
+                    if (parameters.Plan.PromotionCode != null)
+                    {
+                        planValue["promotionCode"] = parameters.Plan.PromotionCode;
+                    }
+                }
                 
                 if (parameters.ProvisioningState != null)
                 {
                     basicResourceValue["provisioningState"] = parameters.ProvisioningState;
                 }
                 
-                requestContent = requestDoc.ToString(Formatting.Indented);
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
                 
@@ -373,13 +402,13 @@ namespace Microsoft.Azure.Management.Resources
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created)
@@ -388,7 +417,7 @@ namespace Microsoft.Azure.Management.Resources
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -396,85 +425,123 @@ namespace Microsoft.Azure.Management.Resources
                     // Create Result
                     ResourceCreateOrUpdateResult result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new ResourceCreateOrUpdateResult();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Created)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        Resource resourceInstance = new Resource();
-                        result.Resource = resourceInstance;
-                        
-                        JToken idValue = responseDoc["id"];
-                        if (idValue != null && idValue.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new ResourceCreateOrUpdateResult();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            string idInstance = ((string)idValue);
-                            resourceInstance.Id = idInstance;
+                            responseDoc = JToken.Parse(responseContent);
                         }
                         
-                        JToken nameValue = responseDoc["name"];
-                        if (nameValue != null && nameValue.Type != JTokenType.Null)
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            string nameInstance = ((string)nameValue);
-                            resourceInstance.Name = nameInstance;
-                        }
-                        
-                        JToken typeValue = responseDoc["type"];
-                        if (typeValue != null && typeValue.Type != JTokenType.Null)
-                        {
-                            string typeInstance = ((string)typeValue);
-                            resourceInstance.Type = typeInstance;
-                        }
-                        
-                        JToken propertiesValue = responseDoc["properties"];
-                        if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                        {
-                            JToken provisioningStateValue = propertiesValue["provisioningState"];
-                            if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
+                            Resource resourceInstance = new Resource();
+                            result.Resource = resourceInstance;
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
                             {
-                                string provisioningStateInstance = ((string)provisioningStateValue);
-                                resourceInstance.ProvisioningState = provisioningStateInstance;
+                                string idInstance = ((string)idValue);
+                                resourceInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                resourceInstance.Name = nameInstance;
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                resourceInstance.Type = typeInstance;
+                            }
+                            
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                            {
+                                JToken provisioningStateValue = propertiesValue["provisioningState"];
+                                if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
+                                {
+                                    string provisioningStateInstance = ((string)provisioningStateValue);
+                                    resourceInstance.ProvisioningState = provisioningStateInstance;
+                                }
+                            }
+                            
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            {
+                                string locationInstance = ((string)locationValue);
+                                resourceInstance.Location = locationInstance;
+                            }
+                            
+                            JToken propertiesValue2 = responseDoc["properties"];
+                            if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                            {
+                                string propertiesInstance = propertiesValue2.ToString(Newtonsoft.Json.Formatting.Indented);
+                                resourceInstance.Properties = propertiesInstance;
+                            }
+                            
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property in tagsSequenceElement)
+                                {
+                                    string tagsKey2 = ((string)property.Name);
+                                    string tagsValue2 = ((string)property.Value);
+                                    resourceInstance.Tags.Add(tagsKey2, tagsValue2);
+                                }
+                            }
+                            
+                            JToken planValue2 = responseDoc["plan"];
+                            if (planValue2 != null && planValue2.Type != JTokenType.Null)
+                            {
+                                Plan planInstance = new Plan();
+                                resourceInstance.Plan = planInstance;
+                                
+                                JToken nameValue2 = planValue2["name"];
+                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                {
+                                    string nameInstance2 = ((string)nameValue2);
+                                    planInstance.Name = nameInstance2;
+                                }
+                                
+                                JToken publisherValue = planValue2["publisher"];
+                                if (publisherValue != null && publisherValue.Type != JTokenType.Null)
+                                {
+                                    string publisherInstance = ((string)publisherValue);
+                                    planInstance.Publisher = publisherInstance;
+                                }
+                                
+                                JToken productValue = planValue2["product"];
+                                if (productValue != null && productValue.Type != JTokenType.Null)
+                                {
+                                    string productInstance = ((string)productValue);
+                                    planInstance.Product = productInstance;
+                                }
+                                
+                                JToken promotionCodeValue = planValue2["promotionCode"];
+                                if (promotionCodeValue != null && promotionCodeValue.Type != JTokenType.Null)
+                                {
+                                    string promotionCodeInstance = ((string)promotionCodeValue);
+                                    planInstance.PromotionCode = promotionCodeInstance;
+                                }
+                            }
+                            
+                            JToken provisioningStateValue2 = responseDoc["provisioningState"];
+                            if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
+                            {
+                                string provisioningStateInstance2 = ((string)provisioningStateValue2);
+                                resourceInstance.ProvisioningState = provisioningStateInstance2;
                             }
                         }
                         
-                        JToken locationValue = responseDoc["location"];
-                        if (locationValue != null && locationValue.Type != JTokenType.Null)
-                        {
-                            string locationInstance = ((string)locationValue);
-                            resourceInstance.Location = locationInstance;
-                        }
-                        
-                        JToken propertiesValue2 = responseDoc["properties"];
-                        if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
-                        {
-                            string propertiesInstance = propertiesValue2.ToString(Formatting.Indented);
-                            resourceInstance.Properties = propertiesInstance;
-                        }
-                        
-                        JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
-                        if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                        {
-                            foreach (JProperty property in tagsSequenceElement)
-                            {
-                                string tagsKey2 = ((string)property.Name);
-                                string tagsValue2 = ((string)property.Value);
-                                resourceInstance.Tags.Add(tagsKey2, tagsValue2);
-                            }
-                        }
-                        
-                        JToken provisioningStateValue2 = responseDoc["provisioningState"];
-                        if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
-                        {
-                            string provisioningStateInstance2 = ((string)provisioningStateValue2);
-                            resourceInstance.ProvisioningState = provisioningStateInstance2;
-                        }
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -483,7 +550,7 @@ namespace Microsoft.Azure.Management.Resources
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -521,7 +588,7 @@ namespace Microsoft.Azure.Management.Resources
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> DeleteAsync(string resourceGroupName, ResourceIdentity identity, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> DeleteAsync(string resourceGroupName, ResourceIdentity identity, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -558,20 +625,20 @@ namespace Microsoft.Azure.Management.Resources
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("identity", identity);
-                Tracing.Enter(invocationId, this, "DeleteAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "DeleteAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/" + identity.ResourceProviderNamespace.Trim() + "/" + (identity.ParentResourcePath != null ? identity.ParentResourcePath.Trim() : "") + "/" + identity.ResourceType.Trim() + "/" + identity.ResourceName.Trim() + "?";
-            url = url + "api-version=" + Uri.EscapeDataString(identity.ResourceProviderApiVersion.Trim());
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/" + Uri.EscapeDataString(identity.ResourceProviderNamespace) + "/" + identity.ParentResourcePath + "/" + identity.ResourceType + "/" + Uri.EscapeDataString(identity.ResourceName) + "?";
+            url = url + "api-version=" + Uri.EscapeDataString(identity.ResourceProviderApiVersion);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -605,13 +672,13 @@ namespace Microsoft.Azure.Management.Resources
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted && statusCode != HttpStatusCode.NoContent)
@@ -620,14 +687,15 @@ namespace Microsoft.Azure.Management.Resources
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
-                    result = new OperationResponse();
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -636,7 +704,7 @@ namespace Microsoft.Azure.Management.Resources
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -710,20 +778,20 @@ namespace Microsoft.Azure.Management.Resources
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("identity", identity);
-                Tracing.Enter(invocationId, this, "GetAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/" + identity.ResourceProviderNamespace.Trim() + "/" + (identity.ParentResourcePath != null ? identity.ParentResourcePath.Trim() : "") + "/" + identity.ResourceType.Trim() + "/" + identity.ResourceName.Trim() + "?";
-            url = url + "api-version=" + Uri.EscapeDataString(identity.ResourceProviderApiVersion.Trim());
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/" + Uri.EscapeDataString(identity.ResourceProviderNamespace) + "/" + identity.ParentResourcePath + "/" + identity.ResourceType + "/" + Uri.EscapeDataString(identity.ResourceName) + "?";
+            url = url + "api-version=" + Uri.EscapeDataString(identity.ResourceProviderApiVersion);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -757,13 +825,13 @@ namespace Microsoft.Azure.Management.Resources
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.NoContent)
@@ -772,7 +840,7 @@ namespace Microsoft.Azure.Management.Resources
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -780,85 +848,123 @@ namespace Microsoft.Azure.Management.Resources
                     // Create Result
                     ResourceGetResult result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new ResourceGetResult();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.NoContent)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        Resource resourceInstance = new Resource();
-                        result.Resource = resourceInstance;
-                        
-                        JToken idValue = responseDoc["id"];
-                        if (idValue != null && idValue.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new ResourceGetResult();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            string idInstance = ((string)idValue);
-                            resourceInstance.Id = idInstance;
+                            responseDoc = JToken.Parse(responseContent);
                         }
                         
-                        JToken nameValue = responseDoc["name"];
-                        if (nameValue != null && nameValue.Type != JTokenType.Null)
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            string nameInstance = ((string)nameValue);
-                            resourceInstance.Name = nameInstance;
-                        }
-                        
-                        JToken typeValue = responseDoc["type"];
-                        if (typeValue != null && typeValue.Type != JTokenType.Null)
-                        {
-                            string typeInstance = ((string)typeValue);
-                            resourceInstance.Type = typeInstance;
-                        }
-                        
-                        JToken propertiesValue = responseDoc["properties"];
-                        if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                        {
-                            JToken provisioningStateValue = propertiesValue["provisioningState"];
-                            if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
+                            Resource resourceInstance = new Resource();
+                            result.Resource = resourceInstance;
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
                             {
-                                string provisioningStateInstance = ((string)provisioningStateValue);
-                                resourceInstance.ProvisioningState = provisioningStateInstance;
+                                string idInstance = ((string)idValue);
+                                resourceInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                resourceInstance.Name = nameInstance;
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                resourceInstance.Type = typeInstance;
+                            }
+                            
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                            {
+                                JToken provisioningStateValue = propertiesValue["provisioningState"];
+                                if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
+                                {
+                                    string provisioningStateInstance = ((string)provisioningStateValue);
+                                    resourceInstance.ProvisioningState = provisioningStateInstance;
+                                }
+                            }
+                            
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            {
+                                string locationInstance = ((string)locationValue);
+                                resourceInstance.Location = locationInstance;
+                            }
+                            
+                            JToken propertiesValue2 = responseDoc["properties"];
+                            if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                            {
+                                string propertiesInstance = propertiesValue2.ToString(Newtonsoft.Json.Formatting.Indented);
+                                resourceInstance.Properties = propertiesInstance;
+                            }
+                            
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property in tagsSequenceElement)
+                                {
+                                    string tagsKey = ((string)property.Name);
+                                    string tagsValue = ((string)property.Value);
+                                    resourceInstance.Tags.Add(tagsKey, tagsValue);
+                                }
+                            }
+                            
+                            JToken planValue = responseDoc["plan"];
+                            if (planValue != null && planValue.Type != JTokenType.Null)
+                            {
+                                Plan planInstance = new Plan();
+                                resourceInstance.Plan = planInstance;
+                                
+                                JToken nameValue2 = planValue["name"];
+                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                {
+                                    string nameInstance2 = ((string)nameValue2);
+                                    planInstance.Name = nameInstance2;
+                                }
+                                
+                                JToken publisherValue = planValue["publisher"];
+                                if (publisherValue != null && publisherValue.Type != JTokenType.Null)
+                                {
+                                    string publisherInstance = ((string)publisherValue);
+                                    planInstance.Publisher = publisherInstance;
+                                }
+                                
+                                JToken productValue = planValue["product"];
+                                if (productValue != null && productValue.Type != JTokenType.Null)
+                                {
+                                    string productInstance = ((string)productValue);
+                                    planInstance.Product = productInstance;
+                                }
+                                
+                                JToken promotionCodeValue = planValue["promotionCode"];
+                                if (promotionCodeValue != null && promotionCodeValue.Type != JTokenType.Null)
+                                {
+                                    string promotionCodeInstance = ((string)promotionCodeValue);
+                                    planInstance.PromotionCode = promotionCodeInstance;
+                                }
+                            }
+                            
+                            JToken provisioningStateValue2 = responseDoc["provisioningState"];
+                            if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
+                            {
+                                string provisioningStateInstance2 = ((string)provisioningStateValue2);
+                                resourceInstance.ProvisioningState = provisioningStateInstance2;
                             }
                         }
                         
-                        JToken locationValue = responseDoc["location"];
-                        if (locationValue != null && locationValue.Type != JTokenType.Null)
-                        {
-                            string locationInstance = ((string)locationValue);
-                            resourceInstance.Location = locationInstance;
-                        }
-                        
-                        JToken propertiesValue2 = responseDoc["properties"];
-                        if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
-                        {
-                            string propertiesInstance = propertiesValue2.ToString(Formatting.Indented);
-                            resourceInstance.Properties = propertiesInstance;
-                        }
-                        
-                        JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
-                        if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                        {
-                            foreach (JProperty property in tagsSequenceElement)
-                            {
-                                string tagsKey = ((string)property.Name);
-                                string tagsValue = ((string)property.Value);
-                                resourceInstance.Tags.Add(tagsKey, tagsValue);
-                            }
-                        }
-                        
-                        JToken provisioningStateValue2 = responseDoc["provisioningState"];
-                        if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
-                        {
-                            string provisioningStateInstance2 = ((string)provisioningStateValue2);
-                            resourceInstance.ProvisioningState = provisioningStateInstance2;
-                        }
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -867,7 +973,7 @@ namespace Microsoft.Azure.Management.Resources
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -906,28 +1012,28 @@ namespace Microsoft.Azure.Management.Resources
             // Validate
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "ListAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/";
             if (parameters != null && parameters.ResourceGroupName != null)
             {
-                url = url + "resourceGroups/" + Uri.EscapeDataString(parameters.ResourceGroupName != null ? parameters.ResourceGroupName.Trim() : "") + "/";
+                url = url + "resourceGroups/" + Uri.EscapeDataString(parameters.ResourceGroupName) + "/";
             }
             url = url + "resources?";
             bool appendFilter = true;
             if (parameters != null && parameters.ResourceType != null)
             {
                 appendFilter = false;
-                url = url + "$filter=resourceType eq '" + Uri.EscapeDataString(parameters.ResourceType != null ? parameters.ResourceType.Trim() : "") + "'";
+                url = url + "$filter=resourceType eq '" + Uri.EscapeDataString(parameters.ResourceType) + "'";
             }
             if (parameters != null && parameters.TagName != null)
             {
@@ -940,7 +1046,7 @@ namespace Microsoft.Azure.Management.Resources
                 {
                     url = url + " and ";
                 }
-                url = url + "tagname eq '" + Uri.EscapeDataString(parameters.TagName != null ? parameters.TagName.Trim() : "") + "'";
+                url = url + "tagname eq '" + Uri.EscapeDataString(parameters.TagName) + "'";
             }
             if (parameters != null && parameters.TagValue != null)
             {
@@ -953,7 +1059,7 @@ namespace Microsoft.Azure.Management.Resources
                 {
                     url = url + " and ";
                 }
-                url = url + "tagvalue eq '" + Uri.EscapeDataString(parameters.TagValue != null ? parameters.TagValue.Trim() : "") + "'";
+                url = url + "tagvalue eq '" + Uri.EscapeDataString(parameters.TagValue) + "'";
             }
             if (parameters != null && parameters.Top != null)
             {
@@ -993,13 +1099,13 @@ namespace Microsoft.Azure.Management.Resources
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -1008,7 +1114,7 @@ namespace Microsoft.Azure.Management.Resources
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -1016,99 +1122,137 @@ namespace Microsoft.Azure.Management.Resources
                     // Create Result
                     ResourceListResult result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new ResourceListResult();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        JToken valueArray = responseDoc["value"];
-                        if (valueArray != null && valueArray.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new ResourceListResult();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            foreach (JToken valueValue in ((JArray)valueArray))
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
                             {
-                                Resource resourceJsonFormatInstance = new Resource();
-                                result.Resources.Add(resourceJsonFormatInstance);
-                                
-                                JToken idValue = valueValue["id"];
-                                if (idValue != null && idValue.Type != JTokenType.Null)
+                                foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    string idInstance = ((string)idValue);
-                                    resourceJsonFormatInstance.Id = idInstance;
-                                }
-                                
-                                JToken nameValue = valueValue["name"];
-                                if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                {
-                                    string nameInstance = ((string)nameValue);
-                                    resourceJsonFormatInstance.Name = nameInstance;
-                                }
-                                
-                                JToken typeValue = valueValue["type"];
-                                if (typeValue != null && typeValue.Type != JTokenType.Null)
-                                {
-                                    string typeInstance = ((string)typeValue);
-                                    resourceJsonFormatInstance.Type = typeInstance;
-                                }
-                                
-                                JToken propertiesValue = valueValue["properties"];
-                                if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                                {
-                                    JToken provisioningStateValue = propertiesValue["provisioningState"];
-                                    if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
+                                    Resource resourceJsonFormatInstance = new Resource();
+                                    result.Resources.Add(resourceJsonFormatInstance);
+                                    
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
                                     {
-                                        string provisioningStateInstance = ((string)provisioningStateValue);
-                                        resourceJsonFormatInstance.ProvisioningState = provisioningStateInstance;
+                                        string idInstance = ((string)idValue);
+                                        resourceJsonFormatInstance.Id = idInstance;
+                                    }
+                                    
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance = ((string)nameValue);
+                                        resourceJsonFormatInstance.Name = nameInstance;
+                                    }
+                                    
+                                    JToken typeValue = valueValue["type"];
+                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                    {
+                                        string typeInstance = ((string)typeValue);
+                                        resourceJsonFormatInstance.Type = typeInstance;
+                                    }
+                                    
+                                    JToken propertiesValue = valueValue["properties"];
+                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                                    {
+                                        JToken provisioningStateValue = propertiesValue["provisioningState"];
+                                        if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
+                                        {
+                                            string provisioningStateInstance = ((string)provisioningStateValue);
+                                            resourceJsonFormatInstance.ProvisioningState = provisioningStateInstance;
+                                        }
+                                    }
+                                    
+                                    JToken locationValue = valueValue["location"];
+                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
+                                    {
+                                        string locationInstance = ((string)locationValue);
+                                        resourceJsonFormatInstance.Location = locationInstance;
+                                    }
+                                    
+                                    JToken propertiesValue2 = valueValue["properties"];
+                                    if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                                    {
+                                        string propertiesInstance = propertiesValue2.ToString(Newtonsoft.Json.Formatting.Indented);
+                                        resourceJsonFormatInstance.Properties = propertiesInstance;
+                                    }
+                                    
+                                    JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
+                                    if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property in tagsSequenceElement)
+                                        {
+                                            string tagsKey = ((string)property.Name);
+                                            string tagsValue = ((string)property.Value);
+                                            resourceJsonFormatInstance.Tags.Add(tagsKey, tagsValue);
+                                        }
+                                    }
+                                    
+                                    JToken planValue = valueValue["plan"];
+                                    if (planValue != null && planValue.Type != JTokenType.Null)
+                                    {
+                                        Plan planInstance = new Plan();
+                                        resourceJsonFormatInstance.Plan = planInstance;
+                                        
+                                        JToken nameValue2 = planValue["name"];
+                                        if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                        {
+                                            string nameInstance2 = ((string)nameValue2);
+                                            planInstance.Name = nameInstance2;
+                                        }
+                                        
+                                        JToken publisherValue = planValue["publisher"];
+                                        if (publisherValue != null && publisherValue.Type != JTokenType.Null)
+                                        {
+                                            string publisherInstance = ((string)publisherValue);
+                                            planInstance.Publisher = publisherInstance;
+                                        }
+                                        
+                                        JToken productValue = planValue["product"];
+                                        if (productValue != null && productValue.Type != JTokenType.Null)
+                                        {
+                                            string productInstance = ((string)productValue);
+                                            planInstance.Product = productInstance;
+                                        }
+                                        
+                                        JToken promotionCodeValue = planValue["promotionCode"];
+                                        if (promotionCodeValue != null && promotionCodeValue.Type != JTokenType.Null)
+                                        {
+                                            string promotionCodeInstance = ((string)promotionCodeValue);
+                                            planInstance.PromotionCode = promotionCodeInstance;
+                                        }
+                                    }
+                                    
+                                    JToken provisioningStateValue2 = valueValue["provisioningState"];
+                                    if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
+                                    {
+                                        string provisioningStateInstance2 = ((string)provisioningStateValue2);
+                                        resourceJsonFormatInstance.ProvisioningState = provisioningStateInstance2;
                                     }
                                 }
-                                
-                                JToken locationValue = valueValue["location"];
-                                if (locationValue != null && locationValue.Type != JTokenType.Null)
-                                {
-                                    string locationInstance = ((string)locationValue);
-                                    resourceJsonFormatInstance.Location = locationInstance;
-                                }
-                                
-                                JToken propertiesValue2 = valueValue["properties"];
-                                if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
-                                {
-                                    string propertiesInstance = propertiesValue2.ToString(Formatting.Indented);
-                                    resourceJsonFormatInstance.Properties = propertiesInstance;
-                                }
-                                
-                                JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
-                                if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                                {
-                                    foreach (JProperty property in tagsSequenceElement)
-                                    {
-                                        string tagsKey = ((string)property.Name);
-                                        string tagsValue = ((string)property.Value);
-                                        resourceJsonFormatInstance.Tags.Add(tagsKey, tagsValue);
-                                    }
-                                }
-                                
-                                JToken provisioningStateValue2 = valueValue["provisioningState"];
-                                if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
-                                {
-                                    string provisioningStateInstance2 = ((string)provisioningStateValue2);
-                                    resourceJsonFormatInstance.ProvisioningState = provisioningStateInstance2;
-                                }
+                            }
+                            
+                            JToken odatanextLinkValue = responseDoc["@odata.nextLink"];
+                            if (odatanextLinkValue != null && odatanextLinkValue.Type != JTokenType.Null)
+                            {
+                                string odatanextLinkInstance = ((string)odatanextLinkValue);
+                                result.NextLink = odatanextLinkInstance;
                             }
                         }
                         
-                        JToken odatanextLinkValue = responseDoc["@odata.nextLink"];
-                        if (odatanextLinkValue != null && odatanextLinkValue.Type != JTokenType.Null)
-                        {
-                            string odatanextLinkInstance = ((string)odatanextLinkValue);
-                            result.NextLink = odatanextLinkInstance;
-                        }
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1117,7 +1261,7 @@ namespace Microsoft.Azure.Management.Resources
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -1160,18 +1304,18 @@ namespace Microsoft.Azure.Management.Resources
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("nextLink", nextLink);
-                Tracing.Enter(invocationId, this, "ListNextAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ListNextAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = nextLink.Trim();
+            string url = nextLink;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1193,13 +1337,13 @@ namespace Microsoft.Azure.Management.Resources
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -1208,7 +1352,7 @@ namespace Microsoft.Azure.Management.Resources
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -1216,99 +1360,137 @@ namespace Microsoft.Azure.Management.Resources
                     // Create Result
                     ResourceListResult result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new ResourceListResult();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        JToken valueArray = responseDoc["value"];
-                        if (valueArray != null && valueArray.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new ResourceListResult();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            foreach (JToken valueValue in ((JArray)valueArray))
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
                             {
-                                Resource resourceJsonFormatInstance = new Resource();
-                                result.Resources.Add(resourceJsonFormatInstance);
-                                
-                                JToken idValue = valueValue["id"];
-                                if (idValue != null && idValue.Type != JTokenType.Null)
+                                foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    string idInstance = ((string)idValue);
-                                    resourceJsonFormatInstance.Id = idInstance;
-                                }
-                                
-                                JToken nameValue = valueValue["name"];
-                                if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                {
-                                    string nameInstance = ((string)nameValue);
-                                    resourceJsonFormatInstance.Name = nameInstance;
-                                }
-                                
-                                JToken typeValue = valueValue["type"];
-                                if (typeValue != null && typeValue.Type != JTokenType.Null)
-                                {
-                                    string typeInstance = ((string)typeValue);
-                                    resourceJsonFormatInstance.Type = typeInstance;
-                                }
-                                
-                                JToken propertiesValue = valueValue["properties"];
-                                if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                                {
-                                    JToken provisioningStateValue = propertiesValue["provisioningState"];
-                                    if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
+                                    Resource resourceJsonFormatInstance = new Resource();
+                                    result.Resources.Add(resourceJsonFormatInstance);
+                                    
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
                                     {
-                                        string provisioningStateInstance = ((string)provisioningStateValue);
-                                        resourceJsonFormatInstance.ProvisioningState = provisioningStateInstance;
+                                        string idInstance = ((string)idValue);
+                                        resourceJsonFormatInstance.Id = idInstance;
+                                    }
+                                    
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance = ((string)nameValue);
+                                        resourceJsonFormatInstance.Name = nameInstance;
+                                    }
+                                    
+                                    JToken typeValue = valueValue["type"];
+                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                    {
+                                        string typeInstance = ((string)typeValue);
+                                        resourceJsonFormatInstance.Type = typeInstance;
+                                    }
+                                    
+                                    JToken propertiesValue = valueValue["properties"];
+                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                                    {
+                                        JToken provisioningStateValue = propertiesValue["provisioningState"];
+                                        if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
+                                        {
+                                            string provisioningStateInstance = ((string)provisioningStateValue);
+                                            resourceJsonFormatInstance.ProvisioningState = provisioningStateInstance;
+                                        }
+                                    }
+                                    
+                                    JToken locationValue = valueValue["location"];
+                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
+                                    {
+                                        string locationInstance = ((string)locationValue);
+                                        resourceJsonFormatInstance.Location = locationInstance;
+                                    }
+                                    
+                                    JToken propertiesValue2 = valueValue["properties"];
+                                    if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                                    {
+                                        string propertiesInstance = propertiesValue2.ToString(Newtonsoft.Json.Formatting.Indented);
+                                        resourceJsonFormatInstance.Properties = propertiesInstance;
+                                    }
+                                    
+                                    JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
+                                    if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property in tagsSequenceElement)
+                                        {
+                                            string tagsKey = ((string)property.Name);
+                                            string tagsValue = ((string)property.Value);
+                                            resourceJsonFormatInstance.Tags.Add(tagsKey, tagsValue);
+                                        }
+                                    }
+                                    
+                                    JToken planValue = valueValue["plan"];
+                                    if (planValue != null && planValue.Type != JTokenType.Null)
+                                    {
+                                        Plan planInstance = new Plan();
+                                        resourceJsonFormatInstance.Plan = planInstance;
+                                        
+                                        JToken nameValue2 = planValue["name"];
+                                        if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                        {
+                                            string nameInstance2 = ((string)nameValue2);
+                                            planInstance.Name = nameInstance2;
+                                        }
+                                        
+                                        JToken publisherValue = planValue["publisher"];
+                                        if (publisherValue != null && publisherValue.Type != JTokenType.Null)
+                                        {
+                                            string publisherInstance = ((string)publisherValue);
+                                            planInstance.Publisher = publisherInstance;
+                                        }
+                                        
+                                        JToken productValue = planValue["product"];
+                                        if (productValue != null && productValue.Type != JTokenType.Null)
+                                        {
+                                            string productInstance = ((string)productValue);
+                                            planInstance.Product = productInstance;
+                                        }
+                                        
+                                        JToken promotionCodeValue = planValue["promotionCode"];
+                                        if (promotionCodeValue != null && promotionCodeValue.Type != JTokenType.Null)
+                                        {
+                                            string promotionCodeInstance = ((string)promotionCodeValue);
+                                            planInstance.PromotionCode = promotionCodeInstance;
+                                        }
+                                    }
+                                    
+                                    JToken provisioningStateValue2 = valueValue["provisioningState"];
+                                    if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
+                                    {
+                                        string provisioningStateInstance2 = ((string)provisioningStateValue2);
+                                        resourceJsonFormatInstance.ProvisioningState = provisioningStateInstance2;
                                     }
                                 }
-                                
-                                JToken locationValue = valueValue["location"];
-                                if (locationValue != null && locationValue.Type != JTokenType.Null)
-                                {
-                                    string locationInstance = ((string)locationValue);
-                                    resourceJsonFormatInstance.Location = locationInstance;
-                                }
-                                
-                                JToken propertiesValue2 = valueValue["properties"];
-                                if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
-                                {
-                                    string propertiesInstance = propertiesValue2.ToString(Formatting.Indented);
-                                    resourceJsonFormatInstance.Properties = propertiesInstance;
-                                }
-                                
-                                JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
-                                if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                                {
-                                    foreach (JProperty property in tagsSequenceElement)
-                                    {
-                                        string tagsKey = ((string)property.Name);
-                                        string tagsValue = ((string)property.Value);
-                                        resourceJsonFormatInstance.Tags.Add(tagsKey, tagsValue);
-                                    }
-                                }
-                                
-                                JToken provisioningStateValue2 = valueValue["provisioningState"];
-                                if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
-                                {
-                                    string provisioningStateInstance2 = ((string)provisioningStateValue2);
-                                    resourceJsonFormatInstance.ProvisioningState = provisioningStateInstance2;
-                                }
+                            }
+                            
+                            JToken odatanextLinkValue = responseDoc["@odata.nextLink"];
+                            if (odatanextLinkValue != null && odatanextLinkValue.Type != JTokenType.Null)
+                            {
+                                string odatanextLinkInstance = ((string)odatanextLinkValue);
+                                result.NextLink = odatanextLinkInstance;
                             }
                         }
                         
-                        JToken odatanextLinkValue = responseDoc["@odata.nextLink"];
-                        if (odatanextLinkValue != null && odatanextLinkValue.Type != JTokenType.Null)
-                        {
-                            string odatanextLinkInstance = ((string)odatanextLinkValue);
-                            result.NextLink = odatanextLinkInstance;
-                        }
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1317,7 +1499,7 @@ namespace Microsoft.Azure.Management.Resources
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }

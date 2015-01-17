@@ -22,7 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.WebSites.Models;
 
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
@@ -35,7 +36,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
     /// itself. If the long-running operation failed, the response body
     /// includes error information regarding the failure.
     /// </summary>
-    public partial class WebSiteOperationStatusResponse : OperationResponse
+    public partial class WebSiteOperationStatusResponse : AzureOperationResponse
     {
         private DateTime _createdTime;
         
@@ -132,7 +133,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public WebSiteOperationStatusResponse()
         {
-            this.Errors = new List<WebSiteOperationStatusResponse.Error>();
+            this.Errors = new LazyList<WebSiteOperationStatusResponse.Error>();
         }
         
         /// <summary>
@@ -211,7 +212,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             /// </summary>
             public Error()
             {
-                this.Parameters = new List<string>();
+                this.Parameters = new LazyList<string>();
             }
         }
     }

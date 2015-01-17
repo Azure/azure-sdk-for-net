@@ -22,9 +22,9 @@
 using System;
 using System.Linq;
 using System.Net.Http;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Automation;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
 
 namespace Microsoft.Azure.Management.Automation
 {
@@ -171,7 +171,7 @@ namespace Microsoft.Azure.Management.Automation
         /// <summary>
         /// Initializes a new instance of the AutomationManagementClient class.
         /// </summary>
-        private AutomationManagementClient()
+        public AutomationManagementClient()
             : base()
         {
             this._cloudServices = new CloudServiceOperations(this);
@@ -196,7 +196,7 @@ namespace Microsoft.Azure.Management.Automation
         /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Gets the URI used as the base for all cloud service
+        /// Optional. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
         public AutomationManagementClient(SubscriptionCloudCredentials credentials, Uri baseUri)
@@ -243,7 +243,7 @@ namespace Microsoft.Azure.Management.Automation
         /// <param name='httpClient'>
         /// The Http client
         /// </param>
-        private AutomationManagementClient(HttpClient httpClient)
+        public AutomationManagementClient(HttpClient httpClient)
             : base(httpClient)
         {
             this._cloudServices = new CloudServiceOperations(this);
@@ -268,7 +268,7 @@ namespace Microsoft.Azure.Management.Automation
         /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Gets the URI used as the base for all cloud service
+        /// Optional. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
         /// <param name='httpClient'>

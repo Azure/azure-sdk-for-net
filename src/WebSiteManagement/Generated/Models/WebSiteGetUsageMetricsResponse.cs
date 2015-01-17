@@ -22,7 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.WebSites.Models;
 
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
@@ -30,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
     /// <summary>
     /// The Get Usage Metrics Web Site operation response.
     /// </summary>
-    public partial class WebSiteGetUsageMetricsResponse : OperationResponse, IEnumerable<WebSiteGetUsageMetricsResponse.UsageMetric>
+    public partial class WebSiteGetUsageMetricsResponse : AzureOperationResponse, IEnumerable<WebSiteGetUsageMetricsResponse.UsageMetric>
     {
         private IList<WebSiteGetUsageMetricsResponse.UsageMetric> _usageMetrics;
         
@@ -49,7 +50,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public WebSiteGetUsageMetricsResponse()
         {
-            this.UsageMetrics = new List<WebSiteGetUsageMetricsResponse.UsageMetric>();
+            this.UsageMetrics = new LazyList<WebSiteGetUsageMetricsResponse.UsageMetric>();
         }
         
         /// <summary>

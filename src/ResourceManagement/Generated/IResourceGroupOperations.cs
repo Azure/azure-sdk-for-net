@@ -23,8 +23,8 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Resources.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Resources
 {
@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Management.Resources
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> DeleteAsync(string resourceGroupName, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> DeleteAsync(string resourceGroupName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Get a resource group.

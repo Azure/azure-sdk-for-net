@@ -21,15 +21,15 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Authorization.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Authorization.Models
 {
     /// <summary>
     /// Role definition get operation result.
     /// </summary>
-    public partial class RoleDefinitionGetResult : OperationResponse
+    public partial class RoleDefinitionGetResult : AzureOperationResponse
     {
         private RoleDefinition _roleDefinition;
         

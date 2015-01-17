@@ -21,15 +21,15 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Insights.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Insights.Models
 {
     /// <summary>
     /// The List Events operation response.
     /// </summary>
-    public partial class EventDataListResponse : OperationResponse
+    public partial class EventDataListResponse : AzureOperationResponse
     {
         private EventDataCollection _eventDataCollection;
         

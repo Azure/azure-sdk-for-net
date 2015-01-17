@@ -23,7 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Storage.Models;
 
 namespace Microsoft.WindowsAzure.Management.Storage
@@ -52,7 +52,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginCreatingAsync(StorageAccountCreateParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BeginCreatingAsync(StorageAccountCreateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Check Name Availability operation checks if a storage account
@@ -112,7 +112,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> DeleteAsync(string accountName, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> DeleteAsync(string accountName, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Get Storage Account Properties operation returns system
@@ -199,6 +199,6 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> UpdateAsync(string accountName, StorageAccountUpdateParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> UpdateAsync(string accountName, StorageAccountUpdateParameters parameters, CancellationToken cancellationToken);
     }
 }

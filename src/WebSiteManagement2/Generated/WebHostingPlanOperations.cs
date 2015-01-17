@@ -21,6 +21,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -28,12 +29,10 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.WebSites;
 using Microsoft.Azure.Management.WebSites.Models;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.Management.WebSites
@@ -114,20 +113,20 @@ namespace Microsoft.Azure.Management.WebSites
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "CreateOrUpdateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "CreateOrUpdateAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourceGroups/" + resourceGroupName.Trim() + "/providers/Microsoft.Web/serverFarms/" + parameters.WebHostingPlan.Name.Trim() + "?";
-            url = url + "api-version=2014-04-01";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourceGroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.Web/serverFarms/" + Uri.EscapeDataString(parameters.WebHostingPlan.Name) + "?";
+            url = url + "api-version=2014-06-01";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -172,6 +171,11 @@ namespace Microsoft.Azure.Management.WebSites
                     propertiesValue["numberOfWorkers"] = parameters.WebHostingPlan.Properties.NumberOfWorkers;
                     
                     propertiesValue["workerSize"] = parameters.WebHostingPlan.Properties.WorkerSize.ToString();
+                    
+                    if (parameters.WebHostingPlan.Properties.AdminSiteName != null)
+                    {
+                        propertiesValue["adminSiteName"] = parameters.WebHostingPlan.Properties.AdminSiteName;
+                    }
                 }
                 
                 if (parameters.WebHostingPlan.Id != null)
@@ -186,19 +190,24 @@ namespace Microsoft.Azure.Management.WebSites
                 
                 webHostingPlanCreateOrUpdateParametersValue["location"] = parameters.WebHostingPlan.Location;
                 
-                JObject tagsDictionary = new JObject();
                 if (parameters.WebHostingPlan.Tags != null)
                 {
+                    JObject tagsDictionary = new JObject();
                     foreach (KeyValuePair<string, string> pair in parameters.WebHostingPlan.Tags)
                     {
                         string tagsKey = pair.Key;
                         string tagsValue = pair.Value;
                         tagsDictionary[tagsKey] = tagsValue;
                     }
+                    webHostingPlanCreateOrUpdateParametersValue["tags"] = tagsDictionary;
                 }
-                webHostingPlanCreateOrUpdateParametersValue["tags"] = tagsDictionary;
                 
-                requestContent = requestDoc.ToString(Formatting.Indented);
+                if (parameters.WebHostingPlan.Type != null)
+                {
+                    webHostingPlanCreateOrUpdateParametersValue["type"] = parameters.WebHostingPlan.Type;
+                }
+                
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
                 
@@ -208,13 +217,13 @@ namespace Microsoft.Azure.Management.WebSites
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -223,7 +232,7 @@ namespace Microsoft.Azure.Management.WebSites
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -231,84 +240,101 @@ namespace Microsoft.Azure.Management.WebSites
                     // Create Result
                     WebHostingPlanCreateOrUpdateResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new WebHostingPlanCreateOrUpdateResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new WebHostingPlanCreateOrUpdateResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        JToken serverFarmValue = responseDoc["ServerFarm"];
+                        if (serverFarmValue != null && serverFarmValue.Type != JTokenType.Null)
+                        {
+                            WebHostingPlanCreateOrUpdateResponse serverFarmInstance = new WebHostingPlanCreateOrUpdateResponse();
+                            
+                            WebHostingPlan webHostingPlanInstance = new WebHostingPlan();
+                            result.WebHostingPlan = webHostingPlanInstance;
+                            
+                            JToken propertiesValue2 = serverFarmValue["properties"];
+                            if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                            {
+                                WebHostingPlanProperties propertiesInstance = new WebHostingPlanProperties();
+                                webHostingPlanInstance.Properties = propertiesInstance;
+                                
+                                JToken skuValue = propertiesValue2["sku"];
+                                if (skuValue != null && skuValue.Type != JTokenType.Null)
+                                {
+                                    SkuOptions skuInstance = ((SkuOptions)Enum.Parse(typeof(SkuOptions), ((string)skuValue), true));
+                                    propertiesInstance.Sku = skuInstance;
+                                }
+                                
+                                JToken numberOfWorkersValue = propertiesValue2["numberOfWorkers"];
+                                if (numberOfWorkersValue != null && numberOfWorkersValue.Type != JTokenType.Null)
+                                {
+                                    int numberOfWorkersInstance = ((int)numberOfWorkersValue);
+                                    propertiesInstance.NumberOfWorkers = numberOfWorkersInstance;
+                                }
+                                
+                                JToken workerSizeValue = propertiesValue2["workerSize"];
+                                if (workerSizeValue != null && workerSizeValue.Type != JTokenType.Null)
+                                {
+                                    WorkerSizeOptions workerSizeInstance = ((WorkerSizeOptions)Enum.Parse(typeof(WorkerSizeOptions), ((string)workerSizeValue), true));
+                                    propertiesInstance.WorkerSize = workerSizeInstance;
+                                }
+                                
+                                JToken adminSiteNameValue = propertiesValue2["adminSiteName"];
+                                if (adminSiteNameValue != null && adminSiteNameValue.Type != JTokenType.Null)
+                                {
+                                    string adminSiteNameInstance = ((string)adminSiteNameValue);
+                                    propertiesInstance.AdminSiteName = adminSiteNameInstance;
+                                }
+                            }
+                            
+                            JToken idValue = serverFarmValue["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                webHostingPlanInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue = serverFarmValue["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                webHostingPlanInstance.Name = nameInstance;
+                            }
+                            
+                            JToken locationValue = serverFarmValue["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            {
+                                string locationInstance = ((string)locationValue);
+                                webHostingPlanInstance.Location = locationInstance;
+                            }
+                            
+                            JToken tagsSequenceElement = ((JToken)serverFarmValue["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property in tagsSequenceElement)
+                                {
+                                    string tagsKey2 = ((string)property.Name);
+                                    string tagsValue2 = ((string)property.Value);
+                                    webHostingPlanInstance.Tags.Add(tagsKey2, tagsValue2);
+                                }
+                            }
+                            
+                            JToken typeValue = serverFarmValue["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                webHostingPlanInstance.Type = typeInstance;
+                            }
+                        }
+                        
                     }
-                    
-                    JToken serverFarmValue = responseDoc["ServerFarm"];
-                    if (serverFarmValue != null && serverFarmValue.Type != JTokenType.Null)
-                    {
-                        WebHostingPlanCreateOrUpdateResponse serverFarmInstance = new WebHostingPlanCreateOrUpdateResponse();
-                        
-                        WebHostingPlan webHostingPlanInstance = new WebHostingPlan();
-                        result.WebHostingPlan = webHostingPlanInstance;
-                        
-                        JToken propertiesValue2 = serverFarmValue["properties"];
-                        if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
-                        {
-                            WebHostingPlanProperties propertiesInstance = new WebHostingPlanProperties();
-                            webHostingPlanInstance.Properties = propertiesInstance;
-                            
-                            JToken skuValue = propertiesValue2["sku"];
-                            if (skuValue != null && skuValue.Type != JTokenType.Null)
-                            {
-                                SkuOptions skuInstance = ((SkuOptions)Enum.Parse(typeof(SkuOptions), ((string)skuValue), true));
-                                propertiesInstance.Sku = skuInstance;
-                            }
-                            
-                            JToken numberOfWorkersValue = propertiesValue2["numberOfWorkers"];
-                            if (numberOfWorkersValue != null && numberOfWorkersValue.Type != JTokenType.Null)
-                            {
-                                int numberOfWorkersInstance = ((int)numberOfWorkersValue);
-                                propertiesInstance.NumberOfWorkers = numberOfWorkersInstance;
-                            }
-                            
-                            JToken workerSizeValue = propertiesValue2["workerSize"];
-                            if (workerSizeValue != null && workerSizeValue.Type != JTokenType.Null)
-                            {
-                                WorkerSizeOptions workerSizeInstance = ((WorkerSizeOptions)Enum.Parse(typeof(WorkerSizeOptions), ((string)workerSizeValue), true));
-                                propertiesInstance.WorkerSize = workerSizeInstance;
-                            }
-                        }
-                        
-                        JToken idValue = serverFarmValue["id"];
-                        if (idValue != null && idValue.Type != JTokenType.Null)
-                        {
-                            string idInstance = ((string)idValue);
-                            webHostingPlanInstance.Id = idInstance;
-                        }
-                        
-                        JToken nameValue = serverFarmValue["name"];
-                        if (nameValue != null && nameValue.Type != JTokenType.Null)
-                        {
-                            string nameInstance = ((string)nameValue);
-                            webHostingPlanInstance.Name = nameInstance;
-                        }
-                        
-                        JToken locationValue = serverFarmValue["location"];
-                        if (locationValue != null && locationValue.Type != JTokenType.Null)
-                        {
-                            string locationInstance = ((string)locationValue);
-                            webHostingPlanInstance.Location = locationInstance;
-                        }
-                        
-                        JToken tagsSequenceElement = ((JToken)serverFarmValue["tags"]);
-                        if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                        {
-                            foreach (JProperty property in tagsSequenceElement)
-                            {
-                                string tagsKey2 = ((string)property.Name);
-                                string tagsValue2 = ((string)property.Value);
-                                webHostingPlanInstance.Tags.Add(tagsKey2, tagsValue2);
-                            }
-                        }
-                    }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -317,7 +343,7 @@ namespace Microsoft.Azure.Management.WebSites
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -356,7 +382,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> DeleteAsync(string resourceGroupName, string webHostingPlanName, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> DeleteAsync(string resourceGroupName, string webHostingPlanName, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -369,20 +395,20 @@ namespace Microsoft.Azure.Management.WebSites
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("webHostingPlanName", webHostingPlanName);
-                Tracing.Enter(invocationId, this, "DeleteAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "DeleteAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourceGroups/" + resourceGroupName.Trim() + "/providers/Microsoft.Web/serverFarms/" + webHostingPlanName.Trim() + "?";
-            url = url + "api-version=2014-04-01";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourceGroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.Web/serverFarms/" + Uri.EscapeDataString(webHostingPlanName) + "?";
+            url = url + "api-version=2014-06-01";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -416,13 +442,13 @@ namespace Microsoft.Azure.Management.WebSites
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -431,14 +457,15 @@ namespace Microsoft.Azure.Management.WebSites
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
-                    result = new OperationResponse();
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -447,7 +474,7 @@ namespace Microsoft.Azure.Management.WebSites
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -498,20 +525,20 @@ namespace Microsoft.Azure.Management.WebSites
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("webHostingPlanName", webHostingPlanName);
-                Tracing.Enter(invocationId, this, "GetAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourceGroups/" + resourceGroupName.Trim() + "/providers/Microsoft.Web/serverFarms/" + webHostingPlanName.Trim() + "?";
-            url = url + "api-version=2014-04-01";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourceGroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.Web/serverFarms/" + Uri.EscapeDataString(webHostingPlanName) + "?";
+            url = url + "api-version=2014-06-01";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -545,13 +572,13 @@ namespace Microsoft.Azure.Management.WebSites
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -560,7 +587,7 @@ namespace Microsoft.Azure.Management.WebSites
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -568,81 +595,98 @@ namespace Microsoft.Azure.Management.WebSites
                     // Create Result
                     WebHostingPlanGetResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new WebHostingPlanGetResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new WebHostingPlanGetResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            WebHostingPlan webHostingPlanInstance = new WebHostingPlan();
+                            result.WebHostingPlan = webHostingPlanInstance;
+                            
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                            {
+                                WebHostingPlanProperties propertiesInstance = new WebHostingPlanProperties();
+                                webHostingPlanInstance.Properties = propertiesInstance;
+                                
+                                JToken skuValue = propertiesValue["sku"];
+                                if (skuValue != null && skuValue.Type != JTokenType.Null)
+                                {
+                                    SkuOptions skuInstance = ((SkuOptions)Enum.Parse(typeof(SkuOptions), ((string)skuValue), true));
+                                    propertiesInstance.Sku = skuInstance;
+                                }
+                                
+                                JToken numberOfWorkersValue = propertiesValue["numberOfWorkers"];
+                                if (numberOfWorkersValue != null && numberOfWorkersValue.Type != JTokenType.Null)
+                                {
+                                    int numberOfWorkersInstance = ((int)numberOfWorkersValue);
+                                    propertiesInstance.NumberOfWorkers = numberOfWorkersInstance;
+                                }
+                                
+                                JToken workerSizeValue = propertiesValue["workerSize"];
+                                if (workerSizeValue != null && workerSizeValue.Type != JTokenType.Null)
+                                {
+                                    WorkerSizeOptions workerSizeInstance = ((WorkerSizeOptions)Enum.Parse(typeof(WorkerSizeOptions), ((string)workerSizeValue), true));
+                                    propertiesInstance.WorkerSize = workerSizeInstance;
+                                }
+                                
+                                JToken adminSiteNameValue = propertiesValue["adminSiteName"];
+                                if (adminSiteNameValue != null && adminSiteNameValue.Type != JTokenType.Null)
+                                {
+                                    string adminSiteNameInstance = ((string)adminSiteNameValue);
+                                    propertiesInstance.AdminSiteName = adminSiteNameInstance;
+                                }
+                            }
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                webHostingPlanInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                webHostingPlanInstance.Name = nameInstance;
+                            }
+                            
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            {
+                                string locationInstance = ((string)locationValue);
+                                webHostingPlanInstance.Location = locationInstance;
+                            }
+                            
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property in tagsSequenceElement)
+                                {
+                                    string tagsKey = ((string)property.Name);
+                                    string tagsValue = ((string)property.Value);
+                                    webHostingPlanInstance.Tags.Add(tagsKey, tagsValue);
+                                }
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                webHostingPlanInstance.Type = typeInstance;
+                            }
+                        }
+                        
                     }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        WebHostingPlan webHostingPlanInstance = new WebHostingPlan();
-                        result.WebHostingPlan = webHostingPlanInstance;
-                        
-                        JToken propertiesValue = responseDoc["properties"];
-                        if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                        {
-                            WebHostingPlanProperties propertiesInstance = new WebHostingPlanProperties();
-                            webHostingPlanInstance.Properties = propertiesInstance;
-                            
-                            JToken skuValue = propertiesValue["sku"];
-                            if (skuValue != null && skuValue.Type != JTokenType.Null)
-                            {
-                                SkuOptions skuInstance = ((SkuOptions)Enum.Parse(typeof(SkuOptions), ((string)skuValue), true));
-                                propertiesInstance.Sku = skuInstance;
-                            }
-                            
-                            JToken numberOfWorkersValue = propertiesValue["numberOfWorkers"];
-                            if (numberOfWorkersValue != null && numberOfWorkersValue.Type != JTokenType.Null)
-                            {
-                                int numberOfWorkersInstance = ((int)numberOfWorkersValue);
-                                propertiesInstance.NumberOfWorkers = numberOfWorkersInstance;
-                            }
-                            
-                            JToken workerSizeValue = propertiesValue["workerSize"];
-                            if (workerSizeValue != null && workerSizeValue.Type != JTokenType.Null)
-                            {
-                                WorkerSizeOptions workerSizeInstance = ((WorkerSizeOptions)Enum.Parse(typeof(WorkerSizeOptions), ((string)workerSizeValue), true));
-                                propertiesInstance.WorkerSize = workerSizeInstance;
-                            }
-                        }
-                        
-                        JToken idValue = responseDoc["id"];
-                        if (idValue != null && idValue.Type != JTokenType.Null)
-                        {
-                            string idInstance = ((string)idValue);
-                            webHostingPlanInstance.Id = idInstance;
-                        }
-                        
-                        JToken nameValue = responseDoc["name"];
-                        if (nameValue != null && nameValue.Type != JTokenType.Null)
-                        {
-                            string nameInstance = ((string)nameValue);
-                            webHostingPlanInstance.Name = nameInstance;
-                        }
-                        
-                        JToken locationValue = responseDoc["location"];
-                        if (locationValue != null && locationValue.Type != JTokenType.Null)
-                        {
-                            string locationInstance = ((string)locationValue);
-                            webHostingPlanInstance.Location = locationInstance;
-                        }
-                        
-                        JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
-                        if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                        {
-                            foreach (JProperty property in tagsSequenceElement)
-                            {
-                                string tagsKey = ((string)property.Name);
-                                string tagsValue = ((string)property.Value);
-                                webHostingPlanInstance.Tags.Add(tagsKey, tagsValue);
-                            }
-                        }
-                    }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -651,7 +695,7 @@ namespace Microsoft.Azure.Management.WebSites
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -712,36 +756,36 @@ namespace Microsoft.Azure.Management.WebSites
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("webHostingPlanName", webHostingPlanName);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "GetHistoricalUsageMetricsAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetHistoricalUsageMetricsAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourceGroups/" + resourceGroupName.Trim() + "/providers/Microsoft.Web/serverFarms/" + webHostingPlanName.Trim() + "/metrics?";
-            url = url + "api-version=2014-04-01";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourceGroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.Web/serverFarms/" + Uri.EscapeDataString(webHostingPlanName) + "/metrics?";
+            url = url + "api-version=2014-06-01";
             if (parameters.MetricNames != null && parameters.MetricNames.Count > 0)
             {
                 url = url + "&names=" + Uri.EscapeDataString(string.Join(",", parameters.MetricNames));
             }
             if (parameters.StartTime != null)
             {
-                url = url + "&StartTime=" + Uri.EscapeDataString(parameters.StartTime.Value.ToString());
+                url = url + "&StartTime=" + Uri.EscapeDataString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.StartTime.Value.ToUniversalTime()));
             }
             if (parameters.EndTime != null)
             {
-                url = url + "&EndTime=" + Uri.EscapeDataString(parameters.EndTime.Value.ToString());
+                url = url + "&EndTime=" + Uri.EscapeDataString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.EndTime.Value.ToUniversalTime()));
             }
             if (parameters.TimeGrain != null)
             {
-                url = url + "&timeGrain=" + Uri.EscapeDataString(parameters.TimeGrain != null ? parameters.TimeGrain.Trim() : "");
+                url = url + "&timeGrain=" + Uri.EscapeDataString(parameters.TimeGrain);
             }
             url = url + "&details=" + Uri.EscapeDataString(parameters.IncludeInstanceBreakdown.ToString().ToLower());
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
@@ -766,7 +810,7 @@ namespace Microsoft.Azure.Management.WebSites
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -778,13 +822,13 @@ namespace Microsoft.Azure.Management.WebSites
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -793,7 +837,7 @@ namespace Microsoft.Azure.Management.WebSites
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -801,150 +845,153 @@ namespace Microsoft.Azure.Management.WebSites
                     // Create Result
                     WebHostingPlanGetHistoricalUsageMetricsResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new WebHostingPlanGetHistoricalUsageMetricsResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        JToken propertiesArray = responseDoc["properties"];
-                        if (propertiesArray != null && propertiesArray.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new WebHostingPlanGetHistoricalUsageMetricsResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            foreach (JToken propertiesValue in ((JArray)propertiesArray))
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken propertiesArray = responseDoc["properties"];
+                            if (propertiesArray != null && propertiesArray.Type != JTokenType.Null)
                             {
-                                HistoricalUsageMetric historicalUsageMetricInstance = new HistoricalUsageMetric();
-                                result.UsageMetrics.Add(historicalUsageMetricInstance);
-                                
-                                JToken codeValue = propertiesValue["code"];
-                                if (codeValue != null && codeValue.Type != JTokenType.Null)
+                                foreach (JToken propertiesValue in ((JArray)propertiesArray))
                                 {
-                                    string codeInstance = ((string)codeValue);
-                                    historicalUsageMetricInstance.Code = codeInstance;
-                                }
-                                
-                                JToken dataValue = propertiesValue["data"];
-                                if (dataValue != null && dataValue.Type != JTokenType.Null)
-                                {
-                                    HistoricalUsageMetricData dataInstance = new HistoricalUsageMetricData();
-                                    historicalUsageMetricInstance.Data = dataInstance;
+                                    HistoricalUsageMetric historicalUsageMetricInstance = new HistoricalUsageMetric();
+                                    result.UsageMetrics.Add(historicalUsageMetricInstance);
                                     
-                                    JToken displayNameValue = dataValue["displayName"];
-                                    if (displayNameValue != null && displayNameValue.Type != JTokenType.Null)
+                                    JToken codeValue = propertiesValue["code"];
+                                    if (codeValue != null && codeValue.Type != JTokenType.Null)
                                     {
-                                        string displayNameInstance = ((string)displayNameValue);
-                                        dataInstance.DisplayName = displayNameInstance;
+                                        string codeInstance = ((string)codeValue);
+                                        historicalUsageMetricInstance.Code = codeInstance;
                                     }
                                     
-                                    JToken endTimeValue = dataValue["EndTime"];
-                                    if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
+                                    JToken dataValue = propertiesValue["data"];
+                                    if (dataValue != null && dataValue.Type != JTokenType.Null)
                                     {
-                                        DateTime endTimeInstance = ((DateTime)endTimeValue);
-                                        dataInstance.EndTime = endTimeInstance;
-                                    }
-                                    
-                                    JToken nameValue = dataValue["name"];
-                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                    {
-                                        string nameInstance = ((string)nameValue);
-                                        dataInstance.Name = nameInstance;
-                                    }
-                                    
-                                    JToken primaryAggregationTypeValue = dataValue["primaryAggregationType"];
-                                    if (primaryAggregationTypeValue != null && primaryAggregationTypeValue.Type != JTokenType.Null)
-                                    {
-                                        string primaryAggregationTypeInstance = ((string)primaryAggregationTypeValue);
-                                        dataInstance.PrimaryAggregationType = primaryAggregationTypeInstance;
-                                    }
-                                    
-                                    JToken startTimeValue = dataValue["startTime"];
-                                    if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
-                                    {
-                                        DateTime startTimeInstance = ((DateTime)startTimeValue);
-                                        dataInstance.StartTime = startTimeInstance;
-                                    }
-                                    
-                                    JToken timeGrainValue = dataValue["timeGrain"];
-                                    if (timeGrainValue != null && timeGrainValue.Type != JTokenType.Null)
-                                    {
-                                        string timeGrainInstance = ((string)timeGrainValue);
-                                        dataInstance.TimeGrain = timeGrainInstance;
-                                    }
-                                    
-                                    JToken unitValue = dataValue["unit"];
-                                    if (unitValue != null && unitValue.Type != JTokenType.Null)
-                                    {
-                                        string unitInstance = ((string)unitValue);
-                                        dataInstance.Unit = unitInstance;
-                                    }
-                                    
-                                    JToken valuesArray = dataValue["values"];
-                                    if (valuesArray != null && valuesArray.Type != JTokenType.Null)
-                                    {
-                                        foreach (JToken valuesValue in ((JArray)valuesArray))
+                                        HistoricalUsageMetricData dataInstance = new HistoricalUsageMetricData();
+                                        historicalUsageMetricInstance.Data = dataInstance;
+                                        
+                                        JToken displayNameValue = dataValue["displayName"];
+                                        if (displayNameValue != null && displayNameValue.Type != JTokenType.Null)
                                         {
-                                            HistoricalUsageMetricSample metricSampleInstance = new HistoricalUsageMetricSample();
-                                            dataInstance.Values.Add(metricSampleInstance);
-                                            
-                                            JToken countValue = valuesValue["count"];
-                                            if (countValue != null && countValue.Type != JTokenType.Null)
+                                            string displayNameInstance = ((string)displayNameValue);
+                                            dataInstance.DisplayName = displayNameInstance;
+                                        }
+                                        
+                                        JToken endTimeValue = dataValue["EndTime"];
+                                        if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
+                                        {
+                                            DateTime endTimeInstance = ((DateTime)endTimeValue);
+                                            dataInstance.EndTime = endTimeInstance;
+                                        }
+                                        
+                                        JToken nameValue = dataValue["name"];
+                                        if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                        {
+                                            string nameInstance = ((string)nameValue);
+                                            dataInstance.Name = nameInstance;
+                                        }
+                                        
+                                        JToken primaryAggregationTypeValue = dataValue["primaryAggregationType"];
+                                        if (primaryAggregationTypeValue != null && primaryAggregationTypeValue.Type != JTokenType.Null)
+                                        {
+                                            string primaryAggregationTypeInstance = ((string)primaryAggregationTypeValue);
+                                            dataInstance.PrimaryAggregationType = primaryAggregationTypeInstance;
+                                        }
+                                        
+                                        JToken startTimeValue = dataValue["startTime"];
+                                        if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
+                                        {
+                                            DateTime startTimeInstance = ((DateTime)startTimeValue);
+                                            dataInstance.StartTime = startTimeInstance;
+                                        }
+                                        
+                                        JToken timeGrainValue = dataValue["timeGrain"];
+                                        if (timeGrainValue != null && timeGrainValue.Type != JTokenType.Null)
+                                        {
+                                            string timeGrainInstance = ((string)timeGrainValue);
+                                            dataInstance.TimeGrain = timeGrainInstance;
+                                        }
+                                        
+                                        JToken unitValue = dataValue["unit"];
+                                        if (unitValue != null && unitValue.Type != JTokenType.Null)
+                                        {
+                                            string unitInstance = ((string)unitValue);
+                                            dataInstance.Unit = unitInstance;
+                                        }
+                                        
+                                        JToken valuesArray = dataValue["values"];
+                                        if (valuesArray != null && valuesArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken valuesValue in ((JArray)valuesArray))
                                             {
-                                                int countInstance = ((int)countValue);
-                                                metricSampleInstance.Count = countInstance;
-                                            }
-                                            
-                                            JToken maximumValue = valuesValue["maximum"];
-                                            if (maximumValue != null && maximumValue.Type != JTokenType.Null)
-                                            {
-                                                string maximumInstance = ((string)maximumValue);
-                                                metricSampleInstance.Maximum = maximumInstance;
-                                            }
-                                            
-                                            JToken minimumValue = valuesValue["minimum"];
-                                            if (minimumValue != null && minimumValue.Type != JTokenType.Null)
-                                            {
-                                                string minimumInstance = ((string)minimumValue);
-                                                metricSampleInstance.Minimum = minimumInstance;
-                                            }
-                                            
-                                            JToken timeCreatedValue = valuesValue["timeCreated"];
-                                            if (timeCreatedValue != null && timeCreatedValue.Type != JTokenType.Null)
-                                            {
-                                                DateTime timeCreatedInstance = ((DateTime)timeCreatedValue);
-                                                metricSampleInstance.TimeCreated = timeCreatedInstance;
-                                            }
-                                            
-                                            JToken totalValue = valuesValue["total"];
-                                            if (totalValue != null && totalValue.Type != JTokenType.Null)
-                                            {
-                                                string totalInstance = ((string)totalValue);
-                                                metricSampleInstance.Total = totalInstance;
-                                            }
-                                            
-                                            JToken instanceNameValue = valuesValue["instanceName"];
-                                            if (instanceNameValue != null && instanceNameValue.Type != JTokenType.Null)
-                                            {
-                                                string instanceNameInstance = ((string)instanceNameValue);
-                                                metricSampleInstance.InstanceName = instanceNameInstance;
+                                                HistoricalUsageMetricSample metricSampleInstance = new HistoricalUsageMetricSample();
+                                                dataInstance.Values.Add(metricSampleInstance);
+                                                
+                                                JToken countValue = valuesValue["count"];
+                                                if (countValue != null && countValue.Type != JTokenType.Null)
+                                                {
+                                                    int countInstance = ((int)countValue);
+                                                    metricSampleInstance.Count = countInstance;
+                                                }
+                                                
+                                                JToken maximumValue = valuesValue["maximum"];
+                                                if (maximumValue != null && maximumValue.Type != JTokenType.Null)
+                                                {
+                                                    string maximumInstance = ((string)maximumValue);
+                                                    metricSampleInstance.Maximum = maximumInstance;
+                                                }
+                                                
+                                                JToken minimumValue = valuesValue["minimum"];
+                                                if (minimumValue != null && minimumValue.Type != JTokenType.Null)
+                                                {
+                                                    string minimumInstance = ((string)minimumValue);
+                                                    metricSampleInstance.Minimum = minimumInstance;
+                                                }
+                                                
+                                                JToken timeCreatedValue = valuesValue["timeCreated"];
+                                                if (timeCreatedValue != null && timeCreatedValue.Type != JTokenType.Null)
+                                                {
+                                                    DateTime timeCreatedInstance = ((DateTime)timeCreatedValue);
+                                                    metricSampleInstance.TimeCreated = timeCreatedInstance;
+                                                }
+                                                
+                                                JToken totalValue = valuesValue["total"];
+                                                if (totalValue != null && totalValue.Type != JTokenType.Null)
+                                                {
+                                                    string totalInstance = ((string)totalValue);
+                                                    metricSampleInstance.Total = totalInstance;
+                                                }
+                                                
+                                                JToken instanceNameValue = valuesValue["instanceName"];
+                                                if (instanceNameValue != null && instanceNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string instanceNameInstance = ((string)instanceNameValue);
+                                                    metricSampleInstance.InstanceName = instanceNameInstance;
+                                                }
                                             }
                                         }
                                     }
-                                }
-                                
-                                JToken messageValue = propertiesValue["message"];
-                                if (messageValue != null && messageValue.Type != JTokenType.Null)
-                                {
-                                    string messageInstance = ((string)messageValue);
-                                    historicalUsageMetricInstance.Message = messageInstance;
+                                    
+                                    JToken messageValue = propertiesValue["message"];
+                                    if (messageValue != null && messageValue.Type != JTokenType.Null)
+                                    {
+                                        string messageInstance = ((string)messageValue);
+                                        historicalUsageMetricInstance.Message = messageInstance;
+                                    }
                                 }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -953,7 +1000,7 @@ namespace Microsoft.Azure.Management.WebSites
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -998,19 +1045,19 @@ namespace Microsoft.Azure.Management.WebSites
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                Tracing.Enter(invocationId, this, "ListAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourceGroups/" + resourceGroupName.Trim() + "/providers/Microsoft.Web/serverFarms?";
-            url = url + "api-version=2014-04-01";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourceGroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.Web/serverFarms?";
+            url = url + "api-version=2014-06-01";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1044,13 +1091,13 @@ namespace Microsoft.Azure.Management.WebSites
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -1059,7 +1106,7 @@ namespace Microsoft.Azure.Management.WebSites
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -1067,88 +1114,105 @@ namespace Microsoft.Azure.Management.WebSites
                     // Create Result
                     WebHostingPlanListResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new WebHostingPlanListResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        JToken webHostingPlansArray = responseDoc;
-                        if (webHostingPlansArray != null && webHostingPlansArray.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new WebHostingPlanListResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            foreach (JToken webHostingPlansValue in ((JArray)webHostingPlansArray))
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
                             {
-                                WebHostingPlan webHostingPlanInstance = new WebHostingPlan();
-                                result.WebHostingPlans.Add(webHostingPlanInstance);
-                                
-                                JToken propertiesValue = webHostingPlansValue["properties"];
-                                if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                                foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    WebHostingPlanProperties propertiesInstance = new WebHostingPlanProperties();
-                                    webHostingPlanInstance.Properties = propertiesInstance;
+                                    WebHostingPlan webHostingPlanInstance = new WebHostingPlan();
+                                    result.WebHostingPlans.Add(webHostingPlanInstance);
                                     
-                                    JToken skuValue = propertiesValue["sku"];
-                                    if (skuValue != null && skuValue.Type != JTokenType.Null)
+                                    JToken propertiesValue = valueValue["properties"];
+                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
-                                        SkuOptions skuInstance = ((SkuOptions)Enum.Parse(typeof(SkuOptions), ((string)skuValue), true));
-                                        propertiesInstance.Sku = skuInstance;
+                                        WebHostingPlanProperties propertiesInstance = new WebHostingPlanProperties();
+                                        webHostingPlanInstance.Properties = propertiesInstance;
+                                        
+                                        JToken skuValue = propertiesValue["sku"];
+                                        if (skuValue != null && skuValue.Type != JTokenType.Null)
+                                        {
+                                            SkuOptions skuInstance = ((SkuOptions)Enum.Parse(typeof(SkuOptions), ((string)skuValue), true));
+                                            propertiesInstance.Sku = skuInstance;
+                                        }
+                                        
+                                        JToken numberOfWorkersValue = propertiesValue["numberOfWorkers"];
+                                        if (numberOfWorkersValue != null && numberOfWorkersValue.Type != JTokenType.Null)
+                                        {
+                                            int numberOfWorkersInstance = ((int)numberOfWorkersValue);
+                                            propertiesInstance.NumberOfWorkers = numberOfWorkersInstance;
+                                        }
+                                        
+                                        JToken workerSizeValue = propertiesValue["workerSize"];
+                                        if (workerSizeValue != null && workerSizeValue.Type != JTokenType.Null)
+                                        {
+                                            WorkerSizeOptions workerSizeInstance = ((WorkerSizeOptions)Enum.Parse(typeof(WorkerSizeOptions), ((string)workerSizeValue), true));
+                                            propertiesInstance.WorkerSize = workerSizeInstance;
+                                        }
+                                        
+                                        JToken adminSiteNameValue = propertiesValue["adminSiteName"];
+                                        if (adminSiteNameValue != null && adminSiteNameValue.Type != JTokenType.Null)
+                                        {
+                                            string adminSiteNameInstance = ((string)adminSiteNameValue);
+                                            propertiesInstance.AdminSiteName = adminSiteNameInstance;
+                                        }
                                     }
                                     
-                                    JToken numberOfWorkersValue = propertiesValue["numberOfWorkers"];
-                                    if (numberOfWorkersValue != null && numberOfWorkersValue.Type != JTokenType.Null)
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
                                     {
-                                        int numberOfWorkersInstance = ((int)numberOfWorkersValue);
-                                        propertiesInstance.NumberOfWorkers = numberOfWorkersInstance;
+                                        string idInstance = ((string)idValue);
+                                        webHostingPlanInstance.Id = idInstance;
                                     }
                                     
-                                    JToken workerSizeValue = propertiesValue["workerSize"];
-                                    if (workerSizeValue != null && workerSizeValue.Type != JTokenType.Null)
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
                                     {
-                                        WorkerSizeOptions workerSizeInstance = ((WorkerSizeOptions)Enum.Parse(typeof(WorkerSizeOptions), ((string)workerSizeValue), true));
-                                        propertiesInstance.WorkerSize = workerSizeInstance;
+                                        string nameInstance = ((string)nameValue);
+                                        webHostingPlanInstance.Name = nameInstance;
                                     }
-                                }
-                                
-                                JToken idValue = webHostingPlansValue["id"];
-                                if (idValue != null && idValue.Type != JTokenType.Null)
-                                {
-                                    string idInstance = ((string)idValue);
-                                    webHostingPlanInstance.Id = idInstance;
-                                }
-                                
-                                JToken nameValue = webHostingPlansValue["name"];
-                                if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                {
-                                    string nameInstance = ((string)nameValue);
-                                    webHostingPlanInstance.Name = nameInstance;
-                                }
-                                
-                                JToken locationValue = webHostingPlansValue["location"];
-                                if (locationValue != null && locationValue.Type != JTokenType.Null)
-                                {
-                                    string locationInstance = ((string)locationValue);
-                                    webHostingPlanInstance.Location = locationInstance;
-                                }
-                                
-                                JToken tagsSequenceElement = ((JToken)webHostingPlansValue["tags"]);
-                                if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                                {
-                                    foreach (JProperty property in tagsSequenceElement)
+                                    
+                                    JToken locationValue = valueValue["location"];
+                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
                                     {
-                                        string tagsKey = ((string)property.Name);
-                                        string tagsValue = ((string)property.Value);
-                                        webHostingPlanInstance.Tags.Add(tagsKey, tagsValue);
+                                        string locationInstance = ((string)locationValue);
+                                        webHostingPlanInstance.Location = locationInstance;
+                                    }
+                                    
+                                    JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
+                                    if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property in tagsSequenceElement)
+                                        {
+                                            string tagsKey = ((string)property.Name);
+                                            string tagsValue = ((string)property.Value);
+                                            webHostingPlanInstance.Tags.Add(tagsKey, tagsValue);
+                                        }
+                                    }
+                                    
+                                    JToken typeValue = valueValue["type"];
+                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                    {
+                                        string typeInstance = ((string)typeValue);
+                                        webHostingPlanInstance.Type = typeInstance;
                                     }
                                 }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1157,7 +1221,7 @@ namespace Microsoft.Azure.Management.WebSites
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }

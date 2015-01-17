@@ -23,8 +23,8 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Redis.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Redis
 {
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.Redis
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> DeleteAsync(string resourceGroupName, string name, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> DeleteAsync(string resourceGroupName, string name, CancellationToken cancellationToken);
         
         /// <summary>
         /// Gets a redis cache (resource description).
@@ -156,6 +156,6 @@ namespace Microsoft.Azure.Management.Redis
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> RegenerateKeyAsync(string resourceGroupName, string name, RedisRegenerateKeyParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> RegenerateKeyAsync(string resourceGroupName, string name, RedisRegenerateKeyParameters parameters, CancellationToken cancellationToken);
     }
 }

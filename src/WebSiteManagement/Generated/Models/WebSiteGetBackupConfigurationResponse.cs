@@ -22,7 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.WebSites.Models;
 
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
@@ -30,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
     /// <summary>
     /// Scheduled backup definition.
     /// </summary>
-    public partial class WebSiteGetBackupConfigurationResponse : OperationResponse
+    public partial class WebSiteGetBackupConfigurationResponse : AzureOperationResponse
     {
         private BackupSchedule _backupSchedule;
         
@@ -96,7 +97,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public WebSiteGetBackupConfigurationResponse()
         {
-            this.Databases = new List<DatabaseBackupSetting>();
+            this.Databases = new LazyList<DatabaseBackupSetting>();
         }
     }
 }

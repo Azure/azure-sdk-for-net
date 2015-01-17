@@ -23,10 +23,10 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Storage;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.Management.Storage
 {
     /// <summary>
     /// The Service Management API provides programmatic access to much of the

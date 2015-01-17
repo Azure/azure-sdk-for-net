@@ -17,7 +17,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Microsoft.WindowsAzure.Common.Test.Fakes
+namespace Microsoft.Azure.Common.Test.Fakes
 {
     public class BadResponseDelegatingHandler : DelegatingHandler
     {
@@ -27,12 +27,12 @@ namespace Microsoft.WindowsAzure.Common.Test.Fakes
             NumberOfTimesToFail = int.MaxValue;
         }
 
-        public HttpStatusCode StatusCodeToReturn { get; set; }
-        
-        public int NumberOfTimesToFail { get; set; }
-
         public int NumberOfTimesFailedSoFar { get; private set; }
 
+        public int NumberOfTimesToFail { get; set; }
+
+        public HttpStatusCode StatusCodeToReturn { get; set; }
+        
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, System.Threading.CancellationToken cancellationToken)
         {
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);

@@ -22,7 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
@@ -30,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
     /// <summary>
     /// The List VM Images operation response.
     /// </summary>
-    public partial class VirtualMachineVMImageListResponse : OperationResponse, IEnumerable<VirtualMachineVMImageListResponse.VirtualMachineVMImage>
+    public partial class VirtualMachineVMImageListResponse : AzureOperationResponse, IEnumerable<VirtualMachineVMImageListResponse.VirtualMachineVMImage>
     {
         private IList<VirtualMachineVMImageListResponse.VirtualMachineVMImage> _vMImages;
         
@@ -50,7 +51,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public VirtualMachineVMImageListResponse()
         {
-            this.VMImages = new List<VirtualMachineVMImageListResponse.VirtualMachineVMImage>();
+            this.VMImages = new LazyList<VirtualMachineVMImageListResponse.VirtualMachineVMImage>();
         }
         
         /// <summary>
@@ -85,6 +86,17 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             {
                 get { return this._hostCaching; }
                 set { this._hostCaching = value; }
+            }
+            
+            private string _iOType;
+            
+            /// <summary>
+            /// Optional. Gets or sets the IO type.
+            /// </summary>
+            public string IOType
+            {
+                get { return this._iOType; }
+                set { this._iOType = value; }
             }
             
             private int _logicalDiskSizeInGB;
@@ -165,6 +177,17 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             {
                 get { return this._hostCaching; }
                 set { this._hostCaching = value; }
+            }
+            
+            private string _iOType;
+            
+            /// <summary>
+            /// Optional. Gets or sets the IO type.
+            /// </summary>
+            public string IOType
+            {
+                get { return this._iOType; }
+                set { this._iOType = value; }
             }
             
             private int _logicalDiskSizeInGB;
@@ -530,7 +553,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             /// </summary>
             public VirtualMachineVMImage()
             {
-                this.DataDiskConfigurations = new List<VirtualMachineVMImageListResponse.DataDiskConfiguration>();
+                this.DataDiskConfigurations = new LazyList<VirtualMachineVMImageListResponse.DataDiskConfiguration>();
             }
         }
     }

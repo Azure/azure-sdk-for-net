@@ -14,31 +14,17 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
 
-namespace Microsoft.WindowsAzure.Common.Test.Fakes
+namespace Microsoft.Azure.Common.Test.Fakes
 {
     public class FakeServiceClientWithCredentials : ServiceClient<FakeServiceClientWithCredentials>
     {
         private Uri _baseUri;
-
-        public Uri BaseUri
-        {
-            get { return this._baseUri; }
-        }
-
         private SubscriptionCloudCredentials _credentials;
-
-        public SubscriptionCloudCredentials Credentials
-        {
-            get { return this._credentials; }
-        }
 
         /// <summary>
         /// Initializes a new instance of the FakeServiceClientWithCredentials class.
@@ -46,7 +32,7 @@ namespace Microsoft.WindowsAzure.Common.Test.Fakes
         private FakeServiceClientWithCredentials()
             : base()
         {
-            this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
+            HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }
 
         /// <summary>
@@ -85,6 +71,28 @@ namespace Microsoft.WindowsAzure.Common.Test.Fakes
             this.Credentials.InitializeServiceClient(this);
         }
 
+        public Uri BaseUri
+        {
+            get { return _baseUri; }
+        }
+
+        public SubscriptionCloudCredentials Credentials
+        {
+            get { return _credentials; }
+        }
+
+        protected override void Clone(ServiceClient<FakeServiceClientWithCredentials> client)
+        {
+            base.Clone(client);
+            FakeServiceClientWithCredentials management = client as FakeServiceClientWithCredentials;
+            if (management != null)
+            {
+                management._credentials = Credentials;
+                management._baseUri = BaseUri;
+                management.Credentials.InitializeServiceClient(management);
+            }
+        }
+
         public async Task<HttpResponseMessage> DoStuff()
         {
             // Construct URL
@@ -105,24 +113,12 @@ namespace Microsoft.WindowsAzure.Common.Test.Fakes
             // Set Credentials
             var cancellationToken = new CancellationToken();
             cancellationToken.ThrowIfCancellationRequested();
-            return await this.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+            return await HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
         }
 
         public override FakeServiceClientWithCredentials WithHandler(DelegatingHandler handler)
         {
             return (FakeServiceClientWithCredentials)WithHandler(new FakeServiceClientWithCredentials(), handler);
-        }
-
-        protected override void Clone(ServiceClient<FakeServiceClientWithCredentials> client)
-        {
-            base.Clone(client);
-            FakeServiceClientWithCredentials management = client as FakeServiceClientWithCredentials;
-            if (management != null)
-            {
-                management._credentials = Credentials;
-                management._baseUri = BaseUri;
-                management.Credentials.InitializeServiceClient(management);
-            }
         }
     }
 }

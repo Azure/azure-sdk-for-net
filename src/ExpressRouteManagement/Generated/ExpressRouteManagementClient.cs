@@ -27,9 +27,8 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.ExpressRoute;
 using Microsoft.WindowsAzure.Management.ExpressRoute.Models;
 
@@ -44,7 +43,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
     /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460799.aspx for
     /// more information)
     /// </summary>
-    public partial class ExpressRouteManagementClient : ServiceClient<ExpressRouteManagementClient>, Microsoft.WindowsAzure.Management.ExpressRoute.IExpressRouteManagementClient
+    public partial class ExpressRouteManagementClient : ServiceClient<ExpressRouteManagementClient>, IExpressRouteManagementClient
     {
         private string _apiVersion;
         
@@ -100,6 +99,13 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             set { this._longRunningOperationRetryTimeout = value; }
         }
         
+        private IAuthorizedDedicatedCircuitOperations _authorizedDedicatedCircuits;
+        
+        public virtual IAuthorizedDedicatedCircuitOperations AuthorizedDedicatedCircuits
+        {
+            get { return this._authorizedDedicatedCircuits; }
+        }
+        
         private IBorderGatewayProtocolPeeringOperations _borderGatewayProtocolPeerings;
         
         public virtual IBorderGatewayProtocolPeeringOperations BorderGatewayProtocolPeerings
@@ -112,6 +118,20 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         public virtual ICrossConnectionOperations CrossConnections
         {
             get { return this._crossConnections; }
+        }
+        
+        private IDedicatedCircuitLinkAuthorizationMicrosoftIdOperations _dedicatedCircuitLinkAuthorizationMicrosoftIds;
+        
+        public virtual IDedicatedCircuitLinkAuthorizationMicrosoftIdOperations DedicatedCircuitLinkAuthorizationMicrosoftIds
+        {
+            get { return this._dedicatedCircuitLinkAuthorizationMicrosoftIds; }
+        }
+        
+        private IDedicatedCircuitLinkAuthorizationOperations _dedicatedCircuitLinkAuthorizations;
+        
+        public virtual IDedicatedCircuitLinkAuthorizationOperations DedicatedCircuitLinkAuthorizations
+        {
+            get { return this._dedicatedCircuitLinkAuthorizations; }
         }
         
         private IDedicatedCircuitLinkOperations _dedicatedCircuitLinks;
@@ -139,11 +159,14 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// Initializes a new instance of the ExpressRouteManagementClient
         /// class.
         /// </summary>
-        private ExpressRouteManagementClient()
+        public ExpressRouteManagementClient()
             : base()
         {
+            this._authorizedDedicatedCircuits = new AuthorizedDedicatedCircuitOperations(this);
             this._borderGatewayProtocolPeerings = new BorderGatewayProtocolPeeringOperations(this);
             this._crossConnections = new CrossConnectionOperations(this);
+            this._dedicatedCircuitLinkAuthorizationMicrosoftIds = new DedicatedCircuitLinkAuthorizationMicrosoftIdOperations(this);
+            this._dedicatedCircuitLinkAuthorizations = new DedicatedCircuitLinkAuthorizationOperations(this);
             this._dedicatedCircuitLinks = new DedicatedCircuitLinkOperations(this);
             this._dedicatedCircuits = new DedicatedCircuitOperations(this);
             this._dedicatedCircuitServiceProviders = new DedicatedCircuitServiceProviderOperations(this);
@@ -163,7 +186,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Gets the URI used as the base for all cloud service
+        /// Optional. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
         public ExpressRouteManagementClient(SubscriptionCloudCredentials credentials, Uri baseUri)
@@ -212,11 +235,14 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// <param name='httpClient'>
         /// The Http client
         /// </param>
-        private ExpressRouteManagementClient(HttpClient httpClient)
+        public ExpressRouteManagementClient(HttpClient httpClient)
             : base(httpClient)
         {
+            this._authorizedDedicatedCircuits = new AuthorizedDedicatedCircuitOperations(this);
             this._borderGatewayProtocolPeerings = new BorderGatewayProtocolPeeringOperations(this);
             this._crossConnections = new CrossConnectionOperations(this);
+            this._dedicatedCircuitLinkAuthorizationMicrosoftIds = new DedicatedCircuitLinkAuthorizationMicrosoftIdOperations(this);
+            this._dedicatedCircuitLinkAuthorizations = new DedicatedCircuitLinkAuthorizationOperations(this);
             this._dedicatedCircuitLinks = new DedicatedCircuitLinkOperations(this);
             this._dedicatedCircuits = new DedicatedCircuitOperations(this);
             this._dedicatedCircuitServiceProviders = new DedicatedCircuitServiceProviderOperations(this);
@@ -236,7 +262,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Gets the URI used as the base for all cloud service
+        /// Optional. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
         /// <param name='httpClient'>
@@ -306,194 +332,6 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                 clonedClient._longRunningOperationRetryTimeout = this._longRunningOperationRetryTimeout;
                 
                 clonedClient.Credentials.InitializeServiceClient(clonedClient);
-            }
-        }
-        
-        /// <summary>
-        /// The Get Express Route operation status gets information on the
-        /// status of Express Route operations in Windows Azure.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154112.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operationId'>
-        /// Required. The id  of the operation.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The response body contains the status of the specified asynchronous
-        /// operation, indicating whether it has succeeded, is inprogress, or
-        /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
-        /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
-        /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
-        /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ExpressRoute.Models.ExpressRouteOperationStatusResponse> GetOperationStatusAsync(string operationId, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (operationId == null)
-            {
-                throw new ArgumentNullException("operationId");
-            }
-            
-            // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = Tracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("operationId", operationId);
-                Tracing.Enter(invocationId, this, "GetOperationStatusAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = "/" + (this.Credentials.SubscriptionId != null ? this.Credentials.SubscriptionId.Trim() : "") + "/services/networking/operation/" + operationId.Trim();
-            string baseUrl = this.BaseUri.AbsoluteUri;
-            // Trim '/' character from the end of baseUrl and beginning of url.
-            if (baseUrl[baseUrl.Length - 1] == '/')
-            {
-                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
-            }
-            if (url[0] == '/')
-            {
-                url = url.Substring(1);
-            }
-            url = baseUrl + "/" + url;
-            url = url.Replace(" ", "%20");
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2011-10-01");
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        Tracing.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    ExpressRouteOperationStatusResponse result = null;
-                    // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new ExpressRouteOperationStatusResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement gatewayOperationElement = responseDoc.Element(XName.Get("GatewayOperation", "http://schemas.microsoft.com/windowsazure"));
-                    if (gatewayOperationElement != null)
-                    {
-                        XElement idElement = gatewayOperationElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
-                        if (idElement != null)
-                        {
-                            string idInstance = idElement.Value;
-                            result.Id = idInstance;
-                        }
-                        
-                        XElement statusElement = gatewayOperationElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
-                        if (statusElement != null)
-                        {
-                            ExpressRouteOperationStatus statusInstance = ((ExpressRouteOperationStatus)Enum.Parse(typeof(ExpressRouteOperationStatus), statusElement.Value, true));
-                            result.Status = statusInstance;
-                        }
-                        
-                        XElement httpStatusCodeElement = gatewayOperationElement.Element(XName.Get("HttpStatusCode", "http://schemas.microsoft.com/windowsazure"));
-                        if (httpStatusCodeElement != null)
-                        {
-                            HttpStatusCode httpStatusCodeInstance = ((HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), httpStatusCodeElement.Value, true));
-                            result.HttpStatusCode = httpStatusCodeInstance;
-                        }
-                        
-                        XElement dataElement = gatewayOperationElement.Element(XName.Get("Data", "http://schemas.microsoft.com/windowsazure"));
-                        if (dataElement != null)
-                        {
-                            string dataInstance = dataElement.Value;
-                            result.Data = dataInstance;
-                        }
-                        
-                        XElement errorElement = gatewayOperationElement.Element(XName.Get("Error", "http://schemas.microsoft.com/windowsazure"));
-                        if (errorElement != null)
-                        {
-                            ExpressRouteOperationStatusResponse.ErrorDetails errorInstance = new ExpressRouteOperationStatusResponse.ErrorDetails();
-                            result.Error = errorInstance;
-                            
-                            XElement codeElement = errorElement.Element(XName.Get("Code", "http://schemas.microsoft.com/windowsazure"));
-                            if (codeElement != null)
-                            {
-                                string codeInstance = codeElement.Value;
-                                errorInstance.Code = codeInstance;
-                            }
-                            
-                            XElement messageElement = errorElement.Element(XName.Get("Message", "http://schemas.microsoft.com/windowsazure"));
-                            if (messageElement != null)
-                            {
-                                string messageInstance = messageElement.Value;
-                                errorInstance.Message = messageInstance;
-                            }
-                        }
-                    }
-                    
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        Tracing.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
             }
         }
         
@@ -583,6 +421,197 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                 return "NotifyCrossConnectionNotProvisioned";
             }
             throw new ArgumentOutOfRangeException("value");
+        }
+        
+        /// <summary>
+        /// The Get Express Route operation status gets information on the
+        /// status of Express Route operations in Windows Azure.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154112.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operationId'>
+        /// Required. The id  of the operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public async Task<ExpressRouteOperationStatusResponse> GetOperationStatusAsync(string operationId, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (operationId == null)
+            {
+                throw new ArgumentNullException("operationId");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("operationId", operationId);
+                TracingAdapter.Enter(invocationId, this, "GetOperationStatusAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "/" + (this.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Credentials.SubscriptionId)) + "/services/networking/operation/" + Uri.EscapeDataString(operationId);
+            string baseUrl = this.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2011-10-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    ExpressRouteOperationStatusResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new ExpressRouteOperationStatusResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement gatewayOperationElement = responseDoc.Element(XName.Get("GatewayOperation", "http://schemas.microsoft.com/windowsazure"));
+                        if (gatewayOperationElement != null)
+                        {
+                            XElement idElement = gatewayOperationElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
+                            if (idElement != null)
+                            {
+                                string idInstance = idElement.Value;
+                                result.Id = idInstance;
+                            }
+                            
+                            XElement statusElement = gatewayOperationElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
+                            if (statusElement != null)
+                            {
+                                ExpressRouteOperationStatus statusInstance = ((ExpressRouteOperationStatus)Enum.Parse(typeof(ExpressRouteOperationStatus), statusElement.Value, true));
+                                result.Status = statusInstance;
+                            }
+                            
+                            XElement httpStatusCodeElement = gatewayOperationElement.Element(XName.Get("HttpStatusCode", "http://schemas.microsoft.com/windowsazure"));
+                            if (httpStatusCodeElement != null)
+                            {
+                                HttpStatusCode httpStatusCodeInstance = ((HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), httpStatusCodeElement.Value, true));
+                                result.HttpStatusCode = httpStatusCodeInstance;
+                            }
+                            
+                            XElement dataElement = gatewayOperationElement.Element(XName.Get("Data", "http://schemas.microsoft.com/windowsazure"));
+                            if (dataElement != null)
+                            {
+                                string dataInstance = dataElement.Value;
+                                result.Data = dataInstance;
+                            }
+                            
+                            XElement errorElement = gatewayOperationElement.Element(XName.Get("Error", "http://schemas.microsoft.com/windowsazure"));
+                            if (errorElement != null)
+                            {
+                                ExpressRouteOperationStatusResponse.ErrorDetails errorInstance = new ExpressRouteOperationStatusResponse.ErrorDetails();
+                                result.Error = errorInstance;
+                                
+                                XElement codeElement = errorElement.Element(XName.Get("Code", "http://schemas.microsoft.com/windowsazure"));
+                                if (codeElement != null)
+                                {
+                                    string codeInstance = codeElement.Value;
+                                    errorInstance.Code = codeInstance;
+                                }
+                                
+                                XElement messageElement = errorElement.Element(XName.Get("Message", "http://schemas.microsoft.com/windowsazure"));
+                                if (messageElement != null)
+                                {
+                                    string messageInstance = messageElement.Value;
+                                    errorInstance.Message = messageInstance;
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
         }
     }
 }

@@ -23,8 +23,8 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Insights.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Insights
 {
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> CreateOrUpdateSettingAsync(string resourceGroupName, string autoscaleSettingName, AutoscaleSettingCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> CreateOrUpdateSettingAsync(string resourceGroupName, string autoscaleSettingName, AutoscaleSettingCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <param name='resourceGroupName'>
         /// The resource name.
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> DeleteSettingAsync(string resourceGroupName, string autoscaleSettingName, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> DeleteSettingAsync(string resourceGroupName, string autoscaleSettingName, CancellationToken cancellationToken);
         
         /// <param name='resourceGroupName'>
         /// The resource name.
@@ -111,6 +111,6 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> UpdateSettingAsync(string resourceGroupName, string autoscaleSettingName, AutoscaleSettingCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> UpdateSettingAsync(string resourceGroupName, string autoscaleSettingName, AutoscaleSettingCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
     }
 }

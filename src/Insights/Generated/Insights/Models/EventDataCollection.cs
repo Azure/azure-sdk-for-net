@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.Azure.Insights.Models;
 
 namespace Microsoft.Azure.Insights.Models
@@ -60,7 +61,7 @@ namespace Microsoft.Azure.Insights.Models
         /// </summary>
         public EventDataCollection()
         {
-            this.Value = new List<EventData>();
+            this.Value = new LazyList<EventData>();
         }
     }
 }

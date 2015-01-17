@@ -21,7 +21,7 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.WindowsAzure.Management.Network.Models
 {
@@ -29,7 +29,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
     /// The configuration script returned from the get device configuration
     /// script operation.
     /// </summary>
-    public partial class GatewayGetDeviceConfigurationScriptResponse : OperationResponse
+    public partial class GatewayGetDeviceConfigurationScriptResponse : AzureOperationResponse
     {
         private string _configurationScript;
         

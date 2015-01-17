@@ -23,8 +23,8 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Resources.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Resources
 {
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.Resources
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> DeleteAsync(string tagName, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> DeleteAsync(string tagName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Delete a subscription resource tag value.
@@ -95,7 +95,7 @@ namespace Microsoft.Azure.Management.Resources
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> DeleteValueAsync(string tagName, string tagValue, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> DeleteValueAsync(string tagName, string tagValue, CancellationToken cancellationToken);
         
         /// <summary>
         /// Get a list of subscription resource tags.

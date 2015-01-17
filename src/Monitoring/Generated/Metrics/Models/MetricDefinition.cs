@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models;
 
 namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
@@ -141,7 +142,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         /// </summary>
         public MetricDefinition()
         {
-            this.MetricAvailabilities = new List<MetricAvailability>();
+            this.MetricAvailabilities = new LazyList<MetricAvailability>();
         }
     }
 }

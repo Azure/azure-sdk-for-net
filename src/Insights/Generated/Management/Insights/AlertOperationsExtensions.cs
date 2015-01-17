@@ -23,9 +23,9 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Insights;
 using Microsoft.Azure.Management.Insights.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Insights
 {
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse CreateOrUpdateRule(this IAlertOperations operations, string resourceGroupName, RuleCreateOrUpdateParameters parameters)
+        public static AzureOperationResponse CreateOrUpdateRule(this IAlertOperations operations, string resourceGroupName, RuleCreateOrUpdateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> CreateOrUpdateRuleAsync(this IAlertOperations operations, string resourceGroupName, RuleCreateOrUpdateParameters parameters)
+        public static Task<AzureOperationResponse> CreateOrUpdateRuleAsync(this IAlertOperations operations, string resourceGroupName, RuleCreateOrUpdateParameters parameters)
         {
             return operations.CreateOrUpdateRuleAsync(resourceGroupName, parameters, CancellationToken.None);
         }
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse DeleteRule(this IAlertOperations operations, string resourceGroupName, string ruleName)
+        public static AzureOperationResponse DeleteRule(this IAlertOperations operations, string resourceGroupName, string ruleName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -110,7 +110,7 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> DeleteRuleAsync(this IAlertOperations operations, string resourceGroupName, string ruleName)
+        public static Task<AzureOperationResponse> DeleteRuleAsync(this IAlertOperations operations, string resourceGroupName, string ruleName)
         {
             return operations.DeleteRuleAsync(resourceGroupName, ruleName, CancellationToken.None);
         }
@@ -301,7 +301,7 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse UpdateRule(this IAlertOperations operations, string resourceGroupName, RuleCreateOrUpdateParameters parameters)
+        public static AzureOperationResponse UpdateRule(this IAlertOperations operations, string resourceGroupName, RuleCreateOrUpdateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -324,7 +324,7 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> UpdateRuleAsync(this IAlertOperations operations, string resourceGroupName, RuleCreateOrUpdateParameters parameters)
+        public static Task<AzureOperationResponse> UpdateRuleAsync(this IAlertOperations operations, string resourceGroupName, RuleCreateOrUpdateParameters parameters)
         {
             return operations.UpdateRuleAsync(resourceGroupName, parameters, CancellationToken.None);
         }

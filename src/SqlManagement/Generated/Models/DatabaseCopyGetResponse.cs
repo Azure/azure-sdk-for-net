@@ -21,7 +21,7 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Sql.Models;
 
 namespace Microsoft.WindowsAzure.Management.Sql.Models
@@ -29,7 +29,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
     /// <summary>
     /// Represents a response to the get request.
     /// </summary>
-    public partial class DatabaseCopyGetResponse : OperationResponse
+    public partial class DatabaseCopyGetResponse : AzureOperationResponse
     {
         private DatabaseCopy _databaseCopy;
         

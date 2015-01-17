@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
@@ -48,7 +49,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public VirtualMachineUpdateLoadBalancedSetParameters()
         {
-            this.LoadBalancedEndpoints = new List<VirtualMachineUpdateLoadBalancedSetParameters.InputEndpoint>();
+            this.LoadBalancedEndpoints = new LazyList<VirtualMachineUpdateLoadBalancedSetParameters.InputEndpoint>();
         }
         
         /// <summary>
@@ -94,6 +95,17 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             {
                 get { return this._loadBalancedEndpointSetName; }
                 set { this._loadBalancedEndpointSetName = value; }
+            }
+            
+            private string _loadBalancerDistribution;
+            
+            /// <summary>
+            /// Optional. Load Balancer Distribution for this endpoint.
+            /// </summary>
+            public string LoadBalancerDistribution
+            {
+                get { return this._loadBalancerDistribution; }
+                set { this._loadBalancerDistribution = value; }
             }
             
             private string _loadBalancerName;
@@ -210,7 +222,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             /// </summary>
             public InputEndpoint()
             {
-                this.Rules = new List<AccessControlListRule>();
+                this.Rules = new LazyList<AccessControlListRule>();
             }
             
             /// <summary>

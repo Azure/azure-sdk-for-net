@@ -22,15 +22,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Automation.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
     /// The response model for the list runbook parameter operation.
     /// </summary>
-    public partial class RunbookParameterListResponse : OperationResponse, IEnumerable<RunbookParameter>
+    public partial class RunbookParameterListResponse : AzureOperationResponse, IEnumerable<RunbookParameter>
     {
         private IList<RunbookParameter> _runbookParameters;
         
@@ -49,7 +50,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         public RunbookParameterListResponse()
         {
-            this.RunbookParameters = new List<RunbookParameter>();
+            this.RunbookParameters = new LazyList<RunbookParameter>();
         }
         
         /// <summary>
