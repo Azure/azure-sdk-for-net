@@ -163,6 +163,9 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     <None Include="app.config" />
+    <None Include="cert\invalid.cer">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="cert\sdkcli.cer">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
