@@ -13,7 +13,8 @@
     using Microsoft.WindowsAzure.Management.HDInsight.TestUtilities;
 
     [SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable", Justification = "Test class. Disposing in the tear off method.")]
-    [DeploymentItem(@"certs\sdkcli.cer", "certs")]
+    [DeploymentItem(@"cert\sdkcli.cer", "certs")]
+    [DeploymentItem(@"cert\invalid.cer", "certs")]
     public class ClustersTestsBase
     {
         internal static string TestSubscription = Guid.NewGuid().ToString();

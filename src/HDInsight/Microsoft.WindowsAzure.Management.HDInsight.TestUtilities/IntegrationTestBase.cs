@@ -43,8 +43,8 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities
     using Microsoft.WindowsAzure.Management.HDInsight.Tests.RestSimulator;
     using Microsoft.WindowsAzure.Management.HDInsight.TestUtilities.RestSimulator;
 
-    [DeploymentItem("cert/sdkcli.cer")]
-    [DeploymentItem("cert/invalid.cer")]
+    [DeploymentItem(@"cert\invalid.cer")]
+    [DeploymentItem(@"cert\sdkcli.cer")]
     [TestClass]
     public class IntegrationTestBase : TestsBase
     {
