@@ -32,14 +32,13 @@ namespace Microsoft.Azure.Common.Test.Fakes
         private FakeServiceClientWithCredentials()
             : base()
         {
-            HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }
 
         /// <summary>
         /// Initializes a new instance of the FakeServiceClientWithCredentials class.
         /// </summary>
         public FakeServiceClientWithCredentials(SubscriptionCloudCredentials credentials, Uri baseUri)
-            : this()
+            : base()
         {
             if (credentials == null)
             {
@@ -58,8 +57,48 @@ namespace Microsoft.Azure.Common.Test.Fakes
         /// <summary>
         /// Initializes a new instance of the FakeServiceClientWithCredentials class.
         /// </summary>
-        public FakeServiceClientWithCredentials(SubscriptionCloudCredentials credentials)
-            : this()
+        public FakeServiceClientWithCredentials(SubscriptionCloudCredentials credentials, Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers)
+            : base(rootHandler, handlers)
+        {
+            if (credentials == null)
+            {
+                throw new ArgumentNullException("credentials");
+            }
+            if (baseUri == null)
+            {
+                throw new ArgumentNullException("baseUri");
+            }
+            this._credentials = credentials;
+            this._baseUri = baseUri;
+
+            this.Credentials.InitializeServiceClient(this);
+        }
+
+         /// <summary>
+        /// Initializes a new instance of the FakeServiceClientWithCredentials class.
+        /// </summary>
+        public FakeServiceClientWithCredentials(SubscriptionCloudCredentials credentials, Uri baseUri, params DelegatingHandler[] handlers)
+            : base(handlers)
+        {
+            if (credentials == null)
+            {
+                throw new ArgumentNullException("credentials");
+            }
+            if (baseUri == null)
+            {
+                throw new ArgumentNullException("baseUri");
+            }
+            this._credentials = credentials;
+            this._baseUri = baseUri;
+
+            this.Credentials.InitializeServiceClient(this);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the FakeServiceClientWithCredentials class.
+        /// </summary>
+        public FakeServiceClientWithCredentials(SubscriptionCloudCredentials credentials, params DelegatingHandler[] handlers)
+            : base(handlers)
         {
             if (credentials == null)
             {
@@ -69,6 +108,28 @@ namespace Microsoft.Azure.Common.Test.Fakes
             this._baseUri = new Uri("https://TBD");
 
             this.Credentials.InitializeServiceClient(this);
+        }
+
+                /// <summary>
+        /// Initializes a new instance of the FakeServiceClientWithCredentials class.
+        /// </summary>
+        public FakeServiceClientWithCredentials(SubscriptionCloudCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers)
+            : base(rootHandler, handlers)
+        {
+            if (credentials == null)
+            {
+                throw new ArgumentNullException("credentials");
+            }
+            this._credentials = credentials;
+            this._baseUri = new Uri("https://TBD");
+
+            this.Credentials.InitializeServiceClient(this);
+        }
+
+        protected override void InitializeHttpClient(HttpClientHandler httpMessageHandler, params DelegatingHandler[] handlers)
+        {
+            base.InitializeHttpClient(httpMessageHandler, handlers);
+            HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }
 
         public Uri BaseUri
@@ -81,18 +142,7 @@ namespace Microsoft.Azure.Common.Test.Fakes
             get { return _credentials; }
         }
 
-        protected override void Clone(ServiceClient<FakeServiceClientWithCredentials> client)
-        {
-            base.Clone(client);
-            FakeServiceClientWithCredentials management = client as FakeServiceClientWithCredentials;
-            if (management != null)
-            {
-                management._credentials = Credentials;
-                management._baseUri = BaseUri;
-                management.Credentials.InitializeServiceClient(management);
-            }
-        }
-
+        
         public async Task<HttpResponseMessage> DoStuff()
         {
             // Construct URL
@@ -114,11 +164,6 @@ namespace Microsoft.Azure.Common.Test.Fakes
             var cancellationToken = new CancellationToken();
             cancellationToken.ThrowIfCancellationRequested();
             return await HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-        }
-
-        public void WithHandler(DelegatingHandler handler)
-        {
-            InitializeHttpPipeline(handler);
         }
     }
 }

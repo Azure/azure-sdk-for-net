@@ -12,6 +12,7 @@
     <AssemblyName>Microsoft.Azure.Common.NetFramework</AssemblyName>
     <OutputType>Library</OutputType>
     <RestorePackages>true</RestorePackages>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <DocumentationFile>bin\Debug\Microsoft.Azure.Common.NetFramework.xml</DocumentationFile>
@@ -28,8 +29,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Hyak.Common">
+      <HintPath>..\..\packages\Hyak.Common.2.0.1\lib\net45\Hyak.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http.Extensions, Version=2.2.22.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="System.Net.Http.Primitives, Version=4.2.22.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
@@ -39,6 +46,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

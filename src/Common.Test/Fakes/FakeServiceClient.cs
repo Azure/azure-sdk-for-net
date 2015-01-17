@@ -23,15 +23,14 @@ namespace Microsoft.Azure.Common.Test.Fakes
 {
     public class FakeServiceClient : ServiceClient<FakeServiceClient>
     {
-        public FakeServiceClient()
+        private FakeServiceClient() : base()
         {
             // Prevent base constructor from executing
         }
 
         public FakeServiceClient(HttpClientHandler httpMessageHandler)
-            : this()
+            : base(httpMessageHandler)
         {
-            InitializeHttpClient(httpMessageHandler);
         }
 
         public async Task<HttpResponseMessage> DoStuff()
@@ -55,13 +54,5 @@ namespace Microsoft.Azure.Common.Test.Fakes
             return await this.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Get an instance of the FakeServiceClient class that uses the handler while initiating web requests.
-        /// </summary>
-        /// <param name="handler">the handler</param>
-        public void WithHandler(DelegatingHandler handler)
-        {
-            InitializeHttpPipeline(handler);
-        }
     }
 }
