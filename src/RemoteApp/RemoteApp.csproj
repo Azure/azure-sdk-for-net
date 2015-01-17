@@ -13,7 +13,7 @@
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <NuGetPackageImportStamp>3a95fa84</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>7456fb68</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,6 +33,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Hyak.Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c66ce9294aae1300, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Hyak.Common.1.0.0\lib\portable-net403+win+wpa81\Hyak.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Azure.Common, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c66ce9294aae1300, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Microsoft.Azure.Common.2.0.0\lib\net45\Microsoft.Azure.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Azure.Common.NetFramework, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c66ce9294aae1300, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Microsoft.Azure.Common.2.0.0\lib\net45\Microsoft.Azure.Common.NetFramework.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Threading.Tasks">
       <HintPath>..\..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.dll</HintPath>
     </Reference>
@@ -70,8 +82,98 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Customizations\RemoteAppManagementClient.Customization.cs" />
-    <Compile Include="Generated\RemoteAppManagementClient.cs" />
+    <Compile Include="Generated\Models\Accounts\AccountDetails.cs" />
+    <Compile Include="Generated\Models\Accounts\AccountDetailsParameter.cs" />
+    <Compile Include="Generated\Models\Accounts\BillingPlan.cs" />
+    <Compile Include="Generated\Models\AliasesListParameter.cs" />
+    <Compile Include="Generated\Models\ApplicationDetailsListParameter.cs" />
+    <Compile Include="Generated\Models\ApplicationDetailsParameter.cs" />
+    <Compile Include="Generated\Models\Applications\AppPublishingStatus.cs" />
+    <Compile Include="Generated\Models\Applications\IconPngUrisType.cs" />
+    <Compile Include="Generated\Models\Applications\PublishedApplicationDetails.cs" />
+    <Compile Include="Generated\Models\Applications\PublishingOperationResult.cs" />
+    <Compile Include="Generated\Models\Applications\StartMenuApplication.cs" />
+    <Compile Include="Generated\Models\Collections\Collection.cs" />
+    <Compile Include="Generated\Models\Collections\CollectionMode.cs" />
+    <Compile Include="Generated\Models\Collections\CollectionType.cs" />
+    <Compile Include="Generated\Models\Collections\ServiceCreationDetails.cs" />
+    <Compile Include="Generated\Models\Images\SetTemplateImageDetails.cs" />
+    <Compile Include="Generated\Models\Images\TemplateImage.cs" />
+    <Compile Include="Generated\Models\Images\TemplateImageStatus.cs" />
+    <Compile Include="Generated\Models\Images\TemplateImageType.cs" />
+    <Compile Include="Generated\Models\Operations\OperationResult.cs" />
+    <Compile Include="Generated\Models\Operations\RemoteAppOperationStatus.cs" />
+    <Compile Include="Generated\Models\Principals\ConsentStatus.cs" />
+    <Compile Include="Generated\Models\Principals\PrincipalProviderType.cs" />
+    <Compile Include="Generated\Models\Principals\PrincipalType.cs" />
+    <Compile Include="Generated\Models\Principals\SecurityPrincipal.cs" />
+    <Compile Include="Generated\Models\Principals\SecurityPrincipalList.cs" />
+    <Compile Include="Generated\Models\Principals\SecurityPrincipalOperationError.cs" />
+    <Compile Include="Generated\Models\Principals\SecurityPrincipalOperationErrorDetails.cs" />
+    <Compile Include="Generated\Models\Principals\ServiceUserConsentStatus.cs" />
+    <Compile Include="Generated\Models\Vnets\GatewayType.cs" />
+    <Compile Include="Generated\Models\Vnets\OsFamily.cs" />
+    <Compile Include="Generated\Models\Vnets\Vendor.cs" />
+    <Compile Include="Generated\Models\Vnets\VirtualNetwork.cs" />
+    <Compile Include="Generated\Models\Vnets\VirtualNetworkOperationStatus.cs" />
+    <Compile Include="Generated\Models\Vnets\VirtualNetworkParameter.cs" />
+    <Compile Include="Generated\Models\Vnets\VirtualNetworkState.cs" />
+    <Compile Include="Generated\Models\Vnets\VpnDevice.cs" />
+    <Compile Include="Generated\Operations\AccountsOperations.cs" />
+    <Compile Include="Generated\Operations\AccountsOperationsExtensions.cs" />
+    <Compile Include="Generated\Operations\DiagnosticOperations.cs" />
+    <Compile Include="Generated\Operations\DiagnosticOperationsExtensions.cs" />
+    <Compile Include="Generated\Operations\IAccountsOperations.cs" />
+    <Compile Include="Generated\Operations\IDiagnosticOperations.cs" />
+    <Compile Include="Generated\Operations\IOperationResultOperations.cs" />
+    <Compile Include="Generated\Operations\IPublishingOperations.cs" />
+    <Compile Include="Generated\Operations\IRemoteAppManagementClient.cs" />
+    <Compile Include="Generated\Operations\IRemoteAppPrincipalOperations.cs" />
+    <Compile Include="Generated\Operations\IRemoteAppServiceOperations.cs" />
+    <Compile Include="Generated\Operations\ITemplateImageOperations.cs" />
+    <Compile Include="Generated\Operations\IVirtualNetworkOperations.cs" />
+    <Compile Include="Generated\Operations\OperationResultOperations.cs" />
+    <Compile Include="Generated\Operations\OperationResultOperationsExtensions.cs" />
+    <Compile Include="Generated\Operations\PublishingOperations.cs" />
+    <Compile Include="Generated\Operations\PublishingOperationsExtensions.cs" />
+    <Compile Include="Generated\Operations\RemoteAppManagementClient.cs" />
+    <Compile Include="Generated\Operations\RemoteAppManagementClientExtensions.cs" />
+    <Compile Include="Generated\Operations\RemoteAppPrincipalOperations.cs" />
+    <Compile Include="Generated\Operations\RemoteAppPrincipalOperationsExtensions.cs" />
+    <Compile Include="Generated\Operations\RemoteAppServiceOperations.cs" />
+    <Compile Include="Generated\Operations\RemoteAppServiceOperationsExtensions.cs" />
+    <Compile Include="Generated\Operations\TemplateImageOperations.cs" />
+    <Compile Include="Generated\Operations\TemplateImageOperationsExtensions.cs" />
+    <Compile Include="Generated\Operations\VirtualNetworkOperations.cs" />
+    <Compile Include="Generated\Operations\VirtualNetworkOperationsExtensions.cs" />
+    <Compile Include="Generated\Responses\Accounts\GetAccountResult.cs" />
+    <Compile Include="Generated\Responses\Accounts\ListBillingPlansResult.cs" />
+    <Compile Include="Generated\Responses\Applications\GetPublishedApplicationListResult.cs" />
+    <Compile Include="Generated\Responses\Applications\GetPublishedApplicationResult.cs" />
+    <Compile Include="Generated\Responses\Applications\GetStartMenuApplicationListResult.cs" />
+    <Compile Include="Generated\Responses\Applications\GetStartMenuApplicationResult.cs" />
+    <Compile Include="Generated\Responses\Applications\ModifyApplicationResult.cs" />
+    <Compile Include="Generated\Responses\Applications\PublishApplicationsResult.cs" />
+    <Compile Include="Generated\Responses\Applications\UnpublishAllApplicationsResult.cs" />
+    <Compile Include="Generated\Responses\Applications\UnpublishApplicationsResult.cs" />
+    <Compile Include="Generated\Responses\Collections\GetRegionListResult.cs" />
+    <Compile Include="Generated\Responses\Collections\GetServiceListResult.cs" />
+    <Compile Include="Generated\Responses\Collections\GetServiceResult.cs" />
+    <Compile Include="Generated\Responses\Common\OperationResultWithTrackingId.cs" />
+    <Compile Include="Generated\Responses\Images\GetUploadScriptResult.cs" />
+    <Compile Include="Generated\Responses\Images\ListTemplateImageResponse.cs" />
+    <Compile Include="Generated\Responses\Images\SetTemplateImageResponse.cs" />
+    <Compile Include="Generated\Responses\Images\TemplateImageResponse.cs" />
+    <Compile Include="Generated\Responses\Logs\DiagnosticOverviewResult.cs" />
+    <Compile Include="Generated\Responses\Logs\DiagnosticSummaryResult.cs" />
+    <Compile Include="Generated\Responses\Operations\GetOperationResultResponse.cs" />
+    <Compile Include="Generated\Responses\Principals\GetServicePrincipalListResult.cs" />
+    <Compile Include="Generated\Responses\Principals\ServicePrincipalOperationsResult.cs" />
+    <Compile Include="Generated\Responses\Vnets\VirtualNetworkConfigScriptResponse.cs" />
+    <Compile Include="Generated\Responses\Vnets\VirtualNetworkListResponse.cs" />
+    <Compile Include="Generated\Responses\Vnets\VirtualNetworkOperationStatusResponse.cs" />
+    <Compile Include="Generated\Responses\Vnets\VirtualNetworkResponse.cs" />
+    <Compile Include="Generated\Responses\Vnets\VirtualNetworkVpnDevicesResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -81,7 +183,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="hydra.xml" />
+    <Content Include="hyak.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
@@ -90,14 +192,7 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
-    <Error Condition="!Exists('..\..\packages\Hydra.Generator.1.0.5368.22430-prerelease\build\Hydra.Generator.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Hydra.Generator.1.0.5368.22430-prerelease\build\Hydra.Generator.targets'))" />
-  </Target>
-  <Import Project="GenerateCode.props" />
-  <Import Project="..\..\packages\Hydra.Generator.1.0.5368.22430-prerelease\build\Hydra.Generator.targets" Condition="Exists('..\..\packages\Hydra.Generator.1.0.5368.22430-prerelease\build\Hydra.Generator.targets')" />
-  <Target Name="DoSpecGeneration" DependsOnTargets="RestorePackages" BeforeTargets="BeforeBuild">
-    <CallTarget Targets="GenerateCodeFromSpecs" Condition="'$(HydraGeneratorImported)' != ''" />
-    <Error Text="The Hydra code generator package was restored from nuget. Build the project again to do code generation." Condition="Exists('..\..\packages\Hydra.Generator.1.0.5368.22430-prerelease\build\Hydra.Generator.targets') And '$(HydraGeneratorImported)' == ''" />
-    <Warning Text="The Hydra code generation packages are not available. Compilation will be done on existing generated sources." Condition="!Exists('..\..\packages\Hydra.Generator.1.0.5368.22430-prerelease\build\Hydra.Generator.targets')" />
+    <Error Condition="!Exists('..\..\packages\Hyak.Generator.1.0.5478.27459-prerelease\build\Hyak.Generator.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Hyak.Generator.1.0.5478.27459-prerelease\build\Hyak.Generator.targets'))" />
   </Target>
   <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
   <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
@@ -108,6 +203,16 @@
     <PreBuildEvent>
     </PreBuildEvent>
   </PropertyGroup>
+  <Import Project="GenerateCode.props" />
+  <Import Project="..\..\packages\Hyak.Generator.1.0.5478.27459-prerelease\build\Hyak.Generator.targets" Condition="Exists('..\..\packages\Hyak.Generator.1.0.5478.27459-prerelease\build\Hyak.Generator.targets')" />
+  <Target Name="DoSpecGeneration" DependsOnTargets="RestorePackages" BeforeTargets="BeforeBuild">
+    <CallTarget Targets="GenerateCodeFromSpecs" Condition="'$(HydraGeneratorImported)' != ''" />
+    <Error Text="The Hydra code generator package was restored from nuget. Build the project again to do code generation." Condition="Exists('..\..\packages\Hyak.Generator.1.0.5478.27459-prerelease\build\Hyak.Generator.targets') And '$(HydraGeneratorImported)' == ''" />
+    <Warning Text="The Hydra code generation packages are not available. Compilation will be done on existing generated sources." Condition="!Exists('..\..\packages\Hyak.Generator.1.0.5478.27459-prerelease\build\Hyak.Generator.targets')" />
+  </Target>
+  <Target Name="CopyMicrosoftAzureManagementRemoteAppSpecification" BeforeTargets="GenerateCodeFromSpecs">
+    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.RemoteApp.Specification.1.0.0.0-prerelease\tools\Microsoft.Azure.Management.RemoteApp.Specification.dll" DestinationFolder="." />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

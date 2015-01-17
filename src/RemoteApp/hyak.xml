@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Hydra>
+    <Assembly>Microsoft.Azure.Management.RemoteApp.Specification.dll</Assembly>
+    <OutputDirectory>Generated</OutputDirectory>
+
+    <Specification>
+        <Type>Microsoft.Azure.Management.RemoteApp.Operations.RemoteAppManagementClient</Type>
+
+        <Platform>
+            <Flavor>CSharp.Azure</Flavor>
+            <OutputDirectory></OutputDirectory>
+            <BaseNamespace>Microsoft.Azure.Management.RemoteApp</BaseNamespace>
+            <Split>Namespace</Split>
+        </Platform>
+
+    </Specification>
+</Hydra>

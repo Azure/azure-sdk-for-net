@@ -7,16 +7,16 @@
      If this is a project that uses the spec from the same solution (for example, a test
      project) then set this property to blank (or just remove it completely)
   -->
-      <GetSpecFromNuGet></GetSpecFromNuGet>
+      <GetSpecFromNuGet>1</GetSpecFromNuGet>
   </PropertyGroup>
 
   <!-- User settable properties to control how specs are found in the same solution -->
   <PropertyGroup Condition="$(GetSpecFromNuGet) == ''">
     <!-- name of project directory which builds the spec dll -->
-    <SpecAssemblyProjectDirName>..\..\hydra-specs-pr\RemoteApp\Microsoft.WindowsAzure.Management.RemoteApp.Specification</SpecAssemblyProjectDirName>
+    <SpecAssemblyProjectDirName>Microsoft.Azure.Management.RemoteApp.Specification</SpecAssemblyProjectDirName>
 
     <!-- The filename for the generated spec assembly -->
-    <SpecAssemblyFileName>Microsoft.WindowsAzure.Management.RemoteApp.Specification.dll</SpecAssemblyFileName>
+    <SpecAssemblyFileName>Microsoft.Azure.Management.RemoteApp.Specification.dll</SpecAssemblyFileName>
   </PropertyGroup>
 
   <!-- User settable properties to control how specs are retrieved from NuGet -->
