@@ -128,16 +128,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.HadoopClientTests
             }
         }
 
-
-        [TestMethod]
-        [TestCategory("Manual")]
-        [TestCategory(TestRunMode.Nightly)]
-        public async Task ICanDeleteAndAddAHttpUser_Azure()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            await this.ICanDeleteAndAddAHttpUser();
-        }
-
         private static async Task WaitforCompletion(IHDInsightManagementPocoClient pocoClient, string dnsName, string location, Guid operationId)
         {
             await pocoClient.WaitForOperationCompleteOrError(dnsName, location, operationId, TimeSpan.FromMilliseconds(IHadoopClientExtensions.GetPollingInterval()), CancellationToken.None);
@@ -190,15 +180,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.HadoopClientTests
         }
 
         [TestMethod]
-        [TestCategory("Manual")]
-        [TestCategory(TestRunMode.Nightly)]
-        public async Task ICanDeleteTheHttpUserTwice_Azure()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            await this.ICanDeleteTheHttpUserTwice();
-        }
-
-        [TestMethod]
         [TestCategory("ApiSec")]
         [TestCategory(TestRunMode.CheckIn)]
         public async Task ICannotAddAnotherHttpUser()
@@ -243,15 +224,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.HadoopClientTests
             }
 
             Assert.Fail("Adding http user twice did not throw an exception");
-        }
-
-        [TestMethod]
-        [TestCategory("Manual")]
-        [TestCategory(TestRunMode.Nightly)]
-        public async Task ICannotAddAnotherHttpUser_Azure()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            await this.ICannotAddAnotherHttpUser();
         }
 
         [TestMethod]
@@ -303,99 +275,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.HadoopClientTests
                 }
             }
 
-        }
-
-        [TestMethod]
-        [TestCategory("Manual")]
-        [TestCategory(TestRunMode.Nightly)]
-        public async Task ICannotSubmitAChangeHttpUserOperationWhileAnotherIsInProgress_Azure()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            await this.ICannotSubmitAChangeHttpUserOperationWhileAnotherIsInProgress();
-        }
-
-        [TestMethod]
-        [TestCategory("ApiSec")]
-        public async Task ICannotSubmitAHttpEnableConnectivityRequestToAnUnsupportedClusterVersion()
-        {
-            IHDInsightCertificateCredential credentials = IntegrationTestBase.GetValidCredentials();
-            var client = ServiceLocator.Instance.Locate<IHDInsightClientFactory>()
-                                        .Create(new HDInsightCertificateCredential(credentials.SubscriptionId, credentials.Certificate));
-            var clusterDetails = GetRandomCluster();
-            try
-            {
-
-                var manager = ServiceLocator.Instance.Locate<IHDInsightManagementPocoClientFactory>();
-                var pocoClient = manager.Create(credentials, GetAbstractionContext(), false);
-
-                clusterDetails.Version = "1.5.0.0.LargeSKU-amd64-134231";
-                client.CreateCluster(clusterDetails);
-
-                // Try disabling first
-                var opId = await pocoClient.EnableHttp(clusterDetails.Name, clusterDetails.Location, "user name", GetRandomValidPassword());
-            }
-            catch (HttpLayerException clientEx)
-            {
-                Assert.IsTrue(clientEx.Message.Contains("connectivity changes are not supported for this cluster version"));
-                Help.DoNothing(clientEx);
-            }
-            catch (InvalidOperationException)
-            {
-                //Tools upgrade required
-            }
-            finally
-            {
-                client.DeleteCluster(clusterDetails.Name);
-            }
-        }
-
-        [TestMethod]
-        [TestCategory("Manual")]
-        [TestCategory(TestRunMode.Nightly)]
-        public async Task ICannotSubmitAHttpEnableConnectivityRequestToAnUnsupportedClusterVersion_Azure()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            await this.ICannotSubmitAHttpEnableConnectivityRequestToAnUnsupportedClusterVersion();
-        }
-
-        [TestMethod]
-        public async Task ICannotSubmitAHttpDisableConnectivityRequestToAnUnsupportedClusterVersion()
-        {
-            IHDInsightCertificateCredential credentials = IntegrationTestBase.GetValidCredentials();
-            var client = ServiceLocator.Instance.Locate<IHDInsightClientFactory>()
-                                        .Create(new HDInsightCertificateCredential(credentials.SubscriptionId, credentials.Certificate));
-            var clusterDetails = GetRandomCluster();
-            try
-            {
-
-                var manager = ServiceLocator.Instance.Locate<IHDInsightManagementPocoClientFactory>();
-                var pocoClient = manager.Create(credentials, GetAbstractionContext(), false);
-
-                clusterDetails.Version = "1.6.0.0.LargeSKU-amd64-134231";
-                client.CreateCluster(clusterDetails);
-
-
-                // Try disabling first
-                var opId = await pocoClient.DisableHttp(clusterDetails.Name, clusterDetails.Location);
-            }
-            catch (HttpLayerException clientEx)
-            {
-                Assert.IsTrue(clientEx.Message.Contains("connectivity changes are not supported for this cluster version"));
-                Help.DoNothing(clientEx);
-            }
-            finally
-            {
-                client.DeleteCluster(clusterDetails.Name);
-            }
-        }
-
-        [TestMethod]
-        [TestCategory("Manual")]
-        [TestCategory(TestRunMode.Nightly)]
-        public async Task ICannotSubmitAHttpDisableConnectivityRequestToAnUnsupportedClusterVersion_Azure()
-        {
-            this.ApplyIndividualTestMockingOnly();
-            await this.ICannotSubmitAHttpDisableConnectivityRequestToAnUnsupportedClusterVersion();
         }
 
         [TestMethod]

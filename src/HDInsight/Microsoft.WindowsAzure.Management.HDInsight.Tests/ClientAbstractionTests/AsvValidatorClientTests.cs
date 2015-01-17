@@ -77,31 +77,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
 
         [TestMethod]
         [TestCategory("Integration")]
-        [TestCategory(TestRunMode.Nightly)] // Commenting since this takes 15 sec
-        [TestCategory("RestAsvClient")]
-        [ExpectedException(typeof(ConfigurationErrorsException))]
-        public async Task ICanPerformA_NegativeValidateAccount_PartialAccount_RestAsvClientAbstraction()
-        {
-            var client = ServiceLocator.Instance.Locate<IAsvValidatorClientFactory>().Create();
-            await client.ValidateAccount(IntegrationTestBase.TestCredentials.Environments[0].DefaultStorageAccount.Name.Split(new char[] { '.' })[0],
-                                         IntegrationTestBase.TestCredentials.Environments[0].DefaultStorageAccount.Key);
-
-        }
-
-        [TestMethod]
-        [TestCategory("Integration")]
-        [TestCategory(TestRunMode.Nightly)] // Commenting since this takes 15 sec
-        [TestCategory("RestAsvClient")]
-        [ExpectedException(typeof(ConfigurationErrorsException))]
-        public async Task ICanPerformA_NegativeValidateAccount_WrongAccount_RestAsvClientAbstraction()
-        {
-            var client = ServiceLocator.Instance.Locate<IAsvValidatorClientFactory>().Create();
-            await client.ValidateAccount("invalid." + IntegrationTestBase.TestCredentials.Environments[0].DefaultStorageAccount.Name,
-                                         IntegrationTestBase.TestCredentials.Environments[0].DefaultStorageAccount.Key);
-        }
-
-        [TestMethod]
-        [TestCategory("Integration")]
         [TestCategory("CheckIn")]
         [TestCategory("RestAsvClient")]
         [ExpectedException(typeof(ConfigurationErrorsException))]
