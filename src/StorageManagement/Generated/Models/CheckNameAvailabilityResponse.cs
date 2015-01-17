@@ -21,14 +21,14 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.WindowsAzure.Management.Storage.Models
 {
     /// <summary>
     /// The response to a storage account check name availability request.
     /// </summary>
-    public partial class CheckNameAvailabilityResponse : OperationResponse
+    public partial class CheckNameAvailabilityResponse : AzureOperationResponse
     {
         private bool _isAvailable;
         

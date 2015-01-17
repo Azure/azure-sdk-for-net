@@ -22,14 +22,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Hyak.Common;
+using Microsoft.Azure;
 
 namespace Microsoft.WindowsAzure.Management.Scheduler.Models
 {
     /// <summary>
     /// The Resource Provider Get Properties operation response.
     /// </summary>
-    public partial class ResourceProviderGetPropertiesResponse : OperationResponse
+    public partial class ResourceProviderGetPropertiesResponse : AzureOperationResponse
     {
         private IDictionary<string, string> _properties;
         
@@ -48,7 +49,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
         /// </summary>
         public ResourceProviderGetPropertiesResponse()
         {
-            this.Properties = new Dictionary<string, string>();
+            this.Properties = new LazyDictionary<string, string>();
         }
     }
 }

@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
@@ -47,7 +48,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public VirtualMachineStartRolesParameters()
         {
-            this.Roles = new List<string>();
+            this.Roles = new LazyList<string>();
         }
     }
 }

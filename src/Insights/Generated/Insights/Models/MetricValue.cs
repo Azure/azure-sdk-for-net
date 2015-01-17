@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 
 namespace Microsoft.Azure.Insights.Models
 {
@@ -87,12 +88,12 @@ namespace Microsoft.Azure.Insights.Models
             set { this._minimum = value; }
         }
         
-        private Dictionary<string, string> _properties;
+        private IDictionary<string, string> _properties;
         
         /// <summary>
         /// Optional. Collection of extended properties.
         /// </summary>
-        public Dictionary<string, string> Properties
+        public IDictionary<string, string> Properties
         {
             get { return this._properties; }
             set { this._properties = value; }
@@ -125,7 +126,7 @@ namespace Microsoft.Azure.Insights.Models
         /// </summary>
         public MetricValue()
         {
-            this.Properties = new Dictionary<string, string>();
+            this.Properties = new LazyDictionary<string, string>();
         }
     }
 }

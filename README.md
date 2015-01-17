@@ -77,6 +77,36 @@ Be sure to check out the [Microsoft Azure Developer Forums on MSDN](http://go.mi
 
 ## Collaborate & Contribute
 
+### Environment setup
+
+Install:
+- Visual Studio 2013 RTM with update 2 and Windows and Windows Phone SDKs
+- Latest [Git client] (http://git-scm.com/download/win)
+
+### How to build locally
+
+#### Visual Studio
+
+In the root folder of Azure Sdk you will find two solutions:
+
+- WindowsAzureCommonLibraries.sln, contains projects for Azure Common libraries
+- WindowsAzureManagementLibraries.sln, contains projects for Azure Management libraries
+
+Any of them could be opened and built in the IDE of Visual Studio 2013.
+
+> Note: 
+> You will need to restore Nuget Packages locally before build. To do so go to "Tools\Nuget Package Manager\Manage Nuget Packages for Solution" menu item in VS IDE and press Restore button in the upper right corner of the window.
+
+#### Command prompt
+
+Open Visual Studio command prompt and navigate to your cloned git folder of Azure Sdk, then run:
+
+```bash
+msbuild libraries.msbuild
+```
+
+### How to contribute
+
 We gladly accept community contributions.
 
 - Issues: Please report bugs using the Issues section of GitHub

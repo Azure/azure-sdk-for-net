@@ -21,14 +21,14 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
     /// The operation response model with skip token.
     /// </summary>
-    public partial class OperationResponseWithSkipToken : OperationResponse
+    public partial class OperationResponseWithSkipToken : AzureOperationResponse
     {
         private string _skipToken;
         

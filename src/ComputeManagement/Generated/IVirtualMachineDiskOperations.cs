@@ -23,7 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute
@@ -78,7 +78,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginCreatingDataDiskAsync(string serviceName, string deploymentName, string roleName, VirtualMachineDataDiskCreateParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BeginCreatingDataDiskAsync(string serviceName, string deploymentName, string roleName, VirtualMachineDataDiskCreateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Begin Deleting Data Disk operation removes the specified data
@@ -109,7 +109,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginDeletingDataDiskAsync(string serviceName, string deploymentName, string roleName, int logicalUnitNumber, bool deleteFromStorage, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BeginDeletingDataDiskAsync(string serviceName, string deploymentName, string roleName, int logicalUnitNumber, bool deleteFromStorage, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Create Data Disk operation adds a data disk to a virtual
@@ -237,7 +237,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> DeleteDiskAsync(string name, bool deleteFromStorage, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> DeleteDiskAsync(string name, bool deleteFromStorage, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Get Data Disk operation retrieves the specified data disk from
@@ -326,7 +326,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> UpdateDataDiskAsync(string serviceName, string deploymentName, string roleName, int logicalUnitNumber, VirtualMachineDataDiskUpdateParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> UpdateDataDiskAsync(string serviceName, string deploymentName, string roleName, int logicalUnitNumber, VirtualMachineDataDiskUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Add Disk operation adds a disk to the user image repository.

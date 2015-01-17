@@ -21,14 +21,14 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
     /// The Download RDP file operation response.
     /// </summary>
-    public partial class VirtualMachineGetRemoteDesktopFileResponse : OperationResponse
+    public partial class VirtualMachineGetRemoteDesktopFileResponse : AzureOperationResponse
     {
         private byte[] _remoteDesktopFile;
         

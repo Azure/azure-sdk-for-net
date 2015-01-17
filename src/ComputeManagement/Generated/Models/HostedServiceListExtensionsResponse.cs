@@ -22,7 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
@@ -30,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
     /// <summary>
     /// The List Extensions operation response.
     /// </summary>
-    public partial class HostedServiceListExtensionsResponse : OperationResponse, IEnumerable<HostedServiceListExtensionsResponse.Extension>
+    public partial class HostedServiceListExtensionsResponse : AzureOperationResponse, IEnumerable<HostedServiceListExtensionsResponse.Extension>
     {
         private IList<HostedServiceListExtensionsResponse.Extension> _extensions;
         
@@ -49,7 +50,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public HostedServiceListExtensionsResponse()
         {
-            this.Extensions = new List<HostedServiceListExtensionsResponse.Extension>();
+            this.Extensions = new LazyList<HostedServiceListExtensionsResponse.Extension>();
         }
         
         /// <summary>

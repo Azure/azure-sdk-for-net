@@ -29,12 +29,11 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Hyak.Common;
+using Hyak.Common.Internals;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Automation;
 using Microsoft.Azure.Management.Automation.Models;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.Management.Automation
@@ -107,19 +106,19 @@ namespace Microsoft.Azure.Management.Automation
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("automationAccount", automationAccount);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "CreateScheduleLinkAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "CreateScheduleLinkAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + automationAccount.Trim() + "/Runbooks(guid'" + parameters.RunbookId.Trim() + "')/StartOnSchedule?";
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + Uri.EscapeDataString(automationAccount) + "/Runbooks(guid'" + Uri.EscapeDataString(parameters.RunbookId) + "')/StartOnSchedule?";
             url = url + "api-version=2014-03-13_Preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -161,28 +160,31 @@ namespace Microsoft.Azure.Management.Automation
                 
                 if (parameters.Parameters != null)
                 {
-                    JArray parametersArray = new JArray();
-                    foreach (NameValuePair parametersItem in parameters.Parameters)
+                    if (parameters.Parameters is ILazyCollection == false || ((ILazyCollection)parameters.Parameters).IsInitialized)
                     {
-                        JObject nameValuePairValue = new JObject();
-                        parametersArray.Add(nameValuePairValue);
-                        
-                        if (parametersItem.Name != null)
+                        JArray parametersArray = new JArray();
+                        foreach (NameValuePair parametersItem in parameters.Parameters)
                         {
-                            nameValuePairValue["Name"] = parametersItem.Name;
+                            JObject nameValuePairValue = new JObject();
+                            parametersArray.Add(nameValuePairValue);
+                            
+                            if (parametersItem.Name != null)
+                            {
+                                nameValuePairValue["Name"] = parametersItem.Name;
+                            }
+                            
+                            if (parametersItem.Value != null)
+                            {
+                                nameValuePairValue["Value"] = parametersItem.Value;
+                            }
                         }
-                        
-                        if (parametersItem.Value != null)
-                        {
-                            nameValuePairValue["Value"] = parametersItem.Value;
-                        }
+                        runbookCreateScheduleLinkParametersValue["parameters"] = parametersArray;
                     }
-                    runbookCreateScheduleLinkParametersValue["parameters"] = parametersArray;
                 }
                 
                 runbookCreateScheduleLinkParametersValue["scheduleId"] = parameters.ScheduleId;
                 
-                requestContent = requestDoc.ToString(Formatting.Indented);
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
                 
@@ -192,13 +194,13 @@ namespace Microsoft.Azure.Management.Automation
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -207,7 +209,7 @@ namespace Microsoft.Azure.Management.Automation
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -215,25 +217,28 @@ namespace Microsoft.Azure.Management.Automation
                     // Create Result
                     RunbookCreateScheduleLinkResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new RunbookCreateScheduleLinkResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        JToken valueValue = responseDoc["value"];
-                        if (valueValue != null && valueValue.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new RunbookCreateScheduleLinkResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            string valueInstance = ((string)valueValue);
-                            result.JobContextId = valueInstance;
+                            responseDoc = JToken.Parse(responseContent);
                         }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueValue = responseDoc["value"];
+                            if (valueValue != null && valueValue.Type != JTokenType.Null)
+                            {
+                                string valueInstance = ((string)valueValue);
+                                result.JobContextId = valueInstance;
+                            }
+                        }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -242,7 +247,7 @@ namespace Microsoft.Azure.Management.Automation
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -281,7 +286,7 @@ namespace Microsoft.Azure.Management.Automation
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> DeleteAsync(string automationAccount, string runbookId, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> DeleteAsync(string automationAccount, string runbookId, CancellationToken cancellationToken)
         {
             // Validate
             if (automationAccount == null)
@@ -294,19 +299,19 @@ namespace Microsoft.Azure.Management.Automation
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("automationAccount", automationAccount);
                 tracingParameters.Add("runbookId", runbookId);
-                Tracing.Enter(invocationId, this, "DeleteAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "DeleteAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + automationAccount.Trim() + "/Runbooks(guid'" + runbookId.Trim() + "')?";
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + Uri.EscapeDataString(automationAccount) + "/Runbooks(guid'" + Uri.EscapeDataString(runbookId) + "')?";
             url = url + "api-version=2014-03-13_Preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -345,13 +350,13 @@ namespace Microsoft.Azure.Management.Automation
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.NoContent)
@@ -360,14 +365,15 @@ namespace Microsoft.Azure.Management.Automation
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
-                    result = new OperationResponse();
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -376,7 +382,7 @@ namespace Microsoft.Azure.Management.Automation
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -416,7 +422,7 @@ namespace Microsoft.Azure.Management.Automation
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> DeleteScheduleLinkAsync(string automationAccount, RunbookDeleteScheduleLinkParameters parameters, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> DeleteScheduleLinkAsync(string automationAccount, RunbookDeleteScheduleLinkParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (automationAccount == null)
@@ -437,19 +443,19 @@ namespace Microsoft.Azure.Management.Automation
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("automationAccount", automationAccount);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "DeleteScheduleLinkAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "DeleteScheduleLinkAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + automationAccount.Trim() + "/Runbooks(guid'" + parameters.RunbookId.Trim() + "')/$links/Schedules(guid'" + parameters.ScheduleId.Trim() + "')?";
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + Uri.EscapeDataString(automationAccount) + "/Runbooks(guid'" + Uri.EscapeDataString(parameters.RunbookId) + "')/$links/Schedules(guid'" + Uri.EscapeDataString(parameters.ScheduleId) + "')?";
             url = url + "api-version=2014-03-13_Preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -488,13 +494,13 @@ namespace Microsoft.Azure.Management.Automation
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.NoContent)
@@ -503,14 +509,15 @@ namespace Microsoft.Azure.Management.Automation
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
-                    result = new OperationResponse();
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -519,7 +526,7 @@ namespace Microsoft.Azure.Management.Automation
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -570,19 +577,19 @@ namespace Microsoft.Azure.Management.Automation
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("automationAccount", automationAccount);
                 tracingParameters.Add("runbookId", runbookId);
-                Tracing.Enter(invocationId, this, "EditAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "EditAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + automationAccount.Trim() + "/Runbooks(guid'" + runbookId.Trim() + "')/Edit?";
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + Uri.EscapeDataString(automationAccount) + "/Runbooks(guid'" + Uri.EscapeDataString(runbookId) + "')/Edit?";
             url = url + "api-version=2014-03-13_Preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -621,13 +628,13 @@ namespace Microsoft.Azure.Management.Automation
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -636,7 +643,7 @@ namespace Microsoft.Azure.Management.Automation
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -644,25 +651,28 @@ namespace Microsoft.Azure.Management.Automation
                     // Create Result
                     RunbookEditResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new RunbookEditResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        JToken valueValue = responseDoc["value"];
-                        if (valueValue != null && valueValue.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new RunbookEditResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            string valueInstance = ((string)valueValue);
-                            result.DraftRunbookVersionId = valueInstance;
+                            responseDoc = JToken.Parse(responseContent);
                         }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueValue = responseDoc["value"];
+                            if (valueValue != null && valueValue.Type != JTokenType.Null)
+                            {
+                                string valueInstance = ((string)valueValue);
+                                result.DraftRunbookVersionId = valueInstance;
+                            }
+                        }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -671,7 +681,7 @@ namespace Microsoft.Azure.Management.Automation
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -722,19 +732,19 @@ namespace Microsoft.Azure.Management.Automation
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("automationAccount", automationAccount);
                 tracingParameters.Add("runbookId", runbookId);
-                Tracing.Enter(invocationId, this, "GetAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + automationAccount.Trim() + "/Runbooks(guid'" + runbookId.Trim() + "')?";
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + Uri.EscapeDataString(automationAccount) + "/Runbooks(guid'" + Uri.EscapeDataString(runbookId) + "')?";
             url = url + "api-version=2014-03-13_Preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -773,13 +783,13 @@ namespace Microsoft.Azure.Management.Automation
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -788,7 +798,7 @@ namespace Microsoft.Azure.Management.Automation
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -796,220 +806,230 @@ namespace Microsoft.Azure.Management.Automation
                     // Create Result
                     RunbookGetResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new RunbookGetResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        Runbook runbookInstance = new Runbook();
-                        result.Runbook = runbookInstance;
-                        
-                        JToken accountIDValue = responseDoc["AccountID"];
-                        if (accountIDValue != null && accountIDValue.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new RunbookGetResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            string accountIDInstance = ((string)accountIDValue);
-                            runbookInstance.AccountId = accountIDInstance;
+                            responseDoc = JToken.Parse(responseContent);
                         }
                         
-                        JToken runbookIDValue = responseDoc["RunbookID"];
-                        if (runbookIDValue != null && runbookIDValue.Type != JTokenType.Null)
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            string runbookIDInstance = ((string)runbookIDValue);
-                            runbookInstance.Id = runbookIDInstance;
-                        }
-                        
-                        JToken runbookNameValue = responseDoc["RunbookName"];
-                        if (runbookNameValue != null && runbookNameValue.Type != JTokenType.Null)
-                        {
-                            string runbookNameInstance = ((string)runbookNameValue);
-                            runbookInstance.Name = runbookNameInstance;
-                        }
-                        
-                        JToken creationTimeValue = responseDoc["CreationTime"];
-                        if (creationTimeValue != null && creationTimeValue.Type != JTokenType.Null)
-                        {
-                            DateTime creationTimeInstance = ((DateTime)creationTimeValue);
-                            runbookInstance.CreationTime = creationTimeInstance;
-                        }
-                        
-                        JToken lastModifiedTimeValue = responseDoc["LastModifiedTime"];
-                        if (lastModifiedTimeValue != null && lastModifiedTimeValue.Type != JTokenType.Null)
-                        {
-                            DateTime lastModifiedTimeInstance = ((DateTime)lastModifiedTimeValue);
-                            runbookInstance.LastModifiedTime = lastModifiedTimeInstance;
-                        }
-                        
-                        JToken lastModifiedByValue = responseDoc["LastModifiedBy"];
-                        if (lastModifiedByValue != null && lastModifiedByValue.Type != JTokenType.Null)
-                        {
-                            string lastModifiedByInstance = ((string)lastModifiedByValue);
-                            runbookInstance.LastModifiedBy = lastModifiedByInstance;
-                        }
-                        
-                        JToken descriptionValue = responseDoc["Description"];
-                        if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
-                        {
-                            string descriptionInstance = ((string)descriptionValue);
-                            runbookInstance.Description = descriptionInstance;
-                        }
-                        
-                        JToken isApiOnlyValue = responseDoc["IsApiOnly"];
-                        if (isApiOnlyValue != null && isApiOnlyValue.Type != JTokenType.Null)
-                        {
-                            bool isApiOnlyInstance = ((bool)isApiOnlyValue);
-                            runbookInstance.IsApiOnly = isApiOnlyInstance;
-                        }
-                        
-                        JToken isGlobalValue = responseDoc["IsGlobal"];
-                        if (isGlobalValue != null && isGlobalValue.Type != JTokenType.Null)
-                        {
-                            bool isGlobalInstance = ((bool)isGlobalValue);
-                            runbookInstance.IsGlobal = isGlobalInstance;
-                        }
-                        
-                        JToken publishedRunbookVersionIDValue = responseDoc["PublishedRunbookVersionID"];
-                        if (publishedRunbookVersionIDValue != null && publishedRunbookVersionIDValue.Type != JTokenType.Null)
-                        {
-                            string publishedRunbookVersionIDInstance = ((string)publishedRunbookVersionIDValue);
-                            runbookInstance.PublishedRunbookVersionId = publishedRunbookVersionIDInstance;
-                        }
-                        
-                        JToken draftRunbookVersionIDValue = responseDoc["DraftRunbookVersionID"];
-                        if (draftRunbookVersionIDValue != null && draftRunbookVersionIDValue.Type != JTokenType.Null)
-                        {
-                            string draftRunbookVersionIDInstance = ((string)draftRunbookVersionIDValue);
-                            runbookInstance.DraftRunbookVersionId = draftRunbookVersionIDInstance;
-                        }
-                        
-                        JToken tagsValue = responseDoc["Tags"];
-                        if (tagsValue != null && tagsValue.Type != JTokenType.Null)
-                        {
-                            string tagsInstance = ((string)tagsValue);
-                            runbookInstance.Tags = tagsInstance;
-                        }
-                        
-                        JToken logDebugValue = responseDoc["LogDebug"];
-                        if (logDebugValue != null && logDebugValue.Type != JTokenType.Null)
-                        {
-                            bool logDebugInstance = ((bool)logDebugValue);
-                            runbookInstance.LogDebug = logDebugInstance;
-                        }
-                        
-                        JToken logVerboseValue = responseDoc["LogVerbose"];
-                        if (logVerboseValue != null && logVerboseValue.Type != JTokenType.Null)
-                        {
-                            bool logVerboseInstance = ((bool)logVerboseValue);
-                            runbookInstance.LogVerbose = logVerboseInstance;
-                        }
-                        
-                        JToken logProgressValue = responseDoc["LogProgress"];
-                        if (logProgressValue != null && logProgressValue.Type != JTokenType.Null)
-                        {
-                            bool logProgressInstance = ((bool)logProgressValue);
-                            runbookInstance.LogProgress = logProgressInstance;
-                        }
-                        
-                        JToken schedulesArray = responseDoc["Schedules"];
-                        if (schedulesArray != null && schedulesArray.Type != JTokenType.Null)
-                        {
-                            foreach (JToken schedulesValue in ((JArray)schedulesArray))
+                            Runbook runbookInstance = new Runbook();
+                            result.Runbook = runbookInstance;
+                            
+                            JToken accountIDValue = responseDoc["AccountID"];
+                            if (accountIDValue != null && accountIDValue.Type != JTokenType.Null)
                             {
-                                Schedule scheduleInstance = new Schedule();
-                                runbookInstance.Schedules.Add(scheduleInstance);
-                                
-                                JToken scheduleIDValue = schedulesValue["ScheduleID"];
-                                if (scheduleIDValue != null && scheduleIDValue.Type != JTokenType.Null)
+                                string accountIDInstance = ((string)accountIDValue);
+                                runbookInstance.AccountId = accountIDInstance;
+                            }
+                            
+                            JToken runbookIDValue = responseDoc["RunbookID"];
+                            if (runbookIDValue != null && runbookIDValue.Type != JTokenType.Null)
+                            {
+                                string runbookIDInstance = ((string)runbookIDValue);
+                                runbookInstance.Id = runbookIDInstance;
+                            }
+                            
+                            JToken runbookNameValue = responseDoc["RunbookName"];
+                            if (runbookNameValue != null && runbookNameValue.Type != JTokenType.Null)
+                            {
+                                string runbookNameInstance = ((string)runbookNameValue);
+                                runbookInstance.Name = runbookNameInstance;
+                            }
+                            
+                            JToken creationTimeValue = responseDoc["CreationTime"];
+                            if (creationTimeValue != null && creationTimeValue.Type != JTokenType.Null)
+                            {
+                                DateTime creationTimeInstance = ((DateTime)creationTimeValue);
+                                runbookInstance.CreationTime = creationTimeInstance;
+                            }
+                            
+                            JToken lastModifiedTimeValue = responseDoc["LastModifiedTime"];
+                            if (lastModifiedTimeValue != null && lastModifiedTimeValue.Type != JTokenType.Null)
+                            {
+                                DateTime lastModifiedTimeInstance = ((DateTime)lastModifiedTimeValue);
+                                runbookInstance.LastModifiedTime = lastModifiedTimeInstance;
+                            }
+                            
+                            JToken lastModifiedByValue = responseDoc["LastModifiedBy"];
+                            if (lastModifiedByValue != null && lastModifiedByValue.Type != JTokenType.Null)
+                            {
+                                string lastModifiedByInstance = ((string)lastModifiedByValue);
+                                runbookInstance.LastModifiedBy = lastModifiedByInstance;
+                            }
+                            
+                            JToken descriptionValue = responseDoc["Description"];
+                            if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
+                            {
+                                string descriptionInstance = ((string)descriptionValue);
+                                runbookInstance.Description = descriptionInstance;
+                            }
+                            
+                            JToken isApiOnlyValue = responseDoc["IsApiOnly"];
+                            if (isApiOnlyValue != null && isApiOnlyValue.Type != JTokenType.Null)
+                            {
+                                bool isApiOnlyInstance = ((bool)isApiOnlyValue);
+                                runbookInstance.IsApiOnly = isApiOnlyInstance;
+                            }
+                            
+                            JToken isGlobalValue = responseDoc["IsGlobal"];
+                            if (isGlobalValue != null && isGlobalValue.Type != JTokenType.Null)
+                            {
+                                bool isGlobalInstance = ((bool)isGlobalValue);
+                                runbookInstance.IsGlobal = isGlobalInstance;
+                            }
+                            
+                            JToken publishedRunbookVersionIDValue = responseDoc["PublishedRunbookVersionID"];
+                            if (publishedRunbookVersionIDValue != null && publishedRunbookVersionIDValue.Type != JTokenType.Null)
+                            {
+                                string publishedRunbookVersionIDInstance = ((string)publishedRunbookVersionIDValue);
+                                runbookInstance.PublishedRunbookVersionId = publishedRunbookVersionIDInstance;
+                            }
+                            
+                            JToken draftRunbookVersionIDValue = responseDoc["DraftRunbookVersionID"];
+                            if (draftRunbookVersionIDValue != null && draftRunbookVersionIDValue.Type != JTokenType.Null)
+                            {
+                                string draftRunbookVersionIDInstance = ((string)draftRunbookVersionIDValue);
+                                runbookInstance.DraftRunbookVersionId = draftRunbookVersionIDInstance;
+                            }
+                            
+                            JToken tagsValue = responseDoc["Tags"];
+                            if (tagsValue != null && tagsValue.Type != JTokenType.Null)
+                            {
+                                string tagsInstance = ((string)tagsValue);
+                                runbookInstance.Tags = tagsInstance;
+                            }
+                            
+                            JToken logDebugValue = responseDoc["LogDebug"];
+                            if (logDebugValue != null && logDebugValue.Type != JTokenType.Null)
+                            {
+                                bool logDebugInstance = ((bool)logDebugValue);
+                                runbookInstance.LogDebug = logDebugInstance;
+                            }
+                            
+                            JToken logVerboseValue = responseDoc["LogVerbose"];
+                            if (logVerboseValue != null && logVerboseValue.Type != JTokenType.Null)
+                            {
+                                bool logVerboseInstance = ((bool)logVerboseValue);
+                                runbookInstance.LogVerbose = logVerboseInstance;
+                            }
+                            
+                            JToken logProgressValue = responseDoc["LogProgress"];
+                            if (logProgressValue != null && logProgressValue.Type != JTokenType.Null)
+                            {
+                                bool logProgressInstance = ((bool)logProgressValue);
+                                runbookInstance.LogProgress = logProgressInstance;
+                            }
+                            
+                            JToken schedulesArray = responseDoc["Schedules"];
+                            if (schedulesArray != null && schedulesArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken schedulesValue in ((JArray)schedulesArray))
                                 {
-                                    string scheduleIDInstance = ((string)scheduleIDValue);
-                                    scheduleInstance.Id = scheduleIDInstance;
-                                }
-                                
-                                JToken accountIDValue2 = schedulesValue["AccountID"];
-                                if (accountIDValue2 != null && accountIDValue2.Type != JTokenType.Null)
-                                {
-                                    string accountIDInstance2 = ((string)accountIDValue2);
-                                    scheduleInstance.AccountId = accountIDInstance2;
-                                }
-                                
-                                JToken nameValue = schedulesValue["Name"];
-                                if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                {
-                                    string nameInstance = ((string)nameValue);
-                                    scheduleInstance.Name = nameInstance;
-                                }
-                                
-                                JToken descriptionValue2 = schedulesValue["Description"];
-                                if (descriptionValue2 != null && descriptionValue2.Type != JTokenType.Null)
-                                {
-                                    string descriptionInstance2 = ((string)descriptionValue2);
-                                    scheduleInstance.Description = descriptionInstance2;
-                                }
-                                
-                                JToken startTimeValue = schedulesValue["StartTime"];
-                                if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
-                                {
-                                    DateTime startTimeInstance = ((DateTime)startTimeValue);
-                                    scheduleInstance.StartTime = startTimeInstance;
-                                }
-                                
-                                JToken expiryTimeValue = schedulesValue["ExpiryTime"];
-                                if (expiryTimeValue != null && expiryTimeValue.Type != JTokenType.Null)
-                                {
-                                    DateTime expiryTimeInstance = ((DateTime)expiryTimeValue);
-                                    scheduleInstance.ExpiryTime = expiryTimeInstance;
-                                }
-                                
-                                JToken creationTimeValue2 = schedulesValue["CreationTime"];
-                                if (creationTimeValue2 != null && creationTimeValue2.Type != JTokenType.Null)
-                                {
-                                    DateTime creationTimeInstance2 = ((DateTime)creationTimeValue2);
-                                    scheduleInstance.CreationTime = creationTimeInstance2;
-                                }
-                                
-                                JToken lastModifiedTimeValue2 = schedulesValue["LastModifiedTime"];
-                                if (lastModifiedTimeValue2 != null && lastModifiedTimeValue2.Type != JTokenType.Null)
-                                {
-                                    DateTime lastModifiedTimeInstance2 = ((DateTime)lastModifiedTimeValue2);
-                                    scheduleInstance.LastModifiedTime = lastModifiedTimeInstance2;
-                                }
-                                
-                                JToken isEnabledValue = schedulesValue["IsEnabled"];
-                                if (isEnabledValue != null && isEnabledValue.Type != JTokenType.Null)
-                                {
-                                    bool isEnabledInstance = ((bool)isEnabledValue);
-                                    scheduleInstance.IsEnabled = isEnabledInstance;
-                                }
-                                
-                                JToken nextRunValue = schedulesValue["NextRun"];
-                                if (nextRunValue != null && nextRunValue.Type != JTokenType.Null)
-                                {
-                                    DateTime nextRunInstance = ((DateTime)nextRunValue);
-                                    scheduleInstance.NextRun = nextRunInstance;
-                                }
-                                
-                                JToken dayIntervalValue = schedulesValue["DayInterval"];
-                                if (dayIntervalValue != null && dayIntervalValue.Type != JTokenType.Null)
-                                {
-                                    int dayIntervalInstance = ((int)dayIntervalValue);
-                                    scheduleInstance.DayInterval = dayIntervalInstance;
-                                }
-                                
-                                JToken odatatypeValue = schedulesValue["odata.type"];
-                                if (odatatypeValue != null && odatatypeValue.Type != JTokenType.Null)
-                                {
-                                    string odatatypeInstance = ((string)odatatypeValue);
-                                    scheduleInstance.ScheduleType = odatatypeInstance;
+                                    Schedule scheduleInstance = new Schedule();
+                                    runbookInstance.Schedules.Add(scheduleInstance);
+                                    
+                                    JToken scheduleIDValue = schedulesValue["ScheduleID"];
+                                    if (scheduleIDValue != null && scheduleIDValue.Type != JTokenType.Null)
+                                    {
+                                        string scheduleIDInstance = ((string)scheduleIDValue);
+                                        scheduleInstance.Id = scheduleIDInstance;
+                                    }
+                                    
+                                    JToken accountIDValue2 = schedulesValue["AccountID"];
+                                    if (accountIDValue2 != null && accountIDValue2.Type != JTokenType.Null)
+                                    {
+                                        string accountIDInstance2 = ((string)accountIDValue2);
+                                        scheduleInstance.AccountId = accountIDInstance2;
+                                    }
+                                    
+                                    JToken nameValue = schedulesValue["Name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance = ((string)nameValue);
+                                        scheduleInstance.Name = nameInstance;
+                                    }
+                                    
+                                    JToken descriptionValue2 = schedulesValue["Description"];
+                                    if (descriptionValue2 != null && descriptionValue2.Type != JTokenType.Null)
+                                    {
+                                        string descriptionInstance2 = ((string)descriptionValue2);
+                                        scheduleInstance.Description = descriptionInstance2;
+                                    }
+                                    
+                                    JToken startTimeValue = schedulesValue["StartTime"];
+                                    if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime startTimeInstance = ((DateTime)startTimeValue);
+                                        scheduleInstance.StartTime = startTimeInstance;
+                                    }
+                                    
+                                    JToken expiryTimeValue = schedulesValue["ExpiryTime"];
+                                    if (expiryTimeValue != null && expiryTimeValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime expiryTimeInstance = ((DateTime)expiryTimeValue);
+                                        scheduleInstance.ExpiryTime = expiryTimeInstance;
+                                    }
+                                    
+                                    JToken creationTimeValue2 = schedulesValue["CreationTime"];
+                                    if (creationTimeValue2 != null && creationTimeValue2.Type != JTokenType.Null)
+                                    {
+                                        DateTime creationTimeInstance2 = ((DateTime)creationTimeValue2);
+                                        scheduleInstance.CreationTime = creationTimeInstance2;
+                                    }
+                                    
+                                    JToken lastModifiedTimeValue2 = schedulesValue["LastModifiedTime"];
+                                    if (lastModifiedTimeValue2 != null && lastModifiedTimeValue2.Type != JTokenType.Null)
+                                    {
+                                        DateTime lastModifiedTimeInstance2 = ((DateTime)lastModifiedTimeValue2);
+                                        scheduleInstance.LastModifiedTime = lastModifiedTimeInstance2;
+                                    }
+                                    
+                                    JToken isEnabledValue = schedulesValue["IsEnabled"];
+                                    if (isEnabledValue != null && isEnabledValue.Type != JTokenType.Null)
+                                    {
+                                        bool isEnabledInstance = ((bool)isEnabledValue);
+                                        scheduleInstance.IsEnabled = isEnabledInstance;
+                                    }
+                                    
+                                    JToken nextRunValue = schedulesValue["NextRun"];
+                                    if (nextRunValue != null && nextRunValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime nextRunInstance = ((DateTime)nextRunValue);
+                                        scheduleInstance.NextRun = nextRunInstance;
+                                    }
+                                    
+                                    JToken dayIntervalValue = schedulesValue["DayInterval"];
+                                    if (dayIntervalValue != null && dayIntervalValue.Type != JTokenType.Null)
+                                    {
+                                        int dayIntervalInstance = ((int)dayIntervalValue);
+                                        scheduleInstance.DayInterval = dayIntervalInstance;
+                                    }
+                                    
+                                    JToken hourIntervalValue = schedulesValue["HourInterval"];
+                                    if (hourIntervalValue != null && hourIntervalValue.Type != JTokenType.Null)
+                                    {
+                                        int hourIntervalInstance = ((int)hourIntervalValue);
+                                        scheduleInstance.HourInterval = hourIntervalInstance;
+                                    }
+                                    
+                                    JToken odatatypeValue = schedulesValue["odata.type"];
+                                    if (odatatypeValue != null && odatatypeValue.Type != JTokenType.Null)
+                                    {
+                                        string odatatypeInstance = ((string)odatatypeValue);
+                                        scheduleInstance.ScheduleType = odatatypeInstance;
+                                    }
                                 }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1018,7 +1038,7 @@ namespace Microsoft.Azure.Management.Automation
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -1069,19 +1089,19 @@ namespace Microsoft.Azure.Management.Automation
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("automationAccount", automationAccount);
                 tracingParameters.Add("runbookId", runbookId);
-                Tracing.Enter(invocationId, this, "GetWithSchedulesAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetWithSchedulesAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + automationAccount.Trim() + "/Runbooks(guid'" + runbookId.Trim() + "')?";
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + Uri.EscapeDataString(automationAccount) + "/Runbooks(guid'" + Uri.EscapeDataString(runbookId) + "')?";
             url = url + "$expand=Schedules";
             url = url + "&api-version=2014-03-13_Preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
@@ -1121,13 +1141,13 @@ namespace Microsoft.Azure.Management.Automation
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -1136,7 +1156,7 @@ namespace Microsoft.Azure.Management.Automation
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -1144,220 +1164,230 @@ namespace Microsoft.Azure.Management.Automation
                     // Create Result
                     RunbookGetResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new RunbookGetResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        Runbook runbookInstance = new Runbook();
-                        result.Runbook = runbookInstance;
-                        
-                        JToken accountIDValue = responseDoc["AccountID"];
-                        if (accountIDValue != null && accountIDValue.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new RunbookGetResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            string accountIDInstance = ((string)accountIDValue);
-                            runbookInstance.AccountId = accountIDInstance;
+                            responseDoc = JToken.Parse(responseContent);
                         }
                         
-                        JToken runbookIDValue = responseDoc["RunbookID"];
-                        if (runbookIDValue != null && runbookIDValue.Type != JTokenType.Null)
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            string runbookIDInstance = ((string)runbookIDValue);
-                            runbookInstance.Id = runbookIDInstance;
-                        }
-                        
-                        JToken runbookNameValue = responseDoc["RunbookName"];
-                        if (runbookNameValue != null && runbookNameValue.Type != JTokenType.Null)
-                        {
-                            string runbookNameInstance = ((string)runbookNameValue);
-                            runbookInstance.Name = runbookNameInstance;
-                        }
-                        
-                        JToken creationTimeValue = responseDoc["CreationTime"];
-                        if (creationTimeValue != null && creationTimeValue.Type != JTokenType.Null)
-                        {
-                            DateTime creationTimeInstance = ((DateTime)creationTimeValue);
-                            runbookInstance.CreationTime = creationTimeInstance;
-                        }
-                        
-                        JToken lastModifiedTimeValue = responseDoc["LastModifiedTime"];
-                        if (lastModifiedTimeValue != null && lastModifiedTimeValue.Type != JTokenType.Null)
-                        {
-                            DateTime lastModifiedTimeInstance = ((DateTime)lastModifiedTimeValue);
-                            runbookInstance.LastModifiedTime = lastModifiedTimeInstance;
-                        }
-                        
-                        JToken lastModifiedByValue = responseDoc["LastModifiedBy"];
-                        if (lastModifiedByValue != null && lastModifiedByValue.Type != JTokenType.Null)
-                        {
-                            string lastModifiedByInstance = ((string)lastModifiedByValue);
-                            runbookInstance.LastModifiedBy = lastModifiedByInstance;
-                        }
-                        
-                        JToken descriptionValue = responseDoc["Description"];
-                        if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
-                        {
-                            string descriptionInstance = ((string)descriptionValue);
-                            runbookInstance.Description = descriptionInstance;
-                        }
-                        
-                        JToken isApiOnlyValue = responseDoc["IsApiOnly"];
-                        if (isApiOnlyValue != null && isApiOnlyValue.Type != JTokenType.Null)
-                        {
-                            bool isApiOnlyInstance = ((bool)isApiOnlyValue);
-                            runbookInstance.IsApiOnly = isApiOnlyInstance;
-                        }
-                        
-                        JToken isGlobalValue = responseDoc["IsGlobal"];
-                        if (isGlobalValue != null && isGlobalValue.Type != JTokenType.Null)
-                        {
-                            bool isGlobalInstance = ((bool)isGlobalValue);
-                            runbookInstance.IsGlobal = isGlobalInstance;
-                        }
-                        
-                        JToken publishedRunbookVersionIDValue = responseDoc["PublishedRunbookVersionID"];
-                        if (publishedRunbookVersionIDValue != null && publishedRunbookVersionIDValue.Type != JTokenType.Null)
-                        {
-                            string publishedRunbookVersionIDInstance = ((string)publishedRunbookVersionIDValue);
-                            runbookInstance.PublishedRunbookVersionId = publishedRunbookVersionIDInstance;
-                        }
-                        
-                        JToken draftRunbookVersionIDValue = responseDoc["DraftRunbookVersionID"];
-                        if (draftRunbookVersionIDValue != null && draftRunbookVersionIDValue.Type != JTokenType.Null)
-                        {
-                            string draftRunbookVersionIDInstance = ((string)draftRunbookVersionIDValue);
-                            runbookInstance.DraftRunbookVersionId = draftRunbookVersionIDInstance;
-                        }
-                        
-                        JToken tagsValue = responseDoc["Tags"];
-                        if (tagsValue != null && tagsValue.Type != JTokenType.Null)
-                        {
-                            string tagsInstance = ((string)tagsValue);
-                            runbookInstance.Tags = tagsInstance;
-                        }
-                        
-                        JToken logDebugValue = responseDoc["LogDebug"];
-                        if (logDebugValue != null && logDebugValue.Type != JTokenType.Null)
-                        {
-                            bool logDebugInstance = ((bool)logDebugValue);
-                            runbookInstance.LogDebug = logDebugInstance;
-                        }
-                        
-                        JToken logVerboseValue = responseDoc["LogVerbose"];
-                        if (logVerboseValue != null && logVerboseValue.Type != JTokenType.Null)
-                        {
-                            bool logVerboseInstance = ((bool)logVerboseValue);
-                            runbookInstance.LogVerbose = logVerboseInstance;
-                        }
-                        
-                        JToken logProgressValue = responseDoc["LogProgress"];
-                        if (logProgressValue != null && logProgressValue.Type != JTokenType.Null)
-                        {
-                            bool logProgressInstance = ((bool)logProgressValue);
-                            runbookInstance.LogProgress = logProgressInstance;
-                        }
-                        
-                        JToken schedulesArray = responseDoc["Schedules"];
-                        if (schedulesArray != null && schedulesArray.Type != JTokenType.Null)
-                        {
-                            foreach (JToken schedulesValue in ((JArray)schedulesArray))
+                            Runbook runbookInstance = new Runbook();
+                            result.Runbook = runbookInstance;
+                            
+                            JToken accountIDValue = responseDoc["AccountID"];
+                            if (accountIDValue != null && accountIDValue.Type != JTokenType.Null)
                             {
-                                Schedule scheduleInstance = new Schedule();
-                                runbookInstance.Schedules.Add(scheduleInstance);
-                                
-                                JToken scheduleIDValue = schedulesValue["ScheduleID"];
-                                if (scheduleIDValue != null && scheduleIDValue.Type != JTokenType.Null)
+                                string accountIDInstance = ((string)accountIDValue);
+                                runbookInstance.AccountId = accountIDInstance;
+                            }
+                            
+                            JToken runbookIDValue = responseDoc["RunbookID"];
+                            if (runbookIDValue != null && runbookIDValue.Type != JTokenType.Null)
+                            {
+                                string runbookIDInstance = ((string)runbookIDValue);
+                                runbookInstance.Id = runbookIDInstance;
+                            }
+                            
+                            JToken runbookNameValue = responseDoc["RunbookName"];
+                            if (runbookNameValue != null && runbookNameValue.Type != JTokenType.Null)
+                            {
+                                string runbookNameInstance = ((string)runbookNameValue);
+                                runbookInstance.Name = runbookNameInstance;
+                            }
+                            
+                            JToken creationTimeValue = responseDoc["CreationTime"];
+                            if (creationTimeValue != null && creationTimeValue.Type != JTokenType.Null)
+                            {
+                                DateTime creationTimeInstance = ((DateTime)creationTimeValue);
+                                runbookInstance.CreationTime = creationTimeInstance;
+                            }
+                            
+                            JToken lastModifiedTimeValue = responseDoc["LastModifiedTime"];
+                            if (lastModifiedTimeValue != null && lastModifiedTimeValue.Type != JTokenType.Null)
+                            {
+                                DateTime lastModifiedTimeInstance = ((DateTime)lastModifiedTimeValue);
+                                runbookInstance.LastModifiedTime = lastModifiedTimeInstance;
+                            }
+                            
+                            JToken lastModifiedByValue = responseDoc["LastModifiedBy"];
+                            if (lastModifiedByValue != null && lastModifiedByValue.Type != JTokenType.Null)
+                            {
+                                string lastModifiedByInstance = ((string)lastModifiedByValue);
+                                runbookInstance.LastModifiedBy = lastModifiedByInstance;
+                            }
+                            
+                            JToken descriptionValue = responseDoc["Description"];
+                            if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
+                            {
+                                string descriptionInstance = ((string)descriptionValue);
+                                runbookInstance.Description = descriptionInstance;
+                            }
+                            
+                            JToken isApiOnlyValue = responseDoc["IsApiOnly"];
+                            if (isApiOnlyValue != null && isApiOnlyValue.Type != JTokenType.Null)
+                            {
+                                bool isApiOnlyInstance = ((bool)isApiOnlyValue);
+                                runbookInstance.IsApiOnly = isApiOnlyInstance;
+                            }
+                            
+                            JToken isGlobalValue = responseDoc["IsGlobal"];
+                            if (isGlobalValue != null && isGlobalValue.Type != JTokenType.Null)
+                            {
+                                bool isGlobalInstance = ((bool)isGlobalValue);
+                                runbookInstance.IsGlobal = isGlobalInstance;
+                            }
+                            
+                            JToken publishedRunbookVersionIDValue = responseDoc["PublishedRunbookVersionID"];
+                            if (publishedRunbookVersionIDValue != null && publishedRunbookVersionIDValue.Type != JTokenType.Null)
+                            {
+                                string publishedRunbookVersionIDInstance = ((string)publishedRunbookVersionIDValue);
+                                runbookInstance.PublishedRunbookVersionId = publishedRunbookVersionIDInstance;
+                            }
+                            
+                            JToken draftRunbookVersionIDValue = responseDoc["DraftRunbookVersionID"];
+                            if (draftRunbookVersionIDValue != null && draftRunbookVersionIDValue.Type != JTokenType.Null)
+                            {
+                                string draftRunbookVersionIDInstance = ((string)draftRunbookVersionIDValue);
+                                runbookInstance.DraftRunbookVersionId = draftRunbookVersionIDInstance;
+                            }
+                            
+                            JToken tagsValue = responseDoc["Tags"];
+                            if (tagsValue != null && tagsValue.Type != JTokenType.Null)
+                            {
+                                string tagsInstance = ((string)tagsValue);
+                                runbookInstance.Tags = tagsInstance;
+                            }
+                            
+                            JToken logDebugValue = responseDoc["LogDebug"];
+                            if (logDebugValue != null && logDebugValue.Type != JTokenType.Null)
+                            {
+                                bool logDebugInstance = ((bool)logDebugValue);
+                                runbookInstance.LogDebug = logDebugInstance;
+                            }
+                            
+                            JToken logVerboseValue = responseDoc["LogVerbose"];
+                            if (logVerboseValue != null && logVerboseValue.Type != JTokenType.Null)
+                            {
+                                bool logVerboseInstance = ((bool)logVerboseValue);
+                                runbookInstance.LogVerbose = logVerboseInstance;
+                            }
+                            
+                            JToken logProgressValue = responseDoc["LogProgress"];
+                            if (logProgressValue != null && logProgressValue.Type != JTokenType.Null)
+                            {
+                                bool logProgressInstance = ((bool)logProgressValue);
+                                runbookInstance.LogProgress = logProgressInstance;
+                            }
+                            
+                            JToken schedulesArray = responseDoc["Schedules"];
+                            if (schedulesArray != null && schedulesArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken schedulesValue in ((JArray)schedulesArray))
                                 {
-                                    string scheduleIDInstance = ((string)scheduleIDValue);
-                                    scheduleInstance.Id = scheduleIDInstance;
-                                }
-                                
-                                JToken accountIDValue2 = schedulesValue["AccountID"];
-                                if (accountIDValue2 != null && accountIDValue2.Type != JTokenType.Null)
-                                {
-                                    string accountIDInstance2 = ((string)accountIDValue2);
-                                    scheduleInstance.AccountId = accountIDInstance2;
-                                }
-                                
-                                JToken nameValue = schedulesValue["Name"];
-                                if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                {
-                                    string nameInstance = ((string)nameValue);
-                                    scheduleInstance.Name = nameInstance;
-                                }
-                                
-                                JToken descriptionValue2 = schedulesValue["Description"];
-                                if (descriptionValue2 != null && descriptionValue2.Type != JTokenType.Null)
-                                {
-                                    string descriptionInstance2 = ((string)descriptionValue2);
-                                    scheduleInstance.Description = descriptionInstance2;
-                                }
-                                
-                                JToken startTimeValue = schedulesValue["StartTime"];
-                                if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
-                                {
-                                    DateTime startTimeInstance = ((DateTime)startTimeValue);
-                                    scheduleInstance.StartTime = startTimeInstance;
-                                }
-                                
-                                JToken expiryTimeValue = schedulesValue["ExpiryTime"];
-                                if (expiryTimeValue != null && expiryTimeValue.Type != JTokenType.Null)
-                                {
-                                    DateTime expiryTimeInstance = ((DateTime)expiryTimeValue);
-                                    scheduleInstance.ExpiryTime = expiryTimeInstance;
-                                }
-                                
-                                JToken creationTimeValue2 = schedulesValue["CreationTime"];
-                                if (creationTimeValue2 != null && creationTimeValue2.Type != JTokenType.Null)
-                                {
-                                    DateTime creationTimeInstance2 = ((DateTime)creationTimeValue2);
-                                    scheduleInstance.CreationTime = creationTimeInstance2;
-                                }
-                                
-                                JToken lastModifiedTimeValue2 = schedulesValue["LastModifiedTime"];
-                                if (lastModifiedTimeValue2 != null && lastModifiedTimeValue2.Type != JTokenType.Null)
-                                {
-                                    DateTime lastModifiedTimeInstance2 = ((DateTime)lastModifiedTimeValue2);
-                                    scheduleInstance.LastModifiedTime = lastModifiedTimeInstance2;
-                                }
-                                
-                                JToken isEnabledValue = schedulesValue["IsEnabled"];
-                                if (isEnabledValue != null && isEnabledValue.Type != JTokenType.Null)
-                                {
-                                    bool isEnabledInstance = ((bool)isEnabledValue);
-                                    scheduleInstance.IsEnabled = isEnabledInstance;
-                                }
-                                
-                                JToken nextRunValue = schedulesValue["NextRun"];
-                                if (nextRunValue != null && nextRunValue.Type != JTokenType.Null)
-                                {
-                                    DateTime nextRunInstance = ((DateTime)nextRunValue);
-                                    scheduleInstance.NextRun = nextRunInstance;
-                                }
-                                
-                                JToken dayIntervalValue = schedulesValue["DayInterval"];
-                                if (dayIntervalValue != null && dayIntervalValue.Type != JTokenType.Null)
-                                {
-                                    int dayIntervalInstance = ((int)dayIntervalValue);
-                                    scheduleInstance.DayInterval = dayIntervalInstance;
-                                }
-                                
-                                JToken odatatypeValue = schedulesValue["odata.type"];
-                                if (odatatypeValue != null && odatatypeValue.Type != JTokenType.Null)
-                                {
-                                    string odatatypeInstance = ((string)odatatypeValue);
-                                    scheduleInstance.ScheduleType = odatatypeInstance;
+                                    Schedule scheduleInstance = new Schedule();
+                                    runbookInstance.Schedules.Add(scheduleInstance);
+                                    
+                                    JToken scheduleIDValue = schedulesValue["ScheduleID"];
+                                    if (scheduleIDValue != null && scheduleIDValue.Type != JTokenType.Null)
+                                    {
+                                        string scheduleIDInstance = ((string)scheduleIDValue);
+                                        scheduleInstance.Id = scheduleIDInstance;
+                                    }
+                                    
+                                    JToken accountIDValue2 = schedulesValue["AccountID"];
+                                    if (accountIDValue2 != null && accountIDValue2.Type != JTokenType.Null)
+                                    {
+                                        string accountIDInstance2 = ((string)accountIDValue2);
+                                        scheduleInstance.AccountId = accountIDInstance2;
+                                    }
+                                    
+                                    JToken nameValue = schedulesValue["Name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance = ((string)nameValue);
+                                        scheduleInstance.Name = nameInstance;
+                                    }
+                                    
+                                    JToken descriptionValue2 = schedulesValue["Description"];
+                                    if (descriptionValue2 != null && descriptionValue2.Type != JTokenType.Null)
+                                    {
+                                        string descriptionInstance2 = ((string)descriptionValue2);
+                                        scheduleInstance.Description = descriptionInstance2;
+                                    }
+                                    
+                                    JToken startTimeValue = schedulesValue["StartTime"];
+                                    if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime startTimeInstance = ((DateTime)startTimeValue);
+                                        scheduleInstance.StartTime = startTimeInstance;
+                                    }
+                                    
+                                    JToken expiryTimeValue = schedulesValue["ExpiryTime"];
+                                    if (expiryTimeValue != null && expiryTimeValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime expiryTimeInstance = ((DateTime)expiryTimeValue);
+                                        scheduleInstance.ExpiryTime = expiryTimeInstance;
+                                    }
+                                    
+                                    JToken creationTimeValue2 = schedulesValue["CreationTime"];
+                                    if (creationTimeValue2 != null && creationTimeValue2.Type != JTokenType.Null)
+                                    {
+                                        DateTime creationTimeInstance2 = ((DateTime)creationTimeValue2);
+                                        scheduleInstance.CreationTime = creationTimeInstance2;
+                                    }
+                                    
+                                    JToken lastModifiedTimeValue2 = schedulesValue["LastModifiedTime"];
+                                    if (lastModifiedTimeValue2 != null && lastModifiedTimeValue2.Type != JTokenType.Null)
+                                    {
+                                        DateTime lastModifiedTimeInstance2 = ((DateTime)lastModifiedTimeValue2);
+                                        scheduleInstance.LastModifiedTime = lastModifiedTimeInstance2;
+                                    }
+                                    
+                                    JToken isEnabledValue = schedulesValue["IsEnabled"];
+                                    if (isEnabledValue != null && isEnabledValue.Type != JTokenType.Null)
+                                    {
+                                        bool isEnabledInstance = ((bool)isEnabledValue);
+                                        scheduleInstance.IsEnabled = isEnabledInstance;
+                                    }
+                                    
+                                    JToken nextRunValue = schedulesValue["NextRun"];
+                                    if (nextRunValue != null && nextRunValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime nextRunInstance = ((DateTime)nextRunValue);
+                                        scheduleInstance.NextRun = nextRunInstance;
+                                    }
+                                    
+                                    JToken dayIntervalValue = schedulesValue["DayInterval"];
+                                    if (dayIntervalValue != null && dayIntervalValue.Type != JTokenType.Null)
+                                    {
+                                        int dayIntervalInstance = ((int)dayIntervalValue);
+                                        scheduleInstance.DayInterval = dayIntervalInstance;
+                                    }
+                                    
+                                    JToken hourIntervalValue = schedulesValue["HourInterval"];
+                                    if (hourIntervalValue != null && hourIntervalValue.Type != JTokenType.Null)
+                                    {
+                                        int hourIntervalInstance = ((int)hourIntervalValue);
+                                        scheduleInstance.HourInterval = hourIntervalInstance;
+                                    }
+                                    
+                                    JToken odatatypeValue = schedulesValue["odata.type"];
+                                    if (odatatypeValue != null && odatatypeValue.Type != JTokenType.Null)
+                                    {
+                                        string odatatypeInstance = ((string)odatatypeValue);
+                                        scheduleInstance.ScheduleType = odatatypeInstance;
+                                    }
                                 }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1366,7 +1396,7 @@ namespace Microsoft.Azure.Management.Automation
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -1417,22 +1447,22 @@ namespace Microsoft.Azure.Management.Automation
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("automationAccount", automationAccount);
                 tracingParameters.Add("runbookName", runbookName);
-                Tracing.Enter(invocationId, this, "ListByNameAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ListByNameAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + automationAccount.Trim() + "/Runbooks?";
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + Uri.EscapeDataString(automationAccount) + "/Runbooks?";
             bool appendFilter = true;
             appendFilter = false;
-            url = url + "$filter=" + "RunbookName eq '" + Uri.EscapeDataString(runbookName.Trim()) + "'";
+            url = url + "$filter=" + "RunbookName eq '" + Uri.EscapeDataString(runbookName) + "'";
             url = url + "&api-version=2014-03-13_Preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -1471,13 +1501,13 @@ namespace Microsoft.Azure.Management.Automation
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -1486,7 +1516,7 @@ namespace Microsoft.Azure.Management.Automation
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -1494,234 +1524,244 @@ namespace Microsoft.Azure.Management.Automation
                     // Create Result
                     RunbookListResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new RunbookListResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        JToken valueArray = responseDoc["value"];
-                        if (valueArray != null && valueArray.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new RunbookListResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            foreach (JToken valueValue in ((JArray)valueArray))
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
                             {
-                                Runbook runbookInstance = new Runbook();
-                                result.Runbooks.Add(runbookInstance);
-                                
-                                JToken accountIDValue = valueValue["AccountID"];
-                                if (accountIDValue != null && accountIDValue.Type != JTokenType.Null)
+                                foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    string accountIDInstance = ((string)accountIDValue);
-                                    runbookInstance.AccountId = accountIDInstance;
-                                }
-                                
-                                JToken runbookIDValue = valueValue["RunbookID"];
-                                if (runbookIDValue != null && runbookIDValue.Type != JTokenType.Null)
-                                {
-                                    string runbookIDInstance = ((string)runbookIDValue);
-                                    runbookInstance.Id = runbookIDInstance;
-                                }
-                                
-                                JToken runbookNameValue = valueValue["RunbookName"];
-                                if (runbookNameValue != null && runbookNameValue.Type != JTokenType.Null)
-                                {
-                                    string runbookNameInstance = ((string)runbookNameValue);
-                                    runbookInstance.Name = runbookNameInstance;
-                                }
-                                
-                                JToken creationTimeValue = valueValue["CreationTime"];
-                                if (creationTimeValue != null && creationTimeValue.Type != JTokenType.Null)
-                                {
-                                    DateTime creationTimeInstance = ((DateTime)creationTimeValue);
-                                    runbookInstance.CreationTime = creationTimeInstance;
-                                }
-                                
-                                JToken lastModifiedTimeValue = valueValue["LastModifiedTime"];
-                                if (lastModifiedTimeValue != null && lastModifiedTimeValue.Type != JTokenType.Null)
-                                {
-                                    DateTime lastModifiedTimeInstance = ((DateTime)lastModifiedTimeValue);
-                                    runbookInstance.LastModifiedTime = lastModifiedTimeInstance;
-                                }
-                                
-                                JToken lastModifiedByValue = valueValue["LastModifiedBy"];
-                                if (lastModifiedByValue != null && lastModifiedByValue.Type != JTokenType.Null)
-                                {
-                                    string lastModifiedByInstance = ((string)lastModifiedByValue);
-                                    runbookInstance.LastModifiedBy = lastModifiedByInstance;
-                                }
-                                
-                                JToken descriptionValue = valueValue["Description"];
-                                if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
-                                {
-                                    string descriptionInstance = ((string)descriptionValue);
-                                    runbookInstance.Description = descriptionInstance;
-                                }
-                                
-                                JToken isApiOnlyValue = valueValue["IsApiOnly"];
-                                if (isApiOnlyValue != null && isApiOnlyValue.Type != JTokenType.Null)
-                                {
-                                    bool isApiOnlyInstance = ((bool)isApiOnlyValue);
-                                    runbookInstance.IsApiOnly = isApiOnlyInstance;
-                                }
-                                
-                                JToken isGlobalValue = valueValue["IsGlobal"];
-                                if (isGlobalValue != null && isGlobalValue.Type != JTokenType.Null)
-                                {
-                                    bool isGlobalInstance = ((bool)isGlobalValue);
-                                    runbookInstance.IsGlobal = isGlobalInstance;
-                                }
-                                
-                                JToken publishedRunbookVersionIDValue = valueValue["PublishedRunbookVersionID"];
-                                if (publishedRunbookVersionIDValue != null && publishedRunbookVersionIDValue.Type != JTokenType.Null)
-                                {
-                                    string publishedRunbookVersionIDInstance = ((string)publishedRunbookVersionIDValue);
-                                    runbookInstance.PublishedRunbookVersionId = publishedRunbookVersionIDInstance;
-                                }
-                                
-                                JToken draftRunbookVersionIDValue = valueValue["DraftRunbookVersionID"];
-                                if (draftRunbookVersionIDValue != null && draftRunbookVersionIDValue.Type != JTokenType.Null)
-                                {
-                                    string draftRunbookVersionIDInstance = ((string)draftRunbookVersionIDValue);
-                                    runbookInstance.DraftRunbookVersionId = draftRunbookVersionIDInstance;
-                                }
-                                
-                                JToken tagsValue = valueValue["Tags"];
-                                if (tagsValue != null && tagsValue.Type != JTokenType.Null)
-                                {
-                                    string tagsInstance = ((string)tagsValue);
-                                    runbookInstance.Tags = tagsInstance;
-                                }
-                                
-                                JToken logDebugValue = valueValue["LogDebug"];
-                                if (logDebugValue != null && logDebugValue.Type != JTokenType.Null)
-                                {
-                                    bool logDebugInstance = ((bool)logDebugValue);
-                                    runbookInstance.LogDebug = logDebugInstance;
-                                }
-                                
-                                JToken logVerboseValue = valueValue["LogVerbose"];
-                                if (logVerboseValue != null && logVerboseValue.Type != JTokenType.Null)
-                                {
-                                    bool logVerboseInstance = ((bool)logVerboseValue);
-                                    runbookInstance.LogVerbose = logVerboseInstance;
-                                }
-                                
-                                JToken logProgressValue = valueValue["LogProgress"];
-                                if (logProgressValue != null && logProgressValue.Type != JTokenType.Null)
-                                {
-                                    bool logProgressInstance = ((bool)logProgressValue);
-                                    runbookInstance.LogProgress = logProgressInstance;
-                                }
-                                
-                                JToken schedulesArray = valueValue["Schedules"];
-                                if (schedulesArray != null && schedulesArray.Type != JTokenType.Null)
-                                {
-                                    foreach (JToken schedulesValue in ((JArray)schedulesArray))
+                                    Runbook runbookInstance = new Runbook();
+                                    result.Runbooks.Add(runbookInstance);
+                                    
+                                    JToken accountIDValue = valueValue["AccountID"];
+                                    if (accountIDValue != null && accountIDValue.Type != JTokenType.Null)
                                     {
-                                        Schedule scheduleInstance = new Schedule();
-                                        runbookInstance.Schedules.Add(scheduleInstance);
-                                        
-                                        JToken scheduleIDValue = schedulesValue["ScheduleID"];
-                                        if (scheduleIDValue != null && scheduleIDValue.Type != JTokenType.Null)
+                                        string accountIDInstance = ((string)accountIDValue);
+                                        runbookInstance.AccountId = accountIDInstance;
+                                    }
+                                    
+                                    JToken runbookIDValue = valueValue["RunbookID"];
+                                    if (runbookIDValue != null && runbookIDValue.Type != JTokenType.Null)
+                                    {
+                                        string runbookIDInstance = ((string)runbookIDValue);
+                                        runbookInstance.Id = runbookIDInstance;
+                                    }
+                                    
+                                    JToken runbookNameValue = valueValue["RunbookName"];
+                                    if (runbookNameValue != null && runbookNameValue.Type != JTokenType.Null)
+                                    {
+                                        string runbookNameInstance = ((string)runbookNameValue);
+                                        runbookInstance.Name = runbookNameInstance;
+                                    }
+                                    
+                                    JToken creationTimeValue = valueValue["CreationTime"];
+                                    if (creationTimeValue != null && creationTimeValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime creationTimeInstance = ((DateTime)creationTimeValue);
+                                        runbookInstance.CreationTime = creationTimeInstance;
+                                    }
+                                    
+                                    JToken lastModifiedTimeValue = valueValue["LastModifiedTime"];
+                                    if (lastModifiedTimeValue != null && lastModifiedTimeValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime lastModifiedTimeInstance = ((DateTime)lastModifiedTimeValue);
+                                        runbookInstance.LastModifiedTime = lastModifiedTimeInstance;
+                                    }
+                                    
+                                    JToken lastModifiedByValue = valueValue["LastModifiedBy"];
+                                    if (lastModifiedByValue != null && lastModifiedByValue.Type != JTokenType.Null)
+                                    {
+                                        string lastModifiedByInstance = ((string)lastModifiedByValue);
+                                        runbookInstance.LastModifiedBy = lastModifiedByInstance;
+                                    }
+                                    
+                                    JToken descriptionValue = valueValue["Description"];
+                                    if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
+                                    {
+                                        string descriptionInstance = ((string)descriptionValue);
+                                        runbookInstance.Description = descriptionInstance;
+                                    }
+                                    
+                                    JToken isApiOnlyValue = valueValue["IsApiOnly"];
+                                    if (isApiOnlyValue != null && isApiOnlyValue.Type != JTokenType.Null)
+                                    {
+                                        bool isApiOnlyInstance = ((bool)isApiOnlyValue);
+                                        runbookInstance.IsApiOnly = isApiOnlyInstance;
+                                    }
+                                    
+                                    JToken isGlobalValue = valueValue["IsGlobal"];
+                                    if (isGlobalValue != null && isGlobalValue.Type != JTokenType.Null)
+                                    {
+                                        bool isGlobalInstance = ((bool)isGlobalValue);
+                                        runbookInstance.IsGlobal = isGlobalInstance;
+                                    }
+                                    
+                                    JToken publishedRunbookVersionIDValue = valueValue["PublishedRunbookVersionID"];
+                                    if (publishedRunbookVersionIDValue != null && publishedRunbookVersionIDValue.Type != JTokenType.Null)
+                                    {
+                                        string publishedRunbookVersionIDInstance = ((string)publishedRunbookVersionIDValue);
+                                        runbookInstance.PublishedRunbookVersionId = publishedRunbookVersionIDInstance;
+                                    }
+                                    
+                                    JToken draftRunbookVersionIDValue = valueValue["DraftRunbookVersionID"];
+                                    if (draftRunbookVersionIDValue != null && draftRunbookVersionIDValue.Type != JTokenType.Null)
+                                    {
+                                        string draftRunbookVersionIDInstance = ((string)draftRunbookVersionIDValue);
+                                        runbookInstance.DraftRunbookVersionId = draftRunbookVersionIDInstance;
+                                    }
+                                    
+                                    JToken tagsValue = valueValue["Tags"];
+                                    if (tagsValue != null && tagsValue.Type != JTokenType.Null)
+                                    {
+                                        string tagsInstance = ((string)tagsValue);
+                                        runbookInstance.Tags = tagsInstance;
+                                    }
+                                    
+                                    JToken logDebugValue = valueValue["LogDebug"];
+                                    if (logDebugValue != null && logDebugValue.Type != JTokenType.Null)
+                                    {
+                                        bool logDebugInstance = ((bool)logDebugValue);
+                                        runbookInstance.LogDebug = logDebugInstance;
+                                    }
+                                    
+                                    JToken logVerboseValue = valueValue["LogVerbose"];
+                                    if (logVerboseValue != null && logVerboseValue.Type != JTokenType.Null)
+                                    {
+                                        bool logVerboseInstance = ((bool)logVerboseValue);
+                                        runbookInstance.LogVerbose = logVerboseInstance;
+                                    }
+                                    
+                                    JToken logProgressValue = valueValue["LogProgress"];
+                                    if (logProgressValue != null && logProgressValue.Type != JTokenType.Null)
+                                    {
+                                        bool logProgressInstance = ((bool)logProgressValue);
+                                        runbookInstance.LogProgress = logProgressInstance;
+                                    }
+                                    
+                                    JToken schedulesArray = valueValue["Schedules"];
+                                    if (schedulesArray != null && schedulesArray.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken schedulesValue in ((JArray)schedulesArray))
                                         {
-                                            string scheduleIDInstance = ((string)scheduleIDValue);
-                                            scheduleInstance.Id = scheduleIDInstance;
-                                        }
-                                        
-                                        JToken accountIDValue2 = schedulesValue["AccountID"];
-                                        if (accountIDValue2 != null && accountIDValue2.Type != JTokenType.Null)
-                                        {
-                                            string accountIDInstance2 = ((string)accountIDValue2);
-                                            scheduleInstance.AccountId = accountIDInstance2;
-                                        }
-                                        
-                                        JToken nameValue = schedulesValue["Name"];
-                                        if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                        {
-                                            string nameInstance = ((string)nameValue);
-                                            scheduleInstance.Name = nameInstance;
-                                        }
-                                        
-                                        JToken descriptionValue2 = schedulesValue["Description"];
-                                        if (descriptionValue2 != null && descriptionValue2.Type != JTokenType.Null)
-                                        {
-                                            string descriptionInstance2 = ((string)descriptionValue2);
-                                            scheduleInstance.Description = descriptionInstance2;
-                                        }
-                                        
-                                        JToken startTimeValue = schedulesValue["StartTime"];
-                                        if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
-                                        {
-                                            DateTime startTimeInstance = ((DateTime)startTimeValue);
-                                            scheduleInstance.StartTime = startTimeInstance;
-                                        }
-                                        
-                                        JToken expiryTimeValue = schedulesValue["ExpiryTime"];
-                                        if (expiryTimeValue != null && expiryTimeValue.Type != JTokenType.Null)
-                                        {
-                                            DateTime expiryTimeInstance = ((DateTime)expiryTimeValue);
-                                            scheduleInstance.ExpiryTime = expiryTimeInstance;
-                                        }
-                                        
-                                        JToken creationTimeValue2 = schedulesValue["CreationTime"];
-                                        if (creationTimeValue2 != null && creationTimeValue2.Type != JTokenType.Null)
-                                        {
-                                            DateTime creationTimeInstance2 = ((DateTime)creationTimeValue2);
-                                            scheduleInstance.CreationTime = creationTimeInstance2;
-                                        }
-                                        
-                                        JToken lastModifiedTimeValue2 = schedulesValue["LastModifiedTime"];
-                                        if (lastModifiedTimeValue2 != null && lastModifiedTimeValue2.Type != JTokenType.Null)
-                                        {
-                                            DateTime lastModifiedTimeInstance2 = ((DateTime)lastModifiedTimeValue2);
-                                            scheduleInstance.LastModifiedTime = lastModifiedTimeInstance2;
-                                        }
-                                        
-                                        JToken isEnabledValue = schedulesValue["IsEnabled"];
-                                        if (isEnabledValue != null && isEnabledValue.Type != JTokenType.Null)
-                                        {
-                                            bool isEnabledInstance = ((bool)isEnabledValue);
-                                            scheduleInstance.IsEnabled = isEnabledInstance;
-                                        }
-                                        
-                                        JToken nextRunValue = schedulesValue["NextRun"];
-                                        if (nextRunValue != null && nextRunValue.Type != JTokenType.Null)
-                                        {
-                                            DateTime nextRunInstance = ((DateTime)nextRunValue);
-                                            scheduleInstance.NextRun = nextRunInstance;
-                                        }
-                                        
-                                        JToken dayIntervalValue = schedulesValue["DayInterval"];
-                                        if (dayIntervalValue != null && dayIntervalValue.Type != JTokenType.Null)
-                                        {
-                                            int dayIntervalInstance = ((int)dayIntervalValue);
-                                            scheduleInstance.DayInterval = dayIntervalInstance;
-                                        }
-                                        
-                                        JToken odatatypeValue = schedulesValue["odata.type"];
-                                        if (odatatypeValue != null && odatatypeValue.Type != JTokenType.Null)
-                                        {
-                                            string odatatypeInstance = ((string)odatatypeValue);
-                                            scheduleInstance.ScheduleType = odatatypeInstance;
+                                            Schedule scheduleInstance = new Schedule();
+                                            runbookInstance.Schedules.Add(scheduleInstance);
+                                            
+                                            JToken scheduleIDValue = schedulesValue["ScheduleID"];
+                                            if (scheduleIDValue != null && scheduleIDValue.Type != JTokenType.Null)
+                                            {
+                                                string scheduleIDInstance = ((string)scheduleIDValue);
+                                                scheduleInstance.Id = scheduleIDInstance;
+                                            }
+                                            
+                                            JToken accountIDValue2 = schedulesValue["AccountID"];
+                                            if (accountIDValue2 != null && accountIDValue2.Type != JTokenType.Null)
+                                            {
+                                                string accountIDInstance2 = ((string)accountIDValue2);
+                                                scheduleInstance.AccountId = accountIDInstance2;
+                                            }
+                                            
+                                            JToken nameValue = schedulesValue["Name"];
+                                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                            {
+                                                string nameInstance = ((string)nameValue);
+                                                scheduleInstance.Name = nameInstance;
+                                            }
+                                            
+                                            JToken descriptionValue2 = schedulesValue["Description"];
+                                            if (descriptionValue2 != null && descriptionValue2.Type != JTokenType.Null)
+                                            {
+                                                string descriptionInstance2 = ((string)descriptionValue2);
+                                                scheduleInstance.Description = descriptionInstance2;
+                                            }
+                                            
+                                            JToken startTimeValue = schedulesValue["StartTime"];
+                                            if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
+                                            {
+                                                DateTime startTimeInstance = ((DateTime)startTimeValue);
+                                                scheduleInstance.StartTime = startTimeInstance;
+                                            }
+                                            
+                                            JToken expiryTimeValue = schedulesValue["ExpiryTime"];
+                                            if (expiryTimeValue != null && expiryTimeValue.Type != JTokenType.Null)
+                                            {
+                                                DateTime expiryTimeInstance = ((DateTime)expiryTimeValue);
+                                                scheduleInstance.ExpiryTime = expiryTimeInstance;
+                                            }
+                                            
+                                            JToken creationTimeValue2 = schedulesValue["CreationTime"];
+                                            if (creationTimeValue2 != null && creationTimeValue2.Type != JTokenType.Null)
+                                            {
+                                                DateTime creationTimeInstance2 = ((DateTime)creationTimeValue2);
+                                                scheduleInstance.CreationTime = creationTimeInstance2;
+                                            }
+                                            
+                                            JToken lastModifiedTimeValue2 = schedulesValue["LastModifiedTime"];
+                                            if (lastModifiedTimeValue2 != null && lastModifiedTimeValue2.Type != JTokenType.Null)
+                                            {
+                                                DateTime lastModifiedTimeInstance2 = ((DateTime)lastModifiedTimeValue2);
+                                                scheduleInstance.LastModifiedTime = lastModifiedTimeInstance2;
+                                            }
+                                            
+                                            JToken isEnabledValue = schedulesValue["IsEnabled"];
+                                            if (isEnabledValue != null && isEnabledValue.Type != JTokenType.Null)
+                                            {
+                                                bool isEnabledInstance = ((bool)isEnabledValue);
+                                                scheduleInstance.IsEnabled = isEnabledInstance;
+                                            }
+                                            
+                                            JToken nextRunValue = schedulesValue["NextRun"];
+                                            if (nextRunValue != null && nextRunValue.Type != JTokenType.Null)
+                                            {
+                                                DateTime nextRunInstance = ((DateTime)nextRunValue);
+                                                scheduleInstance.NextRun = nextRunInstance;
+                                            }
+                                            
+                                            JToken dayIntervalValue = schedulesValue["DayInterval"];
+                                            if (dayIntervalValue != null && dayIntervalValue.Type != JTokenType.Null)
+                                            {
+                                                int dayIntervalInstance = ((int)dayIntervalValue);
+                                                scheduleInstance.DayInterval = dayIntervalInstance;
+                                            }
+                                            
+                                            JToken hourIntervalValue = schedulesValue["HourInterval"];
+                                            if (hourIntervalValue != null && hourIntervalValue.Type != JTokenType.Null)
+                                            {
+                                                int hourIntervalInstance = ((int)hourIntervalValue);
+                                                scheduleInstance.HourInterval = hourIntervalInstance;
+                                            }
+                                            
+                                            JToken odatatypeValue = schedulesValue["odata.type"];
+                                            if (odatatypeValue != null && odatatypeValue.Type != JTokenType.Null)
+                                            {
+                                                string odatatypeInstance = ((string)odatatypeValue);
+                                                scheduleInstance.ScheduleType = odatatypeInstance;
+                                            }
                                         }
                                     }
                                 }
                             }
+                            
+                            JToken odatanextLinkValue = responseDoc["odata.nextLink"];
+                            if (odatanextLinkValue != null && odatanextLinkValue.Type != JTokenType.Null)
+                            {
+                                string odatanextLinkInstance = Regex.Match(((string)odatanextLinkValue), "^.*[&\\?]\\$skiptoken=([^&]*)(&.*)?").Groups[1].Value;
+                                result.SkipToken = odatanextLinkInstance;
+                            }
                         }
                         
-                        JToken odatanextLinkValue = responseDoc["odata.nextLink"];
-                        if (odatanextLinkValue != null && odatanextLinkValue.Type != JTokenType.Null)
-                        {
-                            string odatanextLinkInstance = Regex.Match(((string)odatanextLinkValue), "^.*[&\\?]\\$skiptoken=([^&]*)(&.*)?").Groups[1].Value;
-                            result.SkipToken = odatanextLinkInstance;
-                        }
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1730,7 +1770,7 @@ namespace Microsoft.Azure.Management.Automation
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -1781,22 +1821,22 @@ namespace Microsoft.Azure.Management.Automation
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("automationAccount", automationAccount);
                 tracingParameters.Add("runbookName", runbookName);
-                Tracing.Enter(invocationId, this, "ListByNameWithSchedulesAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ListByNameWithSchedulesAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + automationAccount.Trim() + "/Runbooks?";
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + Uri.EscapeDataString(automationAccount) + "/Runbooks?";
             bool appendFilter = true;
             appendFilter = false;
-            url = url + "$filter=" + "RunbookName eq '" + Uri.EscapeDataString(runbookName.Trim()) + "'";
+            url = url + "$filter=" + "RunbookName eq '" + Uri.EscapeDataString(runbookName) + "'";
             url = url + "&$expand=Schedules";
             url = url + "&api-version=2014-03-13_Preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
@@ -1836,13 +1876,13 @@ namespace Microsoft.Azure.Management.Automation
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -1851,7 +1891,7 @@ namespace Microsoft.Azure.Management.Automation
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -1859,234 +1899,244 @@ namespace Microsoft.Azure.Management.Automation
                     // Create Result
                     RunbookListResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new RunbookListResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        JToken valueArray = responseDoc["value"];
-                        if (valueArray != null && valueArray.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new RunbookListResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            foreach (JToken valueValue in ((JArray)valueArray))
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
                             {
-                                Runbook runbookInstance = new Runbook();
-                                result.Runbooks.Add(runbookInstance);
-                                
-                                JToken accountIDValue = valueValue["AccountID"];
-                                if (accountIDValue != null && accountIDValue.Type != JTokenType.Null)
+                                foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    string accountIDInstance = ((string)accountIDValue);
-                                    runbookInstance.AccountId = accountIDInstance;
-                                }
-                                
-                                JToken runbookIDValue = valueValue["RunbookID"];
-                                if (runbookIDValue != null && runbookIDValue.Type != JTokenType.Null)
-                                {
-                                    string runbookIDInstance = ((string)runbookIDValue);
-                                    runbookInstance.Id = runbookIDInstance;
-                                }
-                                
-                                JToken runbookNameValue = valueValue["RunbookName"];
-                                if (runbookNameValue != null && runbookNameValue.Type != JTokenType.Null)
-                                {
-                                    string runbookNameInstance = ((string)runbookNameValue);
-                                    runbookInstance.Name = runbookNameInstance;
-                                }
-                                
-                                JToken creationTimeValue = valueValue["CreationTime"];
-                                if (creationTimeValue != null && creationTimeValue.Type != JTokenType.Null)
-                                {
-                                    DateTime creationTimeInstance = ((DateTime)creationTimeValue);
-                                    runbookInstance.CreationTime = creationTimeInstance;
-                                }
-                                
-                                JToken lastModifiedTimeValue = valueValue["LastModifiedTime"];
-                                if (lastModifiedTimeValue != null && lastModifiedTimeValue.Type != JTokenType.Null)
-                                {
-                                    DateTime lastModifiedTimeInstance = ((DateTime)lastModifiedTimeValue);
-                                    runbookInstance.LastModifiedTime = lastModifiedTimeInstance;
-                                }
-                                
-                                JToken lastModifiedByValue = valueValue["LastModifiedBy"];
-                                if (lastModifiedByValue != null && lastModifiedByValue.Type != JTokenType.Null)
-                                {
-                                    string lastModifiedByInstance = ((string)lastModifiedByValue);
-                                    runbookInstance.LastModifiedBy = lastModifiedByInstance;
-                                }
-                                
-                                JToken descriptionValue = valueValue["Description"];
-                                if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
-                                {
-                                    string descriptionInstance = ((string)descriptionValue);
-                                    runbookInstance.Description = descriptionInstance;
-                                }
-                                
-                                JToken isApiOnlyValue = valueValue["IsApiOnly"];
-                                if (isApiOnlyValue != null && isApiOnlyValue.Type != JTokenType.Null)
-                                {
-                                    bool isApiOnlyInstance = ((bool)isApiOnlyValue);
-                                    runbookInstance.IsApiOnly = isApiOnlyInstance;
-                                }
-                                
-                                JToken isGlobalValue = valueValue["IsGlobal"];
-                                if (isGlobalValue != null && isGlobalValue.Type != JTokenType.Null)
-                                {
-                                    bool isGlobalInstance = ((bool)isGlobalValue);
-                                    runbookInstance.IsGlobal = isGlobalInstance;
-                                }
-                                
-                                JToken publishedRunbookVersionIDValue = valueValue["PublishedRunbookVersionID"];
-                                if (publishedRunbookVersionIDValue != null && publishedRunbookVersionIDValue.Type != JTokenType.Null)
-                                {
-                                    string publishedRunbookVersionIDInstance = ((string)publishedRunbookVersionIDValue);
-                                    runbookInstance.PublishedRunbookVersionId = publishedRunbookVersionIDInstance;
-                                }
-                                
-                                JToken draftRunbookVersionIDValue = valueValue["DraftRunbookVersionID"];
-                                if (draftRunbookVersionIDValue != null && draftRunbookVersionIDValue.Type != JTokenType.Null)
-                                {
-                                    string draftRunbookVersionIDInstance = ((string)draftRunbookVersionIDValue);
-                                    runbookInstance.DraftRunbookVersionId = draftRunbookVersionIDInstance;
-                                }
-                                
-                                JToken tagsValue = valueValue["Tags"];
-                                if (tagsValue != null && tagsValue.Type != JTokenType.Null)
-                                {
-                                    string tagsInstance = ((string)tagsValue);
-                                    runbookInstance.Tags = tagsInstance;
-                                }
-                                
-                                JToken logDebugValue = valueValue["LogDebug"];
-                                if (logDebugValue != null && logDebugValue.Type != JTokenType.Null)
-                                {
-                                    bool logDebugInstance = ((bool)logDebugValue);
-                                    runbookInstance.LogDebug = logDebugInstance;
-                                }
-                                
-                                JToken logVerboseValue = valueValue["LogVerbose"];
-                                if (logVerboseValue != null && logVerboseValue.Type != JTokenType.Null)
-                                {
-                                    bool logVerboseInstance = ((bool)logVerboseValue);
-                                    runbookInstance.LogVerbose = logVerboseInstance;
-                                }
-                                
-                                JToken logProgressValue = valueValue["LogProgress"];
-                                if (logProgressValue != null && logProgressValue.Type != JTokenType.Null)
-                                {
-                                    bool logProgressInstance = ((bool)logProgressValue);
-                                    runbookInstance.LogProgress = logProgressInstance;
-                                }
-                                
-                                JToken schedulesArray = valueValue["Schedules"];
-                                if (schedulesArray != null && schedulesArray.Type != JTokenType.Null)
-                                {
-                                    foreach (JToken schedulesValue in ((JArray)schedulesArray))
+                                    Runbook runbookInstance = new Runbook();
+                                    result.Runbooks.Add(runbookInstance);
+                                    
+                                    JToken accountIDValue = valueValue["AccountID"];
+                                    if (accountIDValue != null && accountIDValue.Type != JTokenType.Null)
                                     {
-                                        Schedule scheduleInstance = new Schedule();
-                                        runbookInstance.Schedules.Add(scheduleInstance);
-                                        
-                                        JToken scheduleIDValue = schedulesValue["ScheduleID"];
-                                        if (scheduleIDValue != null && scheduleIDValue.Type != JTokenType.Null)
+                                        string accountIDInstance = ((string)accountIDValue);
+                                        runbookInstance.AccountId = accountIDInstance;
+                                    }
+                                    
+                                    JToken runbookIDValue = valueValue["RunbookID"];
+                                    if (runbookIDValue != null && runbookIDValue.Type != JTokenType.Null)
+                                    {
+                                        string runbookIDInstance = ((string)runbookIDValue);
+                                        runbookInstance.Id = runbookIDInstance;
+                                    }
+                                    
+                                    JToken runbookNameValue = valueValue["RunbookName"];
+                                    if (runbookNameValue != null && runbookNameValue.Type != JTokenType.Null)
+                                    {
+                                        string runbookNameInstance = ((string)runbookNameValue);
+                                        runbookInstance.Name = runbookNameInstance;
+                                    }
+                                    
+                                    JToken creationTimeValue = valueValue["CreationTime"];
+                                    if (creationTimeValue != null && creationTimeValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime creationTimeInstance = ((DateTime)creationTimeValue);
+                                        runbookInstance.CreationTime = creationTimeInstance;
+                                    }
+                                    
+                                    JToken lastModifiedTimeValue = valueValue["LastModifiedTime"];
+                                    if (lastModifiedTimeValue != null && lastModifiedTimeValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime lastModifiedTimeInstance = ((DateTime)lastModifiedTimeValue);
+                                        runbookInstance.LastModifiedTime = lastModifiedTimeInstance;
+                                    }
+                                    
+                                    JToken lastModifiedByValue = valueValue["LastModifiedBy"];
+                                    if (lastModifiedByValue != null && lastModifiedByValue.Type != JTokenType.Null)
+                                    {
+                                        string lastModifiedByInstance = ((string)lastModifiedByValue);
+                                        runbookInstance.LastModifiedBy = lastModifiedByInstance;
+                                    }
+                                    
+                                    JToken descriptionValue = valueValue["Description"];
+                                    if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
+                                    {
+                                        string descriptionInstance = ((string)descriptionValue);
+                                        runbookInstance.Description = descriptionInstance;
+                                    }
+                                    
+                                    JToken isApiOnlyValue = valueValue["IsApiOnly"];
+                                    if (isApiOnlyValue != null && isApiOnlyValue.Type != JTokenType.Null)
+                                    {
+                                        bool isApiOnlyInstance = ((bool)isApiOnlyValue);
+                                        runbookInstance.IsApiOnly = isApiOnlyInstance;
+                                    }
+                                    
+                                    JToken isGlobalValue = valueValue["IsGlobal"];
+                                    if (isGlobalValue != null && isGlobalValue.Type != JTokenType.Null)
+                                    {
+                                        bool isGlobalInstance = ((bool)isGlobalValue);
+                                        runbookInstance.IsGlobal = isGlobalInstance;
+                                    }
+                                    
+                                    JToken publishedRunbookVersionIDValue = valueValue["PublishedRunbookVersionID"];
+                                    if (publishedRunbookVersionIDValue != null && publishedRunbookVersionIDValue.Type != JTokenType.Null)
+                                    {
+                                        string publishedRunbookVersionIDInstance = ((string)publishedRunbookVersionIDValue);
+                                        runbookInstance.PublishedRunbookVersionId = publishedRunbookVersionIDInstance;
+                                    }
+                                    
+                                    JToken draftRunbookVersionIDValue = valueValue["DraftRunbookVersionID"];
+                                    if (draftRunbookVersionIDValue != null && draftRunbookVersionIDValue.Type != JTokenType.Null)
+                                    {
+                                        string draftRunbookVersionIDInstance = ((string)draftRunbookVersionIDValue);
+                                        runbookInstance.DraftRunbookVersionId = draftRunbookVersionIDInstance;
+                                    }
+                                    
+                                    JToken tagsValue = valueValue["Tags"];
+                                    if (tagsValue != null && tagsValue.Type != JTokenType.Null)
+                                    {
+                                        string tagsInstance = ((string)tagsValue);
+                                        runbookInstance.Tags = tagsInstance;
+                                    }
+                                    
+                                    JToken logDebugValue = valueValue["LogDebug"];
+                                    if (logDebugValue != null && logDebugValue.Type != JTokenType.Null)
+                                    {
+                                        bool logDebugInstance = ((bool)logDebugValue);
+                                        runbookInstance.LogDebug = logDebugInstance;
+                                    }
+                                    
+                                    JToken logVerboseValue = valueValue["LogVerbose"];
+                                    if (logVerboseValue != null && logVerboseValue.Type != JTokenType.Null)
+                                    {
+                                        bool logVerboseInstance = ((bool)logVerboseValue);
+                                        runbookInstance.LogVerbose = logVerboseInstance;
+                                    }
+                                    
+                                    JToken logProgressValue = valueValue["LogProgress"];
+                                    if (logProgressValue != null && logProgressValue.Type != JTokenType.Null)
+                                    {
+                                        bool logProgressInstance = ((bool)logProgressValue);
+                                        runbookInstance.LogProgress = logProgressInstance;
+                                    }
+                                    
+                                    JToken schedulesArray = valueValue["Schedules"];
+                                    if (schedulesArray != null && schedulesArray.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken schedulesValue in ((JArray)schedulesArray))
                                         {
-                                            string scheduleIDInstance = ((string)scheduleIDValue);
-                                            scheduleInstance.Id = scheduleIDInstance;
-                                        }
-                                        
-                                        JToken accountIDValue2 = schedulesValue["AccountID"];
-                                        if (accountIDValue2 != null && accountIDValue2.Type != JTokenType.Null)
-                                        {
-                                            string accountIDInstance2 = ((string)accountIDValue2);
-                                            scheduleInstance.AccountId = accountIDInstance2;
-                                        }
-                                        
-                                        JToken nameValue = schedulesValue["Name"];
-                                        if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                        {
-                                            string nameInstance = ((string)nameValue);
-                                            scheduleInstance.Name = nameInstance;
-                                        }
-                                        
-                                        JToken descriptionValue2 = schedulesValue["Description"];
-                                        if (descriptionValue2 != null && descriptionValue2.Type != JTokenType.Null)
-                                        {
-                                            string descriptionInstance2 = ((string)descriptionValue2);
-                                            scheduleInstance.Description = descriptionInstance2;
-                                        }
-                                        
-                                        JToken startTimeValue = schedulesValue["StartTime"];
-                                        if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
-                                        {
-                                            DateTime startTimeInstance = ((DateTime)startTimeValue);
-                                            scheduleInstance.StartTime = startTimeInstance;
-                                        }
-                                        
-                                        JToken expiryTimeValue = schedulesValue["ExpiryTime"];
-                                        if (expiryTimeValue != null && expiryTimeValue.Type != JTokenType.Null)
-                                        {
-                                            DateTime expiryTimeInstance = ((DateTime)expiryTimeValue);
-                                            scheduleInstance.ExpiryTime = expiryTimeInstance;
-                                        }
-                                        
-                                        JToken creationTimeValue2 = schedulesValue["CreationTime"];
-                                        if (creationTimeValue2 != null && creationTimeValue2.Type != JTokenType.Null)
-                                        {
-                                            DateTime creationTimeInstance2 = ((DateTime)creationTimeValue2);
-                                            scheduleInstance.CreationTime = creationTimeInstance2;
-                                        }
-                                        
-                                        JToken lastModifiedTimeValue2 = schedulesValue["LastModifiedTime"];
-                                        if (lastModifiedTimeValue2 != null && lastModifiedTimeValue2.Type != JTokenType.Null)
-                                        {
-                                            DateTime lastModifiedTimeInstance2 = ((DateTime)lastModifiedTimeValue2);
-                                            scheduleInstance.LastModifiedTime = lastModifiedTimeInstance2;
-                                        }
-                                        
-                                        JToken isEnabledValue = schedulesValue["IsEnabled"];
-                                        if (isEnabledValue != null && isEnabledValue.Type != JTokenType.Null)
-                                        {
-                                            bool isEnabledInstance = ((bool)isEnabledValue);
-                                            scheduleInstance.IsEnabled = isEnabledInstance;
-                                        }
-                                        
-                                        JToken nextRunValue = schedulesValue["NextRun"];
-                                        if (nextRunValue != null && nextRunValue.Type != JTokenType.Null)
-                                        {
-                                            DateTime nextRunInstance = ((DateTime)nextRunValue);
-                                            scheduleInstance.NextRun = nextRunInstance;
-                                        }
-                                        
-                                        JToken dayIntervalValue = schedulesValue["DayInterval"];
-                                        if (dayIntervalValue != null && dayIntervalValue.Type != JTokenType.Null)
-                                        {
-                                            int dayIntervalInstance = ((int)dayIntervalValue);
-                                            scheduleInstance.DayInterval = dayIntervalInstance;
-                                        }
-                                        
-                                        JToken odatatypeValue = schedulesValue["odata.type"];
-                                        if (odatatypeValue != null && odatatypeValue.Type != JTokenType.Null)
-                                        {
-                                            string odatatypeInstance = ((string)odatatypeValue);
-                                            scheduleInstance.ScheduleType = odatatypeInstance;
+                                            Schedule scheduleInstance = new Schedule();
+                                            runbookInstance.Schedules.Add(scheduleInstance);
+                                            
+                                            JToken scheduleIDValue = schedulesValue["ScheduleID"];
+                                            if (scheduleIDValue != null && scheduleIDValue.Type != JTokenType.Null)
+                                            {
+                                                string scheduleIDInstance = ((string)scheduleIDValue);
+                                                scheduleInstance.Id = scheduleIDInstance;
+                                            }
+                                            
+                                            JToken accountIDValue2 = schedulesValue["AccountID"];
+                                            if (accountIDValue2 != null && accountIDValue2.Type != JTokenType.Null)
+                                            {
+                                                string accountIDInstance2 = ((string)accountIDValue2);
+                                                scheduleInstance.AccountId = accountIDInstance2;
+                                            }
+                                            
+                                            JToken nameValue = schedulesValue["Name"];
+                                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                            {
+                                                string nameInstance = ((string)nameValue);
+                                                scheduleInstance.Name = nameInstance;
+                                            }
+                                            
+                                            JToken descriptionValue2 = schedulesValue["Description"];
+                                            if (descriptionValue2 != null && descriptionValue2.Type != JTokenType.Null)
+                                            {
+                                                string descriptionInstance2 = ((string)descriptionValue2);
+                                                scheduleInstance.Description = descriptionInstance2;
+                                            }
+                                            
+                                            JToken startTimeValue = schedulesValue["StartTime"];
+                                            if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
+                                            {
+                                                DateTime startTimeInstance = ((DateTime)startTimeValue);
+                                                scheduleInstance.StartTime = startTimeInstance;
+                                            }
+                                            
+                                            JToken expiryTimeValue = schedulesValue["ExpiryTime"];
+                                            if (expiryTimeValue != null && expiryTimeValue.Type != JTokenType.Null)
+                                            {
+                                                DateTime expiryTimeInstance = ((DateTime)expiryTimeValue);
+                                                scheduleInstance.ExpiryTime = expiryTimeInstance;
+                                            }
+                                            
+                                            JToken creationTimeValue2 = schedulesValue["CreationTime"];
+                                            if (creationTimeValue2 != null && creationTimeValue2.Type != JTokenType.Null)
+                                            {
+                                                DateTime creationTimeInstance2 = ((DateTime)creationTimeValue2);
+                                                scheduleInstance.CreationTime = creationTimeInstance2;
+                                            }
+                                            
+                                            JToken lastModifiedTimeValue2 = schedulesValue["LastModifiedTime"];
+                                            if (lastModifiedTimeValue2 != null && lastModifiedTimeValue2.Type != JTokenType.Null)
+                                            {
+                                                DateTime lastModifiedTimeInstance2 = ((DateTime)lastModifiedTimeValue2);
+                                                scheduleInstance.LastModifiedTime = lastModifiedTimeInstance2;
+                                            }
+                                            
+                                            JToken isEnabledValue = schedulesValue["IsEnabled"];
+                                            if (isEnabledValue != null && isEnabledValue.Type != JTokenType.Null)
+                                            {
+                                                bool isEnabledInstance = ((bool)isEnabledValue);
+                                                scheduleInstance.IsEnabled = isEnabledInstance;
+                                            }
+                                            
+                                            JToken nextRunValue = schedulesValue["NextRun"];
+                                            if (nextRunValue != null && nextRunValue.Type != JTokenType.Null)
+                                            {
+                                                DateTime nextRunInstance = ((DateTime)nextRunValue);
+                                                scheduleInstance.NextRun = nextRunInstance;
+                                            }
+                                            
+                                            JToken dayIntervalValue = schedulesValue["DayInterval"];
+                                            if (dayIntervalValue != null && dayIntervalValue.Type != JTokenType.Null)
+                                            {
+                                                int dayIntervalInstance = ((int)dayIntervalValue);
+                                                scheduleInstance.DayInterval = dayIntervalInstance;
+                                            }
+                                            
+                                            JToken hourIntervalValue = schedulesValue["HourInterval"];
+                                            if (hourIntervalValue != null && hourIntervalValue.Type != JTokenType.Null)
+                                            {
+                                                int hourIntervalInstance = ((int)hourIntervalValue);
+                                                scheduleInstance.HourInterval = hourIntervalInstance;
+                                            }
+                                            
+                                            JToken odatatypeValue = schedulesValue["odata.type"];
+                                            if (odatatypeValue != null && odatatypeValue.Type != JTokenType.Null)
+                                            {
+                                                string odatatypeInstance = ((string)odatatypeValue);
+                                                scheduleInstance.ScheduleType = odatatypeInstance;
+                                            }
                                         }
                                     }
                                 }
                             }
+                            
+                            JToken odatanextLinkValue = responseDoc["odata.nextLink"];
+                            if (odatanextLinkValue != null && odatanextLinkValue.Type != JTokenType.Null)
+                            {
+                                string odatanextLinkInstance = Regex.Match(((string)odatanextLinkValue), "^.*[&\\?]\\$skiptoken=([^&]*)(&.*)?").Groups[1].Value;
+                                result.SkipToken = odatanextLinkInstance;
+                            }
                         }
                         
-                        JToken odatanextLinkValue = responseDoc["odata.nextLink"];
-                        if (odatanextLinkValue != null && odatanextLinkValue.Type != JTokenType.Null)
-                        {
-                            string odatanextLinkInstance = Regex.Match(((string)odatanextLinkValue), "^.*[&\\?]\\$skiptoken=([^&]*)(&.*)?").Groups[1].Value;
-                            result.SkipToken = odatanextLinkInstance;
-                        }
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -2095,7 +2145,7 @@ namespace Microsoft.Azure.Management.Automation
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -2151,25 +2201,25 @@ namespace Microsoft.Azure.Management.Automation
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("automationAccount", automationAccount);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "ListByScheduleNameAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ListByScheduleNameAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + automationAccount.Trim() + "/Runbooks?";
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + Uri.EscapeDataString(automationAccount) + "/Runbooks?";
             bool appendFilter = true;
             appendFilter = false;
-            url = url + "$filter=" + "Schedules/any(schedule: schedule/Name eq '" + Uri.EscapeDataString(parameters.ScheduleName.Trim()) + "')";
+            url = url + "$filter=" + "Schedules/any(schedule: schedule/Name eq '" + Uri.EscapeDataString(parameters.ScheduleName) + "')";
             if (parameters.SkipToken != null)
             {
-                url = url + "&$skiptoken=" + Uri.EscapeDataString(parameters.SkipToken != null ? parameters.SkipToken.Trim() : "");
+                url = url + "&$skiptoken=" + Uri.EscapeDataString(parameters.SkipToken);
             }
             url = url + "&api-version=2014-03-13_Preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
@@ -2209,13 +2259,13 @@ namespace Microsoft.Azure.Management.Automation
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -2224,7 +2274,7 @@ namespace Microsoft.Azure.Management.Automation
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -2232,234 +2282,244 @@ namespace Microsoft.Azure.Management.Automation
                     // Create Result
                     RunbookListResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new RunbookListResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        JToken valueArray = responseDoc["value"];
-                        if (valueArray != null && valueArray.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new RunbookListResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            foreach (JToken valueValue in ((JArray)valueArray))
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
                             {
-                                Runbook runbookInstance = new Runbook();
-                                result.Runbooks.Add(runbookInstance);
-                                
-                                JToken accountIDValue = valueValue["AccountID"];
-                                if (accountIDValue != null && accountIDValue.Type != JTokenType.Null)
+                                foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    string accountIDInstance = ((string)accountIDValue);
-                                    runbookInstance.AccountId = accountIDInstance;
-                                }
-                                
-                                JToken runbookIDValue = valueValue["RunbookID"];
-                                if (runbookIDValue != null && runbookIDValue.Type != JTokenType.Null)
-                                {
-                                    string runbookIDInstance = ((string)runbookIDValue);
-                                    runbookInstance.Id = runbookIDInstance;
-                                }
-                                
-                                JToken runbookNameValue = valueValue["RunbookName"];
-                                if (runbookNameValue != null && runbookNameValue.Type != JTokenType.Null)
-                                {
-                                    string runbookNameInstance = ((string)runbookNameValue);
-                                    runbookInstance.Name = runbookNameInstance;
-                                }
-                                
-                                JToken creationTimeValue = valueValue["CreationTime"];
-                                if (creationTimeValue != null && creationTimeValue.Type != JTokenType.Null)
-                                {
-                                    DateTime creationTimeInstance = ((DateTime)creationTimeValue);
-                                    runbookInstance.CreationTime = creationTimeInstance;
-                                }
-                                
-                                JToken lastModifiedTimeValue = valueValue["LastModifiedTime"];
-                                if (lastModifiedTimeValue != null && lastModifiedTimeValue.Type != JTokenType.Null)
-                                {
-                                    DateTime lastModifiedTimeInstance = ((DateTime)lastModifiedTimeValue);
-                                    runbookInstance.LastModifiedTime = lastModifiedTimeInstance;
-                                }
-                                
-                                JToken lastModifiedByValue = valueValue["LastModifiedBy"];
-                                if (lastModifiedByValue != null && lastModifiedByValue.Type != JTokenType.Null)
-                                {
-                                    string lastModifiedByInstance = ((string)lastModifiedByValue);
-                                    runbookInstance.LastModifiedBy = lastModifiedByInstance;
-                                }
-                                
-                                JToken descriptionValue = valueValue["Description"];
-                                if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
-                                {
-                                    string descriptionInstance = ((string)descriptionValue);
-                                    runbookInstance.Description = descriptionInstance;
-                                }
-                                
-                                JToken isApiOnlyValue = valueValue["IsApiOnly"];
-                                if (isApiOnlyValue != null && isApiOnlyValue.Type != JTokenType.Null)
-                                {
-                                    bool isApiOnlyInstance = ((bool)isApiOnlyValue);
-                                    runbookInstance.IsApiOnly = isApiOnlyInstance;
-                                }
-                                
-                                JToken isGlobalValue = valueValue["IsGlobal"];
-                                if (isGlobalValue != null && isGlobalValue.Type != JTokenType.Null)
-                                {
-                                    bool isGlobalInstance = ((bool)isGlobalValue);
-                                    runbookInstance.IsGlobal = isGlobalInstance;
-                                }
-                                
-                                JToken publishedRunbookVersionIDValue = valueValue["PublishedRunbookVersionID"];
-                                if (publishedRunbookVersionIDValue != null && publishedRunbookVersionIDValue.Type != JTokenType.Null)
-                                {
-                                    string publishedRunbookVersionIDInstance = ((string)publishedRunbookVersionIDValue);
-                                    runbookInstance.PublishedRunbookVersionId = publishedRunbookVersionIDInstance;
-                                }
-                                
-                                JToken draftRunbookVersionIDValue = valueValue["DraftRunbookVersionID"];
-                                if (draftRunbookVersionIDValue != null && draftRunbookVersionIDValue.Type != JTokenType.Null)
-                                {
-                                    string draftRunbookVersionIDInstance = ((string)draftRunbookVersionIDValue);
-                                    runbookInstance.DraftRunbookVersionId = draftRunbookVersionIDInstance;
-                                }
-                                
-                                JToken tagsValue = valueValue["Tags"];
-                                if (tagsValue != null && tagsValue.Type != JTokenType.Null)
-                                {
-                                    string tagsInstance = ((string)tagsValue);
-                                    runbookInstance.Tags = tagsInstance;
-                                }
-                                
-                                JToken logDebugValue = valueValue["LogDebug"];
-                                if (logDebugValue != null && logDebugValue.Type != JTokenType.Null)
-                                {
-                                    bool logDebugInstance = ((bool)logDebugValue);
-                                    runbookInstance.LogDebug = logDebugInstance;
-                                }
-                                
-                                JToken logVerboseValue = valueValue["LogVerbose"];
-                                if (logVerboseValue != null && logVerboseValue.Type != JTokenType.Null)
-                                {
-                                    bool logVerboseInstance = ((bool)logVerboseValue);
-                                    runbookInstance.LogVerbose = logVerboseInstance;
-                                }
-                                
-                                JToken logProgressValue = valueValue["LogProgress"];
-                                if (logProgressValue != null && logProgressValue.Type != JTokenType.Null)
-                                {
-                                    bool logProgressInstance = ((bool)logProgressValue);
-                                    runbookInstance.LogProgress = logProgressInstance;
-                                }
-                                
-                                JToken schedulesArray = valueValue["Schedules"];
-                                if (schedulesArray != null && schedulesArray.Type != JTokenType.Null)
-                                {
-                                    foreach (JToken schedulesValue in ((JArray)schedulesArray))
+                                    Runbook runbookInstance = new Runbook();
+                                    result.Runbooks.Add(runbookInstance);
+                                    
+                                    JToken accountIDValue = valueValue["AccountID"];
+                                    if (accountIDValue != null && accountIDValue.Type != JTokenType.Null)
                                     {
-                                        Schedule scheduleInstance = new Schedule();
-                                        runbookInstance.Schedules.Add(scheduleInstance);
-                                        
-                                        JToken scheduleIDValue = schedulesValue["ScheduleID"];
-                                        if (scheduleIDValue != null && scheduleIDValue.Type != JTokenType.Null)
+                                        string accountIDInstance = ((string)accountIDValue);
+                                        runbookInstance.AccountId = accountIDInstance;
+                                    }
+                                    
+                                    JToken runbookIDValue = valueValue["RunbookID"];
+                                    if (runbookIDValue != null && runbookIDValue.Type != JTokenType.Null)
+                                    {
+                                        string runbookIDInstance = ((string)runbookIDValue);
+                                        runbookInstance.Id = runbookIDInstance;
+                                    }
+                                    
+                                    JToken runbookNameValue = valueValue["RunbookName"];
+                                    if (runbookNameValue != null && runbookNameValue.Type != JTokenType.Null)
+                                    {
+                                        string runbookNameInstance = ((string)runbookNameValue);
+                                        runbookInstance.Name = runbookNameInstance;
+                                    }
+                                    
+                                    JToken creationTimeValue = valueValue["CreationTime"];
+                                    if (creationTimeValue != null && creationTimeValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime creationTimeInstance = ((DateTime)creationTimeValue);
+                                        runbookInstance.CreationTime = creationTimeInstance;
+                                    }
+                                    
+                                    JToken lastModifiedTimeValue = valueValue["LastModifiedTime"];
+                                    if (lastModifiedTimeValue != null && lastModifiedTimeValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime lastModifiedTimeInstance = ((DateTime)lastModifiedTimeValue);
+                                        runbookInstance.LastModifiedTime = lastModifiedTimeInstance;
+                                    }
+                                    
+                                    JToken lastModifiedByValue = valueValue["LastModifiedBy"];
+                                    if (lastModifiedByValue != null && lastModifiedByValue.Type != JTokenType.Null)
+                                    {
+                                        string lastModifiedByInstance = ((string)lastModifiedByValue);
+                                        runbookInstance.LastModifiedBy = lastModifiedByInstance;
+                                    }
+                                    
+                                    JToken descriptionValue = valueValue["Description"];
+                                    if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
+                                    {
+                                        string descriptionInstance = ((string)descriptionValue);
+                                        runbookInstance.Description = descriptionInstance;
+                                    }
+                                    
+                                    JToken isApiOnlyValue = valueValue["IsApiOnly"];
+                                    if (isApiOnlyValue != null && isApiOnlyValue.Type != JTokenType.Null)
+                                    {
+                                        bool isApiOnlyInstance = ((bool)isApiOnlyValue);
+                                        runbookInstance.IsApiOnly = isApiOnlyInstance;
+                                    }
+                                    
+                                    JToken isGlobalValue = valueValue["IsGlobal"];
+                                    if (isGlobalValue != null && isGlobalValue.Type != JTokenType.Null)
+                                    {
+                                        bool isGlobalInstance = ((bool)isGlobalValue);
+                                        runbookInstance.IsGlobal = isGlobalInstance;
+                                    }
+                                    
+                                    JToken publishedRunbookVersionIDValue = valueValue["PublishedRunbookVersionID"];
+                                    if (publishedRunbookVersionIDValue != null && publishedRunbookVersionIDValue.Type != JTokenType.Null)
+                                    {
+                                        string publishedRunbookVersionIDInstance = ((string)publishedRunbookVersionIDValue);
+                                        runbookInstance.PublishedRunbookVersionId = publishedRunbookVersionIDInstance;
+                                    }
+                                    
+                                    JToken draftRunbookVersionIDValue = valueValue["DraftRunbookVersionID"];
+                                    if (draftRunbookVersionIDValue != null && draftRunbookVersionIDValue.Type != JTokenType.Null)
+                                    {
+                                        string draftRunbookVersionIDInstance = ((string)draftRunbookVersionIDValue);
+                                        runbookInstance.DraftRunbookVersionId = draftRunbookVersionIDInstance;
+                                    }
+                                    
+                                    JToken tagsValue = valueValue["Tags"];
+                                    if (tagsValue != null && tagsValue.Type != JTokenType.Null)
+                                    {
+                                        string tagsInstance = ((string)tagsValue);
+                                        runbookInstance.Tags = tagsInstance;
+                                    }
+                                    
+                                    JToken logDebugValue = valueValue["LogDebug"];
+                                    if (logDebugValue != null && logDebugValue.Type != JTokenType.Null)
+                                    {
+                                        bool logDebugInstance = ((bool)logDebugValue);
+                                        runbookInstance.LogDebug = logDebugInstance;
+                                    }
+                                    
+                                    JToken logVerboseValue = valueValue["LogVerbose"];
+                                    if (logVerboseValue != null && logVerboseValue.Type != JTokenType.Null)
+                                    {
+                                        bool logVerboseInstance = ((bool)logVerboseValue);
+                                        runbookInstance.LogVerbose = logVerboseInstance;
+                                    }
+                                    
+                                    JToken logProgressValue = valueValue["LogProgress"];
+                                    if (logProgressValue != null && logProgressValue.Type != JTokenType.Null)
+                                    {
+                                        bool logProgressInstance = ((bool)logProgressValue);
+                                        runbookInstance.LogProgress = logProgressInstance;
+                                    }
+                                    
+                                    JToken schedulesArray = valueValue["Schedules"];
+                                    if (schedulesArray != null && schedulesArray.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken schedulesValue in ((JArray)schedulesArray))
                                         {
-                                            string scheduleIDInstance = ((string)scheduleIDValue);
-                                            scheduleInstance.Id = scheduleIDInstance;
-                                        }
-                                        
-                                        JToken accountIDValue2 = schedulesValue["AccountID"];
-                                        if (accountIDValue2 != null && accountIDValue2.Type != JTokenType.Null)
-                                        {
-                                            string accountIDInstance2 = ((string)accountIDValue2);
-                                            scheduleInstance.AccountId = accountIDInstance2;
-                                        }
-                                        
-                                        JToken nameValue = schedulesValue["Name"];
-                                        if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                        {
-                                            string nameInstance = ((string)nameValue);
-                                            scheduleInstance.Name = nameInstance;
-                                        }
-                                        
-                                        JToken descriptionValue2 = schedulesValue["Description"];
-                                        if (descriptionValue2 != null && descriptionValue2.Type != JTokenType.Null)
-                                        {
-                                            string descriptionInstance2 = ((string)descriptionValue2);
-                                            scheduleInstance.Description = descriptionInstance2;
-                                        }
-                                        
-                                        JToken startTimeValue = schedulesValue["StartTime"];
-                                        if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
-                                        {
-                                            DateTime startTimeInstance = ((DateTime)startTimeValue);
-                                            scheduleInstance.StartTime = startTimeInstance;
-                                        }
-                                        
-                                        JToken expiryTimeValue = schedulesValue["ExpiryTime"];
-                                        if (expiryTimeValue != null && expiryTimeValue.Type != JTokenType.Null)
-                                        {
-                                            DateTime expiryTimeInstance = ((DateTime)expiryTimeValue);
-                                            scheduleInstance.ExpiryTime = expiryTimeInstance;
-                                        }
-                                        
-                                        JToken creationTimeValue2 = schedulesValue["CreationTime"];
-                                        if (creationTimeValue2 != null && creationTimeValue2.Type != JTokenType.Null)
-                                        {
-                                            DateTime creationTimeInstance2 = ((DateTime)creationTimeValue2);
-                                            scheduleInstance.CreationTime = creationTimeInstance2;
-                                        }
-                                        
-                                        JToken lastModifiedTimeValue2 = schedulesValue["LastModifiedTime"];
-                                        if (lastModifiedTimeValue2 != null && lastModifiedTimeValue2.Type != JTokenType.Null)
-                                        {
-                                            DateTime lastModifiedTimeInstance2 = ((DateTime)lastModifiedTimeValue2);
-                                            scheduleInstance.LastModifiedTime = lastModifiedTimeInstance2;
-                                        }
-                                        
-                                        JToken isEnabledValue = schedulesValue["IsEnabled"];
-                                        if (isEnabledValue != null && isEnabledValue.Type != JTokenType.Null)
-                                        {
-                                            bool isEnabledInstance = ((bool)isEnabledValue);
-                                            scheduleInstance.IsEnabled = isEnabledInstance;
-                                        }
-                                        
-                                        JToken nextRunValue = schedulesValue["NextRun"];
-                                        if (nextRunValue != null && nextRunValue.Type != JTokenType.Null)
-                                        {
-                                            DateTime nextRunInstance = ((DateTime)nextRunValue);
-                                            scheduleInstance.NextRun = nextRunInstance;
-                                        }
-                                        
-                                        JToken dayIntervalValue = schedulesValue["DayInterval"];
-                                        if (dayIntervalValue != null && dayIntervalValue.Type != JTokenType.Null)
-                                        {
-                                            int dayIntervalInstance = ((int)dayIntervalValue);
-                                            scheduleInstance.DayInterval = dayIntervalInstance;
-                                        }
-                                        
-                                        JToken odatatypeValue = schedulesValue["odata.type"];
-                                        if (odatatypeValue != null && odatatypeValue.Type != JTokenType.Null)
-                                        {
-                                            string odatatypeInstance = ((string)odatatypeValue);
-                                            scheduleInstance.ScheduleType = odatatypeInstance;
+                                            Schedule scheduleInstance = new Schedule();
+                                            runbookInstance.Schedules.Add(scheduleInstance);
+                                            
+                                            JToken scheduleIDValue = schedulesValue["ScheduleID"];
+                                            if (scheduleIDValue != null && scheduleIDValue.Type != JTokenType.Null)
+                                            {
+                                                string scheduleIDInstance = ((string)scheduleIDValue);
+                                                scheduleInstance.Id = scheduleIDInstance;
+                                            }
+                                            
+                                            JToken accountIDValue2 = schedulesValue["AccountID"];
+                                            if (accountIDValue2 != null && accountIDValue2.Type != JTokenType.Null)
+                                            {
+                                                string accountIDInstance2 = ((string)accountIDValue2);
+                                                scheduleInstance.AccountId = accountIDInstance2;
+                                            }
+                                            
+                                            JToken nameValue = schedulesValue["Name"];
+                                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                            {
+                                                string nameInstance = ((string)nameValue);
+                                                scheduleInstance.Name = nameInstance;
+                                            }
+                                            
+                                            JToken descriptionValue2 = schedulesValue["Description"];
+                                            if (descriptionValue2 != null && descriptionValue2.Type != JTokenType.Null)
+                                            {
+                                                string descriptionInstance2 = ((string)descriptionValue2);
+                                                scheduleInstance.Description = descriptionInstance2;
+                                            }
+                                            
+                                            JToken startTimeValue = schedulesValue["StartTime"];
+                                            if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
+                                            {
+                                                DateTime startTimeInstance = ((DateTime)startTimeValue);
+                                                scheduleInstance.StartTime = startTimeInstance;
+                                            }
+                                            
+                                            JToken expiryTimeValue = schedulesValue["ExpiryTime"];
+                                            if (expiryTimeValue != null && expiryTimeValue.Type != JTokenType.Null)
+                                            {
+                                                DateTime expiryTimeInstance = ((DateTime)expiryTimeValue);
+                                                scheduleInstance.ExpiryTime = expiryTimeInstance;
+                                            }
+                                            
+                                            JToken creationTimeValue2 = schedulesValue["CreationTime"];
+                                            if (creationTimeValue2 != null && creationTimeValue2.Type != JTokenType.Null)
+                                            {
+                                                DateTime creationTimeInstance2 = ((DateTime)creationTimeValue2);
+                                                scheduleInstance.CreationTime = creationTimeInstance2;
+                                            }
+                                            
+                                            JToken lastModifiedTimeValue2 = schedulesValue["LastModifiedTime"];
+                                            if (lastModifiedTimeValue2 != null && lastModifiedTimeValue2.Type != JTokenType.Null)
+                                            {
+                                                DateTime lastModifiedTimeInstance2 = ((DateTime)lastModifiedTimeValue2);
+                                                scheduleInstance.LastModifiedTime = lastModifiedTimeInstance2;
+                                            }
+                                            
+                                            JToken isEnabledValue = schedulesValue["IsEnabled"];
+                                            if (isEnabledValue != null && isEnabledValue.Type != JTokenType.Null)
+                                            {
+                                                bool isEnabledInstance = ((bool)isEnabledValue);
+                                                scheduleInstance.IsEnabled = isEnabledInstance;
+                                            }
+                                            
+                                            JToken nextRunValue = schedulesValue["NextRun"];
+                                            if (nextRunValue != null && nextRunValue.Type != JTokenType.Null)
+                                            {
+                                                DateTime nextRunInstance = ((DateTime)nextRunValue);
+                                                scheduleInstance.NextRun = nextRunInstance;
+                                            }
+                                            
+                                            JToken dayIntervalValue = schedulesValue["DayInterval"];
+                                            if (dayIntervalValue != null && dayIntervalValue.Type != JTokenType.Null)
+                                            {
+                                                int dayIntervalInstance = ((int)dayIntervalValue);
+                                                scheduleInstance.DayInterval = dayIntervalInstance;
+                                            }
+                                            
+                                            JToken hourIntervalValue = schedulesValue["HourInterval"];
+                                            if (hourIntervalValue != null && hourIntervalValue.Type != JTokenType.Null)
+                                            {
+                                                int hourIntervalInstance = ((int)hourIntervalValue);
+                                                scheduleInstance.HourInterval = hourIntervalInstance;
+                                            }
+                                            
+                                            JToken odatatypeValue = schedulesValue["odata.type"];
+                                            if (odatatypeValue != null && odatatypeValue.Type != JTokenType.Null)
+                                            {
+                                                string odatatypeInstance = ((string)odatatypeValue);
+                                                scheduleInstance.ScheduleType = odatatypeInstance;
+                                            }
                                         }
                                     }
                                 }
                             }
+                            
+                            JToken odatanextLinkValue = responseDoc["odata.nextLink"];
+                            if (odatanextLinkValue != null && odatanextLinkValue.Type != JTokenType.Null)
+                            {
+                                string odatanextLinkInstance = Regex.Match(((string)odatanextLinkValue), "^.*[&\\?]\\$skiptoken=([^&]*)(&.*)?").Groups[1].Value;
+                                result.SkipToken = odatanextLinkInstance;
+                            }
                         }
                         
-                        JToken odatanextLinkValue = responseDoc["odata.nextLink"];
-                        if (odatanextLinkValue != null && odatanextLinkValue.Type != JTokenType.Null)
-                        {
-                            string odatanextLinkInstance = Regex.Match(((string)odatanextLinkValue), "^.*[&\\?]\\$skiptoken=([^&]*)(&.*)?").Groups[1].Value;
-                            result.SkipToken = odatanextLinkInstance;
-                        }
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -2468,7 +2528,7 @@ namespace Microsoft.Azure.Management.Automation
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -2524,26 +2584,26 @@ namespace Microsoft.Azure.Management.Automation
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("automationAccount", automationAccount);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "ListByScheduleNameWithSchedulesAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ListByScheduleNameWithSchedulesAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + automationAccount.Trim() + "/Runbooks?";
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + Uri.EscapeDataString(automationAccount) + "/Runbooks?";
             bool appendFilter = true;
             appendFilter = false;
-            url = url + "$filter=" + "Schedules/any(schedule: schedule/Name eq '" + Uri.EscapeDataString(parameters.ScheduleName.Trim()) + "')";
+            url = url + "$filter=" + "Schedules/any(schedule: schedule/Name eq '" + Uri.EscapeDataString(parameters.ScheduleName) + "')";
             url = url + "&$expand=Schedules";
             if (parameters.SkipToken != null)
             {
-                url = url + "&$skiptoken=" + Uri.EscapeDataString(parameters.SkipToken != null ? parameters.SkipToken.Trim() : "");
+                url = url + "&$skiptoken=" + Uri.EscapeDataString(parameters.SkipToken);
             }
             url = url + "&api-version=2014-03-13_Preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
@@ -2583,13 +2643,13 @@ namespace Microsoft.Azure.Management.Automation
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -2598,7 +2658,7 @@ namespace Microsoft.Azure.Management.Automation
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -2606,234 +2666,244 @@ namespace Microsoft.Azure.Management.Automation
                     // Create Result
                     RunbookListResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new RunbookListResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        JToken valueArray = responseDoc["value"];
-                        if (valueArray != null && valueArray.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new RunbookListResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            foreach (JToken valueValue in ((JArray)valueArray))
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
                             {
-                                Runbook runbookInstance = new Runbook();
-                                result.Runbooks.Add(runbookInstance);
-                                
-                                JToken accountIDValue = valueValue["AccountID"];
-                                if (accountIDValue != null && accountIDValue.Type != JTokenType.Null)
+                                foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    string accountIDInstance = ((string)accountIDValue);
-                                    runbookInstance.AccountId = accountIDInstance;
-                                }
-                                
-                                JToken runbookIDValue = valueValue["RunbookID"];
-                                if (runbookIDValue != null && runbookIDValue.Type != JTokenType.Null)
-                                {
-                                    string runbookIDInstance = ((string)runbookIDValue);
-                                    runbookInstance.Id = runbookIDInstance;
-                                }
-                                
-                                JToken runbookNameValue = valueValue["RunbookName"];
-                                if (runbookNameValue != null && runbookNameValue.Type != JTokenType.Null)
-                                {
-                                    string runbookNameInstance = ((string)runbookNameValue);
-                                    runbookInstance.Name = runbookNameInstance;
-                                }
-                                
-                                JToken creationTimeValue = valueValue["CreationTime"];
-                                if (creationTimeValue != null && creationTimeValue.Type != JTokenType.Null)
-                                {
-                                    DateTime creationTimeInstance = ((DateTime)creationTimeValue);
-                                    runbookInstance.CreationTime = creationTimeInstance;
-                                }
-                                
-                                JToken lastModifiedTimeValue = valueValue["LastModifiedTime"];
-                                if (lastModifiedTimeValue != null && lastModifiedTimeValue.Type != JTokenType.Null)
-                                {
-                                    DateTime lastModifiedTimeInstance = ((DateTime)lastModifiedTimeValue);
-                                    runbookInstance.LastModifiedTime = lastModifiedTimeInstance;
-                                }
-                                
-                                JToken lastModifiedByValue = valueValue["LastModifiedBy"];
-                                if (lastModifiedByValue != null && lastModifiedByValue.Type != JTokenType.Null)
-                                {
-                                    string lastModifiedByInstance = ((string)lastModifiedByValue);
-                                    runbookInstance.LastModifiedBy = lastModifiedByInstance;
-                                }
-                                
-                                JToken descriptionValue = valueValue["Description"];
-                                if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
-                                {
-                                    string descriptionInstance = ((string)descriptionValue);
-                                    runbookInstance.Description = descriptionInstance;
-                                }
-                                
-                                JToken isApiOnlyValue = valueValue["IsApiOnly"];
-                                if (isApiOnlyValue != null && isApiOnlyValue.Type != JTokenType.Null)
-                                {
-                                    bool isApiOnlyInstance = ((bool)isApiOnlyValue);
-                                    runbookInstance.IsApiOnly = isApiOnlyInstance;
-                                }
-                                
-                                JToken isGlobalValue = valueValue["IsGlobal"];
-                                if (isGlobalValue != null && isGlobalValue.Type != JTokenType.Null)
-                                {
-                                    bool isGlobalInstance = ((bool)isGlobalValue);
-                                    runbookInstance.IsGlobal = isGlobalInstance;
-                                }
-                                
-                                JToken publishedRunbookVersionIDValue = valueValue["PublishedRunbookVersionID"];
-                                if (publishedRunbookVersionIDValue != null && publishedRunbookVersionIDValue.Type != JTokenType.Null)
-                                {
-                                    string publishedRunbookVersionIDInstance = ((string)publishedRunbookVersionIDValue);
-                                    runbookInstance.PublishedRunbookVersionId = publishedRunbookVersionIDInstance;
-                                }
-                                
-                                JToken draftRunbookVersionIDValue = valueValue["DraftRunbookVersionID"];
-                                if (draftRunbookVersionIDValue != null && draftRunbookVersionIDValue.Type != JTokenType.Null)
-                                {
-                                    string draftRunbookVersionIDInstance = ((string)draftRunbookVersionIDValue);
-                                    runbookInstance.DraftRunbookVersionId = draftRunbookVersionIDInstance;
-                                }
-                                
-                                JToken tagsValue = valueValue["Tags"];
-                                if (tagsValue != null && tagsValue.Type != JTokenType.Null)
-                                {
-                                    string tagsInstance = ((string)tagsValue);
-                                    runbookInstance.Tags = tagsInstance;
-                                }
-                                
-                                JToken logDebugValue = valueValue["LogDebug"];
-                                if (logDebugValue != null && logDebugValue.Type != JTokenType.Null)
-                                {
-                                    bool logDebugInstance = ((bool)logDebugValue);
-                                    runbookInstance.LogDebug = logDebugInstance;
-                                }
-                                
-                                JToken logVerboseValue = valueValue["LogVerbose"];
-                                if (logVerboseValue != null && logVerboseValue.Type != JTokenType.Null)
-                                {
-                                    bool logVerboseInstance = ((bool)logVerboseValue);
-                                    runbookInstance.LogVerbose = logVerboseInstance;
-                                }
-                                
-                                JToken logProgressValue = valueValue["LogProgress"];
-                                if (logProgressValue != null && logProgressValue.Type != JTokenType.Null)
-                                {
-                                    bool logProgressInstance = ((bool)logProgressValue);
-                                    runbookInstance.LogProgress = logProgressInstance;
-                                }
-                                
-                                JToken schedulesArray = valueValue["Schedules"];
-                                if (schedulesArray != null && schedulesArray.Type != JTokenType.Null)
-                                {
-                                    foreach (JToken schedulesValue in ((JArray)schedulesArray))
+                                    Runbook runbookInstance = new Runbook();
+                                    result.Runbooks.Add(runbookInstance);
+                                    
+                                    JToken accountIDValue = valueValue["AccountID"];
+                                    if (accountIDValue != null && accountIDValue.Type != JTokenType.Null)
                                     {
-                                        Schedule scheduleInstance = new Schedule();
-                                        runbookInstance.Schedules.Add(scheduleInstance);
-                                        
-                                        JToken scheduleIDValue = schedulesValue["ScheduleID"];
-                                        if (scheduleIDValue != null && scheduleIDValue.Type != JTokenType.Null)
+                                        string accountIDInstance = ((string)accountIDValue);
+                                        runbookInstance.AccountId = accountIDInstance;
+                                    }
+                                    
+                                    JToken runbookIDValue = valueValue["RunbookID"];
+                                    if (runbookIDValue != null && runbookIDValue.Type != JTokenType.Null)
+                                    {
+                                        string runbookIDInstance = ((string)runbookIDValue);
+                                        runbookInstance.Id = runbookIDInstance;
+                                    }
+                                    
+                                    JToken runbookNameValue = valueValue["RunbookName"];
+                                    if (runbookNameValue != null && runbookNameValue.Type != JTokenType.Null)
+                                    {
+                                        string runbookNameInstance = ((string)runbookNameValue);
+                                        runbookInstance.Name = runbookNameInstance;
+                                    }
+                                    
+                                    JToken creationTimeValue = valueValue["CreationTime"];
+                                    if (creationTimeValue != null && creationTimeValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime creationTimeInstance = ((DateTime)creationTimeValue);
+                                        runbookInstance.CreationTime = creationTimeInstance;
+                                    }
+                                    
+                                    JToken lastModifiedTimeValue = valueValue["LastModifiedTime"];
+                                    if (lastModifiedTimeValue != null && lastModifiedTimeValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime lastModifiedTimeInstance = ((DateTime)lastModifiedTimeValue);
+                                        runbookInstance.LastModifiedTime = lastModifiedTimeInstance;
+                                    }
+                                    
+                                    JToken lastModifiedByValue = valueValue["LastModifiedBy"];
+                                    if (lastModifiedByValue != null && lastModifiedByValue.Type != JTokenType.Null)
+                                    {
+                                        string lastModifiedByInstance = ((string)lastModifiedByValue);
+                                        runbookInstance.LastModifiedBy = lastModifiedByInstance;
+                                    }
+                                    
+                                    JToken descriptionValue = valueValue["Description"];
+                                    if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
+                                    {
+                                        string descriptionInstance = ((string)descriptionValue);
+                                        runbookInstance.Description = descriptionInstance;
+                                    }
+                                    
+                                    JToken isApiOnlyValue = valueValue["IsApiOnly"];
+                                    if (isApiOnlyValue != null && isApiOnlyValue.Type != JTokenType.Null)
+                                    {
+                                        bool isApiOnlyInstance = ((bool)isApiOnlyValue);
+                                        runbookInstance.IsApiOnly = isApiOnlyInstance;
+                                    }
+                                    
+                                    JToken isGlobalValue = valueValue["IsGlobal"];
+                                    if (isGlobalValue != null && isGlobalValue.Type != JTokenType.Null)
+                                    {
+                                        bool isGlobalInstance = ((bool)isGlobalValue);
+                                        runbookInstance.IsGlobal = isGlobalInstance;
+                                    }
+                                    
+                                    JToken publishedRunbookVersionIDValue = valueValue["PublishedRunbookVersionID"];
+                                    if (publishedRunbookVersionIDValue != null && publishedRunbookVersionIDValue.Type != JTokenType.Null)
+                                    {
+                                        string publishedRunbookVersionIDInstance = ((string)publishedRunbookVersionIDValue);
+                                        runbookInstance.PublishedRunbookVersionId = publishedRunbookVersionIDInstance;
+                                    }
+                                    
+                                    JToken draftRunbookVersionIDValue = valueValue["DraftRunbookVersionID"];
+                                    if (draftRunbookVersionIDValue != null && draftRunbookVersionIDValue.Type != JTokenType.Null)
+                                    {
+                                        string draftRunbookVersionIDInstance = ((string)draftRunbookVersionIDValue);
+                                        runbookInstance.DraftRunbookVersionId = draftRunbookVersionIDInstance;
+                                    }
+                                    
+                                    JToken tagsValue = valueValue["Tags"];
+                                    if (tagsValue != null && tagsValue.Type != JTokenType.Null)
+                                    {
+                                        string tagsInstance = ((string)tagsValue);
+                                        runbookInstance.Tags = tagsInstance;
+                                    }
+                                    
+                                    JToken logDebugValue = valueValue["LogDebug"];
+                                    if (logDebugValue != null && logDebugValue.Type != JTokenType.Null)
+                                    {
+                                        bool logDebugInstance = ((bool)logDebugValue);
+                                        runbookInstance.LogDebug = logDebugInstance;
+                                    }
+                                    
+                                    JToken logVerboseValue = valueValue["LogVerbose"];
+                                    if (logVerboseValue != null && logVerboseValue.Type != JTokenType.Null)
+                                    {
+                                        bool logVerboseInstance = ((bool)logVerboseValue);
+                                        runbookInstance.LogVerbose = logVerboseInstance;
+                                    }
+                                    
+                                    JToken logProgressValue = valueValue["LogProgress"];
+                                    if (logProgressValue != null && logProgressValue.Type != JTokenType.Null)
+                                    {
+                                        bool logProgressInstance = ((bool)logProgressValue);
+                                        runbookInstance.LogProgress = logProgressInstance;
+                                    }
+                                    
+                                    JToken schedulesArray = valueValue["Schedules"];
+                                    if (schedulesArray != null && schedulesArray.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken schedulesValue in ((JArray)schedulesArray))
                                         {
-                                            string scheduleIDInstance = ((string)scheduleIDValue);
-                                            scheduleInstance.Id = scheduleIDInstance;
-                                        }
-                                        
-                                        JToken accountIDValue2 = schedulesValue["AccountID"];
-                                        if (accountIDValue2 != null && accountIDValue2.Type != JTokenType.Null)
-                                        {
-                                            string accountIDInstance2 = ((string)accountIDValue2);
-                                            scheduleInstance.AccountId = accountIDInstance2;
-                                        }
-                                        
-                                        JToken nameValue = schedulesValue["Name"];
-                                        if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                        {
-                                            string nameInstance = ((string)nameValue);
-                                            scheduleInstance.Name = nameInstance;
-                                        }
-                                        
-                                        JToken descriptionValue2 = schedulesValue["Description"];
-                                        if (descriptionValue2 != null && descriptionValue2.Type != JTokenType.Null)
-                                        {
-                                            string descriptionInstance2 = ((string)descriptionValue2);
-                                            scheduleInstance.Description = descriptionInstance2;
-                                        }
-                                        
-                                        JToken startTimeValue = schedulesValue["StartTime"];
-                                        if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
-                                        {
-                                            DateTime startTimeInstance = ((DateTime)startTimeValue);
-                                            scheduleInstance.StartTime = startTimeInstance;
-                                        }
-                                        
-                                        JToken expiryTimeValue = schedulesValue["ExpiryTime"];
-                                        if (expiryTimeValue != null && expiryTimeValue.Type != JTokenType.Null)
-                                        {
-                                            DateTime expiryTimeInstance = ((DateTime)expiryTimeValue);
-                                            scheduleInstance.ExpiryTime = expiryTimeInstance;
-                                        }
-                                        
-                                        JToken creationTimeValue2 = schedulesValue["CreationTime"];
-                                        if (creationTimeValue2 != null && creationTimeValue2.Type != JTokenType.Null)
-                                        {
-                                            DateTime creationTimeInstance2 = ((DateTime)creationTimeValue2);
-                                            scheduleInstance.CreationTime = creationTimeInstance2;
-                                        }
-                                        
-                                        JToken lastModifiedTimeValue2 = schedulesValue["LastModifiedTime"];
-                                        if (lastModifiedTimeValue2 != null && lastModifiedTimeValue2.Type != JTokenType.Null)
-                                        {
-                                            DateTime lastModifiedTimeInstance2 = ((DateTime)lastModifiedTimeValue2);
-                                            scheduleInstance.LastModifiedTime = lastModifiedTimeInstance2;
-                                        }
-                                        
-                                        JToken isEnabledValue = schedulesValue["IsEnabled"];
-                                        if (isEnabledValue != null && isEnabledValue.Type != JTokenType.Null)
-                                        {
-                                            bool isEnabledInstance = ((bool)isEnabledValue);
-                                            scheduleInstance.IsEnabled = isEnabledInstance;
-                                        }
-                                        
-                                        JToken nextRunValue = schedulesValue["NextRun"];
-                                        if (nextRunValue != null && nextRunValue.Type != JTokenType.Null)
-                                        {
-                                            DateTime nextRunInstance = ((DateTime)nextRunValue);
-                                            scheduleInstance.NextRun = nextRunInstance;
-                                        }
-                                        
-                                        JToken dayIntervalValue = schedulesValue["DayInterval"];
-                                        if (dayIntervalValue != null && dayIntervalValue.Type != JTokenType.Null)
-                                        {
-                                            int dayIntervalInstance = ((int)dayIntervalValue);
-                                            scheduleInstance.DayInterval = dayIntervalInstance;
-                                        }
-                                        
-                                        JToken odatatypeValue = schedulesValue["odata.type"];
-                                        if (odatatypeValue != null && odatatypeValue.Type != JTokenType.Null)
-                                        {
-                                            string odatatypeInstance = ((string)odatatypeValue);
-                                            scheduleInstance.ScheduleType = odatatypeInstance;
+                                            Schedule scheduleInstance = new Schedule();
+                                            runbookInstance.Schedules.Add(scheduleInstance);
+                                            
+                                            JToken scheduleIDValue = schedulesValue["ScheduleID"];
+                                            if (scheduleIDValue != null && scheduleIDValue.Type != JTokenType.Null)
+                                            {
+                                                string scheduleIDInstance = ((string)scheduleIDValue);
+                                                scheduleInstance.Id = scheduleIDInstance;
+                                            }
+                                            
+                                            JToken accountIDValue2 = schedulesValue["AccountID"];
+                                            if (accountIDValue2 != null && accountIDValue2.Type != JTokenType.Null)
+                                            {
+                                                string accountIDInstance2 = ((string)accountIDValue2);
+                                                scheduleInstance.AccountId = accountIDInstance2;
+                                            }
+                                            
+                                            JToken nameValue = schedulesValue["Name"];
+                                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                            {
+                                                string nameInstance = ((string)nameValue);
+                                                scheduleInstance.Name = nameInstance;
+                                            }
+                                            
+                                            JToken descriptionValue2 = schedulesValue["Description"];
+                                            if (descriptionValue2 != null && descriptionValue2.Type != JTokenType.Null)
+                                            {
+                                                string descriptionInstance2 = ((string)descriptionValue2);
+                                                scheduleInstance.Description = descriptionInstance2;
+                                            }
+                                            
+                                            JToken startTimeValue = schedulesValue["StartTime"];
+                                            if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
+                                            {
+                                                DateTime startTimeInstance = ((DateTime)startTimeValue);
+                                                scheduleInstance.StartTime = startTimeInstance;
+                                            }
+                                            
+                                            JToken expiryTimeValue = schedulesValue["ExpiryTime"];
+                                            if (expiryTimeValue != null && expiryTimeValue.Type != JTokenType.Null)
+                                            {
+                                                DateTime expiryTimeInstance = ((DateTime)expiryTimeValue);
+                                                scheduleInstance.ExpiryTime = expiryTimeInstance;
+                                            }
+                                            
+                                            JToken creationTimeValue2 = schedulesValue["CreationTime"];
+                                            if (creationTimeValue2 != null && creationTimeValue2.Type != JTokenType.Null)
+                                            {
+                                                DateTime creationTimeInstance2 = ((DateTime)creationTimeValue2);
+                                                scheduleInstance.CreationTime = creationTimeInstance2;
+                                            }
+                                            
+                                            JToken lastModifiedTimeValue2 = schedulesValue["LastModifiedTime"];
+                                            if (lastModifiedTimeValue2 != null && lastModifiedTimeValue2.Type != JTokenType.Null)
+                                            {
+                                                DateTime lastModifiedTimeInstance2 = ((DateTime)lastModifiedTimeValue2);
+                                                scheduleInstance.LastModifiedTime = lastModifiedTimeInstance2;
+                                            }
+                                            
+                                            JToken isEnabledValue = schedulesValue["IsEnabled"];
+                                            if (isEnabledValue != null && isEnabledValue.Type != JTokenType.Null)
+                                            {
+                                                bool isEnabledInstance = ((bool)isEnabledValue);
+                                                scheduleInstance.IsEnabled = isEnabledInstance;
+                                            }
+                                            
+                                            JToken nextRunValue = schedulesValue["NextRun"];
+                                            if (nextRunValue != null && nextRunValue.Type != JTokenType.Null)
+                                            {
+                                                DateTime nextRunInstance = ((DateTime)nextRunValue);
+                                                scheduleInstance.NextRun = nextRunInstance;
+                                            }
+                                            
+                                            JToken dayIntervalValue = schedulesValue["DayInterval"];
+                                            if (dayIntervalValue != null && dayIntervalValue.Type != JTokenType.Null)
+                                            {
+                                                int dayIntervalInstance = ((int)dayIntervalValue);
+                                                scheduleInstance.DayInterval = dayIntervalInstance;
+                                            }
+                                            
+                                            JToken hourIntervalValue = schedulesValue["HourInterval"];
+                                            if (hourIntervalValue != null && hourIntervalValue.Type != JTokenType.Null)
+                                            {
+                                                int hourIntervalInstance = ((int)hourIntervalValue);
+                                                scheduleInstance.HourInterval = hourIntervalInstance;
+                                            }
+                                            
+                                            JToken odatatypeValue = schedulesValue["odata.type"];
+                                            if (odatatypeValue != null && odatatypeValue.Type != JTokenType.Null)
+                                            {
+                                                string odatatypeInstance = ((string)odatatypeValue);
+                                                scheduleInstance.ScheduleType = odatatypeInstance;
+                                            }
                                         }
                                     }
                                 }
                             }
+                            
+                            JToken odatanextLinkValue = responseDoc["odata.nextLink"];
+                            if (odatanextLinkValue != null && odatanextLinkValue.Type != JTokenType.Null)
+                            {
+                                string odatanextLinkInstance = Regex.Match(((string)odatanextLinkValue), "^.*[&\\?]\\$skiptoken=([^&]*)(&.*)?").Groups[1].Value;
+                                result.SkipToken = odatanextLinkInstance;
+                            }
                         }
                         
-                        JToken odatanextLinkValue = responseDoc["odata.nextLink"];
-                        if (odatanextLinkValue != null && odatanextLinkValue.Type != JTokenType.Null)
-                        {
-                            string odatanextLinkInstance = Regex.Match(((string)odatanextLinkValue), "^.*[&\\?]\\$skiptoken=([^&]*)(&.*)?").Groups[1].Value;
-                            result.SkipToken = odatanextLinkInstance;
-                        }
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -2842,7 +2912,7 @@ namespace Microsoft.Azure.Management.Automation
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -2889,23 +2959,23 @@ namespace Microsoft.Azure.Management.Automation
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("automationAccount", automationAccount);
                 tracingParameters.Add("skipToken", skipToken);
-                Tracing.Enter(invocationId, this, "ListWithSchedulesAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ListWithSchedulesAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + automationAccount.Trim() + "/Runbooks?";
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + Uri.EscapeDataString(automationAccount) + "/Runbooks?";
             url = url + "$expand=Schedules";
             if (skipToken != null)
             {
-                url = url + "&$skiptoken=" + Uri.EscapeDataString(skipToken != null ? skipToken.Trim() : "");
+                url = url + "&$skiptoken=" + Uri.EscapeDataString(skipToken);
             }
             url = url + "&api-version=2014-03-13_Preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
@@ -2945,13 +3015,13 @@ namespace Microsoft.Azure.Management.Automation
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -2960,7 +3030,7 @@ namespace Microsoft.Azure.Management.Automation
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -2968,234 +3038,244 @@ namespace Microsoft.Azure.Management.Automation
                     // Create Result
                     RunbookListResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new RunbookListResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        JToken valueArray = responseDoc["value"];
-                        if (valueArray != null && valueArray.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new RunbookListResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            foreach (JToken valueValue in ((JArray)valueArray))
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
                             {
-                                Runbook runbookInstance = new Runbook();
-                                result.Runbooks.Add(runbookInstance);
-                                
-                                JToken accountIDValue = valueValue["AccountID"];
-                                if (accountIDValue != null && accountIDValue.Type != JTokenType.Null)
+                                foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    string accountIDInstance = ((string)accountIDValue);
-                                    runbookInstance.AccountId = accountIDInstance;
-                                }
-                                
-                                JToken runbookIDValue = valueValue["RunbookID"];
-                                if (runbookIDValue != null && runbookIDValue.Type != JTokenType.Null)
-                                {
-                                    string runbookIDInstance = ((string)runbookIDValue);
-                                    runbookInstance.Id = runbookIDInstance;
-                                }
-                                
-                                JToken runbookNameValue = valueValue["RunbookName"];
-                                if (runbookNameValue != null && runbookNameValue.Type != JTokenType.Null)
-                                {
-                                    string runbookNameInstance = ((string)runbookNameValue);
-                                    runbookInstance.Name = runbookNameInstance;
-                                }
-                                
-                                JToken creationTimeValue = valueValue["CreationTime"];
-                                if (creationTimeValue != null && creationTimeValue.Type != JTokenType.Null)
-                                {
-                                    DateTime creationTimeInstance = ((DateTime)creationTimeValue);
-                                    runbookInstance.CreationTime = creationTimeInstance;
-                                }
-                                
-                                JToken lastModifiedTimeValue = valueValue["LastModifiedTime"];
-                                if (lastModifiedTimeValue != null && lastModifiedTimeValue.Type != JTokenType.Null)
-                                {
-                                    DateTime lastModifiedTimeInstance = ((DateTime)lastModifiedTimeValue);
-                                    runbookInstance.LastModifiedTime = lastModifiedTimeInstance;
-                                }
-                                
-                                JToken lastModifiedByValue = valueValue["LastModifiedBy"];
-                                if (lastModifiedByValue != null && lastModifiedByValue.Type != JTokenType.Null)
-                                {
-                                    string lastModifiedByInstance = ((string)lastModifiedByValue);
-                                    runbookInstance.LastModifiedBy = lastModifiedByInstance;
-                                }
-                                
-                                JToken descriptionValue = valueValue["Description"];
-                                if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
-                                {
-                                    string descriptionInstance = ((string)descriptionValue);
-                                    runbookInstance.Description = descriptionInstance;
-                                }
-                                
-                                JToken isApiOnlyValue = valueValue["IsApiOnly"];
-                                if (isApiOnlyValue != null && isApiOnlyValue.Type != JTokenType.Null)
-                                {
-                                    bool isApiOnlyInstance = ((bool)isApiOnlyValue);
-                                    runbookInstance.IsApiOnly = isApiOnlyInstance;
-                                }
-                                
-                                JToken isGlobalValue = valueValue["IsGlobal"];
-                                if (isGlobalValue != null && isGlobalValue.Type != JTokenType.Null)
-                                {
-                                    bool isGlobalInstance = ((bool)isGlobalValue);
-                                    runbookInstance.IsGlobal = isGlobalInstance;
-                                }
-                                
-                                JToken publishedRunbookVersionIDValue = valueValue["PublishedRunbookVersionID"];
-                                if (publishedRunbookVersionIDValue != null && publishedRunbookVersionIDValue.Type != JTokenType.Null)
-                                {
-                                    string publishedRunbookVersionIDInstance = ((string)publishedRunbookVersionIDValue);
-                                    runbookInstance.PublishedRunbookVersionId = publishedRunbookVersionIDInstance;
-                                }
-                                
-                                JToken draftRunbookVersionIDValue = valueValue["DraftRunbookVersionID"];
-                                if (draftRunbookVersionIDValue != null && draftRunbookVersionIDValue.Type != JTokenType.Null)
-                                {
-                                    string draftRunbookVersionIDInstance = ((string)draftRunbookVersionIDValue);
-                                    runbookInstance.DraftRunbookVersionId = draftRunbookVersionIDInstance;
-                                }
-                                
-                                JToken tagsValue = valueValue["Tags"];
-                                if (tagsValue != null && tagsValue.Type != JTokenType.Null)
-                                {
-                                    string tagsInstance = ((string)tagsValue);
-                                    runbookInstance.Tags = tagsInstance;
-                                }
-                                
-                                JToken logDebugValue = valueValue["LogDebug"];
-                                if (logDebugValue != null && logDebugValue.Type != JTokenType.Null)
-                                {
-                                    bool logDebugInstance = ((bool)logDebugValue);
-                                    runbookInstance.LogDebug = logDebugInstance;
-                                }
-                                
-                                JToken logVerboseValue = valueValue["LogVerbose"];
-                                if (logVerboseValue != null && logVerboseValue.Type != JTokenType.Null)
-                                {
-                                    bool logVerboseInstance = ((bool)logVerboseValue);
-                                    runbookInstance.LogVerbose = logVerboseInstance;
-                                }
-                                
-                                JToken logProgressValue = valueValue["LogProgress"];
-                                if (logProgressValue != null && logProgressValue.Type != JTokenType.Null)
-                                {
-                                    bool logProgressInstance = ((bool)logProgressValue);
-                                    runbookInstance.LogProgress = logProgressInstance;
-                                }
-                                
-                                JToken schedulesArray = valueValue["Schedules"];
-                                if (schedulesArray != null && schedulesArray.Type != JTokenType.Null)
-                                {
-                                    foreach (JToken schedulesValue in ((JArray)schedulesArray))
+                                    Runbook runbookInstance = new Runbook();
+                                    result.Runbooks.Add(runbookInstance);
+                                    
+                                    JToken accountIDValue = valueValue["AccountID"];
+                                    if (accountIDValue != null && accountIDValue.Type != JTokenType.Null)
                                     {
-                                        Schedule scheduleInstance = new Schedule();
-                                        runbookInstance.Schedules.Add(scheduleInstance);
-                                        
-                                        JToken scheduleIDValue = schedulesValue["ScheduleID"];
-                                        if (scheduleIDValue != null && scheduleIDValue.Type != JTokenType.Null)
+                                        string accountIDInstance = ((string)accountIDValue);
+                                        runbookInstance.AccountId = accountIDInstance;
+                                    }
+                                    
+                                    JToken runbookIDValue = valueValue["RunbookID"];
+                                    if (runbookIDValue != null && runbookIDValue.Type != JTokenType.Null)
+                                    {
+                                        string runbookIDInstance = ((string)runbookIDValue);
+                                        runbookInstance.Id = runbookIDInstance;
+                                    }
+                                    
+                                    JToken runbookNameValue = valueValue["RunbookName"];
+                                    if (runbookNameValue != null && runbookNameValue.Type != JTokenType.Null)
+                                    {
+                                        string runbookNameInstance = ((string)runbookNameValue);
+                                        runbookInstance.Name = runbookNameInstance;
+                                    }
+                                    
+                                    JToken creationTimeValue = valueValue["CreationTime"];
+                                    if (creationTimeValue != null && creationTimeValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime creationTimeInstance = ((DateTime)creationTimeValue);
+                                        runbookInstance.CreationTime = creationTimeInstance;
+                                    }
+                                    
+                                    JToken lastModifiedTimeValue = valueValue["LastModifiedTime"];
+                                    if (lastModifiedTimeValue != null && lastModifiedTimeValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime lastModifiedTimeInstance = ((DateTime)lastModifiedTimeValue);
+                                        runbookInstance.LastModifiedTime = lastModifiedTimeInstance;
+                                    }
+                                    
+                                    JToken lastModifiedByValue = valueValue["LastModifiedBy"];
+                                    if (lastModifiedByValue != null && lastModifiedByValue.Type != JTokenType.Null)
+                                    {
+                                        string lastModifiedByInstance = ((string)lastModifiedByValue);
+                                        runbookInstance.LastModifiedBy = lastModifiedByInstance;
+                                    }
+                                    
+                                    JToken descriptionValue = valueValue["Description"];
+                                    if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
+                                    {
+                                        string descriptionInstance = ((string)descriptionValue);
+                                        runbookInstance.Description = descriptionInstance;
+                                    }
+                                    
+                                    JToken isApiOnlyValue = valueValue["IsApiOnly"];
+                                    if (isApiOnlyValue != null && isApiOnlyValue.Type != JTokenType.Null)
+                                    {
+                                        bool isApiOnlyInstance = ((bool)isApiOnlyValue);
+                                        runbookInstance.IsApiOnly = isApiOnlyInstance;
+                                    }
+                                    
+                                    JToken isGlobalValue = valueValue["IsGlobal"];
+                                    if (isGlobalValue != null && isGlobalValue.Type != JTokenType.Null)
+                                    {
+                                        bool isGlobalInstance = ((bool)isGlobalValue);
+                                        runbookInstance.IsGlobal = isGlobalInstance;
+                                    }
+                                    
+                                    JToken publishedRunbookVersionIDValue = valueValue["PublishedRunbookVersionID"];
+                                    if (publishedRunbookVersionIDValue != null && publishedRunbookVersionIDValue.Type != JTokenType.Null)
+                                    {
+                                        string publishedRunbookVersionIDInstance = ((string)publishedRunbookVersionIDValue);
+                                        runbookInstance.PublishedRunbookVersionId = publishedRunbookVersionIDInstance;
+                                    }
+                                    
+                                    JToken draftRunbookVersionIDValue = valueValue["DraftRunbookVersionID"];
+                                    if (draftRunbookVersionIDValue != null && draftRunbookVersionIDValue.Type != JTokenType.Null)
+                                    {
+                                        string draftRunbookVersionIDInstance = ((string)draftRunbookVersionIDValue);
+                                        runbookInstance.DraftRunbookVersionId = draftRunbookVersionIDInstance;
+                                    }
+                                    
+                                    JToken tagsValue = valueValue["Tags"];
+                                    if (tagsValue != null && tagsValue.Type != JTokenType.Null)
+                                    {
+                                        string tagsInstance = ((string)tagsValue);
+                                        runbookInstance.Tags = tagsInstance;
+                                    }
+                                    
+                                    JToken logDebugValue = valueValue["LogDebug"];
+                                    if (logDebugValue != null && logDebugValue.Type != JTokenType.Null)
+                                    {
+                                        bool logDebugInstance = ((bool)logDebugValue);
+                                        runbookInstance.LogDebug = logDebugInstance;
+                                    }
+                                    
+                                    JToken logVerboseValue = valueValue["LogVerbose"];
+                                    if (logVerboseValue != null && logVerboseValue.Type != JTokenType.Null)
+                                    {
+                                        bool logVerboseInstance = ((bool)logVerboseValue);
+                                        runbookInstance.LogVerbose = logVerboseInstance;
+                                    }
+                                    
+                                    JToken logProgressValue = valueValue["LogProgress"];
+                                    if (logProgressValue != null && logProgressValue.Type != JTokenType.Null)
+                                    {
+                                        bool logProgressInstance = ((bool)logProgressValue);
+                                        runbookInstance.LogProgress = logProgressInstance;
+                                    }
+                                    
+                                    JToken schedulesArray = valueValue["Schedules"];
+                                    if (schedulesArray != null && schedulesArray.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken schedulesValue in ((JArray)schedulesArray))
                                         {
-                                            string scheduleIDInstance = ((string)scheduleIDValue);
-                                            scheduleInstance.Id = scheduleIDInstance;
-                                        }
-                                        
-                                        JToken accountIDValue2 = schedulesValue["AccountID"];
-                                        if (accountIDValue2 != null && accountIDValue2.Type != JTokenType.Null)
-                                        {
-                                            string accountIDInstance2 = ((string)accountIDValue2);
-                                            scheduleInstance.AccountId = accountIDInstance2;
-                                        }
-                                        
-                                        JToken nameValue = schedulesValue["Name"];
-                                        if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                        {
-                                            string nameInstance = ((string)nameValue);
-                                            scheduleInstance.Name = nameInstance;
-                                        }
-                                        
-                                        JToken descriptionValue2 = schedulesValue["Description"];
-                                        if (descriptionValue2 != null && descriptionValue2.Type != JTokenType.Null)
-                                        {
-                                            string descriptionInstance2 = ((string)descriptionValue2);
-                                            scheduleInstance.Description = descriptionInstance2;
-                                        }
-                                        
-                                        JToken startTimeValue = schedulesValue["StartTime"];
-                                        if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
-                                        {
-                                            DateTime startTimeInstance = ((DateTime)startTimeValue);
-                                            scheduleInstance.StartTime = startTimeInstance;
-                                        }
-                                        
-                                        JToken expiryTimeValue = schedulesValue["ExpiryTime"];
-                                        if (expiryTimeValue != null && expiryTimeValue.Type != JTokenType.Null)
-                                        {
-                                            DateTime expiryTimeInstance = ((DateTime)expiryTimeValue);
-                                            scheduleInstance.ExpiryTime = expiryTimeInstance;
-                                        }
-                                        
-                                        JToken creationTimeValue2 = schedulesValue["CreationTime"];
-                                        if (creationTimeValue2 != null && creationTimeValue2.Type != JTokenType.Null)
-                                        {
-                                            DateTime creationTimeInstance2 = ((DateTime)creationTimeValue2);
-                                            scheduleInstance.CreationTime = creationTimeInstance2;
-                                        }
-                                        
-                                        JToken lastModifiedTimeValue2 = schedulesValue["LastModifiedTime"];
-                                        if (lastModifiedTimeValue2 != null && lastModifiedTimeValue2.Type != JTokenType.Null)
-                                        {
-                                            DateTime lastModifiedTimeInstance2 = ((DateTime)lastModifiedTimeValue2);
-                                            scheduleInstance.LastModifiedTime = lastModifiedTimeInstance2;
-                                        }
-                                        
-                                        JToken isEnabledValue = schedulesValue["IsEnabled"];
-                                        if (isEnabledValue != null && isEnabledValue.Type != JTokenType.Null)
-                                        {
-                                            bool isEnabledInstance = ((bool)isEnabledValue);
-                                            scheduleInstance.IsEnabled = isEnabledInstance;
-                                        }
-                                        
-                                        JToken nextRunValue = schedulesValue["NextRun"];
-                                        if (nextRunValue != null && nextRunValue.Type != JTokenType.Null)
-                                        {
-                                            DateTime nextRunInstance = ((DateTime)nextRunValue);
-                                            scheduleInstance.NextRun = nextRunInstance;
-                                        }
-                                        
-                                        JToken dayIntervalValue = schedulesValue["DayInterval"];
-                                        if (dayIntervalValue != null && dayIntervalValue.Type != JTokenType.Null)
-                                        {
-                                            int dayIntervalInstance = ((int)dayIntervalValue);
-                                            scheduleInstance.DayInterval = dayIntervalInstance;
-                                        }
-                                        
-                                        JToken odatatypeValue = schedulesValue["odata.type"];
-                                        if (odatatypeValue != null && odatatypeValue.Type != JTokenType.Null)
-                                        {
-                                            string odatatypeInstance = ((string)odatatypeValue);
-                                            scheduleInstance.ScheduleType = odatatypeInstance;
+                                            Schedule scheduleInstance = new Schedule();
+                                            runbookInstance.Schedules.Add(scheduleInstance);
+                                            
+                                            JToken scheduleIDValue = schedulesValue["ScheduleID"];
+                                            if (scheduleIDValue != null && scheduleIDValue.Type != JTokenType.Null)
+                                            {
+                                                string scheduleIDInstance = ((string)scheduleIDValue);
+                                                scheduleInstance.Id = scheduleIDInstance;
+                                            }
+                                            
+                                            JToken accountIDValue2 = schedulesValue["AccountID"];
+                                            if (accountIDValue2 != null && accountIDValue2.Type != JTokenType.Null)
+                                            {
+                                                string accountIDInstance2 = ((string)accountIDValue2);
+                                                scheduleInstance.AccountId = accountIDInstance2;
+                                            }
+                                            
+                                            JToken nameValue = schedulesValue["Name"];
+                                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                            {
+                                                string nameInstance = ((string)nameValue);
+                                                scheduleInstance.Name = nameInstance;
+                                            }
+                                            
+                                            JToken descriptionValue2 = schedulesValue["Description"];
+                                            if (descriptionValue2 != null && descriptionValue2.Type != JTokenType.Null)
+                                            {
+                                                string descriptionInstance2 = ((string)descriptionValue2);
+                                                scheduleInstance.Description = descriptionInstance2;
+                                            }
+                                            
+                                            JToken startTimeValue = schedulesValue["StartTime"];
+                                            if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
+                                            {
+                                                DateTime startTimeInstance = ((DateTime)startTimeValue);
+                                                scheduleInstance.StartTime = startTimeInstance;
+                                            }
+                                            
+                                            JToken expiryTimeValue = schedulesValue["ExpiryTime"];
+                                            if (expiryTimeValue != null && expiryTimeValue.Type != JTokenType.Null)
+                                            {
+                                                DateTime expiryTimeInstance = ((DateTime)expiryTimeValue);
+                                                scheduleInstance.ExpiryTime = expiryTimeInstance;
+                                            }
+                                            
+                                            JToken creationTimeValue2 = schedulesValue["CreationTime"];
+                                            if (creationTimeValue2 != null && creationTimeValue2.Type != JTokenType.Null)
+                                            {
+                                                DateTime creationTimeInstance2 = ((DateTime)creationTimeValue2);
+                                                scheduleInstance.CreationTime = creationTimeInstance2;
+                                            }
+                                            
+                                            JToken lastModifiedTimeValue2 = schedulesValue["LastModifiedTime"];
+                                            if (lastModifiedTimeValue2 != null && lastModifiedTimeValue2.Type != JTokenType.Null)
+                                            {
+                                                DateTime lastModifiedTimeInstance2 = ((DateTime)lastModifiedTimeValue2);
+                                                scheduleInstance.LastModifiedTime = lastModifiedTimeInstance2;
+                                            }
+                                            
+                                            JToken isEnabledValue = schedulesValue["IsEnabled"];
+                                            if (isEnabledValue != null && isEnabledValue.Type != JTokenType.Null)
+                                            {
+                                                bool isEnabledInstance = ((bool)isEnabledValue);
+                                                scheduleInstance.IsEnabled = isEnabledInstance;
+                                            }
+                                            
+                                            JToken nextRunValue = schedulesValue["NextRun"];
+                                            if (nextRunValue != null && nextRunValue.Type != JTokenType.Null)
+                                            {
+                                                DateTime nextRunInstance = ((DateTime)nextRunValue);
+                                                scheduleInstance.NextRun = nextRunInstance;
+                                            }
+                                            
+                                            JToken dayIntervalValue = schedulesValue["DayInterval"];
+                                            if (dayIntervalValue != null && dayIntervalValue.Type != JTokenType.Null)
+                                            {
+                                                int dayIntervalInstance = ((int)dayIntervalValue);
+                                                scheduleInstance.DayInterval = dayIntervalInstance;
+                                            }
+                                            
+                                            JToken hourIntervalValue = schedulesValue["HourInterval"];
+                                            if (hourIntervalValue != null && hourIntervalValue.Type != JTokenType.Null)
+                                            {
+                                                int hourIntervalInstance = ((int)hourIntervalValue);
+                                                scheduleInstance.HourInterval = hourIntervalInstance;
+                                            }
+                                            
+                                            JToken odatatypeValue = schedulesValue["odata.type"];
+                                            if (odatatypeValue != null && odatatypeValue.Type != JTokenType.Null)
+                                            {
+                                                string odatatypeInstance = ((string)odatatypeValue);
+                                                scheduleInstance.ScheduleType = odatatypeInstance;
+                                            }
                                         }
                                     }
                                 }
                             }
+                            
+                            JToken odatanextLinkValue = responseDoc["odata.nextLink"];
+                            if (odatanextLinkValue != null && odatanextLinkValue.Type != JTokenType.Null)
+                            {
+                                string odatanextLinkInstance = Regex.Match(((string)odatanextLinkValue), "^.*[&\\?]\\$skiptoken=([^&]*)(&.*)?").Groups[1].Value;
+                                result.SkipToken = odatanextLinkInstance;
+                            }
                         }
                         
-                        JToken odatanextLinkValue = responseDoc["odata.nextLink"];
-                        if (odatanextLinkValue != null && odatanextLinkValue.Type != JTokenType.Null)
-                        {
-                            string odatanextLinkInstance = Regex.Match(((string)odatanextLinkValue), "^.*[&\\?]\\$skiptoken=([^&]*)(&.*)?").Groups[1].Value;
-                            result.SkipToken = odatanextLinkInstance;
-                        }
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -3204,7 +3284,7 @@ namespace Microsoft.Azure.Management.Automation
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -3263,19 +3343,19 @@ namespace Microsoft.Azure.Management.Automation
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("automationAccount", automationAccount);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "PublishAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "PublishAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + automationAccount.Trim() + "/Runbooks(guid'" + parameters.RunbookId.Trim() + "')/Publish?";
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + Uri.EscapeDataString(automationAccount) + "/Runbooks(guid'" + Uri.EscapeDataString(parameters.RunbookId) + "')/Publish?";
             url = url + "api-version=2014-03-13_Preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -3315,13 +3395,13 @@ namespace Microsoft.Azure.Management.Automation
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -3330,7 +3410,7 @@ namespace Microsoft.Azure.Management.Automation
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -3338,25 +3418,28 @@ namespace Microsoft.Azure.Management.Automation
                     // Create Result
                     RunbookPublishResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new RunbookPublishResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        JToken valueValue = responseDoc["value"];
-                        if (valueValue != null && valueValue.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new RunbookPublishResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            string valueInstance = ((string)valueValue);
-                            result.PublishedRunbookVersionId = valueInstance;
+                            responseDoc = JToken.Parse(responseContent);
                         }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueValue = responseDoc["value"];
+                            if (valueValue != null && valueValue.Type != JTokenType.Null)
+                            {
+                                string valueInstance = ((string)valueValue);
+                                result.PublishedRunbookVersionId = valueInstance;
+                            }
+                        }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -3365,7 +3448,7 @@ namespace Microsoft.Azure.Management.Automation
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -3387,7 +3470,7 @@ namespace Microsoft.Azure.Management.Automation
         }
         
         /// <summary>
-        /// Delete the runbook identified by runbookId.  (see
+        /// Start the runbook identified by runbookId.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
         /// for more information)
         /// </summary>
@@ -3420,19 +3503,19 @@ namespace Microsoft.Azure.Management.Automation
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("automationAccount", automationAccount);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "StartAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "StartAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + automationAccount.Trim() + "/Runbooks(guid'" + parameters.RunbookId.Trim() + "')/Start?";
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + Uri.EscapeDataString(automationAccount) + "/Runbooks(guid'" + Uri.EscapeDataString(parameters.RunbookId) + "')/Start?";
             url = url + "api-version=2014-03-13_Preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -3474,26 +3557,29 @@ namespace Microsoft.Azure.Management.Automation
                 
                 if (parameters.Parameters != null)
                 {
-                    JArray parametersArray = new JArray();
-                    foreach (NameValuePair parametersItem in parameters.Parameters)
+                    if (parameters.Parameters is ILazyCollection == false || ((ILazyCollection)parameters.Parameters).IsInitialized)
                     {
-                        JObject nameValuePairValue = new JObject();
-                        parametersArray.Add(nameValuePairValue);
-                        
-                        if (parametersItem.Name != null)
+                        JArray parametersArray = new JArray();
+                        foreach (NameValuePair parametersItem in parameters.Parameters)
                         {
-                            nameValuePairValue["Name"] = parametersItem.Name;
+                            JObject nameValuePairValue = new JObject();
+                            parametersArray.Add(nameValuePairValue);
+                            
+                            if (parametersItem.Name != null)
+                            {
+                                nameValuePairValue["Name"] = parametersItem.Name;
+                            }
+                            
+                            if (parametersItem.Value != null)
+                            {
+                                nameValuePairValue["Value"] = parametersItem.Value;
+                            }
                         }
-                        
-                        if (parametersItem.Value != null)
-                        {
-                            nameValuePairValue["Value"] = parametersItem.Value;
-                        }
+                        runbookStartParametersValue["parameters"] = parametersArray;
                     }
-                    runbookStartParametersValue["parameters"] = parametersArray;
                 }
                 
-                requestContent = requestDoc.ToString(Formatting.Indented);
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
                 
@@ -3503,13 +3589,13 @@ namespace Microsoft.Azure.Management.Automation
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -3518,7 +3604,7 @@ namespace Microsoft.Azure.Management.Automation
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -3526,25 +3612,28 @@ namespace Microsoft.Azure.Management.Automation
                     // Create Result
                     RunbookStartResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new RunbookStartResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        JToken valueValue = responseDoc["value"];
-                        if (valueValue != null && valueValue.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new RunbookStartResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            string valueInstance = ((string)valueValue);
-                            result.JobId = valueInstance;
+                            responseDoc = JToken.Parse(responseContent);
                         }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueValue = responseDoc["value"];
+                            if (valueValue != null && valueValue.Type != JTokenType.Null)
+                            {
+                                string valueInstance = ((string)valueValue);
+                                result.JobId = valueInstance;
+                            }
+                        }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -3553,7 +3642,7 @@ namespace Microsoft.Azure.Management.Automation
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -3592,7 +3681,7 @@ namespace Microsoft.Azure.Management.Automation
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> UpdateAsync(string automationAccount, RunbookUpdateParameters parameters, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> UpdateAsync(string automationAccount, RunbookUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (automationAccount == null)
@@ -3609,19 +3698,19 @@ namespace Microsoft.Azure.Management.Automation
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("automationAccount", automationAccount);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "UpdateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "UpdateAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + automationAccount.Trim() + "/Runbooks(guid'" + parameters.Runbook.Id.Trim() + "')?";
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + Uri.EscapeDataString(automationAccount) + "/Runbooks(guid'" + Uri.EscapeDataString(parameters.Runbook.Id) + "')?";
             url = url + "api-version=2014-03-13_Preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -3717,58 +3806,66 @@ namespace Microsoft.Azure.Management.Automation
                 
                 if (parameters.Runbook.Schedules != null)
                 {
-                    JArray schedulesArray = new JArray();
-                    foreach (Schedule schedulesItem in parameters.Runbook.Schedules)
+                    if (parameters.Runbook.Schedules is ILazyCollection == false || ((ILazyCollection)parameters.Runbook.Schedules).IsInitialized)
                     {
-                        JObject scheduleValue = new JObject();
-                        schedulesArray.Add(scheduleValue);
-                        
-                        if (schedulesItem.Id != null)
+                        JArray schedulesArray = new JArray();
+                        foreach (Schedule schedulesItem in parameters.Runbook.Schedules)
                         {
-                            scheduleValue["ScheduleID"] = schedulesItem.Id;
+                            JObject scheduleValue = new JObject();
+                            schedulesArray.Add(scheduleValue);
+                            
+                            if (schedulesItem.Id != null)
+                            {
+                                scheduleValue["ScheduleID"] = schedulesItem.Id;
+                            }
+                            
+                            if (schedulesItem.AccountId != null)
+                            {
+                                scheduleValue["AccountID"] = schedulesItem.AccountId;
+                            }
+                            
+                            if (schedulesItem.Name != null)
+                            {
+                                scheduleValue["Name"] = schedulesItem.Name;
+                            }
+                            
+                            if (schedulesItem.Description != null)
+                            {
+                                scheduleValue["Description"] = schedulesItem.Description;
+                            }
+                            
+                            scheduleValue["StartTime"] = schedulesItem.StartTime;
+                            
+                            scheduleValue["ExpiryTime"] = schedulesItem.ExpiryTime;
+                            
+                            scheduleValue["CreationTime"] = schedulesItem.CreationTime;
+                            
+                            scheduleValue["LastModifiedTime"] = schedulesItem.LastModifiedTime;
+                            
+                            scheduleValue["IsEnabled"] = schedulesItem.IsEnabled;
+                            
+                            if (schedulesItem.NextRun != null)
+                            {
+                                scheduleValue["NextRun"] = schedulesItem.NextRun.Value;
+                            }
+                            
+                            if (schedulesItem.DayInterval != null)
+                            {
+                                scheduleValue["DayInterval"] = schedulesItem.DayInterval.Value;
+                            }
+                            
+                            if (schedulesItem.HourInterval != null)
+                            {
+                                scheduleValue["HourInterval"] = schedulesItem.HourInterval.Value;
+                            }
+                            
+                            scheduleValue["odata.type"] = schedulesItem.ScheduleType.ToString();
                         }
-                        
-                        if (schedulesItem.AccountId != null)
-                        {
-                            scheduleValue["AccountID"] = schedulesItem.AccountId;
-                        }
-                        
-                        if (schedulesItem.Name != null)
-                        {
-                            scheduleValue["Name"] = schedulesItem.Name;
-                        }
-                        
-                        if (schedulesItem.Description != null)
-                        {
-                            scheduleValue["Description"] = schedulesItem.Description;
-                        }
-                        
-                        scheduleValue["StartTime"] = schedulesItem.StartTime;
-                        
-                        scheduleValue["ExpiryTime"] = schedulesItem.ExpiryTime;
-                        
-                        scheduleValue["CreationTime"] = schedulesItem.CreationTime;
-                        
-                        scheduleValue["LastModifiedTime"] = schedulesItem.LastModifiedTime;
-                        
-                        scheduleValue["IsEnabled"] = schedulesItem.IsEnabled;
-                        
-                        if (schedulesItem.NextRun != null)
-                        {
-                            scheduleValue["NextRun"] = schedulesItem.NextRun.Value;
-                        }
-                        
-                        if (schedulesItem.DayInterval != null)
-                        {
-                            scheduleValue["DayInterval"] = schedulesItem.DayInterval.Value;
-                        }
-                        
-                        scheduleValue["odata.type"] = schedulesItem.ScheduleType.ToString();
+                        runbookUpdateParametersValue["Schedules"] = schedulesArray;
                     }
-                    runbookUpdateParametersValue["Schedules"] = schedulesArray;
                 }
                 
-                requestContent = requestDoc.ToString(Formatting.Indented);
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
                 
@@ -3778,13 +3875,13 @@ namespace Microsoft.Azure.Management.Automation
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.NoContent)
@@ -3793,14 +3890,15 @@ namespace Microsoft.Azure.Management.Automation
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
-                    result = new OperationResponse();
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -3809,7 +3907,7 @@ namespace Microsoft.Azure.Management.Automation
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }

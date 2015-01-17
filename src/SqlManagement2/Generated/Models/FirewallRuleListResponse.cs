@@ -22,15 +22,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Sql.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
     /// <summary>
     /// Represents the response to a List Firewall Rules request.
     /// </summary>
-    public partial class FirewallRuleListResponse : OperationResponse, IEnumerable<FirewallRule>
+    public partial class FirewallRuleListResponse : AzureOperationResponse, IEnumerable<FirewallRule>
     {
         private IList<FirewallRule> _firewallRules;
         
@@ -49,7 +50,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         public FirewallRuleListResponse()
         {
-            this.FirewallRules = new List<FirewallRule>();
+            this.FirewallRules = new LazyList<FirewallRule>();
         }
         
         /// <summary>

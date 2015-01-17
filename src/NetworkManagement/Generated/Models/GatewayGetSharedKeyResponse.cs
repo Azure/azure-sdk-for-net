@@ -21,14 +21,14 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.WindowsAzure.Management.Network.Models
 {
     /// <summary>
     /// The response to the get shared key request.
     /// </summary>
-    public partial class GatewayGetSharedKeyResponse : OperationResponse
+    public partial class GatewayGetSharedKeyResponse : AzureOperationResponse
     {
         private string _sharedKey;
         

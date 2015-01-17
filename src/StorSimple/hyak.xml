@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Hyak>
+    <Assembly>Microsoft.WindowsAzure.Management.StorSimple.Specification.dll</Assembly>
+    <OutputDirectory>Generated</OutputDirectory>
+
+    <Specification>
+      <Type>Microsoft.WindowsAzure.Management.StorSimple.StorSimpleManagementClient</Type>
+
+        <Platform>
+          <Flavor>CSharp.Azure</Flavor>
+          <OutputDirectory></OutputDirectory>
+          <BaseNamespace>Microsoft.WindowsAzure.Management.StorSimple</BaseNamespace>
+          <Split>Namespace</Split>
+        </Platform>
+
+    </Specification>
+</Hyak>

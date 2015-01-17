@@ -23,11 +23,11 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.WebSitesExtensions;
 using Microsoft.WindowsAzure.WebSitesExtensions.Models;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.WebSitesExtensions
 {
     /// <summary>
     /// The websites extensions client manages the web sites deployments, web
@@ -221,7 +221,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Redeploy(this IDeploymentOperations operations, string deploymentId)
+        public static AzureOperationResponse Redeploy(this IDeploymentOperations operations, string deploymentId)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -244,7 +244,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> RedeployAsync(this IDeploymentOperations operations, string deploymentId)
+        public static Task<AzureOperationResponse> RedeployAsync(this IDeploymentOperations operations, string deploymentId)
         {
             return operations.RedeployAsync(deploymentId, CancellationToken.None);
         }

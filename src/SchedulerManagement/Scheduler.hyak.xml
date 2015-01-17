@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Hyak>
+  <Assembly>Microsoft.WindowsAzure.Management.Scheduler.Specification.dll</Assembly>
+  <OutputDirectory>Generated</OutputDirectory>
+
+  <Specification>
+    <Type>Microsoft.WindowsAzure.Scheduler.SchedulerClient</Type>
+
+
+    <Platform>
+      <Flavor>CSharp.Azure</Flavor>
+      <OutputDirectory></OutputDirectory>
+      <BaseNamespace>microsoft.windowsazure.scheduler</BaseNamespace>
+      <Split>Namespace</Split>
+    </Platform>
+  </Specification>
+  <Specification>
+    <Type>Microsoft.WindowsAzure.Management.Scheduler.SchedulerManagementClient</Type>
+
+    <Platform>
+      <Flavor>CSharp.Azure</Flavor>
+      <OutputDirectory></OutputDirectory>
+      <BaseNamespace>microsoft.windowsazure.management.scheduler</BaseNamespace>
+      <Split>Namespace</Split>
+    </Platform>
+  </Specification>
+</Hyak>

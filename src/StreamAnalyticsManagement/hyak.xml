@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Hydra>
+  <Assembly>Microsoft.Azure.Management.StreamAnalytics.Specification.dll</Assembly>
+  <OutputDirectory>Generated</OutputDirectory>
+
+  <Specification>
+    <Type>Microsoft.Azure.Management.StreamAnalytics.StreamAnalyticsManagementClient</Type>
+
+    <Platform>
+      <Flavor>CSharp.Azure</Flavor>
+      <OutputDirectory></OutputDirectory>
+      <BaseNamespace>Microsoft.Azure.Management.StreamAnalytics</BaseNamespace>
+      <Split>Namespace</Split>
+    </Platform>
+  </Specification>
+</Hydra>

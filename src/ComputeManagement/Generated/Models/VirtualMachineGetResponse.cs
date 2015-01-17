@@ -22,7 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
@@ -30,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
     /// <summary>
     /// The Get Virtual Machine operation response.
     /// </summary>
-    public partial class VirtualMachineGetResponse : OperationResponse
+    public partial class VirtualMachineGetResponse : AzureOperationResponse
     {
         private string _availabilitySetName;
         
@@ -147,8 +148,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public VirtualMachineGetResponse()
         {
-            this.ConfigurationSets = new List<ConfigurationSet>();
-            this.DataVirtualHardDisks = new List<DataVirtualHardDisk>();
+            this.ConfigurationSets = new LazyList<ConfigurationSet>();
+            this.DataVirtualHardDisks = new LazyList<DataVirtualHardDisk>();
         }
     }
 }

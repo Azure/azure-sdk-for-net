@@ -21,7 +21,7 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.WindowsAzure.Management.Sql.Models
 {
@@ -29,7 +29,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
     /// Represents the response that the service returns once an import or
     /// export operation has been initiated.
     /// </summary>
-    public partial class DacImportExportResponse : OperationResponse
+    public partial class DacImportExportResponse : AzureOperationResponse
     {
         private string _guid;
         

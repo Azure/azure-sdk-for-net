@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
 {
@@ -47,7 +48,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public WebSiteListParameters()
         {
-            this.PropertiesToInclude = new List<string>();
+            this.PropertiesToInclude = new LazyList<string>();
         }
     }
 }

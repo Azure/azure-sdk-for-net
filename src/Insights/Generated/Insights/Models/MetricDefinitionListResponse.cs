@@ -21,15 +21,15 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Insights.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Insights.Models
 {
     /// <summary>
     /// The List Metric Definitions operation response.
     /// </summary>
-    public partial class MetricDefinitionListResponse : OperationResponse
+    public partial class MetricDefinitionListResponse : AzureOperationResponse
     {
         private MetricDefinitionCollection _metricDefinitionCollection;
         

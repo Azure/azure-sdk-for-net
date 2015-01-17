@@ -21,6 +21,7 @@
 
 using System;
 using System.Linq;
+using Microsoft.WindowsAzure.Management.ServiceBus.Models;
 
 namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
 {
@@ -85,6 +86,17 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         {
             get { return this._name; }
             set { this._name = value; }
+        }
+        
+        private NamespaceType _namespaceType;
+        
+        /// <summary>
+        /// Optional. Gets or sets the namespace type.
+        /// </summary>
+        public NamespaceType NamespaceType
+        {
+            get { return this._namespaceType; }
+            set { this._namespaceType = value; }
         }
         
         private string _region;

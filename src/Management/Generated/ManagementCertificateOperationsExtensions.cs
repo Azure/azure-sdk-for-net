@@ -23,11 +23,11 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management;
 using Microsoft.WindowsAzure.Management.Models;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.Management
 {
     /// <summary>
     /// The Service Management API provides programmatic access to much of the
@@ -60,7 +60,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Create(this IManagementCertificateOperations operations, ManagementCertificateCreateParameters parameters)
+        public static AzureOperationResponse Create(this IManagementCertificateOperations operations, ManagementCertificateCreateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -90,7 +90,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> CreateAsync(this IManagementCertificateOperations operations, ManagementCertificateCreateParameters parameters)
+        public static Task<AzureOperationResponse> CreateAsync(this IManagementCertificateOperations operations, ManagementCertificateCreateParameters parameters)
         {
             return operations.CreateAsync(parameters, CancellationToken.None);
         }
@@ -115,7 +115,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Delete(this IManagementCertificateOperations operations, string thumbprint)
+        public static AzureOperationResponse Delete(this IManagementCertificateOperations operations, string thumbprint)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -144,7 +144,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> DeleteAsync(this IManagementCertificateOperations operations, string thumbprint)
+        public static Task<AzureOperationResponse> DeleteAsync(this IManagementCertificateOperations operations, string thumbprint)
         {
             return operations.DeleteAsync(thumbprint, CancellationToken.None);
         }

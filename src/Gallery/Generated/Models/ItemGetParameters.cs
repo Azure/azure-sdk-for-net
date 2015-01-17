@@ -21,15 +21,15 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Gallery;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Gallery.Models
 {
     /// <summary>
     /// Gallery item information.
     /// </summary>
-    public partial class ItemGetParameters : OperationResponse
+    public partial class ItemGetParameters : AzureOperationResponse
     {
         private GalleryItem _item;
         

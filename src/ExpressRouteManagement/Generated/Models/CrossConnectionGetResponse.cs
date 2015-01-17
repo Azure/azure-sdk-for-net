@@ -21,7 +21,7 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.ExpressRoute.Models;
 
 namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
@@ -29,7 +29,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
     /// <summary>
     /// The Get Cross Connection Operation Response.
     /// </summary>
-    public partial class CrossConnectionGetResponse : OperationResponse
+    public partial class CrossConnectionGetResponse : AzureOperationResponse
     {
         private AzureCrossConnection _crossConnection;
         

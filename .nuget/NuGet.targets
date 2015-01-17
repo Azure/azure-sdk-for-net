@@ -95,14 +95,9 @@
     </Target>
 
     <Target Name="RestorePackages" DependsOnTargets="CheckPrerequisites">
-        <Warning Text="Modified NuGet package restore in use to enable building without access to private NuGet feeds." />
         <Exec Command="$(RestoreCommand)"
               IgnoreExitCode="true"
-              Condition="'$(OS)' != 'Windows_NT' And Exists('$(PackagesConfig)')" />
-              
-        <Exec Command="$(RestoreCommand)"
-              IgnoreExitCode="true"
-              Condition="'$(OS)' == 'Windows_NT' And Exists('$(PackagesConfig)')" />
+              Condition="Exists('$(PackagesConfig)')" />
     </Target>
 
     <Target Name="BuildPackage" DependsOnTargets="CheckPrerequisites">

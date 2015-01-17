@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.Azure.Management.Authorization.Models;
 
 namespace Microsoft.Azure.Management.Authorization.Models
@@ -91,7 +92,7 @@ namespace Microsoft.Azure.Management.Authorization.Models
         /// </summary>
         public RoleDefinitionProperties()
         {
-            this.Permissions = new List<Permission>();
+            this.Permissions = new LazyList<Permission>();
         }
     }
 }

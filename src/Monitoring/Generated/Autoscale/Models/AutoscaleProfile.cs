@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models;
 
 namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
@@ -95,7 +96,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         /// </summary>
         public AutoscaleProfile()
         {
-            this.Rules = new List<ScaleRule>();
+            this.Rules = new LazyList<ScaleRule>();
         }
     }
 }

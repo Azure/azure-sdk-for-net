@@ -22,7 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.WebSites.Models;
 
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
@@ -30,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
     /// <summary>
     /// The information gathered about a backup storaged in a storage account.
     /// </summary>
-    public partial class WebSiteRestoreDiscoverResponse : OperationResponse
+    public partial class WebSiteRestoreDiscoverResponse : AzureOperationResponse
     {
         private bool _adjustConnectionStrings;
         
@@ -112,7 +113,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public WebSiteRestoreDiscoverResponse()
         {
-            this.Databases = new List<DatabaseBackupSetting>();
+            this.Databases = new LazyList<DatabaseBackupSetting>();
         }
     }
 }

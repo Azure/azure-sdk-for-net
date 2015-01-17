@@ -21,7 +21,7 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Hyak.Common;
 using Microsoft.WindowsAzure.WebSitesExtensions;
 
 namespace Microsoft.WindowsAzure.WebSitesExtensions

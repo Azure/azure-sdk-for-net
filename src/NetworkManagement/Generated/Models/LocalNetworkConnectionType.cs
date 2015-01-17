@@ -27,10 +27,12 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
     /// <summary>
     /// Possible values for the Local Network Connection Type.
     /// </summary>
-    public enum LocalNetworkConnectionType
+    public static partial class LocalNetworkConnectionType
     {
-        IPSecurity = 0,
+        public const string IPSecurity = "IPsec";
         
-        Dedicated = 1,
+        public const string Dedicated = "Dedicated";
+        
+        public const string Backend = "Backend";
     }
 }

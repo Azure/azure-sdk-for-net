@@ -22,7 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
@@ -30,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
     /// <summary>
     /// The List Resource Extensions operation response.
     /// </summary>
-    public partial class VirtualMachineExtensionListResponse : OperationResponse, IEnumerable<VirtualMachineExtensionListResponse.ResourceExtension>
+    public partial class VirtualMachineExtensionListResponse : AzureOperationResponse, IEnumerable<VirtualMachineExtensionListResponse.ResourceExtension>
     {
         private IList<VirtualMachineExtensionListResponse.ResourceExtension> _resourceExtensions;
         
@@ -50,7 +51,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public VirtualMachineExtensionListResponse()
         {
-            this.ResourceExtensions = new List<VirtualMachineExtensionListResponse.ResourceExtension>();
+            this.ResourceExtensions = new LazyList<VirtualMachineExtensionListResponse.ResourceExtension>();
         }
         
         /// <summary>

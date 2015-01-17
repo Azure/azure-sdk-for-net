@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
@@ -377,7 +378,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public ExtensionImage()
         {
-            this.LocalResources = new List<ExtensionLocalResourceConfiguration>();
+            this.LocalResources = new LazyList<ExtensionLocalResourceConfiguration>();
         }
         
         /// <summary>

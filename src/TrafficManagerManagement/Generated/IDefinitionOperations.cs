@@ -23,7 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.TrafficManager.Models;
 
 namespace Microsoft.WindowsAzure.Management.TrafficManager
@@ -52,7 +52,7 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> CreateAsync(string profileName, DefinitionCreateParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> CreateAsync(string profileName, DefinitionCreateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Returns an existing profile definition.  (see

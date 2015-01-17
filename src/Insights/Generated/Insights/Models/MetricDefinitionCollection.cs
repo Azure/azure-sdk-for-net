@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.Azure.Insights.Models;
 
 namespace Microsoft.Azure.Insights.Models
@@ -47,7 +48,7 @@ namespace Microsoft.Azure.Insights.Models
         /// </summary>
         public MetricDefinitionCollection()
         {
-            this.Value = new List<MetricDefinition>();
+            this.Value = new LazyList<MetricDefinition>();
         }
     }
 }

@@ -27,11 +27,9 @@ using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Hyak.Common;
 using Microsoft.Azure.Management.Automation;
 using Microsoft.Azure.Management.Automation.Models;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
 using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.Management.Automation
@@ -99,30 +97,34 @@ namespace Microsoft.Azure.Management.Automation
             {
                 throw new ArgumentNullException("parameters.JobId");
             }
+            if (parameters.StartTime == null)
+            {
+                throw new ArgumentNullException("parameters.StartTime");
+            }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("automationAccount", automationAccount);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "ListStreamItemsAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ListStreamItemsAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + automationAccount.Trim() + "/JobStreams/GetStreamItems?";
-            url = url + "jobId='" + Uri.EscapeDataString(parameters.JobId.Trim()) + "'";
-            url = url + "&streamsCreatedSinceDateTime='" + Uri.EscapeDataString(parameters.StartTime.ToString()) + "'";
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + Uri.EscapeDataString(automationAccount) + "/JobStreams/GetStreamItems?";
+            url = url + "jobId='" + Uri.EscapeDataString(parameters.JobId) + "'";
+            url = url + "&streamsCreatedSinceDateTime='" + Uri.EscapeDataString(parameters.StartTime) + "'";
             if (parameters.StreamType != null)
             {
-                url = url + "&$filter=StreamTypeName eq '" + Uri.EscapeDataString(parameters.StreamType != null ? parameters.StreamType.Trim() : "") + "'";
+                url = url + "&$filter=StreamTypeName eq '" + Uri.EscapeDataString(parameters.StreamType) + "'";
             }
             if (parameters.SkipToken != null)
             {
-                url = url + "&$skiptoken=" + Uri.EscapeDataString(parameters.SkipToken != null ? parameters.SkipToken.Trim() : "");
+                url = url + "&$skiptoken=" + Uri.EscapeDataString(parameters.SkipToken);
             }
             url = url + "&api-version=2014-03-13_Preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
@@ -162,13 +164,13 @@ namespace Microsoft.Azure.Management.Automation
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -177,7 +179,7 @@ namespace Microsoft.Azure.Management.Automation
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -185,77 +187,80 @@ namespace Microsoft.Azure.Management.Automation
                     // Create Result
                     JobStreamListStreamItemsResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new JobStreamListStreamItemsResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        JToken valueArray = responseDoc["value"];
-                        if (valueArray != null && valueArray.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new JobStreamListStreamItemsResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            foreach (JToken valueValue in ((JArray)valueArray))
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
                             {
-                                JobStreamItem jobStreamItemInstance = new JobStreamItem();
-                                result.JobStreamItems.Add(jobStreamItemInstance);
-                                
-                                JToken accountIdValue = valueValue["AccountId"];
-                                if (accountIdValue != null && accountIdValue.Type != JTokenType.Null)
+                                foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    string accountIdInstance = ((string)accountIdValue);
-                                    jobStreamItemInstance.AccountId = accountIdInstance;
+                                    JobStreamItem jobStreamItemInstance = new JobStreamItem();
+                                    result.JobStreamItems.Add(jobStreamItemInstance);
+                                    
+                                    JToken accountIdValue = valueValue["AccountId"];
+                                    if (accountIdValue != null && accountIdValue.Type != JTokenType.Null)
+                                    {
+                                        string accountIdInstance = ((string)accountIdValue);
+                                        jobStreamItemInstance.AccountId = accountIdInstance;
+                                    }
+                                    
+                                    JToken jobIdValue = valueValue["JobId"];
+                                    if (jobIdValue != null && jobIdValue.Type != JTokenType.Null)
+                                    {
+                                        string jobIdInstance = ((string)jobIdValue);
+                                        jobStreamItemInstance.JobId = jobIdInstance;
+                                    }
+                                    
+                                    JToken runbookVersionIdValue = valueValue["RunbookVersionId"];
+                                    if (runbookVersionIdValue != null && runbookVersionIdValue.Type != JTokenType.Null)
+                                    {
+                                        string runbookVersionIdInstance = ((string)runbookVersionIdValue);
+                                        jobStreamItemInstance.RunbookVersionId = runbookVersionIdInstance;
+                                    }
+                                    
+                                    JToken streamTextValue = valueValue["StreamText"];
+                                    if (streamTextValue != null && streamTextValue.Type != JTokenType.Null)
+                                    {
+                                        string streamTextInstance = ((string)streamTextValue);
+                                        jobStreamItemInstance.Text = streamTextInstance;
+                                    }
+                                    
+                                    JToken streamTimeValue = valueValue["StreamTime"];
+                                    if (streamTimeValue != null && streamTimeValue.Type != JTokenType.Null)
+                                    {
+                                        DateTime streamTimeInstance = ((DateTime)streamTimeValue);
+                                        jobStreamItemInstance.Time = streamTimeInstance;
+                                    }
+                                    
+                                    JToken streamTypeNameValue = valueValue["StreamTypeName"];
+                                    if (streamTypeNameValue != null && streamTypeNameValue.Type != JTokenType.Null)
+                                    {
+                                        string streamTypeNameInstance = ((string)streamTypeNameValue);
+                                        jobStreamItemInstance.Type = streamTypeNameInstance;
+                                    }
                                 }
-                                
-                                JToken jobIdValue = valueValue["JobId"];
-                                if (jobIdValue != null && jobIdValue.Type != JTokenType.Null)
-                                {
-                                    string jobIdInstance = ((string)jobIdValue);
-                                    jobStreamItemInstance.JobId = jobIdInstance;
-                                }
-                                
-                                JToken runbookVersionIdValue = valueValue["RunbookVersionId"];
-                                if (runbookVersionIdValue != null && runbookVersionIdValue.Type != JTokenType.Null)
-                                {
-                                    string runbookVersionIdInstance = ((string)runbookVersionIdValue);
-                                    jobStreamItemInstance.RunbookVersionId = runbookVersionIdInstance;
-                                }
-                                
-                                JToken streamTextValue = valueValue["StreamText"];
-                                if (streamTextValue != null && streamTextValue.Type != JTokenType.Null)
-                                {
-                                    string streamTextInstance = ((string)streamTextValue);
-                                    jobStreamItemInstance.Text = streamTextInstance;
-                                }
-                                
-                                JToken streamTimeValue = valueValue["StreamTime"];
-                                if (streamTimeValue != null && streamTimeValue.Type != JTokenType.Null)
-                                {
-                                    DateTime streamTimeInstance = ((DateTime)streamTimeValue);
-                                    jobStreamItemInstance.Time = streamTimeInstance;
-                                }
-                                
-                                JToken streamTypeNameValue = valueValue["StreamTypeName"];
-                                if (streamTypeNameValue != null && streamTypeNameValue.Type != JTokenType.Null)
-                                {
-                                    string streamTypeNameInstance = ((string)streamTypeNameValue);
-                                    jobStreamItemInstance.Type = streamTypeNameInstance;
-                                }
+                            }
+                            
+                            JToken odatanextLinkValue = responseDoc["odata.nextLink"];
+                            if (odatanextLinkValue != null && odatanextLinkValue.Type != JTokenType.Null)
+                            {
+                                string odatanextLinkInstance = Regex.Match(((string)odatanextLinkValue), "^.*[&\\?]\\$skiptoken=([^&]*)(&.*)?").Groups[1].Value;
+                                result.SkipToken = odatanextLinkInstance;
                             }
                         }
                         
-                        JToken odatanextLinkValue = responseDoc["odata.nextLink"];
-                        if (odatanextLinkValue != null && odatanextLinkValue.Type != JTokenType.Null)
-                        {
-                            string odatanextLinkInstance = Regex.Match(((string)odatanextLinkValue), "^.*[&\\?]\\$skiptoken=([^&]*)(&.*)?").Groups[1].Value;
-                            result.SkipToken = odatanextLinkInstance;
-                        }
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -264,7 +269,7 @@ namespace Microsoft.Azure.Management.Automation
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }

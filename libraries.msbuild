@@ -2,14 +2,21 @@
 <Project DefaultTargets="DeveloperBuild" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <!-- Product properties -->
   <PropertyGroup>
-    <CommonSolution>WindowsAzureCommonLibraries.sln</CommonSolution>
-    <ManagementLibrariesSolution>WindowsAzureManagementLibraries.sln</ManagementLibrariesSolution>
+    <CommonSolution>AzureCommonLibraries.sln</CommonSolution>
+    <ManagementLibrariesSolution Condition="$(ManagementLibrariesSolution) == ''">AzureManagementLibraries.sln</ManagementLibrariesSolution>
     <ProductFriendlyName>Microsoft Azure Management Libraries</ProductFriendlyName>
-    <ProductSourceFolder>$(MSBuildThisFileDirectory)src</ProductSourceFolder>
+	  <ProductSourceFolderPath Condition="$(ProductSourceFolderPath) == ''">src</ProductSourceFolderPath>
+	  <ProductSourceFolder>$(MSBuildThisFileDirectory)$(ProductSourceFolderPath)</ProductSourceFolder>
   </PropertyGroup>
 
   <!-- NuGet Packages -->
   <Import Project="nuget.targets" />
+
+  <ItemGroup>
+    <CommonProjects Include="$(CommonSolution)" Condition="$(MamlProjectName) == ''" />
+    <ManagementLibrariesProjects Include="$(ManagementLibrariesSolution)" Condition="$(MamlProjectName) == ''" />
+    <ManagementLibrariesProjects Include="$(ProductSourceFolder)\$(MamlProjectName)\*.csproj" Condition="$(MamlProjectName) != ''" />
+  </ItemGroup>
 
   <!-- Developer-specific properties -->
   <Import Project="developer\$(USERNAME)\build.props" Condition="Exists('developer\$(USERNAME)\build.props')" />
@@ -46,6 +53,12 @@
   /t:OfficialSignedBuild
 
   Properties of interest:
+  
+  /p:ManagementLibrariesSolution
+	Provides the relative path of the management libraries solution. Default is WindowsAzureCommonLibraries.sln.
+    
+  /p:ProductSourceFolderPath
+	Provide the product source folder to be build and published. Default is under src folder.
 
   /p:BuildVersionSuffix=BUILD_SUFFIX
     Inserts a string suffix value at the end of all the NuGet package versions
@@ -124,26 +137,54 @@
   Build profiles
   -->
   <PropertyGroup>
-    <DeveloperBuildProperties>Configuration=Debug;Platform=Any CPU;CopyToBinaries=true;GenerateHydraSpecs=$(GenerateHydraSpecs)</DeveloperBuildProperties>
-    <OfficialMSBuildProperties>Configuration=Release;OfficialBuild=true;Platform=Any CPU;GenerateHydraSpecs=$(GenerateHydraSpecs)</OfficialMSBuildProperties>
+    <DeveloperBuildProperties>Configuration=Debug;Platform=Any CPU;CopyToBinaries=true;GenerateHydraSpecs=$(GenerateHydraSpecs);DefineConstants=DEVSIGNED</DeveloperBuildProperties>
+    <OfficialMSBuildProperties>Configuration=Release;OfficialBuild=true;Platform=Any CPU;GenerateHydraSpecs=$(GenerateHydraSpecs);DefineConstants=OFFICIALSIGNED</OfficialMSBuildProperties>
     <Net40BuildProperty>BuildSecondConfiguration=true</Net40BuildProperty>
+    <Net45BuildProperty>BuildThirdConfiguration=true</Net45BuildProperty>
   </PropertyGroup>
 
   <!--
   Regular developer build
   -->
   <Target Name="DeveloperBuild" DependsOnTargets="BuildEngineeringDependencies">
-    <MSBuild Projects="$(CommonSolution)"
+    <MSBuild Projects="@(CommonProjects)"
              Properties="$(DeveloperBuildProperties)"
              Targets="Rebuild" />
-    <MSBuild Projects="$(CommonSolution)"
+    <MSBuild Projects="@(CommonProjects)"
              Properties="$(DeveloperBuildProperties);$(Net40BuildProperty)"
              Targets="Rebuild" />
-    <MSBuild Projects="$(ManagementLibrariesSolution)"
+    <MSBuild Projects="@(CommonProjects)"
+             Properties="$(DeveloperBuildProperties);$(Net45BuildProperty)"
+             Targets="Rebuild" />
+    <MSBuild Projects="@(ManagementLibrariesProjects)"
              Properties="$(DeveloperBuildProperties)"
              Targets="Rebuild" />
-    <MSBuild Projects="$(ManagementLibrariesSolution)"
+    <MSBuild Projects="@(ManagementLibrariesProjects)"
              Properties="$(DeveloperBuildProperties);$(Net40BuildProperty)"
+             Targets="Rebuild" />
+    <MSBuild Projects="@(ManagementLibrariesProjects)"
+             Properties="$(DeveloperBuildProperties);$(Net45BuildProperty)"
+             Targets="Rebuild" />
+  </Target>
+
+  <!--
+  Management library build
+  -->
+  <Target Name="ManagementLibrariesBuild" DependsOnTargets="BuildEngineeringDependencies">
+    <MSBuild Projects="@(ManagementLibrariesProjects)"
+             Properties="$(DeveloperBuildProperties)"
+             Targets="Rebuild" />
+    <MSBuild Projects="@(ManagementLibrariesProjects)"
+             Properties="$(DeveloperBuildProperties);$(Net40BuildProperty)"
+             Targets="Rebuild" />
+    <MSBuild Projects="@(ManagementLibrariesProjects)"
+             Properties="$(DeveloperBuildProperties);$(Net45BuildProperty)"
+             Targets="Rebuild" />
+  </Target>
+
+  <Target Name="AzureCommonPortableBuild" DependsOnTargets="BuildEngineeringDependencies">
+    <MSBuild Projects="@(CommonProjects)"
+             Properties="$(DeveloperBuildProperties)"
              Targets="Rebuild" />
   </Target>
 
@@ -151,17 +192,23 @@
   Clean produced binaries and object files
   -->
   <Target Name="Clean">
-    <MSBuild Projects="$(CommonSolution)"
+    <MSBuild Projects="@(CommonProjects)"
              Properties="$(DeveloperBuildProperties)"
              Targets="Clean" />
-    <MSBuild Projects="$(CommonSolution)"
+    <MSBuild Projects="@(CommonProjects)"
              Properties="$(DeveloperBuildProperties);$(Net40BuildProperty)"
              Targets="Clean" />
-    <MSBuild Projects="$(ManagementLibrariesSolution)"
+    <MSBuild Projects="@(CommonProjects)"
+             Properties="$(DeveloperBuildProperties);$(Net45BuildProperty)"
+             Targets="Clean" />
+    <MSBuild Projects="@(ManagementLibrariesProjects)"
              Properties="$(DeveloperBuildProperties)"
              Targets="Clean" />
-    <MSBuild Projects="$(ManagementLibrariesSolution)"
+    <MSBuild Projects="@(ManagementLibrariesProjects)"
              Properties="$(DeveloperBuildProperties);$(Net40BuildProperty)"
+             Targets="Clean" />
+    <MSBuild Projects="@(ManagementLibrariesProjects)"
+             Properties="$(DeveloperBuildProperties);$(Net45BuildProperty)"
              Targets="Clean" />
     <RemoveDir Directories="binaries" Condition="Exists('binaries\')" ContinueOnError="true" />
   </Target>
@@ -180,6 +227,36 @@
     <xunit Assemblies="@(TestDlls)" Html="$(MSBuildProjectDirectory)\TestResults\MAML.xunit.results.html" ContinueOnError="ErrorAndContinue" />
   </Target>
 
+  <Target Name="RunMSTests" >
+		<PropertyGroup>
+			<TestSettings Condition="'$(TestSettings)' == ''">$(ProductSourceFolder)\Local.testsettings</TestSettings>
+			<TestFilter Condition="'$(TestFilter)' == ''" >!Functional&#x26;!Scenario</TestFilter>
+			<TestFilter Condition="'$(NoInteractiveTests)' == 'true'">$(TestFilter)&#x26;!Interactive</TestFilter>
+			<TestOutputDirectory Condition="'$(TestOutputDirectory)' == ''">$(MSBuildProjectDirectory)\TestResults</TestOutputDirectory>
+		</PropertyGroup>	
+		  		<ItemGroup>
+			<TestDlls Include="$(ProductSourceFolder)\*.Tests\bin\*\*Tests.dll"/>
+		</ItemGroup>
+		<MakeDir Directories="$(MSBuildProjectDirectory)\TestResults"/>
+		<Message Text="Found test file: %(TestDlls.Filename)" />
+
+		<Message Importance="high" Text="Running tests..." />
+		<Message Importance="high" Text="You are required to have installed a version of Visual Studio with support for MSTest (and MSTest on your path)." />
+		<MakeDir Directories="$(TestOutputDirectory)" ContinueOnError="false" />
+
+		<Message Importance="high" Text="Debug tests: %(TestDlls.FullPath)" />
+		
+		<ItemGroup>
+			<TestOutputFiles Include="$(TestOutputDirectory)\%(TestDlls.FileName).trx" />
+		</ItemGroup>
+		
+		<Message Importance="high" Text="Test Output Files: %(TestOutputFiles.FullPath)" />
+		
+		<Exec
+		  Command="MSTest.exe /testcontainer:%(TestDlls.FullPath) /testsettings:$(TestSettings) /category:&quot;$(TestFilter)&quot; /resultsfile:$(TestOutputDirectory)\%(TestDlls.Filename).trx"
+		  ContinueOnError="true" />
+	</Target>
+	
   <!--
   An official build is designed for use while shipping. It generates a release
   build and places binaries ready for the official Microsoft signing process
@@ -195,17 +272,23 @@
   <Target Name="OfficialBuild"
           DependsOnTargets="BuildEngineeringDependencies;Clean">
     <CallTarget Targets="BuildServerPreparation" />
-    <MSBuild Projects="$(CommonSolution)"
+    <MSBuild Projects="@(CommonProjects)"
              Properties="$(OfficialMSBuildProperties)"
              Targets="Rebuild" />
-    <MSBuild Projects="$(CommonSolution)"
+    <MSBuild Projects="@(CommonProjects)"
              Properties="$(OfficialMSBuildProperties);$(Net40BuildProperty)"
              Targets="Rebuild" />
-    <MSBuild Projects="$(ManagementLibrariesSolution)"
+    <MSBuild Projects="@(CommonProjects)"
+             Properties="$(OfficialMSBuildProperties);$(Net45BuildProperty)"
+             Targets="Rebuild" />
+    <MSBuild Projects="@(ManagementLibrariesProjects)"
              Properties="$(OfficialMSBuildProperties)"
              Targets="Rebuild" />
-    <MSBuild Projects="$(ManagementLibrariesSolution)"
+    <MSBuild Projects="@(ManagementLibrariesProjects)"
              Properties="$(OfficialMSBuildProperties);$(Net40BuildProperty)"
+             Targets="Rebuild" />
+    <MSBuild Projects="@(ManagementLibrariesProjects)"
+             Properties="$(OfficialMSBuildProperties);$(Net45BuildProperty)"
              Targets="Rebuild" />
   </Target>
 
@@ -266,8 +349,9 @@
 
     <Message Text="Code signing" Importance="high" />
     <ItemGroup>
-      <AssembliesToBuild Include="binaries\unsigned\Microsoft.*Azure.*.dll" />
-      <Net40AssembliesToBuild Include="binaries\net40\unsigned\Microsoft.*Azure.*.dll" />
+      <AssembliesToBuild Include="binaries\unsigned\*.dll" />
+      <Net40AssembliesToBuild Include="binaries\net40\unsigned\*.dll" />
+      <Net45AssembliesToBuild Include="binaries\net45\unsigned\*.dll" />
     </ItemGroup>
 
     <CodeSigningTask
@@ -277,7 +361,7 @@
         DestinationPath="binaries\"
         SigningLogPath="binaries\signing.log"
         ToolsPath="$(OnPremiseBuildTasks)" />
-    <Error Condition=" !Exists('binaries\Microsoft.WindowsAzure.Common.dll') " Text="The Microsoft.WindowsAzure.Common.dll binary is not in the .\binaries\ folder. Code signing likely failed." />
+    <Error Condition=" !Exists('binaries\Microsoft.Azure.Common.dll') " Text="The Microsoft.Azure.Common.dll binary is not in the .\binaries\ folder. Code signing likely failed." />
 
     <Message Text="Signing .NET Framework 4.0 assemblies..." />
     <CodeSigningTask
@@ -287,7 +371,17 @@
       DestinationPath="binaries\net40\"
       SigningLogPath="binaries\net40\signing.log"
       ToolsPath="$(OnPremiseBuildTasks)" />
-    <Error Condition=" !Exists('binaries\net40\Microsoft.WindowsAzure.Common.dll') " Text="The Microsoft.WindowsAzure.Common.dll binary is not in the .\binaries\ folder. .NET 4.0 code signing likely failed." />
+    <Error Condition=" !Exists('binaries\net40\Microsoft.Azure.Common.dll') " Text="The Microsoft.Azure.Common.dll binary is not in the .\binaries\ folder. .NET 4.0 code signing likely failed." />
+
+    <Message Text="Signing .NET Framework 4.5 assemblies..." />
+    <CodeSigningTask
+      Description="Microsoft Azure SDK"
+      Keywords="Microsoft Azure .NET SDK"
+      UnsignedFiles="@(Net45AssembliesToBuild)"
+      DestinationPath="binaries\net45\"
+      SigningLogPath="binaries\net45\signing.log"
+      ToolsPath="$(OnPremiseBuildTasks)" />
+    <Error Condition=" !Exists('binaries\net45\Microsoft.Azure.Common.dll') " Text="The Microsoft.Azure.Common.dll binary is not in the .\binaries\ folder. .NET 4.5 code signing likely failed." />
 
     <Message Text="Validate the signed files" />
     <CallTarget Targets="ValidateOfficialBuildBinaries" />
@@ -300,6 +394,7 @@
 
     <RemoveDir Directories="binaries\unsigned" Condition="Exists('binaries\unsigned')" ContinueOnError="true" />
     <RemoveDir Directories="binaries\net40\unsigned" Condition="Exists('binaries\net40\unsigned')" ContinueOnError="true" />
+    <RemoveDir Directories="binaries\net45\unsigned" Condition="Exists('binaries\net45\unsigned')" ContinueOnError="true" />
     <Message Text="Have a nice day." />
   </Target>
 
@@ -315,6 +410,7 @@
     <ItemGroup>
       <DelaySignedAssembliesToValidate Include="binaries\unsigned\*.dll" />
       <DelaySignedAssembliesToValidate Include="binaries\net40\unsigned\*.dll" />
+      <DelaySignedAssembliesToValidate Include="binaries\net45\unsigned\*.dll" />
     </ItemGroup>
     <ValidateStrongNameSignatureTask
         WindowsSdkPath="$(WindowsSdkPath)"
@@ -335,6 +431,7 @@
     <ItemGroup>
       <AfterSignedAssembliesToValidate Include="binaries\*.dll" />
       <AfterSignedAssembliesToValidate Include="binaries\net40\*.dll" />
+      <AfterSignedAssembliesToValidate Include="binaries\net45\*.dll" />
     </ItemGroup>
     <ValidateStrongNameSignatureTask
         WindowsSdkPath="$(WindowsSdkPath)"
@@ -353,10 +450,12 @@
     <ItemGroup>
       <PclBinaries Include="binaries\unsigned\*.dll" />
       <Net40Binaries Include="binaries\net40\unsigned\*.dll" />
+      <Net45Binaries Include="binaries\net45\unsigned\*.dll" />
     </ItemGroup>
 
     <Copy SourceFiles="@(PclBinaries)" DestinationFolder="binaries" />
     <Copy SourceFiles="@(Net40Binaries)" DestinationFolder="binaries\net40" />
+    <Copy SourceFiles="@(Net45Binaries)" DestinationFolder="binaries\net45" />
 
     <CallTarget Targets="BuildPackages" />
   </Target>
@@ -381,24 +480,18 @@
 
   <!--
   Force nuget package restore so that packages that include .targets files
-  don't need to be checked into source control.
+  do not need to be checked into source control.
 
-  Assumes use of a private feed, requires the following environment variables
-  to be set:
-
-  PRIVATE_FEED_URL: The url of the feed to pull from (in addition to the public default feed)
-  PRIVATE_FEED_USER_NAME: User name for access to the feed
-  PRIVATE_FEED_PASSWORD: Password for access to the feed
+  Assumes use of a private feed.
+    PRIVATE_FEED_URL: The url of the feed to pull from with specific credentials (in addition to the public default feed)
+    PRIVATE_FEED_USER_NAME: User name for access to the feed
+    PRIVATE_FEED_PASSWORD: Password for access to the feed
   -->
-  <Target Name="ForceRestorePackages" Condition=" '$(GenerateHydraSpecs)' == 'true' ">
+  <Target Name="ForceRestorePackages" Condition=" '$(GenerateHydraSpecs)' == 'true' or '$(SkipRestorePackages)' != 'true' ">
     <PropertyGroup>
       <NuGetRestoreConfigFile>$(MSBuildProjectDirectory)\restore.config</NuGetRestoreConfigFile>
       <NuGetRestoreConfigSwitch>-ConfigFile &quot;$(NuGetRestoreConfigFile)&quot;</NuGetRestoreConfigSwitch>
     </PropertyGroup>
-
-    <Error Text="The code generation target ForceRestorePackages requires an environment variable: PRIVATE_FEED_URL. Please see libraries.msbuild for more information." Condition=" '$(PRIVATE_FEED_URL)'=='' " />
-    <Error Text="The code generation target ForceRestorePackages requires an environment variable: PRIVATE_FEED_USER_NAME. Please see libraries.msbuild for more information." Condition=" '$(PRIVATE_FEED_USER_NAME)'=='' " />
-    <Error Text="The code generation target ForceRestorePackages requires an environment variable: PRIVATE_FEED_PASSWORD. Please see libraries.msbuild for more information." Condition=" '$(PRIVATE_FEED_PASSWORD)'=='' " />
 
     <!-- Create config for user name and password for private feed access -->
     <Delete Files="$(NuGetRestoreConfigFile)" />
@@ -407,9 +500,13 @@
       Lines="&lt;configuration&gt;&lt;/configuration&gt;"
       Overwrite="true"
       Encoding="Unicode"/>
-    <Exec Command="$(NuGetCommand) sources add -Name Hydra -Source &quot;$(PRIVATE_FEED_URL)&quot; $(NuGetRestoreConfigSwitch)" />
-    <Exec Command="$(NuGetCommand) sources Update -Name Hydra -UserName $(PRIVATE_FEED_USER_NAME) -Password &quot;$(PRIVATE_FEED_PASSWORD)&quot; $(NuGetRestoreConfigSwitch)"
-          EchoOff="true" />
+    <!-- Private versions of packages are picked up from these feeds, defined with environment variables -->
+    <Exec Command="$(NuGetCommand) sources add -Name PrimaryFeed -Source &quot;$(PRIVATE_FEED_URL)&quot; $(NuGetRestoreConfigSwitch)" Condition=" '$(PRIVATE_FEED_URL)'!='' "/>
+    <Exec Command="$(NuGetCommand) sources Update -Name PrimaryFeed -UserName $(PRIVATE_FEED_USER_NAME) -Password &quot;$(PRIVATE_FEED_PASSWORD)&quot; $(NuGetRestoreConfigSwitch)" EchoOff="true" Condition=" '$(PRIVATE_FEED_PASSWORD)'!='' AND '$(PRIVATE_FEED_USER_NAME)'!='' "/>
+    <Exec Command="$(NuGetCommand) sources add -Name SecondaryFeed -Source &quot;$(SECONDARY_FEED_URL)&quot; $(NuGetRestoreConfigSwitch)" Condition=" '$(SECONDARY_FEED_URL)'!='' "/>
+    <Exec Command="$(NuGetCommand) sources Update -Name SecondaryFeed -UserName $(SECONDARY_FEED_USER_NAME) -Password &quot;$(SECONDARY_FEED_PASSWORD)&quot; $(NuGetRestoreConfigSwitch)" EchoOff="true" Condition=" '$(SECONDARY_FEED_PASSWORD)'!='' AND '$(SECONDARY_FEED_USER_NAME)'!='' "/>
+    <Exec Command="$(NuGetCommand) sources add -Name AzureSdkInternalFeed -Source &quot;https://www.myget.org/F/azure-sdk-internal/&quot; $(NuGetRestoreConfigSwitch)"/>
+
     <Exec Command="$(NuGetCommand) restore $(CommonSolution) $(NuGetRestoreConfigSwitch)" ContinueOnError="ErrorAndContinue" />
     <Exec Command="$(NuGetCommand) restore $(ManagementLibrariesSolution) $(NuGetRestoreConfigSwitch)" ContinueOnError="ErrorAndContinue" />
 
@@ -422,8 +519,8 @@
   don't need to be checked into source control. Skips all private packages.
   -->
   <Target Name="ForceRestorePublicPackages">
-    <Exec Command="$(NuGetCommand) restore $(CommonSolution)" ContinueOnError="ErrorAndContinue" />
-    <Exec Command="$(NuGetCommand) restore $(ManagementLibrariesSolution)" ContinueOnError="ErrorAndContinue" />
+    <Exec Command="$(NuGetCommand) restore @(CommonProjects)" ContinueOnError="ErrorAndContinue" />
+    <Exec Command="$(NuGetCommand) restore @(ManagementLibrariesProjects)" ContinueOnError="ErrorAndContinue" />
   </Target>
 
   <!--
@@ -480,7 +577,7 @@
           DependsOnTargets="GetGeneratedBuildDate">
     <Message Text="Destructive burn of assembly file versions to include the build number in the revision component." />
     <ItemGroup>
-      <AssemblyInfoFilesToUpdate Include="$(ProductSourceFolder)\**\Properties\AssemblyInfo.cs" />
+      <AssemblyInfoFilesToUpdate Include="$(ProductSourceFolder)\*\Properties\AssemblyInfo.cs" />
     </ItemGroup>
     <RegexReplacementTask Files="@(AssemblyInfoFilesToUpdate)"
                           Find="AssemblyFileVersion\(&quot;(?&lt;semver&gt;\d{1,3}\.\d{1,3}\.\d{1,3}).(?&lt;revision&gt;)\d{1,3}&quot;\)"

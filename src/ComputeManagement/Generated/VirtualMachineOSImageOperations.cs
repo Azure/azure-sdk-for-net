@@ -30,9 +30,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Hyak.Common.Internals;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Compute;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
@@ -44,7 +44,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
     /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157175.aspx for
     /// more information)
     /// </summary>
-    internal partial class VirtualMachineOSImageOperations : IServiceOperations<ComputeManagementClient>, Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOSImageOperations
+    internal partial class VirtualMachineOSImageOperations : IServiceOperations<ComputeManagementClient>, IVirtualMachineOSImageOperations
     {
         /// <summary>
         /// Initializes a new instance of the VirtualMachineOSImageOperations
@@ -87,7 +87,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationResponse> BeginSharingAsync(string imageName, string permission, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> BeginSharingAsync(string imageName, string permission, CancellationToken cancellationToken)
         {
             // Validate
             if (imageName == null)
@@ -100,20 +100,20 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("imageName", imageName);
                 tracingParameters.Add("permission", permission);
-                Tracing.Enter(invocationId, this, "BeginSharingAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "BeginSharingAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/images/" + imageName.Trim() + "/share?";
-            url = url + "permission=" + Uri.EscapeDataString(permission.Trim());
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/images/" + Uri.EscapeDataString(imageName) + "/share?";
+            url = url + "permission=" + Uri.EscapeDataString(permission);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -136,7 +136,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -148,13 +148,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -163,14 +163,15 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
-                    result = new OperationResponse();
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -179,7 +180,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -220,7 +221,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationResponse> BeginUnreplicatingAsync(string imageName, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> BeginUnreplicatingAsync(string imageName, CancellationToken cancellationToken)
         {
             // Validate
             if (imageName == null)
@@ -229,18 +230,18 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("imageName", imageName);
-                Tracing.Enter(invocationId, this, "BeginUnreplicatingAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "BeginUnreplicatingAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/images/" + imageName.Trim() + "/unreplicate";
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/images/" + Uri.EscapeDataString(imageName) + "/unreplicate";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -263,7 +264,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -275,13 +276,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -290,14 +291,15 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
-                    result = new OperationResponse();
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -306,7 +308,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -344,7 +346,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// Parameters returned from the Create Virtual Machine Image operation.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.VirtualMachineOSImageCreateResponse> CreateAsync(VirtualMachineOSImageCreateParameters parameters, CancellationToken cancellationToken)
+        public async Task<VirtualMachineOSImageCreateResponse> CreateAsync(VirtualMachineOSImageCreateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
@@ -369,18 +371,18 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "CreateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "CreateAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/images";
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/images";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -403,7 +405,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -513,13 +515,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -528,7 +530,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -536,148 +538,158 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     // Create Result
                     VirtualMachineOSImageCreateResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new VirtualMachineOSImageCreateResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement oSImageElement2 = responseDoc.Element(XName.Get("OSImage", "http://schemas.microsoft.com/windowsazure"));
-                    if (oSImageElement2 != null)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        XElement locationElement = oSImageElement2.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
-                        if (locationElement != null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new VirtualMachineOSImageCreateResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement oSImageElement2 = responseDoc.Element(XName.Get("OSImage", "http://schemas.microsoft.com/windowsazure"));
+                        if (oSImageElement2 != null)
                         {
-                            string locationInstance = locationElement.Value;
-                            result.Location = locationInstance;
+                            XElement locationElement = oSImageElement2.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
+                            if (locationElement != null)
+                            {
+                                string locationInstance = locationElement.Value;
+                                result.Location = locationInstance;
+                            }
+                            
+                            XElement categoryElement = oSImageElement2.Element(XName.Get("Category", "http://schemas.microsoft.com/windowsazure"));
+                            if (categoryElement != null)
+                            {
+                                string categoryInstance = categoryElement.Value;
+                                result.Category = categoryInstance;
+                            }
+                            
+                            XElement labelElement2 = oSImageElement2.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
+                            if (labelElement2 != null)
+                            {
+                                string labelInstance = labelElement2.Value;
+                                result.Label = labelInstance;
+                            }
+                            
+                            XElement logicalSizeInGBElement = oSImageElement2.Element(XName.Get("LogicalSizeInGB", "http://schemas.microsoft.com/windowsazure"));
+                            if (logicalSizeInGBElement != null)
+                            {
+                                double logicalSizeInGBInstance = double.Parse(logicalSizeInGBElement.Value, CultureInfo.InvariantCulture);
+                                result.LogicalSizeInGB = logicalSizeInGBInstance;
+                            }
+                            
+                            XElement mediaLinkElement2 = oSImageElement2.Element(XName.Get("MediaLink", "http://schemas.microsoft.com/windowsazure"));
+                            if (mediaLinkElement2 != null)
+                            {
+                                Uri mediaLinkInstance = TypeConversion.TryParseUri(mediaLinkElement2.Value);
+                                result.MediaLinkUri = mediaLinkInstance;
+                            }
+                            
+                            XElement nameElement2 = oSImageElement2.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                            if (nameElement2 != null)
+                            {
+                                string nameInstance = nameElement2.Value;
+                                result.Name = nameInstance;
+                            }
+                            
+                            XElement osElement2 = oSImageElement2.Element(XName.Get("OS", "http://schemas.microsoft.com/windowsazure"));
+                            if (osElement2 != null)
+                            {
+                                string osInstance = osElement2.Value;
+                                result.OperatingSystemType = osInstance;
+                            }
+                            
+                            XElement eulaElement2 = oSImageElement2.Element(XName.Get("Eula", "http://schemas.microsoft.com/windowsazure"));
+                            if (eulaElement2 != null)
+                            {
+                                string eulaInstance = eulaElement2.Value;
+                                result.Eula = eulaInstance;
+                            }
+                            
+                            XElement descriptionElement2 = oSImageElement2.Element(XName.Get("Description", "http://schemas.microsoft.com/windowsazure"));
+                            if (descriptionElement2 != null)
+                            {
+                                string descriptionInstance = descriptionElement2.Value;
+                                result.Description = descriptionInstance;
+                            }
+                            
+                            XElement imageFamilyElement2 = oSImageElement2.Element(XName.Get("ImageFamily", "http://schemas.microsoft.com/windowsazure"));
+                            if (imageFamilyElement2 != null)
+                            {
+                                string imageFamilyInstance = imageFamilyElement2.Value;
+                                result.ImageFamily = imageFamilyInstance;
+                            }
+                            
+                            XElement publishedDateElement2 = oSImageElement2.Element(XName.Get("PublishedDate", "http://schemas.microsoft.com/windowsazure"));
+                            if (publishedDateElement2 != null && !string.IsNullOrEmpty(publishedDateElement2.Value))
+                            {
+                                DateTime publishedDateInstance = DateTime.Parse(publishedDateElement2.Value, CultureInfo.InvariantCulture);
+                                result.PublishedDate = publishedDateInstance;
+                            }
+                            
+                            XElement publisherNameElement = oSImageElement2.Element(XName.Get("PublisherName", "http://schemas.microsoft.com/windowsazure"));
+                            if (publisherNameElement != null)
+                            {
+                                string publisherNameInstance = publisherNameElement.Value;
+                                result.PublisherName = publisherNameInstance;
+                            }
+                            
+                            XElement isPremiumElement2 = oSImageElement2.Element(XName.Get("IsPremium", "http://schemas.microsoft.com/windowsazure"));
+                            if (isPremiumElement2 != null && !string.IsNullOrEmpty(isPremiumElement2.Value))
+                            {
+                                bool isPremiumInstance = bool.Parse(isPremiumElement2.Value);
+                                result.IsPremium = isPremiumInstance;
+                            }
+                            
+                            XElement showInGuiElement2 = oSImageElement2.Element(XName.Get("ShowInGui", "http://schemas.microsoft.com/windowsazure"));
+                            if (showInGuiElement2 != null && !string.IsNullOrEmpty(showInGuiElement2.Value))
+                            {
+                                bool showInGuiInstance = bool.Parse(showInGuiElement2.Value);
+                                result.ShowInGui = showInGuiInstance;
+                            }
+                            
+                            XElement privacyUriElement2 = oSImageElement2.Element(XName.Get("PrivacyUri", "http://schemas.microsoft.com/windowsazure"));
+                            if (privacyUriElement2 != null)
+                            {
+                                Uri privacyUriInstance = TypeConversion.TryParseUri(privacyUriElement2.Value);
+                                result.PrivacyUri = privacyUriInstance;
+                            }
+                            
+                            XElement iconUriElement2 = oSImageElement2.Element(XName.Get("IconUri", "http://schemas.microsoft.com/windowsazure"));
+                            if (iconUriElement2 != null)
+                            {
+                                Uri iconUriInstance = TypeConversion.TryParseUri(iconUriElement2.Value);
+                                result.IconUri = iconUriInstance;
+                            }
+                            
+                            XElement recommendedVMSizeElement2 = oSImageElement2.Element(XName.Get("RecommendedVMSize", "http://schemas.microsoft.com/windowsazure"));
+                            if (recommendedVMSizeElement2 != null)
+                            {
+                                string recommendedVMSizeInstance = recommendedVMSizeElement2.Value;
+                                result.RecommendedVMSize = recommendedVMSizeInstance;
+                            }
+                            
+                            XElement smallIconUriElement2 = oSImageElement2.Element(XName.Get("SmallIconUri", "http://schemas.microsoft.com/windowsazure"));
+                            if (smallIconUriElement2 != null)
+                            {
+                                Uri smallIconUriInstance = TypeConversion.TryParseUri(smallIconUriElement2.Value);
+                                result.SmallIconUri = smallIconUriInstance;
+                            }
+                            
+                            XElement languageElement2 = oSImageElement2.Element(XName.Get("Language", "http://schemas.microsoft.com/windowsazure"));
+                            if (languageElement2 != null)
+                            {
+                                string languageInstance = languageElement2.Value;
+                                result.Language = languageInstance;
+                            }
+                            
+                            XElement iOTypeElement = oSImageElement2.Element(XName.Get("IOType", "http://schemas.microsoft.com/windowsazure"));
+                            if (iOTypeElement != null)
+                            {
+                                string iOTypeInstance = iOTypeElement.Value;
+                                result.IOType = iOTypeInstance;
+                            }
                         }
                         
-                        XElement categoryElement = oSImageElement2.Element(XName.Get("Category", "http://schemas.microsoft.com/windowsazure"));
-                        if (categoryElement != null)
-                        {
-                            string categoryInstance = categoryElement.Value;
-                            result.Category = categoryInstance;
-                        }
-                        
-                        XElement labelElement2 = oSImageElement2.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
-                        if (labelElement2 != null)
-                        {
-                            string labelInstance = labelElement2.Value;
-                            result.Label = labelInstance;
-                        }
-                        
-                        XElement logicalSizeInGBElement = oSImageElement2.Element(XName.Get("LogicalSizeInGB", "http://schemas.microsoft.com/windowsazure"));
-                        if (logicalSizeInGBElement != null)
-                        {
-                            double logicalSizeInGBInstance = double.Parse(logicalSizeInGBElement.Value, CultureInfo.InvariantCulture);
-                            result.LogicalSizeInGB = logicalSizeInGBInstance;
-                        }
-                        
-                        XElement mediaLinkElement2 = oSImageElement2.Element(XName.Get("MediaLink", "http://schemas.microsoft.com/windowsazure"));
-                        if (mediaLinkElement2 != null)
-                        {
-                            Uri mediaLinkInstance = TypeConversion.TryParseUri(mediaLinkElement2.Value);
-                            result.MediaLinkUri = mediaLinkInstance;
-                        }
-                        
-                        XElement nameElement2 = oSImageElement2.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                        if (nameElement2 != null)
-                        {
-                            string nameInstance = nameElement2.Value;
-                            result.Name = nameInstance;
-                        }
-                        
-                        XElement osElement2 = oSImageElement2.Element(XName.Get("OS", "http://schemas.microsoft.com/windowsazure"));
-                        if (osElement2 != null)
-                        {
-                            string osInstance = osElement2.Value;
-                            result.OperatingSystemType = osInstance;
-                        }
-                        
-                        XElement eulaElement2 = oSImageElement2.Element(XName.Get("Eula", "http://schemas.microsoft.com/windowsazure"));
-                        if (eulaElement2 != null)
-                        {
-                            string eulaInstance = eulaElement2.Value;
-                            result.Eula = eulaInstance;
-                        }
-                        
-                        XElement descriptionElement2 = oSImageElement2.Element(XName.Get("Description", "http://schemas.microsoft.com/windowsazure"));
-                        if (descriptionElement2 != null)
-                        {
-                            string descriptionInstance = descriptionElement2.Value;
-                            result.Description = descriptionInstance;
-                        }
-                        
-                        XElement imageFamilyElement2 = oSImageElement2.Element(XName.Get("ImageFamily", "http://schemas.microsoft.com/windowsazure"));
-                        if (imageFamilyElement2 != null)
-                        {
-                            string imageFamilyInstance = imageFamilyElement2.Value;
-                            result.ImageFamily = imageFamilyInstance;
-                        }
-                        
-                        XElement publishedDateElement2 = oSImageElement2.Element(XName.Get("PublishedDate", "http://schemas.microsoft.com/windowsazure"));
-                        if (publishedDateElement2 != null && string.IsNullOrEmpty(publishedDateElement2.Value) == false)
-                        {
-                            DateTime publishedDateInstance = DateTime.Parse(publishedDateElement2.Value, CultureInfo.InvariantCulture);
-                            result.PublishedDate = publishedDateInstance;
-                        }
-                        
-                        XElement publisherNameElement = oSImageElement2.Element(XName.Get("PublisherName", "http://schemas.microsoft.com/windowsazure"));
-                        if (publisherNameElement != null)
-                        {
-                            string publisherNameInstance = publisherNameElement.Value;
-                            result.PublisherName = publisherNameInstance;
-                        }
-                        
-                        XElement isPremiumElement2 = oSImageElement2.Element(XName.Get("IsPremium", "http://schemas.microsoft.com/windowsazure"));
-                        if (isPremiumElement2 != null && string.IsNullOrEmpty(isPremiumElement2.Value) == false)
-                        {
-                            bool isPremiumInstance = bool.Parse(isPremiumElement2.Value);
-                            result.IsPremium = isPremiumInstance;
-                        }
-                        
-                        XElement showInGuiElement2 = oSImageElement2.Element(XName.Get("ShowInGui", "http://schemas.microsoft.com/windowsazure"));
-                        if (showInGuiElement2 != null && string.IsNullOrEmpty(showInGuiElement2.Value) == false)
-                        {
-                            bool showInGuiInstance = bool.Parse(showInGuiElement2.Value);
-                            result.ShowInGui = showInGuiInstance;
-                        }
-                        
-                        XElement privacyUriElement2 = oSImageElement2.Element(XName.Get("PrivacyUri", "http://schemas.microsoft.com/windowsazure"));
-                        if (privacyUriElement2 != null)
-                        {
-                            Uri privacyUriInstance = TypeConversion.TryParseUri(privacyUriElement2.Value);
-                            result.PrivacyUri = privacyUriInstance;
-                        }
-                        
-                        XElement iconUriElement2 = oSImageElement2.Element(XName.Get("IconUri", "http://schemas.microsoft.com/windowsazure"));
-                        if (iconUriElement2 != null)
-                        {
-                            Uri iconUriInstance = TypeConversion.TryParseUri(iconUriElement2.Value);
-                            result.IconUri = iconUriInstance;
-                        }
-                        
-                        XElement recommendedVMSizeElement2 = oSImageElement2.Element(XName.Get("RecommendedVMSize", "http://schemas.microsoft.com/windowsazure"));
-                        if (recommendedVMSizeElement2 != null)
-                        {
-                            string recommendedVMSizeInstance = recommendedVMSizeElement2.Value;
-                            result.RecommendedVMSize = recommendedVMSizeInstance;
-                        }
-                        
-                        XElement smallIconUriElement2 = oSImageElement2.Element(XName.Get("SmallIconUri", "http://schemas.microsoft.com/windowsazure"));
-                        if (smallIconUriElement2 != null)
-                        {
-                            Uri smallIconUriInstance = TypeConversion.TryParseUri(smallIconUriElement2.Value);
-                            result.SmallIconUri = smallIconUriInstance;
-                        }
-                        
-                        XElement languageElement2 = oSImageElement2.Element(XName.Get("Language", "http://schemas.microsoft.com/windowsazure"));
-                        if (languageElement2 != null)
-                        {
-                            string languageInstance = languageElement2.Value;
-                            result.Language = languageInstance;
-                        }
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -686,7 +698,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -727,7 +739,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationResponse> DeleteAsync(string imageName, bool deleteFromStorage, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> DeleteAsync(string imageName, bool deleteFromStorage, CancellationToken cancellationToken)
         {
             // Validate
             if (imageName == null)
@@ -736,19 +748,19 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("imageName", imageName);
                 tracingParameters.Add("deleteFromStorage", deleteFromStorage);
-                Tracing.Enter(invocationId, this, "DeleteAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "DeleteAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/images/" + imageName.Trim() + "?";
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/images/" + Uri.EscapeDataString(imageName) + "?";
             if (deleteFromStorage == true)
             {
                 url = url + "comp=media";
@@ -775,7 +787,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -787,13 +799,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -802,14 +814,15 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
-                    result = new OperationResponse();
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -818,7 +831,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -854,7 +867,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// A virtual machine image associated with your subscription.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.VirtualMachineOSImageGetResponse> GetAsync(string imageName, CancellationToken cancellationToken)
+        public async Task<VirtualMachineOSImageGetResponse> GetAsync(string imageName, CancellationToken cancellationToken)
         {
             // Validate
             if (imageName == null)
@@ -863,18 +876,18 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("imageName", imageName);
-                Tracing.Enter(invocationId, this, "GetAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/images/" + imageName.Trim();
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/images/" + Uri.EscapeDataString(imageName);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -897,7 +910,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -909,13 +922,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -924,7 +937,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -932,155 +945,165 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     // Create Result
                     VirtualMachineOSImageGetResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new VirtualMachineOSImageGetResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement oSImageElement = responseDoc.Element(XName.Get("OSImage", "http://schemas.microsoft.com/windowsazure"));
-                    if (oSImageElement != null)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        XElement affinityGroupElement = oSImageElement.Element(XName.Get("AffinityGroup", "http://schemas.microsoft.com/windowsazure"));
-                        if (affinityGroupElement != null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new VirtualMachineOSImageGetResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement oSImageElement = responseDoc.Element(XName.Get("OSImage", "http://schemas.microsoft.com/windowsazure"));
+                        if (oSImageElement != null)
                         {
-                            string affinityGroupInstance = affinityGroupElement.Value;
-                            result.AffinityGroup = affinityGroupInstance;
+                            XElement affinityGroupElement = oSImageElement.Element(XName.Get("AffinityGroup", "http://schemas.microsoft.com/windowsazure"));
+                            if (affinityGroupElement != null)
+                            {
+                                string affinityGroupInstance = affinityGroupElement.Value;
+                                result.AffinityGroup = affinityGroupInstance;
+                            }
+                            
+                            XElement categoryElement = oSImageElement.Element(XName.Get("Category", "http://schemas.microsoft.com/windowsazure"));
+                            if (categoryElement != null)
+                            {
+                                string categoryInstance = categoryElement.Value;
+                                result.Category = categoryInstance;
+                            }
+                            
+                            XElement labelElement = oSImageElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
+                            if (labelElement != null)
+                            {
+                                string labelInstance = labelElement.Value;
+                                result.Label = labelInstance;
+                            }
+                            
+                            XElement locationElement = oSImageElement.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
+                            if (locationElement != null)
+                            {
+                                string locationInstance = locationElement.Value;
+                                result.Location = locationInstance;
+                            }
+                            
+                            XElement logicalSizeInGBElement = oSImageElement.Element(XName.Get("LogicalSizeInGB", "http://schemas.microsoft.com/windowsazure"));
+                            if (logicalSizeInGBElement != null)
+                            {
+                                double logicalSizeInGBInstance = double.Parse(logicalSizeInGBElement.Value, CultureInfo.InvariantCulture);
+                                result.LogicalSizeInGB = logicalSizeInGBInstance;
+                            }
+                            
+                            XElement mediaLinkElement = oSImageElement.Element(XName.Get("MediaLink", "http://schemas.microsoft.com/windowsazure"));
+                            if (mediaLinkElement != null)
+                            {
+                                Uri mediaLinkInstance = TypeConversion.TryParseUri(mediaLinkElement.Value);
+                                result.MediaLinkUri = mediaLinkInstance;
+                            }
+                            
+                            XElement nameElement = oSImageElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                            if (nameElement != null)
+                            {
+                                string nameInstance = nameElement.Value;
+                                result.Name = nameInstance;
+                            }
+                            
+                            XElement osElement = oSImageElement.Element(XName.Get("OS", "http://schemas.microsoft.com/windowsazure"));
+                            if (osElement != null)
+                            {
+                                string osInstance = osElement.Value;
+                                result.OperatingSystemType = osInstance;
+                            }
+                            
+                            XElement eulaElement = oSImageElement.Element(XName.Get("Eula", "http://schemas.microsoft.com/windowsazure"));
+                            if (eulaElement != null)
+                            {
+                                string eulaInstance = eulaElement.Value;
+                                result.Eula = eulaInstance;
+                            }
+                            
+                            XElement descriptionElement = oSImageElement.Element(XName.Get("Description", "http://schemas.microsoft.com/windowsazure"));
+                            if (descriptionElement != null)
+                            {
+                                string descriptionInstance = descriptionElement.Value;
+                                result.Description = descriptionInstance;
+                            }
+                            
+                            XElement imageFamilyElement = oSImageElement.Element(XName.Get("ImageFamily", "http://schemas.microsoft.com/windowsazure"));
+                            if (imageFamilyElement != null)
+                            {
+                                string imageFamilyInstance = imageFamilyElement.Value;
+                                result.ImageFamily = imageFamilyInstance;
+                            }
+                            
+                            XElement showInGuiElement = oSImageElement.Element(XName.Get("ShowInGui", "http://schemas.microsoft.com/windowsazure"));
+                            if (showInGuiElement != null && !string.IsNullOrEmpty(showInGuiElement.Value))
+                            {
+                                bool showInGuiInstance = bool.Parse(showInGuiElement.Value);
+                                result.ShowInGui = showInGuiInstance;
+                            }
+                            
+                            XElement publishedDateElement = oSImageElement.Element(XName.Get("PublishedDate", "http://schemas.microsoft.com/windowsazure"));
+                            if (publishedDateElement != null)
+                            {
+                                DateTime publishedDateInstance = DateTime.Parse(publishedDateElement.Value, CultureInfo.InvariantCulture);
+                                result.PublishedDate = publishedDateInstance;
+                            }
+                            
+                            XElement isPremiumElement = oSImageElement.Element(XName.Get("IsPremium", "http://schemas.microsoft.com/windowsazure"));
+                            if (isPremiumElement != null && !string.IsNullOrEmpty(isPremiumElement.Value))
+                            {
+                                bool isPremiumInstance = bool.Parse(isPremiumElement.Value);
+                                result.IsPremium = isPremiumInstance;
+                            }
+                            
+                            XElement iconUriElement = oSImageElement.Element(XName.Get("IconUri", "http://schemas.microsoft.com/windowsazure"));
+                            if (iconUriElement != null)
+                            {
+                                Uri iconUriInstance = TypeConversion.TryParseUri(iconUriElement.Value);
+                                result.IconUri = iconUriInstance;
+                            }
+                            
+                            XElement privacyUriElement = oSImageElement.Element(XName.Get("PrivacyUri", "http://schemas.microsoft.com/windowsazure"));
+                            if (privacyUriElement != null)
+                            {
+                                Uri privacyUriInstance = TypeConversion.TryParseUri(privacyUriElement.Value);
+                                result.PrivacyUri = privacyUriInstance;
+                            }
+                            
+                            XElement recommendedVMSizeElement = oSImageElement.Element(XName.Get("RecommendedVMSize", "http://schemas.microsoft.com/windowsazure"));
+                            if (recommendedVMSizeElement != null)
+                            {
+                                string recommendedVMSizeInstance = recommendedVMSizeElement.Value;
+                                result.RecommendedVMSize = recommendedVMSizeInstance;
+                            }
+                            
+                            XElement publisherNameElement = oSImageElement.Element(XName.Get("PublisherName", "http://schemas.microsoft.com/windowsazure"));
+                            if (publisherNameElement != null)
+                            {
+                                string publisherNameInstance = publisherNameElement.Value;
+                                result.PublisherName = publisherNameInstance;
+                            }
+                            
+                            XElement smallIconUriElement = oSImageElement.Element(XName.Get("SmallIconUri", "http://schemas.microsoft.com/windowsazure"));
+                            if (smallIconUriElement != null)
+                            {
+                                Uri smallIconUriInstance = TypeConversion.TryParseUri(smallIconUriElement.Value);
+                                result.SmallIconUri = smallIconUriInstance;
+                            }
+                            
+                            XElement languageElement = oSImageElement.Element(XName.Get("Language", "http://schemas.microsoft.com/windowsazure"));
+                            if (languageElement != null)
+                            {
+                                string languageInstance = languageElement.Value;
+                                result.Language = languageInstance;
+                            }
+                            
+                            XElement iOTypeElement = oSImageElement.Element(XName.Get("IOType", "http://schemas.microsoft.com/windowsazure"));
+                            if (iOTypeElement != null)
+                            {
+                                string iOTypeInstance = iOTypeElement.Value;
+                                result.IOType = iOTypeInstance;
+                            }
                         }
                         
-                        XElement categoryElement = oSImageElement.Element(XName.Get("Category", "http://schemas.microsoft.com/windowsazure"));
-                        if (categoryElement != null)
-                        {
-                            string categoryInstance = categoryElement.Value;
-                            result.Category = categoryInstance;
-                        }
-                        
-                        XElement labelElement = oSImageElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
-                        if (labelElement != null)
-                        {
-                            string labelInstance = labelElement.Value;
-                            result.Label = labelInstance;
-                        }
-                        
-                        XElement locationElement = oSImageElement.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
-                        if (locationElement != null)
-                        {
-                            string locationInstance = locationElement.Value;
-                            result.Location = locationInstance;
-                        }
-                        
-                        XElement logicalSizeInGBElement = oSImageElement.Element(XName.Get("LogicalSizeInGB", "http://schemas.microsoft.com/windowsazure"));
-                        if (logicalSizeInGBElement != null)
-                        {
-                            double logicalSizeInGBInstance = double.Parse(logicalSizeInGBElement.Value, CultureInfo.InvariantCulture);
-                            result.LogicalSizeInGB = logicalSizeInGBInstance;
-                        }
-                        
-                        XElement mediaLinkElement = oSImageElement.Element(XName.Get("MediaLink", "http://schemas.microsoft.com/windowsazure"));
-                        if (mediaLinkElement != null)
-                        {
-                            Uri mediaLinkInstance = TypeConversion.TryParseUri(mediaLinkElement.Value);
-                            result.MediaLinkUri = mediaLinkInstance;
-                        }
-                        
-                        XElement nameElement = oSImageElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                        if (nameElement != null)
-                        {
-                            string nameInstance = nameElement.Value;
-                            result.Name = nameInstance;
-                        }
-                        
-                        XElement osElement = oSImageElement.Element(XName.Get("OS", "http://schemas.microsoft.com/windowsazure"));
-                        if (osElement != null)
-                        {
-                            string osInstance = osElement.Value;
-                            result.OperatingSystemType = osInstance;
-                        }
-                        
-                        XElement eulaElement = oSImageElement.Element(XName.Get("Eula", "http://schemas.microsoft.com/windowsazure"));
-                        if (eulaElement != null)
-                        {
-                            string eulaInstance = eulaElement.Value;
-                            result.Eula = eulaInstance;
-                        }
-                        
-                        XElement descriptionElement = oSImageElement.Element(XName.Get("Description", "http://schemas.microsoft.com/windowsazure"));
-                        if (descriptionElement != null)
-                        {
-                            string descriptionInstance = descriptionElement.Value;
-                            result.Description = descriptionInstance;
-                        }
-                        
-                        XElement imageFamilyElement = oSImageElement.Element(XName.Get("ImageFamily", "http://schemas.microsoft.com/windowsazure"));
-                        if (imageFamilyElement != null)
-                        {
-                            string imageFamilyInstance = imageFamilyElement.Value;
-                            result.ImageFamily = imageFamilyInstance;
-                        }
-                        
-                        XElement showInGuiElement = oSImageElement.Element(XName.Get("ShowInGui", "http://schemas.microsoft.com/windowsazure"));
-                        if (showInGuiElement != null && string.IsNullOrEmpty(showInGuiElement.Value) == false)
-                        {
-                            bool showInGuiInstance = bool.Parse(showInGuiElement.Value);
-                            result.ShowInGui = showInGuiInstance;
-                        }
-                        
-                        XElement publishedDateElement = oSImageElement.Element(XName.Get("PublishedDate", "http://schemas.microsoft.com/windowsazure"));
-                        if (publishedDateElement != null)
-                        {
-                            DateTime publishedDateInstance = DateTime.Parse(publishedDateElement.Value, CultureInfo.InvariantCulture);
-                            result.PublishedDate = publishedDateInstance;
-                        }
-                        
-                        XElement isPremiumElement = oSImageElement.Element(XName.Get("IsPremium", "http://schemas.microsoft.com/windowsazure"));
-                        if (isPremiumElement != null && string.IsNullOrEmpty(isPremiumElement.Value) == false)
-                        {
-                            bool isPremiumInstance = bool.Parse(isPremiumElement.Value);
-                            result.IsPremium = isPremiumInstance;
-                        }
-                        
-                        XElement iconUriElement = oSImageElement.Element(XName.Get("IconUri", "http://schemas.microsoft.com/windowsazure"));
-                        if (iconUriElement != null)
-                        {
-                            Uri iconUriInstance = TypeConversion.TryParseUri(iconUriElement.Value);
-                            result.IconUri = iconUriInstance;
-                        }
-                        
-                        XElement privacyUriElement = oSImageElement.Element(XName.Get("PrivacyUri", "http://schemas.microsoft.com/windowsazure"));
-                        if (privacyUriElement != null)
-                        {
-                            Uri privacyUriInstance = TypeConversion.TryParseUri(privacyUriElement.Value);
-                            result.PrivacyUri = privacyUriInstance;
-                        }
-                        
-                        XElement recommendedVMSizeElement = oSImageElement.Element(XName.Get("RecommendedVMSize", "http://schemas.microsoft.com/windowsazure"));
-                        if (recommendedVMSizeElement != null)
-                        {
-                            string recommendedVMSizeInstance = recommendedVMSizeElement.Value;
-                            result.RecommendedVMSize = recommendedVMSizeInstance;
-                        }
-                        
-                        XElement publisherNameElement = oSImageElement.Element(XName.Get("PublisherName", "http://schemas.microsoft.com/windowsazure"));
-                        if (publisherNameElement != null)
-                        {
-                            string publisherNameInstance = publisherNameElement.Value;
-                            result.PublisherName = publisherNameInstance;
-                        }
-                        
-                        XElement smallIconUriElement = oSImageElement.Element(XName.Get("SmallIconUri", "http://schemas.microsoft.com/windowsazure"));
-                        if (smallIconUriElement != null)
-                        {
-                            Uri smallIconUriInstance = TypeConversion.TryParseUri(smallIconUriElement.Value);
-                            result.SmallIconUri = smallIconUriInstance;
-                        }
-                        
-                        XElement languageElement = oSImageElement.Element(XName.Get("Language", "http://schemas.microsoft.com/windowsazure"));
-                        if (languageElement != null)
-                        {
-                            string languageInstance = languageElement.Value;
-                            result.Language = languageInstance;
-                        }
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1089,7 +1112,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -1124,7 +1147,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// The Get Details OS Images operation response.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.VirtualMachineOSImageGetDetailsResponse> GetDetailsAsync(string imageName, CancellationToken cancellationToken)
+        public async Task<VirtualMachineOSImageGetDetailsResponse> GetDetailsAsync(string imageName, CancellationToken cancellationToken)
         {
             // Validate
             if (imageName == null)
@@ -1133,18 +1156,18 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("imageName", imageName);
-                Tracing.Enter(invocationId, this, "GetDetailsAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetDetailsAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/images/" + imageName.Trim() + "/details";
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/images/" + Uri.EscapeDataString(imageName) + "/details";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1167,7 +1190,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1179,13 +1202,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -1194,7 +1217,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -1202,186 +1225,196 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     // Create Result
                     VirtualMachineOSImageGetDetailsResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new VirtualMachineOSImageGetDetailsResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement oSImageDetailsElement = responseDoc.Element(XName.Get("OSImageDetails", "http://schemas.microsoft.com/windowsazure"));
-                    if (oSImageDetailsElement != null)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        XElement isCorruptedElement = oSImageDetailsElement.Element(XName.Get("IsCorrupted", "http://schemas.microsoft.com/windowsazure"));
-                        if (isCorruptedElement != null && string.IsNullOrEmpty(isCorruptedElement.Value) == false)
-                        {
-                            bool isCorruptedInstance = bool.Parse(isCorruptedElement.Value);
-                            result.IsCorrupted = isCorruptedInstance;
-                        }
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new VirtualMachineOSImageGetDetailsResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
                         
-                        XElement replicationProgressSequenceElement = oSImageDetailsElement.Element(XName.Get("ReplicationProgress", "http://schemas.microsoft.com/windowsazure"));
-                        if (replicationProgressSequenceElement != null)
+                        XElement oSImageDetailsElement = responseDoc.Element(XName.Get("OSImageDetails", "http://schemas.microsoft.com/windowsazure"));
+                        if (oSImageDetailsElement != null)
                         {
-                            foreach (XElement replicationProgressElement in replicationProgressSequenceElement.Elements(XName.Get("ReplicationProgressElement", "http://schemas.microsoft.com/windowsazure")))
+                            XElement isCorruptedElement = oSImageDetailsElement.Element(XName.Get("IsCorrupted", "http://schemas.microsoft.com/windowsazure"));
+                            if (isCorruptedElement != null && !string.IsNullOrEmpty(isCorruptedElement.Value))
                             {
-                                VirtualMachineOSImageGetDetailsResponse.ReplicationProgressElement replicationProgressElementInstance = new VirtualMachineOSImageGetDetailsResponse.ReplicationProgressElement();
-                                result.ReplicationProgress.Add(replicationProgressElementInstance);
-                                
-                                XElement locationElement = replicationProgressElement.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
-                                if (locationElement != null)
+                                bool isCorruptedInstance = bool.Parse(isCorruptedElement.Value);
+                                result.IsCorrupted = isCorruptedInstance;
+                            }
+                            
+                            XElement replicationProgressSequenceElement = oSImageDetailsElement.Element(XName.Get("ReplicationProgress", "http://schemas.microsoft.com/windowsazure"));
+                            if (replicationProgressSequenceElement != null)
+                            {
+                                foreach (XElement replicationProgressElement in replicationProgressSequenceElement.Elements(XName.Get("ReplicationProgressElement", "http://schemas.microsoft.com/windowsazure")))
                                 {
-                                    string locationInstance = locationElement.Value;
-                                    replicationProgressElementInstance.Location = locationInstance;
+                                    VirtualMachineOSImageGetDetailsResponse.ReplicationProgressElement replicationProgressElementInstance = new VirtualMachineOSImageGetDetailsResponse.ReplicationProgressElement();
+                                    result.ReplicationProgress.Add(replicationProgressElementInstance);
+                                    
+                                    XElement locationElement = replicationProgressElement.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
+                                    if (locationElement != null)
+                                    {
+                                        string locationInstance = locationElement.Value;
+                                        replicationProgressElementInstance.Location = locationInstance;
+                                    }
+                                    
+                                    XElement progressElement = replicationProgressElement.Element(XName.Get("Progress", "http://schemas.microsoft.com/windowsazure"));
+                                    if (progressElement != null)
+                                    {
+                                        string progressInstance = progressElement.Value;
+                                        replicationProgressElementInstance.Progress = progressInstance;
+                                    }
                                 }
-                                
-                                XElement progressElement = replicationProgressElement.Element(XName.Get("Progress", "http://schemas.microsoft.com/windowsazure"));
-                                if (progressElement != null)
-                                {
-                                    string progressInstance = progressElement.Value;
-                                    replicationProgressElementInstance.Progress = progressInstance;
-                                }
+                            }
+                            
+                            XElement affinityGroupElement = oSImageDetailsElement.Element(XName.Get("AffinityGroup", "http://schemas.microsoft.com/windowsazure"));
+                            if (affinityGroupElement != null)
+                            {
+                                string affinityGroupInstance = affinityGroupElement.Value;
+                                result.AffinityGroup = affinityGroupInstance;
+                            }
+                            
+                            XElement categoryElement = oSImageDetailsElement.Element(XName.Get("Category", "http://schemas.microsoft.com/windowsazure"));
+                            if (categoryElement != null)
+                            {
+                                string categoryInstance = categoryElement.Value;
+                                result.Category = categoryInstance;
+                            }
+                            
+                            XElement labelElement = oSImageDetailsElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
+                            if (labelElement != null)
+                            {
+                                string labelInstance = labelElement.Value;
+                                result.Label = labelInstance;
+                            }
+                            
+                            XElement locationElement2 = oSImageDetailsElement.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
+                            if (locationElement2 != null)
+                            {
+                                string locationInstance2 = locationElement2.Value;
+                                result.Location = locationInstance2;
+                            }
+                            
+                            XElement logicalSizeInGBElement = oSImageDetailsElement.Element(XName.Get("LogicalSizeInGB", "http://schemas.microsoft.com/windowsazure"));
+                            if (logicalSizeInGBElement != null)
+                            {
+                                double logicalSizeInGBInstance = double.Parse(logicalSizeInGBElement.Value, CultureInfo.InvariantCulture);
+                                result.LogicalSizeInGB = logicalSizeInGBInstance;
+                            }
+                            
+                            XElement mediaLinkElement = oSImageDetailsElement.Element(XName.Get("MediaLink", "http://schemas.microsoft.com/windowsazure"));
+                            if (mediaLinkElement != null)
+                            {
+                                Uri mediaLinkInstance = TypeConversion.TryParseUri(mediaLinkElement.Value);
+                                result.MediaLinkUri = mediaLinkInstance;
+                            }
+                            
+                            XElement nameElement = oSImageDetailsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                            if (nameElement != null)
+                            {
+                                string nameInstance = nameElement.Value;
+                                result.Name = nameInstance;
+                            }
+                            
+                            XElement osElement = oSImageDetailsElement.Element(XName.Get("OS", "http://schemas.microsoft.com/windowsazure"));
+                            if (osElement != null)
+                            {
+                                string osInstance = osElement.Value;
+                                result.OperatingSystemType = osInstance;
+                            }
+                            
+                            XElement eulaElement = oSImageDetailsElement.Element(XName.Get("Eula", "http://schemas.microsoft.com/windowsazure"));
+                            if (eulaElement != null)
+                            {
+                                string eulaInstance = eulaElement.Value;
+                                result.Eula = eulaInstance;
+                            }
+                            
+                            XElement descriptionElement = oSImageDetailsElement.Element(XName.Get("Description", "http://schemas.microsoft.com/windowsazure"));
+                            if (descriptionElement != null)
+                            {
+                                string descriptionInstance = descriptionElement.Value;
+                                result.Description = descriptionInstance;
+                            }
+                            
+                            XElement imageFamilyElement = oSImageDetailsElement.Element(XName.Get("ImageFamily", "http://schemas.microsoft.com/windowsazure"));
+                            if (imageFamilyElement != null)
+                            {
+                                string imageFamilyInstance = imageFamilyElement.Value;
+                                result.ImageFamily = imageFamilyInstance;
+                            }
+                            
+                            XElement showInGuiElement = oSImageDetailsElement.Element(XName.Get("ShowInGui", "http://schemas.microsoft.com/windowsazure"));
+                            if (showInGuiElement != null && !string.IsNullOrEmpty(showInGuiElement.Value))
+                            {
+                                bool showInGuiInstance = bool.Parse(showInGuiElement.Value);
+                                result.ShowInGui = showInGuiInstance;
+                            }
+                            
+                            XElement publishedDateElement = oSImageDetailsElement.Element(XName.Get("PublishedDate", "http://schemas.microsoft.com/windowsazure"));
+                            if (publishedDateElement != null)
+                            {
+                                DateTime publishedDateInstance = DateTime.Parse(publishedDateElement.Value, CultureInfo.InvariantCulture);
+                                result.PublishedDate = publishedDateInstance;
+                            }
+                            
+                            XElement isPremiumElement = oSImageDetailsElement.Element(XName.Get("IsPremium", "http://schemas.microsoft.com/windowsazure"));
+                            if (isPremiumElement != null && !string.IsNullOrEmpty(isPremiumElement.Value))
+                            {
+                                bool isPremiumInstance = bool.Parse(isPremiumElement.Value);
+                                result.IsPremium = isPremiumInstance;
+                            }
+                            
+                            XElement iconUriElement = oSImageDetailsElement.Element(XName.Get("IconUri", "http://schemas.microsoft.com/windowsazure"));
+                            if (iconUriElement != null)
+                            {
+                                Uri iconUriInstance = TypeConversion.TryParseUri(iconUriElement.Value);
+                                result.IconUri = iconUriInstance;
+                            }
+                            
+                            XElement privacyUriElement = oSImageDetailsElement.Element(XName.Get("PrivacyUri", "http://schemas.microsoft.com/windowsazure"));
+                            if (privacyUriElement != null)
+                            {
+                                Uri privacyUriInstance = TypeConversion.TryParseUri(privacyUriElement.Value);
+                                result.PrivacyUri = privacyUriInstance;
+                            }
+                            
+                            XElement recommendedVMSizeElement = oSImageDetailsElement.Element(XName.Get("RecommendedVMSize", "http://schemas.microsoft.com/windowsazure"));
+                            if (recommendedVMSizeElement != null)
+                            {
+                                string recommendedVMSizeInstance = recommendedVMSizeElement.Value;
+                                result.RecommendedVMSize = recommendedVMSizeInstance;
+                            }
+                            
+                            XElement publisherNameElement = oSImageDetailsElement.Element(XName.Get("PublisherName", "http://schemas.microsoft.com/windowsazure"));
+                            if (publisherNameElement != null)
+                            {
+                                string publisherNameInstance = publisherNameElement.Value;
+                                result.PublisherName = publisherNameInstance;
+                            }
+                            
+                            XElement smallIconUriElement = oSImageDetailsElement.Element(XName.Get("SmallIconUri", "http://schemas.microsoft.com/windowsazure"));
+                            if (smallIconUriElement != null)
+                            {
+                                Uri smallIconUriInstance = TypeConversion.TryParseUri(smallIconUriElement.Value);
+                                result.SmallIconUri = smallIconUriInstance;
+                            }
+                            
+                            XElement languageElement = oSImageDetailsElement.Element(XName.Get("Language", "http://schemas.microsoft.com/windowsazure"));
+                            if (languageElement != null)
+                            {
+                                string languageInstance = languageElement.Value;
+                                result.Language = languageInstance;
+                            }
+                            
+                            XElement iOTypeElement = oSImageDetailsElement.Element(XName.Get("IOType", "http://schemas.microsoft.com/windowsazure"));
+                            if (iOTypeElement != null)
+                            {
+                                string iOTypeInstance = iOTypeElement.Value;
+                                result.IOType = iOTypeInstance;
                             }
                         }
                         
-                        XElement affinityGroupElement = oSImageDetailsElement.Element(XName.Get("AffinityGroup", "http://schemas.microsoft.com/windowsazure"));
-                        if (affinityGroupElement != null)
-                        {
-                            string affinityGroupInstance = affinityGroupElement.Value;
-                            result.AffinityGroup = affinityGroupInstance;
-                        }
-                        
-                        XElement categoryElement = oSImageDetailsElement.Element(XName.Get("Category", "http://schemas.microsoft.com/windowsazure"));
-                        if (categoryElement != null)
-                        {
-                            string categoryInstance = categoryElement.Value;
-                            result.Category = categoryInstance;
-                        }
-                        
-                        XElement labelElement = oSImageDetailsElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
-                        if (labelElement != null)
-                        {
-                            string labelInstance = labelElement.Value;
-                            result.Label = labelInstance;
-                        }
-                        
-                        XElement locationElement2 = oSImageDetailsElement.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
-                        if (locationElement2 != null)
-                        {
-                            string locationInstance2 = locationElement2.Value;
-                            result.Location = locationInstance2;
-                        }
-                        
-                        XElement logicalSizeInGBElement = oSImageDetailsElement.Element(XName.Get("LogicalSizeInGB", "http://schemas.microsoft.com/windowsazure"));
-                        if (logicalSizeInGBElement != null)
-                        {
-                            double logicalSizeInGBInstance = double.Parse(logicalSizeInGBElement.Value, CultureInfo.InvariantCulture);
-                            result.LogicalSizeInGB = logicalSizeInGBInstance;
-                        }
-                        
-                        XElement mediaLinkElement = oSImageDetailsElement.Element(XName.Get("MediaLink", "http://schemas.microsoft.com/windowsazure"));
-                        if (mediaLinkElement != null)
-                        {
-                            Uri mediaLinkInstance = TypeConversion.TryParseUri(mediaLinkElement.Value);
-                            result.MediaLinkUri = mediaLinkInstance;
-                        }
-                        
-                        XElement nameElement = oSImageDetailsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                        if (nameElement != null)
-                        {
-                            string nameInstance = nameElement.Value;
-                            result.Name = nameInstance;
-                        }
-                        
-                        XElement osElement = oSImageDetailsElement.Element(XName.Get("OS", "http://schemas.microsoft.com/windowsazure"));
-                        if (osElement != null)
-                        {
-                            string osInstance = osElement.Value;
-                            result.OperatingSystemType = osInstance;
-                        }
-                        
-                        XElement eulaElement = oSImageDetailsElement.Element(XName.Get("Eula", "http://schemas.microsoft.com/windowsazure"));
-                        if (eulaElement != null)
-                        {
-                            string eulaInstance = eulaElement.Value;
-                            result.Eula = eulaInstance;
-                        }
-                        
-                        XElement descriptionElement = oSImageDetailsElement.Element(XName.Get("Description", "http://schemas.microsoft.com/windowsazure"));
-                        if (descriptionElement != null)
-                        {
-                            string descriptionInstance = descriptionElement.Value;
-                            result.Description = descriptionInstance;
-                        }
-                        
-                        XElement imageFamilyElement = oSImageDetailsElement.Element(XName.Get("ImageFamily", "http://schemas.microsoft.com/windowsazure"));
-                        if (imageFamilyElement != null)
-                        {
-                            string imageFamilyInstance = imageFamilyElement.Value;
-                            result.ImageFamily = imageFamilyInstance;
-                        }
-                        
-                        XElement showInGuiElement = oSImageDetailsElement.Element(XName.Get("ShowInGui", "http://schemas.microsoft.com/windowsazure"));
-                        if (showInGuiElement != null && string.IsNullOrEmpty(showInGuiElement.Value) == false)
-                        {
-                            bool showInGuiInstance = bool.Parse(showInGuiElement.Value);
-                            result.ShowInGui = showInGuiInstance;
-                        }
-                        
-                        XElement publishedDateElement = oSImageDetailsElement.Element(XName.Get("PublishedDate", "http://schemas.microsoft.com/windowsazure"));
-                        if (publishedDateElement != null)
-                        {
-                            DateTime publishedDateInstance = DateTime.Parse(publishedDateElement.Value, CultureInfo.InvariantCulture);
-                            result.PublishedDate = publishedDateInstance;
-                        }
-                        
-                        XElement isPremiumElement = oSImageDetailsElement.Element(XName.Get("IsPremium", "http://schemas.microsoft.com/windowsazure"));
-                        if (isPremiumElement != null && string.IsNullOrEmpty(isPremiumElement.Value) == false)
-                        {
-                            bool isPremiumInstance = bool.Parse(isPremiumElement.Value);
-                            result.IsPremium = isPremiumInstance;
-                        }
-                        
-                        XElement iconUriElement = oSImageDetailsElement.Element(XName.Get("IconUri", "http://schemas.microsoft.com/windowsazure"));
-                        if (iconUriElement != null)
-                        {
-                            Uri iconUriInstance = TypeConversion.TryParseUri(iconUriElement.Value);
-                            result.IconUri = iconUriInstance;
-                        }
-                        
-                        XElement privacyUriElement = oSImageDetailsElement.Element(XName.Get("PrivacyUri", "http://schemas.microsoft.com/windowsazure"));
-                        if (privacyUriElement != null)
-                        {
-                            Uri privacyUriInstance = TypeConversion.TryParseUri(privacyUriElement.Value);
-                            result.PrivacyUri = privacyUriInstance;
-                        }
-                        
-                        XElement recommendedVMSizeElement = oSImageDetailsElement.Element(XName.Get("RecommendedVMSize", "http://schemas.microsoft.com/windowsazure"));
-                        if (recommendedVMSizeElement != null)
-                        {
-                            string recommendedVMSizeInstance = recommendedVMSizeElement.Value;
-                            result.RecommendedVMSize = recommendedVMSizeInstance;
-                        }
-                        
-                        XElement publisherNameElement = oSImageDetailsElement.Element(XName.Get("PublisherName", "http://schemas.microsoft.com/windowsazure"));
-                        if (publisherNameElement != null)
-                        {
-                            string publisherNameInstance = publisherNameElement.Value;
-                            result.PublisherName = publisherNameInstance;
-                        }
-                        
-                        XElement smallIconUriElement = oSImageDetailsElement.Element(XName.Get("SmallIconUri", "http://schemas.microsoft.com/windowsazure"));
-                        if (smallIconUriElement != null)
-                        {
-                            Uri smallIconUriInstance = TypeConversion.TryParseUri(smallIconUriElement.Value);
-                            result.SmallIconUri = smallIconUriInstance;
-                        }
-                        
-                        XElement languageElement = oSImageDetailsElement.Element(XName.Get("Language", "http://schemas.microsoft.com/windowsazure"));
-                        if (languageElement != null)
-                        {
-                            string languageInstance = languageElement.Value;
-                            result.Language = languageInstance;
-                        }
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1390,7 +1423,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -1423,22 +1456,22 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// The List OS Images operation response.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.VirtualMachineOSImageListResponse> ListAsync(CancellationToken cancellationToken)
+        public async Task<VirtualMachineOSImageListResponse> ListAsync(CancellationToken cancellationToken)
         {
             // Validate
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                Tracing.Enter(invocationId, this, "ListAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/images";
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/images";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1461,7 +1494,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1473,13 +1506,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -1488,7 +1521,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -1496,154 +1529,171 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     // Create Result
                     VirtualMachineOSImageListResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new VirtualMachineOSImageListResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement imagesSequenceElement = responseDoc.Element(XName.Get("Images", "http://schemas.microsoft.com/windowsazure"));
-                    if (imagesSequenceElement != null)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        foreach (XElement imagesElement in imagesSequenceElement.Elements(XName.Get("OSImage", "http://schemas.microsoft.com/windowsazure")))
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new VirtualMachineOSImageListResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement imagesSequenceElement = responseDoc.Element(XName.Get("Images", "http://schemas.microsoft.com/windowsazure"));
+                        if (imagesSequenceElement != null)
                         {
-                            VirtualMachineOSImageListResponse.VirtualMachineOSImage oSImageInstance = new VirtualMachineOSImageListResponse.VirtualMachineOSImage();
-                            result.Images.Add(oSImageInstance);
-                            
-                            XElement affinityGroupElement = imagesElement.Element(XName.Get("AffinityGroup", "http://schemas.microsoft.com/windowsazure"));
-                            if (affinityGroupElement != null)
+                            foreach (XElement imagesElement in imagesSequenceElement.Elements(XName.Get("OSImage", "http://schemas.microsoft.com/windowsazure")))
                             {
-                                string affinityGroupInstance = affinityGroupElement.Value;
-                                oSImageInstance.AffinityGroup = affinityGroupInstance;
-                            }
-                            
-                            XElement categoryElement = imagesElement.Element(XName.Get("Category", "http://schemas.microsoft.com/windowsazure"));
-                            if (categoryElement != null)
-                            {
-                                string categoryInstance = categoryElement.Value;
-                                oSImageInstance.Category = categoryInstance;
-                            }
-                            
-                            XElement labelElement = imagesElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
-                            if (labelElement != null)
-                            {
-                                string labelInstance = labelElement.Value;
-                                oSImageInstance.Label = labelInstance;
-                            }
-                            
-                            XElement locationElement = imagesElement.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
-                            if (locationElement != null)
-                            {
-                                string locationInstance = locationElement.Value;
-                                oSImageInstance.Location = locationInstance;
-                            }
-                            
-                            XElement logicalSizeInGBElement = imagesElement.Element(XName.Get("LogicalSizeInGB", "http://schemas.microsoft.com/windowsazure"));
-                            if (logicalSizeInGBElement != null)
-                            {
-                                double logicalSizeInGBInstance = double.Parse(logicalSizeInGBElement.Value, CultureInfo.InvariantCulture);
-                                oSImageInstance.LogicalSizeInGB = logicalSizeInGBInstance;
-                            }
-                            
-                            XElement mediaLinkElement = imagesElement.Element(XName.Get("MediaLink", "http://schemas.microsoft.com/windowsazure"));
-                            if (mediaLinkElement != null)
-                            {
-                                Uri mediaLinkInstance = TypeConversion.TryParseUri(mediaLinkElement.Value);
-                                oSImageInstance.MediaLinkUri = mediaLinkInstance;
-                            }
-                            
-                            XElement nameElement = imagesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                            if (nameElement != null)
-                            {
-                                string nameInstance = nameElement.Value;
-                                oSImageInstance.Name = nameInstance;
-                            }
-                            
-                            XElement osElement = imagesElement.Element(XName.Get("OS", "http://schemas.microsoft.com/windowsazure"));
-                            if (osElement != null)
-                            {
-                                string osInstance = osElement.Value;
-                                oSImageInstance.OperatingSystemType = osInstance;
-                            }
-                            
-                            XElement eulaElement = imagesElement.Element(XName.Get("Eula", "http://schemas.microsoft.com/windowsazure"));
-                            if (eulaElement != null)
-                            {
-                                string eulaInstance = eulaElement.Value;
-                                oSImageInstance.Eula = eulaInstance;
-                            }
-                            
-                            XElement descriptionElement = imagesElement.Element(XName.Get("Description", "http://schemas.microsoft.com/windowsazure"));
-                            if (descriptionElement != null)
-                            {
-                                string descriptionInstance = descriptionElement.Value;
-                                oSImageInstance.Description = descriptionInstance;
-                            }
-                            
-                            XElement imageFamilyElement = imagesElement.Element(XName.Get("ImageFamily", "http://schemas.microsoft.com/windowsazure"));
-                            if (imageFamilyElement != null)
-                            {
-                                string imageFamilyInstance = imageFamilyElement.Value;
-                                oSImageInstance.ImageFamily = imageFamilyInstance;
-                            }
-                            
-                            XElement publishedDateElement = imagesElement.Element(XName.Get("PublishedDate", "http://schemas.microsoft.com/windowsazure"));
-                            if (publishedDateElement != null)
-                            {
-                                DateTime publishedDateInstance = DateTime.Parse(publishedDateElement.Value, CultureInfo.InvariantCulture);
-                                oSImageInstance.PublishedDate = publishedDateInstance;
-                            }
-                            
-                            XElement isPremiumElement = imagesElement.Element(XName.Get("IsPremium", "http://schemas.microsoft.com/windowsazure"));
-                            if (isPremiumElement != null && string.IsNullOrEmpty(isPremiumElement.Value) == false)
-                            {
-                                bool isPremiumInstance = bool.Parse(isPremiumElement.Value);
-                                oSImageInstance.IsPremium = isPremiumInstance;
-                            }
-                            
-                            XElement privacyUriElement = imagesElement.Element(XName.Get("PrivacyUri", "http://schemas.microsoft.com/windowsazure"));
-                            if (privacyUriElement != null)
-                            {
-                                Uri privacyUriInstance = TypeConversion.TryParseUri(privacyUriElement.Value);
-                                oSImageInstance.PrivacyUri = privacyUriInstance;
-                            }
-                            
-                            XElement recommendedVMSizeElement = imagesElement.Element(XName.Get("RecommendedVMSize", "http://schemas.microsoft.com/windowsazure"));
-                            if (recommendedVMSizeElement != null)
-                            {
-                                string recommendedVMSizeInstance = recommendedVMSizeElement.Value;
-                                oSImageInstance.RecommendedVMSize = recommendedVMSizeInstance;
-                            }
-                            
-                            XElement publisherNameElement = imagesElement.Element(XName.Get("PublisherName", "http://schemas.microsoft.com/windowsazure"));
-                            if (publisherNameElement != null)
-                            {
-                                string publisherNameInstance = publisherNameElement.Value;
-                                oSImageInstance.PublisherName = publisherNameInstance;
-                            }
-                            
-                            XElement pricingDetailLinkElement = imagesElement.Element(XName.Get("PricingDetailLink", "http://schemas.microsoft.com/windowsazure"));
-                            if (pricingDetailLinkElement != null)
-                            {
-                                Uri pricingDetailLinkInstance = TypeConversion.TryParseUri(pricingDetailLinkElement.Value);
-                                oSImageInstance.PricingDetailUri = pricingDetailLinkInstance;
-                            }
-                            
-                            XElement smallIconUriElement = imagesElement.Element(XName.Get("SmallIconUri", "http://schemas.microsoft.com/windowsazure"));
-                            if (smallIconUriElement != null)
-                            {
-                                Uri smallIconUriInstance = TypeConversion.TryParseUri(smallIconUriElement.Value);
-                                oSImageInstance.SmallIconUri = smallIconUriInstance;
-                            }
-                            
-                            XElement languageElement = imagesElement.Element(XName.Get("Language", "http://schemas.microsoft.com/windowsazure"));
-                            if (languageElement != null)
-                            {
-                                string languageInstance = languageElement.Value;
-                                oSImageInstance.Language = languageInstance;
+                                VirtualMachineOSImageListResponse.VirtualMachineOSImage oSImageInstance = new VirtualMachineOSImageListResponse.VirtualMachineOSImage();
+                                result.Images.Add(oSImageInstance);
+                                
+                                XElement affinityGroupElement = imagesElement.Element(XName.Get("AffinityGroup", "http://schemas.microsoft.com/windowsazure"));
+                                if (affinityGroupElement != null)
+                                {
+                                    string affinityGroupInstance = affinityGroupElement.Value;
+                                    oSImageInstance.AffinityGroup = affinityGroupInstance;
+                                }
+                                
+                                XElement categoryElement = imagesElement.Element(XName.Get("Category", "http://schemas.microsoft.com/windowsazure"));
+                                if (categoryElement != null)
+                                {
+                                    string categoryInstance = categoryElement.Value;
+                                    oSImageInstance.Category = categoryInstance;
+                                }
+                                
+                                XElement labelElement = imagesElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
+                                if (labelElement != null)
+                                {
+                                    string labelInstance = labelElement.Value;
+                                    oSImageInstance.Label = labelInstance;
+                                }
+                                
+                                XElement locationElement = imagesElement.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
+                                if (locationElement != null)
+                                {
+                                    string locationInstance = locationElement.Value;
+                                    oSImageInstance.Location = locationInstance;
+                                }
+                                
+                                XElement logicalSizeInGBElement = imagesElement.Element(XName.Get("LogicalSizeInGB", "http://schemas.microsoft.com/windowsazure"));
+                                if (logicalSizeInGBElement != null)
+                                {
+                                    double logicalSizeInGBInstance = double.Parse(logicalSizeInGBElement.Value, CultureInfo.InvariantCulture);
+                                    oSImageInstance.LogicalSizeInGB = logicalSizeInGBInstance;
+                                }
+                                
+                                XElement mediaLinkElement = imagesElement.Element(XName.Get("MediaLink", "http://schemas.microsoft.com/windowsazure"));
+                                if (mediaLinkElement != null)
+                                {
+                                    Uri mediaLinkInstance = TypeConversion.TryParseUri(mediaLinkElement.Value);
+                                    oSImageInstance.MediaLinkUri = mediaLinkInstance;
+                                }
+                                
+                                XElement nameElement = imagesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                if (nameElement != null)
+                                {
+                                    string nameInstance = nameElement.Value;
+                                    oSImageInstance.Name = nameInstance;
+                                }
+                                
+                                XElement osElement = imagesElement.Element(XName.Get("OS", "http://schemas.microsoft.com/windowsazure"));
+                                if (osElement != null)
+                                {
+                                    string osInstance = osElement.Value;
+                                    oSImageInstance.OperatingSystemType = osInstance;
+                                }
+                                
+                                XElement eulaElement = imagesElement.Element(XName.Get("Eula", "http://schemas.microsoft.com/windowsazure"));
+                                if (eulaElement != null)
+                                {
+                                    string eulaInstance = eulaElement.Value;
+                                    oSImageInstance.Eula = eulaInstance;
+                                }
+                                
+                                XElement descriptionElement = imagesElement.Element(XName.Get("Description", "http://schemas.microsoft.com/windowsazure"));
+                                if (descriptionElement != null)
+                                {
+                                    string descriptionInstance = descriptionElement.Value;
+                                    oSImageInstance.Description = descriptionInstance;
+                                }
+                                
+                                XElement imageFamilyElement = imagesElement.Element(XName.Get("ImageFamily", "http://schemas.microsoft.com/windowsazure"));
+                                if (imageFamilyElement != null)
+                                {
+                                    string imageFamilyInstance = imageFamilyElement.Value;
+                                    oSImageInstance.ImageFamily = imageFamilyInstance;
+                                }
+                                
+                                XElement showInGuiElement = imagesElement.Element(XName.Get("ShowInGui", "http://schemas.microsoft.com/windowsazure"));
+                                if (showInGuiElement != null && !string.IsNullOrEmpty(showInGuiElement.Value))
+                                {
+                                    bool showInGuiInstance = bool.Parse(showInGuiElement.Value);
+                                    oSImageInstance.ShowInGui = showInGuiInstance;
+                                }
+                                
+                                XElement publishedDateElement = imagesElement.Element(XName.Get("PublishedDate", "http://schemas.microsoft.com/windowsazure"));
+                                if (publishedDateElement != null)
+                                {
+                                    DateTime publishedDateInstance = DateTime.Parse(publishedDateElement.Value, CultureInfo.InvariantCulture);
+                                    oSImageInstance.PublishedDate = publishedDateInstance;
+                                }
+                                
+                                XElement isPremiumElement = imagesElement.Element(XName.Get("IsPremium", "http://schemas.microsoft.com/windowsazure"));
+                                if (isPremiumElement != null && !string.IsNullOrEmpty(isPremiumElement.Value))
+                                {
+                                    bool isPremiumInstance = bool.Parse(isPremiumElement.Value);
+                                    oSImageInstance.IsPremium = isPremiumInstance;
+                                }
+                                
+                                XElement privacyUriElement = imagesElement.Element(XName.Get("PrivacyUri", "http://schemas.microsoft.com/windowsazure"));
+                                if (privacyUriElement != null)
+                                {
+                                    Uri privacyUriInstance = TypeConversion.TryParseUri(privacyUriElement.Value);
+                                    oSImageInstance.PrivacyUri = privacyUriInstance;
+                                }
+                                
+                                XElement recommendedVMSizeElement = imagesElement.Element(XName.Get("RecommendedVMSize", "http://schemas.microsoft.com/windowsazure"));
+                                if (recommendedVMSizeElement != null)
+                                {
+                                    string recommendedVMSizeInstance = recommendedVMSizeElement.Value;
+                                    oSImageInstance.RecommendedVMSize = recommendedVMSizeInstance;
+                                }
+                                
+                                XElement publisherNameElement = imagesElement.Element(XName.Get("PublisherName", "http://schemas.microsoft.com/windowsazure"));
+                                if (publisherNameElement != null)
+                                {
+                                    string publisherNameInstance = publisherNameElement.Value;
+                                    oSImageInstance.PublisherName = publisherNameInstance;
+                                }
+                                
+                                XElement pricingDetailLinkElement = imagesElement.Element(XName.Get("PricingDetailLink", "http://schemas.microsoft.com/windowsazure"));
+                                if (pricingDetailLinkElement != null)
+                                {
+                                    Uri pricingDetailLinkInstance = TypeConversion.TryParseUri(pricingDetailLinkElement.Value);
+                                    oSImageInstance.PricingDetailUri = pricingDetailLinkInstance;
+                                }
+                                
+                                XElement smallIconUriElement = imagesElement.Element(XName.Get("SmallIconUri", "http://schemas.microsoft.com/windowsazure"));
+                                if (smallIconUriElement != null)
+                                {
+                                    Uri smallIconUriInstance = TypeConversion.TryParseUri(smallIconUriElement.Value);
+                                    oSImageInstance.SmallIconUri = smallIconUriInstance;
+                                }
+                                
+                                XElement languageElement = imagesElement.Element(XName.Get("Language", "http://schemas.microsoft.com/windowsazure"));
+                                if (languageElement != null)
+                                {
+                                    string languageInstance = languageElement.Value;
+                                    oSImageInstance.Language = languageInstance;
+                                }
+                                
+                                XElement iOTypeElement = imagesElement.Element(XName.Get("IOType", "http://schemas.microsoft.com/windowsazure"));
+                                if (iOTypeElement != null)
+                                {
+                                    string iOTypeInstance = iOTypeElement.Value;
+                                    oSImageInstance.IOType = iOTypeInstance;
+                                }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1652,7 +1702,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -1691,7 +1741,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// The response body contains the published name of the image.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.VirtualMachineOSImageReplicateResponse> ReplicateAsync(string imageName, VirtualMachineOSImageReplicateParameters parameters, CancellationToken cancellationToken)
+        public async Task<VirtualMachineOSImageReplicateResponse> ReplicateAsync(string imageName, VirtualMachineOSImageReplicateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (imageName == null)
@@ -1704,19 +1754,19 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("imageName", imageName);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "ReplicateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ReplicateAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/images/" + imageName.Trim() + "/replicate";
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/images/" + Uri.EscapeDataString(imageName) + "/replicate";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1739,7 +1789,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1754,14 +1804,17 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 if (parameters.TargetLocations != null)
                 {
-                    XElement targetLocationsSequenceElement = new XElement(XName.Get("TargetLocations", "http://schemas.microsoft.com/windowsazure"));
-                    foreach (string targetLocationsItem in parameters.TargetLocations)
+                    if (parameters.TargetLocations is ILazyCollection == false || ((ILazyCollection)parameters.TargetLocations).IsInitialized)
                     {
-                        XElement targetLocationsItemElement = new XElement(XName.Get("Region", "http://schemas.microsoft.com/windowsazure"));
-                        targetLocationsItemElement.Value = targetLocationsItem;
-                        targetLocationsSequenceElement.Add(targetLocationsItemElement);
+                        XElement targetLocationsSequenceElement = new XElement(XName.Get("TargetLocations", "http://schemas.microsoft.com/windowsazure"));
+                        foreach (string targetLocationsItem in parameters.TargetLocations)
+                        {
+                            XElement targetLocationsItemElement = new XElement(XName.Get("Region", "http://schemas.microsoft.com/windowsazure"));
+                            targetLocationsItemElement.Value = targetLocationsItem;
+                            targetLocationsSequenceElement.Add(targetLocationsItemElement);
+                        }
+                        replicationInputElement.Add(targetLocationsSequenceElement);
                     }
-                    replicationInputElement.Add(targetLocationsSequenceElement);
                 }
                 
                 requestContent = requestDoc.ToString();
@@ -1774,13 +1827,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -1789,7 +1842,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -1797,20 +1850,23 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     // Create Result
                     VirtualMachineOSImageReplicateResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new VirtualMachineOSImageReplicateResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement virtualMachineOSImageReplicateResponseElement = responseDoc.Element(XName.Get("VirtualMachineOSImageReplicateResponse", ""));
-                    if (virtualMachineOSImageReplicateResponseElement != null)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        XElement stringElement = virtualMachineOSImageReplicateResponseElement.Element(XName.Get("string", ""));
-                        if (stringElement != null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new VirtualMachineOSImageReplicateResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement virtualMachineOSImageReplicateResponseElement = responseDoc.Element(XName.Get("VirtualMachineOSImageReplicateResponse", ""));
+                        if (virtualMachineOSImageReplicateResponseElement != null)
                         {
+                            XElement stringElement = virtualMachineOSImageReplicateResponseElement.Element(XName.Get("string", ""));
+                            if (stringElement != null)
+                            {
+                            }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1819,7 +1875,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -1865,86 +1921,73 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request and error information regarding
         /// the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationStatusResponse> ShareAsync(string imageName, string permission, CancellationToken cancellationToken)
+        public async Task<OperationStatusResponse> ShareAsync(string imageName, string permission, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("imageName", imageName);
                 tracingParameters.Add("permission", permission);
-                Tracing.Enter(invocationId, this, "ShareAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ShareAsync", tracingParameters);
             }
-            try
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            AzureOperationResponse response = await client.VirtualMachineOSImages.BeginSharingAsync(imageName, permission, cancellationToken).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested();
+            OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 30;
+            if (client.LongRunningOperationInitialTimeout >= 0)
             {
-                if (shouldTrace)
-                {
-                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
-                }
-                
-                cancellationToken.ThrowIfCancellationRequested();
-                OperationResponse response = await client.VirtualMachineOSImages.BeginSharingAsync(imageName, permission, cancellationToken).ConfigureAwait(false);
-                cancellationToken.ThrowIfCancellationRequested();
-                OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
-                int delayInSeconds = 30;
-                if (client.LongRunningOperationInitialTimeout >= 0)
-                {
-                    delayInSeconds = client.LongRunningOperationInitialTimeout;
-                }
-                while ((result.Status != OperationStatus.InProgress) == false)
-                {
-                    cancellationToken.ThrowIfCancellationRequested();
-                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
-                    delayInSeconds = 30;
-                    if (client.LongRunningOperationRetryTimeout >= 0)
-                    {
-                        delayInSeconds = client.LongRunningOperationRetryTimeout;
-                    }
-                }
-                
-                if (shouldTrace)
-                {
-                    Tracing.Exit(invocationId, result);
-                }
-                
-                if (result.Status != OperationStatus.Succeeded)
-                {
-                    if (result.Error != null)
-                    {
-                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                        ex.ErrorCode = result.Error.Code;
-                        ex.ErrorMessage = result.Error.Message;
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    else
-                    {
-                        CloudException ex = new CloudException("");
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                }
-                
-                return result;
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            finally
+            while ((result.Status != OperationStatus.InProgress) == false)
             {
-                if (client != null && shouldTrace)
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 30;
+                if (client.LongRunningOperationRetryTimeout >= 0)
                 {
-                    client.Dispose();
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
                 }
             }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            if (result.Status != OperationStatus.Succeeded)
+            {
+                if (result.Error != null)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.Error = new CloudError();
+                    ex.Error.Code = result.Error.Code;
+                    ex.Error.Message = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                else
+                {
+                    CloudException ex = new CloudException("");
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+            }
+            
+            return result;
         }
         
         /// <summary>
@@ -1974,85 +2017,72 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request and error information regarding
         /// the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationStatusResponse> UnreplicateAsync(string imageName, CancellationToken cancellationToken)
+        public async Task<OperationStatusResponse> UnreplicateAsync(string imageName, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("imageName", imageName);
-                Tracing.Enter(invocationId, this, "UnreplicateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "UnreplicateAsync", tracingParameters);
             }
-            try
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            AzureOperationResponse response = await client.VirtualMachineOSImages.BeginUnreplicatingAsync(imageName, cancellationToken).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested();
+            OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 30;
+            if (client.LongRunningOperationInitialTimeout >= 0)
             {
-                if (shouldTrace)
-                {
-                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
-                }
-                
-                cancellationToken.ThrowIfCancellationRequested();
-                OperationResponse response = await client.VirtualMachineOSImages.BeginUnreplicatingAsync(imageName, cancellationToken).ConfigureAwait(false);
-                cancellationToken.ThrowIfCancellationRequested();
-                OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
-                int delayInSeconds = 30;
-                if (client.LongRunningOperationInitialTimeout >= 0)
-                {
-                    delayInSeconds = client.LongRunningOperationInitialTimeout;
-                }
-                while ((result.Status != OperationStatus.InProgress) == false)
-                {
-                    cancellationToken.ThrowIfCancellationRequested();
-                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
-                    delayInSeconds = 30;
-                    if (client.LongRunningOperationRetryTimeout >= 0)
-                    {
-                        delayInSeconds = client.LongRunningOperationRetryTimeout;
-                    }
-                }
-                
-                if (shouldTrace)
-                {
-                    Tracing.Exit(invocationId, result);
-                }
-                
-                if (result.Status != OperationStatus.Succeeded)
-                {
-                    if (result.Error != null)
-                    {
-                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                        ex.ErrorCode = result.Error.Code;
-                        ex.ErrorMessage = result.Error.Message;
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    else
-                    {
-                        CloudException ex = new CloudException("");
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                }
-                
-                return result;
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            finally
+            while ((result.Status != OperationStatus.InProgress) == false)
             {
-                if (client != null && shouldTrace)
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 30;
+                if (client.LongRunningOperationRetryTimeout >= 0)
                 {
-                    client.Dispose();
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
                 }
             }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            if (result.Status != OperationStatus.Succeeded)
+            {
+                if (result.Error != null)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.Error = new CloudError();
+                    ex.Error.Code = result.Error.Code;
+                    ex.Error.Message = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                else
+                {
+                    CloudException ex = new CloudException("");
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+            }
+            
+            return result;
         }
         
         /// <summary>
@@ -2074,7 +2104,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <returns>
         /// Parameters returned from the Create Virtual Machine Image operation.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.VirtualMachineOSImageUpdateResponse> UpdateAsync(string imageName, VirtualMachineOSImageUpdateParameters parameters, CancellationToken cancellationToken)
+        public async Task<VirtualMachineOSImageUpdateResponse> UpdateAsync(string imageName, VirtualMachineOSImageUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (imageName == null)
@@ -2091,19 +2121,19 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("imageName", imageName);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "UpdateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "UpdateAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/images/" + imageName.Trim();
+            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/images/" + Uri.EscapeDataString(imageName);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -2126,7 +2156,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2230,13 +2260,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -2245,7 +2275,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -2253,148 +2283,158 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     // Create Result
                     VirtualMachineOSImageUpdateResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new VirtualMachineOSImageUpdateResponse();
-                    XDocument responseDoc = XDocument.Parse(responseContent);
-                    
-                    XElement oSImageElement2 = responseDoc.Element(XName.Get("OSImage", "http://schemas.microsoft.com/windowsazure"));
-                    if (oSImageElement2 != null)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        XElement locationElement = oSImageElement2.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
-                        if (locationElement != null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new VirtualMachineOSImageUpdateResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement oSImageElement2 = responseDoc.Element(XName.Get("OSImage", "http://schemas.microsoft.com/windowsazure"));
+                        if (oSImageElement2 != null)
                         {
-                            string locationInstance = locationElement.Value;
-                            result.Location = locationInstance;
+                            XElement locationElement = oSImageElement2.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
+                            if (locationElement != null)
+                            {
+                                string locationInstance = locationElement.Value;
+                                result.Location = locationInstance;
+                            }
+                            
+                            XElement categoryElement = oSImageElement2.Element(XName.Get("Category", "http://schemas.microsoft.com/windowsazure"));
+                            if (categoryElement != null)
+                            {
+                                string categoryInstance = categoryElement.Value;
+                                result.Category = categoryInstance;
+                            }
+                            
+                            XElement labelElement2 = oSImageElement2.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
+                            if (labelElement2 != null)
+                            {
+                                string labelInstance = labelElement2.Value;
+                                result.Label = labelInstance;
+                            }
+                            
+                            XElement logicalSizeInGBElement = oSImageElement2.Element(XName.Get("LogicalSizeInGB", "http://schemas.microsoft.com/windowsazure"));
+                            if (logicalSizeInGBElement != null)
+                            {
+                                double logicalSizeInGBInstance = double.Parse(logicalSizeInGBElement.Value, CultureInfo.InvariantCulture);
+                                result.LogicalSizeInGB = logicalSizeInGBInstance;
+                            }
+                            
+                            XElement mediaLinkElement = oSImageElement2.Element(XName.Get("MediaLink", "http://schemas.microsoft.com/windowsazure"));
+                            if (mediaLinkElement != null)
+                            {
+                                Uri mediaLinkInstance = TypeConversion.TryParseUri(mediaLinkElement.Value);
+                                result.MediaLinkUri = mediaLinkInstance;
+                            }
+                            
+                            XElement nameElement = oSImageElement2.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                            if (nameElement != null)
+                            {
+                                string nameInstance = nameElement.Value;
+                                result.Name = nameInstance;
+                            }
+                            
+                            XElement osElement = oSImageElement2.Element(XName.Get("OS", "http://schemas.microsoft.com/windowsazure"));
+                            if (osElement != null)
+                            {
+                                string osInstance = osElement.Value;
+                                result.OperatingSystemType = osInstance;
+                            }
+                            
+                            XElement eulaElement2 = oSImageElement2.Element(XName.Get("Eula", "http://schemas.microsoft.com/windowsazure"));
+                            if (eulaElement2 != null)
+                            {
+                                string eulaInstance = eulaElement2.Value;
+                                result.Eula = eulaInstance;
+                            }
+                            
+                            XElement descriptionElement2 = oSImageElement2.Element(XName.Get("Description", "http://schemas.microsoft.com/windowsazure"));
+                            if (descriptionElement2 != null)
+                            {
+                                string descriptionInstance = descriptionElement2.Value;
+                                result.Description = descriptionInstance;
+                            }
+                            
+                            XElement imageFamilyElement2 = oSImageElement2.Element(XName.Get("ImageFamily", "http://schemas.microsoft.com/windowsazure"));
+                            if (imageFamilyElement2 != null)
+                            {
+                                string imageFamilyInstance = imageFamilyElement2.Value;
+                                result.ImageFamily = imageFamilyInstance;
+                            }
+                            
+                            XElement publishedDateElement2 = oSImageElement2.Element(XName.Get("PublishedDate", "http://schemas.microsoft.com/windowsazure"));
+                            if (publishedDateElement2 != null && !string.IsNullOrEmpty(publishedDateElement2.Value))
+                            {
+                                DateTime publishedDateInstance = DateTime.Parse(publishedDateElement2.Value, CultureInfo.InvariantCulture);
+                                result.PublishedDate = publishedDateInstance;
+                            }
+                            
+                            XElement publisherNameElement = oSImageElement2.Element(XName.Get("PublisherName", "http://schemas.microsoft.com/windowsazure"));
+                            if (publisherNameElement != null)
+                            {
+                                string publisherNameInstance = publisherNameElement.Value;
+                                result.PublisherName = publisherNameInstance;
+                            }
+                            
+                            XElement isPremiumElement2 = oSImageElement2.Element(XName.Get("IsPremium", "http://schemas.microsoft.com/windowsazure"));
+                            if (isPremiumElement2 != null && !string.IsNullOrEmpty(isPremiumElement2.Value))
+                            {
+                                bool isPremiumInstance = bool.Parse(isPremiumElement2.Value);
+                                result.IsPremium = isPremiumInstance;
+                            }
+                            
+                            XElement showInGuiElement2 = oSImageElement2.Element(XName.Get("ShowInGui", "http://schemas.microsoft.com/windowsazure"));
+                            if (showInGuiElement2 != null && !string.IsNullOrEmpty(showInGuiElement2.Value))
+                            {
+                                bool showInGuiInstance = bool.Parse(showInGuiElement2.Value);
+                                result.ShowInGui = showInGuiInstance;
+                            }
+                            
+                            XElement privacyUriElement2 = oSImageElement2.Element(XName.Get("PrivacyUri", "http://schemas.microsoft.com/windowsazure"));
+                            if (privacyUriElement2 != null)
+                            {
+                                Uri privacyUriInstance = TypeConversion.TryParseUri(privacyUriElement2.Value);
+                                result.PrivacyUri = privacyUriInstance;
+                            }
+                            
+                            XElement iconUriElement2 = oSImageElement2.Element(XName.Get("IconUri", "http://schemas.microsoft.com/windowsazure"));
+                            if (iconUriElement2 != null)
+                            {
+                                Uri iconUriInstance = TypeConversion.TryParseUri(iconUriElement2.Value);
+                                result.IconUri = iconUriInstance;
+                            }
+                            
+                            XElement recommendedVMSizeElement2 = oSImageElement2.Element(XName.Get("RecommendedVMSize", "http://schemas.microsoft.com/windowsazure"));
+                            if (recommendedVMSizeElement2 != null)
+                            {
+                                string recommendedVMSizeInstance = recommendedVMSizeElement2.Value;
+                                result.RecommendedVMSize = recommendedVMSizeInstance;
+                            }
+                            
+                            XElement smallIconUriElement2 = oSImageElement2.Element(XName.Get("SmallIconUri", "http://schemas.microsoft.com/windowsazure"));
+                            if (smallIconUriElement2 != null)
+                            {
+                                Uri smallIconUriInstance = TypeConversion.TryParseUri(smallIconUriElement2.Value);
+                                result.SmallIconUri = smallIconUriInstance;
+                            }
+                            
+                            XElement languageElement2 = oSImageElement2.Element(XName.Get("Language", "http://schemas.microsoft.com/windowsazure"));
+                            if (languageElement2 != null)
+                            {
+                                string languageInstance = languageElement2.Value;
+                                result.Language = languageInstance;
+                            }
+                            
+                            XElement iOTypeElement = oSImageElement2.Element(XName.Get("IOType", "http://schemas.microsoft.com/windowsazure"));
+                            if (iOTypeElement != null)
+                            {
+                                string iOTypeInstance = iOTypeElement.Value;
+                                result.IOType = iOTypeInstance;
+                            }
                         }
                         
-                        XElement categoryElement = oSImageElement2.Element(XName.Get("Category", "http://schemas.microsoft.com/windowsazure"));
-                        if (categoryElement != null)
-                        {
-                            string categoryInstance = categoryElement.Value;
-                            result.Category = categoryInstance;
-                        }
-                        
-                        XElement labelElement2 = oSImageElement2.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
-                        if (labelElement2 != null)
-                        {
-                            string labelInstance = labelElement2.Value;
-                            result.Label = labelInstance;
-                        }
-                        
-                        XElement logicalSizeInGBElement = oSImageElement2.Element(XName.Get("LogicalSizeInGB", "http://schemas.microsoft.com/windowsazure"));
-                        if (logicalSizeInGBElement != null)
-                        {
-                            double logicalSizeInGBInstance = double.Parse(logicalSizeInGBElement.Value, CultureInfo.InvariantCulture);
-                            result.LogicalSizeInGB = logicalSizeInGBInstance;
-                        }
-                        
-                        XElement mediaLinkElement = oSImageElement2.Element(XName.Get("MediaLink", "http://schemas.microsoft.com/windowsazure"));
-                        if (mediaLinkElement != null)
-                        {
-                            Uri mediaLinkInstance = TypeConversion.TryParseUri(mediaLinkElement.Value);
-                            result.MediaLinkUri = mediaLinkInstance;
-                        }
-                        
-                        XElement nameElement = oSImageElement2.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                        if (nameElement != null)
-                        {
-                            string nameInstance = nameElement.Value;
-                            result.Name = nameInstance;
-                        }
-                        
-                        XElement osElement = oSImageElement2.Element(XName.Get("OS", "http://schemas.microsoft.com/windowsazure"));
-                        if (osElement != null)
-                        {
-                            string osInstance = osElement.Value;
-                            result.OperatingSystemType = osInstance;
-                        }
-                        
-                        XElement eulaElement2 = oSImageElement2.Element(XName.Get("Eula", "http://schemas.microsoft.com/windowsazure"));
-                        if (eulaElement2 != null)
-                        {
-                            string eulaInstance = eulaElement2.Value;
-                            result.Eula = eulaInstance;
-                        }
-                        
-                        XElement descriptionElement2 = oSImageElement2.Element(XName.Get("Description", "http://schemas.microsoft.com/windowsazure"));
-                        if (descriptionElement2 != null)
-                        {
-                            string descriptionInstance = descriptionElement2.Value;
-                            result.Description = descriptionInstance;
-                        }
-                        
-                        XElement imageFamilyElement2 = oSImageElement2.Element(XName.Get("ImageFamily", "http://schemas.microsoft.com/windowsazure"));
-                        if (imageFamilyElement2 != null)
-                        {
-                            string imageFamilyInstance = imageFamilyElement2.Value;
-                            result.ImageFamily = imageFamilyInstance;
-                        }
-                        
-                        XElement publishedDateElement2 = oSImageElement2.Element(XName.Get("PublishedDate", "http://schemas.microsoft.com/windowsazure"));
-                        if (publishedDateElement2 != null && string.IsNullOrEmpty(publishedDateElement2.Value) == false)
-                        {
-                            DateTime publishedDateInstance = DateTime.Parse(publishedDateElement2.Value, CultureInfo.InvariantCulture);
-                            result.PublishedDate = publishedDateInstance;
-                        }
-                        
-                        XElement publisherNameElement = oSImageElement2.Element(XName.Get("PublisherName", "http://schemas.microsoft.com/windowsazure"));
-                        if (publisherNameElement != null)
-                        {
-                            string publisherNameInstance = publisherNameElement.Value;
-                            result.PublisherName = publisherNameInstance;
-                        }
-                        
-                        XElement isPremiumElement2 = oSImageElement2.Element(XName.Get("IsPremium", "http://schemas.microsoft.com/windowsazure"));
-                        if (isPremiumElement2 != null && string.IsNullOrEmpty(isPremiumElement2.Value) == false)
-                        {
-                            bool isPremiumInstance = bool.Parse(isPremiumElement2.Value);
-                            result.IsPremium = isPremiumInstance;
-                        }
-                        
-                        XElement showInGuiElement2 = oSImageElement2.Element(XName.Get("ShowInGui", "http://schemas.microsoft.com/windowsazure"));
-                        if (showInGuiElement2 != null && string.IsNullOrEmpty(showInGuiElement2.Value) == false)
-                        {
-                            bool showInGuiInstance = bool.Parse(showInGuiElement2.Value);
-                            result.ShowInGui = showInGuiInstance;
-                        }
-                        
-                        XElement privacyUriElement2 = oSImageElement2.Element(XName.Get("PrivacyUri", "http://schemas.microsoft.com/windowsazure"));
-                        if (privacyUriElement2 != null)
-                        {
-                            Uri privacyUriInstance = TypeConversion.TryParseUri(privacyUriElement2.Value);
-                            result.PrivacyUri = privacyUriInstance;
-                        }
-                        
-                        XElement iconUriElement2 = oSImageElement2.Element(XName.Get("IconUri", "http://schemas.microsoft.com/windowsazure"));
-                        if (iconUriElement2 != null)
-                        {
-                            Uri iconUriInstance = TypeConversion.TryParseUri(iconUriElement2.Value);
-                            result.IconUri = iconUriInstance;
-                        }
-                        
-                        XElement recommendedVMSizeElement2 = oSImageElement2.Element(XName.Get("RecommendedVMSize", "http://schemas.microsoft.com/windowsazure"));
-                        if (recommendedVMSizeElement2 != null)
-                        {
-                            string recommendedVMSizeInstance = recommendedVMSizeElement2.Value;
-                            result.RecommendedVMSize = recommendedVMSizeInstance;
-                        }
-                        
-                        XElement smallIconUriElement2 = oSImageElement2.Element(XName.Get("SmallIconUri", "http://schemas.microsoft.com/windowsazure"));
-                        if (smallIconUriElement2 != null)
-                        {
-                            Uri smallIconUriInstance = TypeConversion.TryParseUri(smallIconUriElement2.Value);
-                            result.SmallIconUri = smallIconUriInstance;
-                        }
-                        
-                        XElement languageElement2 = oSImageElement2.Element(XName.Get("Language", "http://schemas.microsoft.com/windowsazure"));
-                        if (languageElement2 != null)
-                        {
-                            string languageInstance = languageElement2.Value;
-                            result.Language = languageInstance;
-                        }
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -2403,7 +2443,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }

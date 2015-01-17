@@ -24,9 +24,6 @@ using System.Linq;
 
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
 {
-    /// <summary>
-    /// The runtime availability of a website.
-    /// </summary>
     public enum WebSiteRuntimeAvailabilityState
     {
         /// <summary>

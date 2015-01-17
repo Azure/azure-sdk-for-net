@@ -21,15 +21,15 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Resources.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Resources.Models
 {
     /// <summary>
     /// Tag information.
     /// </summary>
-    public partial class TagCreateValueResult : OperationResponse
+    public partial class TagCreateValueResult : AzureOperationResponse
     {
         private TagValue _value;
         

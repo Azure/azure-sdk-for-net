@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
@@ -48,7 +49,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public HostedServiceGetDetailedResponse()
         {
-            this.Deployments = new List<HostedServiceGetDetailedResponse.Deployment>();
+            this.Deployments = new LazyList<HostedServiceGetDetailedResponse.Deployment>();
         }
         
         /// <summary>
@@ -318,10 +319,10 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             /// </summary>
             public Deployment()
             {
-                this.ExtendedProperties = new Dictionary<string, string>();
-                this.RoleInstances = new List<RoleInstance>();
-                this.Roles = new List<Role>();
-                this.VirtualIPAddresses = new List<VirtualIPAddress>();
+                this.ExtendedProperties = new LazyDictionary<string, string>();
+                this.RoleInstances = new LazyList<RoleInstance>();
+                this.Roles = new LazyList<Role>();
+                this.VirtualIPAddresses = new LazyList<VirtualIPAddress>();
             }
         }
     }

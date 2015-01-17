@@ -22,7 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
@@ -30,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
     /// <summary>
     /// The List Service Certificates operation response.
     /// </summary>
-    public partial class ServiceCertificateListResponse : OperationResponse, IEnumerable<ServiceCertificateListResponse.Certificate>
+    public partial class ServiceCertificateListResponse : AzureOperationResponse, IEnumerable<ServiceCertificateListResponse.Certificate>
     {
         private IList<ServiceCertificateListResponse.Certificate> _certificates;
         
@@ -50,7 +51,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public ServiceCertificateListResponse()
         {
-            this.Certificates = new List<ServiceCertificateListResponse.Certificate>();
+            this.Certificates = new LazyList<ServiceCertificateListResponse.Certificate>();
         }
         
         /// <summary>

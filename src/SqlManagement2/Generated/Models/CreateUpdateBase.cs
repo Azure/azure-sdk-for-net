@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
@@ -54,7 +55,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         public CreateUpdateBase()
         {
-            this.Tags = new Dictionary<string, string>();
+            this.Tags = new LazyDictionary<string, string>();
         }
         
         /// <summary>

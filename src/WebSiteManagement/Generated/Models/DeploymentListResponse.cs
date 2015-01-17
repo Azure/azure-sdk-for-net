@@ -22,7 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.WebSitesExtensions.Models;
 
 namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
@@ -30,7 +31,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
     /// <summary>
     /// The list of deployments operation response.
     /// </summary>
-    public partial class DeploymentListResponse : OperationResponse, IEnumerable<Deployment>
+    public partial class DeploymentListResponse : AzureOperationResponse, IEnumerable<Deployment>
     {
         private IList<Deployment> _deployments;
         
@@ -48,7 +49,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         /// </summary>
         public DeploymentListResponse()
         {
-            this.Deployments = new List<Deployment>();
+            this.Deployments = new LazyList<Deployment>();
         }
         
         /// <summary>

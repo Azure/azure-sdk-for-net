@@ -21,14 +21,14 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.WindowsAzure.Management.Network.Models
 {
     /// <summary>
     /// A reserved IP associated with your subscription.
     /// </summary>
-    public partial class NetworkReservedIPGetResponse : OperationResponse
+    public partial class NetworkReservedIPGetResponse : AzureOperationResponse
     {
         private string _address;
         

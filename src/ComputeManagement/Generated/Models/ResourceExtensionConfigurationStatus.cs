@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
@@ -141,7 +142,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public ResourceExtensionConfigurationStatus()
         {
-            this.SubStatusList = new List<ResourceExtensionSubStatus>();
+            this.SubStatusList = new LazyList<ResourceExtensionSubStatus>();
         }
     }
 }

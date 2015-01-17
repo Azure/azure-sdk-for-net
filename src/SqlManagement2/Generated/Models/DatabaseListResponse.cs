@@ -22,15 +22,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Sql.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
     /// <summary>
     /// Represents the response to a Get Database request.
     /// </summary>
-    public partial class DatabaseListResponse : OperationResponse, IEnumerable<Database>
+    public partial class DatabaseListResponse : AzureOperationResponse, IEnumerable<Database>
     {
         private IList<Database> _databases;
         
@@ -49,7 +50,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         public DatabaseListResponse()
         {
-            this.Databases = new List<Database>();
+            this.Databases = new LazyList<Database>();
         }
         
         /// <summary>

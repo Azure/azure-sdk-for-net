@@ -21,14 +21,14 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.WindowsAzure.Management.TrafficManager.Models
 {
     /// <summary>
     /// The response to the request for a listing of namespaces.
     /// </summary>
-    public partial class DnsPrefixAvailabilityCheckResponse : OperationResponse
+    public partial class DnsPrefixAvailabilityCheckResponse : AzureOperationResponse
     {
         private bool _result;
         

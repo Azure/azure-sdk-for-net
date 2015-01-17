@@ -21,14 +21,14 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
     /// The Get Service Certificate operation response.
     /// </summary>
-    public partial class ServiceCertificateGetResponse : OperationResponse
+    public partial class ServiceCertificateGetResponse : AzureOperationResponse
     {
         private byte[] _data;
         

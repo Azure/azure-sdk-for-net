@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.Azure.Management.Insights.Models;
 
 namespace Microsoft.Azure.Management.Insights.Models
@@ -111,7 +112,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         /// </summary>
         public EtwProvider()
         {
-            this.Events = new List<EtwEventConfiguration>();
+            this.Events = new LazyList<EtwEventConfiguration>();
         }
     }
 }

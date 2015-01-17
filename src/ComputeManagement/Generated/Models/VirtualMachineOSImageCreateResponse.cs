@@ -21,14 +21,14 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
     /// Parameters returned from the Create Virtual Machine Image operation.
     /// </summary>
-    public partial class VirtualMachineOSImageCreateResponse : OperationResponse
+    public partial class VirtualMachineOSImageCreateResponse : AzureOperationResponse
     {
         private string _category;
         
@@ -88,6 +88,17 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         {
             get { return this._imageFamily; }
             set { this._imageFamily = value; }
+        }
+        
+        private string _iOType;
+        
+        /// <summary>
+        /// Optional. Gets or sets the IO type.
+        /// </summary>
+        public string IOType
+        {
+            get { return this._iOType; }
+            set { this._iOType = value; }
         }
         
         private bool? _isPremium;

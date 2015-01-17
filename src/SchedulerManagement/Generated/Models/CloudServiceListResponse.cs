@@ -22,7 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Scheduler.Models;
 
 namespace Microsoft.WindowsAzure.Management.Scheduler.Models
@@ -30,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
     /// <summary>
     /// The response structure for the Cloud Service List operation.
     /// </summary>
-    public partial class CloudServiceListResponse : OperationResponse, IEnumerable<CloudServiceListResponse.CloudService>
+    public partial class CloudServiceListResponse : AzureOperationResponse, IEnumerable<CloudServiceListResponse.CloudService>
     {
         private IList<CloudServiceListResponse.CloudService> _cloudServices;
         
@@ -48,7 +49,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
         /// </summary>
         public CloudServiceListResponse()
         {
-            this.CloudServices = new List<CloudServiceListResponse.CloudService>();
+            this.CloudServices = new LazyList<CloudServiceListResponse.CloudService>();
         }
         
         /// <summary>
@@ -135,7 +136,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
             /// </summary>
             public CloudService()
             {
-                this.Resources = new List<CloudServiceListResponse.CloudService.AddOnResource>();
+                this.Resources = new LazyList<CloudServiceListResponse.CloudService.AddOnResource>();
             }
             
             /// <summary>
@@ -261,8 +262,8 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
                 /// </summary>
                 public AddOnResource()
                 {
-                    this.OutputItems = new Dictionary<string, string>();
-                    this.UsageLimits = new List<CloudServiceListResponse.CloudService.AddOnResource.UsageLimit>();
+                    this.OutputItems = new LazyDictionary<string, string>();
+                    this.UsageLimits = new LazyList<CloudServiceListResponse.CloudService.AddOnResource.UsageLimit>();
                 }
                 
                 /// <summary>

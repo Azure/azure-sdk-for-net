@@ -22,7 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Sql.Models;
 
 namespace Microsoft.WindowsAzure.Management.Sql.Models
@@ -30,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
     /// <summary>
     /// Contains the response from a request to List Firewall Rules.
     /// </summary>
-    public partial class FirewallRuleListResponse : OperationResponse, IEnumerable<FirewallRule>
+    public partial class FirewallRuleListResponse : AzureOperationResponse, IEnumerable<FirewallRule>
     {
         private IList<FirewallRule> _firewallRules;
         
@@ -49,7 +50,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public FirewallRuleListResponse()
         {
-            this.FirewallRules = new List<FirewallRule>();
+            this.FirewallRules = new LazyList<FirewallRule>();
         }
         
         /// <summary>

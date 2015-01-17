@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.Azure.Management.Automation.Models;
 
 namespace Microsoft.Azure.Management.Automation.Models
@@ -48,7 +49,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         public JobStreamListStreamItemsResponse()
         {
-            this.JobStreamItems = new List<JobStreamItem>();
+            this.JobStreamItems = new LazyList<JobStreamItem>();
         }
     }
 }

@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
@@ -60,8 +61,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public ExtensionConfiguration()
         {
-            this.AllRoles = new List<ExtensionConfiguration.Extension>();
-            this.NamedRoles = new List<ExtensionConfiguration.NamedRole>();
+            this.AllRoles = new LazyList<ExtensionConfiguration.Extension>();
+            this.NamedRoles = new LazyList<ExtensionConfiguration.NamedRole>();
         }
         
         /// <summary>
@@ -140,7 +141,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             /// </summary>
             public NamedRole()
             {
-                this.Extensions = new List<ExtensionConfiguration.Extension>();
+                this.Extensions = new LazyList<ExtensionConfiguration.Extension>();
             }
             
             /// <summary>

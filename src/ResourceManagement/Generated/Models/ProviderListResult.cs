@@ -22,15 +22,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Resources.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Resources.Models
 {
     /// <summary>
     /// List of resource providers.
     /// </summary>
-    public partial class ProviderListResult : OperationResponse
+    public partial class ProviderListResult : AzureOperationResponse
     {
         private string _nextLink;
         
@@ -59,7 +60,7 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         public ProviderListResult()
         {
-            this.Providers = new List<Provider>();
+            this.Providers = new LazyList<Provider>();
         }
     }
 }

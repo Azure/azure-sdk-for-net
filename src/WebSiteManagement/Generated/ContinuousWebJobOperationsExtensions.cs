@@ -24,11 +24,11 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.WebSitesExtensions;
 using Microsoft.WindowsAzure.WebSitesExtensions.Models;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.WebSitesExtensions
 {
     /// <summary>
     /// The websites extensions client manages the web sites deployments, web
@@ -50,7 +50,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Delete(this IContinuousWebJobOperations operations, string jobName)
+        public static AzureOperationResponse Delete(this IContinuousWebJobOperations operations, string jobName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -73,7 +73,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> DeleteAsync(this IContinuousWebJobOperations operations, string jobName)
+        public static Task<AzureOperationResponse> DeleteAsync(this IContinuousWebJobOperations operations, string jobName)
         {
             return operations.DeleteAsync(jobName, CancellationToken.None);
         }
@@ -210,7 +210,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse SetSettings(this IContinuousWebJobOperations operations, string jobName, ContinuousWebJobSettingsUpdateParameters settings)
+        public static AzureOperationResponse SetSettings(this IContinuousWebJobOperations operations, string jobName, ContinuousWebJobSettingsUpdateParameters settings)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -237,7 +237,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> SetSettingsAsync(this IContinuousWebJobOperations operations, string jobName, ContinuousWebJobSettingsUpdateParameters settings)
+        public static Task<AzureOperationResponse> SetSettingsAsync(this IContinuousWebJobOperations operations, string jobName, ContinuousWebJobSettingsUpdateParameters settings)
         {
             return operations.SetSettingsAsync(jobName, settings, CancellationToken.None);
         }
@@ -256,7 +256,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Start(this IContinuousWebJobOperations operations, string jobName)
+        public static AzureOperationResponse Start(this IContinuousWebJobOperations operations, string jobName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -279,7 +279,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> StartAsync(this IContinuousWebJobOperations operations, string jobName)
+        public static Task<AzureOperationResponse> StartAsync(this IContinuousWebJobOperations operations, string jobName)
         {
             return operations.StartAsync(jobName, CancellationToken.None);
         }
@@ -298,7 +298,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Stop(this IContinuousWebJobOperations operations, string jobName)
+        public static AzureOperationResponse Stop(this IContinuousWebJobOperations operations, string jobName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -321,7 +321,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> StopAsync(this IContinuousWebJobOperations operations, string jobName)
+        public static Task<AzureOperationResponse> StopAsync(this IContinuousWebJobOperations operations, string jobName)
         {
             return operations.StopAsync(jobName, CancellationToken.None);
         }
@@ -347,7 +347,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse UploadFile(this IContinuousWebJobOperations operations, string jobName, string fileName, Stream jobContent)
+        public static AzureOperationResponse UploadFile(this IContinuousWebJobOperations operations, string jobName, string fileName, Stream jobContent)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -377,7 +377,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> UploadFileAsync(this IContinuousWebJobOperations operations, string jobName, string fileName, Stream jobContent)
+        public static Task<AzureOperationResponse> UploadFileAsync(this IContinuousWebJobOperations operations, string jobName, string fileName, Stream jobContent)
         {
             return operations.UploadFileAsync(jobName, fileName, jobContent, CancellationToken.None);
         }
@@ -403,7 +403,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse UploadZip(this IContinuousWebJobOperations operations, string jobName, string fileName, Stream jobContent)
+        public static AzureOperationResponse UploadZip(this IContinuousWebJobOperations operations, string jobName, string fileName, Stream jobContent)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -433,7 +433,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> UploadZipAsync(this IContinuousWebJobOperations operations, string jobName, string fileName, Stream jobContent)
+        public static Task<AzureOperationResponse> UploadZipAsync(this IContinuousWebJobOperations operations, string jobName, string fileName, Stream jobContent)
         {
             return operations.UploadZipAsync(jobName, fileName, jobContent, CancellationToken.None);
         }

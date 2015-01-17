@@ -22,9 +22,9 @@
 using System;
 using System.Linq;
 using System.Net.Http;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Insights;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
 
 namespace Microsoft.Azure.Insights
 {
@@ -125,7 +125,7 @@ namespace Microsoft.Azure.Insights
         /// <summary>
         /// Initializes a new instance of the InsightsClient class.
         /// </summary>
-        private InsightsClient()
+        public InsightsClient()
             : base()
         {
             this._eventOperations = new EventOperations(this);
@@ -147,7 +147,7 @@ namespace Microsoft.Azure.Insights
         /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Gets the URI used as the base for all cloud service
+        /// Optional. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
         public InsightsClient(SubscriptionCloudCredentials credentials, Uri baseUri)
@@ -194,7 +194,7 @@ namespace Microsoft.Azure.Insights
         /// <param name='httpClient'>
         /// The Http client
         /// </param>
-        private InsightsClient(HttpClient httpClient)
+        public InsightsClient(HttpClient httpClient)
             : base(httpClient)
         {
             this._eventOperations = new EventOperations(this);
@@ -216,7 +216,7 @@ namespace Microsoft.Azure.Insights
         /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Gets the URI used as the base for all cloud service
+        /// Optional. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
         /// <param name='httpClient'>

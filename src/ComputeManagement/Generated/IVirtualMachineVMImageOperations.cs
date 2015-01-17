@@ -23,7 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute
@@ -34,6 +34,25 @@ namespace Microsoft.WindowsAzure.Management.Compute
     /// </summary>
     public partial interface IVirtualMachineVMImageOperations
     {
+        /// <summary>
+        /// The Create VM Image operation creates a VM image that in your image
+        /// repository.  (see
+        /// http://msdn.microsoft.com/en-us/library/azure/dn775054.aspx for
+        /// more information)
+        /// </summary>
+        /// <param name='parameters'>
+        /// Parameters supplied to the virtual machine VM image create
+        /// operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<AzureOperationResponse> BeginCreatingAsync(VirtualMachineVMImageCreateParameters parameters, CancellationToken cancellationToken);
+        
         /// <summary>
         /// The Begin Deleting Virtual Machine Image operation deletes the
         /// specified virtual machine image.
@@ -52,7 +71,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginDeletingAsync(string vmImageName, bool deleteFromStorage, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BeginDeletingAsync(string vmImageName, bool deleteFromStorage, CancellationToken cancellationToken);
         
         /// <summary>
         /// Share an already replicated VM image. This operation is only for
@@ -72,7 +91,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginSharingAsync(string vmImageName, string permission, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BeginSharingAsync(string vmImageName, string permission, CancellationToken cancellationToken);
         
         /// <summary>
         /// Unreplicate an VM image to multiple target locations. This
@@ -94,7 +113,32 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginUnreplicatingAsync(string vmImageName, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BeginUnreplicatingAsync(string vmImageName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Create VM Image operation creates a VM image that in your image
+        /// repository.  (see
+        /// http://msdn.microsoft.com/en-us/library/azure/dn775054.aspx for
+        /// more information)
+        /// </summary>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Create Virtual Machine Image operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        Task<OperationStatusResponse> CreateAsync(VirtualMachineVMImageCreateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Delete Virtual Machine Image operation deletes the specified
@@ -244,6 +288,6 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> UpdateAsync(string imageName, VirtualMachineVMImageUpdateParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> UpdateAsync(string imageName, VirtualMachineVMImageUpdateParameters parameters, CancellationToken cancellationToken);
     }
 }

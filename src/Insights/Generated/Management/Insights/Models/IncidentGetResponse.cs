@@ -21,15 +21,15 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Insights.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Insights.Models
 {
     /// <summary>
     /// The Get Incident operation response.
     /// </summary>
-    public partial class IncidentGetResponse : OperationResponse
+    public partial class IncidentGetResponse : AzureOperationResponse
     {
         private Incident _incident;
         

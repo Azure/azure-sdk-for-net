@@ -22,14 +22,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Hyak.Common;
+using Microsoft.Azure;
 
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
 {
     /// <summary>
     /// The web site instance ids response.
     /// </summary>
-    public partial class WebSiteInstanceIdsResponse : OperationResponse, IEnumerable<string>
+    public partial class WebSiteInstanceIdsResponse : AzureOperationResponse, IEnumerable<string>
     {
         private IList<string> _instanceIds;
         
@@ -48,7 +49,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public WebSiteInstanceIdsResponse()
         {
-            this.InstanceIds = new List<string>();
+            this.InstanceIds = new LazyList<string>();
         }
         
         /// <summary>

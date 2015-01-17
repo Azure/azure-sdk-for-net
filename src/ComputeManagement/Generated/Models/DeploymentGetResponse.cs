@@ -22,7 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
@@ -30,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
     /// <summary>
     /// A deployment that exists in the cloud service.
     /// </summary>
-    public partial class DeploymentGetResponse : OperationResponse
+    public partial class DeploymentGetResponse : AzureOperationResponse
     {
         private string _configuration;
         
@@ -329,11 +330,11 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public DeploymentGetResponse()
         {
-            this.ExtendedProperties = new Dictionary<string, string>();
-            this.LoadBalancers = new List<LoadBalancer>();
-            this.RoleInstances = new List<RoleInstance>();
-            this.Roles = new List<Role>();
-            this.VirtualIPAddresses = new List<VirtualIPAddress>();
+            this.ExtendedProperties = new LazyDictionary<string, string>();
+            this.LoadBalancers = new LazyList<LoadBalancer>();
+            this.RoleInstances = new LazyList<RoleInstance>();
+            this.Roles = new LazyList<Role>();
+            this.VirtualIPAddresses = new LazyList<VirtualIPAddress>();
         }
     }
 }

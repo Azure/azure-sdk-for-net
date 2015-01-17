@@ -22,8 +22,8 @@
 using System;
 using System.Linq;
 using System.Net.Http;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Monitoring.Autoscale;
 
 namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
@@ -97,7 +97,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
         /// <summary>
         /// Initializes a new instance of the AutoscaleClient class.
         /// </summary>
-        private AutoscaleClient()
+        public AutoscaleClient()
             : base()
         {
             this._settings = new SettingOperations(this);
@@ -116,7 +116,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
         /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Gets the URI used as the base for all cloud service
+        /// Optional. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
         public AutoscaleClient(SubscriptionCloudCredentials credentials, Uri baseUri)
@@ -163,7 +163,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
         /// <param name='httpClient'>
         /// The Http client
         /// </param>
-        private AutoscaleClient(HttpClient httpClient)
+        public AutoscaleClient(HttpClient httpClient)
             : base(httpClient)
         {
             this._settings = new SettingOperations(this);
@@ -182,7 +182,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
         /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Gets the URI used as the base for all cloud service
+        /// Optional. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
         /// <param name='httpClient'>

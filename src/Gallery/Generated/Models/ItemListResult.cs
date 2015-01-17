@@ -22,15 +22,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Gallery;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Gallery.Models
 {
     /// <summary>
     /// List of gallery items.
     /// </summary>
-    public partial class ItemListResult : OperationResponse
+    public partial class ItemListResult : AzureOperationResponse
     {
         private IList<GalleryItem> _items;
         
@@ -48,7 +49,7 @@ namespace Microsoft.Azure.Gallery.Models
         /// </summary>
         public ItemListResult()
         {
-            this.Items = new List<GalleryItem>();
+            this.Items = new LazyList<GalleryItem>();
         }
     }
 }

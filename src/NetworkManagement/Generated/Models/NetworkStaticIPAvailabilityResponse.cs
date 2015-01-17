@@ -22,7 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Hyak.Common;
+using Microsoft.Azure;
 
 namespace Microsoft.WindowsAzure.Management.Network.Models
 {
@@ -30,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
     /// A response that indicates the availability of a static IP address, and
     /// if not, provides a list of suggestions.
     /// </summary>
-    public partial class NetworkStaticIPAvailabilityResponse : OperationResponse
+    public partial class NetworkStaticIPAvailabilityResponse : AzureOperationResponse
     {
         private IList<string> _availableAddresses;
         
@@ -60,7 +61,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         /// </summary>
         public NetworkStaticIPAvailabilityResponse()
         {
-            this.AvailableAddresses = new List<string>();
+            this.AvailableAddresses = new LazyList<string>();
         }
     }
 }

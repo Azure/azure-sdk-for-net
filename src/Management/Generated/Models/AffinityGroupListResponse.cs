@@ -22,7 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Models;
 
 namespace Microsoft.WindowsAzure.Management.Models
@@ -30,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.Models
     /// <summary>
     /// The List Affinity Groups operation response.
     /// </summary>
-    public partial class AffinityGroupListResponse : OperationResponse, IEnumerable<AffinityGroupListResponse.AffinityGroup>
+    public partial class AffinityGroupListResponse : AzureOperationResponse, IEnumerable<AffinityGroupListResponse.AffinityGroup>
     {
         private IList<AffinityGroupListResponse.AffinityGroup> _affinityGroups;
         
@@ -49,7 +50,7 @@ namespace Microsoft.WindowsAzure.Management.Models
         /// </summary>
         public AffinityGroupListResponse()
         {
-            this.AffinityGroups = new List<AffinityGroupListResponse.AffinityGroup>();
+            this.AffinityGroups = new LazyList<AffinityGroupListResponse.AffinityGroup>();
         }
         
         /// <summary>
@@ -160,7 +161,7 @@ namespace Microsoft.WindowsAzure.Management.Models
             /// </summary>
             public AffinityGroup()
             {
-                this.Capabilities = new List<string>();
+                this.Capabilities = new LazyList<string>();
             }
         }
     }

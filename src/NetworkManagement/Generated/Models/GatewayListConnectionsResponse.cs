@@ -22,7 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Network.Models;
 
 namespace Microsoft.WindowsAzure.Management.Network.Models
@@ -30,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
     /// <summary>
     /// The response to a ListConnections request to a Virtual Network Gateway.
     /// </summary>
-    public partial class GatewayListConnectionsResponse : OperationResponse, IEnumerable<GatewayListConnectionsResponse.GatewayConnection>
+    public partial class GatewayListConnectionsResponse : AzureOperationResponse, IEnumerable<GatewayListConnectionsResponse.GatewayConnection>
     {
         private IList<GatewayListConnectionsResponse.GatewayConnection> _connections;
         
@@ -49,7 +50,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         /// </summary>
         public GatewayListConnectionsResponse()
         {
-            this.Connections = new List<GatewayListConnectionsResponse.GatewayConnection>();
+            this.Connections = new LazyList<GatewayListConnectionsResponse.GatewayConnection>();
         }
         
         /// <summary>
@@ -160,7 +161,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             /// </summary>
             public GatewayConnection()
             {
-                this.AllocatedIPAddresses = new List<string>();
+                this.AllocatedIPAddresses = new LazyList<string>();
             }
         }
     }

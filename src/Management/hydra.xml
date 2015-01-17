@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<Hydra>
-  <Reference>management.hydra.xml</Reference>
-  <Reference>subscriptions.hydra.xml</Reference>
-</Hydra>

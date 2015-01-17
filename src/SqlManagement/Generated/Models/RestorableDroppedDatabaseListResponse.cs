@@ -22,7 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Sql.Models;
 
 namespace Microsoft.WindowsAzure.Management.Sql.Models
@@ -30,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
     /// <summary>
     /// Contains the response to the List Restorable Dropped Databases request.
     /// </summary>
-    public partial class RestorableDroppedDatabaseListResponse : OperationResponse, IEnumerable<RestorableDroppedDatabase>
+    public partial class RestorableDroppedDatabaseListResponse : AzureOperationResponse, IEnumerable<RestorableDroppedDatabase>
     {
         private IList<RestorableDroppedDatabase> _databases;
         
@@ -51,7 +52,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public RestorableDroppedDatabaseListResponse()
         {
-            this.Databases = new List<RestorableDroppedDatabase>();
+            this.Databases = new LazyList<RestorableDroppedDatabase>();
         }
         
         /// <summary>

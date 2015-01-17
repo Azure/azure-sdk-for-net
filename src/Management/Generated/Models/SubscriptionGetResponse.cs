@@ -21,7 +21,7 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Models;
 
 namespace Microsoft.WindowsAzure.Management.Models
@@ -29,7 +29,7 @@ namespace Microsoft.WindowsAzure.Management.Models
     /// <summary>
     /// The Get Subscription operation response.
     /// </summary>
-    public partial class SubscriptionGetResponse : OperationResponse
+    public partial class SubscriptionGetResponse : AzureOperationResponse
     {
         private string _accountAdminLiveEmailId;
         

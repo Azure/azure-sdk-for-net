@@ -22,7 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Models;
 
 namespace Microsoft.WindowsAzure.Management.Models
@@ -30,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.Models
     /// <summary>
     /// The Get Affinity Group operation response.
     /// </summary>
-    public partial class AffinityGroupGetResponse : OperationResponse
+    public partial class AffinityGroupGetResponse : AzureOperationResponse
     {
         private IList<string> _capabilities;
         
@@ -141,9 +142,9 @@ namespace Microsoft.WindowsAzure.Management.Models
         /// </summary>
         public AffinityGroupGetResponse()
         {
-            this.Capabilities = new List<string>();
-            this.HostedServices = new List<AffinityGroupGetResponse.HostedServiceReference>();
-            this.StorageServices = new List<AffinityGroupGetResponse.StorageServiceReference>();
+            this.Capabilities = new LazyList<string>();
+            this.HostedServices = new LazyList<AffinityGroupGetResponse.HostedServiceReference>();
+            this.StorageServices = new LazyList<AffinityGroupGetResponse.StorageServiceReference>();
         }
         
         /// <summary>
