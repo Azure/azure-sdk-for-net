@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Hadoop.Avro", "src\HDInsight\Microsoft.Hadoop.Avro\Microsoft.Hadoop.Avro.csproj", "{EAB38A14-211F-4361-A06E-3EC1E07ABE33}"
 EndProject
@@ -46,13 +46,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{14E8819C-A
 		src\HDInsight\HDInsightSDK.vsmdi = src\HDInsight\HDInsightSDK.vsmdi
 		libraries.testsettings = libraries.testsettings
 		src\HDInsight\Local.testsettings = src\HDInsight\Local.testsettings
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{49C00124-D7F2-47F9-8DCF-896CEE1EC5D2}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\HdInsightNuGet.targets = .nuget\HdInsightNuGet.targets
-		.nuget\NuGet.Config = .nuget\NuGet.Config
-		.nuget\NuGet.exe = .nuget\NuGet.exe
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{B642D0DC-6F60-4D91-8F9B-A77B8A06C2A0}"

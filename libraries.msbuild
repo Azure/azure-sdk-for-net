@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="DeveloperBuild" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <!-- Product properties -->
+
   <PropertyGroup>
-    <CommonSolution>AzureCommonLibraries.sln</CommonSolution>
-    <ManagementLibrariesSolution Condition="$(ManagementLibrariesSolution) == ''">AzureManagementLibraries.sln</ManagementLibrariesSolution>
-    <ProductFriendlyName>Microsoft Azure Management Libraries</ProductFriendlyName>
+    <ProductRoot>$(MSBuildThisFileDirectory)</ProductRoot>
 	  <ProductSourceFolderPath Condition="$(ProductSourceFolderPath) == ''">src</ProductSourceFolderPath>
-	  <ProductSourceFolder>$(MSBuildThisFileDirectory)$(ProductSourceFolderPath)</ProductSourceFolder>
+	  <ProductSourceFolder>$(ProductRoot)$(ProductSourceFolderPath)</ProductSourceFolder>
+    <ProductToolsFolder>$(ProductRoot)tools</ProductToolsFolder>
+    <ProductFriendlyName>Microsoft Azure Management Libraries</ProductFriendlyName>
+    <CommonSolution>AzureCommonLibraries.sln</CommonSolution>
+    <ManagementLibrariesSolution Condition="$(ManagementLibrariesSolution) == ''">AzureManagementLibraries.sln</ManagementLibrariesSolution>  
   </PropertyGroup>
 
-  <!-- NuGet Packages -->
-  <Import Project="nuget.targets" />
+  <Import Project="$(ProductToolsFolder)\nuget.targets" />
 
   <ItemGroup>
     <CommonProjects Include="$(CommonSolution)" Condition="$(MamlProjectName) == ''" />
@@ -84,9 +85,9 @@
   <!--
   Helpful build tasks in this tree
   -->
-  <Import Project="tools\Microsoft.WindowsAzure.Build.msbuild" />
-  <UsingTask AssemblyFile="tools\Microsoft.WindowsAzure.Build.Tasks.dll" TaskName="ValidateStrongNameSignatureTask" />
-  <UsingTask AssemblyFile="tools\Microsoft.WindowsAzure.Build.Tasks.dll" TaskName="RegexReplacementTask" />
+  <Import Project="$(ProductToolsFolder)\Microsoft.WindowsAzure.Build.msbuild" />
+  <UsingTask AssemblyFile="$(ProductToolsFolder)\Microsoft.WindowsAzure.Build.Tasks.dll" TaskName="ValidateStrongNameSignatureTask" />
+  <UsingTask AssemblyFile="$(ProductToolsFolder)\Microsoft.WindowsAzure.Build.Tasks.dll" TaskName="RegexReplacementTask" />
 
   <!--
   Build tasks (on-premise only)

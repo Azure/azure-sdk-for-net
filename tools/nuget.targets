@@ -1,90 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <!--
-  NuGet Targets - Microsoft Azure SDK for .NET
-  -->
 
-  <!--
-  Import all nested NuGet property projects, named as *.nuget.proj to
-  differentiate from the .nuproj system (which we may want to move to in the
-  future)
-  -->
   <PropertyGroup>
     <BaselineReleaseNotes>PREVIEW RELEASE</BaselineReleaseNotes>
-	  <ProductSourceFolderPath Condition="$(ProductSourceFolderPath) == ''">src</ProductSourceFolderPath>
-	  <ProductSourceFolder>$(MSBuildThisFileDirectory)$(ProductSourceFolderPath)</ProductSourceFolder>
   </PropertyGroup>
   
   <Import Project="$(ProductSourceFolder)\*\*.nuget.proj" Condition="$(MamlProjectName) == ''"/>
   <Import Project="$(ProductSourceFolder)\*\$(MamlProjectName)\*.nuget.proj" Condition="$(MamlProjectName) != ''"/>
 
-  <!--
-
-  Microsoft Azure SDK for .NET - NuGet Package Guide
-  - - -
-
-  The NuGet Package ID is the Include="..." portion of the package
-  authoring work.
-
-  Required elements:
-  - - -
-
-  PackageVersion
-
-    A NuGet version. We follow SemVer. Learn more by checking
-    this page out:
-    
-        http://docs.nuget.org/docs/reference/versioning
-
-    This is the version that will be used for the package.
-
-    Anything after a number indicates a PRE-RELEASE package 
-    that is treated differently by NuGet.
-
-    Common suffixes then include -preview for Microsoft Azure.
-
-    Nightly and one-off builds that may be published to an
-    alternative NuGet server such as MyGet may override the
-    BuildVersionSuffix property to append an additional 
-    string value to the version.
-
-  Optional elements:
-  - - -
-
-  Publish
-
-    true/false
-
-    A value indicating whether to include the package in the
-    publishing process to a NuGet server.
-
-    True by default, this optional element can be used to
-    keep built packages off of NuGet. This can be used for
-    management libraries that are only used as internal 
-    dependencies today for projects like PowerShell.
-
-    As components reach maturity for a public Preview for
-    developers, this should then be flipped to share the 
-    goods with our customers.
-
-  SkipSymbolSourcePackage
-
-    true/false
-
-    Designed for packages that are for grouping only and do
-    not contain libraries, when true this property will make
-    sure that the -Symbols property is not passed to NuGet
-    while packing the project.
-
-    Also, we won't attempt to push a symbol/source package to
-    the cloud for debugging use.
-  -->
-
-  <!--
-  General NuGet packaging properties
-  -->
   <PropertyGroup>
-    <NuGetCommand>.nuget\NuGet.exe</NuGetCommand>
+    <NuGetCommand>tools\NuGet.exe</NuGetCommand>
     <PackageOutputDir>binaries\packages</PackageOutputDir>
     <NuGetVerbosity>normal</NuGetVerbosity>
     <PublishSymbolSourcePackages>true</PublishSymbolSourcePackages>
@@ -96,7 +21,7 @@
     </NuSpecReplacementTokens>
   </ItemGroup>
 
-  <UsingTask AssemblyFile="tools\Microsoft.WindowsAzure.Build.Tasks.dll" TaskName="RegexReplacementTask" />
+  <UsingTask AssemblyFile="$(ProductToolsFolder)\Microsoft.WindowsAzure.Build.Tasks.dll" TaskName="RegexReplacementTask" />
 
   <Target Name="BuildDynamicNuSpecs"
           DependsOnTargets="GetGeneratedBuildDate; EnsureBinariesFolderExists">
@@ -108,8 +33,6 @@
     <PropertyGroup>
       <PowerShellExe Condition=" '$(PowerShellExe)'=='' ">%WINDIR%\System32\WindowsPowerShell\v1.0\powershell.exe</PowerShellExe>   
       <NuSpecSyncScript>$(MSBuildProjectDirectory)\tools\Sync-NuspecDependencies.ps1</NuSpecSyncScript>	  
-	    <ProductSourceFolderPath Condition="$(ProductSourceFolderPath) == ''">src</ProductSourceFolderPath>
-	    <ProductSourceFolder Condition="$(ProductSourceFolder) == ''">$(MSBuildThisFileDirectory)$(ProductSourceFolderPath)</ProductSourceFolder>
     </PropertyGroup>
 	
     <Error Text="NuGet specification %(NuspecFilesToUpdate.Identity) not found."
