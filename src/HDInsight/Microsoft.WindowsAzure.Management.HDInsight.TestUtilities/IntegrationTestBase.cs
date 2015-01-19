@@ -282,7 +282,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities
             tempCredentials = new HDInsightCertificateCredential()
             {
                 SubscriptionId = TestCredentials.SubscriptionId,
-                Certificate = defaultCertificate,
+                Certificate = new X509Certificate2(TestCredentials.InvalidCertificate),
                 Endpoint = new Uri(TestCredentials.Endpoint)
             };
             IntegrationTestBase.invalidCertificate = ServiceLocator.Instance
