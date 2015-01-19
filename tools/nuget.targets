@@ -9,8 +9,6 @@
   <Import Project="$(ProductSourceFolder)\*\$(MamlProjectName)\*.nuget.proj" Condition="$(MamlProjectName) != ''"/>
 
   <PropertyGroup>
-    <NuGetCommand>tools\NuGet.exe</NuGetCommand>
-    <PackageOutputDir>binaries\packages</PackageOutputDir>
     <NuGetVerbosity>normal</NuGetVerbosity>
     <PublishSymbolSourcePackages>true</PublishSymbolSourcePackages>
   </PropertyGroup>
@@ -20,8 +18,6 @@
       <Value>$(BaselineReleaseNotes)</Value>
     </NuSpecReplacementTokens>
   </ItemGroup>
-
-  <UsingTask AssemblyFile="$(ProductToolsFolder)\Microsoft.WindowsAzure.Build.Tasks.dll" TaskName="RegexReplacementTask" />
 
   <Target Name="BuildDynamicNuSpecs"
           DependsOnTargets="GetGeneratedBuildDate; EnsureBinariesFolderExists">
@@ -74,7 +70,7 @@
   <!--
   Build NuGet packages
   -->
-  <Target Name="BuildPackages"
+  <Target Name="Package"
           DependsOnTargets="EnsureBinariesFolderExists; BuildDynamicNuSpecs">
 
     <Message Text="Generating NuGet library &amp; symbols + source packages" Importance="high" />
@@ -86,7 +82,7 @@
           Command="$(NuGetCommand) pack -BasePath .\src\ -Verbosity $(NuGetVerbosity) &quot;binaries\packages\specs\%(SdkNuGetPackage.Identity).nuspec&quot; -Version %(SdkNuGetPackage.PackageVersion)$(BuildVersionSuffix)$(AdditionalVersionSuffix) -OutputDirectory &quot;$(PackageOutputDir)&quot;" />
   </Target>
 
-  <Target Name="PublishPackagesOnly">
+  <Target Name="Publish">
     <Error Condition=" '$(NuGetKey)' == '' " Text="You must provide the NuGetKey parameter to the build: /p:NuGetKey=YOUR_PUBLISHING_KEY" />
 
     <PropertyGroup>

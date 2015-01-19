@@ -48,12 +48,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{14E8819C-A
 		src\HDInsight\Local.testsettings = src\HDInsight\Local.testsettings
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{B642D0DC-6F60-4D91-8F9B-A77B8A06C2A0}"
-	ProjectSection(SolutionItems) = preProject
-		HDInsightLibraries.msbuild = HDInsightLibraries.msbuild
-		src\library.targets = src\library.targets
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "git", "git", "{55754CA3-22EA-490E-959E-D8178E3C60E4}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore

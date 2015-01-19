@@ -4,7 +4,6 @@
   <PropertyGroup>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <WindowsAzureLibraryProfileSet>net45/net40</WindowsAzureLibraryProfileSet>
     <ProjectGuid>{792D3D25-C7AB-42CA-A565-AD32E0EF7D07}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -14,7 +13,7 @@
     <RestorePackages>true</RestorePackages>
     <NuGetPackageImportStamp>3dfbcbcd</NuGetPackageImportStamp>
   </PropertyGroup>
-  <Import Project="..\library.props" />
+  <Import Project="..\..\tools\Library.Settings.targets" />
   <ItemGroup>
     <Compile Include="Customizations\EventStatusCountSummaryListResponse.Customizations.cs" />
     <Compile Include="Customizations\FilterParameterAttribute.cs" />
@@ -242,7 +241,6 @@
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(WindowsAzureCurrentConfiguration)' == 'portable' " />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(WindowsAzureCurrentConfiguration)' != 'portable' " />
   <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" />
-  <Import Project="$(SolutionDir)\src\library.targets" />
   <Import Project="GenerateCode.props" />
   <Import Project="..\..\packages\Hyak.Generator.1.0.5478.27459-prerelease\build\Hyak.Generator.targets" Condition="Exists('..\..\packages\Hyak.Generator.1.0.5478.27459-prerelease\build\Hyak.Generator.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

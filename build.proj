@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="DeveloperBuild" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <LibraryRoot>$(MSBuildThisFileDirectory)</LibraryRoot>
+	  <LibrarySourceFolder>$(LibraryRoot)src</LibrarySourceFolder>
+    <LibraryToolsFolder>$(LibraryRoot)tools</LibraryToolsFolder>
+    <LibraryFriendlyName>Microsoft Azure Management Libraries</LibraryFriendlyName>
+    <CommonSolution>AzureCommonLibraries.sln</CommonSolution>
+    <ManagementLibrariesSolution>AzureManagementLibraries.sln</ManagementLibrariesSolution>
+    <PackageOutputDir>$(LibraryRoot)binaries\packages</PackageOutputDir>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <CodeSign Condition=" '$(CodeSign)' == '' ">false</CodeSign>
+    <!--Set this true only if you want to test the code sign workflow locally-->
+    <DelaySign Condition =" '$(DelaySign)' == '' ">false</DelaySign>
+    <GenerateHydraSpecs Condition=" '$(GenerateHydraSpecs)' == '' ">true</GenerateHydraSpecs>
+    <NuGetCommand>$(LibraryToolsFolder)\nuget.exe</NuGetCommand>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <CommonProjects Include="$(CommonSolution)" Condition="$(MamlProjectName) == ''" />
+    <ManagementLibrariesProjects Include="$(ManagementLibrariesSolution)" Condition="$(MamlProjectName) == ''" />
+    <ManagementLibrariesProjects Include="$(LibrarySourceFolder)\$(MamlProjectName)\*.csproj" Condition="$(MamlProjectName) != ''" />
+    <LibraryFxTargetList Include="portable;net40;net45" />
+  </ItemGroup>
+
+  <Import Project="$(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.msbuild" />
+  <UsingTask AssemblyFile="$(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks.dll" TaskName="ValidateStrongNameSignatureTask" />
+  <UsingTask AssemblyFile="$(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks.dll" TaskName="RegexReplacementTask" />
+
+  <!--
+  CI build related
+  -->
+  <PropertyGroup>
+    <!--OnPremiseBuildTasks is not a good name, but CI server is using that, will update across soon-->
+    <CIToolsPath>$(OnPremiseBuildTasks)</CIToolsPath>
+    <BuildInCIServer Condition=" Exists($(CIToolsPath)) ">true</BuildInCIServer>
+    <BuildInCIServer Condition=" !Exists($(CIToolsPath)) ">false</BuildInCIServer>
+  </PropertyGroup>
+  <UsingTask Condition=" $(BuildInCIServer) " TaskName="CodeSigningTask" AssemblyFile="$(CIToolsPath)\Microsoft.WindowsAzure.Tools.Build.Tasks.OnPremise.dll" />
+  <UsingTask Condition=" $(BuildInCIServer) " TaskName="CorporateValidation" AssemblyFile="$(CIToolsPath)\Microsoft.WindowsAzure.Tools.Build.Tasks.OnPremise.dll" />
+  <Import Condition=" $(BuildInCIServer) " Project="$(CIToolsPath)\Microsoft.WindowsAzure.Build.OnPremise.msbuild" />
+
+  <Target Name="Build" DependsOnTargets="RestoreNugetPackages">
+
+    <CallTarget Targets="BuildMsBuildTask" />
+    <CallTarget Targets="BuildServerPreparation" Condition=" '$(CodeSign)' == 'true' " />
+    <!--The solution contains configurations for each platform such as Net40-Debug, Net45-Release, etc
+    So when invoke msbuild, feed the right configuration name-->
+    <MSBuild Projects="$(SolutionName)"
+             Properties="Configuration=%(LibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU;CodeSign=$(CodeSign)"
+             Targets="Build" />
+
+    <CallTarget Targets="CodeSignBinaries" Condition=" '$(CodeSign)' == 'true' " />
+
+  </Target>
+
+  <!-- Projects import BCL target, so make sure the packages get restored first -->
+  <Target Name="Clean" DependsOnTargets="RestoreNugetPackages">
+    <MSBuild Projects="$(SolutionName)"
+             Properties="Configuration=%(LibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU"
+             Targets="Clean" />
+    <RemoveDir Directories="$(PackageOutputDir)" />
+  </Target>
+
+  <!--
+  Run all tests
+  -->
+  <UsingTask TaskName="Xunit.Runner.msbuild.xunit" AssemblyFile="packages\xunit.1.9.2\lib\net20\xunit.runner.msbuild.dll" />
+  <Target Name="Test">
+    <ItemGroup>
+      <!--test projects should always have net45 in its target framework list-->
+      <TestDlls Include=".\src\*.Test\bin\net45*\*Test.dll"/>
+    </ItemGroup>
+    <MakeDir Directories="$(LibraryRoot)TestResults"/>
+    <Message Text="%(TestDlls.Filename)" />
+    <xunit Assemblies="@(TestDlls)" Html="$(MSBuildProjectDirectory)\TestResults\xunit.results.html" ContinueOnError="ErrorAndContinue" />
+    <CallTarget Targets="RunMSTests" />
+  </Target>
+
+  <Target Name="RunMSTests" >
+    <PropertyGroup>
+      <TestSettings Condition="'$(TestSettings)' == ''">$(LibrarySourceFolder)\Local.testsettings</TestSettings>
+      <TestFilter Condition="'$(TestFilter)' == ''" >!Functional&#x26;!Scenario</TestFilter>
+      <TestFilter Condition="'$(NoInteractiveTests)' == 'true'">$(TestFilter)&#x26;!Interactive</TestFilter>
+      <TestOutputDirectory Condition="'$(TestOutputDirectory)' == ''">$(LibraryRoot)TestResults</TestOutputDirectory>
+    </PropertyGroup>
+    <ItemGroup>
+      <TestDlls Include="$(LibrarySourceFolder)\*.Tests\bin\*\*Tests.dll"/>
+    </ItemGroup>
+    <MakeDir Directories="$(LibraryRoot)TestResults"/>
+    <Message Text="Found test file: %(TestDlls.Filename)" />
+
+    <Message Importance="high" Text="Running tests..." />
+    <Message Importance="high" Text="You are required to have installed a version of Visual Studio with support for MSTest (and MSTest on your path)." />
+    <MakeDir Directories="$(TestOutputDirectory)" ContinueOnError="false" />
+
+    <Message Importance="high" Text="Debug tests: %(TestDlls.FullPath)" />
+
+    <ItemGroup>
+      <TestOutputFiles Include="$(TestOutputDirectory)\%(TestDlls.FileName).trx" />
+    </ItemGroup>
+
+    <Message Importance="high" Text="Test Output Files: %(TestOutputFiles.FullPath)" />
+
+    <Exec
+		  Command="MSTest.exe /testcontainer:%(TestDlls.FullPath) /testsettings:$(TestSettings) /category:&quot;$(TestFilter)&quot; /resultsfile:$(TestOutputDirectory)\%(TestDlls.Filename).trx"
+		  ContinueOnError="true" />
+  </Target>
+  
+  <PropertyGroup>
+    <!--This property is used by build script at CI server. Do not remove it unless you will update CI as well -->
+    <CorporateScanPaths>$(LibrarySourceFolder)</CorporateScanPaths>
+  </PropertyGroup>
+  <Target Name="SignBinariesForAFxTarget">
+    <PropertyGroup>
+      <!--public token associated with MSSharedLibKey.snk-->
+      <StrongNameToken Condition=" '$(StrongNameToken)' == '' ">31bf3856ad364e35</StrongNameToken>
+    </PropertyGroup>
+    <GetFrameworkSdkPath>
+      <Output TaskParameter="Path" PropertyName="WindowsSdkPath"/>
+    </GetFrameworkSdkPath>
+
+    <ItemGroup>
+      <DelaySignedAssembliesToValidate Include="binaries\$(LibraryFxTarget)\unsigned\*.dll" />
+    </ItemGroup>
+    <ValidateStrongNameSignatureTask
+        WindowsSdkPath="$(WindowsSdkPath)"
+        Assembly="%(DelaySignedAssembliesToValidate.Identity)"
+        ExpectedTokenSignature="$(StrongNameToken)"
+        ExpectedDelaySigned="true"
+        ContinueOnError="false" />
+
+    <CodeSigningTask
+        Description="Microsoft Azure SDK"
+        Keywords="Microsoft Azure .NET SDK"
+        UnsignedFiles="@(DelaySignedAssembliesToValidate)"
+        DestinationPath="binaries\$(LibraryFxTarget)"
+        SigningLogPath="binaries\$(LibraryFxTarget)\signing.log"
+        ToolsPath="$(CIToolsPath)"
+        Condition="!$(DelaySign)"/>
+    <!--If we are testing locally then we copy the binaries and do not submit to the code sign server-->
+    <Copy SourceFiles="@(DelaySignedAssembliesToValidate)" DestinationFolder="binaries\$(LibraryFxTarget)" Condition="$(DelaySign)" />
+
+    <Error Condition=" !Exists('binaries\$(LibraryFxTarget)\Microsoft.Azure.Common.dll') " Text="The Microsoft.Azure.Common.dll binary is not in the .\binaries\$(LibraryFxTarget) folder. Code signing likely failed." />
+
+    <ItemGroup>
+      <AfterSignedAssembliesToValidate Include="binaries\$(LibraryFxTarget)\*.dll" />
+    </ItemGroup>
+    <ValidateStrongNameSignatureTask
+        WindowsSdkPath="$(WindowsSdkPath)"
+        Assembly="%(AfterSignedAssembliesToValidate.Identity)"
+        ExpectedTokenSignature="$(StrongNameToken)"
+        ExpectedDelaySigned="false"
+        ContinueOnError="false"
+        Condition="!$(DelaySign)"/>
+
+    <RemoveDir Directories="binaries\$(LibraryFxTarget)\unsigned;" ContinueOnError="true" />
+  </Target>
+
+  <Target Name="CodeSignBinaries">
+
+    <Error Condition=" !$(BuildInCIServer) and !$(DelaySign) " Text="No CI tools path available, the code sign will be unable to continue. $(CIToolsPath)" />
+
+    <Message Text="Code signing" Importance="high" />
+
+    <MSBuild Projects="$(MSBuildProjectFullPath)"
+             Targets="SignBinariesForAFxTarget"
+             Properties="LibraryFxTarget=%(LibraryFxTargetList.Identity);StrongNameToken=$(StrongNameToken)">
+    </MSBuild>
+
+    <CallTarget Targets="ValidateCorporateCompliance" Condition="!$(DelaySign)"/>
+  </Target>
+  
+  <!--
+  Pre-build the tasks file used for validating strong name signatures,
+  providing date-based build numbers, and processing regular expression
+  replacements in files such as NuGet specs.
+  -->
+  <Target Name="BuildMsBuildTask" DependsOnTargets="ForceRestorePackages">
+    <MSBuild Projects="tools\Microsoft.WindowsAzure.Build.Tasks\Microsoft.WindowsAzure.Build.Tasks.csproj"
+             Targets="Build"
+             Properties="Configuration=Debug;Platform=AnyCPU" />
+  </Target>
+
+  <!--
+  Force nuget package restore so that packages that include .targets files
+  do not need to be checked into source control.
+
+  Assumes use of a private feed.
+    PRIVATE_FEED_URL: The url of the feed to pull from with specific credentials (in addition to the public default feed)
+    PRIVATE_FEED_USER_NAME: User name for access to the feed
+    PRIVATE_FEED_PASSWORD: Password for access to the feed
+  -->
+  <Target Name="RestoreNugetPackages">
+    <PropertyGroup>
+      <NuGetRestoreConfigFile>$(LibraryRoot)restore.config</NuGetRestoreConfigFile>
+      <NuGetRestoreConfigSwitch>-ConfigFile &quot;$(NuGetRestoreConfigFile)&quot;</NuGetRestoreConfigSwitch>
+    </PropertyGroup>
+
+    <!-- Create config for user name and password for private feed access -->
+    <Delete Files="$(NuGetRestoreConfigFile)" />
+    <WriteLinesToFile
+      File="$(NuGetRestoreConfigFile)"
+      Lines="&lt;configuration&gt;&lt;/configuration&gt;"
+      Overwrite="true"
+      Encoding="Unicode"/>
+    <!-- Private versions of packages are picked up from these feeds, defined with environment variables -->
+    <Exec Command="$(NuGetCommand) sources add -Name PrimaryFeed -Source &quot;$(PRIVATE_FEED_URL)&quot; $(NuGetRestoreConfigSwitch)" Condition=" '$(PRIVATE_FEED_URL)'!='' "/>
+    <Exec Command="$(NuGetCommand) sources Update -Name PrimaryFeed -UserName $(PRIVATE_FEED_USER_NAME) -Password &quot;$(PRIVATE_FEED_PASSWORD)&quot; $(NuGetRestoreConfigSwitch)" EchoOff="true" Condition=" '$(PRIVATE_FEED_PASSWORD)'!='' AND '$(PRIVATE_FEED_USER_NAME)'!='' "/>
+    <Exec Command="$(NuGetCommand) sources add -Name SecondaryFeed -Source &quot;$(SECONDARY_FEED_URL)&quot; $(NuGetRestoreConfigSwitch)" Condition=" '$(SECONDARY_FEED_URL)'!='' "/>
+    <Exec Command="$(NuGetCommand) sources Update -Name SecondaryFeed -UserName $(SECONDARY_FEED_USER_NAME) -Password &quot;$(SECONDARY_FEED_PASSWORD)&quot; $(NuGetRestoreConfigSwitch)" EchoOff="true" Condition=" '$(SECONDARY_FEED_PASSWORD)'!='' AND '$(SECONDARY_FEED_USER_NAME)'!='' "/>
+    <Exec Command="$(NuGetCommand) sources add -Name AzureSdkInternalFeed -Source &quot;https://www.myget.org/F/azure-sdk-internal/&quot; $(NuGetRestoreConfigSwitch)"/>
+
+    <Exec Command="$(NuGetCommand) restore $(CommonSolution) $(NuGetRestoreConfigSwitch)" ContinueOnError="ErrorAndContinue" />
+    <Exec Command="$(NuGetCommand) restore $(ManagementLibrariesSolution) $(NuGetRestoreConfigSwitch)" ContinueOnError="ErrorAndContinue" />
+
+    <!-- delete config file, don't want to leave passwords hanging around on the build server file system -->
+    <Delete Files="$(NuGetRestoreConfigFile)" />
+  </Target>
+
+
+  <!--
+  We have some important work to do when building our official Library bits.
+  -->
+  <Target Name="ValidateCorporateCompliance">
+    <Error Text="This target must be run in an on-premise build server." Condition=" '$(OnPremiseBuild)'=='false' " />
+    <CallTarget Targets="CorporateValidation" />
+  </Target>
+
+  <!--
+  Tasks that should be performed on any build server before getting to work.
+  -->
+  <Target Name="BuildServerPreparation">
+    <!-- Log server information -->
+    <Message Text="Build Server Information" Importance="high" />
+    <Message Text="Hostname      : $(COMPUTERNAME)" />
+    <Message Text="Build Account : $(USERDOMAIN)\$(USERNAME)" />
+
+    <!-- Useful variables to log -->
+    <Message Text="Build Properties and Variables" Importance="high" />
+    <Message Text="Common Solution    : $(CommonSolution)" />
+    <Message Text="Libraries Solution : $(ManagementLibrariesSolution)" />
+    <Message Text="Library            : $(LibraryFriendlyName)" />
+    <Message Text="Source folder      : $(LibrarySourceFolder)" />
+
+    <!-- Modify local files -->
+    <CallTarget Targets="BurnBuildVersions" />
+  </Target>
+
+  <!--
+  Burn the build information into the assembly file information, NuGet specs,
+  and other source files before beginning a build.
+
+  This updates the AssemblyFileVersion for .NET assemblies. 
+  
+  If you accidentally run this within your enlistment, revert AssemblyInfo.cs
+  changes before commiting to Git.
+  -->
+  <Target Name="BurnBuildVersions"
+          DependsOnTargets="GetGeneratedBuildDate">
+    <Message Text="Destructive burn of assembly file versions to include the build number in the revision component." />
+    <ItemGroup>
+      <AssemblyInfoFilesToUpdate Include="$(LibrarySourceFolder)\*\Properties\AssemblyInfo.cs" />
+    </ItemGroup>
+    <RegexReplacementTask Files="@(AssemblyInfoFilesToUpdate)"
+                          Find="AssemblyFileVersion\(&quot;(?&lt;semver&gt;\d{1,3}\.\d{1,3}\.\d{1,3}).(?&lt;revision&gt;)\d{1,3}&quot;\)"
+                          Replace="AssemblyFileVersion(&quot;${semver}.$(GeneratedBuildDate)&quot;)"
+                          LogReplacement="true" />
+  </Target>
+  
+  <Import Project="$(LibraryToolsFolder)\nuget.targets" />
+</Project>

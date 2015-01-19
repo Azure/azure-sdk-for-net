@@ -15,12 +15,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComputeManagement", "src\Co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Management", "src\Management\Management.csproj", "{2B6D304F-5DC0-4052-A8AB-80E53C291E5F}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{D93C94DB-270A-46A0-AF68-C58B99B9A4D2}"
-	ProjectSection(SolutionItems) = preProject
-		libraries.msbuild = libraries.msbuild
-		src\library.targets = src\library.targets
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{7C044DD1-F76B-49A7-A8DF-A5DEEE748EBB}"
 	ProjectSection(SolutionItems) = preProject
 		Libraries.testsettings = Libraries.testsettings

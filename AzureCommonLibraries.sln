@@ -8,12 +8,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "src\Common\Common
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.NetFramework", "src\Common.NetFramework\Common.NetFramework.csproj", "{14529261-9F9F-4D2F-80D5-B26677F51E8B}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{D93C94DB-270A-46A0-AF68-C58B99B9A4D2}"
-	ProjectSection(SolutionItems) = preProject
-		libraries.msbuild = libraries.msbuild
-		src\library.targets = src\library.targets
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{7C044DD1-F76B-49A7-A8DF-A5DEEE748EBB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Configuration", "src\Configuration\Configuration.csproj", "{8FF949EE-73BD-48BF-ABDF-A6711E573FDF}"
