@@ -1,0 +1,231 @@
+<?xml version="1.0"?>
+<ArrayOfAzureTestCredentials xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <AzureTestCredentials>
+    <CredentialsName>default</CredentialsName>
+    <SubscriptionId>c36fd9e7-e5b1-4d3e-bb85-2e538040258b</SubscriptionId>
+    <Certificate>creds\certs\sdkcli.cer</Certificate>
+    <InvalidCertificate>creds\certs\invalid.cer</InvalidCertificate>
+    <AzureUserName>sa-po-svc</AzureUserName>
+    <AzurePassword>4e9e2feA406B4A5187BB889576871989!</AzurePassword>
+    <HadoopUserName>sa-po-svc</HadoopUserName>
+
+    <WellKnownCluster>
+      <Cluster>https://tsthdx00hdxcibldSU1121.azurehdinsight.net</Cluster>
+      <DnsName>tsthdx00hdxcibldsu1121</DnsName>
+      <Version>2.1</Version>
+    </WellKnownCluster>
+
+    <CloudServiceName>hdinsight</CloudServiceName>
+    <Endpoint>https://management.core.windows.net:8443/</Endpoint>
+    <EnvironmentType>Production</EnvironmentType>
+    <ResourceProviderProperties>
+      <ResourceProviderProperty>
+        <Key>CAPABILITY_FEATURE_CUSTOM_ACTIONS_V2</Key>
+        <Value>Custom Actions Feature V2</Value>
+      </ResourceProviderProperty>
+      <ResourceProviderProperty>
+        <Key>CAPABILITY_REGION_EAST_US</Key>
+        <Value>East US</Value>
+      </ResourceProviderProperty>
+      <ResourceProviderProperty>
+        <Key>CAPABILITY_REGION_EAST_US_2</Key>
+        <Value>East US 2</Value>
+      </ResourceProviderProperty>
+      <ResourceProviderProperty>
+        <Key>CAPABILITY_REGION_NORTH_EUROPE</Key>
+        <Value>North Europe</Value>
+      </ResourceProviderProperty>
+      <ResourceProviderProperty>
+        <Key>CAPABILITY_REGION_WEST_US</Key>
+        <Value>West US</Value>
+      </ResourceProviderProperty>
+      <ResourceProviderProperty>
+        <Key>CAPABILITY_VERSION_1.4</Key>
+        <Value>HdInsight version 1.4</Value>
+      </ResourceProviderProperty>
+      <ResourceProviderProperty>
+        <Key>CAPABILITY_VERSION_1.5</Key>
+        <Value>HdInsight version 1.5</Value>
+      </ResourceProviderProperty>
+      <ResourceProviderProperty>
+        <Key>CAPABILITY_VERSION_1.6</Key>
+        <Value>HdInsight version 1.6</Value>
+      </ResourceProviderProperty>
+      <ResourceProviderProperty>
+        <Key>CAPABILITY_VERSION_2.0</Key>
+        <Value>HdInsight version 2.0</Value>
+      </ResourceProviderProperty>
+      <ResourceProviderProperty>
+        <Key>CAPABILITY_VERSION_2.1</Key>
+        <Value>HdInsight version 2.1</Value>
+      </ResourceProviderProperty>
+      <ResourceProviderProperty>
+        <Key>CONTAINERS_Count</Key>
+        <Value>3</Value>
+      </ResourceProviderProperty>
+      <ResourceProviderProperty>
+        <Key>CONTAINERS_CoresUsed</Key>
+        <Value>72</Value>
+      </ResourceProviderProperty>
+      <ResourceProviderProperty>
+        <Key>CONTAINERS_MaxCoresAllowed</Key>
+        <Value>170</Value>
+      </ResourceProviderProperty>
+    </ResourceProviderProperties>
+
+    <Environments>
+      <CreationDetails>
+        <Location>West US</Location>
+        <DefaultStorageAccount>
+          <Name>hdxciwestus1.blob.core.windows.net</Name>
+          <Key>MOhzfOWc5F42YTEpf+xzftMlOvzRO4L9pnCSYzYIWQTEPrYA7VVb1CE2GKB64Be4iuhfYB+V60E3HQ0pbD4UtA==</Key>
+          <Container>deployment1</Container>
+        </DefaultStorageAccount>
+        <AdditionalStorageAccounts>
+          <StorageAccountCredentials>
+            <Name>hdxciwestus2.blob.core.windows.net</Name>
+            <Key>QGH8IHm00ufs00dsJHbq0O+o6QGgLgtgfQsUZDIrzIfW/1Vb6AwTM0O3r9ZKwGQsZlAE5w3nLK4L9+kAJ4f5gg==</Key>
+            <Container>deployment1</Container>
+          </StorageAccountCredentials>
+
+          <StorageAccountCredentials>
+            <Name>hdxciwestus3.blob.core.windows.net</Name>
+            <Key>kYiHJJgEOvEoiV3Dhk+zQMILwjJOXjbB5ipFW2uJcoQYa1Inhwrtqo94YiFjqPj+YtbVlwixRJFHzyaYSmiGMA==</Key>
+            <Container>deployment1</Container>
+          </StorageAccountCredentials>
+        </AdditionalStorageAccounts>
+        <HiveStores>
+          <MetastoreCredentials>
+            <Description>HiveDB1</Description>
+            <SqlServer>p9ltxwbw4s.database.windows.net</SqlServer>
+            <Database>tstsql00hdxcibld02-wus-hive10</Database>
+            <UserName>sa-po-svc</UserName>
+            <Password>4e9e2feA406B4A5187BB889576871989!</Password>
+          </MetastoreCredentials>
+        </HiveStores>
+        <OozieStores>
+          <MetastoreCredentials>
+            <Description>OOzieDB1</Description>
+            <SqlServer>p9ltxwbw4s.database.windows.net</SqlServer>
+            <Database>tstsql00hdxcibld02-wus-oozie10</Database>
+            <UserName>sa-po-svc</UserName>
+            <Password>4e9e2feA406B4A5187BB889576871989!</Password>
+          </MetastoreCredentials>
+        </OozieStores>
+      </CreationDetails>
+      <CreationDetails>
+        <Location>East US</Location>
+        <DefaultStorageAccount>
+          <Name>tststg00eus1.blob.core.windows.net</Name>
+          <Key>+wobuEtwG8oWO5zgtxVUW52Llck/1sZp2sr5eCf2AmbnI525fuMQ4cIpvqZC9bs/920PLYZCiDyfaxhXArcoHQ==</Key>
+          <Container>deployment1</Container>
+        </DefaultStorageAccount>
+        <AdditionalStorageAccounts>
+          <StorageAccountCredentials>
+            <Name>tststg01eus1.blob.core.windows.net</Name>
+            <Key>sc0Y5S8xhRCe2o6FjLTBXxW8twqwk+ClfLqohoW3cMkrXj92FyJgmNajTqhrlAiM4fzmxNt/7fMWI3ucXbZ8DA==</Key>
+            <Container>deployment1</Container>
+          </StorageAccountCredentials>
+        </AdditionalStorageAccounts>
+      </CreationDetails>
+      <CreationDetails>
+        <Location>North Europe</Location>
+        <DefaultStorageAccount>
+          <Name>tststg00hdxcibld02f.blob.core.windows.net</Name>
+          <Key>o1h1nw+A3e+rsjtdlFH2LTnBJt1LUTM4gpYpgItunU+X8jtHMWjwsemA9+7Y9XEkxyT1kdAElO2l8eN0ORDypQ==</Key>
+          <Container>tststg00hdxcibld02f</Container>
+        </DefaultStorageAccount>
+        <AdditionalStorageAccounts/>
+      </CreationDetails>
+    </Environments>
+
+
+    <AlternativeEnvironment>
+      <Endpoint>https://umapi.rdfetest.dnsdemo4.com:8443</Endpoint>
+      <Namespace>hadoopservicesnightly</Namespace>
+      <SubscriptionId>0fec600d-7e0c-4282-ad96-9b515db0471b</SubscriptionId>
+    </AlternativeEnvironment>
+
+  </AzureTestCredentials>
+  <AzureTestCredentials>
+    <CredentialsName>hadoop</CredentialsName>
+    <SubscriptionId>0fec600d-7e0c-4282-ad96-9b515db0471b</SubscriptionId>
+    <Certificate>creds\certs\emrcert.cer</Certificate>
+    <InvalidCertificate>creds\cert\invalid.cer</InvalidCertificate>
+
+    <WellKnownCluster>
+      <DnsName>tistocks-manualtest03</DnsName>
+      <Cluster>https://tistocks-manualtest03.hdinsight-stable.azure-test.net:563</Cluster>
+      <Version>1.4.0.350</Version>
+    </WellKnownCluster>
+    <ResourceProviderProperties>
+      <ResourceProviderProperty>
+        <Key>CAPABILITY_REGION_EAST_US</Key>
+        <Value>East US</Value>
+      </ResourceProviderProperty>
+      <ResourceProviderProperty>
+        <Key>CAPABILITY_REGION_EAST_US_2</Key>
+        <Value>East US 2</Value>
+      </ResourceProviderProperty>
+      <ResourceProviderProperty>
+        <Key>CAPABILITY_REGION_NORTH_EUROPE</Key>
+        <Value>North Europe</Value>
+      </ResourceProviderProperty>
+      <ResourceProviderProperty>
+        <Key>CAPABILITY_VERSION_1.2.0.0.LARGESKU-AMD64-134231</Key>
+        <Value>1.2.0.0.LargeSKU-amd64-134231</Value>
+      </ResourceProviderProperty>
+      <ResourceProviderProperty>
+        <Key>CONTAINERS_Count</Key>
+        <Value>13</Value>
+      </ResourceProviderProperty>
+      <ResourceProviderProperty>
+        <Key>CONTAINERS_CoresUsed</Key>
+        <Value>168</Value>
+      </ResourceProviderProperty>
+      <ResourceProviderProperty>
+        <Key>CONTAINERS_MaxCoresAllowed</Key>
+        <Value>170</Value>
+      </ResourceProviderProperty>
+    </ResourceProviderProperties>
+    <AzureUserName>hdinsightuser</AzureUserName>
+    <AzurePassword>HdInsight123!</AzurePassword>
+    <HadoopUserName>tistocks</HadoopUserName>
+    <AlternativeEnvironment>
+      <Endpoint>https://umapi.rdfetest.dnsdemo4.com:8443</Endpoint>
+      <Namespace>hadoopservicesnightly</Namespace>
+      <SubscriptionId>2542357d-054f-4ec9-ab66-ce4ec1c948c6</SubscriptionId>
+    </AlternativeEnvironment>
+    <DefaultStorageAccount>
+      <Name>tistocksstg1.blob.core.windows.net</Name>
+      <Key>f0Q/NDSTRCq6dbhYUb865A+u+bbAEJuUxBwMEMS6k0P9KJtcv8Mt4K5G2bsb18ET8j0BnLJF7RHhE90eZ38Wrw==</Key>
+      <Container>deployment1</Container>
+    </DefaultStorageAccount>
+    <AdditionalStorageAccounts>
+      <StorageAccountCredentials>
+        <Name>tststg00hdxcibld02b.blob.core.windows.net</Name>
+        <Key>P8TADZ3WSDgdCMTexZ2Tt3srG5NsEKUcg59pnoSKHZAbc1pxjfnPNzEB00M6NPob/0xVhqeKpqSeQhjw5tInsg==</Key>
+        <Container>deployment1</Container>
+      </StorageAccountCredentials>
+    </AdditionalStorageAccounts>
+     <HiveStores>
+          <MetastoreCredentials>
+            <Description>HiveDB1</Description>
+            <SqlServer>p9ltxwbw4s.database.windows.net</SqlServer>
+            <Database>tstsql00hdxcibld02-wus-hive10</Database>
+            <UserName>sa-po-svc</UserName>
+            <Password>4e9e2feA406B4A5187BB889576871989!</Password>
+          </MetastoreCredentials>
+        </HiveStores>
+        <OozieStores>
+          <MetastoreCredentials>
+            <Description>OOzieDB1</Description>
+            <SqlServer>p9ltxwbw4s.database.windows.net</SqlServer>
+            <Database>tstsql00hdxcibld02-wus-oozie10</Database>
+            <UserName>sa-po-svc</UserName>
+            <Password>4e9e2feA406B4A5187BB889576871989!</Password>
+          </MetastoreCredentials>
+        </OozieStores>
+  </AzureTestCredentials>
+</ArrayOfAzureTestCredentials>
+

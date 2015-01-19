@@ -13,14 +13,16 @@
     using Microsoft.WindowsAzure.Management.HDInsight.TestUtilities;
 
     [SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable", Justification = "Test class. Disposing in the tear off method.")]
-    [DeploymentItem(@"cert\sdkcli.cer", "certs")]
-    [DeploymentItem(@"cert\invalid.cer", "certs")]
+    [DeploymentItem(@"creds\creds.xml", @"creds\")]
+    [DeploymentItem(@"creds\certs\invalid.cer", @"creds\certs")]
+    [DeploymentItem(@"creds\certs\emrcert.cer", @"creds\certs")]
+    [DeploymentItem(@"creds\certs\sdkcli.cer", @"creds\certs")]
     public class ClustersTestsBase
     {
         internal static string TestSubscription = Guid.NewGuid().ToString();
         internal HttpServer DefaultHandler;
         internal HDInsightCertificateCredential HdInsightCertCred;
-        internal readonly X509Certificate2 Certificate = new X509Certificate2(@"certs\sdkcli.cer");
+        internal readonly X509Certificate2 Certificate = new X509Certificate2(@"creds\certs\sdkcli.cer");
         internal HDInsightSubscriptionAbstractionContext Context;
         internal static List<string> Capabilities = new List<string>();
     

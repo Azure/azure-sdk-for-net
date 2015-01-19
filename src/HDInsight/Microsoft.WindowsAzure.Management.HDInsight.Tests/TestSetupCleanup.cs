@@ -14,24 +14,8 @@
 // permissions and limitations under the License.
 namespace Microsoft.WindowsAzure.Management.HDInsight.Tests
 {
-    using System;
-    using System.Collections.Generic;
-    using Microsoft.Hadoop.Client;
-    using Microsoft.Hadoop.Client.HadoopJobSubmissionPocoClient;
-    using Microsoft.Hadoop.Client.HadoopJobSubmissionPocoClient.RemoteHadoop;
-    using Microsoft.Hadoop.Client.Storage;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using Microsoft.WindowsAzure.Management.Configuration;
-    using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Asv;
-    using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.AzureManagementClient;
-    using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.RestClient;
-    using Microsoft.WindowsAzure.Management.HDInsight.Framework.Logging;
-    using Microsoft.WindowsAzure.Management.HDInsight.Logging;
-    using Microsoft.WindowsAzure.Management.HDInsight.Framework.ServiceLocation;
-    using Microsoft.WindowsAzure.Management.HDInsight.JobSubmission.PocoClient;
     using Microsoft.WindowsAzure.Management.HDInsight.TestUtilities;
-    using Microsoft.WindowsAzure.Management.HDInsight.TestUtilities.RestSimulator;
-    using Microsoft.WindowsAzure.Management.HDInsight.Tests.RestSimulator;
 
     [TestClass]
     public static class TestSetupCleanup

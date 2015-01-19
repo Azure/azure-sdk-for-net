@@ -43,8 +43,10 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities
     using Microsoft.WindowsAzure.Management.HDInsight.Tests.RestSimulator;
     using Microsoft.WindowsAzure.Management.HDInsight.TestUtilities.RestSimulator;
 
-    [DeploymentItem(@"cert\invalid.cer", "certs")]
-    [DeploymentItem(@"cert\sdkcli.cer", "certs")]
+    [DeploymentItem(@"creds\creds.xml", @"creds\")]
+    [DeploymentItem(@"creds\certs\invalid.cer", @"creds\certs")]
+    [DeploymentItem(@"creds\certs\sdkcli.cer", @"creds\certs")]
+    [DeploymentItem(@"creds\certs\emrcert.cer", @"creds\certs")]
     [TestClass]
     public class IntegrationTestBase : TestsBase
     {
@@ -258,7 +260,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities
             }
 
             // Sets the certificate
-            var defaultCertificate = new X509Certificate2("certs/sdkcli.cer");
+            var defaultCertificate = new X509Certificate2(IntegrationTestBase.TestCredentials.Certificate);
 
             // Sets the test static properties
             IntegrationTestBase.ClusterPrefix = string.Format("CLITest-{0}", Environment.GetEnvironmentVariable("computername") ?? "unknown");
@@ -280,7 +282,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities
             tempCredentials = new HDInsightCertificateCredential()
             {
                 SubscriptionId = TestCredentials.SubscriptionId,
-                Certificate = new X509Certificate2("certs/invalid.cer"),
+                Certificate = defaultCertificate,
                 Endpoint = new Uri(TestCredentials.Endpoint)
             };
             IntegrationTestBase.invalidCertificate = ServiceLocator.Instance

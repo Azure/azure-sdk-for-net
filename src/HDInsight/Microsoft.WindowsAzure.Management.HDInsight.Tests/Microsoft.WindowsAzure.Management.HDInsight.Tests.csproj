@@ -16,9 +16,6 @@
     <Compile Include="ClientAbstractionTests\StorageAbstractionTests.cs" />
     <Compile Include="ClientAbstractionTests\StringLogWriter.cs" />
     <Compile Include="ClientAbstractionTests\VersionFinderClientTests.cs" />
-    <None Include="certs\sdkcli.cer">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="ClientAbstractionTests\JobPocoClientTests.cs" />
     <Compile Include="ClientAbstractionTests\LocationFinderClientTests.cs" />
     <Compile Include="ClientAbstractionTests\SubscriptionRegistrationTests.cs" />
