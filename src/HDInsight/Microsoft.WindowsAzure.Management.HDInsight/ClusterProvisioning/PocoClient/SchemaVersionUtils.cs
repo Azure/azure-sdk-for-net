@@ -19,7 +19,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
             {
                 {1, "CAPABILITY_FEATURE_CLUSTERS_CONTRACT_1_SDK"},
                 {2, "CAPABILITY_FEATURE_CLUSTERS_CONTRACT_2_SDK"},
-                {3, "CAPABILITY_FEATURE_CLUSTERS_CONTRACT_3_SDK"}
+                {3, "CAPABILITY_FEATURE_CLUSTERS_CONTRACT_VERSION_3_SDK"}
             };
 
         public static string GetSchemaVersion(List<string> capabilities)
@@ -42,11 +42,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
             }
 
             var matchesOld = capabilities.Select(s => ClustersContractCapabilityRegexOld.Match(s)).Where(match => match.Success).ToList();
-            if (matchesOld.Count == 0)
-            {
-                throw new NotSupportedException(
-                    String.Format(CultureInfo.CurrentCulture, "This subscription is not enabled for the clusters contract. The capability {0} is missing.", clustersCapability));
-            }
 
             var schemaVersions = matchesOld.Select(m => Int32.Parse(m.Groups[1].Value, CultureInfo.CurrentCulture)).ToList();
 
