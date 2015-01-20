@@ -5,8 +5,10 @@
     <BaselineReleaseNotes>PREVIEW RELEASE</BaselineReleaseNotes>
   </PropertyGroup>
   
-  <Import Project="$(ProductSourceFolder)\*\*.nuget.proj" Condition="$(MamlProjectName) == ''"/>
-  <Import Project="$(ProductSourceFolder)\*\$(MamlProjectName)\*.nuget.proj" Condition="$(MamlProjectName) != ''"/>
+  <!--TODO: uncomment when we are build all of the project-->
+  <!--<Import Project="$(LibrarySourceFolder)\*\*.nuget.proj" Condition="$(MamlProjectName) == ''"/>-->
+  <Import Project="$(LibrarySourceFolder)\*\$(MamlProjectName)\*.nuget.proj" Condition="$(MamlProjectName) != ''"/>
+  <Import Project="$(LibrarySourceFolder)\Common*\*.nuget.proj" />
 
   <PropertyGroup>
     <NuGetVerbosity>normal</NuGetVerbosity>
@@ -43,7 +45,7 @@
                           LogReplacement="false" />
 
     <!-- Update all explicit references to dependent versions. -->
-    <Exec Command="$(PowerShellExe) -NonInteractive -ExecutionPolicy bypass -Command &quot;&amp; { &amp;&apos;$(NuSpecSyncScript)&apos; -BasePath &apos;$(ProductSourceFolder)&apos; }&quot;" />
+    <Exec Command="$(PowerShellExe) -NonInteractive -ExecutionPolicy bypass -Command &quot;&amp; { &amp;&apos;$(NuSpecSyncScript)&apos; -BasePath &apos;$(LibrarySourceFolder)&apos; }&quot;" />
 
     <!-- Second, use the new files as destructive replacement targets. -->
     <ItemGroup>
