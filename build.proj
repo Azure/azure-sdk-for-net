@@ -219,6 +219,10 @@
     <Delete Files="$(NuGetRestoreConfigFile)" />
   </Target>
 
+  <Target Name="ForceRestorePublicPackages">
+    <Exec Command="$(NuGetCommand) restore @(CommonProjects)" ContinueOnError="ErrorAndContinue" />
+    <Exec Command="$(NuGetCommand) restore @(ManagementLibrariesProjects)" ContinueOnError="ErrorAndContinue" />
+  </Target>
 
   <!--
   We have some important work to do when building our official Library bits.
