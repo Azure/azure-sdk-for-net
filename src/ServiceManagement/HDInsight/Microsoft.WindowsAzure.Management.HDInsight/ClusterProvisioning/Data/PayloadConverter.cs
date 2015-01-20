@@ -73,12 +73,13 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         private const string HttpPassword = "Http_Password";
         private const string BlobContainersElementName = "BlobContainers";
         private const string Create = "Create";
-        private const string SchemaVersion30 = "3.0";
+        private const string SchemaVersion20 = "2.0";
         private const string WorkerNodeRoleName = "WorkerNodeRole";
         private const string HeadNodeRoleName = "HeadNodeRole";
         private const string ClusterTypePropertyName = "Type";
         private const string HadoopAndHBaseType = "MR,HBase";
         private const string HadoopAndStormType = "MR,Storm";
+        private const string HadoopAndSparkType = "MR,Spark";
         private const string ContainersResourceType = "containers";
       
         /// <summary>
@@ -245,7 +246,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         }
 
         /// <inheritdoc />
-        public string SerializeClusterCreateRequestV3(ClusterCreateParameters2 cluster)
+        public string SerializeClusterCreateRequestV3(ClusterCreateParametersV2 cluster)
         {
             Contracts.May2014.ClusterCreateParameters ccp = null;
             if (cluster.ClusterType == ClusterType.HBase)
@@ -255,6 +256,10 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
             else if (cluster.ClusterType == ClusterType.Storm)
             {
                 ccp = HDInsightClusterRequestGenerator.Create3XClusterForMapReduceAndStormTemplate(cluster);
+            }
+            else if (cluster.ClusterType == ClusterType.Spark)
+            {
+                ccp = HDInsightClusterRequestGenerator.Create3XClusterForMapReduceAndSparkTemplate(cluster);
             }
             else if (cluster.ClusterType == ClusterType.Hadoop)
             {
@@ -268,14 +273,14 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         }
 
         /// <inheritdoc />
-        public string SerializeClusterCreateRequest(ClusterCreateParameters2 cluster)
+        public string SerializeClusterCreateRequest(ClusterCreateParametersV2 cluster)
         {
             return this.CreateClusterRequest_ToInternal(cluster);
         }
 
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity",
             Justification = "This is a result of interface flowing and not a true measure of complexity.")]
-        private string CreateClusterRequest_ToInternal(ClusterCreateParameters2 cluster)
+        private string CreateClusterRequest_ToInternal(ClusterCreateParametersV2 cluster)
         {
             dynamic dynaXml = DynaXmlBuilder.Create(false, Formatting.None);
             // The RP translates 1 XL into 2 L for SU 4 and up.
@@ -285,7 +290,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
             dynaXml.xmlns("http://schemas.microsoft.com/windowsazure")
                    .Resource
                    .b
-                     .SchemaVersion(SchemaVersion30)
+                     .SchemaVersion(SchemaVersion20)
                      .IntrinsicSettings
                      .b
                        .xmlns(May2013)
@@ -429,7 +434,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
             }
         }
 
-        private void SerializeHiveConfiguration(ClusterCreateParameters2 cluster, dynamic dynaXml)
+        private void SerializeHiveConfiguration(ClusterCreateParametersV2 cluster, dynamic dynaXml)
         {
             if (cluster.HiveConfiguration.AdditionalLibraries != null)
             {
@@ -451,7 +456,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
             }
         }
 
-        private void SerializeOozieConfiguration(ClusterCreateParameters2 cluster, dynamic dynaXml)
+        private void SerializeOozieConfiguration(ClusterCreateParametersV2 cluster, dynamic dynaXml)
         {
             this.AddConfigurationOptions(dynaXml, cluster.OozieConfiguration.ConfigurationCollection, "ooziesettings");
             if (cluster.OozieConfiguration.AdditionalSharedLibraries != null)
@@ -479,7 +484,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
             this.SerializeOozieMetastore(cluster, dynaXml);
         }
 
-        private void SerializeOozieMetastore(ClusterCreateParameters2 cluster, dynamic dynaXml)
+        private void SerializeOozieMetastore(ClusterCreateParametersV2 cluster, dynamic dynaXml)
         {
             if (cluster.OozieMetastore != null)
             {
@@ -566,6 +571,10 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
             else if (clusterType != null && clusterType.Equals(HadoopAndStormType))
             {
                 return ClusterType.Storm;
+            }
+            else if (clusterType != null && clusterType.Equals(HadoopAndSparkType))
+            {
+                return ClusterType.Spark;
             }
             return ClusterType.Hadoop;
         }

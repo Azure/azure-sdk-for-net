@@ -67,7 +67,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         /// </summary>
         /// <param name="cluster">Request object that encapsulates all the configurations.</param>
         /// <returns>Object that represents the HDInsight Cluster created.</returns>
-        [Obsolete]
+        [Obsolete("ClusterCreateParameters is deprecated. Please use ClusterCreateParametersV2 for creating clusters in HdInsight.")]
         ClusterDetails CreateCluster(ClusterCreateParameters cluster);
 
         /// <summary>
@@ -76,6 +76,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         /// <param name="cluster">Request object that encapsulates all the configurations.</param>
         /// <param name="timeout">Timeout interval for the operation.</param>
         /// <returns>Object that represents the HDInsight Cluster created.</returns>
+        [Obsolete("ClusterCreateParameters is deprecated. Please use ClusterCreateParametersV2 for creating clusters in HdInsight.")]
         ClusterDetails CreateCluster(ClusterCreateParameters cluster, TimeSpan timeout);
 
         /// <summary>
@@ -83,7 +84,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         /// </summary>
         /// <param name="cluster">Request object that encapsulates all the configurations.</param>
         /// <returns>Object that represents the HDInsight Cluster created.</returns>
-        ClusterDetails CreateCluster(ClusterCreateParameters2 cluster);
+        ClusterDetails CreateCluster(ClusterCreateParametersV2 cluster);
 
         /// <summary>
         /// Submits a request to create an HDInsight cluster and waits for it to complete.
@@ -91,7 +92,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         /// <param name="cluster">Request object that encapsulates all the configurations.</param>
         /// <param name="timeout">Timeout interval for the operation.</param>
         /// <returns>Object that represents the HDInsight Cluster created.</returns>
-        ClusterDetails CreateCluster(ClusterCreateParameters2 cluster, TimeSpan timeout);
+        ClusterDetails CreateCluster(ClusterCreateParametersV2 cluster, TimeSpan timeout);
 
         /// <summary>
         /// Submits a request to delete an HDInsight cluster and waits for it to complete.

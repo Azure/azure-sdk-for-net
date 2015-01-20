@@ -57,6 +57,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities.ServerDataOb
         private const string ExtendedErrorMessage = "ExtendedErrorMessage";
         private const string HeadNodeRoleName = "HeadNodeRole";
         private const string WorkerNodeRoleName = "WorkerNodeRole";
+        private const string ZookeeperNodeRoleName = "ZookeeperRole";
 
         internal static string SerializeListContainersResult(IEnumerable<ClusterDetails> containers, string deploymentNamespace, bool writeError, bool writeExtendedError)
         {
@@ -79,14 +80,14 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities.ServerDataOb
             return DeserializeFromXml<Resource>(payload);
         }
 
-        internal static HDInsight.ClusterCreateParameters DeserializeClusterCreateRequest(string payload)
+        internal static HDInsight.ClusterCreateParametersV2 DeserializeClusterCreateRequest(string payload)
         {
             var resource = DeserializeFromXml<Resource>(payload);
             var createPayload = DeserializeFromXml<ClusterContainer>(resource.IntrinsicSettings[0].OuterXml);
             return CreateClusterRequest_FromInternal(createPayload);
         }
 
-        internal static HDInsight.ClusterCreateParameters DeserializeClusterCreateRequestV3(string payload)
+        internal static HDInsight.ClusterCreateParametersV2 DeserializeClusterCreateRequestV3(string payload)
         {
             var resource = DeserializeFromXml<Resource>(payload);
             var createPayload =
@@ -225,10 +226,10 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities.ServerDataOb
             return Enumerable.Empty<WabStorageAccountConfiguration>();
         }
 
-        private static HDInsight.ClusterCreateParameters CreateClusterRequest_FromInternalV3(
+        private static HDInsight.ClusterCreateParametersV2 CreateClusterRequest_FromInternalV3(
             Microsoft.WindowsAzure.Management.HDInsight.Contracts.May2014.ClusterCreateParameters payloadObject)
         {
-            var cluster = new HDInsight.ClusterCreateParameters
+            var cluster = new HDInsight.ClusterCreateParametersV2
             {
                 Location = payloadObject.Location,
                 Name = payloadObject.DnsName,
@@ -244,14 +245,19 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities.ServerDataOb
             var headNodeRole = payloadObject.ClusterRoleCollection.ToList().Where(role => role.FriendlyName == HeadNodeRoleName).ToList();
             if (headNodeRole.Any())
             {
-                if (headNodeRole.First().VMSize == VmSize.Large)
-                {
-                    cluster.HeadNodeSize = HDInsight.NodeVMSize.Default;
-                }
-                else
-                {
-                    cluster.HeadNodeSize = (HDInsight.NodeVMSize)((int)(headNodeRole.First().VMSize));
-                }
+                 cluster.HeadNodeSize = headNodeRole.First().VMSizeAsString;
+            }
+
+            var dataNodeRole = payloadObject.ClusterRoleCollection.ToList().Where(role => role.FriendlyName == WorkerNodeRoleName).ToList();
+            if (dataNodeRole.Any())
+            {
+                cluster.DataNodeSize = dataNodeRole.First().VMSizeAsString;
+            }
+
+            var zookeeperNodeRole = payloadObject.ClusterRoleCollection.ToList().Where(role => role.FriendlyName == ZookeeperNodeRoleName).ToList();
+            if (zookeeperNodeRole.Any())
+            {
+                cluster.ZookeeperNodeSize = zookeeperNodeRole.First().VMSizeAsString;
             }
 
             if (payloadObject.VirtualNetworkConfiguration != null)
@@ -265,9 +271,9 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities.ServerDataOb
             return cluster;
         }
 
-        private static HDInsight.ClusterCreateParameters CreateClusterRequest_FromInternal(ClusterContainer payloadObject)
+        private static HDInsight.ClusterCreateParametersV2 CreateClusterRequest_FromInternal(ClusterContainer payloadObject)
         {
-            var cluster = new HDInsight.ClusterCreateParameters
+            var cluster = new HDInsight.ClusterCreateParametersV2
             {
                 Location = payloadObject.Region,
                 Name = payloadObject.ClusterName
@@ -284,15 +290,16 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities.ServerDataOb
             //if headnode count is 1 and size XL, then we treat it as Default on the server side
             if (headnodeRole.VMSize == Microsoft.WindowsAzure.Management.HDInsight.Contracts.May2013.NodeVMSize.ExtraLarge && headnodeRole.Count == 1)
             {
-                cluster.HeadNodeSize = HDInsight.NodeVMSize.Default;
+                //changed this to no-op for ccpv2
+                //cluster.HeadNodeSize = HDInsight.NodeVMSize.Default;
             }
             else switch (headnodeRole.VMSize)
             {
                 case Microsoft.WindowsAzure.Management.HDInsight.Contracts.May2013.NodeVMSize.ExtraLarge:
-                    cluster.HeadNodeSize = HDInsight.NodeVMSize.ExtraLarge;
+                    cluster.HeadNodeSize = HDInsight.NodeVMSize.ExtraLarge.ToString();
                     break;
                 case Microsoft.WindowsAzure.Management.HDInsight.Contracts.May2013.NodeVMSize.Large:
-                    cluster.HeadNodeSize = HDInsight.NodeVMSize.Large;
+                    cluster.HeadNodeSize = HDInsight.NodeVMSize.Large.ToString();
                     break;
                 default:
                     throw new InvalidDataContractException(string.Format("The server returned an unsupported value for head node VM size '{0}", headnodeRole.VMSize));
@@ -332,7 +339,10 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities.ServerDataOb
                 }
             }
 
-            cluster.ClusterSizeInNodes = payloadObject.Deployment.Roles.Sum(role => role.Count);
+            cluster.ClusterSizeInNodes =
+                payloadObject.Deployment.Roles.Where(r => r.RoleType == ClusterRoleType.DataNode)
+                    .Sum(role => role.Count);
+
             return cluster;
         }
 
@@ -373,7 +383,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities.ServerDataOb
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity",
             Justification = "This complexity is needed to handle all the types in the submit payload.")]
         private static void CopyConfigurationForCluster(
-            Microsoft.WindowsAzure.Management.HDInsight.Contracts.May2014.ClusterCreateParameters payloadObject, HDInsight.ClusterCreateParameters cluster)
+            Microsoft.WindowsAzure.Management.HDInsight.Contracts.May2014.ClusterCreateParameters payloadObject, HDInsight.ClusterCreateParametersV2 cluster)
         {
             var yarn = payloadObject.Components.OfType<YarnComponent>().Single();
             var mapreduce = yarn.Applications.OfType<MapReduceApplication>().Single();
@@ -391,6 +401,11 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities.ServerDataOb
             if (payloadObject.Components.OfType<StormComponent>().Count() == 1)
             {
                 storm = payloadObject.Components.OfType<StormComponent>().Single();
+            }
+            SparkComponent spark = null;
+            if (payloadObject.Components.OfType<SparkComponent>().Count() == 1)
+            {
+                spark = payloadObject.Components.OfType<SparkComponent>().Single();
             }
             CustomActionComponent configActions = null;
             if (payloadObject.Components.OfType<CustomActionComponent>().Count() == 1)
@@ -514,10 +529,16 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities.ServerDataOb
                 cluster.StormConfiguration.AddRange(
                     storm.StormConfiguration.Select(prop => new KeyValuePair<string, string>(prop.Name, prop.Value)));
             }
+
+            if (spark != null && spark.SparkConfiguration.Any())
+            {
+                cluster.SparkConfiguration.AddRange(
+                    spark.SparkConfiguration.Select(prop => new KeyValuePair<string, string>(prop.Name, prop.Value)));
+            }
         }
 
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "This complexity is needed to handle all the types in the submit payload.")]
-        private static void CopyConfiguration(ClusterContainer payloadObject, HDInsight.ClusterCreateParameters cluster)
+        private static void CopyConfiguration(ClusterContainer payloadObject, HDInsight.ClusterCreateParametersV2 cluster)
         {
             if (payloadObject.Settings.Core != null && payloadObject.Settings.Core.Configuration != null)
             {

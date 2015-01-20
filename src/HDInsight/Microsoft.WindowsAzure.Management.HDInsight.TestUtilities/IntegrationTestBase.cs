@@ -322,10 +322,29 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities
             return retval;
         }
 
-        public static ClusterCreateParameters2 GetRandomCluster()
+        public static ClusterCreateParametersV2 GetRandomCluster()
         {
             // Creates the cluster
-            return new ClusterCreateParameters2
+            return new ClusterCreateParametersV2
+            {
+                Name = GetRandomClusterName(),
+                UserName = TestCredentials.AzureUserName,
+                Password = GetRandomValidPassword(),
+                Location = "West US",
+                Version = "default",
+                DefaultStorageAccountName = TestCredentials.Environments[0].DefaultStorageAccount.Name,
+                DefaultStorageAccountKey = TestCredentials.Environments[0].DefaultStorageAccount.Key,
+                DefaultStorageContainer = TestCredentials.Environments[0].DefaultStorageAccount.Container,
+                ClusterSizeInNodes = 3,
+                HeadNodeSize = "ExtraLarge",
+                DataNodeSize = "Large",
+            };
+        }
+
+        public static ClusterCreateParameters GetRandomClusterOldSchema()
+        {
+            // Creates the cluster
+            return new ClusterCreateParameters
             {
                 Name = GetRandomClusterName(),
                 UserName = TestCredentials.AzureUserName,

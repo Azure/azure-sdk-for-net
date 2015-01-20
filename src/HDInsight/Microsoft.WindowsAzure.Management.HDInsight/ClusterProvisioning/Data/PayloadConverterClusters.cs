@@ -15,7 +15,6 @@
     using Microsoft.WindowsAzure.Management.HDInsight.Contracts.May2014.Networking;
     using Microsoft.WindowsAzure.Management.HDInsight.Contracts.May2014.Resources.CredentialBackedResources;
     using Microsoft.WindowsAzure.Management.HDInsight.Framework.ServiceLocation;
-    using UserClusterCreateParameters = Microsoft.WindowsAzure.Management.HDInsight.ClusterCreateParameters2;
 
     internal class PayloadConverterClusters
     {
@@ -248,7 +247,7 @@
         /// </summary>
         /// <param name="cluster">The cluster.</param>
         /// <returns>An Instance of cluster create parameters.</returns>
-        public static ClusterCreateParameters CreateWireClusterCreateParametersFromUserType(UserClusterCreateParameters cluster)
+        public static ClusterCreateParameters CreateWireClusterCreateParametersFromUserType(ClusterCreateParametersV2 cluster)
         {
             if (cluster == null)
             {
@@ -258,21 +257,27 @@
             ClusterCreateParameters ccp = null;
             if (cluster.Version.Equals("default", StringComparison.OrdinalIgnoreCase) || new Version(cluster.Version).Major >= 3)
             {
-                if (cluster.ClusterType == ClusterType.HBase)
+                switch (cluster.ClusterType)
                 {
-                    ccp = HDInsightClusterRequestGenerator.Create3XClusterForMapReduceAndHBaseTemplate(cluster);
-                }
-                else if (cluster.ClusterType == ClusterType.Storm)
-                {
-                    ccp = HDInsightClusterRequestGenerator.Create3XClusterForMapReduceAndStormTemplate(cluster);
-                }
-                else if (cluster.ClusterType == ClusterType.Hadoop)
-                {
-                    ccp = HDInsightClusterRequestGenerator.Create3XClusterFromMapReduceTemplate(cluster);
-                }
-                else
-                {
-                    throw new InvalidDataException(string.Format(CultureInfo.InvariantCulture, "Invalid cluster type '{0}' specified for cluster '{1}'", cluster.ClusterType, cluster.Name));
+                    case ClusterType.HBase:
+                        ccp = HDInsightClusterRequestGenerator.Create3XClusterForMapReduceAndHBaseTemplate(cluster);
+                        break;
+                    case ClusterType.Storm:
+                        ccp = HDInsightClusterRequestGenerator.Create3XClusterForMapReduceAndStormTemplate(cluster);
+                        break;
+                    case ClusterType.Hadoop:
+                        ccp = HDInsightClusterRequestGenerator.Create3XClusterFromMapReduceTemplate(cluster);
+                        break;
+                    case ClusterType.Spark:
+                        ccp = HDInsightClusterRequestGenerator.Create3XClusterForMapReduceAndSparkTemplate(cluster);
+                        break;
+                    default:
+                        throw new InvalidDataException(
+                            string.Format(
+                                CultureInfo.InvariantCulture,
+                                "Invalid cluster type '{0}' specified for cluster '{1}'",
+                                cluster.ClusterType,
+                                cluster.Name));
                 }
             }
             else
@@ -337,6 +342,10 @@
             if (components.Any(c => c.Equals(typeof(StormComponent).Name, StringComparison.OrdinalIgnoreCase)))
             {
                 return ClusterType.Storm;
+            }
+            if (components.Any(c => c.Equals(typeof(SparkComponent).Name, StringComparison.OrdinalIgnoreCase)))
+            {
+                return ClusterType.Spark;
             }
             return ClusterType.Hadoop;
         }

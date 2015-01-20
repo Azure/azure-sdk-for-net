@@ -30,6 +30,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Contracts.May2014.Componen
     [KnownType(typeof(HadoopCoreComponent))]
     [KnownType(typeof(ZookeeperComponent))]
     [KnownType(typeof(StormComponent))]
+    [KnownType(typeof(SparkComponent))]
     [KnownType(typeof(DashboardComponent))]
     [KnownType(typeof(CustomActionComponent))]
     internal abstract class ClusterComponent : RestDataContract

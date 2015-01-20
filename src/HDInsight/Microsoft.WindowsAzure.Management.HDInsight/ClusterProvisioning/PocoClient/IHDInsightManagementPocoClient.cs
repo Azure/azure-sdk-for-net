@@ -86,7 +86,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
         /// <returns>
         /// A task that can be used to wait for the creation request to complete.
         /// </returns>
-        Task CreateContainer(ClusterCreateParameters2 details);
+        Task CreateContainer(ClusterCreateParametersV2 details);
 
         /// <summary>
         /// Deletes an HDInsight container (cluster).

@@ -24,7 +24,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
     /// <summary>
     /// Object that encapsulates all the properties of a List Request.
     /// </summary>
-    public sealed class ClusterCreateParameters2
+    public sealed class ClusterCreateParametersV2
     {
         /// <summary>
         /// Gets or sets the Name of the cluster.
@@ -86,18 +86,18 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         public string HeadNodeSize { get; set; }
 
         /// <summary>
-        /// Gets or sets the size of the Head Node.
+        /// Gets or sets the size of the Data Node.
         /// </summary>
         /// <value>
-        /// The size of the head node.
+        /// The size of the data node.
         /// </value>
         public string DataNodeSize { get; set; }
 
         /// <summary>
-        /// Gets or sets the size of the Head Node.
+        /// Gets or sets the size of the Zookeeper Node.
         /// </summary>
         /// <value>
-        /// The size of the head node.
+        /// The size of the zookeeper node.
         /// </value>
         public string ZookeeperNodeSize { get; set; }
 
@@ -162,6 +162,11 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         public ConfigValuesCollection StormConfiguration { get; private set; }
 
         /// <summary>
+        /// Gets the Spark service configuration of this HDInsight cluster.
+        /// </summary>
+        public ConfigValuesCollection SparkConfiguration { get; private set; }
+
+        /// <summary>
         /// Gets or sets the flavor for a cluster.
         /// </summary>
         public ClusterType ClusterType { get; set; }
@@ -184,7 +189,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         /// <summary>
         /// Initializes a new instance of the ClusterCreateParameters class.
         /// </summary>
-        public ClusterCreateParameters2()
+        public ClusterCreateParametersV2()
         {
             this.CreateTimeout = TimeSpan.FromHours(2);
             this.AdditionalStorageAccounts = new Collection<WabStorageAccountConfiguration>();
@@ -197,15 +202,16 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
             this.YarnConfiguration = new ConfigValuesCollection();
             this.HBaseConfiguration = new HBaseConfiguration();
             this.StormConfiguration = new ConfigValuesCollection();
+            this.SparkConfiguration = new ConfigValuesCollection();
 
             // By default create hadoop only cluster unless set otherwise
             this.ClusterType = ClusterType.Hadoop;
             this.HeadNodeSize = VmSize.Large.ToString();
             this.DataNodeSize = VmSize.Large.ToString();
-            this.ZookeeperNodeSize = VmSize.Small.ToString();
+            this.ZookeeperNodeSize = null; //VmSize.Small.ToString();
         }
 
-        public ClusterCreateParameters2(ClusterCreateParameters versionOneParams)
+        public ClusterCreateParametersV2(ClusterCreateParameters versionOneParams)
         {
             this.Name = versionOneParams.Name;
             this.Location = versionOneParams.Location;
@@ -216,7 +222,12 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
             this.Password = versionOneParams.Password;
             this.ClusterSizeInNodes = versionOneParams.ClusterSizeInNodes;
             this.Version = versionOneParams.Version;
-            this.HeadNodeSize =versionOneParams.HeadNodeSize.ToString(); 
+            
+            //headnode can be default, setting real value in CCPV2
+            this.HeadNodeSize = versionOneParams.HeadNodeSize != NodeVMSize.Default
+                ? versionOneParams.HeadNodeSize.ToString()
+                : NodeVMSize.Large.ToString(); 
+
             this.AdditionalStorageAccounts = versionOneParams.AdditionalStorageAccounts;
             this.ConfigActions = versionOneParams.ConfigActions;
             this.OozieMetastore = versionOneParams.OozieMetastore;

@@ -67,7 +67,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
             return uri;
         }
 
-        private static WabStorageAccountConfiguration GetStorageAccountForScript(ScriptAction sa, ClusterCreateParameters2 details)
+        private static WabStorageAccountConfiguration GetStorageAccountForScript(ScriptAction sa, ClusterCreateParametersV2 details)
         {
             var accts = new List<WabStorageAccountConfiguration>();
 
@@ -168,7 +168,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
             }
         }
 
-        public static void ValidateAndResolveConfigActionEndpointUris(ClusterCreateParameters2 details)
+        public static void ValidateAndResolveConfigActionEndpointUris(ClusterCreateParametersV2 details)
         {
             if (details == null || details.ConfigActions == null)
             {

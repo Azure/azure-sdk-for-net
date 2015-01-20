@@ -100,7 +100,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
             return result;
         }
 
-        public async Task CreateContainer(ClusterCreateParameters2 details)
+        public async Task CreateContainer(ClusterCreateParametersV2 details)
         {
             this.LogMessage("Create Cluster Requested", Severity.Informational, Verbosity.Diagnostic);
             // Validates that the AzureStorage Configurations are valid and optionally append FQDN suffix to the storage account name
@@ -109,10 +109,13 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
             // Validates that the config actions' Uris are downloadable.
             UriEndpointValidator.ValidateAndResolveConfigActionEndpointUris(details);
 
-            var overrideHandlers = ServiceLocator.Instance.Locate<IHDInsightClusterOverrideManager>().GetHandlers(this.credentials, this.Context, this.ignoreSslErrors);
+            var overrideHandlers =
+                ServiceLocator.Instance.Locate<IHDInsightClusterOverrideManager>()
+                    .GetHandlers(this.credentials, this.Context, this.ignoreSslErrors);
 
             var rdfeCapabilitiesClient =
-                ServiceLocator.Instance.Locate<IRdfeServiceRestClientFactory>().Create(this.credentials, this.Context, this.ignoreSslErrors);
+                ServiceLocator.Instance.Locate<IRdfeServiceRestClientFactory>()
+                    .Create(this.credentials, this.Context, this.ignoreSslErrors);
             var capabilities = await rdfeCapabilitiesClient.GetResourceProviderProperties();
             if (!this.HasClusterCreateCapability(capabilities))
             {
@@ -125,6 +128,15 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
             {
                 throw new InvalidOperationException(string.Format(
                     "Your subscription cannot create customized clusters, please contact Support"));
+            }
+
+            if (!new[] {"ExtraLarge", "Large"}.Contains(details.HeadNodeSize, StringComparer.OrdinalIgnoreCase)
+                || string.Equals(details.DataNodeSize, "Large", StringComparison.OrdinalIgnoreCase)
+                || details.ZookeeperNodeSize.IsNotNullOrEmpty())
+            {
+                throw new InvalidOperationException(string.Format(
+                    "Illegal node size specification for container resource. Headnode: [{0}], Datanode: [{1}], Zookeeper: [{2}]",
+                    details.HeadNodeSize, details.DataNodeSize, details.ZookeeperNodeSize));
             }
 
             // Validates the region for the cluster creation
@@ -148,7 +160,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
 
             // Creates the cluster
             var client = ServiceLocator.Instance.Locate<IHDInsightManagementRestClientFactory>().Create(this.credentials, this.Context, this.ignoreSslErrors);
-            if (details.ClusterType == ClusterType.HBase || details.ClusterType == ClusterType.Storm)
+            if (details.ClusterType == ClusterType.HBase || details.ClusterType == ClusterType.Storm || details.ClusterType == ClusterType.Spark)
             {
                 string payload = overrideHandlers.PayloadConverter.SerializeClusterCreateRequestV3(details);
                 await client.CreateContainer(details.Name, details.Location, payload, 3);

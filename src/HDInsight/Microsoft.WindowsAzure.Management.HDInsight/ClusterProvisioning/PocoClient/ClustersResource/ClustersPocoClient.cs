@@ -198,12 +198,16 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
             return capabilities.Contains(resizeCapability, StringComparer.OrdinalIgnoreCase);
         }
 
+        internal static bool HasCorrectSchemaVersionForNewVMSizes(IEnumerable<string> capabilities)
+        {
+            return capabilities.Contains(HDInsightClient.ClustersContractCapabilityVersion3, StringComparer.OrdinalIgnoreCase);
+        }
         /// <summary>
         /// Creates the container.
         /// </summary>
         /// <param name="clusterCreateParameters">The cluster create parameters.</param>
         /// <returns>A task.</returns>
-        public async Task CreateContainer(HDInsight.ClusterCreateParameters2 clusterCreateParameters)
+        public async Task CreateContainer(HDInsight.ClusterCreateParametersV2 clusterCreateParameters)
         {
             if (clusterCreateParameters == null)
             {
@@ -224,6 +228,13 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
             {
                 throw new ArgumentException("clusterCreateParameters.ClusterSizeInNodes must be > 0");
             }
+
+            if (clusterCreateParameters.ClusterType != ClusterType.HBase
+                && clusterCreateParameters.ZookeeperNodeSize != null)
+            {
+                throw new ArgumentException("clusterCreateParameters.ZookeeperNodeSize must be null for non-hbase clusters.");                   
+            }
+
             try
             {
                 //Validate 
@@ -244,6 +255,13 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
 
                     // Validates that the config actions' Uris are downloadable.
                     UriEndpointValidator.ValidateAndResolveConfigActionEndpointUris(clusterCreateParameters);
+                }
+
+                //Validate if new vm sizes are used and if the schema is on.
+                if (CreateHasNewVMSizesSpecified(clusterCreateParameters) &&
+                    !ClustersPocoClient.HasCorrectSchemaVersionForNewVMSizes(this.capabilities))
+                {
+                    throw new NotSupportedException("Your subscription does not support various VM sizes.");
                 }
 
                 var rdfeCapabilitiesClient =
@@ -281,6 +299,25 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
                 string content = iEx.Response.Content != null ? iEx.Response.Content.ReadAsStringAsync().Result : string.Empty;
                 throw new HttpLayerException(iEx.ReceivedStatusCode, content);
             }
+        }
+
+        private static bool CreateHasNewVMSizesSpecified(ClusterCreateParametersV2 clusterCreateParameters)
+        {
+            return new[]
+            {
+                clusterCreateParameters.HeadNodeSize, 
+                clusterCreateParameters.DataNodeSize, 
+                clusterCreateParameters.ZookeeperNodeSize
+            }
+            .Except(
+                new[]
+                {
+                    "ExtraLarge", 
+                    "Large", 
+                    "Medium", 
+                    "Small", 
+                    "ExtraSmall"
+                }, StringComparer.OrdinalIgnoreCase).Any();
         }
 
         /// <summary>

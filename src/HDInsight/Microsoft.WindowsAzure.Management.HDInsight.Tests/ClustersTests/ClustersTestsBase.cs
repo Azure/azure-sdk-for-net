@@ -19,7 +19,8 @@
     [DeploymentItem(@"creds\certs\sdkcli.cer", @"creds\certs")]
     public class ClustersTestsBase
     {
-        internal static string TestSubscription = Guid.NewGuid().ToString();
+        internal static string TestSubscription =
+            new IntegrationTestManager().GetCredentials("default").SubscriptionId.ToString(); 
         internal HttpServer DefaultHandler;
         internal HDInsightCertificateCredential HdInsightCertCred;
         internal readonly X509Certificate2 Certificate = new X509Certificate2(@"creds\certs\sdkcli.cer");
@@ -31,6 +32,9 @@
         {
             Capabilities.Add("CAPABILITY_FEATURE_CLUSTERS_CONTRACT_1_SDK");
             Capabilities.Add("CAPABILITY_FEATURE_CLUSTERS_CONTRACT_2_SDK");
+            Capabilities.Add("CAPABILITY_FEATURE_CLUSTERS_CONTRACT_VERSION_3_SDK");
+            Capabilities.Add("CAPABILITY_FEATURE_POWERSHELL_SCRIPT_ACTION_SDK");
+
             this.DefaultHandler = this.GetDefaultHandler();
             this.HdInsightCertCred = new HDInsightCertificateCredential(Guid.Parse(TestSubscription), Certificate);
             this.Context = new HDInsightSubscriptionAbstractionContext(this.HdInsightCertCred, new CancellationTokenSource().Token);
@@ -51,7 +55,7 @@
 
         internal void CreateCluster(string dnsName, string location)
         {
-            var clusterCreateParameters = new HDInsight.ClusterCreateParameters2
+            var clusterCreateParameters = new HDInsight.ClusterCreateParametersV2
             {
                 Name = dnsName,
                 DefaultStorageAccountKey = "storageaccountkey",
@@ -62,6 +66,7 @@
                 Password = "Password1!",
                 Version = "3.1"
             };
+
             var testCluster = CreateClusterFromCreateParameters(clusterCreateParameters);
             testCluster.ClusterCapabilities = new List<string> { ClustersPocoClient.ResizeCapabilityEnabled };
 
@@ -81,7 +86,7 @@
 
         internal void CreateClusterWithoutCapability(string dnsName, string location)
         {
-            var clusterCreateParameters = new HDInsight.ClusterCreateParameters2
+            var clusterCreateParameters = new HDInsight.ClusterCreateParametersV2
             {
                 Name = dnsName,
                 DefaultStorageAccountKey = "storageaccountkey",
@@ -108,7 +113,7 @@
             }
         }
 
-        private static Cluster CreateClusterFromCreateParameters(HDInsight.ClusterCreateParameters2 clusterCreateParameters)
+        private static Cluster CreateClusterFromCreateParameters(HDInsight.ClusterCreateParametersV2 clusterCreateParameters)
         {
             var clusterCreateParams = HDInsightClusterRequestGenerator.Create3XClusterFromMapReduceTemplate(clusterCreateParameters);
             var cluster = new Cluster

@@ -63,6 +63,7 @@
     <Compile Include="May2014\Components\CustomActions\ScriptCustomAction.cs" />
     <Compile Include="May2014\Components\GatewayComponent.cs" />
     <Compile Include="May2014\Components\HadoopCoreComponent.cs" />
+    <Compile Include="May2014\Components\SparkComponent.cs" />
     <Compile Include="May2014\Components\StormComponent.cs" />
     <Compile Include="May2014\Components\ZookeeperComponent.cs" />
     <Compile Include="May2014\Networking\AddressAssignment.cs" />
@@ -113,6 +114,7 @@
     <Compile Include="UserChangeOperationType.cs" />
     <Compile Include="UserChangeRequest.cs" />
     <Compile Include="UserType.cs" />
+    <Compile Include="VmSizeCompatibilityFilter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="May2014\Components\DashboardComponent.cs" />

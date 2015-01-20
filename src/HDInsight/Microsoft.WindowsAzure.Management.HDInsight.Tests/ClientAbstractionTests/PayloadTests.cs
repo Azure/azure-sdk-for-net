@@ -384,7 +384,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
         [TestCategory("Payload")]
         public void InternalValidation_PayloadConverter_SerializationCreateRequest()
         {
-            var cluster1 = new HDInsight.ClusterCreateParameters2
+            var cluster1 = new HDInsight.ClusterCreateParametersV2
             {
                 UserName = Guid.NewGuid().ToString("N"),
                 Password = Guid.NewGuid().ToString("N"),
@@ -412,7 +412,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
         [TestCategory("Payload")]
         public void InternalValidation_PayloadConverter_SerializationCreateRequestV3()
         {
-            var cluster1 = new HDInsight.ClusterCreateParameters2
+            var cluster1 = new HDInsight.ClusterCreateParametersV2
             {
                 UserName = Guid.NewGuid().ToString("N"),
                 Password = Guid.NewGuid().ToString("N"),
@@ -457,7 +457,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
         [TestCategory("Payload")]
         public void InternalValidation_PayloadConverter_SerializationCreateRequest_MayContracts()
         {
-            var cluster1 = new HDInsight.ClusterCreateParameters2
+            var cluster1 = new HDInsight.ClusterCreateParametersV2
             {
                 Name = "bcarlson",
                 ClusterSizeInNodes = 1,
@@ -485,7 +485,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
         [TestCategory("Payload")]
         public void InternalValidation_PayloadConverter_SerializationCreateRequestWithMetastore()
         {
-            var expected = new HDInsight.ClusterCreateParameters2
+            var expected = new HDInsight.ClusterCreateParametersV2
             {
                 UserName = Guid.NewGuid().ToString("N"),
                 Password = Guid.NewGuid().ToString("N"),
@@ -521,7 +521,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
         [TestCategory("Payload")]
         public void InternalValidation_PayloadConverter_SerializationCreateHadoopClusterRequestWithVirtualNetworkConfigurationV3()
         {
-            var expected = new HDInsight.ClusterCreateParameters2
+            var expected = new HDInsight.ClusterCreateParametersV2
             {
                 UserName = Guid.NewGuid().ToString("N"),
                 Password = Guid.NewGuid().ToString("N"),
@@ -551,7 +551,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
         [TestCategory("Payload")]
         public void InternalValidation_PayloadConverter_SerializationCreateHBaseClusterRequestWithVirtualNetworkConfigurationV3()
         {
-            var expected = new HDInsight.ClusterCreateParameters2
+            var expected = new HDInsight.ClusterCreateParametersV2
             {
                 UserName = Guid.NewGuid().ToString("N"),
                 Password = Guid.NewGuid().ToString("N"),
@@ -582,7 +582,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
         [TestCategory("Payload")]
         public void InternalValidation_PayloadConverter_SerializationCreateStormClusterRequestWithVirtualNetworkConfigurationV3()
         {
-            var expected = new HDInsight.ClusterCreateParameters2
+            var expected = new HDInsight.ClusterCreateParametersV2
             {
                 UserName = Guid.NewGuid().ToString("N"),
                 Password = Guid.NewGuid().ToString("N"),
@@ -611,9 +611,41 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
         [TestCategory("Integration")]
         [TestCategory("CheckIn")]
         [TestCategory("Payload")]
+        public void InternalValidation_PayloadConverter_SerializationCreateSparkClusterRequestWithVirtualNetworkConfigurationV3()
+        {
+            var expected = new HDInsight.ClusterCreateParametersV2
+            {
+                UserName = Guid.NewGuid().ToString("N"),
+                Password = Guid.NewGuid().ToString("N"),
+                DefaultStorageAccountKey = Guid.NewGuid().ToString("N"),
+                DefaultStorageAccountName = Guid.NewGuid().ToString("N"),
+                DefaultStorageContainer = Guid.NewGuid().ToString("N"),
+                Name = GetRandomClusterName(),
+                Location = "East US",
+                Version = "3.0",
+                ClusterSizeInNodes = new Random().Next(),
+                ClusterType = ClusterType.Spark
+            };
+            expected.AdditionalStorageAccounts.Add(new WabStorageAccountConfiguration(Guid.NewGuid().ToString("N"),
+                                                                 Guid.NewGuid().ToString("N")));
+            expected.AdditionalStorageAccounts.Add(new WabStorageAccountConfiguration(Guid.NewGuid().ToString("N"),
+                                                                 Guid.NewGuid().ToString("N")));
+            expected.VirtualNetworkId = Guid.NewGuid().ToString();
+            expected.SubnetName = "MySubnet";
+
+            string payload = new PayloadConverter().SerializeClusterCreateRequestV3(expected);
+            var actual = ServerSerializer.DeserializeClusterCreateRequestV3(payload);
+            Assert.IsTrue(Equals(expected, actual));
+        }
+
+
+        [TestMethod]
+        [TestCategory("Integration")]
+        [TestCategory("CheckIn")]
+        [TestCategory("Payload")]
         public void InternalValidation_PayloadConverter_SerializationCreateRequestWithMetastoreV3()
         {
-            var expected = new HDInsight.ClusterCreateParameters2
+            var expected = new HDInsight.ClusterCreateParametersV2
             {
                 UserName = Guid.NewGuid().ToString("N"),
                 Password = Guid.NewGuid().ToString("N"),
@@ -650,7 +682,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
         [TestCategory("Payload")]
         public void InternalValidation_PayloadConverter_SerializationCreateRequestWithMetastore_Storm()
         {
-            var expected = new HDInsight.ClusterCreateParameters2
+            var expected = new HDInsight.ClusterCreateParametersV2
             {
                 UserName = Guid.NewGuid().ToString("N"),
                 Password = Guid.NewGuid().ToString("N"),
@@ -681,7 +713,43 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
             Assert.IsTrue(Equals(expected, actual));
         }
 
-   
+        [TestMethod]
+        [TestCategory("Integration")]
+        [TestCategory("CheckIn")]
+        [TestCategory("Payload")]
+        public void InternalValidation_PayloadConverter_SerializationCreateRequestWithMetastore_Spark()
+        {
+            var expected = new HDInsight.ClusterCreateParametersV2
+            {
+                UserName = Guid.NewGuid().ToString("N"),
+                Password = Guid.NewGuid().ToString("N"),
+                Version = "3.0",
+                DefaultStorageAccountKey = Guid.NewGuid().ToString("N"),
+                DefaultStorageAccountName = Guid.NewGuid().ToString("N"),
+                DefaultStorageContainer = Guid.NewGuid().ToString("N"),
+                Name = GetRandomClusterName(),
+                Location = "East US",
+                ClusterSizeInNodes = new Random().Next(),
+                ClusterType = ClusterType.Spark
+            };
+            expected.AdditionalStorageAccounts.Add(new WabStorageAccountConfiguration(Guid.NewGuid().ToString("N"),
+                                                                 Guid.NewGuid().ToString("N")));
+            expected.AdditionalStorageAccounts.Add(new WabStorageAccountConfiguration(Guid.NewGuid().ToString("N"),
+                                                                 Guid.NewGuid().ToString("N")));
+            expected.OozieMetastore = new Metastore(Guid.NewGuid().ToString("N"),
+                                                             Guid.NewGuid().ToString("N"),
+                                                             Guid.NewGuid().ToString("N"),
+                                                             Guid.NewGuid().ToString("N"));
+            expected.HiveMetastore = new Metastore(Guid.NewGuid().ToString("N"),
+                                                            Guid.NewGuid().ToString("N"),
+                                                            Guid.NewGuid().ToString("N"),
+                                                            Guid.NewGuid().ToString("N"));
+
+            string payload = new PayloadConverter().SerializeClusterCreateRequestV3(expected);
+            var actual = ServerSerializer.DeserializeClusterCreateRequestV3(payload);
+            Assert.IsTrue(Equals(expected, actual));
+        }
+
         [TestMethod]
         [TestCategory("Integration")]
         [TestCategory("CheckIn")]
@@ -718,7 +786,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
         [TestCategory("Payload")]
         public void InternalValidation_PayloadConverter_SerializationCreateRequestWithCoreAndHBaseConfigurationV3()
         {
-            var expected = new HDInsight.ClusterCreateParameters2
+            var expected = new HDInsight.ClusterCreateParametersV2
             {
                 UserName = Guid.NewGuid().ToString("N"),
                 Password = Guid.NewGuid().ToString("N"),
@@ -748,7 +816,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
         [TestCategory("Payload")]
         public void InternalValidation_PayloadConverter_SerializationCreateRequestWithCoreConfiguration()
         {
-            var expected = new HDInsight.ClusterCreateParameters2
+            var expected = new HDInsight.ClusterCreateParametersV2
             {
                 UserName = Guid.NewGuid().ToString("N"),
                 Password = Guid.NewGuid().ToString("N"),
@@ -775,7 +843,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
         [TestCategory("Payload")]
         public void InternalValidation_PayloadConverter_SerializationCreateRequestWithOozieConfiguration()
         {
-            var expected = new HDInsight.ClusterCreateParameters2
+            var expected = new HDInsight.ClusterCreateParametersV2
             {
                 UserName = Guid.NewGuid().ToString("N"),
                 Password = Guid.NewGuid().ToString("N"),
@@ -802,7 +870,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
         [TestCategory("Payload")]
         public void InternalValidation_PayloadConverter_SerializationCreateRequestWithOozieAndHBaseConfigurationV3()
         {
-            var expected = new HDInsight.ClusterCreateParameters2
+            var expected = new HDInsight.ClusterCreateParametersV2
             {
                 UserName = Guid.NewGuid().ToString("N"),
                 Password = Guid.NewGuid().ToString("N"),
@@ -831,7 +899,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
         [TestCategory("Payload")]
         public void InternalValidation_PayloadConverter_SerializationCreateRequestWithOozieLibraries()
         {
-            var expected = new HDInsight.ClusterCreateParameters2
+            var expected = new HDInsight.ClusterCreateParametersV2
             {
                 UserName = Guid.NewGuid().ToString("N"),
                 Password = Guid.NewGuid().ToString("N"),
@@ -863,7 +931,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
         [TestCategory("Payload")]
         public void InternalValidation_PayloadConverter_SerializationCreateRequestWithHiveConfiguration()
         {
-            var expected = new HDInsight.ClusterCreateParameters2
+            var expected = new HDInsight.ClusterCreateParametersV2
             {
                 UserName = Guid.NewGuid().ToString("N"),
                 Password = Guid.NewGuid().ToString("N"),
@@ -890,7 +958,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
         [TestCategory("Payload")]
         public void InternalValidation_PayloadConverter_SerializationCreateRequestWithHiveAndHBaseConfigurationV3()
         {
-            var expected = new HDInsight.ClusterCreateParameters2
+            var expected = new HDInsight.ClusterCreateParametersV2
             {
                 UserName = Guid.NewGuid().ToString("N"),
                 Password = Guid.NewGuid().ToString("N"),
@@ -919,7 +987,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
         [TestCategory("Payload")]
         public void InternalValidation_PayloadConverter_SerializationCreateRequestWithHiveConfiguration_Resources()
         {
-            var expected = new HDInsight.ClusterCreateParameters2
+            var expected = new HDInsight.ClusterCreateParametersV2
             {
                 UserName = Guid.NewGuid().ToString("N"),
                 Password = Guid.NewGuid().ToString("N"),
@@ -948,7 +1016,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
         [TestCategory("Payload")]
         public void InternalValidation_PayloadConverter_SerializationCreateRequestWithHiveConfiguration_ResourcesV3()
         {
-            var expected = new HDInsight.ClusterCreateParameters2
+            var expected = new HDInsight.ClusterCreateParametersV2
             {
                 UserName = Guid.NewGuid().ToString("N"),
                 Password = Guid.NewGuid().ToString("N"),
@@ -978,7 +1046,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
         [TestCategory("Payload")]
         public void InternalValidation_PayloadConverter_SerializationCreateRequestWithHBaseConfiguration_ResourcesV3()
         {
-            var expected = new HDInsight.ClusterCreateParameters2
+            var expected = new HDInsight.ClusterCreateParametersV2
             {
                 UserName = Guid.NewGuid().ToString("N"),
                 Password = Guid.NewGuid().ToString("N"),
@@ -1008,7 +1076,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
         [TestCategory("Payload")]
         public void InternalValidation_PayloadConverter_SerializationCreateRequestWithMapReduceConfiguration()
         {
-            var expected = new HDInsight.ClusterCreateParameters2
+            var expected = new HDInsight.ClusterCreateParametersV2
             {
                 UserName = Guid.NewGuid().ToString("N"),
                 Password = Guid.NewGuid().ToString("N"),
@@ -1035,7 +1103,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
         [TestCategory("Payload")]
         public void InternalValidation_PayloadConverter_SerializationCreateRequestWithMapReduceAndHBaseConfigurationV3()
         {
-            var expected = new HDInsight.ClusterCreateParameters2
+            var expected = new HDInsight.ClusterCreateParametersV2
             {
                 UserName = Guid.NewGuid().ToString("N"),
                 Password = Guid.NewGuid().ToString("N"),
@@ -1064,7 +1132,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
         [TestCategory("Payload")]
         public void InternalValidation_PayloadConverter_SerializationCreateRequestWithHdfsConfiguration()
         {
-            var expected = new HDInsight.ClusterCreateParameters2
+            var expected = new HDInsight.ClusterCreateParametersV2
             {
                 UserName = Guid.NewGuid().ToString("N"),
                 Password = Guid.NewGuid().ToString("N"),
@@ -1092,7 +1160,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
         [ExpectedException(typeof(ArgumentNullException))]
         public void InternalValidation_PayloadConverter_SerializationCreateRequestWithInvalidConfigActionsV3()
         {
-            var testInvalidConfigAction = new HDInsight.ClusterCreateParameters2
+            var testInvalidConfigAction = new HDInsight.ClusterCreateParametersV2
             {
                 UserName = Guid.NewGuid().ToString("N"),
                 Password = Guid.NewGuid().ToString("N"),
@@ -1115,7 +1183,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
         [TestCategory("Payload")]
         public void InternalValidation_PayloadConverter_SerializationCreateRequestWithConfigActionsV3()
         {
-            var expected = new HDInsight.ClusterCreateParameters2
+            var expected = new HDInsight.ClusterCreateParametersV2
             {
                 UserName = Guid.NewGuid().ToString("N"),
                 Password = Guid.NewGuid().ToString("N"),
@@ -1142,7 +1210,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
         [TestCategory("Payload")]
         public void InternalValidation_PayloadConverter_SerializationCreateRequestWithHdfsAndHBaseConfiguration()
         {
-            var expected = new HDInsight.ClusterCreateParameters2
+            var expected = new HDInsight.ClusterCreateParametersV2
             {
                 UserName = Guid.NewGuid().ToString("N"),
                 Password = Guid.NewGuid().ToString("N"),
@@ -1171,7 +1239,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
         [TestCategory("Payload")]
         public void InternalValidation_PayloadConverter_SerializationCreateRequestWithYarnConfiguration()
         {
-            var expected = new HDInsight.ClusterCreateParameters2
+            var expected = new HDInsight.ClusterCreateParametersV2
             {
                 UserName = Guid.NewGuid().ToString("N"),
                 Password = Guid.NewGuid().ToString("N"),
@@ -1198,7 +1266,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
         [TestCategory("Payload")]
         public void InternalValidation_PayloadConverter_SerializationCreateRequestWithYarnAndHBaseConfigurationV3()
         {
-            var expected = new HDInsight.ClusterCreateParameters2
+            var expected = new HDInsight.ClusterCreateParametersV2
             {
                 UserName = Guid.NewGuid().ToString("N"),
                 Password = Guid.NewGuid().ToString("N"),
@@ -1227,7 +1295,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
         [TestCategory("Payload")]
         public void InternalValidation_PayloadConverter_SerializationCreateRequestWithYarnAndStormConfigurationV3()
         {
-            var expected = new HDInsight.ClusterCreateParameters2
+            var expected = new HDInsight.ClusterCreateParametersV2
             {
                 UserName = Guid.NewGuid().ToString("N"),
                 Password = Guid.NewGuid().ToString("N"),
@@ -1244,6 +1312,35 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
             expected.YarnConfiguration.Add(new KeyValuePair<string, string>("my setting 1", "my value 1"));
             expected.YarnConfiguration.Add(new KeyValuePair<string, string>("my setting 2", "my value 2"));
             expected.StormConfiguration.Add(new KeyValuePair<string, string>("my setting 3", "my value 3"));
+
+            string payload = new PayloadConverter().SerializeClusterCreateRequestV3(expected);
+            var actual = ServerSerializer.DeserializeClusterCreateRequestV3(payload);
+            Assert.IsTrue(Equals(expected, actual));
+        }
+
+        [TestMethod]
+        [TestCategory("Integration")]
+        [TestCategory("CheckIn")]
+        [TestCategory("Payload")]
+        public void InternalValidation_PayloadConverter_SerializationCreateRequestWithYarnAndSparkConfigurationV3()
+        {
+            var expected = new HDInsight.ClusterCreateParametersV2
+            {
+                UserName = Guid.NewGuid().ToString("N"),
+                Password = Guid.NewGuid().ToString("N"),
+                Version = "3.0",
+                DefaultStorageAccountKey = Guid.NewGuid().ToString("N"),
+                DefaultStorageAccountName = Guid.NewGuid().ToString("N"),
+                DefaultStorageContainer = Guid.NewGuid().ToString("N"),
+                Name = GetRandomClusterName(),
+                Location = "East US",
+                ClusterSizeInNodes = new Random().Next(),
+                ClusterType = ClusterType.Spark
+            };
+
+            expected.YarnConfiguration.Add(new KeyValuePair<string, string>("my setting 1", "my value 1"));
+            expected.YarnConfiguration.Add(new KeyValuePair<string, string>("my setting 2", "my value 2"));
+            expected.SparkConfiguration.Add(new KeyValuePair<string, string>("my setting 3", "my value 3"));
 
             string payload = new PayloadConverter().SerializeClusterCreateRequestV3(expected);
             var actual = ServerSerializer.DeserializeClusterCreateRequestV3(payload);
@@ -1385,9 +1482,9 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
             return true;
         }
 
-        private static HDInsight.ClusterCreateParameters2 GetClusterCreateParametersForHeadNodeSize(NodeVMSize headNodeSize)
+        private static HDInsight.ClusterCreateParametersV2 GetClusterCreateParametersForHeadNodeSize(NodeVMSize headNodeSize)
         {
-            var cluster1 = new HDInsight.ClusterCreateParameters2
+            var cluster1 = new HDInsight.ClusterCreateParametersV2
             {
                 UserName = Guid.NewGuid().ToString("N"),
                 Password = Guid.NewGuid().ToString("N"),
@@ -1398,7 +1495,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
                 Location = "East US",
                 Version = IntegrationTestBase.TestCredentials.WellKnownCluster.Version,
                 ClusterSizeInNodes = new Random().Next(),
-                HeadNodeSize = headNodeSize.ToString(),
+                HeadNodeSize = headNodeSize.ToVmSize().ToString(),
             };
             cluster1.AdditionalStorageAccounts.Add(new WabStorageAccountConfiguration(Guid.NewGuid().ToString("N"), Guid.NewGuid().ToString("N")));
             cluster1.AdditionalStorageAccounts.Add(new WabStorageAccountConfiguration(Guid.NewGuid().ToString("N"), Guid.NewGuid().ToString("N")));

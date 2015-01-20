@@ -57,6 +57,9 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         ///     Default HDInsight version.
         /// </summary>
         internal const string DEFAULTHDINSIGHTVERSION = "default";
+        internal const string ClustersContractCapabilityVersion1 = "CAPABILITY_FEATURE_CLUSTERS_CONTRACT_1_SDK";
+        internal static string ClustersContractCapabilityVersion2 = "CAPABILITY_FEATURE_CLUSTERS_CONTRACT_2_SDK";
+        internal static string ClustersContractCapabilityVersion3 = "CAPABILITY_FEATURE_CLUSTERS_CONTRACT_VERSION_3_SDK";
         internal const string ClusterAlreadyExistsError = "The condition specified by the ETag is not satisfied.";
 
         private IHDInsightSubscriptionCredentials credentials;
@@ -229,13 +232,13 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
                 throw new ArgumentNullException("clusterCreateParameters");
             }
 
-            var createParamsV2 = new ClusterCreateParameters2(clusterCreateParameters);
+            var createParamsV2 = new ClusterCreateParametersV2(clusterCreateParameters);
 
             return await CreateClusterAsync(createParamsV2);
         }
 
         /// <inheritdoc />
-        public async Task<ClusterDetails> CreateClusterAsync(ClusterCreateParameters2 clusterCreateParameters)
+        public async Task<ClusterDetails> CreateClusterAsync(ClusterCreateParametersV2 clusterCreateParameters)
         {
             if (clusterCreateParameters == null)
             {
@@ -367,7 +370,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
             return this.CreateContainersPocoClient();
         }
 
-        private static void HandleCreateHttpLayerException(ClusterCreateParameters2 clusterCreateParameters, HttpLayerException e)
+        private static void HandleCreateHttpLayerException(ClusterCreateParametersV2 clusterCreateParameters, HttpLayerException e)
         {
             if (e.RequestContent.Contains(ClusterAlreadyExistsError) && e.RequestStatusCode == HttpStatusCode.BadRequest)
             {
@@ -517,21 +520,21 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         /// <inheritdoc />
         public ClusterDetails CreateCluster(ClusterCreateParameters cluster)
         {
-            return this.CreateClusterAsync(new ClusterCreateParameters2(cluster)).WaitForResult();
+            return this.CreateClusterAsync(new ClusterCreateParametersV2(cluster)).WaitForResult();
         }
 
         /// <inheritdoc />
         public ClusterDetails CreateCluster(ClusterCreateParameters cluster, TimeSpan timeout)
         {
-            return this.CreateClusterAsync(new ClusterCreateParameters2(cluster)).WaitForResult(timeout);
+            return this.CreateClusterAsync(new ClusterCreateParametersV2(cluster)).WaitForResult(timeout);
         }
 
-        public ClusterDetails CreateCluster(ClusterCreateParameters2 cluster)
+        public ClusterDetails CreateCluster(ClusterCreateParametersV2 cluster)
         {
             return this.CreateClusterAsync(cluster).WaitForResult();
         }
 
-        public ClusterDetails CreateCluster(ClusterCreateParameters2 cluster, TimeSpan timeout)
+        public ClusterDetails CreateCluster(ClusterCreateParametersV2 cluster, TimeSpan timeout)
         {
             return this.CreateClusterAsync(cluster).WaitForResult(timeout);
         }
@@ -669,7 +672,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
             this.AssertSupportedVersion(cluster.VersionNumber);
         }
 
-        private async Task ValidateClusterVersion(ClusterCreateParameters2 cluster)
+        private async Task ValidateClusterVersion(ClusterCreateParametersV2 cluster)
         {
             var overrideHandlers = ServiceLocator.Instance.Locate<IHDInsightClusterOverrideManager>().GetHandlers(this.credentials, this.Context, this.IgnoreSslErrors);
 

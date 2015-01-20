@@ -83,6 +83,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         /// </summary>
         /// <param name="clusterCreateParameters">Request object that encapsulates all the configurations.</param>
         /// <returns>Object that will manage the deployment and returns an object that represents the HDInsight Cluster created.</returns>
+        [Obsolete("ClusterCreateParameters is deprecated. Please use ClusterCreateParametersV2 for creating clusters in HdInsight.")]
         Task<ClusterDetails> CreateClusterAsync(ClusterCreateParameters clusterCreateParameters);
 
         /// <summary>
@@ -90,7 +91,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         /// </summary>
         /// <param name="clusterCreateParameters">Request object that encapsulates all the configurations.</param>
         /// <returns>Object that will manage the deployment and returns an object that represents the HDInsight Cluster created.</returns>
-        Task<ClusterDetails> CreateClusterAsync(ClusterCreateParameters2 clusterCreateParameters);
+        Task<ClusterDetails> CreateClusterAsync(ClusterCreateParametersV2 clusterCreateParameters);
 
         /// <summary>
         /// Submits a request to delete an HDInsight cluster.

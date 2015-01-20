@@ -483,7 +483,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities.RestSimulato
             return await Task.FromResult(new HttpResponseMessageAbstraction(HttpStatusCode.Accepted, null, value));
         }
 
-        private ClusterErrorStatus ValidateClusterCreation(HDInsight.ClusterCreateParameters cluster)
+        private ClusterErrorStatus ValidateClusterCreation(HDInsight.ClusterCreateParametersV2 cluster)
         {
             if (!this.ValidateClusterCreationMetadata(cluster.HiveMetastore, cluster.OozieMetastore))
                 return new ClusterErrorStatus(400, "Invalid metastores", "create");
@@ -553,7 +553,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities.RestSimulato
                     select s).Any();
         }
 
-        public async Task<IHttpResponseMessageAbstraction> CreateContainer(string dnsName, string location, string clusterPayload, int schemaVersion=3)
+        public async Task<IHttpResponseMessageAbstraction> CreateContainer(string dnsName, string location, string clusterPayload, int schemaVersion = 2)
         {
             this.LogMessage("Creating cluster '{0}' in location {1}", dnsName, location);
             this.ValidateConnection();
@@ -575,7 +575,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities.RestSimulato
                 if (existingCluster != null)
                     throw new HttpLayerException(HttpStatusCode.BadRequest, "<!DOCTYPE html><html>" + HDInsightClient.ClusterAlreadyExistsError + "</html>");
 
-                HDInsight.ClusterCreateParameters cluster = null;
+                HDInsight.ClusterCreateParametersV2 cluster = null;
                 AzureHDInsightClusterConfiguration azureClusterConfig = null;
                 ClusterDetails createCluster = null;
                 if (schemaVersion == 2)
@@ -605,6 +605,12 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities.RestSimulato
                 }
                 else if (schemaVersion == 3)
                 {
+                    var resource = ServerSerializer.DeserializeClusterCreateRequestIntoResource(clusterPayload);
+                    if (resource.SchemaVersion != "3.0")
+                    {
+                        throw new HttpLayerException(HttpStatusCode.BadRequest, "SchemaVersion needs to be at 3.0");
+                    }
+
                     cluster = ServerSerializer.DeserializeClusterCreateRequestV3(clusterPayload);
                     var storageAccounts = GetStorageAccounts(cluster).ToList();
                     createCluster = new ClusterDetails(cluster.Name, HDInsight.ClusterState.ReadyForDeployment.ToString())
@@ -776,7 +782,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities.RestSimulato
             }
         }
 
-        private static IEnumerable<WabStorageAccountConfiguration> GetStorageAccounts(HDInsight.ClusterCreateParameters cluster)
+        private static IEnumerable<WabStorageAccountConfiguration> GetStorageAccounts(HDInsight.ClusterCreateParametersV2 cluster)
         {
             var storageAccounts = new List<WabStorageAccountConfiguration>();
             storageAccounts.Add(

@@ -1,3 +1,5 @@
+
+
 namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities
 {
     using System;
@@ -7,10 +9,15 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities
     using System.Net.Http;
     using System.Threading.Tasks;
     using System.Web.Http;
+    using System.IO;
+    using System.Runtime.Serialization;
+    using System.Xml;
     using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Data.Rdfe;
+    using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Data;
     using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoClient.ClustersResource;
     using Microsoft.WindowsAzure.Management.HDInsight.Contracts;
     using Microsoft.WindowsAzure.Management.HDInsight.Contracts.May2014;
+    using Microsoft.WindowsAzure.Management.HDInsight.Contracts.May2014.Components;
 
     public class RootHandlerSimulatorController : ApiController
     {
@@ -86,6 +93,79 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities
         {
             return new PassthroughResponse { Data = this.GetCluster(dnsName, cloudServiceName, subscriptionId) };
         }
+
+        [Route("~/{subscriptionId}/services")]
+        [HttpPut]
+        public HttpResponseMessage RegisterSubscriptionIfNotExists(string subscriptionId)
+        {
+            return this.Request.CreateResponse(HttpStatusCode.OK);
+        }
+
+        [Route("~/{subscriptionId}/cloudservices/{cloudServiceName}")]
+        [HttpPut]
+        public async Task<HttpResponseMessage> PutCloudServiceAsync(string subscriptionId, string cloudServiceName)
+        {
+            var cloudServiceFromRequest = await this.Request.Content.ReadAsAsync<CloudService>();
+            return this.Request.CreateResponse(HttpStatusCode.Created);
+        }
+
+        [Route("~/{subscriptionId}/cloudservices/{cloudServiceName}/resources/{resourceNamespace}/clusters/{dnsName}")]
+        [HttpPut]
+        public async Task<HttpResponseMessage> CreateCluster(string subscriptionId, string cloudServiceName, string resourceNamespace, string dnsName)
+        {
+            var requestMessage = this.Request;
+            var rdfeResource = await requestMessage.Content.ReadAsAsync<RDFEResource>();
+            XmlNode node = rdfeResource.IntrinsicSettings[0];
+
+            MemoryStream stm = new MemoryStream();
+            StreamWriter stw = new StreamWriter(stm);
+            stw.Write(node.OuterXml);
+            stw.Flush();
+            stm.Position = 0;
+            DataContractSerializer ser = new DataContractSerializer(typeof(ClusterCreateParameters));
+            ClusterCreateParameters clusterCreateParams = (ClusterCreateParameters)ser.ReadObject(stm);
+
+            // Spark cluster creation in introduced after schema version 3.0
+            if (clusterCreateParams.Components.Any(c => c.GetType() == typeof(SparkComponent)))
+            {
+                if (!requestMessage.Headers.GetValues("SchemaVersion").Any(v => v.Equals("3.0")))
+                {
+                    throw new NotSupportedException(ClustersTestConstants.NotSupportedBySubscriptionException);
+                }
+            }
+
+            var testCluster = new Cluster
+            {
+                ClusterRoleCollection = clusterCreateParams.ClusterRoleCollection,
+                CreatedTime = DateTime.UtcNow,
+                Error = null,
+                FullyQualifiedDnsName = clusterCreateParams.DnsName,
+                State = ClusterState.Running,
+                UpdatedTime = DateTime.UtcNow,
+                DnsName = clusterCreateParams.DnsName,
+                Components = clusterCreateParams.Components,
+                ExtensionData = clusterCreateParams.ExtensionData,
+                Location = clusterCreateParams.Location,
+                Version = clusterCreateParams.Version,
+                VirtualNetworkConfiguration = clusterCreateParams.VirtualNetworkConfiguration
+            };
+
+            List<Cluster> clusters;
+            bool subExists = _clustersAvailable.TryGetValue(subscriptionId, out clusters);
+            if (subExists)
+            {
+                clusters.Add(testCluster);
+                _clustersAvailable[subscriptionId] = clusters;
+            }
+            else
+            {
+                _clustersAvailable.Add(
+                    new KeyValuePair<string, List<Cluster>>(subscriptionId, new List<Cluster> { testCluster }));
+            }
+
+            return this.Request.CreateResponse(HttpStatusCode.Created);
+        }
+
 
         [Route("~/{subscriptionId}/cloudservices/{cloudServiceName}/resources/{resourceNamespace}/~/clusters/{dnsName}/roles")]
         [HttpPost]
