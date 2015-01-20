@@ -29,9 +29,9 @@
   </metadata>
   <files>
     <file src="StorSimple\**\*.cs" target="src" />
-    <file src="..\binaries\Microsoft.WindowsAzure.Management.StorSimple.dll" target="lib\portable-net45+sl50+wp80+win" />
-    <file src="..\binaries\Microsoft.WindowsAzure.Management.StorSimple.pdb" target="lib\portable-net45+sl50+wp80+win" />
-    <file src="..\binaries\Microsoft.WindowsAzure.Management.StorSimple.xml" target="lib\portable-net45+sl50+wp80+win" />
+    <file src="..\binaries\portable\Microsoft.WindowsAzure.Management.StorSimple.dll" target="lib\portable-net45+sl50+wp80+win" />
+    <file src="..\binaries\portable\Microsoft.WindowsAzure.Management.StorSimple.pdb" target="lib\portable-net45+sl50+wp80+win" />
+    <file src="..\binaries\portable\Microsoft.WindowsAzure.Management.StorSimple.xml" target="lib\portable-net45+sl50+wp80+win" />
     <file src="..\binaries\net40\Microsoft.WindowsAzure.Management.StorSimple.dll" target="lib\net40" />
     <file src="..\binaries\net40\Microsoft.WindowsAzure.Management.StorSimple.pdb" target="lib\net40" />
     <file src="..\binaries\net40\Microsoft.WindowsAzure.Management.StorSimple.xml" target="lib\net40" />

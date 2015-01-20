@@ -15,6 +15,8 @@
     <DelaySign Condition =" '$(DelaySign)' == '' ">false</DelaySign>
     <GenerateHydraSpecs Condition=" '$(GenerateHydraSpecs)' == '' ">true</GenerateHydraSpecs>
     <NuGetCommand>$(LibraryToolsFolder)\nuget.exe</NuGetCommand>
+    <!-- 'Common': only build common; 'Services': only build all services; 'All': Both common and servies; Or a path to a library project -->
+    <BuildScope Condition=" '$(BuildScope)' == '' ">All</BuildScope>
   </PropertyGroup>
 
   <ItemGroup>
@@ -48,12 +50,18 @@
     So when invoke msbuild, feed the right configuration name-->
     <MSBuild Projects="$(CommonSolution)"
              Properties="Configuration=%(LibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU;CodeSign=$(CodeSign)"
-             Targets="Build" />
+             Targets="Build"
+             Condition=" '$(BuildScope)' == 'Common' or '$(BuildScope)' == 'All' " />
 
     <MSBuild Projects="$(ManagementLibrariesSolution)"
-            Properties="Configuration=%(LibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU;CodeSign=$(CodeSign)"
-            Targets="Build" 
-            Condition=" $(CommonOnly) != 'true' " />
+             Properties="Configuration=%(LibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU;CodeSign=$(CodeSign)"
+             Targets="Build" 
+             Condition=" '$(BuildScope)' == 'Services' or '$(BuildScope)' == 'All' " />
+    
+    <MSBuild Projects="$(LibrarySourceFolder)\$(BuildScope)"
+             Properties="Configuration=%(LibraryFxTargetList.Identity)-$(Configuration);Platform=AnyCPU;CodeSign=$(CodeSign)"
+             Targets="Build"
+             Condition=" '$(BuildScope)' != 'Services' and '$(BuildScope)' != 'Common' and '$(BuildScope)' != 'All' " />
 
     <CallTarget Targets="CodeSignBinaries" Condition=" '$(CodeSign)' == 'true' " />
 
