@@ -18,7 +18,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <CommonProjects Include="$(CommonSolution)" Condition="$(MamlProjectName) == ''" />
     <ManagementLibrariesProjects Include="$(ManagementLibrariesSolution)" Condition="$(MamlProjectName) == ''" />
     <ManagementLibrariesProjects Include="$(LibrarySourceFolder)\$(MamlProjectName)\*.csproj" Condition="$(MamlProjectName) != ''" />
     <LibraryFxTargetList Include="portable;net40;net45" />
@@ -47,9 +46,14 @@
     <CallTarget Targets="BuildServerPreparation" Condition=" '$(CodeSign)' == 'true' " />
     <!--The solution contains configurations for each platform such as Net40-Debug, Net45-Release, etc
     So when invoke msbuild, feed the right configuration name-->
-    <MSBuild Projects="$(SolutionName)"
+    <MSBuild Projects="$(CommonSolution)"
              Properties="Configuration=%(LibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU;CodeSign=$(CodeSign)"
              Targets="Build" />
+
+    <MSBuild Projects="$(ManagementLibrariesSolution)"
+            Properties="Configuration=%(LibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU;CodeSign=$(CodeSign)"
+            Targets="Build" 
+            Condition=" $(CommonOnly) != 'true' " />
 
     <CallTarget Targets="CodeSignBinaries" Condition=" '$(CodeSign)' == 'true' " />
 
