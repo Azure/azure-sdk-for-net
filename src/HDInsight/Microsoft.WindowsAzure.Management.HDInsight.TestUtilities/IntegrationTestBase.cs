@@ -218,18 +218,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities
             {
                 client.DeleteCluster(cluster.Name);
             }
-
-            // Next get the live clusters.
-            runManager.MockingLevel = ServiceLocationMockingLevel.ApplyNoMocking;
-            factory = ServiceLocator.Instance.Locate<ClusterProvisioning.IHDInsightClientFactory>();
-            client = factory.Create(new HDInsightCertificateCredential(creds.SubscriptionId, new X509Certificate2(creds.Certificate)));
-            clusters = client.ListClusters().ToList();
-            var liveClusters = clusters.Where(c => c.Name.StartsWith(ClusterPrefix, StringComparison.OrdinalIgnoreCase));
-
-            foreach (var cluster in liveClusters)
-            {
-                client.DeleteCluster(cluster.Name);
-            }
         }
 
         private static List<Type> types = new List<Type>();
