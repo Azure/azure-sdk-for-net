@@ -5,7 +5,7 @@
 Microsoft.Azure.Common.Extensions
 -->
 <SdkNuGetPackage Include="Microsoft.Azure.Common.Extensions">
-<PackageVersion>0.13.0-preview</PackageVersion>
+<PackageVersion>0.13.1-preview</PackageVersion>
 <Folder>$(MSBuildThisFileDirectory)</Folder>
 </SdkNuGetPackage>
 </ItemGroup>
