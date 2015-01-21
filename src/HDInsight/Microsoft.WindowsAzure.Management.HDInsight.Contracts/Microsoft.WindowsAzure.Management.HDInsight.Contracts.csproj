@@ -114,7 +114,6 @@
     <Compile Include="UserChangeOperationType.cs" />
     <Compile Include="UserChangeRequest.cs" />
     <Compile Include="UserType.cs" />
-    <Compile Include="VmSizeCompatibilityFilter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="May2014\Components\DashboardComponent.cs" />

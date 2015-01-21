@@ -146,7 +146,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities.RestSimulato
         private readonly IDictionary<string, X509Certificate2> certificates = new Dictionary<string, X509Certificate2>();
         private readonly List<Guid> subscriptions = new List<Guid>();
 
-        private readonly IList<string> SupportedConnectivityClusterVersions = new List<string> { "1.6.0.0.LargeSKU-amd64-134231", "1.6", "2.0", "2.1", "default" };
+        private readonly IList<string> SupportedConnectivityClusterVersions = new List<string> { "1.6.0.0.LargeSKU-amd64-134231", "1.6", "2.0", "2.1", "3.0", "3.1", "default" };
 
         // List of Clusters stored.
         // Includes the expected 'tsthdx00hdxcibld02' cluster

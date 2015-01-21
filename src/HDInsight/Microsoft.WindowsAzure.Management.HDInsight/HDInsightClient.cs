@@ -704,6 +704,14 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
                     throw new InvalidOperationException(
                         string.Format("Cannot create a customized cluster with version '{0}'. Customized clusters only supported after version 3.0", cluster.Version));
                 }
+
+                if (version.CompareTo(new Version("3.1")) < 0 && createHasNewVMSizesSpecified(cluster))
+                {
+                    throw new InvalidOperationException(
+                        string.Format(
+                            "Cannot use various VM sizes with cluster version '{0}'. Custom VM sizes are only supported for cluster versions 3.1 and above.",
+                            cluster.Version));
+                }
             }
             else
             {
@@ -734,6 +742,24 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
                             HDInsightSDKSupportedVersions.MinVersion,
                             HDInsightSDKSupportedVersions.MaxVersion));
             }
+        }
+
+        private bool createHasNewVMSizesSpecified(ClusterCreateParametersV2 clusterCreateParameters)
+        {
+            const string ExtraLarge = "ExtraLarge";
+            const string Large = "Large";
+
+            if (!new[] {Large, ExtraLarge}.Contains(clusterCreateParameters.HeadNodeSize, StringComparer.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+
+            if (!clusterCreateParameters.DataNodeSize.Equals(Large))
+            {
+                return true;
+            }
+
+            return clusterCreateParameters.ZookeeperNodeSize == null;
         }
     }
 }

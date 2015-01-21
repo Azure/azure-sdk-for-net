@@ -85,7 +85,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Data
             {
                 InstanceCount = 3,
                 FriendlyName = "ZKRole",
-                VMSizeAsString = inputs.ZookeeperNodeSize,
+                VMSizeAsString = VmSize.Small.ToString(),
             };
 
             cluster.ClusterRoleCollection.Add(headnodeRole);
@@ -171,7 +171,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Data
             {
                 InstanceCount = 3,
                 FriendlyName = "ZKRole",
-                VMSizeAsString = inputs.ZookeeperNodeSize,
+                VMSizeAsString = inputs.ZookeeperNodeSize ?? VmSize.Small.ToString(),
             };
             cluster.ClusterRoleCollection.Add(headnodeRole);
             cluster.ClusterRoleCollection.Add(workernodeRole);
@@ -246,7 +246,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Data
             var hbaseMasterRole = cluster.Components.OfType<ZookeeperComponent>().Single().ZookeeperRole;
 
             //in case no ZK node size is set for hbase, set medium.
-            if (hbaseMasterRole.VMSizeAsString != null)
+            if (inputs.ZookeeperNodeSize == null)
             {
                 hbaseMasterRole.VMSizeAsString = VmSize.Medium.ToString();   
             }

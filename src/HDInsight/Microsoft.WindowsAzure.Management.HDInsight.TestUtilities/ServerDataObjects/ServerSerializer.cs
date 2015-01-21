@@ -57,7 +57,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities.ServerDataOb
         private const string ExtendedErrorMessage = "ExtendedErrorMessage";
         private const string HeadNodeRoleName = "HeadNodeRole";
         private const string WorkerNodeRoleName = "WorkerNodeRole";
-        private const string ZookeeperNodeRoleName = "ZookeeperRole";
+        private const string ZookeeperNodeRoleName = "ZKRole";
 
         internal static string SerializeListContainersResult(IEnumerable<ClusterDetails> containers, string deploymentNamespace, bool writeError, bool writeExtendedError)
         {
@@ -239,7 +239,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities.ServerDataOb
                 DefaultStorageAccountName = GetDefaultStorageAccountFromFromPayloadObject(payloadObject).Name,
                 DefaultStorageAccountKey = GetDefaultStorageAccountFromFromPayloadObject(payloadObject).Key,
                 DefaultStorageContainer = GetDefaultStorageAccountFromFromPayloadObject(payloadObject).Container,
-                ClusterSizeInNodes = payloadObject.ClusterRoleCollection.ToList().Single(role => role.FriendlyName == WorkerNodeRoleName).InstanceCount + 1
+                ClusterSizeInNodes = payloadObject.ClusterRoleCollection.ToList().Single(role => role.FriendlyName == WorkerNodeRoleName).InstanceCount,
             };
 
             var headNodeRole = payloadObject.ClusterRoleCollection.ToList().Where(role => role.FriendlyName == HeadNodeRoleName).ToList();

@@ -208,7 +208,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
             this.ClusterType = ClusterType.Hadoop;
             this.HeadNodeSize = VmSize.Large.ToString();
             this.DataNodeSize = VmSize.Large.ToString();
-            this.ZookeeperNodeSize = null; //VmSize.Small.ToString();
+            this.ZookeeperNodeSize = null;
         }
 
         public ClusterCreateParametersV2(ClusterCreateParameters versionOneParams)
@@ -247,7 +247,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
 
             //new parameters in version 2 (default values)
             this.DataNodeSize = VmSize.Large.ToString();
-            this.ZookeeperNodeSize = VmSize.Small.ToString();
+            this.ZookeeperNodeSize = null;
         }
     }
 }

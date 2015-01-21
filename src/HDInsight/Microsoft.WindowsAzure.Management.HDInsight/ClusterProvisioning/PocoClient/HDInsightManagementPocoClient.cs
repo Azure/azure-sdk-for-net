@@ -131,7 +131,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
             }
 
             if (!new[] {"ExtraLarge", "Large"}.Contains(details.HeadNodeSize, StringComparer.OrdinalIgnoreCase)
-                || string.Equals(details.DataNodeSize, "Large", StringComparison.OrdinalIgnoreCase)
+                || !string.Equals(details.DataNodeSize, "Large", StringComparison.OrdinalIgnoreCase)
                 || details.ZookeeperNodeSize.IsNotNullOrEmpty())
             {
                 throw new InvalidOperationException(string.Format(

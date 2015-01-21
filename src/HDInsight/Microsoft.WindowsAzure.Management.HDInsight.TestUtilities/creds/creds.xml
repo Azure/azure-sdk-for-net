@@ -60,6 +60,14 @@
         <Value>HdInsight version 2.1</Value>
       </ResourceProviderProperty>
       <ResourceProviderProperty>
+        <Key>CAPABILITY_VERSION_3.0</Key>
+        <Value>HdInsight version 3.0</Value>
+      </ResourceProviderProperty>
+      <ResourceProviderProperty>
+        <Key>CAPABILITY_VERSION_3.1</Key>
+        <Value>HdInsight version 3.1</Value>
+      </ResourceProviderProperty>
+      <ResourceProviderProperty>
         <Key>CONTAINERS_Count</Key>
         <Value>3</Value>
       </ResourceProviderProperty>

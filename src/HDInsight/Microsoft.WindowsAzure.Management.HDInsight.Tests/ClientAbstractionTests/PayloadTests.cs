@@ -403,7 +403,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
 
             string payload = new PayloadConverter().SerializeClusterCreateRequest(cluster1);
             var cluster2 = ServerSerializer.DeserializeClusterCreateRequest(payload);
-            Assert.IsTrue(Equals(cluster1, cluster2));
+            Assert.IsTrue(Equals(cluster1, cluster2));            
         }
 
         [TestMethod]
@@ -423,7 +423,8 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
                 Location = "East US",
                 Version = "3.0",
                 ClusterSizeInNodes = new Random().Next(),
-                ClusterType = ClusterType.HBase
+                ClusterType = ClusterType.HBase,
+                ZookeeperNodeSize = "Large",
             };
             cluster1.AdditionalStorageAccounts.Add(new WabStorageAccountConfiguration(Guid.NewGuid().ToString("N"),
                                                                  Guid.NewGuid().ToString("N")));
@@ -542,6 +543,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
 
             string payload = new PayloadConverter().SerializeClusterCreateRequestV3(expected);
             var actual = ServerSerializer.DeserializeClusterCreateRequestV3(payload);
+            fixDefaultExpectedZookeeperSize(expected);
             Assert.IsTrue(Equals(expected, actual));
         }
 
@@ -573,6 +575,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
 
             string payload = new PayloadConverter().SerializeClusterCreateRequestV3(expected);
             var actual = ServerSerializer.DeserializeClusterCreateRequestV3(payload);
+            fixDefaultExpectedZookeeperSize(expected); 
             Assert.IsTrue(Equals(expected, actual));
         }
 
@@ -604,6 +607,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
 
             string payload = new PayloadConverter().SerializeClusterCreateRequestV3(expected);
             var actual = ServerSerializer.DeserializeClusterCreateRequestV3(payload);
+            fixDefaultExpectedZookeeperSize(expected); 
             Assert.IsTrue(Equals(expected, actual));
         }
 
@@ -635,6 +639,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
 
             string payload = new PayloadConverter().SerializeClusterCreateRequestV3(expected);
             var actual = ServerSerializer.DeserializeClusterCreateRequestV3(payload);
+            fixDefaultExpectedZookeeperSize(expected); 
             Assert.IsTrue(Equals(expected, actual));
         }
 
@@ -673,6 +678,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
 
             string payload = new PayloadConverter().SerializeClusterCreateRequestV3(expected);
             var actual = ServerSerializer.DeserializeClusterCreateRequestV3(payload);
+            fixDefaultExpectedZookeeperSize(expected); 
             Assert.IsTrue(Equals(expected, actual));
         }
 
@@ -710,6 +716,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
 
             string payload = new PayloadConverter().SerializeClusterCreateRequestV3(expected);
             var actual = ServerSerializer.DeserializeClusterCreateRequestV3(payload);
+            fixDefaultExpectedZookeeperSize(expected); 
             Assert.IsTrue(Equals(expected, actual));
         }
 
@@ -747,6 +754,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
 
             string payload = new PayloadConverter().SerializeClusterCreateRequestV3(expected);
             var actual = ServerSerializer.DeserializeClusterCreateRequestV3(payload);
+            fixDefaultExpectedZookeeperSize(expected); 
             Assert.IsTrue(Equals(expected, actual));
         }
 
@@ -806,7 +814,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
 
             string payload = new PayloadConverter().SerializeClusterCreateRequestV3(expected);
             var actual = ServerSerializer.DeserializeClusterCreateRequestV3(payload);
-
+            fixDefaultExpectedZookeeperSize(expected);
             Assert.IsTrue(Equals(expected, actual));
         }
 
@@ -881,7 +889,8 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
                 Name = GetRandomClusterName(),
                 Location = "East US",
                 ClusterSizeInNodes = new Random().Next(),
-                ClusterType = ClusterType.HBase
+                ClusterType = ClusterType.HBase,
+                ZookeeperNodeSize = "Small",
             };
 
             expected.OozieConfiguration.ConfigurationCollection.Add(new KeyValuePair<string, string>("my setting 1", "my value 1"));
@@ -890,6 +899,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
 
             string payload = new PayloadConverter().SerializeClusterCreateRequestV3(expected);
             var actual = ServerSerializer.DeserializeClusterCreateRequestV3(payload);
+
             Assert.IsTrue(Equals(expected, actual));
         }
 
@@ -949,6 +959,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
 
             string payload = new PayloadConverter().SerializeClusterCreateRequest(expected);
             var actual = ServerSerializer.DeserializeClusterCreateRequest(payload);
+            
             Assert.IsTrue(Equals(expected, actual));
         }
 
@@ -978,6 +989,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
 
             string payload = new PayloadConverter().SerializeClusterCreateRequestV3(expected);
             var actual = ServerSerializer.DeserializeClusterCreateRequestV3(payload);
+            fixDefaultExpectedZookeeperSize(expected); 
             Assert.IsTrue(Equals(expected, actual));
         }
 
@@ -1007,6 +1019,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
 
             string payload = new PayloadConverter().SerializeClusterCreateRequest(expected);
             var actual = ServerSerializer.DeserializeClusterCreateRequest(payload);
+
             Assert.IsTrue(Equals(expected, actual));
         }
 
@@ -1037,6 +1050,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
 
             string payload = new PayloadConverter().SerializeClusterCreateRequestV3(expected);
             var actual = ServerSerializer.DeserializeClusterCreateRequestV3(payload);
+            fixDefaultExpectedZookeeperSize(expected); 
             Assert.IsTrue(Equals(expected, actual));
         }
 
@@ -1067,6 +1081,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
 
             string payload = new PayloadConverter().SerializeClusterCreateRequestV3(expected);
             var actual = ServerSerializer.DeserializeClusterCreateRequestV3(payload);
+            fixDefaultExpectedZookeeperSize(expected); 
             Assert.IsTrue(Equals(expected, actual));
         }
 
@@ -1094,6 +1109,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
 
             string payload = new PayloadConverter().SerializeClusterCreateRequest(expected);
             var actual = ServerSerializer.DeserializeClusterCreateRequest(payload);
+
             Assert.IsTrue(Equals(expected, actual));
         }
 
@@ -1123,6 +1139,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
 
             string payload = new PayloadConverter().SerializeClusterCreateRequestV3(expected);
             var actual = ServerSerializer.DeserializeClusterCreateRequestV3(payload);
+            fixDefaultExpectedZookeeperSize(expected); 
             Assert.IsTrue(Equals(expected, actual));
         }
 
@@ -1201,6 +1218,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
 
             string payload = new PayloadConverter().SerializeClusterCreateRequestV3(expected);
             var actual = ServerSerializer.DeserializeClusterCreateRequestV3(payload);
+            fixDefaultExpectedZookeeperSize(expected); 
             Assert.IsTrue(Equals(expected, actual));
         }
 
@@ -1230,6 +1248,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
 
             string payload = new PayloadConverter().SerializeClusterCreateRequestV3(expected);
             var actual = ServerSerializer.DeserializeClusterCreateRequestV3(payload);
+            fixDefaultExpectedZookeeperSize(expected); 
             Assert.IsTrue(Equals(expected, actual));
         }
 
@@ -1257,6 +1276,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
 
             string payload = new PayloadConverter().SerializeClusterCreateRequest(expected);
             var actual = ServerSerializer.DeserializeClusterCreateRequest(payload);
+
             Assert.IsTrue(Equals(expected, actual));
         }
 
@@ -1286,6 +1306,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
 
             string payload = new PayloadConverter().SerializeClusterCreateRequestV3(expected);
             var actual = ServerSerializer.DeserializeClusterCreateRequestV3(payload);
+            fixDefaultExpectedZookeeperSize(expected); 
             Assert.IsTrue(Equals(expected, actual));
         }
 
@@ -1315,6 +1336,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
 
             string payload = new PayloadConverter().SerializeClusterCreateRequestV3(expected);
             var actual = ServerSerializer.DeserializeClusterCreateRequestV3(payload);
+            fixDefaultExpectedZookeeperSize(expected); 
             Assert.IsTrue(Equals(expected, actual));
         }
 
@@ -1344,12 +1366,13 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
 
             string payload = new PayloadConverter().SerializeClusterCreateRequestV3(expected);
             var actual = ServerSerializer.DeserializeClusterCreateRequestV3(payload);
+            fixDefaultExpectedZookeeperSize(expected); 
             Assert.IsTrue(Equals(expected, actual));
         }
 
-        private static bool Equals(HDInsight.ClusterCreateParameters expected, HDInsight.ClusterCreateParameters actual)
+        private static bool Equals(HDInsight.ClusterCreateParametersV2 expected, HDInsight.ClusterCreateParametersV2 actual)
         {
-            if (expected == null && actual == null)
+            if (Object.ReferenceEquals(expected, actual))
             {
                 return true;
             }
@@ -1369,11 +1392,13 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
                 new Tuple<object, object>(expected.DefaultStorageContainer, actual.DefaultStorageContainer),
                 new Tuple<object, object>(expected.Name, actual.Name),
                 new Tuple<object, object>(expected.Location, actual.Location),
-                new Tuple<object, object>(expected.ClusterSizeInNodes + 1, actual.ClusterSizeInNodes),
+                new Tuple<object, object>(expected.ClusterSizeInNodes, actual.ClusterSizeInNodes),
                 new Tuple<object, object>(expected.AdditionalStorageAccounts.Count, actual.AdditionalStorageAccounts.Count),
                 new Tuple<object, object>(expected.HeadNodeSize, actual.HeadNodeSize),
                 new Tuple<object, object>(expected.VirtualNetworkId, actual.VirtualNetworkId),
                 new Tuple<object, object>(expected.SubnetName, actual.SubnetName),
+                new Tuple<object, object>(expected.DataNodeSize, actual.DataNodeSize),
+                new Tuple<object, object>(expected.ZookeeperNodeSize, actual.ZookeeperNodeSize),
             };
             if (expected.OozieMetastore != null)
             {
@@ -1500,6 +1525,18 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
             cluster1.AdditionalStorageAccounts.Add(new WabStorageAccountConfiguration(Guid.NewGuid().ToString("N"), Guid.NewGuid().ToString("N")));
             cluster1.AdditionalStorageAccounts.Add(new WabStorageAccountConfiguration(Guid.NewGuid().ToString("N"), Guid.NewGuid().ToString("N")));
             return cluster1;
+        }
+
+        private void fixDefaultExpectedZookeeperSize(ClusterCreateParametersV2 expected)
+        {
+            if (expected.ClusterType == ClusterType.HBase)
+            {
+                expected.ZookeeperNodeSize = "Medium";
+            }
+            else
+            {
+                expected.ZookeeperNodeSize = "Small";
+            }
         }
     }
 }
