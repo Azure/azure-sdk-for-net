@@ -89,7 +89,7 @@ namespace Microsoft.Azure.Management.Authorization
             
             // Construct URL
             string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/providers/Microsoft.Authorization/roleDefinitions/" + Uri.EscapeDataString(roleDefinitionName.ToString()) + "?";
-            url = url + "api-version=2014-07-01-preview";
+            url = url + "api-version=2014-10-01-preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -112,7 +112,7 @@ namespace Microsoft.Azure.Management.Authorization
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-07-01-preview");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01-preview");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -311,7 +311,7 @@ namespace Microsoft.Azure.Management.Authorization
             
             // Construct URL
             string url = "/" + roleDefinitionId + "?";
-            url = url + "api-version=2014-07-01-preview";
+            url = url + "api-version=2014-10-01-preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -334,7 +334,7 @@ namespace Microsoft.Azure.Management.Authorization
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-07-01-preview");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01-preview");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -525,7 +525,7 @@ namespace Microsoft.Azure.Management.Authorization
             
             // Construct URL
             string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/providers/Microsoft.Authorization/roleDefinitions?";
-            url = url + "api-version=2014-07-01-preview";
+            url = url + "api-version=2014-10-01-preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -548,7 +548,7 @@ namespace Microsoft.Azure.Management.Authorization
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-07-01-preview");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01-preview");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();

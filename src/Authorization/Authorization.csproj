@@ -26,6 +26,7 @@
     <Compile Include="Generated\Models\RoleAssignment.cs" />
     <Compile Include="Generated\Models\RoleAssignmentCreateParameters.cs" />
     <Compile Include="Generated\Models\RoleAssignmentCreateResult.cs" />
+    <Compile Include="Generated\Models\RoleAssignmentDeleteResult.cs" />
     <Compile Include="Generated\Models\RoleAssignmentGetResult.cs" />
     <Compile Include="Generated\Models\RoleAssignmentListResult.cs" />
     <Compile Include="Generated\Models\RoleAssignmentProperties.cs" />
@@ -44,6 +45,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="GenerateCode.props" />
     <None Include="Microsoft.Azure.Management.Authorization.nuget.proj" />
     <None Include="Microsoft.Azure.Management.Authorization.nuspec" />

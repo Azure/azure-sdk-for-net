@@ -125,7 +125,7 @@ namespace Microsoft.Azure.Management.Authorization
             this._permissions = new PermissionOperations(this);
             this._roleAssignments = new RoleAssignmentOperations(this);
             this._roleDefinitions = new RoleDefinitionOperations(this);
-            this._apiVersion = "2014-07-01-preview";
+            this._apiVersion = "2014-10-01-preview";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -196,7 +196,7 @@ namespace Microsoft.Azure.Management.Authorization
             this._permissions = new PermissionOperations(this);
             this._roleAssignments = new RoleAssignmentOperations(this);
             this._roleDefinitions = new RoleDefinitionOperations(this);
-            this._apiVersion = "2014-07-01-preview";
+            this._apiVersion = "2014-10-01-preview";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
