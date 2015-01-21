@@ -15,6 +15,18 @@
   </Specification>
 
   <Specification>
+    <Type>Microsoft.Azure.Management.Resources.FeatureClient</Type>
+
+    <Platform>
+      <Flavor>CSharp.Azure</Flavor>
+      <OutputDirectory></OutputDirectory>
+      <BaseNamespace>Microsoft.Azure.Management.Resources</BaseNamespace>
+      <Split>Namespace</Split>
+    </Platform>
+  </Specification>
+  
+
+  <Specification>
     <Type>Microsoft.Azure.Subscriptions.SubscriptionClient</Type>
 
     <Platform>
