@@ -129,7 +129,11 @@ namespace Microsoft.Azure.Insights
                 result = new MetricListResponse()
                 {
                     RequestId = Guid.NewGuid().ToString("D"),
-                    StatusCode =  HttpStatusCode.OK
+                    StatusCode =  HttpStatusCode.OK,
+                    MetricCollection = new MetricCollection()
+                    {
+                        Value = new Metric[0]
+                    }
                 };
 
                 this.LogEndGetMetrics(invocationId, result);
