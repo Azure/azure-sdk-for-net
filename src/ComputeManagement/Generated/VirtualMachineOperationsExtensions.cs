@@ -23,11 +23,11 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Compute;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.Management.Compute
 {
     /// <summary>
     /// The Service Management API provides programmatic access to much of the
@@ -78,7 +78,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginCapturingOSImage(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineCaptureOSImageParameters parameters)
+        public static AzureOperationResponse BeginCapturingOSImage(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineCaptureOSImageParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -126,7 +126,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginCapturingOSImageAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineCaptureOSImageParameters parameters)
+        public static Task<AzureOperationResponse> BeginCapturingOSImageAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineCaptureOSImageParameters parameters)
         {
             return operations.BeginCapturingOSImageAsync(serviceName, deploymentName, virtualMachineName, parameters, CancellationToken.None);
         }
@@ -155,7 +155,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginCapturingVMImage(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineCaptureVMImageParameters parameters)
+        public static AzureOperationResponse BeginCapturingVMImage(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineCaptureVMImageParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -188,7 +188,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginCapturingVMImageAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineCaptureVMImageParameters parameters)
+        public static Task<AzureOperationResponse> BeginCapturingVMImageAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineCaptureVMImageParameters parameters)
         {
             return operations.BeginCapturingVMImageAsync(serviceName, deploymentName, virtualMachineName, parameters, CancellationToken.None);
         }
@@ -228,7 +228,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginCreating(this IVirtualMachineOperations operations, string serviceName, string deploymentName, VirtualMachineCreateParameters parameters)
+        public static AzureOperationResponse BeginCreating(this IVirtualMachineOperations operations, string serviceName, string deploymentName, VirtualMachineCreateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -272,7 +272,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginCreatingAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, VirtualMachineCreateParameters parameters)
+        public static Task<AzureOperationResponse> BeginCreatingAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, VirtualMachineCreateParameters parameters)
         {
             return operations.BeginCreatingAsync(serviceName, deploymentName, parameters, CancellationToken.None);
         }
@@ -304,7 +304,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginCreatingDeployment(this IVirtualMachineOperations operations, string serviceName, VirtualMachineCreateDeploymentParameters parameters)
+        public static AzureOperationResponse BeginCreatingDeployment(this IVirtualMachineOperations operations, string serviceName, VirtualMachineCreateDeploymentParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -340,7 +340,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginCreatingDeploymentAsync(this IVirtualMachineOperations operations, string serviceName, VirtualMachineCreateDeploymentParameters parameters)
+        public static Task<AzureOperationResponse> BeginCreatingDeploymentAsync(this IVirtualMachineOperations operations, string serviceName, VirtualMachineCreateDeploymentParameters parameters)
         {
             return operations.BeginCreatingDeploymentAsync(serviceName, parameters, CancellationToken.None);
         }
@@ -372,7 +372,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginDeleting(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, bool deleteFromStorage)
+        public static AzureOperationResponse BeginDeleting(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, bool deleteFromStorage)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -408,7 +408,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginDeletingAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, bool deleteFromStorage)
+        public static Task<AzureOperationResponse> BeginDeletingAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, bool deleteFromStorage)
         {
             return operations.BeginDeletingAsync(serviceName, deploymentName, virtualMachineName, deleteFromStorage, CancellationToken.None);
         }
@@ -436,7 +436,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginRestarting(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName)
+        public static AzureOperationResponse BeginRestarting(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -468,7 +468,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginRestartingAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName)
+        public static Task<AzureOperationResponse> BeginRestartingAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName)
         {
             return operations.BeginRestartingAsync(serviceName, deploymentName, virtualMachineName, CancellationToken.None);
         }
@@ -499,7 +499,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginShutdown(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineShutdownParameters parameters)
+        public static AzureOperationResponse BeginShutdown(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineShutdownParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -534,7 +534,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginShutdownAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineShutdownParameters parameters)
+        public static Task<AzureOperationResponse> BeginShutdownAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineShutdownParameters parameters)
         {
             return operations.BeginShutdownAsync(serviceName, deploymentName, virtualMachineName, parameters, CancellationToken.None);
         }
@@ -563,7 +563,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginShuttingDownRoles(this IVirtualMachineOperations operations, string serviceName, string deploymentName, VirtualMachineShutdownRolesParameters parameters)
+        public static AzureOperationResponse BeginShuttingDownRoles(this IVirtualMachineOperations operations, string serviceName, string deploymentName, VirtualMachineShutdownRolesParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -596,7 +596,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginShuttingDownRolesAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, VirtualMachineShutdownRolesParameters parameters)
+        public static Task<AzureOperationResponse> BeginShuttingDownRolesAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, VirtualMachineShutdownRolesParameters parameters)
         {
             return operations.BeginShuttingDownRolesAsync(serviceName, deploymentName, parameters, CancellationToken.None);
         }
@@ -624,7 +624,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginStarting(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName)
+        public static AzureOperationResponse BeginStarting(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -656,7 +656,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginStartingAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName)
+        public static Task<AzureOperationResponse> BeginStartingAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName)
         {
             return operations.BeginStartingAsync(serviceName, deploymentName, virtualMachineName, CancellationToken.None);
         }
@@ -684,7 +684,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginStartingRoles(this IVirtualMachineOperations operations, string serviceName, string deploymentName, VirtualMachineStartRolesParameters parameters)
+        public static AzureOperationResponse BeginStartingRoles(this IVirtualMachineOperations operations, string serviceName, string deploymentName, VirtualMachineStartRolesParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -716,7 +716,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginStartingRolesAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, VirtualMachineStartRolesParameters parameters)
+        public static Task<AzureOperationResponse> BeginStartingRolesAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, VirtualMachineStartRolesParameters parameters)
         {
             return operations.BeginStartingRolesAsync(serviceName, deploymentName, parameters, CancellationToken.None);
         }
@@ -748,7 +748,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginUpdating(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineUpdateParameters parameters)
+        public static AzureOperationResponse BeginUpdating(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineUpdateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -784,7 +784,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginUpdatingAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineUpdateParameters parameters)
+        public static Task<AzureOperationResponse> BeginUpdatingAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineUpdateParameters parameters)
         {
             return operations.BeginUpdatingAsync(serviceName, deploymentName, virtualMachineName, parameters, CancellationToken.None);
         }
@@ -815,7 +815,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginUpdatingLoadBalancedEndpointSet(this IVirtualMachineOperations operations, string serviceName, string deploymentName, VirtualMachineUpdateLoadBalancedSetParameters parameters)
+        public static AzureOperationResponse BeginUpdatingLoadBalancedEndpointSet(this IVirtualMachineOperations operations, string serviceName, string deploymentName, VirtualMachineUpdateLoadBalancedSetParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -850,7 +850,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginUpdatingLoadBalancedEndpointSetAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, VirtualMachineUpdateLoadBalancedSetParameters parameters)
+        public static Task<AzureOperationResponse> BeginUpdatingLoadBalancedEndpointSetAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, VirtualMachineUpdateLoadBalancedSetParameters parameters)
         {
             return operations.BeginUpdatingLoadBalancedEndpointSetAsync(serviceName, deploymentName, parameters, CancellationToken.None);
         }

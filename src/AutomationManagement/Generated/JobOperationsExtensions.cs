@@ -23,9 +23,9 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Automation;
 using Microsoft.Azure.Management.Automation.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Automation
 {
@@ -516,7 +516,7 @@ namespace Microsoft.Azure.Management.Automation
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Resume(this IJobOperations operations, string automationAccount, string jobId)
+        public static AzureOperationResponse Resume(this IJobOperations operations, string automationAccount, string jobId)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -544,7 +544,7 @@ namespace Microsoft.Azure.Management.Automation
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> ResumeAsync(this IJobOperations operations, string automationAccount, string jobId)
+        public static Task<AzureOperationResponse> ResumeAsync(this IJobOperations operations, string automationAccount, string jobId)
         {
             return operations.ResumeAsync(automationAccount, jobId, CancellationToken.None);
         }
@@ -568,7 +568,7 @@ namespace Microsoft.Azure.Management.Automation
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Stop(this IJobOperations operations, string automationAccount, string jobId)
+        public static AzureOperationResponse Stop(this IJobOperations operations, string automationAccount, string jobId)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -596,7 +596,7 @@ namespace Microsoft.Azure.Management.Automation
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> StopAsync(this IJobOperations operations, string automationAccount, string jobId)
+        public static Task<AzureOperationResponse> StopAsync(this IJobOperations operations, string automationAccount, string jobId)
         {
             return operations.StopAsync(automationAccount, jobId, CancellationToken.None);
         }
@@ -620,7 +620,7 @@ namespace Microsoft.Azure.Management.Automation
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Suspend(this IJobOperations operations, string automationAccount, string jobId)
+        public static AzureOperationResponse Suspend(this IJobOperations operations, string automationAccount, string jobId)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -648,7 +648,7 @@ namespace Microsoft.Azure.Management.Automation
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> SuspendAsync(this IJobOperations operations, string automationAccount, string jobId)
+        public static Task<AzureOperationResponse> SuspendAsync(this IJobOperations operations, string automationAccount, string jobId)
         {
             return operations.SuspendAsync(automationAccount, jobId, CancellationToken.None);
         }

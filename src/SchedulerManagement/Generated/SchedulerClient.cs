@@ -22,8 +22,8 @@
 using System;
 using System.Linq;
 using System.Net.Http;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Scheduler;
 using Microsoft.WindowsAzure.Scheduler.Models;
 
@@ -111,7 +111,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// <summary>
         /// Initializes a new instance of the SchedulerClient class.
         /// </summary>
-        private SchedulerClient()
+        public SchedulerClient()
             : base()
         {
             this._jobs = new JobOperations(this);
@@ -209,7 +209,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// <param name='httpClient'>
         /// The Http client
         /// </param>
-        private SchedulerClient(HttpClient httpClient)
+        public SchedulerClient(HttpClient httpClient)
             : base(httpClient)
         {
             this._jobs = new JobOperations(this);
@@ -345,17 +345,21 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// </returns>
         internal static HttpAuthenticationType ParseHttpAuthenticationType(string value)
         {
-            if ("notspecified".Equals(value, StringComparison.OrdinalIgnoreCase))
+            if ("NotSpecified".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return HttpAuthenticationType.NotSpecified;
             }
-            if ("basic".Equals(value, StringComparison.OrdinalIgnoreCase))
-            {
-                return HttpAuthenticationType.Basic;
-            }
-            if ("clientcertificate".Equals(value, StringComparison.OrdinalIgnoreCase))
+            if ("ClientCertificate".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return HttpAuthenticationType.ClientCertificate;
+            }
+            if ("ActiveDirectoryOAuth".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return HttpAuthenticationType.ActiveDirectoryOAuth;
+            }
+            if ("Basic".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return HttpAuthenticationType.Basic;
             }
             throw new ArgumentOutOfRangeException("value");
         }
@@ -373,15 +377,19 @@ namespace Microsoft.WindowsAzure.Scheduler
         {
             if (value == HttpAuthenticationType.NotSpecified)
             {
-                return "notspecified";
-            }
-            if (value == HttpAuthenticationType.Basic)
-            {
-                return "basic";
+                return "NotSpecified";
             }
             if (value == HttpAuthenticationType.ClientCertificate)
             {
-                return "clientcertificate";
+                return "ClientCertificate";
+            }
+            if (value == HttpAuthenticationType.ActiveDirectoryOAuth)
+            {
+                return "ActiveDirectoryOAuth";
+            }
+            if (value == HttpAuthenticationType.Basic)
+            {
+                return "Basic";
             }
             throw new ArgumentOutOfRangeException("value");
         }

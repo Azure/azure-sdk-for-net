@@ -22,8 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Sql.Models;
 
 namespace Microsoft.WindowsAzure.Management.Sql.Models
@@ -31,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
     /// <summary>
     /// Contains the response to a Get Database Event Logs request.
     /// </summary>
-    public partial class DatabaseGetEventLogsResponse : OperationResponse, IEnumerable<DatabaseEventLog>
+    public partial class DatabaseGetEventLogsResponse : AzureOperationResponse, IEnumerable<DatabaseEventLog>
     {
         private IList<DatabaseEventLog> _eventLogs;
         

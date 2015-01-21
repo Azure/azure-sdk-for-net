@@ -23,7 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.WindowsAzure.WebSitesExtensions
 {
@@ -42,6 +42,6 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> DeleteAsync(CancellationToken cancellationToken);
+        Task<AzureOperationResponse> DeleteAsync(CancellationToken cancellationToken);
     }
 }

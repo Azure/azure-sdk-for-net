@@ -9,11 +9,14 @@
   differentiate from the .nuproj system (which we may want to move to in the
   future)
   -->
-  <Import Project="*\**\*.nuget.proj" Condition="$(MamlProjectName) == ''"/>
-  <Import Project="*\**\$(MamlProjectName)\*.nuget.proj" Condition="$(MamlProjectName) != ''"/>
   <PropertyGroup>
     <BaselineReleaseNotes>PREVIEW RELEASE</BaselineReleaseNotes>
+	  <ProductSourceFolderPath Condition="$(ProductSourceFolderPath) == ''">src</ProductSourceFolderPath>
+	  <ProductSourceFolder>$(MSBuildThisFileDirectory)$(ProductSourceFolderPath)</ProductSourceFolder>
   </PropertyGroup>
+  
+  <Import Project="$(ProductSourceFolder)\*\*.nuget.proj" Condition="$(MamlProjectName) == ''"/>
+  <Import Project="$(ProductSourceFolder)\*\$(MamlProjectName)\*.nuget.proj" Condition="$(MamlProjectName) != ''"/>
 
   <!--
 
@@ -105,6 +108,8 @@
     <PropertyGroup>
       <PowerShellExe Condition=" '$(PowerShellExe)'=='' ">%WINDIR%\System32\WindowsPowerShell\v1.0\powershell.exe</PowerShellExe>   
       <NuSpecSyncScript>$(MSBuildProjectDirectory)\tools\Sync-NuspecDependencies.ps1</NuSpecSyncScript>	  
+	    <ProductSourceFolderPath Condition="$(ProductSourceFolderPath) == ''">src</ProductSourceFolderPath>
+	    <ProductSourceFolder Condition="$(ProductSourceFolder) == ''">$(MSBuildThisFileDirectory)$(ProductSourceFolderPath)</ProductSourceFolder>
     </PropertyGroup>
 	
     <Error Text="NuGet specification %(NuspecFilesToUpdate.Identity) not found."
@@ -119,7 +124,7 @@
                           LogReplacement="false" />
 
     <!-- Update all explicit references to dependent versions. -->
-    <Exec Command="$(PowerShellExe) -NonInteractive -ExecutionPolicy bypass -Command &quot;&amp; { &amp;&apos;$(NuSpecSyncScript)&apos; }&quot;" />
+    <Exec Command="$(PowerShellExe) -NonInteractive -ExecutionPolicy bypass -Command &quot;&amp; { &amp;&apos;$(NuSpecSyncScript)&apos; -BasePath &apos;$(ProductSourceFolder)&apos; }&quot;" />
 
     <!-- Second, use the new files as destructive replacement targets. -->
     <ItemGroup>
@@ -153,7 +158,7 @@
     <Exec Condition=" '%(SdkNuGetPackage.SkipSymbolSourcePackage)' != 'true' "
           Command="$(NuGetCommand) pack -BasePath .\src\ -Verbosity $(NuGetVerbosity) &quot;binaries\packages\specs\%(SdkNuGetPackage.Identity).nuspec&quot; -Version %(SdkNuGetPackage.PackageVersion)$(BuildVersionSuffix)$(AdditionalVersionSuffix) -OutputDirectory &quot;$(PackageOutputDir)&quot; -Symbols" />
 
-    <Message Text="Generating NuGet packages without symbol + source packages" Importance="high" />
+    <Message Text="Generating NuGet packages without symbol + source packages into $(PackageOutputDir)" Importance="high" />
     <Exec Condition=" '%(SdkNuGetPackage.SkipSymbolSourcePackage)' == 'true' "
           Command="$(NuGetCommand) pack -BasePath .\src\ -Verbosity $(NuGetVerbosity) &quot;binaries\packages\specs\%(SdkNuGetPackage.Identity).nuspec&quot; -Version %(SdkNuGetPackage.PackageVersion)$(BuildVersionSuffix)$(AdditionalVersionSuffix) -OutputDirectory &quot;$(PackageOutputDir)&quot;" />
   </Target>

@@ -21,15 +21,15 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.WebSites.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
     /// <summary>
     /// Publishing credentials for the website.
     /// </summary>
-    public partial class WebSitePublishingCredentialsResult : OperationResponse
+    public partial class WebSitePublishingCredentialsResult : AzureOperationResponse
     {
         private WebSitePublishingCredentialsEnvelope _resource;
         

@@ -23,7 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute
@@ -53,7 +53,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginRegisteringAsync(ExtensionImageRegisterParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BeginRegisteringAsync(ExtensionImageRegisterParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Unregister a version of an extension that was previously registered
@@ -85,7 +85,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginUnregisteringAsync(string providerNamespace, string type, string version, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BeginUnregisteringAsync(string providerNamespace, string type, string version, CancellationToken cancellationToken);
         
         /// <summary>
         /// Update a new extension. It is allowed to update an extension which
@@ -106,7 +106,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginUpdatingAsync(ExtensionImageUpdateParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BeginUpdatingAsync(ExtensionImageUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Register a new extension. An extension is identified by the

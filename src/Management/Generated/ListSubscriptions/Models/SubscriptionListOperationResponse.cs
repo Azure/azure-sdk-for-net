@@ -22,8 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Subscriptions.Models;
 
 namespace Microsoft.WindowsAzure.Subscriptions.Models
@@ -32,7 +32,7 @@ namespace Microsoft.WindowsAzure.Subscriptions.Models
     /// A standard service response including an HTTP status code and request
     /// ID.
     /// </summary>
-    public partial class SubscriptionListOperationResponse : OperationResponse, IEnumerable<SubscriptionListOperationResponse.Subscription>
+    public partial class SubscriptionListOperationResponse : AzureOperationResponse, IEnumerable<SubscriptionListOperationResponse.Subscription>
     {
         private IList<SubscriptionListOperationResponse.Subscription> _subscriptions;
         

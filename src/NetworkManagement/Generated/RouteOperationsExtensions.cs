@@ -23,11 +23,11 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Network;
 using Microsoft.WindowsAzure.Management.Network.Models;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.Management.Network
 {
     /// <summary>
     /// The Service Management API includes operations for managing the virtual
@@ -137,7 +137,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginAddRouteTableToSubnet(this IRouteOperations operations, string vnetName, string subnetName, AddRouteTableToSubnetParameters parameters)
+        public static AzureOperationResponse BeginAddRouteTableToSubnet(this IRouteOperations operations, string vnetName, string subnetName, AddRouteTableToSubnetParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -170,7 +170,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginAddRouteTableToSubnetAsync(this IRouteOperations operations, string vnetName, string subnetName, AddRouteTableToSubnetParameters parameters)
+        public static Task<AzureOperationResponse> BeginAddRouteTableToSubnetAsync(this IRouteOperations operations, string vnetName, string subnetName, AddRouteTableToSubnetParameters parameters)
         {
             return operations.BeginAddRouteTableToSubnetAsync(vnetName, subnetName, parameters, CancellationToken.None);
         }
@@ -189,7 +189,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginCreateRouteTable(this IRouteOperations operations, CreateRouteTableParameters parameters)
+        public static AzureOperationResponse BeginCreateRouteTable(this IRouteOperations operations, CreateRouteTableParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -212,7 +212,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginCreateRouteTableAsync(this IRouteOperations operations, CreateRouteTableParameters parameters)
+        public static Task<AzureOperationResponse> BeginCreateRouteTableAsync(this IRouteOperations operations, CreateRouteTableParameters parameters)
         {
             return operations.BeginCreateRouteTableAsync(parameters, CancellationToken.None);
         }
@@ -236,7 +236,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginDeleteRoute(this IRouteOperations operations, string routeTableName, string routeName)
+        public static AzureOperationResponse BeginDeleteRoute(this IRouteOperations operations, string routeTableName, string routeName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -264,7 +264,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginDeleteRouteAsync(this IRouteOperations operations, string routeTableName, string routeName)
+        public static Task<AzureOperationResponse> BeginDeleteRouteAsync(this IRouteOperations operations, string routeTableName, string routeName)
         {
             return operations.BeginDeleteRouteAsync(routeTableName, routeName, CancellationToken.None);
         }
@@ -283,7 +283,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginDeleteRouteTable(this IRouteOperations operations, string routeTableName)
+        public static AzureOperationResponse BeginDeleteRouteTable(this IRouteOperations operations, string routeTableName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -306,7 +306,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginDeleteRouteTableAsync(this IRouteOperations operations, string routeTableName)
+        public static Task<AzureOperationResponse> BeginDeleteRouteTableAsync(this IRouteOperations operations, string routeTableName)
         {
             return operations.BeginDeleteRouteTableAsync(routeTableName, CancellationToken.None);
         }
@@ -331,7 +331,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginRemoveRouteTableFromSubnet(this IRouteOperations operations, string vnetName, string subnetName)
+        public static AzureOperationResponse BeginRemoveRouteTableFromSubnet(this IRouteOperations operations, string vnetName, string subnetName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -360,7 +360,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginRemoveRouteTableFromSubnetAsync(this IRouteOperations operations, string vnetName, string subnetName)
+        public static Task<AzureOperationResponse> BeginRemoveRouteTableFromSubnetAsync(this IRouteOperations operations, string vnetName, string subnetName)
         {
             return operations.BeginRemoveRouteTableFromSubnetAsync(vnetName, subnetName, CancellationToken.None);
         }
@@ -387,7 +387,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginSetRoute(this IRouteOperations operations, string routeTableName, string routeName, SetRouteParameters parameters)
+        public static AzureOperationResponse BeginSetRoute(this IRouteOperations operations, string routeTableName, string routeName, SetRouteParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -418,7 +418,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginSetRouteAsync(this IRouteOperations operations, string routeTableName, string routeName, SetRouteParameters parameters)
+        public static Task<AzureOperationResponse> BeginSetRouteAsync(this IRouteOperations operations, string routeTableName, string routeName, SetRouteParameters parameters)
         {
             return operations.BeginSetRouteAsync(routeTableName, routeName, parameters, CancellationToken.None);
         }

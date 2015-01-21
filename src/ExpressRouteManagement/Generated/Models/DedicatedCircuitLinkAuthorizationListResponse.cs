@@ -22,8 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.ExpressRoute.Models;
 
 namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
@@ -31,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
     /// <summary>
     /// List link authorization operation response.
     /// </summary>
-    public partial class DedicatedCircuitLinkAuthorizationListResponse : OperationResponse, IEnumerable<AzureDedicatedCircuitLinkAuthorization>
+    public partial class DedicatedCircuitLinkAuthorizationListResponse : AzureOperationResponse, IEnumerable<AzureDedicatedCircuitLinkAuthorization>
     {
         private IList<AzureDedicatedCircuitLinkAuthorization> _dedicatedCircuitLinkAuthorizations;
         

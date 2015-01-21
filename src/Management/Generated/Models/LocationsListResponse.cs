@@ -22,8 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Models;
 
 namespace Microsoft.WindowsAzure.Management.Models
@@ -31,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.Models
     /// <summary>
     /// The List Locations operation response.
     /// </summary>
-    public partial class LocationsListResponse : OperationResponse, IEnumerable<LocationsListResponse.Location>
+    public partial class LocationsListResponse : AzureOperationResponse, IEnumerable<LocationsListResponse.Location>
     {
         private IList<LocationsListResponse.Location> _locations;
         

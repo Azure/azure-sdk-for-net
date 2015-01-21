@@ -22,8 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Models;
 
 namespace Microsoft.WindowsAzure.Management.Models
@@ -31,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.Models
     /// <summary>
     /// The List Role Sizes operation response.
     /// </summary>
-    public partial class RoleSizeListResponse : OperationResponse, IEnumerable<RoleSizeListResponse.RoleSize>
+    public partial class RoleSizeListResponse : AzureOperationResponse, IEnumerable<RoleSizeListResponse.RoleSize>
     {
         private IList<RoleSizeListResponse.RoleSize> _roleSizes;
         

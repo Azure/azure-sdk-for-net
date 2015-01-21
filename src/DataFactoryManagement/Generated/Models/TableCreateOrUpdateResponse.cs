@@ -21,15 +21,15 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.DataFactories.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
     /// The CreateOrUpdate table operation response.
     /// </summary>
-    public partial class TableCreateOrUpdateResponse : OperationResponse
+    public partial class TableCreateOrUpdateResponse : AzureOperationResponse
     {
         private string _location;
         

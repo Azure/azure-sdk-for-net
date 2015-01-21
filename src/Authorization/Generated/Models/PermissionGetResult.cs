@@ -22,16 +22,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Authorization.Models;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Management.Authorization.Models
 {
     /// <summary>
     /// Permissions information.
     /// </summary>
-    public partial class PermissionGetResult : OperationResponse
+    public partial class PermissionGetResult : AzureOperationResponse
     {
         private IList<Permission> _permissions;
         

@@ -23,11 +23,11 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Scheduler;
 using Microsoft.WindowsAzure.Management.Scheduler.Models;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.Management.Scheduler
 {
     public static partial class SchedulerManagementClientExtensions
     {
@@ -148,7 +148,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse RegisterResourceProvider(this ISchedulerManagementClient operations)
+        public static AzureOperationResponse RegisterResourceProvider(this ISchedulerManagementClient operations)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -168,7 +168,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> RegisterResourceProviderAsync(this ISchedulerManagementClient operations)
+        public static Task<AzureOperationResponse> RegisterResourceProviderAsync(this ISchedulerManagementClient operations)
         {
             return operations.RegisterResourceProviderAsync(CancellationToken.None);
         }
@@ -184,7 +184,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse UnregisterResourceProvider(this ISchedulerManagementClient operations)
+        public static AzureOperationResponse UnregisterResourceProvider(this ISchedulerManagementClient operations)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -204,7 +204,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> UnregisterResourceProviderAsync(this ISchedulerManagementClient operations)
+        public static Task<AzureOperationResponse> UnregisterResourceProviderAsync(this ISchedulerManagementClient operations)
         {
             return operations.UnregisterResourceProviderAsync(CancellationToken.None);
         }

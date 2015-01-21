@@ -1,9 +1,21 @@
-﻿//------------------------------------------------------------
-// Copyright (c) Microsoft Corporation.  All rights reserved.
-//------------------------------------------------------------
+﻿//
+// Copyright (c) Microsoft.  All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//   http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml;
 
@@ -15,8 +27,9 @@ namespace Microsoft.Azure.Insights
     /// Clauses can be in any order
     /// Names clause must be surrounded by parentheses if it contains multiple names
     /// No parentheses are allowed outside the names clause
+    /// NOTE: The regex parser does not currently support dimensions (dimensionname.value, dimensionvalue.value)
     /// </summary>
-    public static class MetricFilterRegexParser
+    internal static class MetricFilterRegexParser
     {
         private static Regex splitOnAndRegex = new Regex("\\sand\\s", RegexOptions.Compiled);
         private static Regex splitOnORegex = new Regex("\\sor\\s", RegexOptions.Compiled);
@@ -43,7 +56,7 @@ namespace Microsoft.Azure.Insights
                 Match nameGroup = nameGroupRegex.Match(clause);
 
                 // If it's in parentheses, it must be a group of 'name' clauses, only 1 is allowed
-                if (nameGroup.Success && filter.Names == null)
+                if (nameGroup.Success && filter.DimensionFilters == null)
                 {
                     // The capturing group strips off the parentheses, leaving the clauses separated by ORs (nested parentheses are not allowed)
                     string[] namesClauses = splitOnORegex.Split(nameGroup.Groups["clauses"].Captures[0].Value);
@@ -64,7 +77,10 @@ namespace Microsoft.Azure.Insights
                     }
 
                     // an empty group will cause this assignment to throw InvalidOperationException
-                    filter.Names = names;
+                    filter.DimensionFilters = names.Select(n => new MetricDimension()
+                    {
+                        Name = n
+                    });
                 }
                 else if (clause.Trim().StartsWith("("))
                 {
@@ -109,13 +125,19 @@ namespace Microsoft.Azure.Insights
                             filter.EndTime = DateTime.Parse(value);
                             break;
                         case "name.value": // single name (without) parentheses is allowed, but only one
-                            if (filter.Names == null)
+                            if (filter.DimensionFilters == null)
                             {
                                 // verify quotes
                                 if (value.StartsWith("'") && value.EndsWith("'") && value.Length >= 2)
                                 {
                                     // strip off quotes and store
-                                    filter.Names = new List<string>() { value.Substring(1, value.Length - 2) };
+                                    filter.DimensionFilters = new List<MetricDimension>()
+                                    {
+                                        new MetricDimension()
+                                        {
+                                            Name = value.Substring(1, value.Length - 2)
+                                        }
+                                    };
                                 }
                                 else
                                 {

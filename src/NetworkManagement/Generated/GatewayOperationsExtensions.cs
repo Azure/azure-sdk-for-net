@@ -26,7 +26,7 @@ using System.Threading.Tasks;
 using Microsoft.WindowsAzure.Management.Network;
 using Microsoft.WindowsAzure.Management.Network.Models;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.Management.Network
 {
     /// <summary>
     /// The Service Management API includes operations for managing the virtual
@@ -361,6 +361,58 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
+        /// The Begin Reset Virtual network Gateway operation resets an
+        /// existing gateway.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
+        /// </param>
+        /// <param name='networkName'>
+        /// Required. The name of the virtual network for this gateway.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Begin Reset Virtual Network
+        /// Gateway operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static GatewayOperationResponse BeginReset(this IGatewayOperations operations, string networkName, ResetGatewayParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IGatewayOperations)s).BeginResetAsync(networkName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Begin Reset Virtual network Gateway operation resets an
+        /// existing gateway.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
+        /// </param>
+        /// <param name='networkName'>
+        /// Required. The name of the virtual network for this gateway.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Begin Reset Virtual Network
+        /// Gateway operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<GatewayOperationResponse> BeginResetAsync(this IGatewayOperations operations, string networkName, ResetGatewayParameters parameters)
+        {
+            return operations.BeginResetAsync(networkName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// The Begin Reset Virtual Network Gateway Shared Key operation resets
         /// the shared key on the virtual network gateway for the specified
         /// virtual network connection to the specified local network in
@@ -533,6 +585,66 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
+        /// The Begin Set Virtual Network Gateway IPsec Parameters operation
+        /// sets the IPsec parameters on the virtual network gateway for the
+        /// specified connection to the specified local network in Azure.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
+        /// </param>
+        /// <param name='networkName'>
+        /// Required. The name of the virtual network for this gateway.
+        /// </param>
+        /// <param name='localNetworkName'>
+        /// Required. The name of the local network.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Begin Virtual Network Gateway
+        /// Set IPsec Parameters request.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static GatewayOperationResponse BeginSetIPsecParameters(this IGatewayOperations operations, string networkName, string localNetworkName, GatewaySetIPsecParametersParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IGatewayOperations)s).BeginSetIPsecParametersAsync(networkName, localNetworkName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Begin Set Virtual Network Gateway IPsec Parameters operation
+        /// sets the IPsec parameters on the virtual network gateway for the
+        /// specified connection to the specified local network in Azure.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
+        /// </param>
+        /// <param name='networkName'>
+        /// Required. The name of the virtual network for this gateway.
+        /// </param>
+        /// <param name='localNetworkName'>
+        /// Required. The name of the local network.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Begin Virtual Network Gateway
+        /// Set IPsec Parameters request.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<GatewayOperationResponse> BeginSetIPsecParametersAsync(this IGatewayOperations operations, string networkName, string localNetworkName, GatewaySetIPsecParametersParameters parameters)
+        {
+            return operations.BeginSetIPsecParametersAsync(networkName, localNetworkName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// The Begin Set Virtual Network Gateway Shared Key operation sets the
         /// shared key on the virtual network gateway for the specified
         /// virtual network connection to the specified local network in
@@ -599,7 +711,7 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Begin Update Diagnostics operation begins an asynchronous
+        /// The Begin Start Diagnostics operation begins an asynchronous
         /// operation to starta diagnostics session for the specified virtual
         /// network gateway in Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154119.aspx
@@ -613,24 +725,24 @@ namespace Microsoft.WindowsAzure
         /// Required. The name of the virtual network for this gateway.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Begin Creating Virtual Network
-        /// Gateway operation.
+        /// Required. Parameters supplied to the Begin Start Diagnostics
+        /// operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static GatewayOperationResponse BeginUpdateDiagnostics(this IGatewayOperations operations, string networkName, UpdateGatewayPublicDiagnostics parameters)
+        public static GatewayOperationResponse BeginStartDiagnostics(this IGatewayOperations operations, string networkName, StartGatewayPublicDiagnosticsParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IGatewayOperations)s).BeginUpdateDiagnosticsAsync(networkName, parameters);
+                return ((IGatewayOperations)s).BeginStartDiagnosticsAsync(networkName, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// The Begin Update Diagnostics operation begins an asynchronous
+        /// The Begin Start Diagnostics operation begins an asynchronous
         /// operation to starta diagnostics session for the specified virtual
         /// network gateway in Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154119.aspx
@@ -644,16 +756,16 @@ namespace Microsoft.WindowsAzure
         /// Required. The name of the virtual network for this gateway.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Begin Creating Virtual Network
-        /// Gateway operation.
+        /// Required. Parameters supplied to the Begin Start Diagnostics
+        /// operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<GatewayOperationResponse> BeginUpdateDiagnosticsAsync(this IGatewayOperations operations, string networkName, UpdateGatewayPublicDiagnostics parameters)
+        public static Task<GatewayOperationResponse> BeginStartDiagnosticsAsync(this IGatewayOperations operations, string networkName, StartGatewayPublicDiagnosticsParameters parameters)
         {
-            return operations.BeginUpdateDiagnosticsAsync(networkName, parameters, CancellationToken.None);
+            return operations.BeginStartDiagnosticsAsync(networkName, parameters, CancellationToken.None);
         }
         
         /// <summary>
@@ -1159,6 +1271,60 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
+        /// The Get IPsec Parameters operation gets the IPsec parameters that
+        /// have been set for the connection between the provided virtual
+        /// network gateway and the provided local network site.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
+        /// </param>
+        /// <param name='networkName'>
+        /// Required. The name of the virtual network for this gateway.
+        /// </param>
+        /// <param name='localNetworkName'>
+        /// Required. The name of the local network.
+        /// </param>
+        /// <returns>
+        /// The response that will be returned from a GetIPsecParameters
+        /// request. This contains the IPsec parameters for the specified
+        /// connection.
+        /// </returns>
+        public static GatewayGetIPsecParametersResponse GetIPsecParameters(this IGatewayOperations operations, string networkName, string localNetworkName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IGatewayOperations)s).GetIPsecParametersAsync(networkName, localNetworkName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Get IPsec Parameters operation gets the IPsec parameters that
+        /// have been set for the connection between the provided virtual
+        /// network gateway and the provided local network site.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
+        /// </param>
+        /// <param name='networkName'>
+        /// Required. The name of the virtual network for this gateway.
+        /// </param>
+        /// <param name='localNetworkName'>
+        /// Required. The name of the local network.
+        /// </param>
+        /// <returns>
+        /// The response that will be returned from a GetIPsecParameters
+        /// request. This contains the IPsec parameters for the specified
+        /// connection.
+        /// </returns>
+        public static Task<GatewayGetIPsecParametersResponse> GetIPsecParametersAsync(this IGatewayOperations operations, string networkName, string localNetworkName)
+        {
+            return operations.GetIPsecParametersAsync(networkName, localNetworkName, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// The Get Virtual Network Gateway Operation Status gets information
         /// on the status of network gateway operations in Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154112.aspx
@@ -1427,6 +1593,72 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
+        /// The Begin Reset Virtual network Gateway operation resets an
+        /// existing gateway.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
+        /// </param>
+        /// <param name='networkName'>
+        /// Required. The name of the virtual network for this gateway.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Reset Virtual Network Gateway
+        /// operation.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is in progress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static GatewayGetOperationStatusResponse Reset(this IGatewayOperations operations, string networkName, ResetGatewayParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IGatewayOperations)s).ResetAsync(networkName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Begin Reset Virtual network Gateway operation resets an
+        /// existing gateway.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
+        /// </param>
+        /// <param name='networkName'>
+        /// Required. The name of the virtual network for this gateway.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Reset Virtual Network Gateway
+        /// operation.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is in progress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static Task<GatewayGetOperationStatusResponse> ResetAsync(this IGatewayOperations operations, string networkName, ResetGatewayParameters parameters)
+        {
+            return operations.ResetAsync(networkName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// The Reset Virtual Network Gateway Shared Key operation resets the
         /// shared key on the virtual network gateway for the specified
         /// virtual network connection to the specified local network in
@@ -1641,6 +1873,80 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
+        /// The Begin Set Virtual Network Gateway IPsec Parameters operation
+        /// sets the IPsec parameters on the virtual network gateway for the
+        /// specified connection to the specified local network in Azure.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
+        /// </param>
+        /// <param name='networkName'>
+        /// Required. The name of the virtual network for this gateway.
+        /// </param>
+        /// <param name='localNetworkName'>
+        /// Required. The name of the local network.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Begin Virtual Network Gateway
+        /// Set IPsec Parameters request.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is in progress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static GatewayGetOperationStatusResponse SetIPsecParameters(this IGatewayOperations operations, string networkName, string localNetworkName, GatewaySetIPsecParametersParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IGatewayOperations)s).SetIPsecParametersAsync(networkName, localNetworkName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Begin Set Virtual Network Gateway IPsec Parameters operation
+        /// sets the IPsec parameters on the virtual network gateway for the
+        /// specified connection to the specified local network in Azure.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
+        /// </param>
+        /// <param name='networkName'>
+        /// Required. The name of the virtual network for this gateway.
+        /// </param>
+        /// <param name='localNetworkName'>
+        /// Required. The name of the local network.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Begin Virtual Network Gateway
+        /// Set IPsec Parameters request.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is in progress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static Task<GatewayGetOperationStatusResponse> SetIPsecParametersAsync(this IGatewayOperations operations, string networkName, string localNetworkName, GatewaySetIPsecParametersParameters parameters)
+        {
+            return operations.SetIPsecParametersAsync(networkName, localNetworkName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// The Set Virtual Network Gateway Shared Key operation sets the
         /// shared key on the virtual network gateway for the specified
         /// virtual network connection to the specified local network in
@@ -1721,7 +2027,7 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Update Diagnostics operation starts a diagnostics session for
+        /// The Start Diagnostics operation starts a diagnostics session for
         /// the specified virtual network gateway in Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154119.aspx
         /// for more information)
@@ -1734,7 +2040,7 @@ namespace Microsoft.WindowsAzure
         /// Required. The name of the virtual network for this gateway.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Update Diagnostics operation.
+        /// Required. Parameters supplied to the Start Diagnostics operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -1747,17 +2053,17 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static GatewayGetOperationStatusResponse UpdateDiagnostics(this IGatewayOperations operations, string networkName, UpdateGatewayPublicDiagnostics parameters)
+        public static GatewayGetOperationStatusResponse StartDiagnostics(this IGatewayOperations operations, string networkName, StartGatewayPublicDiagnosticsParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IGatewayOperations)s).UpdateDiagnosticsAsync(networkName, parameters);
+                return ((IGatewayOperations)s).StartDiagnosticsAsync(networkName, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// The Update Diagnostics operation starts a diagnostics session for
+        /// The Start Diagnostics operation starts a diagnostics session for
         /// the specified virtual network gateway in Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154119.aspx
         /// for more information)
@@ -1770,7 +2076,7 @@ namespace Microsoft.WindowsAzure
         /// Required. The name of the virtual network for this gateway.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Update Diagnostics operation.
+        /// Required. Parameters supplied to the Start Diagnostics operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -1783,9 +2089,65 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static Task<GatewayGetOperationStatusResponse> UpdateDiagnosticsAsync(this IGatewayOperations operations, string networkName, UpdateGatewayPublicDiagnostics parameters)
+        public static Task<GatewayGetOperationStatusResponse> StartDiagnosticsAsync(this IGatewayOperations operations, string networkName, StartGatewayPublicDiagnosticsParameters parameters)
         {
-            return operations.UpdateDiagnosticsAsync(networkName, parameters, CancellationToken.None);
+            return operations.StartDiagnosticsAsync(networkName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The Stop Diagnostics operation begins an asynchronous operation to
+        /// stopa diagnostics session for the specified virtual network
+        /// gateway in Azure.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154119.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
+        /// </param>
+        /// <param name='networkName'>
+        /// Required. The name of the virtual network for this gateway.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to Stop Diagnostics operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static GatewayOperationResponse StopDiagnostics(this IGatewayOperations operations, string networkName, StopGatewayPublicDiagnosticsParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IGatewayOperations)s).StopDiagnosticsAsync(networkName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Stop Diagnostics operation begins an asynchronous operation to
+        /// stopa diagnostics session for the specified virtual network
+        /// gateway in Azure.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154119.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
+        /// </param>
+        /// <param name='networkName'>
+        /// Required. The name of the virtual network for this gateway.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to Stop Diagnostics operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<GatewayOperationResponse> StopDiagnosticsAsync(this IGatewayOperations operations, string networkName, StopGatewayPublicDiagnosticsParameters parameters)
+        {
+            return operations.StopDiagnosticsAsync(networkName, parameters, CancellationToken.None);
         }
     }
 }

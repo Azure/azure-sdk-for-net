@@ -27,14 +27,13 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.DataFactories;
 using Microsoft.Azure.Management.DataFactories.Models;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.Management.DataFactories
@@ -91,31 +90,55 @@ namespace Microsoft.Azure.Management.DataFactories
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
+            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
             if (dataFactoryName == null)
             {
                 throw new ArgumentNullException("dataFactoryName");
+            }
+            if (dataFactoryName != null && dataFactoryName.Length > 63)
+            {
+                throw new ArgumentOutOfRangeException("dataFactoryName");
+            }
+            if (Regex.IsMatch(dataFactoryName, "^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$") == false)
+            {
+                throw new ArgumentOutOfRangeException("dataFactoryName");
             }
             if (parameters == null)
             {
                 throw new ArgumentNullException("parameters");
             }
+            if (parameters.Hub.Name != null && parameters.Hub.Name.Length > 260)
+            {
+                throw new ArgumentOutOfRangeException("parameters.Hub.Name");
+            }
+            if (Regex.IsMatch(parameters.Hub.Name, "^[A-Za-z0-9_][^<>*#.%&:\\\\+?/]*$") == false)
+            {
+                throw new ArgumentOutOfRangeException("parameters.Hub.Name");
+            }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("dataFactoryName", dataFactoryName);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "BeginCreateOrUpdateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "BeginCreateOrUpdateAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/Microsoft.DataFactory/datafactories/" + dataFactoryName.Trim() + "/hubs/" + (parameters.Hub.Name != null ? parameters.Hub.Name.Trim() : "") + "?";
-            url = url + "api-version=2014-10-01-preview";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.DataFactory/datafactories/" + Uri.EscapeDataString(dataFactoryName) + "/hubs/" + (parameters.Hub.Name == null ? "" : Uri.EscapeDataString(parameters.Hub.Name)) + "?";
+            url = url + "api-version=2015-01-01-preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -195,7 +218,7 @@ namespace Microsoft.Azure.Management.DataFactories
                     }
                 }
                 
-                requestContent = requestDoc.ToString(Formatting.Indented);
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
                 
@@ -205,13 +228,13 @@ namespace Microsoft.Azure.Management.DataFactories
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created)
@@ -220,7 +243,7 @@ namespace Microsoft.Azure.Management.DataFactories
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -228,72 +251,75 @@ namespace Microsoft.Azure.Management.DataFactories
                     // Create Result
                     HubCreateOrUpdateResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new HubCreateOrUpdateResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Created)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        Hub hubInstance = new Hub();
-                        result.Hub = hubInstance;
-                        
-                        JToken nameValue = responseDoc["name"];
-                        if (nameValue != null && nameValue.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new HubCreateOrUpdateResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            string nameInstance = ((string)nameValue);
-                            hubInstance.Name = nameInstance;
+                            responseDoc = JToken.Parse(responseContent);
                         }
                         
-                        JToken propertiesValue2 = responseDoc["properties"];
-                        if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            string typeName = ((string)propertiesValue2["type"]);
-                            if (typeName == "Hub")
+                            Hub hubInstance = new Hub();
+                            result.Hub = hubInstance;
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
                             {
-                                HubProperties hubPropertiesInstance = new HubProperties();
-                                
-                                JToken hubIdValue = propertiesValue2["hubId"];
-                                if (hubIdValue != null && hubIdValue.Type != JTokenType.Null)
-                                {
-                                    string hubIdInstance = ((string)hubIdValue);
-                                    hubPropertiesInstance.HubId = hubIdInstance;
-                                }
-                                
-                                JToken provisioningStateValue = propertiesValue2["provisioningState"];
-                                if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
-                                {
-                                    string provisioningStateInstance = ((string)provisioningStateValue);
-                                    hubPropertiesInstance.ProvisioningState = provisioningStateInstance;
-                                }
-                                hubInstance.Properties = hubPropertiesInstance;
+                                string nameInstance = ((string)nameValue);
+                                hubInstance.Name = nameInstance;
                             }
-                            if (typeName == "InternalHub")
+                            
+                            JToken propertiesValue2 = responseDoc["properties"];
+                            if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
                             {
-                                InternalHubProperties internalHubPropertiesInstance = new InternalHubProperties();
-                                
-                                JToken hubIdValue2 = propertiesValue2["hubId"];
-                                if (hubIdValue2 != null && hubIdValue2.Type != JTokenType.Null)
+                                string typeName = ((string)propertiesValue2["type"]);
+                                if (typeName == "Hub")
                                 {
-                                    string hubIdInstance2 = ((string)hubIdValue2);
-                                    internalHubPropertiesInstance.HubId = hubIdInstance2;
+                                    HubProperties hubPropertiesInstance = new HubProperties();
+                                    
+                                    JToken hubIdValue = propertiesValue2["hubId"];
+                                    if (hubIdValue != null && hubIdValue.Type != JTokenType.Null)
+                                    {
+                                        string hubIdInstance = ((string)hubIdValue);
+                                        hubPropertiesInstance.HubId = hubIdInstance;
+                                    }
+                                    
+                                    JToken provisioningStateValue = propertiesValue2["provisioningState"];
+                                    if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
+                                    {
+                                        string provisioningStateInstance = ((string)provisioningStateValue);
+                                        hubPropertiesInstance.ProvisioningState = provisioningStateInstance;
+                                    }
+                                    hubInstance.Properties = hubPropertiesInstance;
                                 }
-                                
-                                JToken provisioningStateValue2 = propertiesValue2["provisioningState"];
-                                if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
+                                if (typeName == "InternalHub")
                                 {
-                                    string provisioningStateInstance2 = ((string)provisioningStateValue2);
-                                    internalHubPropertiesInstance.ProvisioningState = provisioningStateInstance2;
+                                    InternalHubProperties internalHubPropertiesInstance = new InternalHubProperties();
+                                    
+                                    JToken hubIdValue2 = propertiesValue2["hubId"];
+                                    if (hubIdValue2 != null && hubIdValue2.Type != JTokenType.Null)
+                                    {
+                                        string hubIdInstance2 = ((string)hubIdValue2);
+                                        internalHubPropertiesInstance.HubId = hubIdInstance2;
+                                    }
+                                    
+                                    JToken provisioningStateValue2 = propertiesValue2["provisioningState"];
+                                    if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
+                                    {
+                                        string provisioningStateInstance2 = ((string)provisioningStateValue2);
+                                        internalHubPropertiesInstance.ProvisioningState = provisioningStateInstance2;
+                                    }
+                                    hubInstance.Properties = internalHubPropertiesInstance;
                                 }
-                                hubInstance.Properties = internalHubPropertiesInstance;
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -303,7 +329,7 @@ namespace Microsoft.Azure.Management.DataFactories
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -349,31 +375,55 @@ namespace Microsoft.Azure.Management.DataFactories
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
+            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
             if (dataFactoryName == null)
             {
                 throw new ArgumentNullException("dataFactoryName");
+            }
+            if (dataFactoryName != null && dataFactoryName.Length > 63)
+            {
+                throw new ArgumentOutOfRangeException("dataFactoryName");
+            }
+            if (Regex.IsMatch(dataFactoryName, "^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$") == false)
+            {
+                throw new ArgumentOutOfRangeException("dataFactoryName");
             }
             if (hubName == null)
             {
                 throw new ArgumentNullException("hubName");
             }
+            if (hubName != null && hubName.Length > 260)
+            {
+                throw new ArgumentOutOfRangeException("hubName");
+            }
+            if (Regex.IsMatch(hubName, "^[A-Za-z0-9_][^<>*#.%&:\\\\+?/]*$") == false)
+            {
+                throw new ArgumentOutOfRangeException("hubName");
+            }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("dataFactoryName", dataFactoryName);
                 tracingParameters.Add("hubName", hubName);
-                Tracing.Enter(invocationId, this, "BeginDeleteAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "BeginDeleteAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/Microsoft.DataFactory/datafactories/" + dataFactoryName.Trim() + "/hubs/" + hubName.Trim() + "?";
-            url = url + "api-version=2014-10-01-preview";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.DataFactory/datafactories/" + Uri.EscapeDataString(dataFactoryName) + "/hubs/" + Uri.EscapeDataString(hubName) + "?";
+            url = url + "api-version=2015-01-01-preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -408,13 +458,13 @@ namespace Microsoft.Azure.Management.DataFactories
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted && statusCode != HttpStatusCode.NoContent)
@@ -423,13 +473,14 @@ namespace Microsoft.Azure.Management.DataFactories
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
                     LongRunningOperationResponse result = null;
+                    // Deserialize Response
                     result = new LongRunningOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("Location"))
@@ -444,18 +495,18 @@ namespace Microsoft.Azure.Management.DataFactories
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-                    if (statusCode == HttpStatusCode.NoContent)
+                    if (statusCode == HttpStatusCode.OK)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.NoContent)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -497,56 +548,42 @@ namespace Microsoft.Azure.Management.DataFactories
         public async Task<HubCreateOrUpdateResponse> CreateOrUpdateAsync(string resourceGroupName, string dataFactoryName, HubCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
         {
             DataPipelineManagementClient client = this.Client;
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("dataFactoryName", dataFactoryName);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "CreateOrUpdateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "CreateOrUpdateAsync", tracingParameters);
             }
-            try
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            HubCreateOrUpdateResponse response = await client.Hubs.BeginCreateOrUpdateAsync(resourceGroupName, dataFactoryName, parameters, cancellationToken).ConfigureAwait(false);
+            if (response.Status == OperationStatus.Succeeded)
             {
-                if (shouldTrace)
-                {
-                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
-                }
-                
-                cancellationToken.ThrowIfCancellationRequested();
-                HubCreateOrUpdateResponse response = await client.Hubs.BeginCreateOrUpdateAsync(resourceGroupName, dataFactoryName, parameters, cancellationToken).ConfigureAwait(false);
-                if (response.Status == OperationStatus.Succeeded)
-                {
-                    return response;
-                }
-                cancellationToken.ThrowIfCancellationRequested();
-                HubCreateOrUpdateResponse result = await client.Hubs.GetCreateOrUpdateStatusAsync(response.Location, cancellationToken).ConfigureAwait(false);
-                int delayInSeconds = 5;
-                while ((result.Status != OperationStatus.InProgress) == false)
-                {
-                    cancellationToken.ThrowIfCancellationRequested();
-                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    result = await client.Hubs.GetCreateOrUpdateStatusAsync(response.Location, cancellationToken).ConfigureAwait(false);
-                    delayInSeconds = 5;
-                }
-                
-                if (shouldTrace)
-                {
-                    Tracing.Exit(invocationId, result);
-                }
-                
-                return result;
+                return response;
             }
-            finally
+            cancellationToken.ThrowIfCancellationRequested();
+            HubCreateOrUpdateResponse result = await client.Hubs.GetCreateOrUpdateStatusAsync(response.Location, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 5;
+            while ((result.Status != OperationStatus.InProgress) == false)
             {
-                if (client != null && shouldTrace)
-                {
-                    client.Dispose();
-                }
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.Hubs.GetCreateOrUpdateStatusAsync(response.Location, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 5;
             }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            return result;
         }
         
         /// <summary>
@@ -577,13 +614,37 @@ namespace Microsoft.Azure.Management.DataFactories
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
+            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
             if (dataFactoryName == null)
             {
                 throw new ArgumentNullException("dataFactoryName");
             }
+            if (dataFactoryName != null && dataFactoryName.Length > 63)
+            {
+                throw new ArgumentOutOfRangeException("dataFactoryName");
+            }
+            if (Regex.IsMatch(dataFactoryName, "^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$") == false)
+            {
+                throw new ArgumentOutOfRangeException("dataFactoryName");
+            }
             if (hubName == null)
             {
                 throw new ArgumentNullException("hubName");
+            }
+            if (hubName != null && hubName.Length > 260)
+            {
+                throw new ArgumentOutOfRangeException("hubName");
+            }
+            if (Regex.IsMatch(hubName, "^[A-Za-z0-9_][^<>*#.%&:\\\\+?/]*$") == false)
+            {
+                throw new ArgumentOutOfRangeException("hubName");
             }
             if (parameters == null)
             {
@@ -595,22 +656,22 @@ namespace Microsoft.Azure.Management.DataFactories
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("dataFactoryName", dataFactoryName);
                 tracingParameters.Add("hubName", hubName);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "CreateOrUpdateWithRawJsonContentAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "CreateOrUpdateWithRawJsonContentAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/Microsoft.DataFactory/datafactories/" + dataFactoryName.Trim() + "/hubs/" + hubName.Trim() + "?";
-            url = url + "api-version=2014-10-01-preview";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.DataFactory/datafactories/" + Uri.EscapeDataString(dataFactoryName) + "/hubs/" + Uri.EscapeDataString(hubName) + "?";
+            url = url + "api-version=2015-01-01-preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -650,13 +711,13 @@ namespace Microsoft.Azure.Management.DataFactories
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created)
@@ -665,7 +726,7 @@ namespace Microsoft.Azure.Management.DataFactories
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -673,72 +734,75 @@ namespace Microsoft.Azure.Management.DataFactories
                     // Create Result
                     HubCreateOrUpdateResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new HubCreateOrUpdateResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Created)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        Hub hubInstance = new Hub();
-                        result.Hub = hubInstance;
-                        
-                        JToken nameValue = responseDoc["name"];
-                        if (nameValue != null && nameValue.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new HubCreateOrUpdateResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            string nameInstance = ((string)nameValue);
-                            hubInstance.Name = nameInstance;
+                            responseDoc = JToken.Parse(responseContent);
                         }
                         
-                        JToken propertiesValue = responseDoc["properties"];
-                        if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            string typeName = ((string)propertiesValue["type"]);
-                            if (typeName == "Hub")
+                            Hub hubInstance = new Hub();
+                            result.Hub = hubInstance;
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
                             {
-                                HubProperties hubPropertiesInstance = new HubProperties();
-                                
-                                JToken hubIdValue = propertiesValue["hubId"];
-                                if (hubIdValue != null && hubIdValue.Type != JTokenType.Null)
-                                {
-                                    string hubIdInstance = ((string)hubIdValue);
-                                    hubPropertiesInstance.HubId = hubIdInstance;
-                                }
-                                
-                                JToken provisioningStateValue = propertiesValue["provisioningState"];
-                                if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
-                                {
-                                    string provisioningStateInstance = ((string)provisioningStateValue);
-                                    hubPropertiesInstance.ProvisioningState = provisioningStateInstance;
-                                }
-                                hubInstance.Properties = hubPropertiesInstance;
+                                string nameInstance = ((string)nameValue);
+                                hubInstance.Name = nameInstance;
                             }
-                            if (typeName == "InternalHub")
+                            
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
-                                InternalHubProperties internalHubPropertiesInstance = new InternalHubProperties();
-                                
-                                JToken hubIdValue2 = propertiesValue["hubId"];
-                                if (hubIdValue2 != null && hubIdValue2.Type != JTokenType.Null)
+                                string typeName = ((string)propertiesValue["type"]);
+                                if (typeName == "Hub")
                                 {
-                                    string hubIdInstance2 = ((string)hubIdValue2);
-                                    internalHubPropertiesInstance.HubId = hubIdInstance2;
+                                    HubProperties hubPropertiesInstance = new HubProperties();
+                                    
+                                    JToken hubIdValue = propertiesValue["hubId"];
+                                    if (hubIdValue != null && hubIdValue.Type != JTokenType.Null)
+                                    {
+                                        string hubIdInstance = ((string)hubIdValue);
+                                        hubPropertiesInstance.HubId = hubIdInstance;
+                                    }
+                                    
+                                    JToken provisioningStateValue = propertiesValue["provisioningState"];
+                                    if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
+                                    {
+                                        string provisioningStateInstance = ((string)provisioningStateValue);
+                                        hubPropertiesInstance.ProvisioningState = provisioningStateInstance;
+                                    }
+                                    hubInstance.Properties = hubPropertiesInstance;
                                 }
-                                
-                                JToken provisioningStateValue2 = propertiesValue["provisioningState"];
-                                if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
+                                if (typeName == "InternalHub")
                                 {
-                                    string provisioningStateInstance2 = ((string)provisioningStateValue2);
-                                    internalHubPropertiesInstance.ProvisioningState = provisioningStateInstance2;
+                                    InternalHubProperties internalHubPropertiesInstance = new InternalHubProperties();
+                                    
+                                    JToken hubIdValue2 = propertiesValue["hubId"];
+                                    if (hubIdValue2 != null && hubIdValue2.Type != JTokenType.Null)
+                                    {
+                                        string hubIdInstance2 = ((string)hubIdValue2);
+                                        internalHubPropertiesInstance.HubId = hubIdInstance2;
+                                    }
+                                    
+                                    JToken provisioningStateValue2 = propertiesValue["provisioningState"];
+                                    if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
+                                    {
+                                        string provisioningStateInstance2 = ((string)provisioningStateValue2);
+                                        internalHubPropertiesInstance.ProvisioningState = provisioningStateInstance2;
+                                    }
+                                    hubInstance.Properties = internalHubPropertiesInstance;
                                 }
-                                hubInstance.Properties = internalHubPropertiesInstance;
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -748,7 +812,7 @@ namespace Microsoft.Azure.Management.DataFactories
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -790,64 +854,50 @@ namespace Microsoft.Azure.Management.DataFactories
         public async Task<LongRunningOperationResponse> DeleteAsync(string resourceGroupName, string dataFactoryName, string hubName, CancellationToken cancellationToken)
         {
             DataPipelineManagementClient client = this.Client;
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("dataFactoryName", dataFactoryName);
                 tracingParameters.Add("hubName", hubName);
-                Tracing.Enter(invocationId, this, "DeleteAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "DeleteAsync", tracingParameters);
             }
-            try
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            LongRunningOperationResponse response = await client.Hubs.BeginDeleteAsync(resourceGroupName, dataFactoryName, hubName, cancellationToken).ConfigureAwait(false);
+            if (response.Status == OperationStatus.Succeeded)
             {
-                if (shouldTrace)
-                {
-                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
-                }
-                
+                return response;
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            LongRunningOperationResponse result = await client.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = response.RetryAfter;
+            if (delayInSeconds == 0)
+            {
+                delayInSeconds = 30;
+            }
+            while ((result.Status != OperationStatus.InProgress) == false)
+            {
                 cancellationToken.ThrowIfCancellationRequested();
-                LongRunningOperationResponse response = await client.Hubs.BeginDeleteAsync(resourceGroupName, dataFactoryName, hubName, cancellationToken).ConfigureAwait(false);
-                if (response.Status == OperationStatus.Succeeded)
-                {
-                    return response;
-                }
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
-                LongRunningOperationResponse result = await client.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
-                int delayInSeconds = response.RetryAfter;
+                result = await client.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = result.RetryAfter;
                 if (delayInSeconds == 0)
                 {
-                    delayInSeconds = 30;
+                    delayInSeconds = 15;
                 }
-                while ((result.Status != OperationStatus.InProgress) == false)
-                {
-                    cancellationToken.ThrowIfCancellationRequested();
-                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    result = await client.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
-                    delayInSeconds = result.RetryAfter;
-                    if (delayInSeconds == 0)
-                    {
-                        delayInSeconds = 15;
-                    }
-                }
-                
-                if (shouldTrace)
-                {
-                    Tracing.Exit(invocationId, result);
-                }
-                
-                return result;
             }
-            finally
+            
+            if (shouldTrace)
             {
-                if (client != null && shouldTrace)
-                {
-                    client.Dispose();
-                }
+                TracingAdapter.Exit(invocationId, result);
             }
+            
+            return result;
         }
         
         /// <summary>
@@ -875,31 +925,55 @@ namespace Microsoft.Azure.Management.DataFactories
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
+            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
             if (dataFactoryName == null)
             {
                 throw new ArgumentNullException("dataFactoryName");
+            }
+            if (dataFactoryName != null && dataFactoryName.Length > 63)
+            {
+                throw new ArgumentOutOfRangeException("dataFactoryName");
+            }
+            if (Regex.IsMatch(dataFactoryName, "^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$") == false)
+            {
+                throw new ArgumentOutOfRangeException("dataFactoryName");
             }
             if (hubName == null)
             {
                 throw new ArgumentNullException("hubName");
             }
+            if (hubName != null && hubName.Length > 260)
+            {
+                throw new ArgumentOutOfRangeException("hubName");
+            }
+            if (Regex.IsMatch(hubName, "^[A-Za-z0-9_][^<>*#.%&:\\\\+?/]*$") == false)
+            {
+                throw new ArgumentOutOfRangeException("hubName");
+            }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("dataFactoryName", dataFactoryName);
                 tracingParameters.Add("hubName", hubName);
-                Tracing.Enter(invocationId, this, "GetAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/Microsoft.DataFactory/datafactories/" + dataFactoryName.Trim() + "/hubs/" + hubName.Trim() + "?";
-            url = url + "api-version=2014-10-01-preview";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.DataFactory/datafactories/" + Uri.EscapeDataString(dataFactoryName) + "/hubs/" + Uri.EscapeDataString(hubName) + "?";
+            url = url + "api-version=2015-01-01-preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -934,13 +1008,13 @@ namespace Microsoft.Azure.Management.DataFactories
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -949,7 +1023,7 @@ namespace Microsoft.Azure.Management.DataFactories
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -957,72 +1031,75 @@ namespace Microsoft.Azure.Management.DataFactories
                     // Create Result
                     HubGetResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new HubGetResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        Hub hubInstance = new Hub();
-                        result.Hub = hubInstance;
-                        
-                        JToken nameValue = responseDoc["name"];
-                        if (nameValue != null && nameValue.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new HubGetResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            string nameInstance = ((string)nameValue);
-                            hubInstance.Name = nameInstance;
+                            responseDoc = JToken.Parse(responseContent);
                         }
                         
-                        JToken propertiesValue = responseDoc["properties"];
-                        if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            string typeName = ((string)propertiesValue["type"]);
-                            if (typeName == "Hub")
+                            Hub hubInstance = new Hub();
+                            result.Hub = hubInstance;
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
                             {
-                                HubProperties hubPropertiesInstance = new HubProperties();
-                                
-                                JToken hubIdValue = propertiesValue["hubId"];
-                                if (hubIdValue != null && hubIdValue.Type != JTokenType.Null)
-                                {
-                                    string hubIdInstance = ((string)hubIdValue);
-                                    hubPropertiesInstance.HubId = hubIdInstance;
-                                }
-                                
-                                JToken provisioningStateValue = propertiesValue["provisioningState"];
-                                if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
-                                {
-                                    string provisioningStateInstance = ((string)provisioningStateValue);
-                                    hubPropertiesInstance.ProvisioningState = provisioningStateInstance;
-                                }
-                                hubInstance.Properties = hubPropertiesInstance;
+                                string nameInstance = ((string)nameValue);
+                                hubInstance.Name = nameInstance;
                             }
-                            if (typeName == "InternalHub")
+                            
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
-                                InternalHubProperties internalHubPropertiesInstance = new InternalHubProperties();
-                                
-                                JToken hubIdValue2 = propertiesValue["hubId"];
-                                if (hubIdValue2 != null && hubIdValue2.Type != JTokenType.Null)
+                                string typeName = ((string)propertiesValue["type"]);
+                                if (typeName == "Hub")
                                 {
-                                    string hubIdInstance2 = ((string)hubIdValue2);
-                                    internalHubPropertiesInstance.HubId = hubIdInstance2;
+                                    HubProperties hubPropertiesInstance = new HubProperties();
+                                    
+                                    JToken hubIdValue = propertiesValue["hubId"];
+                                    if (hubIdValue != null && hubIdValue.Type != JTokenType.Null)
+                                    {
+                                        string hubIdInstance = ((string)hubIdValue);
+                                        hubPropertiesInstance.HubId = hubIdInstance;
+                                    }
+                                    
+                                    JToken provisioningStateValue = propertiesValue["provisioningState"];
+                                    if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
+                                    {
+                                        string provisioningStateInstance = ((string)provisioningStateValue);
+                                        hubPropertiesInstance.ProvisioningState = provisioningStateInstance;
+                                    }
+                                    hubInstance.Properties = hubPropertiesInstance;
                                 }
-                                
-                                JToken provisioningStateValue2 = propertiesValue["provisioningState"];
-                                if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
+                                if (typeName == "InternalHub")
                                 {
-                                    string provisioningStateInstance2 = ((string)provisioningStateValue2);
-                                    internalHubPropertiesInstance.ProvisioningState = provisioningStateInstance2;
+                                    InternalHubProperties internalHubPropertiesInstance = new InternalHubProperties();
+                                    
+                                    JToken hubIdValue2 = propertiesValue["hubId"];
+                                    if (hubIdValue2 != null && hubIdValue2.Type != JTokenType.Null)
+                                    {
+                                        string hubIdInstance2 = ((string)hubIdValue2);
+                                        internalHubPropertiesInstance.HubId = hubIdInstance2;
+                                    }
+                                    
+                                    JToken provisioningStateValue2 = propertiesValue["provisioningState"];
+                                    if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
+                                    {
+                                        string provisioningStateInstance2 = ((string)provisioningStateValue2);
+                                        internalHubPropertiesInstance.ProvisioningState = provisioningStateInstance2;
+                                    }
+                                    hubInstance.Properties = internalHubPropertiesInstance;
                                 }
-                                hubInstance.Properties = internalHubPropertiesInstance;
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1031,7 +1108,7 @@ namespace Microsoft.Azure.Management.DataFactories
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -1070,18 +1147,18 @@ namespace Microsoft.Azure.Management.DataFactories
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("operationStatusLink", operationStatusLink);
-                Tracing.Enter(invocationId, this, "GetCreateOrUpdateStatusAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetCreateOrUpdateStatusAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = operationStatusLink.Trim();
+            string url = operationStatusLink;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1093,7 +1170,7 @@ namespace Microsoft.Azure.Management.DataFactories
                 
                 // Set Headers
                 httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
-                httpRequest.Headers.Add("x-ms-version", "2014-10-01-preview");
+                httpRequest.Headers.Add("x-ms-version", "2015-01-01-preview");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1105,13 +1182,13 @@ namespace Microsoft.Azure.Management.DataFactories
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -1120,7 +1197,7 @@ namespace Microsoft.Azure.Management.DataFactories
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -1128,90 +1205,93 @@ namespace Microsoft.Azure.Management.DataFactories
                     // Create Result
                     HubCreateOrUpdateResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new HubCreateOrUpdateResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        Hub hubInstance = new Hub();
-                        result.Hub = hubInstance;
-                        
-                        JToken nameValue = responseDoc["name"];
-                        if (nameValue != null && nameValue.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new HubCreateOrUpdateResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            string nameInstance = ((string)nameValue);
-                            hubInstance.Name = nameInstance;
+                            responseDoc = JToken.Parse(responseContent);
                         }
                         
-                        JToken propertiesValue = responseDoc["properties"];
-                        if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            string typeName = ((string)propertiesValue["type"]);
-                            if (typeName == "Hub")
+                            Hub hubInstance = new Hub();
+                            result.Hub = hubInstance;
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
                             {
-                                HubProperties hubPropertiesInstance = new HubProperties();
-                                
-                                JToken hubIdValue = propertiesValue["hubId"];
-                                if (hubIdValue != null && hubIdValue.Type != JTokenType.Null)
-                                {
-                                    string hubIdInstance = ((string)hubIdValue);
-                                    hubPropertiesInstance.HubId = hubIdInstance;
-                                }
-                                
-                                JToken provisioningStateValue = propertiesValue["provisioningState"];
-                                if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
-                                {
-                                    string provisioningStateInstance = ((string)provisioningStateValue);
-                                    hubPropertiesInstance.ProvisioningState = provisioningStateInstance;
-                                }
-                                hubInstance.Properties = hubPropertiesInstance;
+                                string nameInstance = ((string)nameValue);
+                                hubInstance.Name = nameInstance;
                             }
-                            if (typeName == "InternalHub")
+                            
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
-                                InternalHubProperties internalHubPropertiesInstance = new InternalHubProperties();
-                                
-                                JToken hubIdValue2 = propertiesValue["hubId"];
-                                if (hubIdValue2 != null && hubIdValue2.Type != JTokenType.Null)
+                                string typeName = ((string)propertiesValue["type"]);
+                                if (typeName == "Hub")
                                 {
-                                    string hubIdInstance2 = ((string)hubIdValue2);
-                                    internalHubPropertiesInstance.HubId = hubIdInstance2;
+                                    HubProperties hubPropertiesInstance = new HubProperties();
+                                    
+                                    JToken hubIdValue = propertiesValue["hubId"];
+                                    if (hubIdValue != null && hubIdValue.Type != JTokenType.Null)
+                                    {
+                                        string hubIdInstance = ((string)hubIdValue);
+                                        hubPropertiesInstance.HubId = hubIdInstance;
+                                    }
+                                    
+                                    JToken provisioningStateValue = propertiesValue["provisioningState"];
+                                    if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
+                                    {
+                                        string provisioningStateInstance = ((string)provisioningStateValue);
+                                        hubPropertiesInstance.ProvisioningState = provisioningStateInstance;
+                                    }
+                                    hubInstance.Properties = hubPropertiesInstance;
                                 }
-                                
-                                JToken provisioningStateValue2 = propertiesValue["provisioningState"];
-                                if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
+                                if (typeName == "InternalHub")
                                 {
-                                    string provisioningStateInstance2 = ((string)provisioningStateValue2);
-                                    internalHubPropertiesInstance.ProvisioningState = provisioningStateInstance2;
+                                    InternalHubProperties internalHubPropertiesInstance = new InternalHubProperties();
+                                    
+                                    JToken hubIdValue2 = propertiesValue["hubId"];
+                                    if (hubIdValue2 != null && hubIdValue2.Type != JTokenType.Null)
+                                    {
+                                        string hubIdInstance2 = ((string)hubIdValue2);
+                                        internalHubPropertiesInstance.HubId = hubIdInstance2;
+                                    }
+                                    
+                                    JToken provisioningStateValue2 = propertiesValue["provisioningState"];
+                                    if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
+                                    {
+                                        string provisioningStateInstance2 = ((string)provisioningStateValue2);
+                                        internalHubPropertiesInstance.ProvisioningState = provisioningStateInstance2;
+                                    }
+                                    hubInstance.Properties = internalHubPropertiesInstance;
                                 }
-                                hubInstance.Properties = internalHubPropertiesInstance;
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
                     result.Location = url;
-                    if (result.Hub.Properties.ProvisioningState == "Failed")
+                    if (result.Hub != null && result.Hub.Properties != null && result.Hub.Properties.ProvisioningState == "Failed")
                     {
                         result.Status = OperationStatus.Failed;
                     }
-                    if (result.Hub.Properties.ProvisioningState == "Succeeded")
+                    if (result.Hub != null && result.Hub.Properties != null && result.Hub.Properties.ProvisioningState == "Succeeded")
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -1255,26 +1335,42 @@ namespace Microsoft.Azure.Management.DataFactories
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
+            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
             if (dataFactoryName == null)
             {
                 throw new ArgumentNullException("dataFactoryName");
             }
+            if (dataFactoryName != null && dataFactoryName.Length > 63)
+            {
+                throw new ArgumentOutOfRangeException("dataFactoryName");
+            }
+            if (Regex.IsMatch(dataFactoryName, "^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$") == false)
+            {
+                throw new ArgumentOutOfRangeException("dataFactoryName");
+            }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("dataFactoryName", dataFactoryName);
-                Tracing.Enter(invocationId, this, "ListAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/Microsoft.DataFactory/datafactories/" + dataFactoryName.Trim() + "/hubs?";
-            url = url + "api-version=2014-10-01-preview";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.DataFactory/datafactories/" + Uri.EscapeDataString(dataFactoryName) + "/hubs?";
+            url = url + "api-version=2015-01-01-preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1309,13 +1405,13 @@ namespace Microsoft.Azure.Management.DataFactories
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -1324,7 +1420,7 @@ namespace Microsoft.Azure.Management.DataFactories
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -1332,86 +1428,89 @@ namespace Microsoft.Azure.Management.DataFactories
                     // Create Result
                     HubListResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new HubListResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        JToken valueArray = responseDoc["value"];
-                        if (valueArray != null && valueArray.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new HubListResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            foreach (JToken valueValue in ((JArray)valueArray))
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
                             {
-                                Hub hubInstance = new Hub();
-                                result.Hubs.Add(hubInstance);
-                                
-                                JToken nameValue = valueValue["name"];
-                                if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    string nameInstance = ((string)nameValue);
-                                    hubInstance.Name = nameInstance;
-                                }
-                                
-                                JToken propertiesValue = valueValue["properties"];
-                                if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                                {
-                                    string typeName = ((string)propertiesValue["type"]);
-                                    if (typeName == "Hub")
+                                    Hub hubInstance = new Hub();
+                                    result.Hubs.Add(hubInstance);
+                                    
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
                                     {
-                                        HubProperties hubPropertiesInstance = new HubProperties();
-                                        
-                                        JToken hubIdValue = propertiesValue["hubId"];
-                                        if (hubIdValue != null && hubIdValue.Type != JTokenType.Null)
-                                        {
-                                            string hubIdInstance = ((string)hubIdValue);
-                                            hubPropertiesInstance.HubId = hubIdInstance;
-                                        }
-                                        
-                                        JToken provisioningStateValue = propertiesValue["provisioningState"];
-                                        if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
-                                        {
-                                            string provisioningStateInstance = ((string)provisioningStateValue);
-                                            hubPropertiesInstance.ProvisioningState = provisioningStateInstance;
-                                        }
-                                        hubInstance.Properties = hubPropertiesInstance;
+                                        string nameInstance = ((string)nameValue);
+                                        hubInstance.Name = nameInstance;
                                     }
-                                    if (typeName == "InternalHub")
+                                    
+                                    JToken propertiesValue = valueValue["properties"];
+                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
-                                        InternalHubProperties internalHubPropertiesInstance = new InternalHubProperties();
-                                        
-                                        JToken hubIdValue2 = propertiesValue["hubId"];
-                                        if (hubIdValue2 != null && hubIdValue2.Type != JTokenType.Null)
+                                        string typeName = ((string)propertiesValue["type"]);
+                                        if (typeName == "Hub")
                                         {
-                                            string hubIdInstance2 = ((string)hubIdValue2);
-                                            internalHubPropertiesInstance.HubId = hubIdInstance2;
+                                            HubProperties hubPropertiesInstance = new HubProperties();
+                                            
+                                            JToken hubIdValue = propertiesValue["hubId"];
+                                            if (hubIdValue != null && hubIdValue.Type != JTokenType.Null)
+                                            {
+                                                string hubIdInstance = ((string)hubIdValue);
+                                                hubPropertiesInstance.HubId = hubIdInstance;
+                                            }
+                                            
+                                            JToken provisioningStateValue = propertiesValue["provisioningState"];
+                                            if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
+                                            {
+                                                string provisioningStateInstance = ((string)provisioningStateValue);
+                                                hubPropertiesInstance.ProvisioningState = provisioningStateInstance;
+                                            }
+                                            hubInstance.Properties = hubPropertiesInstance;
                                         }
-                                        
-                                        JToken provisioningStateValue2 = propertiesValue["provisioningState"];
-                                        if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
+                                        if (typeName == "InternalHub")
                                         {
-                                            string provisioningStateInstance2 = ((string)provisioningStateValue2);
-                                            internalHubPropertiesInstance.ProvisioningState = provisioningStateInstance2;
+                                            InternalHubProperties internalHubPropertiesInstance = new InternalHubProperties();
+                                            
+                                            JToken hubIdValue2 = propertiesValue["hubId"];
+                                            if (hubIdValue2 != null && hubIdValue2.Type != JTokenType.Null)
+                                            {
+                                                string hubIdInstance2 = ((string)hubIdValue2);
+                                                internalHubPropertiesInstance.HubId = hubIdInstance2;
+                                            }
+                                            
+                                            JToken provisioningStateValue2 = propertiesValue["provisioningState"];
+                                            if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
+                                            {
+                                                string provisioningStateInstance2 = ((string)provisioningStateValue2);
+                                                internalHubPropertiesInstance.ProvisioningState = provisioningStateInstance2;
+                                            }
+                                            hubInstance.Properties = internalHubPropertiesInstance;
                                         }
-                                        hubInstance.Properties = internalHubPropertiesInstance;
                                     }
                                 }
                             }
+                            
+                            JToken odatanextLinkValue = responseDoc["@odata.nextLink"];
+                            if (odatanextLinkValue != null && odatanextLinkValue.Type != JTokenType.Null)
+                            {
+                                string odatanextLinkInstance = ((string)odatanextLinkValue);
+                                result.NextLink = odatanextLinkInstance;
+                            }
                         }
                         
-                        JToken odatanextLinkValue = responseDoc["@odata.nextLink"];
-                        if (odatanextLinkValue != null && odatanextLinkValue.Type != JTokenType.Null)
-                        {
-                            string odatanextLinkInstance = ((string)odatanextLinkValue);
-                            result.NextLink = odatanextLinkInstance;
-                        }
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1420,7 +1519,7 @@ namespace Microsoft.Azure.Management.DataFactories
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -1463,18 +1562,18 @@ namespace Microsoft.Azure.Management.DataFactories
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("nextLink", nextLink);
-                Tracing.Enter(invocationId, this, "ListNextAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ListNextAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = nextLink.Trim();
+            string url = nextLink;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1497,13 +1596,13 @@ namespace Microsoft.Azure.Management.DataFactories
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -1512,7 +1611,7 @@ namespace Microsoft.Azure.Management.DataFactories
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -1520,86 +1619,89 @@ namespace Microsoft.Azure.Management.DataFactories
                     // Create Result
                     HubListResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new HubListResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        JToken valueArray = responseDoc["value"];
-                        if (valueArray != null && valueArray.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new HubListResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            foreach (JToken valueValue in ((JArray)valueArray))
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
                             {
-                                Hub hubInstance = new Hub();
-                                result.Hubs.Add(hubInstance);
-                                
-                                JToken nameValue = valueValue["name"];
-                                if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    string nameInstance = ((string)nameValue);
-                                    hubInstance.Name = nameInstance;
-                                }
-                                
-                                JToken propertiesValue = valueValue["properties"];
-                                if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                                {
-                                    string typeName = ((string)propertiesValue["type"]);
-                                    if (typeName == "Hub")
+                                    Hub hubInstance = new Hub();
+                                    result.Hubs.Add(hubInstance);
+                                    
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
                                     {
-                                        HubProperties hubPropertiesInstance = new HubProperties();
-                                        
-                                        JToken hubIdValue = propertiesValue["hubId"];
-                                        if (hubIdValue != null && hubIdValue.Type != JTokenType.Null)
-                                        {
-                                            string hubIdInstance = ((string)hubIdValue);
-                                            hubPropertiesInstance.HubId = hubIdInstance;
-                                        }
-                                        
-                                        JToken provisioningStateValue = propertiesValue["provisioningState"];
-                                        if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
-                                        {
-                                            string provisioningStateInstance = ((string)provisioningStateValue);
-                                            hubPropertiesInstance.ProvisioningState = provisioningStateInstance;
-                                        }
-                                        hubInstance.Properties = hubPropertiesInstance;
+                                        string nameInstance = ((string)nameValue);
+                                        hubInstance.Name = nameInstance;
                                     }
-                                    if (typeName == "InternalHub")
+                                    
+                                    JToken propertiesValue = valueValue["properties"];
+                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                     {
-                                        InternalHubProperties internalHubPropertiesInstance = new InternalHubProperties();
-                                        
-                                        JToken hubIdValue2 = propertiesValue["hubId"];
-                                        if (hubIdValue2 != null && hubIdValue2.Type != JTokenType.Null)
+                                        string typeName = ((string)propertiesValue["type"]);
+                                        if (typeName == "Hub")
                                         {
-                                            string hubIdInstance2 = ((string)hubIdValue2);
-                                            internalHubPropertiesInstance.HubId = hubIdInstance2;
+                                            HubProperties hubPropertiesInstance = new HubProperties();
+                                            
+                                            JToken hubIdValue = propertiesValue["hubId"];
+                                            if (hubIdValue != null && hubIdValue.Type != JTokenType.Null)
+                                            {
+                                                string hubIdInstance = ((string)hubIdValue);
+                                                hubPropertiesInstance.HubId = hubIdInstance;
+                                            }
+                                            
+                                            JToken provisioningStateValue = propertiesValue["provisioningState"];
+                                            if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
+                                            {
+                                                string provisioningStateInstance = ((string)provisioningStateValue);
+                                                hubPropertiesInstance.ProvisioningState = provisioningStateInstance;
+                                            }
+                                            hubInstance.Properties = hubPropertiesInstance;
                                         }
-                                        
-                                        JToken provisioningStateValue2 = propertiesValue["provisioningState"];
-                                        if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
+                                        if (typeName == "InternalHub")
                                         {
-                                            string provisioningStateInstance2 = ((string)provisioningStateValue2);
-                                            internalHubPropertiesInstance.ProvisioningState = provisioningStateInstance2;
+                                            InternalHubProperties internalHubPropertiesInstance = new InternalHubProperties();
+                                            
+                                            JToken hubIdValue2 = propertiesValue["hubId"];
+                                            if (hubIdValue2 != null && hubIdValue2.Type != JTokenType.Null)
+                                            {
+                                                string hubIdInstance2 = ((string)hubIdValue2);
+                                                internalHubPropertiesInstance.HubId = hubIdInstance2;
+                                            }
+                                            
+                                            JToken provisioningStateValue2 = propertiesValue["provisioningState"];
+                                            if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
+                                            {
+                                                string provisioningStateInstance2 = ((string)provisioningStateValue2);
+                                                internalHubPropertiesInstance.ProvisioningState = provisioningStateInstance2;
+                                            }
+                                            hubInstance.Properties = internalHubPropertiesInstance;
                                         }
-                                        hubInstance.Properties = internalHubPropertiesInstance;
                                     }
                                 }
                             }
+                            
+                            JToken odatanextLinkValue = responseDoc["@odata.nextLink"];
+                            if (odatanextLinkValue != null && odatanextLinkValue.Type != JTokenType.Null)
+                            {
+                                string odatanextLinkInstance = ((string)odatanextLinkValue);
+                                result.NextLink = odatanextLinkInstance;
+                            }
                         }
                         
-                        JToken odatanextLinkValue = responseDoc["@odata.nextLink"];
-                        if (odatanextLinkValue != null && odatanextLinkValue.Type != JTokenType.Null)
-                        {
-                            string odatanextLinkInstance = ((string)odatanextLinkValue);
-                            result.NextLink = odatanextLinkInstance;
-                        }
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1608,7 +1710,7 @@ namespace Microsoft.Azure.Management.DataFactories
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }

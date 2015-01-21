@@ -21,15 +21,15 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Resources.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Resources.Models
 {
     /// <summary>
     /// Resource provider information.
     /// </summary>
-    public partial class ProviderGetResult : OperationResponse
+    public partial class ProviderGetResult : AzureOperationResponse
     {
         private Provider _provider;
         

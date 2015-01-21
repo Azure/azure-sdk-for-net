@@ -22,8 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.WebSites.Models;
 
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
@@ -31,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
     /// <summary>
     /// The Get Publish Profile Web Site operation response.
     /// </summary>
-    public partial class WebSiteGetPublishProfileResponse : OperationResponse, IEnumerable<WebSiteGetPublishProfileResponse.PublishProfile>
+    public partial class WebSiteGetPublishProfileResponse : AzureOperationResponse, IEnumerable<WebSiteGetPublishProfileResponse.PublishProfile>
     {
         private IList<WebSiteGetPublishProfileResponse.PublishProfile> _publishProfiles;
         

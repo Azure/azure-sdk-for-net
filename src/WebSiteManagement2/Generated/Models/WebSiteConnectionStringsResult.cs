@@ -21,15 +21,15 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.WebSites.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
     /// <summary>
     /// List of connection strings for the website.
     /// </summary>
-    public partial class WebSiteConnectionStringsResult : OperationResponse
+    public partial class WebSiteConnectionStringsResult : AzureOperationResponse
     {
         private WebSiteConnectionStringsEnvelope _resource;
         

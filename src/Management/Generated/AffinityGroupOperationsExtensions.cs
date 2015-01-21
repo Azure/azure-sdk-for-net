@@ -23,11 +23,11 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management;
 using Microsoft.WindowsAzure.Management.Models;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.Management
 {
     /// <summary>
     /// The Service Management API provides programmatic access to much of the
@@ -57,7 +57,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Create(this IAffinityGroupOperations operations, AffinityGroupCreateParameters parameters)
+        public static AzureOperationResponse Create(this IAffinityGroupOperations operations, AffinityGroupCreateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -84,7 +84,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> CreateAsync(this IAffinityGroupOperations operations, AffinityGroupCreateParameters parameters)
+        public static Task<AzureOperationResponse> CreateAsync(this IAffinityGroupOperations operations, AffinityGroupCreateParameters parameters)
         {
             return operations.CreateAsync(parameters, CancellationToken.None);
         }
@@ -106,7 +106,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Delete(this IAffinityGroupOperations operations, string affinityGroupName)
+        public static AzureOperationResponse Delete(this IAffinityGroupOperations operations, string affinityGroupName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -132,7 +132,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> DeleteAsync(this IAffinityGroupOperations operations, string affinityGroupName)
+        public static Task<AzureOperationResponse> DeleteAsync(this IAffinityGroupOperations operations, string affinityGroupName)
         {
             return operations.DeleteAsync(affinityGroupName, CancellationToken.None);
         }
@@ -247,7 +247,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Update(this IAffinityGroupOperations operations, string affinityGroupName, AffinityGroupUpdateParameters parameters)
+        public static AzureOperationResponse Update(this IAffinityGroupOperations operations, string affinityGroupName, AffinityGroupUpdateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -278,7 +278,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> UpdateAsync(this IAffinityGroupOperations operations, string affinityGroupName, AffinityGroupUpdateParameters parameters)
+        public static Task<AzureOperationResponse> UpdateAsync(this IAffinityGroupOperations operations, string affinityGroupName, AffinityGroupUpdateParameters parameters)
         {
             return operations.UpdateAsync(affinityGroupName, parameters, CancellationToken.None);
         }

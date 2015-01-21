@@ -23,7 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute
@@ -175,7 +175,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> DeleteAsync(string serviceName, string deploymentName, string loadBalancerName, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> DeleteAsync(string serviceName, string deploymentName, string loadBalancerName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Updates an internal load balancer associated with an existing

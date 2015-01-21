@@ -21,7 +21,7 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.SiteRecovery.Models;
 
 namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
@@ -29,7 +29,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
     /// <summary>
     /// The response model for the Vm object.
     /// </summary>
-    public partial class VirtualMachineResponse : OperationResponse
+    public partial class VirtualMachineResponse : AzureOperationResponse
     {
         private VirtualMachine _vm;
         

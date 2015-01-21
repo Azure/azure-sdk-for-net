@@ -23,9 +23,9 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Resources
 {
@@ -151,7 +151,7 @@ namespace Microsoft.Azure.Management.Resources
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Delete(this IResourceOperations operations, string resourceGroupName, ResourceIdentity identity)
+        public static AzureOperationResponse Delete(this IResourceOperations operations, string resourceGroupName, ResourceIdentity identity)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -178,7 +178,7 @@ namespace Microsoft.Azure.Management.Resources
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> DeleteAsync(this IResourceOperations operations, string resourceGroupName, ResourceIdentity identity)
+        public static Task<AzureOperationResponse> DeleteAsync(this IResourceOperations operations, string resourceGroupName, ResourceIdentity identity)
         {
             return operations.DeleteAsync(resourceGroupName, identity, CancellationToken.None);
         }

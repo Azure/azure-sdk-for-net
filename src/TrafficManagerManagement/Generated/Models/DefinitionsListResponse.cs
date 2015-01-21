@@ -22,8 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.TrafficManager.Models;
 
 namespace Microsoft.WindowsAzure.Management.TrafficManager.Models
@@ -31,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager.Models
     /// <summary>
     /// The List Definitions operation response.
     /// </summary>
-    public partial class DefinitionsListResponse : OperationResponse, IEnumerable<Definition>
+    public partial class DefinitionsListResponse : AzureOperationResponse, IEnumerable<Definition>
     {
         private IList<Definition> _definitions;
         

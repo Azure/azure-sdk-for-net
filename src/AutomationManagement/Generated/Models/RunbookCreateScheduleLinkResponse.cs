@@ -21,14 +21,14 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
     /// The response model for the create runbook schedule link operation.
     /// </summary>
-    public partial class RunbookCreateScheduleLinkResponse : OperationResponse
+    public partial class RunbookCreateScheduleLinkResponse : AzureOperationResponse
     {
         private string _jobContextId;
         

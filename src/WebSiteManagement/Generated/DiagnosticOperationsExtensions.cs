@@ -23,11 +23,11 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.WebSitesExtensions;
 using Microsoft.WindowsAzure.WebSitesExtensions.Models;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.WebSitesExtensions
 {
     /// <summary>
     /// The websites extensions client manages the web sites deployments, web
@@ -83,7 +83,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse UpdateSettings(this IDiagnosticOperations operations, DiagnosticUpdateParameters parameters)
+        public static AzureOperationResponse UpdateSettings(this IDiagnosticOperations operations, DiagnosticUpdateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -106,7 +106,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> UpdateSettingsAsync(this IDiagnosticOperations operations, DiagnosticUpdateParameters parameters)
+        public static Task<AzureOperationResponse> UpdateSettingsAsync(this IDiagnosticOperations operations, DiagnosticUpdateParameters parameters)
         {
             return operations.UpdateSettingsAsync(parameters, CancellationToken.None);
         }

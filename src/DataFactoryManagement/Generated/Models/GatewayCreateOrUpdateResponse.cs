@@ -21,15 +21,15 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.DataFactories.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
     /// The create or update data factory gateway operation response.
     /// </summary>
-    public partial class GatewayCreateOrUpdateResponse : OperationResponse
+    public partial class GatewayCreateOrUpdateResponse : AzureOperationResponse
     {
         private Gateway _gateway;
         

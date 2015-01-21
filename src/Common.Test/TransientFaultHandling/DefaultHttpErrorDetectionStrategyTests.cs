@@ -14,16 +14,12 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 using Xunit.Extensions;
-using Microsoft.WindowsAzure.Common.TransientFaultHandling;
+using Hyak.Common.TransientFaultHandling;
 
-namespace Microsoft.WindowsAzure.Common.Test.TransientFaultHandling
+namespace Microsoft.Azure.Common.Test.TransientFaultHandling
 {
     /// <summary>
     /// Implements general test cases for http error detections.

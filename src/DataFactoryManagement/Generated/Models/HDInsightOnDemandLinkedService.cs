@@ -20,7 +20,9 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.Azure.Management.DataFactories.Models;
 
 namespace Microsoft.Azure.Management.DataFactories.Models
@@ -30,6 +32,18 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// </summary>
     public partial class HDInsightOnDemandLinkedService : LinkedServiceProperties
     {
+        private IList<string> _additionalLinkedServiceNames;
+        
+        /// <summary>
+        /// Optional. Specify additional Azure storage accounts that need to be
+        /// accessible from the cluster.
+        /// </summary>
+        public IList<string> AdditionalLinkedServiceNames
+        {
+            get { return this._additionalLinkedServiceNames; }
+            set { this._additionalLinkedServiceNames = value; }
+        }
+        
         private int _clusterSize;
         
         /// <summary>
@@ -39,6 +53,54 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         {
             get { return this._clusterSize; }
             set { this._clusterSize = value; }
+        }
+        
+        private IDictionary<string, string> _coreConfiguration;
+        
+        /// <summary>
+        /// Optional. Allows user to override default values for core
+        /// configuration.
+        /// </summary>
+        public IDictionary<string, string> CoreConfiguration
+        {
+            get { return this._coreConfiguration; }
+            set { this._coreConfiguration = value; }
+        }
+        
+        private IDictionary<string, string> _hBaseConfiguration;
+        
+        /// <summary>
+        /// Optional. Allows user to override default values for HBase
+        /// configuration.
+        /// </summary>
+        public IDictionary<string, string> HBaseConfiguration
+        {
+            get { return this._hBaseConfiguration; }
+            set { this._hBaseConfiguration = value; }
+        }
+        
+        private IDictionary<string, string> _hdfsConfiguration;
+        
+        /// <summary>
+        /// Optional. Allows user to override default values for Hdfs
+        /// configuration.
+        /// </summary>
+        public IDictionary<string, string> HdfsConfiguration
+        {
+            get { return this._hdfsConfiguration; }
+            set { this._hdfsConfiguration = value; }
+        }
+        
+        private IDictionary<string, string> _hiveConfiguration;
+        
+        /// <summary>
+        /// Optional. Allows user to override default values for HIVE
+        /// configuration.
+        /// </summary>
+        public IDictionary<string, string> HiveConfiguration
+        {
+            get { return this._hiveConfiguration; }
+            set { this._hiveConfiguration = value; }
         }
         
         private string _hiveCustomLibrariesContainer;
@@ -53,17 +115,6 @@ namespace Microsoft.Azure.Management.DataFactories.Models
             set { this._hiveCustomLibrariesContainer = value; }
         }
         
-        private string _jobsContainer;
-        
-        /// <summary>
-        /// Required. HDInsight jobs container.
-        /// </summary>
-        public string JobsContainer
-        {
-            get { return this._jobsContainer; }
-            set { this._jobsContainer = value; }
-        }
-        
         private string _linkedServiceName;
         
         /// <summary>
@@ -73,6 +124,42 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         {
             get { return this._linkedServiceName; }
             set { this._linkedServiceName = value; }
+        }
+        
+        private IDictionary<string, string> _mapReduceConfiguration;
+        
+        /// <summary>
+        /// Optional. Allows user to override default values for mapreduce
+        /// configuration.
+        /// </summary>
+        public IDictionary<string, string> MapReduceConfiguration
+        {
+            get { return this._mapReduceConfiguration; }
+            set { this._mapReduceConfiguration = value; }
+        }
+        
+        private IDictionary<string, string> _oozieConfiguration;
+        
+        /// <summary>
+        /// Optional. Allows user to override default values for oozie
+        /// configuration.
+        /// </summary>
+        public IDictionary<string, string> OozieConfiguration
+        {
+            get { return this._oozieConfiguration; }
+            set { this._oozieConfiguration = value; }
+        }
+        
+        private IDictionary<string, string> _stormConfiguration;
+        
+        /// <summary>
+        /// Optional. Allows user to override default values for Storm
+        /// configuration.
+        /// </summary>
+        public IDictionary<string, string> StormConfiguration
+        {
+            get { return this._stormConfiguration; }
+            set { this._stormConfiguration = value; }
         }
         
         private TimeSpan _timeToLive;
@@ -97,12 +184,49 @@ namespace Microsoft.Azure.Management.DataFactories.Models
             set { this._version = value; }
         }
         
+        private IDictionary<string, string> _yarnConfiguration;
+        
+        /// <summary>
+        /// Optional. Allows user to override default values for YARN
+        /// configuration.
+        /// </summary>
+        public IDictionary<string, string> YarnConfiguration
+        {
+            get { return this._yarnConfiguration; }
+            set { this._yarnConfiguration = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the HDInsightOnDemandLinkedService
         /// class.
         /// </summary>
         public HDInsightOnDemandLinkedService()
         {
+            this.AdditionalLinkedServiceNames = new LazyList<string>();
+            this.CoreConfiguration = new LazyDictionary<string, string>();
+            this.HBaseConfiguration = new LazyDictionary<string, string>();
+            this.HdfsConfiguration = new LazyDictionary<string, string>();
+            this.HiveConfiguration = new LazyDictionary<string, string>();
+            this.MapReduceConfiguration = new LazyDictionary<string, string>();
+            this.OozieConfiguration = new LazyDictionary<string, string>();
+            this.StormConfiguration = new LazyDictionary<string, string>();
+            this.YarnConfiguration = new LazyDictionary<string, string>();
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the HDInsightOnDemandLinkedService
+        /// class with required arguments.
+        /// </summary>
+        public HDInsightOnDemandLinkedService(int clusterSize, TimeSpan timeToLive, string linkedServiceName)
+            : this()
+        {
+            if (linkedServiceName == null)
+            {
+                throw new ArgumentNullException("linkedServiceName");
+            }
+            this.ClusterSize = clusterSize;
+            this.TimeToLive = timeToLive;
+            this.LinkedServiceName = linkedServiceName;
         }
     }
 }

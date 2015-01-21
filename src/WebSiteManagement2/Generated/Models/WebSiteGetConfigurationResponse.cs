@@ -22,8 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.Azure.Management.WebSites.Models;
-using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
@@ -128,6 +128,17 @@ namespace Microsoft.Azure.Management.WebSites.Models
         {
             get { return this._httpLoggingEnabled; }
             set { this._httpLoggingEnabled = value; }
+        }
+        
+        private SiteLimits _limits;
+        
+        /// <summary>
+        /// Optional. The per site limits.
+        /// </summary>
+        public SiteLimits Limits
+        {
+            get { return this._limits; }
+            set { this._limits = value; }
         }
         
         private int? _logsDirectorySizeLimit;

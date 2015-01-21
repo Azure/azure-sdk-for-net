@@ -22,8 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.ServiceBus.Models;
 
 namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
@@ -31,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
     /// <summary>
     /// A response to a request for a list of namespaces.
     /// </summary>
-    public partial class ServiceBusNamespaceDescriptionResponse : OperationResponse, IEnumerable<NamespaceDescription>
+    public partial class ServiceBusNamespaceDescriptionResponse : AzureOperationResponse, IEnumerable<NamespaceDescription>
     {
         private IList<NamespaceDescription> _namespaceDescriptions;
         

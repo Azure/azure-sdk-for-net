@@ -21,15 +21,15 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.DataFactories.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
     /// The create or update data factory operation response.
     /// </summary>
-    public partial class DataFactoryCreateOrUpdateResponse : OperationResponse
+    public partial class DataFactoryCreateOrUpdateResponse : AzureOperationResponse
     {
         private DataFactory _dataFactory;
         

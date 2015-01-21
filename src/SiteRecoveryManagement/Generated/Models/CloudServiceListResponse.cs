@@ -22,8 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.RecoveryServices.Models;
 
 namespace Microsoft.WindowsAzure.Management.RecoveryServices.Models
@@ -31,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.RecoveryServices.Models
     /// <summary>
     /// The response model for the list cloud service operation.
     /// </summary>
-    public partial class CloudServiceListResponse : OperationResponse, IEnumerable<CloudService>
+    public partial class CloudServiceListResponse : AzureOperationResponse, IEnumerable<CloudService>
     {
         private IList<CloudService> _cloudServices;
         

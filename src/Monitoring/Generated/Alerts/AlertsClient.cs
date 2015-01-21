@@ -22,8 +22,8 @@
 using System;
 using System.Linq;
 using System.Net.Http;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Monitoring.Alerts;
 
 namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
@@ -107,7 +107,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
         /// <summary>
         /// Initializes a new instance of the AlertsClient class.
         /// </summary>
-        private AlertsClient()
+        public AlertsClient()
             : base()
         {
             this._incidents = new IncidentOperations(this);
@@ -174,7 +174,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
         /// <param name='httpClient'>
         /// The Http client
         /// </param>
-        private AlertsClient(HttpClient httpClient)
+        public AlertsClient(HttpClient httpClient)
             : base(httpClient)
         {
             this._incidents = new IncidentOperations(this);

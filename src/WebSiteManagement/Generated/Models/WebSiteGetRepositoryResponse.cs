@@ -21,14 +21,14 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
 {
     /// <summary>
     /// The Get Repository Web Site operation response.
     /// </summary>
-    public partial class WebSiteGetRepositoryResponse : OperationResponse
+    public partial class WebSiteGetRepositoryResponse : AzureOperationResponse
     {
         private Uri _uri;
         

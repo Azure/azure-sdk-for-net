@@ -21,15 +21,15 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.WebSites.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
     /// <summary>
     /// Scheduled backup definition.
     /// </summary>
-    public partial class WebSiteGetBackupConfigurationResponse : OperationResponse
+    public partial class WebSiteGetBackupConfigurationResponse : AzureOperationResponse
     {
         private BackupScheduleRequestEnvelope _backupSchedule;
         

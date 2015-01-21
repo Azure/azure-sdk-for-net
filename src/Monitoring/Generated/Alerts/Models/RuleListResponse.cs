@@ -22,8 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models;
 
 namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
@@ -31,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
     /// <summary>
     /// The List Rules operation response.
     /// </summary>
-    public partial class RuleListResponse : OperationResponse, IEnumerable<Rule>
+    public partial class RuleListResponse : AzureOperationResponse, IEnumerable<Rule>
     {
         private IList<Rule> _value;
         

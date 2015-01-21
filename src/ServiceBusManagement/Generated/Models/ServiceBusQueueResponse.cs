@@ -21,7 +21,7 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.ServiceBus.Models;
 
 namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
@@ -29,7 +29,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
     /// <summary>
     /// A response to a request for a particular queue.
     /// </summary>
-    public partial class ServiceBusQueueResponse : OperationResponse
+    public partial class ServiceBusQueueResponse : AzureOperationResponse
     {
         private string _name;
         

@@ -22,8 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.Azure.Management.DataFactories.Models;
-using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
@@ -32,12 +32,12 @@ namespace Microsoft.Azure.Management.DataFactories.Models
     /// </summary>
     public partial class PipelineProperties
     {
-        private IList<Activity> _activities;
+        private IList<BaseActivity> _activities;
         
         /// <summary>
         /// Required. Activities that belong to the pipeline.
         /// </summary>
-        public IList<Activity> Activities
+        public IList<BaseActivity> Activities
         {
             get { return this._activities; }
             set { this._activities = value; }
@@ -137,14 +137,14 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// </summary>
         public PipelineProperties()
         {
-            this.Activities = new LazyList<Activity>();
+            this.Activities = new LazyList<BaseActivity>();
         }
         
         /// <summary>
         /// Initializes a new instance of the PipelineProperties class with
         /// required arguments.
         /// </summary>
-        public PipelineProperties(IList<Activity> activities)
+        public PipelineProperties(IList<BaseActivity> activities)
             : this()
         {
             if (activities == null)

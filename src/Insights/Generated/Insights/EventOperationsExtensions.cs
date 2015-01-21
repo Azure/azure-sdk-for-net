@@ -31,49 +31,89 @@ namespace Microsoft.Azure.Insights
     public static partial class EventOperationsExtensions
     {
         /// <summary>
-        /// The count of events in a subscription.
+        /// The List Digest Event Values operation lists the digest events.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the Microsoft.Azure.Insights.IEventOperations.
         /// </param>
         /// <param name='filterString'>
-        /// Required. The filter string should be generated using
-        /// Microsoft.WindowsAzure.Common.OData.FilterStringHere is an
-        /// example:var filterString =
-        /// FilterString.Generate<GetCountSummaryParameters> (p =>
-        /// (p.StartTime == startTime) && p.EndTime == endTime);
+        /// Required. The filter string
+        /// </param>
+        /// <param name='selectedProperties'>
+        /// Optional. The list of property names to be returned. You can save
+        /// bandwith by selecting only the properties you need.
         /// </param>
         /// <returns>
-        /// The event count summary response.
+        /// The List Events operation response.
         /// </returns>
-        public static EventCountSummaryResponse GetCountSummary(this IEventOperations operations, string filterString)
+        public static EventDataListResponse ListDigestEvents(this IEventOperations operations, string filterString, string selectedProperties)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IEventOperations)s).GetCountSummaryAsync(filterString);
+                return ((IEventOperations)s).ListDigestEventsAsync(filterString, selectedProperties);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// The count of events in a subscription.
+        /// The List Digest Event Values operation lists the digest events.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the Microsoft.Azure.Insights.IEventOperations.
         /// </param>
         /// <param name='filterString'>
-        /// Required. The filter string should be generated using
-        /// Microsoft.WindowsAzure.Common.OData.FilterStringHere is an
-        /// example:var filterString =
-        /// FilterString.Generate<GetCountSummaryParameters> (p =>
-        /// (p.StartTime == startTime) && p.EndTime == endTime);
+        /// Required. The filter string
+        /// </param>
+        /// <param name='selectedProperties'>
+        /// Optional. The list of property names to be returned. You can save
+        /// bandwith by selecting only the properties you need.
         /// </param>
         /// <returns>
-        /// The event count summary response.
+        /// The List Events operation response.
         /// </returns>
-        public static Task<EventCountSummaryResponse> GetCountSummaryAsync(this IEventOperations operations, string filterString)
+        public static Task<EventDataListResponse> ListDigestEventsAsync(this IEventOperations operations, string filterString, string selectedProperties)
         {
-            return operations.GetCountSummaryAsync(filterString, CancellationToken.None);
+            return operations.ListDigestEventsAsync(filterString, selectedProperties, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The List Digest Event Next operation lists the next set of digest
+        /// events.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
+        /// </param>
+        /// <param name='nextLink'>
+        /// Required. The next link
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        public static EventDataListResponse ListDigestEventsNext(this IEventOperations operations, string nextLink)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IEventOperations)s).ListDigestEventsNextAsync(nextLink);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The List Digest Event Next operation lists the next set of digest
+        /// events.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
+        /// </param>
+        /// <param name='nextLink'>
+        /// Required. The next link
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        public static Task<EventDataListResponse> ListDigestEventsNextAsync(this IEventOperations operations, string nextLink)
+        {
+            return operations.ListDigestEventsNextAsync(nextLink, CancellationToken.None);
         }
         
         /// <summary>
@@ -174,6 +214,44 @@ namespace Microsoft.Azure.Insights
         public static Task<EventDataListResponse> ListEventsNextAsync(this IEventOperations operations, string nextLink)
         {
             return operations.ListEventsNextAsync(nextLink, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The status count of events in a subscription.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
+        /// </param>
+        /// <param name='filterString'>
+        /// Required. The filter string.
+        /// </param>
+        /// <returns>
+        /// The List event status count summary operation response.
+        /// </returns>
+        public static EventStatusCountSummaryListResponse ListEventStatusCountSummaryItems(this IEventOperations operations, string filterString)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IEventOperations)s).ListEventStatusCountSummaryItemsAsync(filterString);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The status count of events in a subscription.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
+        /// </param>
+        /// <param name='filterString'>
+        /// Required. The filter string.
+        /// </param>
+        /// <returns>
+        /// The List event status count summary operation response.
+        /// </returns>
+        public static Task<EventStatusCountSummaryListResponse> ListEventStatusCountSummaryItemsAsync(this IEventOperations operations, string filterString)
+        {
+            return operations.ListEventStatusCountSummaryItemsAsync(filterString, CancellationToken.None);
         }
     }
 }

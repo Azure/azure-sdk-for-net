@@ -23,7 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.WebSites;
 using Microsoft.WindowsAzure.Management.WebSites.Models;
 
@@ -150,7 +150,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> RegisterSubscriptionAsync(CancellationToken cancellationToken);
+        Task<AzureOperationResponse> RegisterSubscriptionAsync(CancellationToken cancellationToken);
         
         /// <summary>
         /// Unregister your subscription to use Azure Web Sites.
@@ -162,6 +162,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> UnregisterSubscriptionAsync(CancellationToken cancellationToken);
+        Task<AzureOperationResponse> UnregisterSubscriptionAsync(CancellationToken cancellationToken);
     }
 }

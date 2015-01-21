@@ -23,11 +23,11 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.TrafficManager;
 using Microsoft.WindowsAzure.Management.TrafficManager.Models;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.Management.TrafficManager
 {
     /// <summary>
     /// The Windows Azure Traffic Manager management API provides a RESTful set
@@ -58,7 +58,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Create(this IDefinitionOperations operations, string profileName, DefinitionCreateParameters parameters)
+        public static AzureOperationResponse Create(this IDefinitionOperations operations, string profileName, DefinitionCreateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -86,7 +86,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> CreateAsync(this IDefinitionOperations operations, string profileName, DefinitionCreateParameters parameters)
+        public static Task<AzureOperationResponse> CreateAsync(this IDefinitionOperations operations, string profileName, DefinitionCreateParameters parameters)
         {
             return operations.CreateAsync(profileName, parameters, CancellationToken.None);
         }

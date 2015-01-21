@@ -21,15 +21,15 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.WebSites.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
     /// <summary>
     /// Config for the website.
     /// </summary>
-    public partial class WebSiteGetConfigurationResult : OperationResponse
+    public partial class WebSiteGetConfigurationResult : AzureOperationResponse
     {
         private WebSiteConfigurationEnvelope _resource;
         

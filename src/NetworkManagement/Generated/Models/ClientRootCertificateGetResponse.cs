@@ -21,14 +21,14 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.WindowsAzure.Management.Network.Models
 {
     /// <summary>
     /// Response to the Get Client Root Certificate operation.
     /// </summary>
-    public partial class ClientRootCertificateGetResponse : OperationResponse
+    public partial class ClientRootCertificateGetResponse : AzureOperationResponse
     {
         private string _certificate;
         

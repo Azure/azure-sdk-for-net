@@ -23,11 +23,11 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Monitoring.Alerts;
 using Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
 {
     public static partial class RuleOperationsExtensions
     {
@@ -42,7 +42,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse CreateOrUpdate(this IRuleOperations operations, RuleCreateOrUpdateParameters parameters)
+        public static AzureOperationResponse CreateOrUpdate(this IRuleOperations operations, RuleCreateOrUpdateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -62,7 +62,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> CreateOrUpdateAsync(this IRuleOperations operations, RuleCreateOrUpdateParameters parameters)
+        public static Task<AzureOperationResponse> CreateOrUpdateAsync(this IRuleOperations operations, RuleCreateOrUpdateParameters parameters)
         {
             return operations.CreateOrUpdateAsync(parameters, CancellationToken.None);
         }
@@ -78,7 +78,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Delete(this IRuleOperations operations, string ruleId)
+        public static AzureOperationResponse Delete(this IRuleOperations operations, string ruleId)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -98,7 +98,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> DeleteAsync(this IRuleOperations operations, string ruleId)
+        public static Task<AzureOperationResponse> DeleteAsync(this IRuleOperations operations, string ruleId)
         {
             return operations.DeleteAsync(ruleId, CancellationToken.None);
         }

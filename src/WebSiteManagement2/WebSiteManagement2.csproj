@@ -4,7 +4,7 @@
   <PropertyGroup>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <WindowsAzureLibraryProfileSet>portable/net40</WindowsAzureLibraryProfileSet>
+    <WindowsAzureLibraryProfileSet>portable/net45/net40</WindowsAzureLibraryProfileSet>
     <ProjectGuid>{F455DFDB-0869-43EE-9CD1-E040752BD033}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -29,6 +29,7 @@
     <Compile Include="Generated\Models\BackupSchedule.cs" />
     <Compile Include="Generated\Models\BackupScheduleRequestEnvelope.cs" />
     <Compile Include="Generated\Models\BackupScheduleRequestResponse.cs" />
+    <Compile Include="Generated\Models\CloningInfo.cs" />
     <Compile Include="Generated\Models\ConnectionStringInfo.cs" />
     <Compile Include="Generated\Models\DatabaseBackupSetting.cs" />
     <Compile Include="Generated\Models\DatabaseServerType.cs" />
@@ -44,6 +45,7 @@
     <Compile Include="Generated\Models\ResourceBase.cs" />
     <Compile Include="Generated\Models\RestoreRequest.cs" />
     <Compile Include="Generated\Models\RestoreRequestEnvelope.cs" />
+    <Compile Include="Generated\Models\SiteLimits.cs" />
     <Compile Include="Generated\Models\SiteSourceControl.cs" />
     <Compile Include="Generated\Models\SiteSourceControlProperties.cs" />
     <Compile Include="Generated\Models\SiteSourceControlUpdateParameters.cs" />
@@ -59,6 +61,7 @@
     <Compile Include="Generated\Models\SourceControlProperties.cs" />
     <Compile Include="Generated\Models\SourceControlUpdateParameters.cs" />
     <Compile Include="Generated\Models\SourceControlUpdateResponse.cs" />
+    <Compile Include="Generated\Models\SourceWebSite.cs" />
     <Compile Include="Generated\Models\WebHostingPlan.cs" />
     <Compile Include="Generated\Models\WebHostingPlanCreateOrUpdateParameters.cs" />
     <Compile Include="Generated\Models\WebHostingPlanCreateOrUpdateResponse.cs" />
@@ -70,9 +73,13 @@
     <Compile Include="Generated\Models\WebSite.cs" />
     <Compile Include="Generated\Models\WebSiteAppSettingsEnvelope.cs" />
     <Compile Include="Generated\Models\WebSiteAppSettingsResult.cs" />
+    <Compile Include="Generated\Models\WebSiteAsyncOperationResponse.cs" />
     <Compile Include="Generated\Models\WebSiteBackupResponse.cs" />
     <Compile Include="Generated\Models\WebSiteBase.cs" />
     <Compile Include="Generated\Models\WebSiteBaseProperties.cs" />
+    <Compile Include="Generated\Models\WebSiteCloneBase.cs" />
+    <Compile Include="Generated\Models\WebSiteCloneBaseProperties.cs" />
+    <Compile Include="Generated\Models\WebSiteCloneParameters.cs" />
     <Compile Include="Generated\Models\WebSiteConfigurationEnvelope.cs" />
     <Compile Include="Generated\Models\WebSiteConnectionStringsEnvelope.cs" />
     <Compile Include="Generated\Models\WebSiteConnectionStringsResult.cs" />
@@ -124,10 +131,8 @@
     <Compile Include="Generated\WebSiteOperations.cs" />
     <Compile Include="Generated\WebSiteOperationsExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WebSiteManagementClient.Customization.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="GenerateCode.props" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
@@ -141,8 +146,11 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.WindowsAzure.Common">
-      <HintPath>..\..\packages\Microsoft.WindowsAzure.Common.1.4.1\lib\portable-net45+wp8+wpa81+win\Microsoft.WindowsAzure.Common.dll</HintPath>
+    <Reference Include="Hyak.Common">
+      <HintPath>..\..\packages\Hyak.Common.1.0.1\lib\portable-net403+win+wpa81\Hyak.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Azure.Common">
+      <HintPath>..\..\packages\Microsoft.Azure.Common.2.0.1\lib\portable-net45+wp8+wpa81+win\Microsoft.Azure.Common.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(WindowsAzureCurrentConfiguration)' == 'portable' " />
@@ -155,19 +163,13 @@
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets') " />
   <Import Project="$(SolutionDir)\src\library.targets" />
   <Import Project="GenerateCode.props" />
-  <Import Project="..\..\packages\Hyak.Generator.1.0.5400.37276-prerelease\build\Hyak.Generator.targets" Condition="Exists('..\..\packages\Hyak.Generator.1.0.5400.37276-prerelease\build\Hyak.Generator.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\..\packages\Hyak.Generator.1.0.5400.37276-prerelease\build\Hyak.Generator.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Hyak.Generator.1.0.5400.37276-prerelease\build\Hyak.Generator.targets'))" />
-  </Target>
+  <Import Project="..\..\packages\Hyak.Generator.1.0.5478.27459-prerelease\build\Hyak.Generator.targets" Condition="Exists('..\..\packages\Hyak.Generator.1.0.5478.27459-prerelease\build\Hyak.Generator.targets')" />
   <Target Name="DoSpecGeneration" DependsOnTargets="RestorePackages" BeforeTargets="BeforeBuild">
     <CallTarget Targets="GenerateCodeFromSpecs" Condition="'$(HydraGeneratorImported)' != ''" />
-    <Error Text="The Hyak code generator package was restored from nuget. Build the project again to do code generation." Condition="Exists('..\..\packages\Hyak.Generator.1.0.5400.37276-prerelease\build\Hyak.Generator.targets') And '$(HydraGeneratorImported)' == ''" />
-    <Warning Text="The Hyak code generation packages are not available. Compilation will be done on existing generated sources." Condition="!Exists('..\..\packages\Hyak.Generator.1.0.5400.37276-prerelease\build\Hyak.Generator.targets')" />
+    <Error Text="The Hyak code generator package was restored from nuget. Build the project again to do code generation." Condition="Exists('..\..\packages\Hyak.Generator.1.0.5478.27459-prerelease\build\Hyak.Generator.targets') And '$(HydraGeneratorImported)' == ''" />
+    <Warning Text="The Hyak code generation packages are not available. Compilation will be done on existing generated sources." Condition="!Exists('..\..\packages\Hyak.Generator.1.0.5478.27459-prerelease\build\Hyak.Generator.targets')" />
   </Target>
   <Target Name="CopyMicrosoftAzureManagementWebSitesSpecification" BeforeTargets="GenerateCodeFromSpecs">
-    <Copy SourceFiles="..\..\packages\Microsoft.Azure.Management.WebSites.Specification.2.0.5424.10966-prerelease\tools\Microsoft.Azure.Management.WebSites.Specification.dll" DestinationFolder="." />
+    <Copy SourceFiles="..\..\packages\Microsoft.Azure.Management.WebSites.Specification.2.0.5483.24656-prerelease\tools\Microsoft.Azure.Management.WebSites.Specification.dll" DestinationFolder="." />
   </Target>
 </Project>

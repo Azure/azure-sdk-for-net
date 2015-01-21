@@ -21,7 +21,7 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.WebSites.Models;
 
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
@@ -29,7 +29,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
     /// <summary>
     /// The backup record created based on the backup request.
     /// </summary>
-    public partial class WebSiteBackupResponse : OperationResponse
+    public partial class WebSiteBackupResponse : AzureOperationResponse
     {
         private BackupItem _backupItem;
         

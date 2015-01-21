@@ -22,8 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.Azure.Insights.Models;
-using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Insights.Models
 {
@@ -32,6 +32,28 @@ namespace Microsoft.Azure.Insights.Models
     /// </summary>
     public partial class Metric
     {
+        private LocalizableString _dimensionName;
+        
+        /// <summary>
+        /// Optional. The name of the dimension.
+        /// </summary>
+        public LocalizableString DimensionName
+        {
+            get { return this._dimensionName; }
+            set { this._dimensionName = value; }
+        }
+        
+        private LocalizableString _dimensionValue;
+        
+        /// <summary>
+        /// Optional. The value of the dimension.
+        /// </summary>
+        public LocalizableString DimensionValue
+        {
+            get { return this._dimensionValue; }
+            set { this._dimensionValue = value; }
+        }
+        
         private DateTime _endTime;
         
         /// <summary>

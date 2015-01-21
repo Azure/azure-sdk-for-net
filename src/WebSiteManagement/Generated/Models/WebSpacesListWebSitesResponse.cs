@@ -22,8 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.WebSites.Models;
 
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
@@ -31,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
     /// <summary>
     /// The List Web Sites operation response.
     /// </summary>
-    public partial class WebSpacesListWebSitesResponse : OperationResponse, IEnumerable<WebSite>
+    public partial class WebSpacesListWebSitesResponse : AzureOperationResponse, IEnumerable<WebSite>
     {
         private IList<WebSite> _webSites;
         

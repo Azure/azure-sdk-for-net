@@ -22,7 +22,7 @@
 using System;
 using System.Linq;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.Subscriptions
 {
     public static partial class SubscriptionClientExtensions
     {

@@ -21,15 +21,15 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Insights.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Insights.Models
 {
     /// <summary>
     /// The List Autoscale settings operation response.
     /// </summary>
-    public partial class AutoscaleSettingListResponse : OperationResponse
+    public partial class AutoscaleSettingListResponse : AzureOperationResponse
     {
         private AutoscaleSettingResourceCollection _autoscaleSettingResourceCollection;
         

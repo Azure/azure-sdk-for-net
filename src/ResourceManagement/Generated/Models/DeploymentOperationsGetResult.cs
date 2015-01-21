@@ -21,15 +21,15 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Resources.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Resources.Models
 {
     /// <summary>
     /// Deployment operation.
     /// </summary>
-    public partial class DeploymentOperationsGetResult : OperationResponse
+    public partial class DeploymentOperationsGetResult : AzureOperationResponse
     {
         private DeploymentOperation _operation;
         

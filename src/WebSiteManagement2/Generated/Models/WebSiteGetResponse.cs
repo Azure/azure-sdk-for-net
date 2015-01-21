@@ -21,15 +21,15 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.WebSites.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
     /// <summary>
     /// The Get Web Site Details operation response.
     /// </summary>
-    public partial class WebSiteGetResponse : OperationResponse
+    public partial class WebSiteGetResponse : AzureOperationResponse
     {
         private WebSite _webSite;
         

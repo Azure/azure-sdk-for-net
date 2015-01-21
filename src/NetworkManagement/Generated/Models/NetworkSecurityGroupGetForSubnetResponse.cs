@@ -21,14 +21,14 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.WindowsAzure.Management.Network.Models
 {
     /// <summary>
     /// The Network Security Group associated with a subnet.
     /// </summary>
-    public partial class NetworkSecurityGroupGetForSubnetResponse : OperationResponse
+    public partial class NetworkSecurityGroupGetForSubnetResponse : AzureOperationResponse
     {
         private string _name;
         

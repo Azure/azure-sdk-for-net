@@ -13,10 +13,8 @@
 // limitations under the License.
 //
 
-using System;
 using System.Collections.Generic;
 using Microsoft.Azure.Insights.Models;
-using Microsoft.WindowsAzure.Common;
 using System.Net.Http;
 
 namespace Microsoft.Azure.Insights
@@ -25,7 +23,7 @@ namespace Microsoft.Azure.Insights
     {
         private MetricDefinitionCache _cache;
 
-        public MetricDefinitionCache Cache
+        internal MetricDefinitionCache Cache
         {
             get { return _cache ?? (_cache = new MetricDefinitionCache()); }
         }
@@ -39,7 +37,7 @@ namespace Microsoft.Azure.Insights
             return WithHandler(new InsightsClient(), handler);
         }
 
-        public class MetricDefinitionCache : SizeBoundedCache<string, IEnumerable<MetricDefinition>>
+        internal class MetricDefinitionCache : SizeBoundedCache<string, IEnumerable<MetricDefinition>>
         {
         }
     }

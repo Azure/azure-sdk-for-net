@@ -15,16 +15,25 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Globalization;
 using System.Security.Cryptography.X509Certificates;
 
-namespace Microsoft.WindowsAzure.Common.Internals
+namespace Microsoft.Azure.Common.Internals
 {
     public static class PlatformConfigurationHelper
     {       
         public static X509Certificate2 GetCertificate(IDictionary<string, object> parameters, string name, bool isRequired = true)
         {
-            object value = ConfigurationHelper.GetParameter(parameters, name, isRequired);
+            if (isRequired && !parameters.ContainsKey(name))
+            {
+                throw new ArgumentException(name);
+            }
+
+            object value = null;
+            if (parameters.ContainsKey(name))
+            {
+                value = parameters[name];
+            }
 
             X509Certificate2 certificate = value as X509Certificate2;
             if (certificate == null)
@@ -52,7 +61,19 @@ namespace Microsoft.WindowsAzure.Common.Internals
 
             if (isRequired && certificate == null)
             {
-                throw ConfigurationHelper.CreateCouldNotConvertException<X509Certificate2>(name, value);
+                if (string.IsNullOrEmpty(name))
+                {
+                    throw new ArgumentNullException(name);
+                }
+
+                string message =
+                    string.Format(
+                        CultureInfo.InvariantCulture,
+                        "Failed to convert parameter {0} value '{1}' to type {2}.",
+                        name,
+                        value == null ? "(null)" : value.ToString(),
+                        typeof(X509Certificate2).FullName);
+                throw new FormatException(message);
             }
 
             return certificate;

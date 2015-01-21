@@ -21,15 +21,15 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.WebSites.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
     /// <summary>
     /// List of app settings for the website.
     /// </summary>
-    public partial class WebSiteAppSettingsResult : OperationResponse
+    public partial class WebSiteAppSettingsResult : AzureOperationResponse
     {
         private WebSiteAppSettingsEnvelope _resource;
         
