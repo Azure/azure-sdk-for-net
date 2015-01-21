@@ -17,7 +17,7 @@
     <dependencies>
       <dependency id="Microsoft.Azure.Common" version="2.0.1" />
       <dependency id="Microsoft.IdentityModel.Clients.ActiveDirectory" version="2.11.10918.1222" />
-      <dependency id="Microsoft.WindowsAzure.Management" version="4.0.0" />
+      <dependency id="Microsoft.WindowsAzure.Management" version="4.0.1" />
       <dependency id="Microsoft.Azure.Management.Resources" version="2.12.0-preview" />
     </dependencies>
   </metadata>
