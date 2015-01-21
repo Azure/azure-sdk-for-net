@@ -25,6 +25,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Versio
     internal class HDInsightSDKSupportedVersions
     {
         public static readonly Version MinVersion = new Version("1.6");
-        public static readonly Version MaxVersion = new Version("3.1");
+        public static readonly Version MaxVersion = new Version("3.2");
     }
 }
