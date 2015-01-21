@@ -57,9 +57,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         ///     Default HDInsight version.
         /// </summary>
         internal const string DEFAULTHDINSIGHTVERSION = "default";
-        internal const string ClustersContractCapabilityVersion1 = "CAPABILITY_FEATURE_CLUSTERS_CONTRACT_1_SDK";
-        internal static string ClustersContractCapabilityVersion2 = "CAPABILITY_FEATURE_CLUSTERS_CONTRACT_2_SDK";
-        internal static string ClustersContractCapabilityVersion3 = "CAPABILITY_FEATURE_CLUSTERS_CONTRACT_VERSION_3_SDK";
         internal const string ClusterAlreadyExistsError = "The condition specified by the ETag is not satisfied.";
 
         private IHDInsightSubscriptionCredentials credentials;
