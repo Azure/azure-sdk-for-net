@@ -20,6 +20,7 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace Microsoft.Azure.Common.Internals
 {
+
     public static class PlatformConfigurationHelper
     {       
         public static X509Certificate2 GetCertificate(IDictionary<string, object> parameters, string name, bool isRequired = true)

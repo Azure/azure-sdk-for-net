@@ -89,6 +89,15 @@ namespace Microsoft.Azure.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} requires a {1} in its HTTP pipeline to work with client certificates..
+        /// </summary>
+        internal static string CertificateCloudCredentials_InitializeServiceClient_NoWebRequestHandler {
+            get {
+                return ResourceManager.GetString("CertificateCloudCredentials_InitializeServiceClient_NoWebRequestHandler", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to convert parameter {0} value &apos;{1}&apos; to type {2}..
         /// </summary>
         internal static string ConfigurationHelper_CreateCouldNotConvertException {

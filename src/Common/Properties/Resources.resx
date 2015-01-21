@@ -127,6 +127,9 @@ Parameter name: {0}</value>
   <data name="ArgumentCannotBeNegative" xml:space="preserve">
     <value>The specified argument {0} cannot be initialized with a negative value.</value>
   </data>
+  <data name="CertificateCloudCredentials_InitializeServiceClient_NoWebRequestHandler" xml:space="preserve">
+    <value>{0} requires a {1} in its HTTP pipeline to work with client certificates.</value>
+  </data>
   <data name="ConfigurationHelper_CreateCouldNotConvertException" xml:space="preserve">
     <value>Failed to convert parameter {0} value '{1}' to type {2}.</value>
   </data>

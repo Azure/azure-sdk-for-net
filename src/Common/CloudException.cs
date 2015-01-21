@@ -19,6 +19,9 @@ using System.Net.Http;
 
 namespace Microsoft.Azure
 {
+    /// <summary>
+    /// An exception generated from an http response error message returned from a Microsoft Azure service
+    /// </summary>
     public class CloudException : HttpOperationException<CloudError>
     {
         public CloudException(string message) : base(message)
@@ -29,6 +32,15 @@ namespace Microsoft.Azure
         {
         }
 
+        /// <summary>
+        /// Create a new CloudException using the given exception details
+        /// </summary>
+        /// <param name="request">The request message that generated the http error response</param>
+        /// <param name="requestContent">The request body of the http request message as a string</param>
+        /// <param name="response">The http error response returned by the Microsoft Azure service</param>
+        /// <param name="responseContent">The response body of the http error response</param>
+        /// <param name="innerException">The exception which caused this exception, if any</param>
+        /// <returns>A new CloudException instance with the given details</returns>
         public static new CloudException Create(HttpRequestMessage request, string requestContent,
             HttpResponseMessage response,
             string responseContent, Exception innerException = null)

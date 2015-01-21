@@ -20,11 +20,27 @@ using System.Xml.Linq;
 
 namespace Microsoft.Azure
 {
+    /// <summary>
+    /// Provides additional information about an http error response
+    /// </summary>
     public class CloudError
     {
+        /// <summary>
+        /// The error code parsed from the body of the http error response
+        /// </summary>
         public string Code { get; set; }
+
+        /// <summary>
+        /// The error message parsed from the body of the http error response
+        /// </summary>
         public string Message { get; set; }
 
+        /// <summary>
+        /// Try to parse the given content as a standard xml or json http error response body
+        /// </summary>
+        /// <param name="content">The content to try to parse</param>
+        /// <param name="error">The parsed content, if parsing is successful</param>
+        /// <returns>True if the error is successfully parsed as Json or Xml, otherwise false</returns>
         public static bool TryParseJsonOrXml(string content, out CloudError error)
         {
             return TryParseJsonError(content, out error) || TryParseXmlError(content, out error);
