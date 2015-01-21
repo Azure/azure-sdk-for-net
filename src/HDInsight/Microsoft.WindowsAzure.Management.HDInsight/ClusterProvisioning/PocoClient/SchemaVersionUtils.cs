@@ -25,12 +25,12 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
         public static string GetSchemaVersion(List<string> capabilities)
         {
             var subscriptionVersions = GetSchemaVersionsForSubscription(capabilities);
-            var sdkVersions = SupportedSchemaVersions.Keys.ToList();
-            var intersection = subscriptionVersions.Intersect(sdkVersions);
-            return String.Format(CultureInfo.CurrentCulture, "{0}.0", intersection.Max());
+            var sdkVersions = SupportedSchemaVersions.Keys;
+            subscriptionVersions.IntersectWith(sdkVersions);
+            return subscriptionVersions.Count != 0 ? String.Format(CultureInfo.CurrentCulture, "{0}.0", subscriptionVersions.Max()) : "1.0";
         }
 
-        public static List<int> GetSchemaVersionsForSubscription(List<string> capabilities)
+        public static ISet<int> GetSchemaVersionsForSubscription(List<string> capabilities)
         {
             //The first two schema versions follow the old regex, and versions 3 on follow the new one.
             string clustersCapability;
@@ -43,35 +43,35 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
 
             var matchesOld = capabilities.Select(s => ClustersContractCapabilityRegexOld.Match(s)).Where(match => match.Success).ToList();
 
-            var schemaVersions = matchesOld.Select(m => Int32.Parse(m.Groups[1].Value, CultureInfo.CurrentCulture)).ToList();
+            var schemaVersions = matchesOld.Select(m => Int32.Parse(m.Groups[1].Value, CultureInfo.CurrentCulture)) as ISet<int>;
 
             var matchesNew = capabilities.Select(s => ClustersContractCapabilityRegex.Match(s)).Where(match => match.Success).ToList();
             if (matchesNew.Count != 0)
             {
-                schemaVersions.AddRange(
-                    matchesNew.Select(m => Int32.Parse(m.Groups[1].Value, CultureInfo.CurrentCulture)).ToList());
+                if (schemaVersions != null)
+                {
+                    schemaVersions.UnionWith(
+                        matchesNew.Select(m => Int32.Parse(m.Groups[1].Value, CultureInfo.CurrentCulture)));
+                }
+                else
+                {
+                    schemaVersions = matchesNew.Select(m => Int32.Parse(m.Groups[1].Value, CultureInfo.CurrentCulture)) as ISet<int>;
+                }
             }
             
-            if (!schemaVersions.Any())
+            if (schemaVersions == null || !schemaVersions.Any())
             {
-                throw new NotSupportedException(
-                    String.Format(CultureInfo.CurrentCulture, "This subscription is not enabled for the clusters contract. The capability {0} is missing.", clustersCapability));
+                throw new NotSupportedException("This subscription is not enabled for the clusters contract.");
             }
 
             return schemaVersions;
         }
-
-        public static List<int> GetSchemaVersionsIntersection(List<int> subscriptionVersions, List<int> sdkVersions)
-        {
-            var intersection = subscriptionVersions.Intersect(sdkVersions).ToList();
-            return intersection;
-        }
-
-        public static void EnsureSchemaVersionSupportsResize(List<string> capabilities, bool canUseClustersContract)
+        
+        public static void EnsureSchemaVersionSupportsResize(List<string> capabilities)
         {
             string clustersCapability;
             SupportedSchemaVersions.TryGetValue(1, out clustersCapability);
-            if (!canUseClustersContract)
+            if (!capabilities.Contains(clustersCapability))
             {
                 throw new NotSupportedException(
                     string.Format(CultureInfo.CurrentCulture, "This subscription is missing the capability {0} and therefore does not support a change cluster size operation.", clustersCapability));
