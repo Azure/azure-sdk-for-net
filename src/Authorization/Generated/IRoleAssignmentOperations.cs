@@ -84,10 +84,9 @@ namespace Microsoft.Azure.Management.Authorization
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Role assignments delete result
         /// </returns>
-        Task<AzureOperationResponse> DeleteAsync(string scope, Guid roleAssignmentName, CancellationToken cancellationToken);
+        Task<RoleAssignmentDeleteResult> DeleteAsync(string scope, Guid roleAssignmentName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Delete role assignment.
@@ -99,10 +98,9 @@ namespace Microsoft.Azure.Management.Authorization
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Role assignments delete result
         /// </returns>
-        Task<AzureOperationResponse> DeleteByIdAsync(string roleAssignmentId, CancellationToken cancellationToken);
+        Task<RoleAssignmentDeleteResult> DeleteByIdAsync(string roleAssignmentId, CancellationToken cancellationToken);
         
         /// <summary>
         /// Get single role assignment.
