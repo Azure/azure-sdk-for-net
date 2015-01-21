@@ -81,6 +81,8 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Microsoft.Azure.Common.Extensions.nuget.proj" />
+    <None Include="Microsoft.Azure.Common.Extensions.nuspec" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
