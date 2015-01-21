@@ -33,9 +33,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
         public static ISet<int> GetSchemaVersionsForSubscription(List<string> capabilities)
         {
             //The first two schema versions follow the old regex, and versions 3 on follow the new one.
-            string clustersCapability;
-            SupportedSchemaVersions.TryGetValue(2, out clustersCapability);
-
             if (capabilities == null)
             {
                 throw new ArgumentNullException("capabilities");
@@ -43,22 +40,15 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
 
             var matchesOld = capabilities.Select(s => ClustersContractCapabilityRegexOld.Match(s)).Where(match => match.Success).ToList();
 
-            var schemaVersions = matchesOld.Select(m => Int32.Parse(m.Groups[1].Value, CultureInfo.CurrentCulture)) as ISet<int>;
+            var schemaVersions = new HashSet<int>(matchesOld.Select(m => Int32.Parse(m.Groups[1].Value, CultureInfo.CurrentCulture)).ToList());
 
             var matchesNew = capabilities.Select(s => ClustersContractCapabilityRegex.Match(s)).Where(match => match.Success).ToList();
             if (matchesNew.Count != 0)
             {
-                if (schemaVersions != null)
-                {
-                    schemaVersions.UnionWith(
-                        matchesNew.Select(m => Int32.Parse(m.Groups[1].Value, CultureInfo.CurrentCulture)));
-                }
-                else
-                {
-                    schemaVersions = matchesNew.Select(m => Int32.Parse(m.Groups[1].Value, CultureInfo.CurrentCulture)) as ISet<int>;
-                }
+                schemaVersions.UnionWith(
+                    matchesNew.Select(m => Int32.Parse(m.Groups[1].Value, CultureInfo.CurrentCulture)));
             }
-            
+
             if (schemaVersions == null || !schemaVersions.Any())
             {
                 throw new NotSupportedException("This subscription is not enabled for the clusters contract.");
