@@ -79,6 +79,17 @@ namespace Microsoft.WindowsAzure.Management.Network
         }
         
         /// <summary>
+        /// The Application Gateway Management API includes operations for
+        /// managing application gateways in your subscription.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154113.aspx
+        /// for more information)
+        /// </summary>
+        IApplicationGatewayOperations ApplicationGateways
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// The Network Management API includes operations for managing the
         /// client root certificates for your subscription.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154113.aspx
