@@ -16,7 +16,7 @@
     <DelaySign Condition =" '$(DelaySign)' == '' ">false</DelaySign>
     <GenerateHydraSpecs Condition=" '$(GenerateHydraSpecs)' == '' ">true</GenerateHydraSpecs>
     <NuGetCommand>$(LibraryToolsFolder)\nuget.exe</NuGetCommand>
-    <!-- 'Common': only build common; 'Services': only build all services; 'All': Both common and servies; Or, a path to a library project -->
+    <!-- 'Common': only build common; 'All': Both common and servies; 'full path to a library project': build that project -->
     <Scope Condition=" '$(Scope)' == '' ">All</Scope>
   </PropertyGroup>
 
@@ -58,12 +58,12 @@
     <MSBuild Projects="$(ManagementLibrariesSolution)"
              Properties="Configuration=%(LibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU;CodeSign=$(CodeSign)"
              Targets="Build" 
-             Condition=" '$(Scope)' == 'Services' or '$(Scope)' == 'All' " />
+             Condition=" '$(Scope)' == 'All' " />
     
     <MSBuild Projects="$(Scope)"
              Properties="Configuration=%(LibraryFxTargetList.Identity)-$(Configuration);Platform=AnyCPU;CodeSign=$(CodeSign)"
              Targets="Build"
-             Condition=" '$(Scope)' != 'Services' and '$(Scope)' != 'Common' and '$(Scope)' != 'All' " />
+             Condition=" '$(Scope)' != 'Common' and '$(Scope)' != 'All' " />
 
     <CallTarget Targets="CodeSignBinaries" Condition=" '$(CodeSign)' == 'true' " />
 
@@ -86,43 +86,11 @@
   <UsingTask TaskName="Xunit.Runner.msbuild.xunit" AssemblyFile="packages\xunit.1.9.2\lib\net20\xunit.runner.msbuild.dll" />
   <Target Name="Test">
     <ItemGroup>
-      <!--test projects should always have net45 in its target framework list-->
-      <TestDlls Include=".\src\*.Test\bin\net45*\*Test.dll"/>
+      <TestDlls Include=".\src\*.Test\bin\*\*Test.dll"/>
     </ItemGroup>
     <MakeDir Directories="$(LibraryRoot)TestResults"/>
     <Message Text="%(TestDlls.Filename)" />
-    <xunit Assemblies="@(TestDlls)" Html="$(MSBuildProjectDirectory)\TestResults\xunit.results.html" ContinueOnError="ErrorAndContinue" />
-    <CallTarget Targets="RunMSTests" />
-  </Target>
-
-  <Target Name="RunMSTests" >
-    <PropertyGroup>
-      <TestSettings Condition="'$(TestSettings)' == ''">$(LibrarySourceFolder)\Local.testsettings</TestSettings>
-      <TestFilter Condition="'$(TestFilter)' == ''" >!Functional&#x26;!Scenario</TestFilter>
-      <TestFilter Condition="'$(NoInteractiveTests)' == 'true'">$(TestFilter)&#x26;!Interactive</TestFilter>
-      <TestOutputDirectory Condition="'$(TestOutputDirectory)' == ''">$(LibraryRoot)TestResults</TestOutputDirectory>
-    </PropertyGroup>
-    <ItemGroup>
-      <TestDlls Include="$(LibrarySourceFolder)\*.Tests\bin\*\*Tests.dll"/>
-    </ItemGroup>
-    <MakeDir Directories="$(LibraryRoot)TestResults"/>
-    <Message Text="Found test file: %(TestDlls.Filename)" />
-
-    <Message Importance="high" Text="Running tests..." />
-    <Message Importance="high" Text="You are required to have installed a version of Visual Studio with support for MSTest (and MSTest on your path)." />
-    <MakeDir Directories="$(TestOutputDirectory)" ContinueOnError="false" />
-
-    <Message Importance="high" Text="Debug tests: %(TestDlls.FullPath)" />
-
-    <ItemGroup>
-      <TestOutputFiles Include="$(TestOutputDirectory)\%(TestDlls.FileName).trx" />
-    </ItemGroup>
-
-    <Message Importance="high" Text="Test Output Files: %(TestOutputFiles.FullPath)" />
-
-    <Exec
-		  Command="MSTest.exe /testcontainer:%(TestDlls.FullPath) /testsettings:$(TestSettings) /category:&quot;$(TestFilter)&quot; /resultsfile:$(TestOutputDirectory)\%(TestDlls.Filename).trx"
-		  ContinueOnError="true" />
+    <xunit Assemblies="@(TestDlls)" Html="$(MSBuildProjectDirectory)\TestResults\xunit.results.html" ContinueOnError="false" />
   </Target>
   
   <PropertyGroup>

@@ -6,8 +6,10 @@
   </PropertyGroup>
   
   <!--TODO: polish them to be perfect on matching common or not-->
-  <Import Project="$(LibrarySourceFolder)\*\*.nuget.proj" 
-          Condition=" '$(Scope)' == 'Services' or '$(Scope)' == 'Common' or '$(Scope)' == 'All' "/>
+  <Import Project="$(LibrarySourceFolder)\Common*\*.nuget.proj" 
+          Condition=" '$(Scope)' == 'Common' "/>
+  <Import Project="$(LibrarySourceFolder)\*\*.nuget.proj"
+          Condition=" '$(Scope)' == 'All' "/>
   <Import Project="$([System.IO.Path]::GetDirectoryName($(Scope)))\*.nuget.proj" 
           Condition=" '$(Scope)' != 'Services' and '$(Scope)' != 'Common' and '$(Scope)' != 'All' " />
 
