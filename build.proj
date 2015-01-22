@@ -8,7 +8,8 @@
     <LibraryFriendlyName>Microsoft Azure Management Libraries</LibraryFriendlyName>
     <CommonSolution>AzureCommonLibraries.sln</CommonSolution>
     <ManagementLibrariesSolution>AzureManagementLibraries.sln</ManagementLibrariesSolution>
-    <PackageOutputDir>$(LibraryRoot)binaries\packages</PackageOutputDir>
+    <BinariesFolder>$(LibraryRoot)binaries</BinariesFolder>
+    <PackageOutputDir>$(BinariesFolder)\packages</PackageOutputDir>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <CodeSign Condition=" '$(CodeSign)' == '' ">false</CodeSign>
     <!--Set this true only if you want to test the code sign workflow locally-->
@@ -70,10 +71,13 @@
 
   <!-- Projects import BCL target, so make sure the packages get restored first -->
   <Target Name="Clean" DependsOnTargets="RestoreNugetPackages">
-    <MSBuild Projects="$(SolutionName)"
+    <MSBuild Projects="$(CommonSolution)"
              Properties="Configuration=%(LibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU"
              Targets="Clean" />
-    <RemoveDir Directories="$(PackageOutputDir)" />
+    <MSBuild Projects="$(ManagementLibrariesSolution)"
+             Properties="Configuration=%(LibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU"
+             Targets="Clean" />
+    <RemoveDir Directories="$(BinariesFolder)" />
   </Target>
 
   <!--
