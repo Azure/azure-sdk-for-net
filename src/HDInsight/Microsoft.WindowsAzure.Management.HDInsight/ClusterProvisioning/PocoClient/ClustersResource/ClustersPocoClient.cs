@@ -203,7 +203,13 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
 
         internal static bool HasCorrectSchemaVersionForNewVMSizes(IEnumerable<string> capabilities)
         {
-            return capabilities.Contains(HDInsightClient.ClustersContractCapabilityVersion3, StringComparer.OrdinalIgnoreCase);
+            string vmSizesCapability;
+            SchemaVersionUtils.SupportedSchemaVersions.TryGetValue(3, out vmSizesCapability);
+            if (vmSizesCapability == null)
+            {
+                return false;
+            }
+            return capabilities.Contains(vmSizesCapability, StringComparer.OrdinalIgnoreCase);
         }
         /// <summary>
         /// Creates the container.

@@ -300,7 +300,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClustersTests
             Capabilities.Add("CAPABILITY_FEATURE_CLUSTERS_CONTRACT_1_SDK");
             Capabilities.Add("CAPABILITY_FEATURE_CLUSTERS_CONTRACT_3_SDK");
             var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
-                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, ClustersPocoClient.GetSchemaVersion(Capabilities));
+                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(Capabilities));
             var clustersPocoClient = new ClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient);
             var clusterCreateParameters = new HDInsight.ClusterCreateParametersV2
             {
@@ -328,7 +328,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClustersTests
         public async Task ICanCreateACluster_WithNewVmSizes_Headnode_Specified()
         {
             var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
-                                                    .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, ClustersPocoClient.GetSchemaVersion(Capabilities));
+                                                    .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(Capabilities));
             var clustersPocoClient = new ClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient);
             try
             {
@@ -362,7 +362,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClustersTests
         public async Task ICanCreateACluster_WithNewVmSizes_Datanode_Specified()
         {
             var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
-                                                     .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, ClustersPocoClient.GetSchemaVersion(Capabilities));
+                                                     .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(Capabilities));
             var clustersPocoClient = new ClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient);
             try
             {
@@ -396,7 +396,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClustersTests
         public async Task ICanCreateACluster_WithNewVmSizes_Zookeeper_Specified()
         {
             var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
-                                                    .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, ClustersPocoClient.GetSchemaVersion(Capabilities));
+                                                    .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(Capabilities));
             var clustersPocoClient = new ClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient);
             try
             {
@@ -431,7 +431,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClustersTests
         public async Task ICanCreateACluster_WithNewVmSizes_All_Specified()
         {
             var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
-                                                     .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, ClustersPocoClient.GetSchemaVersion(Capabilities));
+                                                     .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(Capabilities));
             var clustersPocoClient = new ClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient);
             try
             {
@@ -468,7 +468,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClustersTests
         public async Task ICanCreateACluster_WithOldVmSizes_All_Specified()
         {
             var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
-                                                     .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, ClustersPocoClient.GetSchemaVersion(Capabilities));
+                                                     .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(Capabilities));
             var clustersPocoClient = new ClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient);
             try
             {
@@ -505,7 +505,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClustersTests
         public async Task ICanCreateACluster_WithVmSizes_All_Specified_NonHBase_Negative()
         {
             var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
-                                                     .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, ClustersPocoClient.GetSchemaVersion(Capabilities));
+                                                     .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(Capabilities));
             var clustersPocoClient = new ClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient);
             try
             {
