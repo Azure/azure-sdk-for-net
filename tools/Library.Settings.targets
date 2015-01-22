@@ -7,8 +7,9 @@
     <LibraryNugetPackageFolder>$(LibraryRoot)\packages</LibraryNugetPackageFolder>
     <AssemblyOriginatorKeyFile Condition=" '$(AssemblyOriginatorKeyFile)' == '' ">$(LibraryRoot)\tools\MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
     <LibraryFxTarget Condition="'$(HyakFxTarget)' == ''">net45</LibraryFxTarget>
-    <!--TODO: get rid of this once all testing is done -->
-    <GenerateHydraSpecs Condition=" '$(GenerateHydraSpecs)' == '' ">false</GenerateHydraSpecs>
+    <!--'GenerateHydraSpecs' is not a great name, means whether or not to invoke hyak.exe to regenerate the code. -->
+    <GenerateHydraSpecs Condition=" '$(GenerateHydraSpecs)' == '' and '$(PRIVATE_FEED_URL)' == '' and '$(SECONDARY_FEED_URL)' == '' ">false</GenerateHydraSpecs>
+    <GenerateHydraSpecs Condition=" '$(GenerateHydraSpecs)' == '' and ('$(PRIVATE_FEED_URL)' != '' or '$(SECONDARY_FEED_URL)' != '') ">true</GenerateHydraSpecs>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Net45-Debug' or '$(Configuration)' == 'Net45-Release'">
