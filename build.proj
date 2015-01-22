@@ -1,14 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-
+  
   <!--
-  TODO: put comments here:
-  GenerateCodeFromSpecs: ....
-  -->
+  Available Targets:
+
+  /t:Clean
+    Removes temporary build outputs.
+    
+  /t:Build
+    Builds assemblies.
+
+  /t:Package 
+    Builds NuGet packages using the binaries folder contents.
+    The packages will drop to .\binaries\packages.
+
+  /t:Test
+    Runs tests
+
+  /t:Publish
+    Publishes the built packages. You will need to include your
+    publishing key when running. Include: /p:NuGetKey=YOUR_PUBLISHING_KEY
+
+  Properties of interest:
+  /P:CodeSign=True
+    Code sign binaries, mainly for official release 
+
+  /p:CodeSign=True;DelaySign=True
+    Test the code sign workflow locally
+
+  /p:NuGetKey=NUGET_PUBLISHING_KEY
+    Provides the key used to publish to a NuGet or MyGet server.
+
+    This key should never be committed to source control.
+
+  /p:PublishSymbolSourcePackages
+    A true/false value indicating whether to push the symbol + source
+    packages to a symbol server.
+
+  /p:NuGetPublishingSource=Uri
+    The NuGet Server to push packages to.
+
+  /p:NuGetSymbolPublishingSource=Uri
+    The NuGet Server to push symbol + source packages to.
+
+  /p:GenerateCodeFromSpecs
+    True if you want to invoke codegen tool to regenerate libraries. 
+  -->  
   
   <PropertyGroup>
     <LibraryRoot>$(MSBuildThisFileDirectory)</LibraryRoot>
-	  <LibrarySourceFolder>$(LibraryRoot)src</LibrarySourceFolder>
+    <LibrarySourceFolder>$(LibraryRoot)src</LibrarySourceFolder>
     <LibraryToolsFolder>$(LibraryRoot)tools</LibraryToolsFolder>
     <LibraryFriendlyName>Microsoft Azure Management Libraries</LibraryFriendlyName>
     <CommonSolution>AzureCommonLibraries.sln</CommonSolution>
@@ -19,7 +60,6 @@
     <CodeSign Condition=" '$(CodeSign)' == '' ">false</CodeSign>
     <!--Set this true only if you want to test the code sign workflow locally-->
     <DelaySign Condition =" '$(DelaySign)' == '' ">false</DelaySign>
-    <NuGetCommand>$(LibraryToolsFolder)\nuget.exe</NuGetCommand>
     <!-- 'Common': only build common; 'All': Both common and servies; 'full path to a library project': build that project -->
     <Scope Condition=" '$(Scope)' == '' ">All</Scope>
   </PropertyGroup>
@@ -30,10 +70,14 @@
     <LibraryFxTargetList Condition=" '$(FxTargetList)' == '' " Include="portable;net40;net45" />
     <LibraryFxTargetList Condition=" '$(FxTargetList)' != '' " Include="$(FxTargetList)" />
   </ItemGroup>
+  
+  <PropertyGroup>
+    <NuGetCommand>$(LibraryToolsFolder)\nuget.exe</NuGetCommand>
+  </PropertyGroup>
 
   <Import Project="$(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.msbuild" />
-  <UsingTask AssemblyFile="$(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks.dll" TaskName="ValidateStrongNameSignatureTask" />
   <UsingTask AssemblyFile="$(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks.dll" TaskName="RegexReplacementTask" />
+  <UsingTask AssemblyFile="$(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks.dll" TaskName="ValidateStrongNameSignatureTask" />
 
   <!--
   CI build related
@@ -41,12 +85,12 @@
   <PropertyGroup>
     <!--OnPremiseBuildTasks is not a good name, but CI server is using that, will update across soon-->
     <CIToolsPath>$(OnPremiseBuildTasks)</CIToolsPath>
-    <BuildInCIServer Condition=" Exists($(CIToolsPath)) ">true</BuildInCIServer>
-    <BuildInCIServer Condition=" !Exists($(CIToolsPath)) ">false</BuildInCIServer>
+    <OnPremiseBuild Condition=" Exists($(OnPremiseBuildTasks)) ">true</OnPremiseBuild>
+    <OnPremiseBuild Condition=" ! Exists($(OnPremiseBuildTasks)) ">false</OnPremiseBuild>
   </PropertyGroup>
-  <UsingTask Condition=" $(BuildInCIServer) " TaskName="CodeSigningTask" AssemblyFile="$(CIToolsPath)\Microsoft.WindowsAzure.Tools.Build.Tasks.OnPremise.dll" />
-  <UsingTask Condition=" $(BuildInCIServer) " TaskName="CorporateValidation" AssemblyFile="$(CIToolsPath)\Microsoft.WindowsAzure.Tools.Build.Tasks.OnPremise.dll" />
-  <Import Condition=" $(BuildInCIServer) " Project="$(CIToolsPath)\Microsoft.WindowsAzure.Build.OnPremise.msbuild" />
+  <UsingTask Condition=" $(OnPremiseBuild) " TaskName="CodeSigningTask" AssemblyFile="$(CIToolsPath)\Microsoft.WindowsAzure.Tools.Build.Tasks.OnPremise.dll" />
+  <UsingTask Condition=" $(OnPremiseBuild) " TaskName="CorporateValidation" AssemblyFile="$(CIToolsPath)\Microsoft.WindowsAzure.Tools.Build.Tasks.OnPremise.dll" />
+  <Import Condition=" $(OnPremiseBuild) " Project="$(CIToolsPath)\Microsoft.WindowsAzure.Build.OnPremise.msbuild" />
 
   <Target Name="Build" DependsOnTargets="RestoreNugetPackages">
     <PropertyGroup>
@@ -92,7 +136,8 @@
   <UsingTask TaskName="Xunit.Runner.msbuild.xunit" AssemblyFile="packages\xunit.1.9.2\lib\net20\xunit.runner.msbuild.dll" />
   <Target Name="Test">
     <ItemGroup>
-      <TestDlls Include=".\src\*.Test\bin\*\*Test.dll"/>
+      <!--test projects should always have net45 in its target framework list-->
+      <TestDlls Include=".\src\*.Test\bin\net45*\*Test.dll"/>
     </ItemGroup>
     <MakeDir Directories="$(LibraryRoot)TestResults"/>
     <Message Text="%(TestDlls.Filename)" />
@@ -132,7 +177,7 @@
         Condition="!$(DelaySign)"/>
     <!--If we are testing locally then we copy the binaries and do not submit to the code sign server-->
     <Copy SourceFiles="@(DelaySignedAssembliesToValidate)" DestinationFolder="binaries\$(LibraryFxTarget)" Condition="$(DelaySign)" />
-
+    
     <Error Condition=" !Exists('binaries\$(LibraryFxTarget)\Microsoft.Azure.Common.dll') " Text="The Microsoft.Azure.Common.dll binary is not in the .\binaries\$(LibraryFxTarget) folder. Code signing likely failed." />
 
     <ItemGroup>
@@ -143,33 +188,33 @@
         Assembly="%(AfterSignedAssembliesToValidate.Identity)"
         ExpectedTokenSignature="$(StrongNameToken)"
         ExpectedDelaySigned="false"
-        ContinueOnError="false"
+        ContinueOnError="false" 
         Condition="!$(DelaySign)"/>
-
+    
     <RemoveDir Directories="binaries\$(LibraryFxTarget)\unsigned;" ContinueOnError="true" />
   </Target>
-
+   
   <Target Name="CodeSignBinaries">
 
-    <Error Condition=" !$(BuildInCIServer) and !$(DelaySign) " Text="No CI tools path available, the code sign will be unable to continue. $(CIToolsPath)" />
+    <Error Condition=" !$(OnPremiseBuild) and !$(DelaySign) " Text="No CI tools path available, the code sign will be unable to continue. $(CIToolsPath)" />
 
     <Message Text="Code signing" Importance="high" />
 
     <MSBuild Projects="$(MSBuildProjectFullPath)"
              Targets="SignBinariesForAFxTarget"
-             Properties="LibraryFxTarget=%(LibraryFxTargetList.Identity);StrongNameToken=$(StrongNameToken)">
+             Properties="LibraryFxTarget=%(LibraryFxTargetList.Identity);StrongNameToken=$(StrongNameToken)">    
     </MSBuild>
-
+    
     <CallTarget Targets="ValidateCorporateCompliance" Condition="!$(DelaySign)"/>
   </Target>
-  
+
   <!--
   Pre-build the tasks file used for validating strong name signatures,
   providing date-based build numbers, and processing regular expression
   replacements in files such as NuGet specs.
   -->
   <Target Name="BuildMsBuildTask" DependsOnTargets="RestoreNugetPackages">
-    <MSBuild Projects="tools\Microsoft.WindowsAzure.Build.Tasks\Microsoft.WindowsAzure.Build.Tasks.csproj"
+    <MSBuild Projects="$(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks\Microsoft.WindowsAzure.Build.Tasks.csproj"
              Targets="Build"
              Properties="Configuration=Debug;Platform=AnyCPU" />
   </Target>
@@ -266,6 +311,13 @@
                           Replace="AssemblyFileVersion(&quot;${semver}.$(GeneratedBuildDate)&quot;)"
                           LogReplacement="true" />
   </Target>
-  
+
+  <Target Name="GetGeneratedBuildDate">
+    <GetBuildVersionTask>
+      <Output TaskParameter="Date" PropertyName="GeneratedBuildDate" />
+    </GetBuildVersionTask>
+  </Target>
+
   <Import Project="$(LibraryToolsFolder)\nuget.targets" />
+
 </Project>
