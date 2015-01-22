@@ -22,6 +22,8 @@
     </dependencies>
   </metadata>
   <files>
+    <file src="Common.Extensions\**\*.cs" target="src\Common.Extensions" />
+    <file src="Common.Extensions\Properties\*.resx" target="src\Common.Extensions\Properties" />
     <file src="..\binaries\net45\Microsoft.Azure.Common.Extensions.dll" target="lib\net45" />
     <file src="..\binaries\net45\Microsoft.Azure.Common.Extensions.pdb" target="lib\net45" />
     <file src="..\binaries\net45\Microsoft.Azure.Common.Extensions.xml" target="lib\net45" />
