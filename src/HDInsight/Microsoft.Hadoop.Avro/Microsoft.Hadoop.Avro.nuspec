@@ -26,7 +26,7 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="ServiceManagement\HDInsight\Microsoft.Hadoop.Avro\**\*.cs" target="src" />
+    <file src="HDInsight\**\*.cs" target="src" />
     <file src="..\binaries\net45\Microsoft.Hadoop.Avro.dll" target="lib\net45" />
     <file src="..\binaries\net45\Microsoft.Hadoop.Avro.pdb" target="lib\net45" />
     <file src="..\binaries\net45\Microsoft.Hadoop.Avro.xml" target="lib\net45" />
