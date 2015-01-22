@@ -27,9 +27,9 @@
   </metadata>
   <files>
     <file src="HDInsight\**\*.cs" target="src" />
-    <file src="..\binaries\net45\Microsoft.WindowsAzure.Management.HDInsight.dll" target="lib\net45" />
-    <file src="..\binaries\net45\Microsoft.WindowsAzure.Management.HDInsight.pdb" target="lib\net45" />
-    <file src="..\binaries\net45\Microsoft.WindowsAzure.Management.HDInsight.xml" target="lib\net45" />
+    <file src="..\binaries\Microsoft.WindowsAzure.Management.HDInsight.dll" target="lib\net45" />
+    <file src="..\binaries\Microsoft.WindowsAzure.Management.HDInsight.pdb" target="lib\net45" />
+    <file src="..\binaries\Microsoft.WindowsAzure.Management.HDInsight.xml" target="lib\net45" />
     <file src="..\binaries\net45\Microsoft.WindowsAzure.Management.HDInsight.Contracts.dll" target="lib\net45" />
     <file src="..\binaries\net45\Microsoft.WindowsAzure.Management.HDInsight.Contracts.pdb" target="lib\net45" />
     <file src="..\binaries\net45\Microsoft.WindowsAzure.Management.HDInsight.Contracts.xml" target="lib\net45" />
