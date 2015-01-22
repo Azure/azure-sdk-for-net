@@ -23,10 +23,17 @@
       <Value>$(BaselineReleaseNotes)</Value>
     </NuSpecReplacementTokens>
   </ItemGroup>
-
+  
+  <Target Name="EnsureBinariesFolderExists">
+    <MakeDir Directories="binaries" Condition="!Exists('binaries')" />
+    <MakeDir Directories="binaries\packages" Condition="!Exists('binaries\packages')" />
+    <MakeDir Directories="binaries\packages\specs" Condition="!Exists('binaries\packages\specs')" />
+  </Target>
+  
+  <!-- Replacing version token dependency. -->
   <Target Name="BuildDynamicNuSpecs"
           DependsOnTargets="GetGeneratedBuildDate; EnsureBinariesFolderExists">
-
+    <!-- First we copy nuspec files to binaries folder -->
     <ItemGroup>
       <NuspecFilesToUpdate Include="%(SdkNuGetPackage.Folder)%(SdkNuGetPackage.Identity).nuspec" />
     </ItemGroup>
@@ -66,18 +73,11 @@
     <Message Text="%(SdkNuGetPackage.Identity) %(SdkNuGetPackage.PackageVersion) %(SdkNuGetPackage.Folder)" />
   </Target>
 
-  <Target Name="EnsureBinariesFolderExists">
-    <MakeDir Directories="binaries" Condition="!Exists('binaries')" />
-    <MakeDir Directories="binaries\packages" Condition="!Exists('binaries\packages')" />
-    <MakeDir Directories="binaries\packages\specs" Condition="!Exists('binaries\packages\specs')" />
-  </Target>
-
   <!--
   Build NuGet packages
   -->
-  <Target Name="Package"
-          DependsOnTargets="EnsureBinariesFolderExists; BuildDynamicNuSpecs">
-
+  <Target Name="Package" DependsOnTargets="BuildDynamicNuSpecs">
+    
     <Message Text="Generating NuGet library &amp; symbols + source packages" Importance="high" />
     <Exec Condition=" '%(SdkNuGetPackage.SkipSymbolSourcePackage)' != 'true' "
           Command="$(NuGetCommand) pack -BasePath .\src\ -Verbosity $(NuGetVerbosity) &quot;binaries\packages\specs\%(SdkNuGetPackage.Identity).nuspec&quot; -Version %(SdkNuGetPackage.PackageVersion)$(BuildVersionSuffix)$(AdditionalVersionSuffix) -OutputDirectory &quot;$(PackageOutputDir)&quot; -Symbols" />
