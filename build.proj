@@ -15,14 +15,15 @@
     <DelaySign Condition =" '$(DelaySign)' == '' ">false</DelaySign>
     <GenerateHydraSpecs Condition=" '$(GenerateHydraSpecs)' == '' ">true</GenerateHydraSpecs>
     <NuGetCommand>$(LibraryToolsFolder)\nuget.exe</NuGetCommand>
-    <!-- 'Common': only build common; 'Services': only build all services; 'All': Both common and servies; Or a path to a library project -->
-    <BuildScope Condition=" '$(BuildScope)' == '' ">All</BuildScope>
+    <!-- 'Common': only build common; 'Services': only build all services; 'All': Both common and servies; Or, a path to a library project -->
+    <Scope Condition=" '$(Scope)' == '' ">All</Scope>
   </PropertyGroup>
 
   <ItemGroup>
     <ManagementLibrariesProjects Include="$(ManagementLibrariesSolution)" Condition="$(MamlProjectName) == ''" />
     <ManagementLibrariesProjects Include="$(LibrarySourceFolder)\$(MamlProjectName)\*.csproj" Condition="$(MamlProjectName) != ''" />
-    <LibraryFxTargetList Include="portable;net40;net45" />
+    <LibraryFxTargetList Condition=" '$(FxTargetList)' == '' " Include="portable;net40;net45" />
+    <LibraryFxTargetList Condition=" '$(FxTargetList)' != '' " Include="$(FxTargetList)" />
   </ItemGroup>
 
   <Import Project="$(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.msbuild" />
@@ -51,17 +52,17 @@
     <MSBuild Projects="$(CommonSolution)"
              Properties="Configuration=%(LibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU;CodeSign=$(CodeSign)"
              Targets="Build"
-             Condition=" '$(BuildScope)' == 'Common' or '$(BuildScope)' == 'All' " />
+             Condition=" '$(Scope)' == 'Common' or '$(Scope)' == 'All' " />
 
     <MSBuild Projects="$(ManagementLibrariesSolution)"
              Properties="Configuration=%(LibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU;CodeSign=$(CodeSign)"
              Targets="Build" 
-             Condition=" '$(BuildScope)' == 'Services' or '$(BuildScope)' == 'All' " />
+             Condition=" '$(Scope)' == 'Services' or '$(Scope)' == 'All' " />
     
-    <MSBuild Projects="$(LibrarySourceFolder)\$(BuildScope)"
+    <MSBuild Projects="$(Scope)"
              Properties="Configuration=%(LibraryFxTargetList.Identity)-$(Configuration);Platform=AnyCPU;CodeSign=$(CodeSign)"
              Targets="Build"
-             Condition=" '$(BuildScope)' != 'Services' and '$(BuildScope)' != 'Common' and '$(BuildScope)' != 'All' " />
+             Condition=" '$(Scope)' != 'Services' and '$(Scope)' != 'Common' and '$(Scope)' != 'All' " />
 
     <CallTarget Targets="CodeSignBinaries" Condition=" '$(CodeSign)' == 'true' " />
 
@@ -236,7 +237,7 @@
   </Target>
 
   <Target Name="RestorePublicNugetPackages">
-    <Exec Command="$(NuGetCommand) restore $(LibraryToolsFolder)\Packages.config -PackagesDirectory $(LibraryRoot)\packages" />
+    <Exec Command="$(NuGetCommand) restore $(LibraryToolsFolder)\Packages.config -PackagesDirectory $(LibraryRoot)\packages -NonInteractive" />
   </Target>
 
   <!--

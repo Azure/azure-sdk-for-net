@@ -5,11 +5,11 @@
     <BaselineReleaseNotes>PREVIEW RELEASE</BaselineReleaseNotes>
   </PropertyGroup>
   
-  <!--TODO: polish them to be perfect on matching-->
+  <!--TODO: polish them to be perfect on matching common or not-->
   <Import Project="$(LibrarySourceFolder)\*\*.nuget.proj" 
-          Condition=" '$(BuildScope)' == 'Services' or '$(BuildScope)' == 'Common' or '$(BuildScope)' == 'All' "/>
-  <Import Project="$(LibrarySourceFolder)\$(BuildScope).nuget.proj" 
-          Condition=" '$(BuildScope)' != 'Services' and '$(BuildScope)' != 'Common' and '$(BuildScope)' != 'All' " />
+          Condition=" '$(Scope)' == 'Services' or '$(Scope)' == 'Common' or '$(Scope)' == 'All' "/>
+  <Import Project="$([System.IO.Path]::GetDirectoryName($(Scope)))\*.nuget.proj" 
+          Condition=" '$(Scope)' != 'Services' and '$(Scope)' != 'Common' and '$(Scope)' != 'All' " />
 
   <PropertyGroup>
     <NuGetVerbosity>normal</NuGetVerbosity>
