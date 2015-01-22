@@ -756,7 +756,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
                 return true;
             }
 
-            return clusterCreateParameters.ZookeeperNodeSize == null;
+            return clusterCreateParameters.ZookeeperNodeSize != null;
         }
     }
 }

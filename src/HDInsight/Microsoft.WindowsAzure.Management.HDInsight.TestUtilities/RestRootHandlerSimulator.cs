@@ -173,7 +173,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities
         {
             var requestMessage = this.Request;
             var actionValue = requestMessage.RequestUri.ParseQueryString()["action"];
-            if (!requestMessage.Headers.GetValues("SchemaVersion").Any(v => v.Equals("2.0")))
+            if (requestMessage.Headers.GetValues("SchemaVersion").Any(v => v.Equals("1.0")))
             {
                 throw new NotSupportedException(ClustersTestConstants.NotSupportedBySubscriptionException);
             }
