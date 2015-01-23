@@ -80,6 +80,8 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Microsoft.Azure.Common.Extensions.nuget.proj.rename" />
+    <None Include="Microsoft.Azure.Common.Extensions.nuspec.rename" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>

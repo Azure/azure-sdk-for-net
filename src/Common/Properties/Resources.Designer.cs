@@ -143,6 +143,15 @@ namespace Microsoft.Azure.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to convert parameter {0} value &apos;{1}&apos; to type {2}..
+        /// </summary>
+        internal static string CouldNotConvertToCertificateType {
+            get {
+                return ResourceManager.GetString("CouldNotConvertToCertificateType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Default retry strategy for technology {0}, named &apos;{1}&apos;, is not defined..
         /// </summary>
         internal static string DefaultRetryStrategyMappingNotFound {

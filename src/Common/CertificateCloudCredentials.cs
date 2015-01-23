@@ -1,19 +1,7 @@
-﻿//
-// Copyright (c) Microsoft.  All rights reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//   http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-//
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
-#if NET45
+using Microsoft.Azure.Common.Properties;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -44,6 +32,7 @@ namespace Microsoft.Azure
             get { return _subscriptionId; }
         }
 
+#if NET45
         /// <summary>
         /// The Microsoft Azure Service Management API use mutual authentication
         /// of management certificates over SSL to ensure that a request made
@@ -74,6 +63,24 @@ namespace Microsoft.Azure
             ManagementCertificate = managementCertificate;
         }
 
+#else
+        /// <summary>
+        /// The Microsoft Azure Service Management API use mutual authentication
+        /// of management certificates over SSL to ensure that a request made
+        /// to the service is secure. No anonymous requests are allowed.
+        /// </summary>
+        /// <param name="subscriptionId">The Subscription ID.</param>
+        public CertificateCloudCredentials(string subscriptionId)
+        {
+            if (string.IsNullOrEmpty(subscriptionId))
+            {
+                throw new ArgumentNullException("subscriptionId");
+            }
+             _subscriptionId = subscriptionId;
+       }
+#endif
+
+#if NET45
         /// <summary>
         /// Attempt to create certificate credentials from a collection of
         /// settings.
@@ -99,7 +106,8 @@ namespace Microsoft.Azure
             return null;
         }
 
-        private static X509Certificate2 GetCertificate(IDictionary<string, object> parameters, string name, bool isRequired = true)
+        private static X509Certificate2 GetCertificate(IDictionary<string, object> parameters, 
+            string name, bool isRequired = true)
         {
             if (isRequired && !parameters.ContainsKey(name))
             {
@@ -146,7 +154,7 @@ namespace Microsoft.Azure
                 string message =
                     string.Format(
                         CultureInfo.InvariantCulture,
-                        "Failed to convert parameter {0} value '{1}' to type {2}.",
+                        Resources.CouldNotConvertToCertificateType,
                         name,
                         value == null ? "(null)" : value.ToString(),
                         typeof(X509Certificate2).FullName);
@@ -177,7 +185,8 @@ namespace Microsoft.Azure
                 {
                     store = new X509Store(StoreName.My, location);
                     store.Open(OpenFlags.ReadOnly);
-                    X509Certificate2Collection certificates = store.Certificates.Find(X509FindType.FindByThumbprint, thumbprint, false);
+                    X509Certificate2Collection certificates = store.Certificates.Find(X509FindType.FindByThumbprint, 
+                        thumbprint, false);
                     if (certificates.Count > 0)
                     {
                         return certificates[0];
@@ -196,7 +205,8 @@ namespace Microsoft.Azure
             }
             return null;
         }
-    
+
+#endif
 
         /// <summary>
         /// Initialize a ServiceClient instance to process credentials.
@@ -209,6 +219,7 @@ namespace Microsoft.Azure
         /// </remarks>
         public override void InitializeServiceClient<T>(ServiceClient<T> client)
         {
+#if NET45
             WebRequestHandler handler = client.GetHttpPipeline().OfType<WebRequestHandler>().FirstOrDefault();
             if (handler == null)
             {
@@ -221,8 +232,8 @@ namespace Microsoft.Azure
             }
             
             handler.ClientCertificates.Add(ManagementCertificate);
+#endif
         }
     }
 }
-#endif
 

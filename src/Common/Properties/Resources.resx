@@ -145,6 +145,9 @@ Parameter name: {0}</value>
   <data name="ConfigurationHelper_GetParameter_NotFound" xml:space="preserve">
     <value>Parameter {0} is required.</value>
   </data>
+  <data name="CouldNotConvertToCertificateType" xml:space="preserve">
+    <value>Failed to convert parameter {0} value '{1}' to type {2}.</value>
+  </data>
   <data name="DefaultRetryStrategyMappingNotFound" xml:space="preserve">
     <value>Default retry strategy for technology {0}, named '{1}', is not defined.</value>
   </data>

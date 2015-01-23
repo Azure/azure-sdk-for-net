@@ -9,7 +9,7 @@
     </Reference>
     <Reference Include="Hyak.Common">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(SolutionDir)packages\Hyak.Common.2.0.0\lib\portable-net403+win+wpa81\Hyak.Common.dll</HintPath>
+      <HintPath>$(SolutionDir)packages\Hyak.Common.2.0.3\lib\portable-net403+win+wpa81\Hyak.Common.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>$(SolutionDir)packages\Newtonsoft.Json.6.0.4\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>

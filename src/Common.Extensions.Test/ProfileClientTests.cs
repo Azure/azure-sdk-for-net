@@ -12,7 +12,7 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
-using Microsoft.Azure.Common.Extensions;
+using Microsoft.Azure.Common;
 using Microsoft.Azure.Common.Extensions.Authentication;
 using Microsoft.Azure.Common.Extensions.Models;
 using Microsoft.Azure.Subscriptions.Models;

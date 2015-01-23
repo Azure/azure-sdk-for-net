@@ -345,8 +345,8 @@ namespace Microsoft.Azure.Test
             var ex = CloudException.Create(genericMessage, genericMessageString, notFoundResponse, xmlErrorCodeOnly);
 
             Assert.NotNull(ex);
-            Assert.Null(ex.Model);
-            Assert.Equal(xmlErrorCodeOnly, ex.Message);
+            Assert.NotNull(ex.Model);
+            Assert.Equal(ex.Model.Code, ex.Message);
             
         }
 
@@ -356,8 +356,8 @@ namespace Microsoft.Azure.Test
             var ex = CloudException.Create(genericMessage, genericMessageString, notFoundResponse, xmlErrorMessageOnly);
 
             Assert.NotNull(ex);
-            Assert.Null(ex.Model);
-            Assert.Equal(xmlErrorMessageOnly, ex.Message);
+            Assert.NotNull(ex.Model);
+            Assert.Equal(ex.Model.Message, ex.Message);
             
         }
     }

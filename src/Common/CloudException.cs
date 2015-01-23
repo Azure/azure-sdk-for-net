@@ -1,21 +1,10 @@
-﻿//
-// Copyright (c) Microsoft.  All rights reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//   http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-//
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Hyak.Common;
 using System;
 using System.Net.Http;
+using Microsoft.Azure.Common.Properties;
 
 namespace Microsoft.Azure
 {
@@ -24,10 +13,19 @@ namespace Microsoft.Azure
     /// </summary>
     public class CloudException : HttpOperationException<CloudError>
     {
+        /// <summary>
+        /// Create a Cloud Exception with the given exception message.
+        /// </summary>
+        /// <param name="message">A message describing the error.</param>
         public CloudException(string message) : base(message)
         {
         }
 
+        /// <summary>
+        /// Create a Cloud Exception caused by another exception.
+        /// </summary>
+        /// <param name="message">A description of the error.</param>
+        /// <param name="innerException">The exception which caused the current exception.</param>
         public CloudException(string message, Exception innerException) : base(message, innerException)
         {
         }
@@ -45,32 +43,36 @@ namespace Microsoft.Azure
             HttpResponseMessage response,
             string responseContent, Exception innerException = null)
         {
-            CloudError error;
             string exceptionMessage;
-            if (CloudError.TryParseJsonOrXml(responseContent, out error))
+            CloudError errorModel = null;
+            if (!string.IsNullOrEmpty(responseContent))
             {
-                exceptionMessage = error.Code + ": " + error.Message;
-            }
-            else if (!string.IsNullOrEmpty(responseContent))
-            {
-                exceptionMessage = responseContent;
-            }
-            else
-            {
-                if (response != null && response.ReasonPhrase != null)
+                if (HttpOperationException<CloudError>.TryParseErrorModel(responseContent, out errorModel))
                 {
-                    exceptionMessage = response.ReasonPhrase;
-                }
-                else if (response != null)
-                {
-                    exceptionMessage = response.StatusCode.ToString();
+                    if (!string.IsNullOrEmpty(errorModel.Code) && !string.IsNullOrEmpty(errorModel.Message))
+                    {
+                        exceptionMessage = string.Format("{0}: {1}", errorModel.Code, errorModel.Message);
+                    }
+                    else
+                    {
+                        exceptionMessage = errorModel.Code ?? errorModel.Message;
+                    }
                 }
                 else
                 {
-                    exceptionMessage = new InvalidOperationException().Message;
+                    exceptionMessage = responseContent;
                 }
             }
+            else if (response != null && response.ReasonPhrase != null)
+            {
+                exceptionMessage = response.ReasonPhrase;
+            }
+            else
+            {
+                exceptionMessage = new InvalidOperationException().Message;
+            }
 
+            // Create the exception
             var exception = new CloudException(exceptionMessage, innerException);
             if (request != null)
             {
@@ -82,8 +84,7 @@ namespace Microsoft.Azure
                 exception.Response = HttpResponseErrorInfo.Create(response, responseContent);
             }
 
-            exception.Model = error;
-
+            exception.Model = errorModel;
             return exception;
         }
 

@@ -34,9 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Hyak.Common">
-      <HintPath>..\..\packages\Hyak.Common.2.0.1\lib\net45\Hyak.Common.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Hyak.Common, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Hyak.Common.2.0.3\lib\net45\Hyak.Common.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -76,7 +76,6 @@
     <Compile Include="Fakes\FakeServiceClientWithCredentials.cs" />
     <Compile Include="Fakes\FakeServiceClient.cs" />
     <Compile Include="Fakes\RecordedDelegatingHandler.cs" />
-    <Compile Include="Internals\ParserHelperTests.cs" />
     <Compile Include="Internals\LazyDictionaryTest.cs" />
     <Compile Include="Internals\LazyListTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
