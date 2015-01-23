@@ -28,10 +28,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Test", "src\Common.T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Configuration.Test", "src\Configuration.Test\Configuration.Test.csproj", "{0645E75E-9C0B-47EE-B5A2-239286E1DED9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Extensions", "src\Common.Extensions\Common.Extensions.csproj", "{B95C489C-8CB7-4DCF-8D5F-B9AEBDBBAF89}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Extensions.Test", "src\Common.Extensions.Test\Common.Extensions.Test.csproj", "{C2CF99A2-D35E-4AED-AFB9-C26960AF1D0D}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Net40-Debug|Any CPU = Net40-Debug|Any CPU
@@ -61,14 +57,6 @@ Global
 		{0645E75E-9C0B-47EE-B5A2-239286E1DED9}.Net40-Debug|Any CPU.ActiveCfg = Net40-Debug|Any CPU
 		{0645E75E-9C0B-47EE-B5A2-239286E1DED9}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
 		{0645E75E-9C0B-47EE-B5A2-239286E1DED9}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
-		{B95C489C-8CB7-4DCF-8D5F-B9AEBDBBAF89}.Net40-Debug|Any CPU.ActiveCfg = Net40-Debug|Any CPU
-		{B95C489C-8CB7-4DCF-8D5F-B9AEBDBBAF89}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
-		{B95C489C-8CB7-4DCF-8D5F-B9AEBDBBAF89}.Net45-Debug|Any CPU.Build.0 = Net45-Debug|Any CPU
-		{B95C489C-8CB7-4DCF-8D5F-B9AEBDBBAF89}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
-		{C2CF99A2-D35E-4AED-AFB9-C26960AF1D0D}.Net40-Debug|Any CPU.ActiveCfg = Net40-Debug|Any CPU
-		{C2CF99A2-D35E-4AED-AFB9-C26960AF1D0D}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
-		{C2CF99A2-D35E-4AED-AFB9-C26960AF1D0D}.Net45-Debug|Any CPU.Build.0 = Net45-Debug|Any CPU
-		{C2CF99A2-D35E-4AED-AFB9-C26960AF1D0D}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -79,8 +67,6 @@ Global
 		{8FF949EE-73BD-48BF-ABDF-A6711E573FDF} = {868850B4-1073-41A1-ABA8-A3B465880148}
 		{CB18ACEB-2825-4884-91FA-05C31AC779FE} = {7C044DD1-F76B-49A7-A8DF-A5DEEE748EBB}
 		{0645E75E-9C0B-47EE-B5A2-239286E1DED9} = {7C044DD1-F76B-49A7-A8DF-A5DEEE748EBB}
-		{B95C489C-8CB7-4DCF-8D5F-B9AEBDBBAF89} = {868850B4-1073-41A1-ABA8-A3B465880148}
-		{C2CF99A2-D35E-4AED-AFB9-C26960AF1D0D} = {7C044DD1-F76B-49A7-A8DF-A5DEEE748EBB}
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = WindowsAzureLibraries.vsmdi
