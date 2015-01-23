@@ -34,5 +34,7 @@
     <file src="..\binaries\net45\Microsoft.WindowsAzure.Management.HDInsight.Framework.Core.pdb" target="lib\net45" />
     <file src="..\binaries\net45\Microsoft.WindowsAzure.Management.HDInsight.Framework.Core.xml" target="lib\net45" />
     <file src="..\binaries\net45\Microsoft.HDInsight.Net.Http.Formatting.dll" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.HDInsight.Net.Http.Formatting.pdb" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.HDInsight.Net.Http.Formatting.xml" target="lib\net45" />
   </files>
 </package>
