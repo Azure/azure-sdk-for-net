@@ -1,10 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Hyak.Common;
+using Microsoft.Rest;
 using System;
 using System.Net.Http;
-using Microsoft.Azure.Common.Properties;
 
 namespace Microsoft.Azure
 {

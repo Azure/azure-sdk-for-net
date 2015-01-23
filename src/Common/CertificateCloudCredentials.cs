@@ -8,7 +8,7 @@ using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Security.Cryptography.X509Certificates;
-using Hyak.Common;
+using Microsoft.Rest;
 
 namespace Microsoft.Azure
 {
