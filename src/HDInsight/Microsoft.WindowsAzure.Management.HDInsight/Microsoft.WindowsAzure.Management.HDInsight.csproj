@@ -6,14 +6,14 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{CF2838EC-AF11-477B-A7E6-F59A70A0E67F}</ProjectGuid>
-    <WindowsAzureLibraryProfileSet>net45</WindowsAzureLibraryProfileSet>
+    <LibraryFxTarget>net45</LibraryFxTarget>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Microsoft.WindowsAzure.Management.HDInsight</RootNamespace>
     <AssemblyName>Microsoft.WindowsAzure.Management.HDInsight</AssemblyName>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
-  <Import Project="$(SolutionDir)\src\library.props" />
+  <Import Project="..\..\..\tools\Library.Settings.targets" />
   <ItemGroup>
     <Reference Include="Microsoft.WindowsAzure.Common">
       <HintPath>$(SolutionDir)\packages\Microsoft.WindowsAzure.Common.1.3.0\lib\portable-net45+sl50+wp8+wpa81+win\Microsoft.WindowsAzure.Common.dll</HintPath>
@@ -209,5 +209,4 @@
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(LibraryFxTarget)' == 'portable' " />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(LibraryFxTarget)' != 'portable' " />
   <Import Project="$(SolutionDir)\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" />
-  <Import Project="$(SolutionDir)\src\library.targets" />
 </Project>
