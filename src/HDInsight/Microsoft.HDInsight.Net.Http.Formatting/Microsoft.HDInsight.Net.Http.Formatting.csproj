@@ -13,14 +13,10 @@
     <AssemblyName>Microsoft.HDInsight.Net.Http.Formatting</AssemblyName>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
-  <Import Project="..\..\..\tools\Library.Settings.targets" />
+  <Import Project="..\HDInsight.Settings.targets" />
   <ItemGroup>
     <Reference Include="Microsoft.WindowsAzure.Common">
       <HintPath>$(SolutionDir)\packages\Microsoft.WindowsAzure.Common.1.3.0\lib\portable-net45+sl50+wp8+wpa81+win\Microsoft.WindowsAzure.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>$(SolutionDir)\packages\Newtonsoft.Json.6.0.4\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

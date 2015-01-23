@@ -18,7 +18,7 @@
   <PropertyGroup>
     <StartupObject />
   </PropertyGroup>
-  <Import Project="..\..\..\tools\Library.Settings.targets" />
+  <Import Project="..\HDInsight.Settings.targets" />
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

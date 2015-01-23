@@ -13,7 +13,7 @@
     <AssemblyName>Microsoft.HadoopAppliance.Client</AssemblyName>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
-  <Import Project="..\..\..\tools\Library.Settings.targets" />
+  <Import Project="..\HDInsight.Settings.targets" />
   <ItemGroup>
     <Reference Include="Microsoft.WindowsAzure.Common">
       <HintPath>$(SolutionDir)\packages\Microsoft.WindowsAzure.Common.1.3.0\lib\portable-net45+sl50+wp8+wpa81+win\Microsoft.WindowsAzure.Common.dll</HintPath>

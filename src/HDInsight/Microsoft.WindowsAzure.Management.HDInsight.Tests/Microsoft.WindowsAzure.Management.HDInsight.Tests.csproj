@@ -20,7 +20,7 @@
     <SpecFlowTasksPath>$(SolutionDir)\packages\SpecFlow.1.9.0\tools\specflow.exe</SpecFlowTasksPath>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
-  <Import Project="..\..\..\tools\Library.Settings.targets" />
+  <Import Project="..\HDInsight.Settings.targets" />
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
       <ItemGroup>
