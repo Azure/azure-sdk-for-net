@@ -19,12 +19,10 @@
 // Changes to this file may cause incorrect behavior and will be lost if the
 // code is regenerated.
 
+using Microsoft.Azure;
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure;
-using Microsoft.WindowsAzure.Management;
 
 namespace Microsoft.WindowsAzure.Management
 {

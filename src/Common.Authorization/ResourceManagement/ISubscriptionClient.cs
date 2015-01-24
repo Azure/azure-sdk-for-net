@@ -19,10 +19,8 @@
 // Changes to this file may cause incorrect behavior and will be lost if the
 // code is regenerated.
 
-using System;
-using System.Linq;
 using Hyak.Common;
-using Microsoft.Azure.Subscriptions;
+using System;
 
 namespace Microsoft.Azure.Subscriptions
 {

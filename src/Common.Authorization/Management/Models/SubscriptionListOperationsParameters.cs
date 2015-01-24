@@ -20,8 +20,6 @@
 // code is regenerated.
 
 using System;
-using System.Linq;
-using Microsoft.Azure;
 
 namespace Microsoft.WindowsAzure.Management.Models
 {

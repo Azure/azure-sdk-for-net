@@ -19,6 +19,8 @@
 // Changes to this file may cause incorrect behavior and will be lost if the
 // code is regenerated.
 
+using Hyak.Common;
+using Microsoft.WindowsAzure.Subscriptions.Models;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -28,9 +30,6 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using Hyak.Common;
-using Microsoft.WindowsAzure.Subscriptions;
-using Microsoft.WindowsAzure.Subscriptions.Models;
 
 namespace Microsoft.WindowsAzure.Subscriptions
 {

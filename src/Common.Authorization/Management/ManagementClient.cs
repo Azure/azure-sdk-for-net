@@ -19,6 +19,8 @@
 // Changes to this file may cause incorrect behavior and will be lost if the
 // code is regenerated.
 
+using Hyak.Common;
+using Microsoft.Azure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,9 +29,6 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using Hyak.Common;
-using Microsoft.Azure;
-using Microsoft.WindowsAzure.Management;
 
 namespace Microsoft.WindowsAzure.Management
 {

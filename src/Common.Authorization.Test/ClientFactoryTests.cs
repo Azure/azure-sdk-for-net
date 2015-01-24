@@ -12,7 +12,6 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
-using Microsoft.Azure;
 using Microsoft.Azure.Common.Authorization;
 using Microsoft.Azure.Common.Authorization.Authentication;
 using Microsoft.Azure.Common.Authorization.Models;
@@ -21,7 +20,6 @@ using System;
 using System.Collections.Generic;
 using System.Security;
 using Xunit;
-using System.Linq;
 
 namespace Common.Authorization.Test
 {

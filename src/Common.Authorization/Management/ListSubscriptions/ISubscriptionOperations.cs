@@ -19,11 +19,9 @@
 // Changes to this file may cause incorrect behavior and will be lost if the
 // code is regenerated.
 
-using System;
-using System.Linq;
+using Microsoft.WindowsAzure.Subscriptions.Models;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure.Subscriptions.Models;
 
 namespace Microsoft.WindowsAzure.Subscriptions
 {
