@@ -498,6 +498,26 @@ namespace Microsoft.Azure.Management.Resources
                                                         providerResourceTypeInstance.Locations.Add(((string)locationsValue));
                                                     }
                                                 }
+                                                
+                                                JToken apiVersionsArray = resourceTypesValue["apiVersions"];
+                                                if (apiVersionsArray != null && apiVersionsArray.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken apiVersionsValue in ((JArray)apiVersionsArray))
+                                                    {
+                                                        providerResourceTypeInstance.ApiVersions.Add(((string)apiVersionsValue));
+                                                    }
+                                                }
+                                                
+                                                JToken propertiesSequenceElement = ((JToken)resourceTypesValue["properties"]);
+                                                if (propertiesSequenceElement != null && propertiesSequenceElement.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JProperty property in propertiesSequenceElement)
+                                                    {
+                                                        string propertiesKey = ((string)property.Name);
+                                                        string propertiesValue3 = ((string)property.Value);
+                                                        providerResourceTypeInstance.Properties.Add(propertiesKey, propertiesValue3);
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -881,6 +901,26 @@ namespace Microsoft.Azure.Management.Resources
                                                     foreach (JToken locationsValue in ((JArray)locationsArray))
                                                     {
                                                         providerResourceTypeInstance.Locations.Add(((string)locationsValue));
+                                                    }
+                                                }
+                                                
+                                                JToken apiVersionsArray = resourceTypesValue["apiVersions"];
+                                                if (apiVersionsArray != null && apiVersionsArray.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken apiVersionsValue in ((JArray)apiVersionsArray))
+                                                    {
+                                                        providerResourceTypeInstance.ApiVersions.Add(((string)apiVersionsValue));
+                                                    }
+                                                }
+                                                
+                                                JToken propertiesSequenceElement = ((JToken)resourceTypesValue["properties"]);
+                                                if (propertiesSequenceElement != null && propertiesSequenceElement.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JProperty property in propertiesSequenceElement)
+                                                    {
+                                                        string propertiesKey = ((string)property.Name);
+                                                        string propertiesValue2 = ((string)property.Value);
+                                                        providerResourceTypeInstance.Properties.Add(propertiesKey, propertiesValue2);
                                                     }
                                                 }
                                             }
@@ -1274,6 +1314,26 @@ namespace Microsoft.Azure.Management.Resources
                                                                 providerResourceTypeInstance.Locations.Add(((string)locationsValue));
                                                             }
                                                         }
+                                                        
+                                                        JToken apiVersionsArray = resourceTypesValue["apiVersions"];
+                                                        if (apiVersionsArray != null && apiVersionsArray.Type != JTokenType.Null)
+                                                        {
+                                                            foreach (JToken apiVersionsValue in ((JArray)apiVersionsArray))
+                                                            {
+                                                                providerResourceTypeInstance.ApiVersions.Add(((string)apiVersionsValue));
+                                                            }
+                                                        }
+                                                        
+                                                        JToken propertiesSequenceElement = ((JToken)resourceTypesValue["properties"]);
+                                                        if (propertiesSequenceElement != null && propertiesSequenceElement.Type != JTokenType.Null)
+                                                        {
+                                                            foreach (JProperty property in propertiesSequenceElement)
+                                                            {
+                                                                string propertiesKey = ((string)property.Name);
+                                                                string propertiesValue2 = ((string)property.Value);
+                                                                providerResourceTypeInstance.Properties.Add(propertiesKey, propertiesValue2);
+                                                            }
+                                                        }
                                                     }
                                                 }
                                             }
@@ -1642,6 +1702,26 @@ namespace Microsoft.Azure.Management.Resources
                                                             foreach (JToken locationsValue in ((JArray)locationsArray))
                                                             {
                                                                 providerResourceTypeInstance.Locations.Add(((string)locationsValue));
+                                                            }
+                                                        }
+                                                        
+                                                        JToken apiVersionsArray = resourceTypesValue["apiVersions"];
+                                                        if (apiVersionsArray != null && apiVersionsArray.Type != JTokenType.Null)
+                                                        {
+                                                            foreach (JToken apiVersionsValue in ((JArray)apiVersionsArray))
+                                                            {
+                                                                providerResourceTypeInstance.ApiVersions.Add(((string)apiVersionsValue));
+                                                            }
+                                                        }
+                                                        
+                                                        JToken propertiesSequenceElement = ((JToken)resourceTypesValue["properties"]);
+                                                        if (propertiesSequenceElement != null && propertiesSequenceElement.Type != JTokenType.Null)
+                                                        {
+                                                            foreach (JProperty property in propertiesSequenceElement)
+                                                            {
+                                                                string propertiesKey = ((string)property.Name);
+                                                                string propertiesValue2 = ((string)property.Value);
+                                                                providerResourceTypeInstance.Properties.Add(propertiesKey, propertiesValue2);
                                                             }
                                                         }
                                                     }
@@ -2150,6 +2230,26 @@ namespace Microsoft.Azure.Management.Resources
                                                     foreach (JToken locationsValue in ((JArray)locationsArray))
                                                     {
                                                         providerResourceTypeInstance.Locations.Add(((string)locationsValue));
+                                                    }
+                                                }
+                                                
+                                                JToken apiVersionsArray = resourceTypesValue["apiVersions"];
+                                                if (apiVersionsArray != null && apiVersionsArray.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken apiVersionsValue in ((JArray)apiVersionsArray))
+                                                    {
+                                                        providerResourceTypeInstance.ApiVersions.Add(((string)apiVersionsValue));
+                                                    }
+                                                }
+                                                
+                                                JToken propertiesSequenceElement = ((JToken)resourceTypesValue["properties"]);
+                                                if (propertiesSequenceElement != null && propertiesSequenceElement.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JProperty property in propertiesSequenceElement)
+                                                    {
+                                                        string propertiesKey = ((string)property.Name);
+                                                        string propertiesValue3 = ((string)property.Value);
+                                                        providerResourceTypeInstance.Properties.Add(propertiesKey, propertiesValue3);
                                                     }
                                                 }
                                             }

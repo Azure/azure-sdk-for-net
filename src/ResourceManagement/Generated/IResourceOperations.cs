@@ -134,11 +134,10 @@ namespace Microsoft.Azure.Management.Resources
         Task<ResourceListResult> ListNextAsync(string nextLink, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Move resources between subscriprtions or within the same
-        /// subscription.
+        /// Move resources within or across subscriptions.
         /// </summary>
         /// <param name='sourceResourceGroupName'>
-        /// Source resource group.
+        /// Source resource group name.
         /// </param>
         /// <param name='parameters'>
         /// move resources' parameters.
@@ -150,6 +149,6 @@ namespace Microsoft.Azure.Management.Resources
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<AzureOperationResponse> MoveResourcesAsync(string sourceResourceGroupName, ResourceMoveInfo parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> MoveResourcesAsync(string sourceResourceGroupName, ResourcesMoveInfo parameters, CancellationToken cancellationToken);
     }
 }

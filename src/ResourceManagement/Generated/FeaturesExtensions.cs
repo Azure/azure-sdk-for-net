@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.Resources
         /// Reference to the Microsoft.Azure.Management.Resources.IFeatures.
         /// </param>
         /// <param name='resourceProviderNamespace'>
-        /// Required. The namespace of the resource group.
+        /// Required. The namespace of the resource provider.
         /// </param>
         /// <returns>
         /// List of previewed features.
@@ -102,7 +102,7 @@ namespace Microsoft.Azure.Management.Resources
         /// Reference to the Microsoft.Azure.Management.Resources.IFeatures.
         /// </param>
         /// <param name='resourceProviderNamespace'>
-        /// Required. The namespace of the resource group.
+        /// Required. The namespace of the resource provider.
         /// </param>
         /// <returns>
         /// List of previewed features.
