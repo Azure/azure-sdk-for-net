@@ -43,7 +43,7 @@
   /p:NuGetSymbolPublishingSource=Uri
     The NuGet Server to push symbol + source packages to.
 
-  /p:GenerateCodeFromSpecs
+  /p:CodeGen
     True if you want to invoke codegen tool to regenerate libraries. 
   -->  
   
@@ -63,8 +63,8 @@
     <DelaySign Condition =" '$(DelaySign)' == '' ">false</DelaySign>
     <!-- 'Common': only build common; 'All': Both common and servies; "Extensions": Azure Extensions; 'full path to a library project': build that project -->
     <Scope Condition=" '$(Scope)' == '' ">All</Scope>
-    <GenerateCodeFromSpecs Condition=" '$(GenerateCodeFromSpecs)' == '' and '$(PRIVATE_FEED_URL)' == '' ">false</GenerateCodeFromSpecs>
-    <GenerateCodeFromSpecs Condition=" '$(GenerateCodeFromSpecs)' == '' and '$(PRIVATE_FEED_URL)' != '' ">true</GenerateCodeFromSpecs>
+    <CodeGen Condition=" '$(GenerateCodeFromSpecs)' == '' and '$(PRIVATE_FEED_URL)' == '' ">false</CodeGen>
+    <CodeGen Condition=" '$(GenerateCodeFromSpecs)' == '' and '$(PRIVATE_FEED_URL)' != '' ">true</CodeGen>
   </PropertyGroup>
 
   <ItemGroup>
@@ -97,7 +97,7 @@
 
   <Target Name="Build" DependsOnTargets="RestoreNugetPackages">
     <PropertyGroup>
-      <_ExtraPropertyList>CodeSign=$(CodeSign);GenerateHydraSpecs=$(GenerateCodeFromSpecs)</_ExtraPropertyList>
+      <_ExtraPropertyList>CodeSign=$(CodeSign);GenerateHydraSpecs=$(CodeGen)</_ExtraPropertyList>
     </PropertyGroup>
     <CallTarget Targets="BuildMsBuildTask" />
     <CallTarget Targets="BuildServerPreparation" Condition=" '$(CodeSign)' == 'true' " />
@@ -127,10 +127,12 @@
 
   </Target>
 
-  <!-- Projects import BCL target, so make sure the packages get restored first -->
   <Target Name="Clean" DependsOnTargets="RestoreNugetPackages">
     <MSBuild Projects="$(CommonSolution)"
              Properties="Configuration=%(LibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU"
+             Targets="Clean" />
+    <MSBuild Projects="$(ExtensionsSolution)"
+             Properties="Configuration=Net45-$(Configuration);Platform=Any CPU"
              Targets="Clean" />
     <MSBuild Projects="$(ManagementLibrariesSolution)"
              Properties="Configuration=%(LibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU"
@@ -138,14 +140,11 @@
     <RemoveDir Directories="$(BinariesFolder)" />
   </Target>
 
-  <!--
-  Run all tests
-  -->
   <UsingTask TaskName="Xunit.Runner.msbuild.xunit" AssemblyFile="packages\xunit.1.9.2\lib\net20\xunit.runner.msbuild.dll" />
   <Target Name="Test">
     <ItemGroup>
       <!--test projects should always have net45 in its target framework list-->
-      <TestDlls Include=".\src\*.Test\bin\net45*\*Test.dll"/>
+      <TestDlls Include=".\src\*.Test\bin\*\*Test.dll"/>
     </ItemGroup>
     <MakeDir Directories="$(LibraryRoot)TestResults"/>
     <Message Text="%(TestDlls.Filename)" />
@@ -228,8 +227,8 @@
   </Target>
 
   <Target Name="RestoreNugetPackages">
-    <CallTarget Targets="RestoreAllNugetPackages" Condition=" '$(GenerateCodeFromSpecs)' ==  'true' " />
-    <CallTarget Targets="RestorePublicNugetPackages" Condition=" '$(GenerateCodeFromSpecs)' !=  'true' " />
+    <CallTarget Targets="RestoreAllNugetPackages" Condition=" '$(CodeGen)' ==  'true' " />
+    <CallTarget Targets="RestorePublicNugetPackages" Condition=" '$(CodeGen)' !=  'true' " />
   </Target>
   <!--
   Force nuget package restore so that packages that include .targets files
