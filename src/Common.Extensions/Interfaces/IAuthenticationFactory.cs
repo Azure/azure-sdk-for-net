@@ -28,6 +28,7 @@ namespace Microsoft.Azure.Common.Extensions
         /// <param name="tenant"></param>
         /// <param name="password"></param>
         /// <param name="promptBehavior"></param>
+        /// <param name="resourceId"></param>
         /// <returns></returns>
         IAccessToken Authenticate(AzureAccount account, AzureEnvironment environment, string tenant, SecureString password, ShowDialog promptBehavior,
             AzureEnvironment.Endpoint resourceId = AzureEnvironment.Endpoint.ActiveDirectoryServiceEndpointResourceId);

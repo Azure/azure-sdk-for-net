@@ -1,4 +1,4 @@
-// ----------------------------------------------------------------------------------
+ï»¿// ----------------------------------------------------------------------------------
 //
 // Copyright Microsoft Corporation
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,10 +19,10 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Azure Common Extensions")]
 [assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Microsoft Azure Libraries")]
-[assembly: AssemblyCopyright("Copyright © Microsoft")]
+[assembly: AssemblyCopyright("Copyright ï¿½ Microsoft")]
 
 [assembly: ComVisible(false)]
 [assembly: CLSCompliant(false)]
 [assembly: Guid("4f3ab2e4-cc7a-43ac-bb15-f481fcf94d58")]
 [assembly: AssemblyVersion("0.9.0.0")]
-[assembly: AssemblyFileVersion("0.13.0.0")]
+[assembly: AssemblyFileVersion("0.13.0.30123")]

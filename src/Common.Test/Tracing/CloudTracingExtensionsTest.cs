@@ -17,7 +17,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
-using Hyak.Common;
+using Microsoft.Rest;
 using Xunit;
 
 namespace Microsoft.Azure.Common.Tracing.Etw.Test

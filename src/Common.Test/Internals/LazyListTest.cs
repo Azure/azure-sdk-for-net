@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-using Hyak.Common;
+using Microsoft.Rest;
 using Xunit;
 
 namespace Microsoft.Azure.Common.Test.Internals

@@ -17,7 +17,7 @@ using System;
 using System.Net;
 using Xunit;
 using Xunit.Extensions;
-using Hyak.Common.TransientFaultHandling;
+using Microsoft.Rest.TransientFaultHandling;
 
 namespace Microsoft.Azure.Common.Test.TransientFaultHandling
 {

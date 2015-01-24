@@ -25,6 +25,9 @@ Supported Portable Library Platforms:
     <copyright>Copyright © Microsoft Corporation</copyright>
     <tags>Microsoft "Microsoft Azure" Azure cloud REST HTTP client core common azureofficial windowsazureofficial</tags>
     <references>
+      <group targetFramework="windowsphone8">
+        <reference file="Microsoft.Azure.Common.dll" />
+      </group>
       <group targetFramework="portable-net45+wp8+wpa81+win">
         <reference file="Microsoft.Azure.Common.dll" />
       </group>
@@ -43,12 +46,15 @@ Supported Portable Library Platforms:
   <files>
     <file src="Common\**\*.cs" target="src\Common" />
     <file src="Common\Properties\*.resx" target="src\Common\Properties" />
-    <file src="..\binaries\Microsoft.Azure.Common.dll" target="lib\portable-net45+wp8+wpa81+win" />
-    <file src="..\binaries\Microsoft.Azure.Common.pdb" target="lib\portable-net45+wp8+wpa81+win" />
-    <file src="..\binaries\Microsoft.Azure.Common.xml" target="lib\portable-net45+wp8+wpa81+win" />
-    <file src="..\binaries\Microsoft.Azure.Common.dll" target="lib\net45" />
-    <file src="..\binaries\Microsoft.Azure.Common.pdb" target="lib\net45" />
-    <file src="..\binaries\Microsoft.Azure.Common.xml" target="lib\net45" />
+    <file src="..\binaries\portable\Microsoft.Azure.Common.dll" target="lib\portable-net45+wp8+wpa81+win" />
+    <file src="..\binaries\portable\Microsoft.Azure.Common.pdb" target="lib\portable-net45+wp8+wpa81+win" />
+    <file src="..\binaries\portable\Microsoft.Azure.Common.xml" target="lib\portable-net45+wp8+wpa81+win" />
+    <file src="..\binaries\wp80\Microsoft.Azure.Common.dll" target="lib\windowsphone8" />
+    <file src="..\binaries\wp80\Microsoft.Azure.Common.pdb" target="lib\windowsphone8" />
+    <file src="..\binaries\wp80\Microsoft.Azure.Common.xml" target="lib\windowsphone8" />
+    <file src="..\binaries\net45\Microsoft.Azure.Common.dll" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.Azure.Common.pdb" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.Azure.Common.xml" target="lib\net45" />
     <file src="..\binaries\net40\Microsoft.Azure.Common.dll" target="lib\net40" />
     <file src="..\binaries\net40\Microsoft.Azure.Common.pdb" target="lib\net40" />
     <file src="..\binaries\net40\Microsoft.Azure.Common.xml" target="lib\net40" />

@@ -17,7 +17,7 @@ using System;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Hyak.Common;
+using Microsoft.Rest;
 
 namespace Microsoft.Azure.Common.Test.Fakes
 {

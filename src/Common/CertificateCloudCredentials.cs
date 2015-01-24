@@ -1,6 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-
+#if NETCORE
 using Microsoft.Azure.Common.Properties;
 using System;
 using System.Collections.Generic;
@@ -32,7 +32,6 @@ namespace Microsoft.Azure
             get { return _subscriptionId; }
         }
 
-#if NET45
         /// <summary>
         /// The Microsoft Azure Service Management API use mutual authentication
         /// of management certificates over SSL to ensure that a request made
@@ -63,24 +62,7 @@ namespace Microsoft.Azure
             ManagementCertificate = managementCertificate;
         }
 
-#else
-        /// <summary>
-        /// The Microsoft Azure Service Management API use mutual authentication
-        /// of management certificates over SSL to ensure that a request made
-        /// to the service is secure. No anonymous requests are allowed.
-        /// </summary>
-        /// <param name="subscriptionId">The Subscription ID.</param>
-        public CertificateCloudCredentials(string subscriptionId)
-        {
-            if (string.IsNullOrEmpty(subscriptionId))
-            {
-                throw new ArgumentNullException("subscriptionId");
-            }
-             _subscriptionId = subscriptionId;
-       }
-#endif
 
-#if NET45
         /// <summary>
         /// Attempt to create certificate credentials from a collection of
         /// settings.
@@ -206,7 +188,6 @@ namespace Microsoft.Azure
             return null;
         }
 
-#endif
 
         /// <summary>
         /// Initialize a ServiceClient instance to process credentials.
@@ -219,21 +200,72 @@ namespace Microsoft.Azure
         /// </remarks>
         public override void InitializeServiceClient<T>(ServiceClient<T> client)
         {
-#if NET45
             WebRequestHandler handler = client.GetHttpPipeline().OfType<WebRequestHandler>().FirstOrDefault();
             if (handler == null)
             {
                 throw new PlatformNotSupportedException(
                     string.Format(
                         CultureInfo.InvariantCulture,
-                        Common.Properties.Resources.CertificateCloudCredentials_InitializeServiceClient_NoWebRequestHandler,
+                        Resources.CertificateCloudCredentials_InitializeServiceClient_NoWebRequestHandler,
                         client.GetType().Name,
                         typeof(WebRequestHandler).Name));
             }
             
             handler.ClientCertificates.Add(ManagementCertificate);
-#endif
         }
     }
 }
 
+#endif
+
+#if PORTABLE
+namespace Microsoft.Azure
+{
+
+    /// <summary>
+    /// Credentials using a management certificate to authorize requests.
+    /// </summary>
+    public sealed class CertificateCloudCredentials
+        : SubscriptionCloudCredentials
+    {
+        // The Microsoft Azure Subscription ID.
+        private readonly string _subscriptionId = null;
+
+        /// <summary>
+        /// Gets subscription ID which uniquely identifies Microsoft Azure 
+        /// subscription. The subscription ID forms part of the URI for 
+        /// every call that you make to the Service Management API.
+        /// </summary>
+        public override string SubscriptionId
+        {
+            get { return _subscriptionId; }
+        }
+
+        /// <summary>
+        /// Create certificate credentials for the given subscription.
+        /// To use certificate credentials on portable devices, you must use
+        /// the CertificateEnrollmentManager to associate your certificate in pfx format with
+        /// a service client
+        /// </summary>
+        /// <example>
+        /// Import certificate and associate it with a service client
+        /// <code>
+        ///    CertificateEnrollmentManager.ImportPfxDataAsync(_certificateString, 
+        ///        _certificatePassword, ExportOption.NotExportable, KeyProtectionLevel.NoConsent, 
+        ///        InstallOptions.None,"friendly_name").AsTask().Wait();
+        ///
+        ///    var credentials = new CertificateCloudCredentials(_subscription);
+        ///
+        ///    using (ManagementClient client = CloudContext.Clients.CreateManagementClient(credentials))
+        ///    { ... }
+        ///  </code>
+        /// </example>
+        /// <param name="subscriptionId">The subscription ID.</param>
+        public CertificateCloudCredentials(string subscriptionId)
+        {
+            this._subscriptionId = subscriptionId;
+        }
+    }
+}
+
+#endif

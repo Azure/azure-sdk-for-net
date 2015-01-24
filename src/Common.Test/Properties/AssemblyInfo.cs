@@ -21,7 +21,7 @@ using System.Resources;
 [assembly: AssemblyDescription("Tests for the Microsoft Azure Common Library.")]
 
 [assembly: AssemblyVersion("0.9.0.0")]
-[assembly: AssemblyFileVersion("0.9.0.0")]
+[assembly: AssemblyFileVersion("0.9.0.30123")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
