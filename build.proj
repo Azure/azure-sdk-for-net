@@ -63,6 +63,8 @@
     <DelaySign Condition =" '$(DelaySign)' == '' ">false</DelaySign>
     <!-- 'Common': only build common; 'All': Both common and servies; "Extensions": Azure Extensions; 'full path to a library project': build that project -->
     <Scope Condition=" '$(Scope)' == '' ">All</Scope>
+    <GenerateCodeFromSpecs Condition=" '$(GenerateCodeFromSpecs)' == '' and '$(PRIVATE_FEED_URL)' == '' ">false</GenerateCodeFromSpecs>
+    <GenerateCodeFromSpecs Condition=" '$(GenerateCodeFromSpecs)' == '' and '$(PRIVATE_FEED_URL)' != '' ">true</GenerateCodeFromSpecs>
   </PropertyGroup>
 
   <ItemGroup>
@@ -226,8 +228,8 @@
   </Target>
 
   <Target Name="RestoreNugetPackages">
-    <CallTarget Targets="RestoreAllNugetPackages"  Condition=" '$(PRIVATE_FEED_URL)' != '' or '$(SECONDARY_FEED_URL)' != '' " />
-    <CallTarget Targets="RestorePublicNugetPackages"  Condition=" '$(PRIVATE_FEED_URL)' == '' and '$(SECONDARY_FEED_URL)' == '' " />
+    <CallTarget Targets="RestoreAllNugetPackages" Condition=" '$(GenerateCodeFromSpecs)' ==  'true' " />
+    <CallTarget Targets="RestorePublicNugetPackages" Condition=" '$(GenerateCodeFromSpecs)' !=  'true' " />
   </Target>
   <!--
   Force nuget package restore so that packages that include .targets files

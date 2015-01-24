@@ -5,7 +5,6 @@
     <BaselineReleaseNotes>PREVIEW RELEASE</BaselineReleaseNotes>
   </PropertyGroup>
   
-  <!--TODO: polish them to be perfect on matching common or not-->
   <Import Project="$(LibrarySourceFolder)\Common\*.nuget.proj" 
           Condition=" '$(Scope)' == 'Common' "/>
   <Import Project="$(LibrarySourceFolder)\Configuration\*.nuget.proj"
@@ -67,7 +66,7 @@
     </ItemGroup>
     <RegexReplacementTask Files="@(NuspecFilesToUpdate2)"
                           Find="__VERSION_%(SdkNuGetPackage.Identity)__"
-                          Replace="%(SdkNuGetPackage.PackageVersion)$(BuildVersionSuffix)$(AdditionalVersionSuffix)"
+                          Replace="%(SdkNuGetPackage.PackageVersion)"
                           LogReplacement="false" />
 
     <Message Text="Created dynamic nuspec %(NuspecFilesToUpdate2.Identity)" />
@@ -84,11 +83,11 @@
     
     <Message Text="Generating NuGet library &amp; symbols + source packages" Importance="high" />
     <Exec Condition=" '%(SdkNuGetPackage.SkipSymbolSourcePackage)' != 'true' "
-          Command="$(NuGetCommand) pack -BasePath .\src\ -Verbosity $(NuGetVerbosity) &quot;binaries\packages\specs\%(SdkNuGetPackage.Identity).nuspec&quot; -Version %(SdkNuGetPackage.PackageVersion)$(BuildVersionSuffix)$(AdditionalVersionSuffix) -OutputDirectory &quot;$(PackageOutputDir)&quot; -Symbols" />
+          Command="$(NuGetCommand) pack -BasePath .\src\ -Verbosity $(NuGetVerbosity) &quot;binaries\packages\specs\%(SdkNuGetPackage.Identity).nuspec&quot; -Version %(SdkNuGetPackage.PackageVersion) -OutputDirectory &quot;$(PackageOutputDir)&quot; -Symbols" />
 
     <Message Text="Generating NuGet packages without symbol + source packages into $(PackageOutputDir)" Importance="high" />
     <Exec Condition=" '%(SdkNuGetPackage.SkipSymbolSourcePackage)' == 'true' "
-          Command="$(NuGetCommand) pack -BasePath .\src\ -Verbosity $(NuGetVerbosity) &quot;binaries\packages\specs\%(SdkNuGetPackage.Identity).nuspec&quot; -Version %(SdkNuGetPackage.PackageVersion)$(BuildVersionSuffix)$(AdditionalVersionSuffix) -OutputDirectory &quot;$(PackageOutputDir)&quot;" />
+          Command="$(NuGetCommand) pack -BasePath .\src\ -Verbosity $(NuGetVerbosity) &quot;binaries\packages\specs\%(SdkNuGetPackage.Identity).nuspec&quot; -Version %(SdkNuGetPackage.PackageVersion) -OutputDirectory &quot;$(PackageOutputDir)&quot;" />
   </Target>
 
   <Target Name="Publish">
@@ -100,13 +99,13 @@
     </PropertyGroup>
 
     <Message Importance="high" Text="Publishing NuGet packages to the cloud at $(NuGetPublishingSource)" />
-    <Exec Command="$(NuGetCommand) push &quot;$(PackageOutputDir)\%(SdkNuGetPackage.Identity).%(SdkNuGetPackage.PackageVersion)$(BuildVersionSuffix)$(AdditionalVersionSuffix).nupkg&quot; $(NuGetKey)$(ActualSource)"
+    <Exec Command="$(NuGetCommand) push &quot;$(PackageOutputDir)\%(SdkNuGetPackage.Identity).%(SdkNuGetPackage.PackageVersion).nupkg&quot; $(NuGetKey)$(ActualSource)"
           IgnoreExitCode="true"
           Condition=" '%(SdkNuGetPackage.Publish)' != 'false' " />
 
     <Message Importance="high" Text="Publishing NuGet symbol &amp; source packages to the cloud at $(NuGetSymbolPublishingSource)"
              Condition=" $(NuGetSymbolPublishingSource) != '' "/>
-    <Exec Command="$(NuGetCommand) push &quot;$(PackageOutputDir)\%(SdkNuGetPackage.Identity).%(SdkNuGetPackage.PackageVersion)$(BuildVersionSuffix)$(AdditionalVersionSuffix).Symbols.nupkg&quot; $(NuGetKey) -Source $(NuGetSymbolPublishingSource)"
+    <Exec Command="$(NuGetCommand) push &quot;$(PackageOutputDir)\%(SdkNuGetPackage.Identity).%(SdkNuGetPackage.PackageVersion).Symbols.nupkg&quot; $(NuGetKey) -Source $(NuGetSymbolPublishingSource)"
           Condition=" $(NuGetSymbolPublishingSource) != '' And '%(SdkNuGetPackage.Publish)' != 'false' And '%(SdkNuGetPackage.SkipSymbolSourcePackage)' != 'true' And '$(PublishSymbolSourcePackages)' == 'true' "
           IgnoreExitCode="true"
           ContinueOnError="true" />
