@@ -41,9 +41,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Test", "src\Common.T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Configuration.Test", "src\Configuration.Test\Configuration.Test.csproj", "{0645E75E-9C0B-47EE-B5A2-239286E1DED9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Extensions", "src\Common.Extensions\Common.Extensions.csproj", "{B95C489C-8CB7-4DCF-8D5F-B9AEBDBBAF89}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Authorization", "src\Common.Authorization\Common.Authorization.csproj", "{B95C489C-8CB7-4DCF-8D5F-B9AEBDBBAF89}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Extensions.Test", "src\Common.Extensions.Test\Common.Extensions.Test.csproj", "{C2CF99A2-D35E-4AED-AFB9-C26960AF1D0D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Authorization.Test", "src\Common.Authorization.Test\Common.Authorization.Test.csproj", "{C2CF99A2-D35E-4AED-AFB9-C26960AF1D0D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
