@@ -272,15 +272,16 @@
     <Exec Command="$(NuGetCommand) restore $(LibraryToolsFolder)\Packages.config -PackagesDirectory $(LibraryRoot)\packages -NonInteractive" />
   </Target>
 
-  <Target Name="SmokeTest">
+  <!--Smoke test the packages under the output dir-->
+  <Target Name="VerifyPackages">
     <PropertyGroup>
-      <_TestProject>$(LibraryToolsFolder)\SmokeTest\PackageTest.sln</_TestProject>
-      <_TestExecutable>$(LibraryToolsFolder)\SmokeTest\bin\debug\PackageTest.exe</_TestExecutable>
+      <_TestProject>$(LibraryToolsFolder)\VerifyPackages\VerifyPackages.sln</_TestProject>
+      <_TestExecutable>$(LibraryToolsFolder)\VerifyPackages\bin\debug\VerifyPackages.exe</_TestExecutable>
     </PropertyGroup>
-    <Error Text="Please provide a publish settings file" Condition=" '$(PublishSettingsFile)' == '' " />
+    <Error Text="Please provide a publish settings file for the 'Creds' property" Condition=" '$(Creds)' == '' " />
     <Exec Command="$(NuGetCommand) restore $(_TestProject) -source &quot;$(PackageOutputDir)&quot;"/>
     <MSBuild Projects="$(_TestProject)" Targets="Build" Properties="Configuration=Debug;Platform=Any CPU" />
-    <Exec Command="$(_TestExecutable) $(PublishSettingsFile)" />
+    <Exec Command="$(_TestExecutable) $(Creds)" />
   </Target>
   
   <!--

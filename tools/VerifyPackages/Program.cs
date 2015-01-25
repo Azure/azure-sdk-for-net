@@ -12,7 +12,7 @@ using Microsoft.WindowsAzure.Management.WebSites;
 using Microsoft.WindowsAzure.Management.WebSites.Models;
 using System.Xml.Linq;
 
-namespace PackageTest
+namespace VerifyPackages
 {
     class Program
     {
