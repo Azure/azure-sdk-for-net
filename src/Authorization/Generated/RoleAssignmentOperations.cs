@@ -108,7 +108,7 @@ namespace Microsoft.Azure.Management.Authorization
             
             // Construct URL
             string url = "/" + scope + "/providers/Microsoft.Authorization/roleAssignments/" + Uri.EscapeDataString(roleAssignmentName.ToString()) + "?";
-            url = url + "api-version=2014-07-01-preview";
+            url = url + "api-version=2014-10-01-preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -321,7 +321,7 @@ namespace Microsoft.Azure.Management.Authorization
             
             // Construct URL
             string url = "/" + roleAssignmentId + "?";
-            url = url + "api-version=2014-07-01-preview";
+            url = url + "api-version=2014-10-01-preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -506,10 +506,9 @@ namespace Microsoft.Azure.Management.Authorization
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Role assignments delete result
         /// </returns>
-        public async Task<AzureOperationResponse> DeleteAsync(string scope, Guid roleAssignmentName, CancellationToken cancellationToken)
+        public async Task<RoleAssignmentDeleteResult> DeleteAsync(string scope, Guid roleAssignmentName, CancellationToken cancellationToken)
         {
             // Validate
             if (scope == null)
@@ -531,7 +530,7 @@ namespace Microsoft.Azure.Management.Authorization
             
             // Construct URL
             string url = "/" + scope + "/providers/Microsoft.Authorization/roleAssignments/" + Uri.EscapeDataString(roleAssignmentName.ToString()) + "?";
-            url = url + "api-version=2014-07-01-preview";
+            url = url + "api-version=2014-10-01-preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -554,7 +553,7 @@ namespace Microsoft.Azure.Management.Authorization
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-07-01-preview");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01-preview");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -587,9 +586,75 @@ namespace Microsoft.Azure.Management.Authorization
                     }
                     
                     // Create Result
-                    AzureOperationResponse result = null;
+                    RoleAssignmentDeleteResult result = null;
                     // Deserialize Response
-                    result = new AzureOperationResponse();
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new RoleAssignmentDeleteResult();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            RoleAssignment roleAssignmentInstance = new RoleAssignment();
+                            result.RoleAssignment = roleAssignmentInstance;
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                roleAssignmentInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                Guid nameInstance = Guid.Parse(((string)nameValue));
+                                roleAssignmentInstance.Name = nameInstance;
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                roleAssignmentInstance.Type = typeInstance;
+                            }
+                            
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                            {
+                                RoleAssignmentProperties propertiesInstance = new RoleAssignmentProperties();
+                                roleAssignmentInstance.Properties = propertiesInstance;
+                                
+                                JToken roleDefinitionIdValue = propertiesValue["roleDefinitionId"];
+                                if (roleDefinitionIdValue != null && roleDefinitionIdValue.Type != JTokenType.Null)
+                                {
+                                    string roleDefinitionIdInstance = ((string)roleDefinitionIdValue);
+                                    propertiesInstance.RoleDefinitionId = roleDefinitionIdInstance;
+                                }
+                                
+                                JToken principalIdValue = propertiesValue["principalId"];
+                                if (principalIdValue != null && principalIdValue.Type != JTokenType.Null)
+                                {
+                                    Guid principalIdInstance = Guid.Parse(((string)principalIdValue));
+                                    propertiesInstance.PrincipalId = principalIdInstance;
+                                }
+                                
+                                JToken scopeValue = propertiesValue["scope"];
+                                if (scopeValue != null && scopeValue.Type != JTokenType.Null)
+                                {
+                                    string scopeInstance = ((string)scopeValue);
+                                    propertiesInstance.Scope = scopeInstance;
+                                }
+                            }
+                        }
+                        
+                    }
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -629,10 +694,9 @@ namespace Microsoft.Azure.Management.Authorization
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Role assignments delete result
         /// </returns>
-        public async Task<AzureOperationResponse> DeleteByIdAsync(string roleAssignmentId, CancellationToken cancellationToken)
+        public async Task<RoleAssignmentDeleteResult> DeleteByIdAsync(string roleAssignmentId, CancellationToken cancellationToken)
         {
             // Validate
             if (roleAssignmentId == null)
@@ -653,7 +717,7 @@ namespace Microsoft.Azure.Management.Authorization
             
             // Construct URL
             string url = "/" + roleAssignmentId + "?";
-            url = url + "api-version=2014-07-01-preview";
+            url = url + "api-version=2014-10-01-preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -676,7 +740,7 @@ namespace Microsoft.Azure.Management.Authorization
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-07-01-preview");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01-preview");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -709,9 +773,75 @@ namespace Microsoft.Azure.Management.Authorization
                     }
                     
                     // Create Result
-                    AzureOperationResponse result = null;
+                    RoleAssignmentDeleteResult result = null;
                     // Deserialize Response
-                    result = new AzureOperationResponse();
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new RoleAssignmentDeleteResult();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            RoleAssignment roleAssignmentInstance = new RoleAssignment();
+                            result.RoleAssignment = roleAssignmentInstance;
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                roleAssignmentInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                Guid nameInstance = Guid.Parse(((string)nameValue));
+                                roleAssignmentInstance.Name = nameInstance;
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                roleAssignmentInstance.Type = typeInstance;
+                            }
+                            
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                            {
+                                RoleAssignmentProperties propertiesInstance = new RoleAssignmentProperties();
+                                roleAssignmentInstance.Properties = propertiesInstance;
+                                
+                                JToken roleDefinitionIdValue = propertiesValue["roleDefinitionId"];
+                                if (roleDefinitionIdValue != null && roleDefinitionIdValue.Type != JTokenType.Null)
+                                {
+                                    string roleDefinitionIdInstance = ((string)roleDefinitionIdValue);
+                                    propertiesInstance.RoleDefinitionId = roleDefinitionIdInstance;
+                                }
+                                
+                                JToken principalIdValue = propertiesValue["principalId"];
+                                if (principalIdValue != null && principalIdValue.Type != JTokenType.Null)
+                                {
+                                    Guid principalIdInstance = Guid.Parse(((string)principalIdValue));
+                                    propertiesInstance.PrincipalId = principalIdInstance;
+                                }
+                                
+                                JToken scopeValue = propertiesValue["scope"];
+                                if (scopeValue != null && scopeValue.Type != JTokenType.Null)
+                                {
+                                    string scopeInstance = ((string)scopeValue);
+                                    propertiesInstance.Scope = scopeInstance;
+                                }
+                            }
+                        }
+                        
+                    }
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -778,7 +908,7 @@ namespace Microsoft.Azure.Management.Authorization
             
             // Construct URL
             string url = "/" + scope + "/providers/Microsoft.Authorization/roleAssignments/" + Uri.EscapeDataString(roleAssignmentName.ToString()) + "?";
-            url = url + "api-version=2014-07-01-preview";
+            url = url + "api-version=2014-10-01-preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -801,7 +931,7 @@ namespace Microsoft.Azure.Management.Authorization
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-07-01-preview");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01-preview");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -965,7 +1095,7 @@ namespace Microsoft.Azure.Management.Authorization
             
             // Construct URL
             string url = "/" + roleAssignmentId + "?";
-            url = url + "api-version=2014-07-01-preview";
+            url = url + "api-version=2014-10-01-preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -988,7 +1118,7 @@ namespace Microsoft.Azure.Management.Authorization
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-07-01-preview");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01-preview");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1159,7 +1289,7 @@ namespace Microsoft.Azure.Management.Authorization
             {
                 url = url + "&$filter=principalId eq '" + Uri.EscapeDataString(parameters.PrincipalId.Value.ToString()) + "'";
             }
-            url = url + "&api-version=2014-07-01-preview";
+            url = url + "&api-version=2014-10-01-preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1182,7 +1312,7 @@ namespace Microsoft.Azure.Management.Authorization
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-07-01-preview");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01-preview");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1388,7 +1518,7 @@ namespace Microsoft.Azure.Management.Authorization
             {
                 url = url + "&$filter=principalId eq '" + Uri.EscapeDataString(parameters.PrincipalId.Value.ToString()) + "'";
             }
-            url = url + "&api-version=2014-07-01-preview";
+            url = url + "&api-version=2014-10-01-preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1411,7 +1541,7 @@ namespace Microsoft.Azure.Management.Authorization
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-07-01-preview");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01-preview");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1593,7 +1723,7 @@ namespace Microsoft.Azure.Management.Authorization
             {
                 url = url + "&$filter=principalId eq '" + Uri.EscapeDataString(parameters.PrincipalId.Value.ToString()) + "'";
             }
-            url = url + "&api-version=2014-07-01-preview";
+            url = url + "&api-version=2014-10-01-preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1616,7 +1746,7 @@ namespace Microsoft.Azure.Management.Authorization
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-07-01-preview");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01-preview");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1802,7 +1932,7 @@ namespace Microsoft.Azure.Management.Authorization
             {
                 url = url + "&$filter=principalId eq '" + Uri.EscapeDataString(parameters.PrincipalId.Value.ToString()) + "'";
             }
-            url = url + "&api-version=2014-07-01-preview";
+            url = url + "&api-version=2014-10-01-preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1825,7 +1955,7 @@ namespace Microsoft.Azure.Management.Authorization
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-07-01-preview");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01-preview");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
