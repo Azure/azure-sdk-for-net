@@ -272,6 +272,17 @@
     <Exec Command="$(NuGetCommand) restore $(LibraryToolsFolder)\Packages.config -PackagesDirectory $(LibraryRoot)\packages -NonInteractive" />
   </Target>
 
+  <Target Name="SmokeTest">
+    <PropertyGroup>
+      <_TestProject>$(LibraryToolsFolder)\SmokeTest\PackageTest.sln</_TestProject>
+      <_TestExecutable>$(LibraryToolsFolder)\SmokeTest\bin\debug\PackageTest.exe</_TestExecutable>
+    </PropertyGroup>
+    <Error Text="Please provide a publish settings file" Condition=" '$(PublishSettingsFile)' == '' " />
+    <Exec Command="$(NuGetCommand) restore $(_TestProject) -source &quot;$(PackageOutputDir)&quot;"/>
+    <MSBuild Projects="$(_TestProject)" Targets="Build" Properties="Configuration=Debug;Platform=Any CPU" />
+    <Exec Command="$(_TestExecutable) $(PublishSettingsFile)" />
+  </Target>
+  
   <!--
   We have some important work to do when building our official Library bits.
   -->
