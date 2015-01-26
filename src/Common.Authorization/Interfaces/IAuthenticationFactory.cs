@@ -29,6 +29,7 @@ namespace Microsoft.Azure.Common.Authorization
         /// <param name="password">The AD account password</param>
         /// <param name="promptBehavior">The prompt behavior</param>
         /// <param name="resourceId">Optional, the AD resource id</param>
+        /// <param name="resourceId"></param>
         /// <returns></returns>
         IAccessToken Authenticate(AzureAccount account, AzureEnvironment environment, string tenant, SecureString password, ShowDialog promptBehavior,
             AzureEnvironment.Endpoint resourceId = AzureEnvironment.Endpoint.ActiveDirectoryServiceEndpointResourceId);

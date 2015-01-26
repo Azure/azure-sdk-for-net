@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Insights
         // Removes the oldest item from the dictionary and list
         private void RemoveOldest()
         {
-            LinkedListNode<KeyValuePair<TKey, TValue>> val;
+            //LinkedListNode<KeyValuePair<TKey, TValue>> val;
 
             // TODO: Lock
             //while (!dictionary.TryRemove(list.Last.Value.Key, out val))
