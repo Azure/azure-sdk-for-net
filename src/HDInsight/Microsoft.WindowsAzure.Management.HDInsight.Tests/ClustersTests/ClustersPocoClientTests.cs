@@ -10,7 +10,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClustersTests
     using Microsoft.Hadoop.Client;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoClient;
-    using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoClient.ClustersResource;
+    using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoClient.PaasClusters;
     using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.RestClient.ClustersResource;
     using Microsoft.WindowsAzure.Management.HDInsight.Framework.ServiceLocation;
     using Microsoft.WindowsAzure.Management.HDInsight.TestUtilities;
@@ -35,12 +35,12 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClustersTests
         public void CanCreatePocoClient()
         {
             var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
-                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(Capabilities));
+                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, PaasClustersPocoClient.GetSchemaVersion(Capabilities));
             Assert.IsNotNull(restClient);
 
-            using (var clustersPocoClient = new ClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient))
+            using (var paasClustersPocoClient = new PaasClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient))
             {
-                Assert.IsNotNull(clustersPocoClient);
+                Assert.IsNotNull(paasClustersPocoClient);
             }
         }
 
@@ -49,10 +49,10 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClustersTests
         public void CanListCloudServicesEmpty()
         {
             var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
-                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(Capabilities));
-            using (var clustersPocoClient = new ClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient))
+                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, PaasClustersPocoClient.GetSchemaVersion(Capabilities));
+            using (var paasClustersPocoClient = new PaasClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient))
             {
-                var containersList = clustersPocoClient.ListContainers().Result;
+                var containersList = paasClustersPocoClient.ListContainers().Result;
                 Assert.AreEqual(containersList.Count, 0);
             }
         }
@@ -62,13 +62,13 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClustersTests
         public void CanListCloudServices()
         {
             var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
-                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(Capabilities));
-            using (var clustersPocoClient = new ClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient))
+                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, PaasClustersPocoClient.GetSchemaVersion(Capabilities));
+            using (var paasClustersPocoClient = new PaasClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient))
             {
                 CreateCluster("testcluster1", "West US");
                 CreateCluster("testcluster2", "West US");
                 CreateCluster("testcluster3", "East US");
-                var containersList = clustersPocoClient.ListContainers().Result;
+                var containersList = paasClustersPocoClient.ListContainers().Result;
                 Assert.AreEqual(containersList.Count, 3);
                 Assert.IsNotNull(containersList.SingleOrDefault(cluster => cluster.Name.Equals("testcluster1")));
                 Assert.IsNotNull(containersList.SingleOrDefault(cluster => cluster.Name.Equals("testcluster2")));
@@ -81,12 +81,12 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClustersTests
         public void CanListCloudServicesWithDuplicateNames()
         {
             var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
-                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(Capabilities));
-            using (var clustersPocoClient = new ClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient))
+                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, PaasClustersPocoClient.GetSchemaVersion(Capabilities));
+            using (var paasClustersPocoClient = new PaasClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient))
             {
                 CreateCluster("testcluster1", "West US");
                 CreateCluster("testcluster1", "East US");
-                var containersList = clustersPocoClient.ListContainers().Result;
+                var containersList = paasClustersPocoClient.ListContainers().Result;
                 Assert.AreEqual(containersList.Count, 2);
                 Assert.IsNotNull(containersList.SingleOrDefault(cluster => cluster.Name.Equals("testcluster1") && cluster.Location.Equals("West US")));
                 Assert.IsNotNull(containersList.SingleOrDefault(cluster => cluster.Name.Equals("testcluster1") && cluster.Location.Equals("East US")));
@@ -98,21 +98,21 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClustersTests
         public void CanGetCloudServicesWithDuplicateNames()
         {
             var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
-                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(Capabilities));
-            using (var clustersPocoClient = new ClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient))
+                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, PaasClustersPocoClient.GetSchemaVersion(Capabilities));
+            using (var paasClustersPocoClient = new PaasClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient))
             {
                 CreateCluster("testcluster1", "West US");
                 CreateCluster("testcluster1", "East US");
-                var containersList = clustersPocoClient.ListContainers().Result;
+                var containersList = paasClustersPocoClient.ListContainers().Result;
                 Assert.AreEqual(containersList.Count, 2);
                 // Now list cluster without region name and the first one should always be returned
-                Assert.IsNotNull(clustersPocoClient.ListContainer("testcluster1"));
-                Assert.IsNotNull(clustersPocoClient.ListContainer("testcluster1").Result.Location.Equals("West US"));
+                Assert.IsNotNull(paasClustersPocoClient.ListContainer("testcluster1"));
+                Assert.IsNotNull(paasClustersPocoClient.ListContainer("testcluster1").Result.Location.Equals("West US"));
                 // Now list cluster with region name 
-                Assert.IsNotNull(clustersPocoClient.ListContainer("testcluster1", "West US"));
-                Assert.IsNotNull(clustersPocoClient.ListContainer("testcluster1", "West US").Result.Location.Equals("West US"));
-                Assert.IsNotNull(clustersPocoClient.ListContainer("testcluster1", "East US"));
-                Assert.IsNotNull(clustersPocoClient.ListContainer("testcluster1", "East US").Result.Location.Equals("East US"));
+                Assert.IsNotNull(paasClustersPocoClient.ListContainer("testcluster1", "West US"));
+                Assert.IsNotNull(paasClustersPocoClient.ListContainer("testcluster1", "West US").Result.Location.Equals("West US"));
+                Assert.IsNotNull(paasClustersPocoClient.ListContainer("testcluster1", "East US"));
+                Assert.IsNotNull(paasClustersPocoClient.ListContainer("testcluster1", "East US").Result.Location.Equals("East US"));
             }
         }
 
@@ -121,17 +121,17 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClustersTests
         public void CanDeleteCloudServicesWithDuplicateNames()
         {
             var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
-                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(Capabilities));
-            using (var clustersPocoClient = new ClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient))
+                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, PaasClustersPocoClient.GetSchemaVersion(Capabilities));
+            using (var paasClustersPocoClient = new PaasClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient))
             {
                 CreateCluster("testcluster1", "West US");
                 CreateCluster("testcluster1", "East US");
-                var containersList = clustersPocoClient.ListContainers().Result;
+                var containersList = paasClustersPocoClient.ListContainers().Result;
                 Assert.AreEqual(containersList.Count, 2);
                 // Now delete cluster without region name and both should be deleted
                 try
                 {
-                    clustersPocoClient.DeleteContainer("testcluster1").Wait();
+                    paasClustersPocoClient.DeleteContainer("testcluster1").Wait();
                     Assert.Fail("Exception not thrown");
                 }
                 catch (AggregateException age)
@@ -140,7 +140,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClustersTests
                     Assert.IsTrue(age.InnerException is InvalidOperationException, "Exception is not InvalidOperationException");
                     Assert.AreEqual("Multiple clusters found with dnsname 'testcluster1'. Please specify dnsname and location", age.InnerException.Message, "Message not as expected");
                 }
-                containersList = clustersPocoClient.ListContainers().Result;
+                containersList = paasClustersPocoClient.ListContainers().Result;
                 Assert.AreEqual(containersList.Count, 2);
             }
         }
@@ -150,19 +150,19 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClustersTests
         public void CanDeleteCloudServiceWithRegionWithDuplicateNames()
         {
             var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
-                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(Capabilities));
-            using (var clustersPocoClient = new ClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient))
+                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, PaasClustersPocoClient.GetSchemaVersion(Capabilities));
+            using (var paasClustersPocoClient = new PaasClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient))
             {
                 CreateCluster("testcluster1", "West US");
                 CreateCluster("testcluster1", "East US");
-                var containersList = clustersPocoClient.ListContainers().Result;
+                var containersList = paasClustersPocoClient.ListContainers().Result;
                 Assert.AreEqual(containersList.Count, 2);
                 // Now delete cluster without region name and both should be deleted
-                clustersPocoClient.DeleteContainer("testcluster1", "West US");
-                containersList = clustersPocoClient.ListContainers().Result;
+                paasClustersPocoClient.DeleteContainer("testcluster1", "West US");
+                containersList = paasClustersPocoClient.ListContainers().Result;
                 Assert.AreEqual(containersList.Count, 1);
-                Assert.IsNotNull(clustersPocoClient.ListContainer("testcluster1", "East US"));
-                Assert.IsNotNull(clustersPocoClient.ListContainer("testcluster1", "East US").Result.Location.Equals("East US"));
+                Assert.IsNotNull(paasClustersPocoClient.ListContainer("testcluster1", "East US"));
+                Assert.IsNotNull(paasClustersPocoClient.ListContainer("testcluster1", "East US").Result.Location.Equals("East US"));
             }
         }
 
@@ -172,15 +172,15 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClustersTests
         public async Task CannotDeserializeClusterWithoutClusterCapability()
         {
             var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
-                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(Capabilities));
-            var clustersPocoClient = new ClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient);
+                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, PaasClustersPocoClient.GetSchemaVersion(Capabilities));
+            var paasClustersPocoClient = new PaasClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient);
             CreateClusterWithoutCapability("testcluster", "West US");
-            var cluster = clustersPocoClient.ListContainer("testcluster").Result;
+            var cluster = paasClustersPocoClient.ListContainer("testcluster").Result;
             var originalInstanceCount = cluster.ClusterSizeInNodes;
             var expectedNewCount = originalInstanceCount * 2;
             Assert.AreEqual(cluster.ClusterSizeInNodes, originalInstanceCount);
-            await clustersPocoClient.ChangeClusterSize("testcluster", cluster.Location, expectedNewCount);
-            cluster = clustersPocoClient.ListContainer("testcluster").Result;
+            await paasClustersPocoClient.ChangeClusterSize("testcluster", cluster.Location, expectedNewCount);
+            cluster = paasClustersPocoClient.ListContainer("testcluster").Result;
             var actualNewCount = cluster.ClusterSizeInNodes;
             Assert.AreEqual(expectedNewCount, actualNewCount);
         }
@@ -190,15 +190,15 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClustersTests
         public async Task CanResizeCluster()
         {
             var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
-                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(Capabilities));
-            var clustersPocoClient = new ClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient);
+                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, PaasClustersPocoClient.GetSchemaVersion(Capabilities));
+            var paasClustersPocoClient = new PaasClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient);
             CreateCluster("testcluster", "West US");
-            var cluster = clustersPocoClient.ListContainer("testcluster").Result;
+            var cluster = paasClustersPocoClient.ListContainer("testcluster").Result;
             var originalInstanceCount = cluster.ClusterSizeInNodes;
             var expectedNewCount = originalInstanceCount * 2;
             Assert.AreEqual(cluster.ClusterSizeInNodes, originalInstanceCount);
-            await clustersPocoClient.ChangeClusterSize("testcluster", cluster.Location, expectedNewCount);
-            cluster = clustersPocoClient.ListContainer("testcluster").Result;
+            await paasClustersPocoClient.ChangeClusterSize("testcluster", cluster.Location, expectedNewCount);
+            cluster = paasClustersPocoClient.ListContainer("testcluster").Result;
             var actualNewCount = cluster.ClusterSizeInNodes;
             Assert.AreEqual(expectedNewCount, actualNewCount);
         }
@@ -208,13 +208,13 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClustersTests
         public async Task ResizeToSameSizeReturnsEmptyGuidOperationId()
         {
             var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
-                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(Capabilities));
-            var clustersPocoClient = new ClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient);
+                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, PaasClustersPocoClient.GetSchemaVersion(Capabilities));
+            var paasClustersPocoClient = new PaasClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient);
             CreateCluster("testcluster", "West US");
-            var cluster = clustersPocoClient.ListContainer("testcluster").Result;
+            var cluster = paasClustersPocoClient.ListContainer("testcluster").Result;
             var originalInstanceCount = cluster.ClusterSizeInNodes;
 
-            var operationId = await clustersPocoClient.ChangeClusterSize("testcluster", cluster.Location, originalInstanceCount);
+            var operationId = await paasClustersPocoClient.ChangeClusterSize("testcluster", cluster.Location, originalInstanceCount);
             Assert.AreEqual(operationId, Guid.Empty);
         }
 
@@ -225,12 +225,12 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClustersTests
             var capabilities = new List<string>();
             capabilities.Add("CAPABILITY_FEATURE_CLUSTERS_CONTRACT_1_SDK");
             var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
-                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(capabilities));
-            var clustersPocoClient = new ClustersPocoClient(this.HdInsightCertCred, false, this.Context, capabilities, restClient);
+                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, PaasClustersPocoClient.GetSchemaVersion(capabilities));
+            var paasClustersPocoClient = new PaasClustersPocoClient(this.HdInsightCertCred, false, this.Context, capabilities, restClient);
             CreateCluster("testcluster", "West US");
             try
             {
-                await clustersPocoClient.ChangeClusterSize("testcluster", "West US", 100);
+                await paasClustersPocoClient.ChangeClusterSize("testcluster", "West US", 100);
             }
             catch (NotSupportedException ex)
             {
@@ -243,15 +243,15 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClustersTests
         public async Task CannotResizeClusterToLessThanOne()
         {
             var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
-                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(Capabilities));
-            var clustersPocoClient = new ClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient);
+                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, PaasClustersPocoClient.GetSchemaVersion(Capabilities));
+            var paasClustersPocoClient = new PaasClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient);
             CreateCluster("testcluster", "West US");
-            var cluster = clustersPocoClient.ListContainer("testcluster").Result;
+            var cluster = paasClustersPocoClient.ListContainer("testcluster").Result;
             var originalInstanceCount = cluster.ClusterSizeInNodes;
             Assert.AreEqual(cluster.ClusterSizeInNodes, originalInstanceCount);
             try
             {
-                await clustersPocoClient.ChangeClusterSize("testcluster", cluster.Location, 0);
+                await paasClustersPocoClient.ChangeClusterSize("testcluster", cluster.Location, 0);
             }
             catch (ArgumentOutOfRangeException ex)
             {
@@ -265,8 +265,8 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClustersTests
         public async Task CannotCreateCustomizedClusterWithoutCapability()
         {
             var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
-                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(Capabilities));
-            var clustersPocoClient = new ClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient);
+                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, PaasClustersPocoClient.GetSchemaVersion(Capabilities));
+            var paasClustersPocoClient = new PaasClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient);
             try
             {
                 var clusterCreateParameters = new HDInsight.ClusterCreateParametersV2
@@ -285,7 +285,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClustersTests
                 // Add in valid config action.
                 clusterCreateParameters.ConfigActions.Add(new ScriptAction("TestScriptAction", new ClusterNodeType[] { ClusterNodeType.HeadNode }, new Uri("http://www.microsoft.com"), null));
 
-                await clustersPocoClient.CreateContainer(clusterCreateParameters);
+                await paasClustersPocoClient.CreateContainer(clusterCreateParameters);
             }
             catch (NotSupportedException ex)
             {
@@ -546,7 +546,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClustersTests
         public void ShouldSendClusterConfigActionWithCorrectCapabilities()
         {
             var capabilities = new[] { "CAPABILITY_FEATURE_CLUSTERS_CONTRACT_1_SDK", "CAPABILITY_FEATURE_CLUSTERS_CONTRACT_2_SDK", "CAPABILITY_FEATURE_POWERSHELL_SCRIPT_ACTION_SDK" };
-            Assert.IsTrue(ClustersPocoClient.HasCorrectSchemaVersionForConfigAction(capabilities) && ClustersPocoClient.HasClusterConfigActionCapability(capabilities));
+            Assert.IsTrue(PaasClustersPocoClient.HasCorrectSchemaVersionForConfigAction(capabilities) && PaasClustersPocoClient.HasClusterConfigActionCapability(capabilities));
         }
 
         [TestMethod]
@@ -554,7 +554,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClustersTests
         public void ShouldNotSendClusterConfigActionWithoutSchemaVersion2()
         {
             var capabilities = new[] { "CAPABILITY_FEATURE_CLUSTERS_CONTRACT_1_SDK", "CAPABILITY_FEATURE_POWERSHELL_SCRIPT_ACTION_SDK" };
-            Assert.IsFalse(ClustersPocoClient.HasCorrectSchemaVersionForConfigAction(capabilities));
+            Assert.IsFalse(PaasClustersPocoClient.HasCorrectSchemaVersionForConfigAction(capabilities));
         }
 
         [TestMethod]
@@ -562,7 +562,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClustersTests
         public void ShouldNotSendClusterConfigActionWithoutConfigActionCapability()
         {
             var capabilities = new[] { "CAPABILITY_FEATURE_CLUSTERS_CONTRACT_1_SDK", "CAPABILITY_FEATURE_CLUSTERS_CONTRACT_2_SDK" };
-            Assert.IsFalse(ClustersPocoClient.HasClusterConfigActionCapability(capabilities));
+            Assert.IsFalse(PaasClustersPocoClient.HasClusterConfigActionCapability(capabilities));
         }
 
         [TestMethod]

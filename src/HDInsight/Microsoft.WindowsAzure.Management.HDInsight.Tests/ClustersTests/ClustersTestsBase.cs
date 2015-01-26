@@ -8,7 +8,7 @@
     using System.Web.Http;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Data;
-    using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoClient.ClustersResource;
+    using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoClient.PaasClusters;
     using Microsoft.WindowsAzure.Management.HDInsight.Contracts.May2014;
     using Microsoft.WindowsAzure.Management.HDInsight.TestUtilities;
 
@@ -68,7 +68,7 @@
             };
 
             var testCluster = CreateClusterFromCreateParameters(clusterCreateParameters);
-            testCluster.ClusterCapabilities = new List<string> { ClustersPocoClient.ResizeCapabilityEnabled };
+            testCluster.ClusterCapabilities = new List<string> { PaasClustersPocoClient.ResizeCapabilityEnabled };
 
             List<Cluster> clusters;
             bool subExists = RootHandlerSimulatorController._clustersAvailable.TryGetValue(TestSubscription, out clusters);
