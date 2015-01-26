@@ -163,6 +163,21 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         public string SubnetName { get; set; }
 
         /// <summary>
+        /// Gets or sets the type of operating system installed on cluster nodes.
+        /// </summary>
+        public OSType OSType { get; set; }
+
+        /// <summary>
+        /// Gets or sets SSH user name.
+        /// </summary>
+        public string SshUserName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the public key to be used for SSH.
+        /// </summary>
+        public string SshPublicKey { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the ClusterCreateParameters class.
         /// </summary>
         public ClusterCreateParameters()
@@ -182,6 +197,9 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
             // By default create hadoop only cluster unless set otherwise
             this.ClusterType = ClusterType.Hadoop; 
             this.HeadNodeSize = NodeVMSize.Default;
+
+            // By default choose Windows
+            this.OSType = HDInsight.OSType.Windows;
         }
     }
 }

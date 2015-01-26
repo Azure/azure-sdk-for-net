@@ -7,7 +7,7 @@
     using System.Linq;
     using System.Xml;
     using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Data.Rdfe;
-    using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoClient.ClustersResource.Extensions;
+    using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoClient.PaasClusters.Extensions;
     using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.VersionFinder;
     using Microsoft.WindowsAzure.Management.HDInsight.Contracts.May2014;
     using Microsoft.WindowsAzure.Management.HDInsight.Contracts.May2014.Components;
@@ -135,6 +135,9 @@
             clusterDetails.ClusterType = !string.IsNullOrEmpty(componentListCommaSeperated) 
                                         ? GetClusterTypeFromComponentList(componentListCommaSeperated) 
                                         : ClusterType.Unknown;
+
+            // This code will only execute for PaaS clusters which only support Windows
+            clusterDetails.ClusterOSType = OSType.Windows;
 
             if (clusterDetailsFromServer.Error != null)
             {

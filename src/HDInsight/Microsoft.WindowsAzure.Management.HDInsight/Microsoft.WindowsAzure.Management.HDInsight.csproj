@@ -13,6 +13,10 @@
   </PropertyGroup>
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
   <ItemGroup>
+    <Reference Include="BouncyCastle.Crypto, Version=1.7.4137.9688, Culture=neutral, PublicKeyToken=a4292a325f69b123, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\packages\BouncyCastle.1.7.0\lib\Net40-Client\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.WindowsAzure.Common">
       <HintPath>$(LibraryNugetPackageFolder)\Microsoft.WindowsAzure.Common.1.3.0\lib\net45\Microsoft.WindowsAzure.Common.dll</HintPath>
     </Reference>
@@ -25,9 +29,16 @@
     <Compile Include="ClusterNodeType.cs" />
     <Compile Include="ClusterProvisioning\Data\ClusterCreateParametersV2.cs" />
     <Compile Include="ClusterProvisioning\Data\ClusterType.cs" />
+    <Compile Include="ClusterProvisioning\Data\DocumentTemplates\VersionToDocumentMapper.cs" />
     <Compile Include="ClusterProvisioning\Data\HBaseConfiguration.cs" />
     <Compile Include="ClusterProvisioning\Data\HdInsightClusterRequestGenerator.cs" />
     <Compile Include="ClusterProvisioning\Data\ConfigAction.cs" />
+    <Compile Include="ClusterProvisioning\Data\Iaas\AmbariConfigurationDocumentManager.cs" />
+    <Compile Include="ClusterProvisioning\Data\Iaas\AzureCsmDocumentManager.cs" />
+    <Compile Include="ClusterProvisioning\Data\Iaas\JsonHelper.cs" />
+    <Compile Include="ClusterProvisioning\Data\Iaas\OpenSshToX509CertificateHelper.cs" />
+    <Compile Include="ClusterProvisioning\Data\OSType.cs" />
+    <Compile Include="ClusterProvisioning\Data\Iaas\PayloadConverterIaasClusters.cs" />
     <Compile Include="ClusterProvisioning\Data\ScriptAction.cs" />
     <Compile Include="ClusterProvisioning\Data\NodeVMSize.cs" />
     <Compile Include="ClusterProvisioning\Data\PayloadConverterClusters.cs" />
@@ -49,17 +60,24 @@
     <Compile Include="ClusterProvisioning\PocoClient\ClustersResource\ClustersPocoClient.cs" />
     <Compile Include="ClusterProvisioning\PocoClient\ClustersResource\Extensions\WabStorageAccountConfigurationExtensions.cs" />
     <Compile Include="ClusterProvisioning\PocoClient\SchemaVersionUtils.cs" />
+    <Compile Include="ClusterProvisioning\PocoClient\IaasClusters\IaasClustersPocoClient.cs" />
+    <Compile Include="ClusterProvisioning\PocoClient\PaasClusters\PaasClustersPocoClient.cs" />
+    <Compile Include="ClusterProvisioning\PocoClient\PaasClusters\Extensions\WabStorageAccountConfigurationExtensions.cs" />
     <Compile Include="ClusterProvisioning\PocoClient\UriEndpointValidator.cs" />
     <Compile Include="ClusterProvisioning\ResourceTypeFinder\IRdfeResourceTypeFinderFactory.cs" />
     <Compile Include="ClusterProvisioning\ResourceTypeFinder\IRdfeResourceTypeFinderClient.cs" />
     <Compile Include="ClusterProvisioning\ResourceTypeFinder\RdfeResourceTypeFinderClient.cs" />
     <Compile Include="ClusterProvisioning\ResourceTypeFinder\RdfeResourceTypeFinderClientFactory.cs" />
-    <Compile Include="ClusterProvisioning\RestClient\ClustersResource\BearerTokenMessageHandler.cs" />
-    <Compile Include="ClusterProvisioning\RestClient\ClustersResource\CustomHeaderHandler.cs" />
+    <Compile Include="ClusterProvisioning\RestClient\BearerTokenMessageHandler.cs" />
+    <Compile Include="ClusterProvisioning\RestClient\CustomHeaderHandler.cs" />
     <Compile Include="ClusterProvisioning\RestClient\ClustersResource\IRDFEClustersResourceRestClient.cs" />
     <Compile Include="ClusterProvisioning\RestClient\ClustersResource\IRDFEClustersResourceRestClientFactory.cs" />
     <Compile Include="ClusterProvisioning\RestClient\ClustersResource\RdfeClustersResourceRestClient.cs" />
     <Compile Include="ClusterProvisioning\RestClient\ClustersResource\RdfeClustersResourceRestClientFactory.cs" />
+    <Compile Include="ClusterProvisioning\RestClient\IaasClusters\IRdfeIaasClustersRestClientFactory.cs" />
+    <Compile Include="ClusterProvisioning\RestClient\IaasClusters\IRdfeIaasClustersRestClient.cs" />
+    <Compile Include="ClusterProvisioning\RestClient\IaasClusters\RdfeIaasClustersRestClient.cs" />
+    <Compile Include="ClusterProvisioning\RestClient\IaasClusters\RdfeIaasClustersRestClientFactory.cs" />
     <Compile Include="HDInsightClusterCreateException.cs" />
     <Compile Include="HDInsightClusterDoesNotExistException.cs" />
     <Compile Include="JobSubmission\JobSubmissionCache.cs" />
@@ -160,6 +178,8 @@
     <Compile Include="JobSubmission\PocoClient\HDInsightJobSubmissionPocoClient.cs" />
     <Compile Include="JobSubmission\PocoClient\HDInsightJobSubmissionPocoClientFactory.cs" />
     <None Include="app.config" />
+    <EmbeddedResource Include="ClusterProvisioning\Data\DocumentTemplates\Common\hadoop-azure.json" />
+    <EmbeddedResource Include="ClusterProvisioning\Data\DocumentTemplates\3.2\hadoop-configuration.json" />
     <None Include="JobSubmission\PocoClient\RDFE\HDInsightRdfeJobSubmissionPocoClient.cs" />
     <None Include="JobSubmission\PocoClient\RDFE\HDInsightRdfeJobSubmissionPocoClientFactory.cs" />
     <Compile Include="JobSubmission\PocoClient\IHDInsightJobSubmissionPocoClient.cs" />
@@ -204,4 +224,14 @@
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(LibraryFxTarget)' == 'portable' " />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(LibraryFxTarget)' != 'portable' " />
   <Import Project="$(LibraryNugetPackageFolder)\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('$(LibraryNugetPackageFolder)\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
+  <ItemGroup />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(WindowsAzureCurrentConfiguration)' == 'portable' " />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(WindowsAzureCurrentConfiguration)' != 'portable' " />
+  <Import Project="$(SolutionDir)\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('$(SolutionDir)\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
+    <Error Condition="!Exists('$(SolutionDir)\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('$(SolutionDir)\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  </Target>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets') " />
+  <Import Project="$(SolutionDir)\src\library.targets" />
 </Project>

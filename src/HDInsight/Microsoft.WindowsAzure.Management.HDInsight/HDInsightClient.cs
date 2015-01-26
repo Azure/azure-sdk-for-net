@@ -33,7 +33,8 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
     using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Data;
     using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.LocationFinder;
     using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoClient;
-    using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoClient.ClustersResource;
+    using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoClient.IaasClusters;
+    using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoClient.PaasClusters;
     using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.ResourceTypeFinder;
     using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.RestClient;
     using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.VersionFinder;
@@ -154,23 +155,32 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         /// <inheritdoc />
         public async Task<ICollection<ClusterDetails>> ListClustersAsync()
         {
-            ICollection<ClusterDetails> clustersFromContainersResourceType;
+            ICollection<ClusterDetails> allClusters;
 
+            // List all clusters using the containers client
             using (var client = this.CreateContainersPocoClient())
             {
-                clustersFromContainersResourceType = await client.ListContainers();
+                allClusters = await client.ListContainers();
             }
 
+            // List all clusters using the clusters client
             if (this.canUseClustersContract.Value)
             {
                 using (var client = this.CreateClustersPocoClient(this.capabilities.Value))
                 {
-                    var clustersFromClustersResourceType = await client.ListContainers();
-                    return clustersFromClustersResourceType.Concat(clustersFromContainersResourceType).ToList();
+                    var clusters = await client.ListContainers();
+                    allClusters = clusters.Concat(allClusters).ToList();
                 }
             }
 
-            return clustersFromContainersResourceType;
+            // List all clusters using the iaas clusters client
+            using (var client = this.CreateIaasClustersPocoClient(this.capabilities.Value))
+            {
+                var iaasClusters = await client.ListContainers();
+                allClusters = iaasClusters.Concat(allClusters).ToList();
+            }
+
+            return allClusters;
         }
 
         /// <inheritdoc />
@@ -312,6 +322,72 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
             return result;
         }
 
+        private async Task<ClusterDetails> CreateIaasClusterAsync(ClusterCreateParameters clusterCreateParameters)
+        {
+            if (clusterCreateParameters == null)
+            {
+                throw new ArgumentNullException("clusterCreateParameters");
+            }
+
+            IHDInsightManagementPocoClient client = this.CreateIaasClustersPocoClient(this.capabilities.Value);
+
+            // listen to cluster provisioning events on the POCO client.
+            client.ClusterProvisioning += this.RaiseClusterProvisioningEvent;
+            Exception requestException = null;
+
+            // Creates a cluster and waits for it to complete
+            try
+            {
+                this.LogMessage("Sending Cluster Create Request", Severity.Informational, Verbosity.Detailed);
+                await client.CreateContainer(clusterCreateParameters);
+            }
+            catch (Exception ex)
+            {
+                ex = ex.GetFirstException();
+                var hlex = ex as HttpLayerException;
+                var httpEx = ex as HttpRequestException;
+                var webex = ex as WebException;
+                if (hlex.IsNotNull() || httpEx.IsNotNull() || webex.IsNotNull())
+                {
+                    requestException = ex;
+                    if (hlex.IsNotNull())
+                    {
+                        HandleCreateHttpLayerException(clusterCreateParameters, hlex);
+                    }
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            await client.WaitForClusterInConditionOrError(this.HandleClusterWaitNotifyEvent,
+                                                          clusterCreateParameters.Name,
+                                                          clusterCreateParameters.Location,
+                                                          clusterCreateParameters.CreateTimeout,
+                                                          this.PollingInterval,
+                                                          this.Context,
+                                                          ClusterState.Operational,
+                                                          ClusterState.Running);
+
+            // Validates that cluster didn't get on error state
+            var result = this.currentDetails;
+            if (result == null)
+            {
+                if (requestException != null)
+                {
+                    throw requestException;
+                }
+                throw new HDInsightClusterCreateException("Attempting to return the newly created cluster returned no cluster.  The cluster could not be found.");
+            }
+            if (result.Error != null)
+            {
+                throw new HDInsightClusterCreateException(result);
+            }
+
+            return result;
+        }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", Justification = "They are not",
             MessageId = "Microsoft.WindowsAzure.Management.HDInsight.Logging.LogProviderExtensions.LogMessage(Microsoft.WindowsAzure.Management.HDInsight.Logging.ILogProvider,System.String,Microsoft.WindowsAzure.Management.HDInsight.Logging.Severity,Microsoft.WindowsAzure.Management.HDInsight.Logging.Verbosity)")]
         private bool CanUseClustersContract()
@@ -339,7 +415,12 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
 
         private IHDInsightManagementPocoClient CreateClustersPocoClient(List<string> capabilities)
         {
-            return new ClustersPocoClient(this.credentials, this.IgnoreSslErrors, this.Context, capabilities);
+            return new PaasClustersPocoClient(this.credentials, this.IgnoreSslErrors, this.Context, capabilities);
+        }
+
+        private IHDInsightManagementPocoClient CreateIaasClustersPocoClient(List<string> capabilities)
+        {
+            return new IaasClustersPocoClient(this.credentials, this.IgnoreSslErrors, this.Context, capabilities);
         }
 
         private IHDInsightManagementPocoClient CreateContainersPocoClient()
@@ -360,6 +441,8 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
                         return this.CreateClustersPocoClient(this.capabilities.Value);
                     case RdfeResourceType.Containers:
                         return this.CreateContainersPocoClient();
+                    case RdfeResourceType.IaasClusters:
+                        return this.CreateIaasClustersPocoClient(this.capabilities.Value);
                     default:
                         throw new HDInsightClusterDoesNotExistException(dnsName);
                 }
@@ -517,23 +600,27 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         /// <inheritdoc />
         public ClusterDetails CreateCluster(ClusterCreateParameters cluster)
         {
-            return this.CreateClusterAsync(new ClusterCreateParametersV2(cluster)).WaitForResult();
+            if (cluster.OSType == OSType.Linux)
+            {
+                return this.CreateIaasClusterAsync(cluster).WaitForResult();
+            }
+            else
+            {
+                return this.CreateClusterAsync(cluster).WaitForResult();
+            }
         }
 
         /// <inheritdoc />
         public ClusterDetails CreateCluster(ClusterCreateParameters cluster, TimeSpan timeout)
         {
-            return this.CreateClusterAsync(new ClusterCreateParametersV2(cluster)).WaitForResult(timeout);
-        }
-
-        public ClusterDetails CreateCluster(ClusterCreateParametersV2 cluster)
-        {
-            return this.CreateClusterAsync(cluster).WaitForResult();
-        }
-
-        public ClusterDetails CreateCluster(ClusterCreateParametersV2 cluster, TimeSpan timeout)
-        {
-            return this.CreateClusterAsync(cluster).WaitForResult(timeout);
+            if (cluster.OSType == OSType.Linux)
+            {
+                return this.CreateIaasClusterAsync(cluster).WaitForResult(timeout);
+            }
+            else
+            {
+                return this.CreateClusterAsync(cluster).WaitForResult(timeout);
+            }
         }
 
         /// <inheritdoc />
