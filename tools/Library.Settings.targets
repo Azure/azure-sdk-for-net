@@ -8,6 +8,8 @@
     <AssemblyOriginatorKeyFile Condition=" '$(AssemblyOriginatorKeyFile)' == '' ">$(LibraryRoot)\tools\MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
     <LibraryFxTarget Condition="'$(HyakFxTarget)' == ''">net45</LibraryFxTarget>
     <!--'GenerateHydraSpecs' is not a great name, means whether or not to invoke hyak.exe to regenerate the code. -->
+    <!--If we are inside visual studio, we always invoke code-gen. This is the optimization made for parnter service teams-->
+    <GenerateHydraSpecs Condition=" '$(GenerateHydraSpecs)' == '' and '$(BuildingInsideVisualStudio)' == 'true' " >true</GenerateHydraSpecs>
     <GenerateHydraSpecs Condition=" '$(GenerateHydraSpecs)' == '' and '$(PRIVATE_FEED_URL)' == '' ">false</GenerateHydraSpecs>
     <GenerateHydraSpecs Condition=" '$(GenerateHydraSpecs)' == '' and '$(PRIVATE_FEED_URL)' != '' ">true</GenerateHydraSpecs>
   </PropertyGroup>
