@@ -10,11 +10,14 @@
     <RootNamespace>Common.Authorization.Test</RootNamespace>
     <AssemblyName>Common.Authorization.Test</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <RootNamespace>Common.Extensions.Test</RootNamespace>
-    <AssemblyName>Common.Extensions.Test</AssemblyName>
+    <RootNamespace>Common.Authorization.Test</RootNamespace>
+    <AssemblyName>Common.Authorization.Test</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Net45-Release'">
+    <DocumentationFile>bin\Net45-Release\Common.Authorization.Test.xml</DocumentationFile>
   </PropertyGroup>
   <Import Project="..\..\tools\Library.Settings.targets" />
   <ItemGroup>
@@ -75,7 +78,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Resources\ResourceLocator.cs" />
+    <EmbeddedResource Include="Resources\ResourceLocator.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common.Authorization\Common.Authorization.csproj">
@@ -85,24 +88,25 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Resources\Azure.publishsettings" />
-    <None Include="Resources\GB18030ServiceDefinition.csdef" />
-    <None Include="Resources\InvalidProfile.PublishSettings" />
-    <None Include="Resources\ValidProfile.PublishSettings" />
-    <None Include="Resources\ValidProfile2.PublishSettings" />
-    <None Include="Resources\ValidProfile3.PublishSettings" />
-    <None Include="Resources\ValidProfileChina.PublishSettings" />
-    <None Include="Resources\ValidProfileChinaOld.PublishSettings" />
+    <EmbeddedResource Include="Resources\Azure.publishsettings" />
+    <EmbeddedResource Include="Resources\GB18030ServiceDefinition.csdef" />
+    <EmbeddedResource Include="Resources\InvalidProfile.PublishSettings" />
+    <EmbeddedResource Include="Resources\ValidProfile.PublishSettings" />
+    <EmbeddedResource Include="Resources\ValidProfile2.PublishSettings" />
+    <EmbeddedResource Include="Resources\ValidProfile3.PublishSettings" />
+    <EmbeddedResource Include="Resources\ValidProfileChina.PublishSettings" />
+    <EmbeddedResource Include="Resources\ValidProfileChinaOld.PublishSettings" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\invalidsubscriptions.xml" />
-    <Content Include="Resources\subscriptions.xml" />
-    <Content Include="Resources\testruntimemanifest.xml" />
+    <EmbeddedResource Include="Resources\invalidsubscriptions.xml" />
+    <EmbeddedResource Include="Resources\subscriptions.xml" />
+    <EmbeddedResource Include="Resources\testruntimemanifest.xml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
