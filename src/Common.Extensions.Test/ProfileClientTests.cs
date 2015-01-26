@@ -35,8 +35,6 @@ namespace Common.Extensions.Test
         private string oldProfileDataPath;
         private string oldProfileDataPathError;
         private string newProfileDataPath;
-        private string jsonProfileWithoutAccount;
-        private string jsonProfileWithBadData;
         private string defaultSubscription = "06E3F6FD-A3AA-439A-8FC4-1F5C41D2AD1F";
         private SubscriptionListOperationResponse.Subscription rdfeSubscription1;
         private SubscriptionListOperationResponse.Subscription rdfeSubscription2;
@@ -1550,42 +1548,6 @@ namespace Common.Extensions.Test
                   <Subscriptions>                    
                   </Subscriptions>
                 </ProfileData>";
-
-            jsonProfileWithoutAccount = @"{
-              ""Environments"": [],
-              ""Subscriptions"": [  
-                {
-                  ""Id"": ""7e11f45f-70e6-430a-a4fc-af338aa22c11"",
-                  ""Name"": ""Test"",
-                  ""Environment"": ""AzureCloud"",
-                  ""Account"": ""test@mail.com"",
-                  ""Properties"": {
-                    ""SupportedModes"": ""AzureServiceManagement"",
-                    ""Default"": ""True"",
-                    ""StorageAccount"": ""rjfmmanagement""
-                  }
-                }
-              ],
-              ""Accounts"": []
-            }";
-
-            jsonProfileWithBadData = @"{
-              ""Environments"": [],
-              ""Subscriptions"": {  
-                {
-                  ""Id"": ""7e11f45f-70e6-430a-a4fc-af338aa22c11"",
-                  ""Name"": ""Test"",
-                  ""Environment"": ""AzureCloud"",
-                  ""Account"": ""test@mail.com"",
-                  ""Properties"": {
-                    ""SupportedModes"": ""AzureServiceManagement"",
-                    ""Default"": ""True"",
-                    ""StorageAccount"": ""rjfmmanagement""
-                  }
-                }
-              ],
-              ""Accounts"": []
-            }";
         }
     }
 }
