@@ -6,6 +6,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Contracts
 {
     using Microsoft.WindowsAzure.Management.HDInsight.Contracts.May2014;
     using Microsoft.WindowsAzure.Management.HDInsight.Contracts.May2014.Components;
+    using Microsoft.WindowsAzure.Management.HDInsight.Contracts.Iaas.Jan2015;
 
     /// <summary>
     /// Class that represents a response to a passthrough request.
@@ -35,6 +36,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Contracts
     [KnownType(typeof(StormComponent))]
     [KnownType(typeof(DashboardComponent))]
     [KnownType(typeof(UserChangeOperationStatusResponse))]
+    [KnownType(typeof(IaasCluster))]
     [DataContract(Namespace = May2013.Constants.XsdNamespace)]
     public class PassthroughResponse
     {
