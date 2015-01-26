@@ -269,7 +269,7 @@
   </Target>
 
   <Target Name="RestorePublicNugetPackages">
-    <Exec Command="$(NuGetCommand) restore $(LibraryToolsFolder)\Packages.config -PackagesDirectory $(LibraryRoot)\packages -NonInteractive" />
+    <Exec Command="$(NuGetCommand) restore &quot;$(LibraryToolsFolder)\Packages.config&quot; -PackagesDirectory &quot;$(LibraryRoot)\packages&quot; -NonInteractive" />
   </Target>
 
   <!--Smoke test the packages under the output dir-->
