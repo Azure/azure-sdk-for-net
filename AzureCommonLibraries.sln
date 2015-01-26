@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{868850B4-1073-41A1-ABA8-A3B465880148}"
 EndProject
@@ -27,10 +27,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Test", "src\Common.Test\Common.Test.csproj", "{CB18ACEB-2825-4884-91FA-05C31AC779FE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Configuration.Test", "src\Configuration.Test\Configuration.Test.csproj", "{0645E75E-9C0B-47EE-B5A2-239286E1DED9}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Authorization", "src\Common.Authorization\Common.Authorization.csproj", "{B95C489C-8CB7-4DCF-8D5F-B9AEBDBBAF89}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Authorization.Test", "src\Common.Authorization.Test\Common.Authorization.Test.csproj", "{C2CF99A2-D35E-4AED-AFB9-C26960AF1D0D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
