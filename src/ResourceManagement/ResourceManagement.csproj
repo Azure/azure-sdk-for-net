@@ -25,9 +25,15 @@
     <Compile Include="Generated\Microsoft\Azure\ResourceIdentity.cs" />
     <Compile Include="Generated\Models\BasicDependency.cs" />
     <Compile Include="Generated\Models\Dependency.cs" />
+    <Compile Include="Generated\Models\FeatureOperationsListResult.cs" />
+    <Compile Include="Generated\Models\FeatureProperties.cs" />
+    <Compile Include="Generated\Models\FeatureResponse.cs" />
     <Compile Include="Generated\Models\ParametersLink.cs" />
     <Compile Include="Generated\Models\Plan.cs" />
-    <Compile Include="Generated\Models\ResourceMoveInfo.cs" />
+    <Compile Include="Generated\Models\ProviderRegistionResult.cs" />
+    <Compile Include="Generated\Models\ProviderUnregistionResult.cs" />
+    <Compile Include="Generated\Models\RegistrationState.cs" />
+    <Compile Include="Generated\Models\ResourcesMoveInfo.cs" />
     <Compile Include="Generated\Models\Subscription.cs" />
     <Compile Include="Generated\DeploymentOperationOperations.cs" />
     <Compile Include="Generated\DeploymentOperationOperationsExtensions.cs" />
