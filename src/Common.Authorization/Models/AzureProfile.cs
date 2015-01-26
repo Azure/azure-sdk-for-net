@@ -12,11 +12,11 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
+using System.Security.Cryptography.X509Certificates;
 using Hyak.Common;
 using Microsoft.Azure.Common.Authorization.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 
 namespace Microsoft.Azure.Common.Authorization.Models
@@ -25,13 +25,17 @@ namespace Microsoft.Azure.Common.Authorization.Models
     {
         private IDataStore store;
         private string profilePath;
-        private string tokenCacheFile = Path.Combine(AzureSession.ProfileDirectory, AzureSession.TokenCacheFile);
 
-        public AzureProfile()
+        public AzureProfile() : this(new DiskDataStore())
+        { }
+
+        public AzureProfile(IDataStore dataStore)
         {
             Environments = new Dictionary<string, AzureEnvironment>(StringComparer.InvariantCultureIgnoreCase);
             Subscriptions = new Dictionary<Guid, AzureSubscription>();
             Accounts = new Dictionary<string, AzureAccount>(StringComparer.InvariantCultureIgnoreCase);
+
+            this.store = dataStore;
         }
 
         public AzureProfile(IDataStore store, string profilePath)
@@ -40,6 +44,54 @@ namespace Microsoft.Azure.Common.Authorization.Models
             this.profilePath = profilePath;
 
             Load();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of AzureProfile using passed in certificate. The certificate
+        /// is imported into a certificate store.
+        /// </summary>
+        /// <param name="environment">Environment object.</param>
+        /// <param name="subscriptionId">Subscription Id</param>
+        /// <param name="storageAccount">Storage account name.</param>
+        /// <param name="certificate">Certificate to use with profile.</param>
+        /// <param name="store">Custom data store with certificate store.</param>
+        /// <returns></returns>
+        public static AzureProfile Create(AzureEnvironment environment, Guid subscriptionId,
+            string storageAccount, X509Certificate2 certificate, IDataStore store = null)
+        {
+            if (environment == null)
+            {
+                throw new ArgumentNullException("environment");
+            }
+            if (certificate == null)
+            {
+                throw new ArgumentNullException("environment");
+            }
+
+            var azureProfile = new AzureProfile(store);
+            azureProfile.Environments[environment.Name] = environment;
+
+            var azureAccount = new AzureAccount
+            {
+                Id = certificate.Thumbprint,
+                Type = AzureAccount.AccountType.Certificate
+            };
+            azureAccount.Properties[AzureAccount.Property.Subscriptions] = subscriptionId.ToString();
+            azureProfile.store.AddCertificate(certificate);
+            azureProfile.Accounts[azureAccount.Id] = azureAccount;
+
+            var azureSubscription = new AzureSubscription
+            {
+                Id = subscriptionId,
+                Name = subscriptionId.ToString(),
+                Environment = environment.Name
+            };
+            azureSubscription.Properties[AzureSubscription.Property.StorageAccount] = storageAccount;
+            azureSubscription.Properties[AzureSubscription.Property.Default] = "True";
+            azureSubscription.Account = certificate.Thumbprint;
+            azureProfile.Subscriptions[azureSubscription.Id] = azureSubscription;
+
+            return azureProfile;
         }
 
         private void Load()

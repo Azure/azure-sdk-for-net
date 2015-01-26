@@ -12,6 +12,7 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
+using System.Security.Cryptography.X509Certificates;
 using Microsoft.Azure.Common.Authorization;
 using Microsoft.Azure.Common.Authorization.Authentication;
 using Microsoft.Azure.Common.Authorization.Models;
@@ -74,6 +75,33 @@ namespace Common.Authorization.Test
 
             Assert.False(dataStore.FileExists(oldProfileDataPath));
             Assert.True(dataStore.FileExists(newProfileDataPath));
+        }
+
+        [Fact]
+        public void NewProfileFromEnvironmentWithNullsThrowsArgumentNullException()
+        {
+            MockDataStore dataStore = new MockDataStore();
+            dataStore.VirtualStore[oldProfileDataPath] = oldProfileData;
+            Assert.Throws<ArgumentNullException>(() =>
+                AzureProfile.Create(null, Guid.NewGuid(), "foo", new X509Certificate2(), dataStore));
+            Assert.Throws<ArgumentNullException>(() =>
+                AzureProfile.Create(AzureEnvironment.PublicEnvironments["AzureCloud"], Guid.NewGuid(), "foo", null, dataStore));
+        }
+
+        [Fact]
+        public void NewProfileFromEnvironmentReturnsProfile()
+        {
+            MockDataStore dataStore = new MockDataStore();
+            dataStore.VirtualStore[oldProfileDataPath] = oldProfileData;
+            var subscriptionId = Guid.NewGuid();
+            var certificate = new X509Certificate2("Resources\\pfxtest.pfx");
+
+            var profile = AzureProfile.Create(AzureEnvironment.PublicEnvironments["AzureCloud"],
+                subscriptionId, "foo", certificate, dataStore);
+
+            Assert.Equal("AzureCloud", profile.DefaultSubscription.Environment);
+            Assert.Equal(subscriptionId, profile.DefaultSubscription.Id);
+            Assert.Equal(certificate.Thumbprint, profile.DefaultSubscription.Account);
         }
 
         [Fact]
@@ -1016,7 +1044,7 @@ namespace Common.Authorization.Test
             ProfileClient client = new ProfileClient();
 
             dataStore.WriteFile("ImportPublishSettingsLoadsAndReturnsSubscriptions.publishsettings",
-                Properties.Resources.ValidProfile);
+                Common.Extensions.Test.Properties.Resources.ValidProfile);
 
             client.AddOrSetEnvironment(azureEnvironment);
             var subscriptions = client.ImportPublishSettings("ImportPublishSettingsLoadsAndReturnsSubscriptions.publishsettings", azureEnvironment.Name);
@@ -1042,7 +1070,7 @@ namespace Common.Authorization.Test
             client = new ProfileClient();
 
             dataStore.WriteFile("ImportPublishSettingsLoadsAndReturnsSubscriptions.publishsettings",
-                Properties.Resources.ValidProfile);
+                Common.Extensions.Test.Properties.Resources.ValidProfile);
 
             client.AddOrSetEnvironment(azureEnvironment);
             var subscriptions = client.ImportPublishSettings("ImportPublishSettingsLoadsAndReturnsSubscriptions.publishsettings", null);
@@ -1068,7 +1096,7 @@ namespace Common.Authorization.Test
             client = new ProfileClient();
 
             dataStore.WriteFile("ImportPublishSettingsLoadsAndReturnsSubscriptions.publishsettings",
-                Properties.Resources.ValidProfile3);
+                Common.Extensions.Test.Properties.Resources.ValidProfile3);
 
             client.AddOrSetEnvironment(azureEnvironment);
             var subscriptions = client.ImportPublishSettings("ImportPublishSettingsLoadsAndReturnsSubscriptions.publishsettings", null);
@@ -1086,7 +1114,7 @@ namespace Common.Authorization.Test
             ProfileClient client = new ProfileClient();
 
             dataStore.WriteFile("ImportPublishSettingsLoadsAndReturnsSubscriptions.publishsettings",
-                Properties.Resources.ValidProfileChina);
+                Common.Extensions.Test.Properties.Resources.ValidProfileChina);
 
             client.AddOrSetEnvironment(azureEnvironment);
             var subscriptions = client.ImportPublishSettings("ImportPublishSettingsLoadsAndReturnsSubscriptions.publishsettings", null);
@@ -1104,7 +1132,7 @@ namespace Common.Authorization.Test
             ProfileClient client = new ProfileClient();
 
             dataStore.WriteFile("ImportPublishSettingsLoadsAndReturnsSubscriptions.publishsettings",
-                Properties.Resources.ValidProfileChinaOld);
+                Common.Extensions.Test.Properties.Resources.ValidProfileChinaOld);
 
             client.AddOrSetEnvironment(azureEnvironment);
             var subscriptions = client.ImportPublishSettings("ImportPublishSettingsLoadsAndReturnsSubscriptions.publishsettings", null);
@@ -1129,7 +1157,7 @@ namespace Common.Authorization.Test
             client = new ProfileClient();
 
             dataStore.WriteFile("ImportPublishSettingsLoadsAndReturnsSubscriptions.publishsettings",
-                Properties.Resources.ValidProfile3);
+                Common.Extensions.Test.Properties.Resources.ValidProfile3);
 
             client.AddOrSetEnvironment(azureEnvironment);
             var subscriptions = client.ImportPublishSettings("ImportPublishSettingsLoadsAndReturnsSubscriptions.publishsettings", null);
@@ -1154,7 +1182,7 @@ namespace Common.Authorization.Test
             client = new ProfileClient();
 
             dataStore.WriteFile("ImportPublishSettingsLoadsAndReturnsSubscriptions.publishsettings",
-                Properties.Resources.ValidProfile3);
+                Common.Extensions.Test.Properties.Resources.ValidProfile3);
 
             client.AddOrSetEnvironment(azureEnvironment);
             var subscriptions = client.ImportPublishSettings("ImportPublishSettingsLoadsAndReturnsSubscriptions.publishsettings", azureEnvironment.Name);
@@ -1185,7 +1213,7 @@ namespace Common.Authorization.Test
             client = new ProfileClient();
 
             dataStore.WriteFile("ImportPublishSettingsLoadsAndReturnsSubscriptions.publishsettings",
-                Properties.Resources.ValidProfile);
+                Common.Extensions.Test.Properties.Resources.ValidProfile);
 
             client.AddOrSetEnvironment(azureEnvironment);
             var subscriptions = client.ImportPublishSettings("ImportPublishSettingsLoadsAndReturnsSubscriptions.publishsettings", azureEnvironment.Name);
