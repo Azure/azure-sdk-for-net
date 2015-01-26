@@ -75,7 +75,7 @@
   </ItemGroup>
   
   <PropertyGroup>
-    <NuGetCommand>$(LibraryToolsFolder)\nuget.exe</NuGetCommand>
+    <NuGetCommand>&quot;$(LibraryToolsFolder)\nuget.exe&quot;</NuGetCommand>
   </PropertyGroup>
 
   <Import Project="$(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.msbuild" />
