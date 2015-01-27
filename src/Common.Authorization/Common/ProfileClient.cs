@@ -15,7 +15,6 @@
 using Hyak.Common;
 using Microsoft.Azure.Common.Authorization.Authentication;
 using Microsoft.Azure.Common.Authorization.Factories;
-using Microsoft.Azure.Common.Authorization;
 using Microsoft.Azure.Common.Authorization.Models;
 using Microsoft.Azure.Common.Authorization.Properties;
 using Microsoft.Azure.Subscriptions;
@@ -165,7 +164,7 @@ namespace Microsoft.Azure.Common.Authorization
         #region Profile management
 
         /// <summary>
-        /// Initializes a new instance of AzureProfile using passed in certificate. The certificate
+        /// Initializes AzureProfile using passed in certificate. The certificate
         /// is imported into a certificate store.
         /// </summary>
         /// <param name="environment">Environment object.</param>
@@ -173,7 +172,8 @@ namespace Microsoft.Azure.Common.Authorization
         /// <param name="certificate">Certificate to use with profile.</param>
         /// <param name="storageAccount">Storage account name (optional).</param>
         /// <returns></returns>
-        public void InitializeProfile(AzureEnvironment environment, Guid subscriptionId, X509Certificate2 certificate, string storageAccount)
+        public void InitializeProfile(AzureEnvironment environment, Guid subscriptionId, X509Certificate2 certificate, 
+            string storageAccount)
         {
             if (environment == null)
             {
@@ -217,8 +217,7 @@ namespace Microsoft.Azure.Common.Authorization
         }
 
         /// <summary>
-        /// Initializes a new instance of AzureProfile using passed in certificate. The certificate
-        /// is imported into a certificate store.
+        /// Initializes AzureProfile using passed in account and optional password.
         /// </summary>
         /// <param name="environment">Environment object.</param>
         /// <param name="subscriptionId">Subscription Id</param>
@@ -252,6 +251,12 @@ namespace Microsoft.Azure.Common.Authorization
             {
                 throw new ArgumentException(string.Format(Resources.SubscriptionIdNotFoundMessage, subscriptionId));
             }
+            var azureSubscription = GetSubscription(subscriptionId);
+            if (!string.IsNullOrEmpty(storageAccount))
+            {
+                azureSubscription.Properties[AzureSubscription.Property.StorageAccount] = storageAccount;
+            }
+            AddOrSetSubscription(azureSubscription);
         }
         #endregion
 
