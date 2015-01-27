@@ -20,45 +20,33 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
+using Microsoft.Azure;
+using Microsoft.Azure.Management.Resources.Models;
 
 namespace Microsoft.Azure.Management.Resources.Models
 {
     /// <summary>
-    /// Describes a resource movement info.
+    /// Resource provider registration information.
     /// </summary>
-    public partial class ResourceMoveInfo
+    public partial class ProviderUnregistionResult : AzureOperationResponse
     {
-        private string _destinationResourceGroupName;
+        private Provider _provider;
         
         /// <summary>
-        /// Optional. The target resource group.
+        /// Optional. Gets or sets the resource provider.
         /// </summary>
-        public string DestinationResourceGroupName
+        public Provider Provider
         {
-            get { return this._destinationResourceGroupName; }
-            set { this._destinationResourceGroupName = value; }
-        }
-        
-        private IList<string> _resources;
-        
-        /// <summary>
-        /// Optional. Gets or sets the id of the resources.
-        /// </summary>
-        public IList<string> Resources
-        {
-            get { return this._resources; }
-            set { this._resources = value; }
+            get { return this._provider; }
+            set { this._provider = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ResourceMoveInfo class.
+        /// Initializes a new instance of the ProviderUnregistionResult class.
         /// </summary>
-        public ResourceMoveInfo()
+        public ProviderUnregistionResult()
         {
-            this.Resources = new LazyList<string>();
         }
     }
 }

@@ -23,7 +23,6 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
 
@@ -166,10 +165,9 @@ namespace Microsoft.Azure.Management.Resources
         /// Required. Namespace of the resource provider.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Resource provider registration information.
         /// </returns>
-        public static AzureOperationResponse Register(this IProviderOperations operations, string resourceProviderNamespace)
+        public static ProviderRegistionResult Register(this IProviderOperations operations, string resourceProviderNamespace)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -189,10 +187,9 @@ namespace Microsoft.Azure.Management.Resources
         /// Required. Namespace of the resource provider.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Resource provider registration information.
         /// </returns>
-        public static Task<AzureOperationResponse> RegisterAsync(this IProviderOperations operations, string resourceProviderNamespace)
+        public static Task<ProviderRegistionResult> RegisterAsync(this IProviderOperations operations, string resourceProviderNamespace)
         {
             return operations.RegisterAsync(resourceProviderNamespace, CancellationToken.None);
         }
@@ -208,10 +205,9 @@ namespace Microsoft.Azure.Management.Resources
         /// Required. Namespace of the resource provider.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Resource provider registration information.
         /// </returns>
-        public static AzureOperationResponse Unregister(this IProviderOperations operations, string resourceProviderNamespace)
+        public static ProviderUnregistionResult Unregister(this IProviderOperations operations, string resourceProviderNamespace)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -231,10 +227,9 @@ namespace Microsoft.Azure.Management.Resources
         /// Required. Namespace of the resource provider.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Resource provider registration information.
         /// </returns>
-        public static Task<AzureOperationResponse> UnregisterAsync(this IProviderOperations operations, string resourceProviderNamespace)
+        public static Task<ProviderUnregistionResult> UnregisterAsync(this IProviderOperations operations, string resourceProviderNamespace)
         {
             return operations.UnregisterAsync(resourceProviderNamespace, CancellationToken.None);
         }
