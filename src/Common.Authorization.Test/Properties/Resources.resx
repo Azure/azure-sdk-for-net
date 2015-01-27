@@ -121,9 +121,6 @@
   <data name="InvalidProfile" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\invalidprofile.publishsettings;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="pfxtest" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\pfxtest.pfx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="ValidProfile" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\validprofile.publishsettings;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

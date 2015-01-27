@@ -12,11 +12,11 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
+using Hyak.Common;
 using Microsoft.Azure;
 using Microsoft.Azure.Common.Authorization;
 using Microsoft.Azure.Common.Authorization.Factories;
 using Microsoft.Azure.Common.Authorization.Models;
-using Microsoft.Azure.Test.HttpRecorder;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,83 +24,63 @@ using System.Net.Http;
 
 namespace Microsoft.WindowsAzure.Commands.Common.Test.Mocks
 {
-    public class MockClientFactory : ClientFactory
+    public class MockClientFactory : IClientFactory
     {
-        private readonly bool throwWhenNotAvailable;
-
         public List<object> ManagementClients { get; private set; }
 
-        public MockClientFactory(IEnumerable<object> clients, bool throwIfClientNotSpecified = true)
+        public MockClientFactory(IEnumerable<object> clients)
         {
             ManagementClients = clients.ToList();
-            throwWhenNotAvailable = throwIfClientNotSpecified;
         }
 
-        public override TClient CreateClient<TClient>(AzureSubscription subscription, AzureEnvironment.Endpoint endpoint)
+        public TClient CreateClient<TClient>(AzureSubscription subscription, AzureEnvironment.Endpoint endpoint) where TClient : ServiceClient<TClient>
         {
             SubscriptionCloudCredentials creds = new TokenCloudCredentials(subscription.Id.ToString(), "fake_token");
-            if (HttpMockServer.GetCurrentMode() != HttpRecorderMode.Playback)
-            {
-                ProfileClient profileClient = new ProfileClient();
-                AzureContext context = new AzureContext()
-                {
-                    Account = profileClient.GetAccount(subscription.Account),
-                    Environment = profileClient.GetEnvironmentOrDefault(subscription.Environment),
-                    Subscription = subscription
-                };
-
-                creds = AzureSession.AuthenticationFactory.GetSubscriptionCloudCredentials(context);
-            }
-
             Uri endpointUri = (new ProfileClient()).Profile.Environments[subscription.Environment].GetEndpointAsUri(endpoint);
             return CreateCustomClient<TClient>(creds, endpointUri);
         }
 
-        public override TClient CreateCustomClient<TClient>(params object[] parameters)
+        public TClient CreateClient<TClient>(AzureContext context, AzureEnvironment.Endpoint endpoint) where TClient : Hyak.Common.ServiceClient<TClient>
         {
-            TClient client = ManagementClients.FirstOrDefault(o => o is TClient) as TClient;
-            if (client == null)
-            {
-                if (throwWhenNotAvailable)
-                {
-                    throw new ArgumentException(
-                        string.Format("TestManagementClientHelper class wasn't initialized with the {0} client.",
-                            typeof(TClient).Name));
-                }
-                else
-                {
-                    var realClient = base.CreateCustomClient<TClient>(parameters);
-                    var newRealClient = realClient.WithHandler(HttpMockServer.CreateInstance());
-                    realClient.Dispose();
-                    return newRealClient;
-                }
-            }
-
-            return client;
+            SubscriptionCloudCredentials creds = AzureSession.AuthenticationFactory.GetSubscriptionCloudCredentials(context);
+            return CreateCustomClient<TClient>(creds, context.Environment.GetEndpointAsUri(endpoint));
         }
 
-        public override HttpClient CreateHttpClient(string serviceUrl, HttpMessageHandler effectiveHandler)
+        public TClient CreateCustomClient<TClient>(params object[] parameters) where TClient : ServiceClient<TClient>
         {
-            if (serviceUrl == null)
+            return ManagementClients.FirstOrDefault(o => o is TClient) as TClient;
+        }
+
+        public HttpClient CreateHttpClient(string serviceUrl, HttpMessageHandler effectiveHandler)
+        {
+            throw new NotImplementedException();
+        }
+
+        public HttpClient CreateHttpClient(string endpoint, System.Net.ICredentials credentials)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddAction(IClientAction action)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveAction(Type actionType)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<System.Net.Http.Headers.ProductInfoHeaderValue> UserAgents
+        {
+            get
             {
-                throw new ArgumentNullException("serviceUrl");
+                throw new NotImplementedException();
             }
-            if (effectiveHandler == null)
+            set
             {
-                throw new ArgumentNullException("effectiveHandler");
+                throw new NotImplementedException();
             }
-            var mockHandler = HttpMockServer.CreateInstance();
-            mockHandler.InnerHandler = effectiveHandler;
-
-            HttpClient client = new HttpClient(mockHandler)
-            {
-                BaseAddress = new Uri(serviceUrl),
-                MaxResponseContentBufferSize = 30 * 1024 * 1024
-            };
-
-            client.DefaultRequestHeaders.Accept.Clear();
-
-            return client;
         }
     }
 }

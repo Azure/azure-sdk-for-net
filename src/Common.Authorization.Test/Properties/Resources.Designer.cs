@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Common.Extensions.Test.Properties {
+namespace Common.Authorization.Test.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Common.Extensions.Test.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Common.Extensions.Test.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Common.Authorization.Test.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -66,16 +66,6 @@ namespace Common.Extensions.Test.Properties {
         internal static byte[] InvalidProfile {
             get {
                 object obj = ResourceManager.GetObject("InvalidProfile", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] pfxtest {
-            get {
-                object obj = ResourceManager.GetObject("pfxtest", resourceCulture);
                 return ((byte[])(obj));
             }
         }

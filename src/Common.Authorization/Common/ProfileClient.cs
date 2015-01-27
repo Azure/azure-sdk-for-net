@@ -161,6 +161,106 @@ namespace Microsoft.Azure.Common.Authorization
             WarningLog = (s) => Debug.WriteLine(s);
         }
 
+        public ProfileClient(AzureProfile profile)
+        {
+            Profile = profile;
+
+            WarningLog = (s) => Debug.WriteLine(s);
+        }
+
+        #region Profile management
+
+        /// <summary>
+        /// Initializes a new instance of AzureProfile using passed in certificate. The certificate
+        /// is imported into a certificate store.
+        /// </summary>
+        /// <param name="environment">Environment object.</param>
+        /// <param name="subscriptionId">Subscription Id</param>
+        /// <param name="certificate">Certificate to use with profile.</param>
+        /// <param name="storageAccount">Storage account name (optional).</param>
+        /// <returns></returns>
+        public void InitializeProfile(AzureEnvironment environment, Guid subscriptionId, X509Certificate2 certificate, string storageAccount)
+        {
+            if (environment == null)
+            {
+                throw new ArgumentNullException("environment");
+            }
+            if (certificate == null)
+            {
+                throw new ArgumentNullException("certificate");
+            }
+
+            // Add environment if not public
+            if (!AzureEnvironment.PublicEnvironments.ContainsKey(environment.Name))
+            {
+                AddOrSetEnvironment(environment);
+            }
+
+            // Add account
+            var azureAccount = new AzureAccount
+            {
+                Id = certificate.Thumbprint,
+                Type = AzureAccount.AccountType.Certificate
+            };
+            azureAccount.Properties[AzureAccount.Property.Subscriptions] = subscriptionId.ToString();
+            DataStore.AddCertificate(certificate);
+            AddOrSetAccount(azureAccount);
+
+            // Add subscription
+            var azureSubscription = new AzureSubscription
+            {
+                Id = subscriptionId,
+                Name = subscriptionId.ToString(),
+                Environment = environment.Name
+            };
+            if (!string.IsNullOrEmpty(storageAccount))
+            {
+                azureSubscription.Properties[AzureSubscription.Property.StorageAccount] = storageAccount;
+            }
+            azureSubscription.Properties[AzureSubscription.Property.Default] = "True";
+            azureSubscription.Account = certificate.Thumbprint;
+            AddOrSetSubscription(azureSubscription);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of AzureProfile using passed in certificate. The certificate
+        /// is imported into a certificate store.
+        /// </summary>
+        /// <param name="environment">Environment object.</param>
+        /// <param name="subscriptionId">Subscription Id</param>
+        /// <param name="account">Azure account with AD username and tenant.</param>
+        /// <param name="password">AD password (optional).</param>
+        /// <param name="storageAccount">Storage account name (optional).</param>
+        /// <returns></returns>
+        public void InitializeProfile(AzureEnvironment environment, Guid subscriptionId, AzureAccount account, 
+            SecureString password, string storageAccount)
+        {
+            if (environment == null)
+            {
+                throw new ArgumentNullException("environment");
+            }
+            if (account == null)
+            {
+                throw new ArgumentNullException("account");
+            }
+
+            // Add environment if not public
+            if (!AzureEnvironment.PublicEnvironments.ContainsKey(environment.Name))
+            {
+                AddOrSetEnvironment(environment);
+            }
+
+            // Add account
+            var azureAccount = AddAccountAndLoadSubscriptions(account, environment, password);
+
+            // Add subscription
+            if (!azureAccount.HasSubscription(subscriptionId))
+            {
+                throw new ArgumentException(string.Format(Resources.SubscriptionIdNotFoundMessage, subscriptionId));
+            }
+        }
+        #endregion
+
         #region Account management
 
         public AzureAccount AddAccountAndLoadSubscriptions(AzureAccount account, AzureEnvironment environment, SecureString password)

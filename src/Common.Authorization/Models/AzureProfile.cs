@@ -23,10 +23,10 @@ namespace Microsoft.Azure.Common.Authorization.Models
 {
     public sealed class AzureProfile
     {
-        private IDataStore store;
-        private string profilePath;
+        private readonly IDataStore _store;
+        private readonly string _profilePath;
 
-        public AzureProfile() : this(new DiskDataStore())
+        public AzureProfile() : this(null)
         { }
 
         public AzureProfile(IDataStore dataStore)
@@ -35,63 +35,20 @@ namespace Microsoft.Azure.Common.Authorization.Models
             Subscriptions = new Dictionary<Guid, AzureSubscription>();
             Accounts = new Dictionary<string, AzureAccount>(StringComparer.InvariantCultureIgnoreCase);
 
-            this.store = dataStore;
+            if (dataStore == null)
+            {
+                dataStore = new DiskDataStore();
+            }
+
+            this._store = dataStore;
         }
 
         public AzureProfile(IDataStore store, string profilePath)
         {
-            this.store = store;
-            this.profilePath = profilePath;
+            this._store = store;
+            this._profilePath = profilePath;
 
             Load();
-        }
-
-        /// <summary>
-        /// Initializes a new instance of AzureProfile using passed in certificate. The certificate
-        /// is imported into a certificate store.
-        /// </summary>
-        /// <param name="environment">Environment object.</param>
-        /// <param name="subscriptionId">Subscription Id</param>
-        /// <param name="storageAccount">Storage account name.</param>
-        /// <param name="certificate">Certificate to use with profile.</param>
-        /// <param name="store">Custom data store with certificate store.</param>
-        /// <returns></returns>
-        public static AzureProfile Create(AzureEnvironment environment, Guid subscriptionId,
-            string storageAccount, X509Certificate2 certificate, IDataStore store = null)
-        {
-            if (environment == null)
-            {
-                throw new ArgumentNullException("environment");
-            }
-            if (certificate == null)
-            {
-                throw new ArgumentNullException("environment");
-            }
-
-            var azureProfile = new AzureProfile(store);
-            azureProfile.Environments[environment.Name] = environment;
-
-            var azureAccount = new AzureAccount
-            {
-                Id = certificate.Thumbprint,
-                Type = AzureAccount.AccountType.Certificate
-            };
-            azureAccount.Properties[AzureAccount.Property.Subscriptions] = subscriptionId.ToString();
-            azureProfile.store.AddCertificate(certificate);
-            azureProfile.Accounts[azureAccount.Id] = azureAccount;
-
-            var azureSubscription = new AzureSubscription
-            {
-                Id = subscriptionId,
-                Name = subscriptionId.ToString(),
-                Environment = environment.Name
-            };
-            azureSubscription.Properties[AzureSubscription.Property.StorageAccount] = storageAccount;
-            azureSubscription.Properties[AzureSubscription.Property.Default] = "True";
-            azureSubscription.Account = certificate.Thumbprint;
-            azureProfile.Subscriptions[azureSubscription.Id] = azureSubscription;
-
-            return azureProfile;
         }
 
         private void Load()
@@ -101,14 +58,14 @@ namespace Microsoft.Azure.Common.Authorization.Models
             Accounts = new Dictionary<string, AzureAccount>(StringComparer.InvariantCultureIgnoreCase);
             ProfileLoadErrors = new List<string>();
 
-            if (!store.DirectoryExists(AzureSession.ProfileDirectory))
+            if (!_store.DirectoryExists(AzureSession.ProfileDirectory))
             {
-                store.CreateDirectory(AzureSession.ProfileDirectory);
+                _store.CreateDirectory(AzureSession.ProfileDirectory);
             }
 
-            if (store.FileExists(profilePath))
+            if (_store.FileExists(_profilePath))
             {
-                string contents = store.ReadFileAsText(profilePath);
+                string contents = _store.ReadFileAsText(_profilePath);
 
                 IProfileSerializer serializer;
 
@@ -149,14 +106,14 @@ namespace Microsoft.Azure.Common.Authorization.Models
 
             string contents = jsonSerializer.Serialize(this);
             string diskContents = string.Empty;
-            if (store.FileExists(profilePath))
+            if (_store.FileExists(_profilePath))
             {
-                diskContents = store.ReadFileAsText(profilePath);
+                diskContents = _store.ReadFileAsText(_profilePath);
             }
 
             if (diskContents != contents)
             {
-                store.WriteFile(profilePath, contents);
+                _store.WriteFile(_profilePath, contents);
             }
         }
 
