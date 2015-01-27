@@ -18,11 +18,7 @@
     <references>
       <group targetFramework="net45">
         <reference file="Microsoft.WindowsAzure.Management.HDInsight.dll" />
-        <reference file="Microsoft.WindowsAzure.Management.HDInsight.xml" />
-      </group> 
-      <group targetFramework="net40">
-        <reference file="Microsoft.WindowsAzure.Management.HDInsight.dll" />
-        <reference file="Microsoft.WindowsAzure.Management.HDInsight.xml" />
+        <reference file="Microsoft.WindowsAzure.Management.HDInsight.Contracts.dll" />
       </group>
     </references>
     <dependencies>

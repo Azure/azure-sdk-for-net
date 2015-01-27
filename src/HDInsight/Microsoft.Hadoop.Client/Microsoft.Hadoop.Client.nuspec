@@ -18,7 +18,9 @@
     <references>
       <group targetFramework="net45">
         <reference file="Microsoft.Hadoop.Client.dll" />
-        <reference file="Microsoft.Hadoop.Client.xml" />
+        <reference file="Microsoft.WindowsAzure.Management.HDInsight.Framework.Core.dll" />
+        <reference file="Microsoft.WindowsAzure.Management.HDInsight.Framework.dll" />
+        <reference file="Microsoft.HDInsight.Net.Http.Formatting.dll" />
       </group>
     </references>
     <dependencies>
