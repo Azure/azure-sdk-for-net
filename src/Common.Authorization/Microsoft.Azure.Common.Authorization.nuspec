@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata minClientVersion="2.5">
     <id>Microsoft.Azure.Common.Authorization</id>
-    <title>Microsoft Azure Common Extensions Library</title>
+    <title>Microsoft Azure Common Authorization Library</title>
     <version>$version$</version>
     <authors>Microsoft</authors>
     <owners>azure-sdk, Microsoft</owners>
