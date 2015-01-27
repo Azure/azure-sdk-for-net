@@ -9,8 +9,8 @@
           Condition=" '$(Scope)' == 'Common' "/>
   <Import Project="$(LibrarySourceFolder)\Configuration\*.nuget.proj"
         Condition=" '$(Scope)' == 'Common' "/>
-  <Import Project="$(LibrarySourceFolder)\Common.Extensions\*.nuget.proj"
-        Condition=" '$(Scope)' == 'Extensions' "/>
+  <Import Project="$(LibrarySourceFolder)\Common.Authorization\*.nuget.proj"
+        Condition=" '$(Scope)' == 'Authorization' "/>
   <Import Project="$(LibrarySourceFolder)\*\*.nuget.proj"
           Condition=" '$(Scope)' == 'All' "/>
   <Import Project="$([System.IO.Path]::GetDirectoryName($(Scope)))\*.nuget.proj" 
