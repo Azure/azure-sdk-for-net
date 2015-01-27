@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Common.Authorization.Factories
 
             if (context.Account.Type == AzureAccount.AccountType.Certificate)
             {
-                var certificate = ProfileClient.DataStore.GetCertificate(context.Account.Id);
+                var certificate = AzureSession.DataStore.GetCertificate(context.Account.Id);
                 return new CertificateCloudCredentials(context.Subscription.Id.ToString(), certificate);
             }
 

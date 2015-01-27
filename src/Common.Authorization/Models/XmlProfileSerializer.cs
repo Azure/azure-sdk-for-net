@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Common.Authorization.Models
 
         public bool Deserialize(string contents, AzureProfile profile)
         {
-            ProfileData data = null;
+            ProfileData data;
             Debug.Assert(profile != null);
 
             DeserializeErrors = new List<string>();

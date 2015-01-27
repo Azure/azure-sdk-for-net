@@ -1576,4 +1576,28 @@ use and privacy statement at &lt;url&gt; and (c) agree to sharing my contact inf
   <data name="SubscriptionDataFileDeprecated" xml:space="preserve">
     <value>The SubscriptionDataFile parameter is deprecated.  This parameter will be removed in a future release. See https://github.com/Azure/azure-powershell/wiki/Proposed-Design-Stateless-Azure-Profile for a description of the upcoming mechanism for providing alternate sources of subscription information.</value>
   </data>
+  <data name="AccountNeedsToBeSpecified" xml:space="preserve">
+    <value>Account needs to be specified.</value>
+  </data>
+  <data name="UserNameIsNotValid" xml:space="preserve">
+    <value>User name is not valid.</value>
+  </data>
+  <data name="UserNameNeedsToBeSpecified" xml:space="preserve">
+    <value>User name needs to be specified.</value>
+  </data>
+  <data name="SubscriptionNeedsToBeSpecified" xml:space="preserve">
+    <value>Subscription needs to be specified.</value>
+  </data>
+  <data name="EnvironmentNeedsToBeSpecified" xml:space="preserve">
+    <value>Environment needs to be specified.</value>
+  </data>
+  <data name="FilePathIsNotValid" xml:space="preserve">
+    <value>File path is not valid.</value>
+  </data>
+  <data name="EnvironmentNameNeedsToBeSpecified" xml:space="preserve">
+    <value>Environment name needs to be specified.</value>
+  </data>
+  <data name="SubscriptionNameNeedsToBeSpecified" xml:space="preserve">
+    <value>Subscription name needs to be specified.</value>
+  </data>
 </root>

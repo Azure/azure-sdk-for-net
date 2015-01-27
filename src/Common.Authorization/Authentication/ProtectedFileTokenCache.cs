@@ -53,9 +53,9 @@ namespace Microsoft.Azure.Common.Authorization.Authentication
             BeforeAccess = BeforeAccessNotification;
             lock (fileLock)
             {
-                if (ProfileClient.DataStore.FileExists(fileName))
+                if (AzureSession.DataStore.FileExists(fileName))
                 {
-                    var existingData = ProfileClient.DataStore.ReadFileAsBytes(fileName);
+                    var existingData = AzureSession.DataStore.ReadFileAsBytes(fileName);
                     if (existingData != null)
                     {
                         try
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Common.Authorization.Authentication
                         }
                         catch (CryptographicException)
                         {
-                            ProfileClient.DataStore.DeleteFile(fileName);
+                            AzureSession.DataStore.DeleteFile(fileName);
                         }
                     }
                 }
@@ -80,9 +80,9 @@ namespace Microsoft.Azure.Common.Authorization.Authentication
         public override void Clear()
         {
             base.Clear();
-            if (ProfileClient.DataStore.FileExists(CacheFileName))
+            if (AzureSession.DataStore.FileExists(CacheFileName))
             {
-                ProfileClient.DataStore.DeleteFile(CacheFileName);
+                AzureSession.DataStore.DeleteFile(CacheFileName);
             }
         }
 
@@ -92,9 +92,9 @@ namespace Microsoft.Azure.Common.Authorization.Authentication
         {
             lock (fileLock)
             {
-                if (ProfileClient.DataStore.FileExists(CacheFileName))
+                if (AzureSession.DataStore.FileExists(CacheFileName))
                 {
-                    var existingData = ProfileClient.DataStore.ReadFileAsBytes(CacheFileName);
+                    var existingData = AzureSession.DataStore.ReadFileAsBytes(CacheFileName);
                     if (existingData != null)
                     {
                         try
@@ -103,7 +103,7 @@ namespace Microsoft.Azure.Common.Authorization.Authentication
                         }
                         catch (CryptographicException)
                         {
-                            ProfileClient.DataStore.DeleteFile(CacheFileName);
+                            AzureSession.DataStore.DeleteFile(CacheFileName);
                         }
                     }
                 }
@@ -119,7 +119,7 @@ namespace Microsoft.Azure.Common.Authorization.Authentication
                 lock (fileLock)
                 {
                     // reflect changes in the persistent store
-                    ProfileClient.DataStore.WriteFile(CacheFileName,
+                    AzureSession.DataStore.WriteFile(CacheFileName,
                         ProtectedData.Protect(Serialize(), null, DataProtectionScope.CurrentUser));
                     // once the write operation took place, restore the HasStateChanged bit to false
                     HasStateChanged = false;

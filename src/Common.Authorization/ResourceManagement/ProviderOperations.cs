@@ -717,7 +717,7 @@ namespace Microsoft.Azure.Management.Resources
                     }
                     
                     // Create Result
-                    AzureOperationResponse result = null;
+                    AzureOperationResponse result;
                     // Deserialize Response
                     result = new AzureOperationResponse();
                     result.StatusCode = statusCode;

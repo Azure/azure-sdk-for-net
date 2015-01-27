@@ -13,6 +13,7 @@
 // ----------------------------------------------------------------------------------
 
 using Microsoft.Azure.Common.Authorization.Factories;
+using Microsoft.Azure.Common.Authorization.Interfaces;
 using Microsoft.Azure.Common.Authorization.Models;
 using Microsoft.Azure.Common.Authorization.Properties;
 using System;
@@ -26,6 +27,7 @@ namespace Microsoft.Azure.Common.Authorization
         {
             ClientFactory = new ClientFactory();
             AuthenticationFactory = new AuthenticationFactory();
+            DataStore = new DiskDataStore();
             CurrentContext = new AzureContext();
             CurrentContext.Environment = AzureEnvironment.PublicEnvironments[EnvironmentName.AzureCloud];
             AzureSession.OldProfileFile = "WindowsAzureProfile.xml";
@@ -37,8 +39,17 @@ namespace Microsoft.Azure.Common.Authorization
             AzureSession.TokenCacheFile = "TokenCache.dat";
         }
 
+        /// <summary>
+        /// Current session context.
+        /// </summary>
         public static AzureContext CurrentContext { get; private set; }
         
+        /// <summary>
+        /// Sets current session context.
+        /// </summary>
+        /// <param name="subscription"></param>
+        /// <param name="environment"></param>
+        /// <param name="account"></param>
         public static void SetCurrentContext(AzureSubscription subscription, AzureEnvironment environment, AzureAccount account)
         {
             if (environment == null)
@@ -93,6 +104,8 @@ namespace Microsoft.Azure.Common.Authorization
         public static IClientFactory ClientFactory { get; set; }
 
         public static IAuthenticationFactory AuthenticationFactory { get; set; }
+
+        public static IDataStore DataStore { get; set; }
 
         public static string ProfileDirectory { get; set; }
 

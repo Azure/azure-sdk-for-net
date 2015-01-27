@@ -36,8 +36,6 @@ namespace Microsoft.Azure.Common.Authorization
     /// </summary>
     public class ProfileClient
     {
-        public static IDataStore DataStore { get; set; }
-
         public AzureProfile Profile { get; private set; }
 
         public Action<string> WarningLog;
@@ -65,7 +63,7 @@ namespace Microsoft.Azure.Common.Authorization
             string oldProfileFilePath = System.IO.Path.Combine(AzureSession.ProfileDirectory, AzureSession.OldProfileFile);
             string oldProfileFilePathBackup = System.IO.Path.Combine(AzureSession.ProfileDirectory, AzureSession.OldProfileFileBackup);
             string newProfileFilePath = System.IO.Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile);
-            if (DataStore.FileExists(oldProfileFilePath))
+            if (AzureSession.DataStore.FileExists(oldProfileFilePath))
             {
                 string oldProfilePath = System.IO.Path.Combine(AzureSession.ProfileDirectory,
                     AzureSession.OldProfileFile);
@@ -75,19 +73,19 @@ namespace Microsoft.Azure.Common.Authorization
                     // Try to backup old profile
                     try
                     {
-                        DataStore.CopyFile(oldProfilePath, oldProfileFilePathBackup);
+                        AzureSession.DataStore.CopyFile(oldProfilePath, oldProfileFilePathBackup);
                     }
                     catch
                     {
                         // Ignore any errors here
                     }
 
-                    AzureProfile oldProfile = new AzureProfile(DataStore, oldProfilePath);
+                    AzureProfile oldProfile = new AzureProfile(oldProfilePath);
 
-                    if (DataStore.FileExists(newProfileFilePath))
+                    if (AzureSession.DataStore.FileExists(newProfileFilePath))
                     {
                         // Merge profile files
-                        AzureProfile newProfile = new AzureProfile(DataStore, newProfileFilePath);
+                        AzureProfile newProfile = new AzureProfile(newProfileFilePath);
                         foreach (var environment in newProfile.Environments.Values)
                         {
                             oldProfile.Environments[environment.Name] = environment;
@@ -96,7 +94,7 @@ namespace Microsoft.Azure.Common.Authorization
                         {
                             oldProfile.Subscriptions[subscription.Id] = subscription;
                         }
-                        DataStore.DeleteFile(newProfileFilePath);
+                        AzureSession.DataStore.DeleteFile(newProfileFilePath);
                     }
 
                     // If there were no load errors - delete backup file
@@ -104,7 +102,7 @@ namespace Microsoft.Azure.Common.Authorization
                     {
                         try
                         {
-                            DataStore.DeleteFile(oldProfileFilePathBackup);
+                            AzureSession.DataStore.DeleteFile(oldProfileFilePathBackup);
                         }
                         catch
                         {
@@ -116,7 +114,7 @@ namespace Microsoft.Azure.Common.Authorization
                     oldProfile.Save();
 
                     // Rename WindowsAzureProfile.xml to WindowsAzureProfile.json
-                    DataStore.RenameFile(oldProfilePath, newProfileFilePath);
+                    AzureSession.DataStore.RenameFile(oldProfilePath, newProfileFilePath);
 
                 }
                 catch
@@ -124,7 +122,7 @@ namespace Microsoft.Azure.Common.Authorization
                     // Something really bad happened - try to delete the old profile
                     try
                     {
-                        DataStore.DeleteFile(oldProfilePath);
+                        AzureSession.DataStore.DeleteFile(oldProfilePath);
                     }
                     catch
                     {
@@ -134,10 +132,6 @@ namespace Microsoft.Azure.Common.Authorization
             }
         }
 
-        static ProfileClient()
-        {
-            DataStore = new DiskDataStore();
-        }
 
         public ProfileClient()
             : this(System.IO.Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile))
@@ -151,7 +145,7 @@ namespace Microsoft.Azure.Common.Authorization
             {
                 ProfileClient.UpgradeProfile();
 
-                Profile = new AzureProfile(DataStore, profilePath);
+                Profile = new AzureProfile(profilePath);
             }
             catch
             {
@@ -203,7 +197,7 @@ namespace Microsoft.Azure.Common.Authorization
                 Type = AzureAccount.AccountType.Certificate
             };
             azureAccount.Properties[AzureAccount.Property.Subscriptions] = subscriptionId.ToString();
-            DataStore.AddCertificate(certificate);
+            ImportCertificate(certificate);
             AddOrSetAccount(azureAccount);
 
             // Add subscription
@@ -311,7 +305,7 @@ namespace Microsoft.Azure.Common.Authorization
         {
             if (account == null)
             {
-                throw new ArgumentNullException("Account needs to be specified.", "account");
+                throw new ArgumentNullException("account", Resources.AccountNeedsToBeSpecified);
             }
 
             if (Profile.Accounts.ContainsKey(account.Id))
@@ -401,19 +395,19 @@ namespace Microsoft.Azure.Common.Authorization
                 accounts = Profile.Accounts.Values.ToList();
             }
 
-            return Profile.Accounts.Values;
+            return accounts;
         }
 
         public AzureAccount RemoveAccount(string accountId)
         {
             if (string.IsNullOrEmpty(accountId))
             {
-                throw new ArgumentNullException("User name needs to be specified.", "userName");
+                throw new ArgumentNullException("accountId", Resources.UserNameNeedsToBeSpecified);
             }
 
             if (!Profile.Accounts.ContainsKey(accountId))
             {
-                throw new ArgumentException("User name is not valid.", "userName");
+                throw new ArgumentException(Resources.UserNameIsNotValid, "accountId");
             }
 
             AzureAccount account = Profile.Accounts[accountId];
@@ -478,11 +472,11 @@ namespace Microsoft.Azure.Common.Authorization
         {
             if (subscription == null)
             {
-                throw new ArgumentNullException("Subscription needs to be specified.", "subscription");
+                throw new ArgumentNullException("subscription", Resources.SubscriptionNeedsToBeSpecified);
             }
             if (subscription.Environment == null)
             {
-                throw new ArgumentNullException("Environment needs to be specified.", "subscription.Environment");
+                throw new ArgumentNullException("subscription.Environment", Resources.EnvironmentNeedsToBeSpecified);
             }
             // Validate environment
             GetEnvironmentOrDefault(subscription.Environment);
@@ -518,7 +512,7 @@ namespace Microsoft.Azure.Common.Authorization
         {
             if (string.IsNullOrEmpty(name))
             {
-                throw new ArgumentNullException("Subscription name needs to be specified.", "name");
+                throw new ArgumentNullException("name", Resources.SubscriptionNameNeedsToBeSpecified);
             }
 
             var subscription = Profile.Subscriptions.Values.FirstOrDefault(s => s.Name == name);
@@ -640,7 +634,7 @@ namespace Microsoft.Azure.Common.Authorization
                 throw new ArgumentNullException("id", string.Format(Resources.InvalidSubscriptionId, id));
             }
 
-            AzureSubscription currentSubscription = null;
+            AzureSubscription currentSubscription;
             var subscription = Profile.Subscriptions.Values.FirstOrDefault(s => s.Id == id);
 
             if (subscription == null)
@@ -704,7 +698,7 @@ namespace Microsoft.Azure.Common.Authorization
 
         public void ImportCertificate(X509Certificate2 certificate)
         {
-            DataStore.AddCertificate(certificate);
+            AzureSession.DataStore.AddCertificate(certificate);
         }
 
         public List<AzureAccount> ListSubscriptionAccounts(Guid subscriptionId)
@@ -746,11 +740,11 @@ namespace Microsoft.Azure.Common.Authorization
 
         private List<AzureSubscription> ListSubscriptionsFromPublishSettingsFile(string filePath, string environment)
         {
-            if (string.IsNullOrEmpty(filePath) || !DataStore.FileExists(filePath))
+            if (string.IsNullOrEmpty(filePath) || !AzureSession.DataStore.FileExists(filePath))
             {
-                throw new ArgumentException("File path is not valid.", "filePath");
+                throw new ArgumentException(Resources.FilePathIsNotValid, "filePath");
             }
-            return PublishSettingsImporter.ImportAzureSubscription(DataStore.ReadFileAsStream(filePath), this, environment).ToList();
+            return PublishSettingsImporter.ImportAzureSubscription(AzureSession.DataStore.ReadFileAsStream(filePath), this, environment).ToList();
         }
 
         private IEnumerable<AzureSubscription> ListSubscriptionsFromServerForAllAccounts(AzureEnvironment environment)
@@ -1241,7 +1235,7 @@ namespace Microsoft.Azure.Common.Authorization
         {
             if (string.IsNullOrEmpty(name))
             {
-                throw new ArgumentNullException("Environment name needs to be specified.", "name");
+                throw new ArgumentNullException("name", Resources.EnvironmentNameNeedsToBeSpecified);
             }
             if (AzureEnvironment.PublicEnvironments.ContainsKey(name))
             {
@@ -1269,7 +1263,7 @@ namespace Microsoft.Azure.Common.Authorization
         {
             if (environment == null)
             {
-                throw new ArgumentNullException("Environment needs to be specified.", "environment");
+                throw new ArgumentNullException("environment", Resources.EnvironmentNeedsToBeSpecified);
             }
 
             if (AzureEnvironment.PublicEnvironments.ContainsKey(environment.Name))
