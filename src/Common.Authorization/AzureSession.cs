@@ -13,7 +13,6 @@
 // ----------------------------------------------------------------------------------
 
 using Microsoft.Azure.Common.Authorization.Factories;
-using Microsoft.Azure.Common.Authorization.Interfaces;
 using Microsoft.Azure.Common.Authorization.Models;
 using Microsoft.Azure.Common.Authorization.Properties;
 using System;

@@ -15,7 +15,7 @@
 using Microsoft.Azure.Common.Authorization.Models;
 using System.Collections.Generic;
 
-namespace Microsoft.Azure.Common.Authorization.Interfaces
+namespace Microsoft.Azure.Common.Authorization
 {
     public interface IProfileSerializer
     {

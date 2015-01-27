@@ -12,7 +12,7 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
-using Microsoft.Azure.Common.Authorization.Interfaces;
+using Microsoft.Azure.Common.Authorization;
 using Microsoft.Azure.Common.Authorization.Models;
 using Microsoft.Azure.Common.Authorization.Properties;
 using System;

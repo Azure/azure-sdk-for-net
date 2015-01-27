@@ -15,7 +15,7 @@
 using Hyak.Common;
 using Microsoft.Azure.Common.Authorization.Authentication;
 using Microsoft.Azure.Common.Authorization.Factories;
-using Microsoft.Azure.Common.Authorization.Interfaces;
+using Microsoft.Azure.Common.Authorization;
 using Microsoft.Azure.Common.Authorization.Models;
 using Microsoft.Azure.Common.Authorization.Properties;
 using Microsoft.Azure.Subscriptions;
