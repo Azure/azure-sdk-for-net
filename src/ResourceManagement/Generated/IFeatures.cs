@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Resources
         /// Gets a list of previewed features of a resource provider.
         /// </summary>
         /// <param name='resourceProviderNamespace'>
-        /// The namespace of the resource group.
+        /// The namespace of the resource provider.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
