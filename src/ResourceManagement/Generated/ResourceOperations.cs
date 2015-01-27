@@ -1521,11 +1521,10 @@ namespace Microsoft.Azure.Management.Resources
         }
         
         /// <summary>
-        /// Move resources between subscriprtions or within the same
-        /// subscription.
+        /// Move resources within or across subscriptions.
         /// </summary>
         /// <param name='sourceResourceGroupName'>
-        /// Required. Source resource group.
+        /// Required. Source resource group name.
         /// </param>
         /// <param name='parameters'>
         /// Required. move resources' parameters.
@@ -1537,7 +1536,7 @@ namespace Microsoft.Azure.Management.Resources
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<AzureOperationResponse> MoveResourcesAsync(string sourceResourceGroupName, ResourceMoveInfo parameters, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> MoveResourcesAsync(string sourceResourceGroupName, ResourcesMoveInfo parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (sourceResourceGroupName == null)
@@ -1595,8 +1594,8 @@ namespace Microsoft.Azure.Management.Resources
                 string requestContent = null;
                 JToken requestDoc = null;
                 
-                JObject resourceMoveInfoValue = new JObject();
-                requestDoc = resourceMoveInfoValue;
+                JObject resourcesMoveInfoValue = new JObject();
+                requestDoc = resourcesMoveInfoValue;
                 
                 if (parameters.Resources != null)
                 {
@@ -1607,13 +1606,13 @@ namespace Microsoft.Azure.Management.Resources
                         {
                             resourcesArray.Add(resourcesItem);
                         }
-                        resourceMoveInfoValue["resources"] = resourcesArray;
+                        resourcesMoveInfoValue["resources"] = resourcesArray;
                     }
                 }
                 
-                if (parameters.DestinationResourceGroupName != null)
+                if (parameters.TargetResourceGroup != null)
                 {
-                    resourceMoveInfoValue["destinationResourceGroup"] = parameters.DestinationResourceGroupName;
+                    resourcesMoveInfoValue["targetResourceGroup"] = parameters.TargetResourceGroup;
                 }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
