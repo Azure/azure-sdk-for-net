@@ -14,6 +14,9 @@
 
 namespace Microsoft.Azure.Common.Authorization.Models
 {
+    /// <summary>
+    /// Represents current Azure session context.
+    /// </summary>
     public class AzureContext
     {
         public AzureAccount Account { get; set; }

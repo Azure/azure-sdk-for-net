@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Common.Authorization
             }
 
             X509Certificate2 certificate = new X509Certificate2(Convert.FromBase64String(certificateString), string.Empty);
-            ProfileClient.DataStore.AddCertificate(certificate);
+            AzureSession.DataStore.AddCertificate(certificate);
             
             return certificate;
         }

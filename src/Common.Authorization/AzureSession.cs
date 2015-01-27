@@ -20,12 +20,16 @@ using System.IO;
 
 namespace Microsoft.Azure.Common.Authorization
 {
+    /// <summary>
+    /// Represents current Azure session.
+    /// </summary>
     public static class AzureSession
     {
         static AzureSession()
         {
             ClientFactory = new ClientFactory();
             AuthenticationFactory = new AuthenticationFactory();
+            DataStore = new DiskDataStore();
             CurrentContext = new AzureContext();
             CurrentContext.Environment = AzureEnvironment.PublicEnvironments[EnvironmentName.AzureCloud];
             AzureSession.OldProfileFile = "WindowsAzureProfile.xml";
@@ -37,8 +41,17 @@ namespace Microsoft.Azure.Common.Authorization
             AzureSession.TokenCacheFile = "TokenCache.dat";
         }
 
+        /// <summary>
+        /// Current session context.
+        /// </summary>
         public static AzureContext CurrentContext { get; private set; }
         
+        /// <summary>
+        /// Sets current session context.
+        /// </summary>
+        /// <param name="subscription"></param>
+        /// <param name="environment"></param>
+        /// <param name="account"></param>
         public static void SetCurrentContext(AzureSubscription subscription, AzureEnvironment environment, AzureAccount account)
         {
             if (environment == null)
@@ -90,18 +103,44 @@ namespace Microsoft.Azure.Common.Authorization
             };
         }
 
+        /// <summary>
+        /// Gets or sets Azure client factory.
+        /// </summary>
         public static IClientFactory ClientFactory { get; set; }
 
+        /// <summary>
+        /// Gets or sets Azure authentication factory.
+        /// </summary>
         public static IAuthenticationFactory AuthenticationFactory { get; set; }
 
+        /// <summary>
+        /// Gets or sets data persistence store.
+        /// </summary>
+        public static IDataStore DataStore { get; set; }
+
+        /// <summary>
+        /// Gets or sets profile directory.
+        /// </summary>
         public static string ProfileDirectory { get; set; }
 
+        /// <summary>
+        /// Gets or sets token cache file path.
+        /// </summary>
         public static string TokenCacheFile { get; set; }
 
+        /// <summary>
+        /// Gets or sets profile file name.
+        /// </summary>
         public static string ProfileFile { get; set; }
 
+        /// <summary>
+        /// Gets or sets file name for the migration backup.
+        /// </summary>
         public static string OldProfileFileBackup { get; set; }
 
+        /// <summary>
+        /// Gets or sets old profile file name.
+        /// </summary>
         public static string OldProfileFile { get; set; }
     }
 }

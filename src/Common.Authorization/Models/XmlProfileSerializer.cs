@@ -12,7 +12,7 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
-using Microsoft.Azure.Common.Authorization.Interfaces;
+using Microsoft.Azure.Common.Authorization;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Common.Authorization.Models
 
         public bool Deserialize(string contents, AzureProfile profile)
         {
-            ProfileData data = null;
+            ProfileData data;
             Debug.Assert(profile != null);
 
             DeserializeErrors = new List<string>();

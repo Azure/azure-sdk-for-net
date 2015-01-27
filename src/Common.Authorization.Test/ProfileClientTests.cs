@@ -12,6 +12,7 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
+using System.Security.Cryptography.X509Certificates;
 using Microsoft.Azure.Common.Authorization;
 using Microsoft.Azure.Common.Authorization.Authentication;
 using Microsoft.Azure.Common.Authorization.Models;
@@ -36,6 +37,7 @@ namespace Common.Authorization.Test
         private string oldProfileDataPathError;
         private string newProfileDataPath;
         private string defaultSubscription = "06E3F6FD-A3AA-439A-8FC4-1F5C41D2AD1F";
+        private string dummyCertificate = "MIIKJAIBAzCCCeQGCSqGSIb3DQEHAaCCCdUEggnRMIIJzTCCBe4GCSqGSIb3DQEHAaCCBd8EggXbMIIF1zCCBdMGCyqGSIb3DQEMCgECoIIE7jCCBOowHAYKKoZIhvcNAQwBAzAOBAjilB4DFutYJwICB9AEggTItMCor/6dq+ynHyoo82U2N8bT9fBn57xuvF4zTtZdl503n+q48ZE5SLcUFoeAZkrYoCiyPn4ayVA4pfAHou5I2XEG1B4YF46hD0Bz0igWRSrsVigdoYP98BGGaMgl43d9AQGeV8iJ3d3In/TxMGjHUYzZwoIg1jE7xhQ8dMr2Xenw8pLrxl8FybI1isyxzAUjFE7E/Znv9DYi83VNwjC1uPg8q16PzXUQ/smFVzoZMtvmp8MxPrnI/gHqcS5g7SnnisTLmJcjqdLVywBZqiMo1ALs90EEgc7qgbim9lxGczUh+SI9cj2m5w9XMmXro4XJNJTLFG26DDOVMPfMSr9ij9P4rmxckVK7nHrGhQpshrLr37dF5KGFo6mh79VUadbwn/a4rXjfX9gXm5N/ZS8wq3U4/4Pl7t5N+bwB5izt8JG4aMhX6M6jshNrpe/gZHI9u6jNAo1yRxNfBdoxA7P2sZdlHO4CYTc9zZcZqTgH2QjRLTelIDn17PEQL9L4rEzqhT322WMzNnSMH9TCu3D5l2RuO6hsHl0JK4saiq3s04kkYoLXF9i+ovS0xSmu0zxemnFAGB1q1mlwoWoD06zlXEjHM2Q3T2b8ip1tK6/GFpU8Qs5BOUDanBOCqVLWlyvM/ilXUyN9cyLRMKM1sgEmn5ue0wsZlflU6egqChF8qjSJzq/34FgTjPazvkXkXv0e2vBz5+qzeC/1R8xySdFoehglny42VTkCRH4BzhoXf+MrfrC6tW85WCTKOj8SiTSzYXRragIwfG8RyLViOzdIW9pEAJF3UOloKOGGL1NREAnRPgxm9UVxD1oUj+pqYkPRRXcHuEnbiYEqE8Dgwk6GaSVOZ4CKjKAcapOwwW8bTxHgFOCrwgZhxIFXQhIZVoH8NphqN2WWwIUPa1gsc3uPwVXecgt8y8S01QEYCCFo9dT5sBS0rAOXMTOnSudWSHvz7c36IJSG2KyJwW3YO2UopIQ1V14MBZQhwUyddUILeuOy50u1j2eVOV3XESHO99oNP9FfalmgZw19LQDqX8S861x1w+GuU/NG//LZ0aXXaw1IhddIMZlpZVTADMunXIJbd0OiunfblXFwGZ33M1y/wGvFAZ6ofOuZv6vM0kmtufg3AHl/Vg+jzLOp1bYbKx4f7FHoYAerV88EA/ELXr2NTOLwwRYdk0cLWk4VY2lCLs8lcyoIUrcOS/+af8oX8dgJo9qkx2AiKp6AgYAWwrdpolOH7sMLmtu1rrthoMesExLz6xpUq/rYrWQJuyXWUmwbdxpDYFP8spqcW3KdbroNWhPEvM0tdocSK6lPWNnFMgqbb2qJJqjyV87LBZPEpHI8TPraofE7h4NWjXx/OqA6/dF1t3RvrvYqyC7kvrnaJ2LWfQI/88K9s7LAVvfDIbxWtIadrGXlo4gbtbQDSFzjve123DngBJkXqpzqRoL7mdpFvsgpg0upIKQ1fIbtaksC115g8BGBOzwGlo0Y3f4+ob6++OkePHoLkGhLahCMyDmGV1mxFz3ZUkXyxmfPSeynwXe/N8TxeZ2ixLZMF3sa61CpFsuHfEmVEetFxP5t3rrO5ZIbE87KVtvl6jCr8JQ3h81TZJBaeu8iiNC0MVspJpNQ/irYFElTMYHRMBMGCSqGSIb3DQEJFTEGBAQBAAAAMFsGCSqGSIb3DQEJFDFOHkwAewA0ADgANQBFADQAOQBCADYALQBFAEUARQA4AC0ANAA3ADUAQgAtADgAOQAwAEQALQA5ADcAQQA3ADYARgAyADQANgBEADkAMwB9MF0GCSsGAQQBgjcRATFQHk4ATQBpAGMAcgBvAHMAbwBmAHQAIABTAG8AZgB0AHcAYQByAGUAIABLAGUAeQAgAFMAdABvAHIAYQBnAGUAIABQAHIAbwB2AGkAZABlAHIwggPXBgkqhkiG9w0BBwagggPIMIIDxAIBADCCA70GCSqGSIb3DQEHATAcBgoqhkiG9w0BDAEGMA4ECG9kWMFPd2j2AgIH0ICCA5AUBLyrnhFVIYZKNWVLOWn0nfwmhADWS2FA3LGyGirb/lgpPcolLiQwGnXih0xxESn1CsZcWDpXiUvAfjQF1kxKHyCIUQBkrKQliYIT+RErliVuAY/vv1YW2Zj+bPUtTZKXUDzIPjNgb43+uxvf/wu+gGhAV/dV5oIWLjFhC1u4+Gp/LA5C6j60NtBXG7barSflAWTSOjGt2IIb5mBrUw+GkrhoYOqA+HYG40j2fkmkWpMCkImzcxxEM65ZElGUt7H1QY+GSRAxt7icA5ka9L+A0UM8a1SCFhbBK6Voo0IAkBZctJ6I7h4znhoHtqMDYYzraaYDVAK4SPdwOUMUyYdai0QwOYSL3frwVzC/ZHvCJkRmOsQXj9U44OGoXXrJ4rWIQIkcxFO3rEC3alI9lV5h5w73DWQRjex8Nz214B1yBRdlkoC/HQpgJ6IwFfEyJOn/lGgqkRPbgntTKSjNQZr5Ot60Z1SUYmmcMTpB8jRg+hy0LbWmx+79q9ERUnLO4yrtcXjQza12/FwAdpJOwbFrXMZb3QcuhQfn9aDF9/iNRkhTdxDmumS/C5gjZSYBzTugGDWsyS1hqws7LaYfcs6aWWRafqxt68cpNy4FaNXZ3XwXRVzuH+brnGvnWXRqhzwCbeGxEKDCEPxO9hO8NVrndsGlGfTZmxfTkKnPyRPD6vk4BG0Rc5BniyrmhnaZgSq0M04MeoAjp1s6S8CcIG73H5KkmoqQwSiKUbY3aA15nxqYhQj6L83WK5dPnVlmaV/xOeqkggzsdkaa+eQfA1e5RR27Gkyr5Rl20PQUR6J/sIGWIVCSSaqD2kxmDTODEORsF7jhL4YXZr96hqvNWtyNncxrqvjPsaFi/P2JFxjfZ8wmnF1HDsVW4W/i8cdRTyEz7Go4kzoRvSvC2sCPRAMa3D+o341r7L0hBlCnFfMU5Le8jatMKsw+Nk1TeOc4Cvc+w3gczSKrlhJnPtJjVZ67kKe8Ror8mKOP6afSr27avEizUYvJcCpKztUM59ukEbM2chEb2rrFPWxnB67KaLF825pRm+6Nl3mx0jaPDgK2ToydGfuVBA+9TSpnuV26imsd+K2yL2nwrdvBJPE/t2lPzVIR0hnf4AJ8/9BR0vTGmxiWwy8VMxrS3PyouLPZMXAgdT6ddRVwmewNjTe5g/tciGazIW+nROgg6fsgyObMp7keONMvtFMrJQLa2oKarGkwNzAfMAcGBSsOAwIaBBQXFDnqplMX7OuyknHK7B+HA/N8tAQUsL21+IY37DPL968vhVzqz09W/so=";
         private SubscriptionListOperationResponse.Subscription rdfeSubscription1;
         private SubscriptionListOperationResponse.Subscription rdfeSubscription2;
         private Subscription csmSubscription1;
@@ -60,7 +62,7 @@ namespace Common.Authorization.Test
         [Fact]
         public void ProfileGetsCreatedWithNonExistingFile()
         {
-            ProfileClient.DataStore = new MockDataStore();
+            AzureSession.DataStore = new MockDataStore();
             ProfileClient client = new ProfileClient();
         }
 
@@ -69,7 +71,7 @@ namespace Common.Authorization.Test
         {
             MockDataStore dataStore = new MockDataStore();
             dataStore.VirtualStore[oldProfileDataPath] = oldProfileData;
-            ProfileClient.DataStore = dataStore;
+            AzureSession.DataStore = dataStore;
             ProfileClient client = new ProfileClient();
 
             Assert.False(dataStore.FileExists(oldProfileDataPath));
@@ -77,11 +79,91 @@ namespace Common.Authorization.Test
         }
 
         [Fact]
+        public void NewProfileFromCertificateWithNullsThrowsArgumentNullException()
+        {
+            MockDataStore dataStore = new MockDataStore();
+            AzureSession.DataStore = dataStore;
+            AzureProfile newProfile = new AzureProfile();
+            ProfileClient client1 = new ProfileClient(newProfile);
+            Assert.Throws<ArgumentNullException>(() =>
+                client1.InitializeProfile(null, Guid.NewGuid(), new X509Certificate2(), "foo"));
+            Assert.Throws<ArgumentNullException>(() =>
+                client1.InitializeProfile(AzureEnvironment.PublicEnvironments["AzureCloud"], Guid.NewGuid(), null, "foo"));
+        }
+
+        [Fact]
+        public void NewProfileFromCertificateReturnsProfile()
+        {
+            MockDataStore dataStore = new MockDataStore();
+            AzureSession.DataStore = dataStore;
+            AzureProfile newProfile = new AzureProfile();
+            ProfileClient client1 = new ProfileClient(newProfile);
+            var subscriptionId = Guid.NewGuid();
+            var certificate = new X509Certificate2(Convert.FromBase64String(dummyCertificate));
+
+            client1.InitializeProfile(AzureEnvironment.PublicEnvironments["AzureCloud"],
+                subscriptionId, certificate, null);
+
+            Assert.Equal("AzureCloud", newProfile.DefaultSubscription.Environment);
+            Assert.Equal(subscriptionId, newProfile.DefaultSubscription.Id);
+            Assert.Equal(certificate.Thumbprint, newProfile.DefaultSubscription.Account);
+            Assert.False(newProfile.DefaultSubscription.Properties.ContainsKey(AzureSubscription.Property.StorageAccount));
+        }
+
+        [Fact]
+        public void NewProfileFromAdCredentialsWithNullsThrowsArgumentNullException()
+        {
+            MockDataStore dataStore = new MockDataStore();
+            AzureSession.DataStore = dataStore;
+            AzureProfile newProfile = new AzureProfile();
+            ProfileClient client1 = new ProfileClient(newProfile);
+            Assert.Throws<ArgumentNullException>(() =>
+                client1.InitializeProfile(null, Guid.NewGuid(), new AzureAccount(), null, "foo"));
+            Assert.Throws<ArgumentNullException>(() =>
+                client1.InitializeProfile(AzureEnvironment.PublicEnvironments["AzureCloud"], Guid.NewGuid(), null, null, "foo"));
+        }
+
+        [Fact]
+        public void NewProfileFromADReturnsProfile()
+        {
+            SetMocks(new[] { rdfeSubscription1, rdfeSubscription2 }.ToList(), new[] { csmSubscription1 }.ToList());
+            MockDataStore dataStore = new MockDataStore();
+            AzureSession.DataStore = dataStore;
+            AzureProfile newProfile = new AzureProfile();
+            ProfileClient client1 = new ProfileClient(newProfile);
+            var newAccount = new AzureAccount {Id = "foo"};
+            newAccount.Properties[AzureAccount.Property.Tenants] = "123";
+
+            client1.InitializeProfile(AzureEnvironment.PublicEnvironments["AzureCloud"],
+                new Guid(csmSubscription1.SubscriptionId), newAccount, null, null);
+
+            Assert.Equal("AzureCloud", newProfile.DefaultSubscription.Environment);
+            Assert.Equal(new Guid(csmSubscription1.SubscriptionId), newProfile.DefaultSubscription.Id);
+            Assert.Equal(newAccount.Id, newProfile.DefaultSubscription.Account);
+            Assert.False(newProfile.DefaultSubscription.Properties.ContainsKey(AzureSubscription.Property.StorageAccount));
+        }
+
+        [Fact]
+        public void NewProfileFromADWithMismatchSubscriptionThrows()
+        {
+            SetMocks(new[] { rdfeSubscription1, rdfeSubscription2 }.ToList(), new[] { csmSubscription1 }.ToList());
+            MockDataStore dataStore = new MockDataStore();
+            AzureSession.DataStore = dataStore;
+            AzureProfile newProfile = new AzureProfile();
+            ProfileClient client1 = new ProfileClient(newProfile);
+            var newAccount = new AzureAccount { Id = "foo" };
+            newAccount.Properties[AzureAccount.Property.Tenants] = "123";
+
+            Assert.Throws<ArgumentException>(() => client1.InitializeProfile(AzureEnvironment.PublicEnvironments["AzureCloud"],
+                Guid.NewGuid(), newAccount, null, null));
+        }
+
+        [Fact]
         public void ProfileMigratesOldDataOnce()
         {
             MockDataStore dataStore = new MockDataStore();
             dataStore.VirtualStore[oldProfileDataPath] = oldProfileData;
-            ProfileClient.DataStore = dataStore;
+            AzureSession.DataStore = dataStore;
             ProfileClient client1 = new ProfileClient();
 
             Assert.False(dataStore.FileExists(oldProfileDataPath));
@@ -98,7 +180,7 @@ namespace Common.Authorization.Test
         {
             MockDataStore dataStore = new MockDataStore();
             dataStore.VirtualStore[oldProfileDataPath] = oldProfileData;
-            ProfileClient.DataStore = dataStore;
+            AzureSession.DataStore = dataStore;
             ProfileClient client = new ProfileClient();
 
             // Verify Environment migration
@@ -156,7 +238,7 @@ namespace Common.Authorization.Test
         {
             MockDataStore dataStore = new MockDataStore();
             dataStore.VirtualStore[oldProfileDataPath] = oldProfileDataBadSubscription;
-            ProfileClient.DataStore = dataStore;
+            AzureSession.DataStore = dataStore;
             ProfileClient client = new ProfileClient();
 
             // Verify Environment migration
@@ -203,7 +285,7 @@ namespace Common.Authorization.Test
         {
             MockDataStore dataStore = new MockDataStore();
             dataStore.VirtualStore[oldProfileDataPath] = oldProfileDataCorruptedFile;
-            ProfileClient.DataStore = dataStore;
+            AzureSession.DataStore = dataStore;
             ProfileClient client = new ProfileClient();
 
             // Verify Environment migration
@@ -227,7 +309,7 @@ namespace Common.Authorization.Test
             SetMocks(new[] { rdfeSubscription1, rdfeSubscription2 }.ToList(), new[] { csmSubscription1 }.ToList());
             MockDataStore dataStore = new MockDataStore();
             dataStore.VirtualStore[oldProfileDataPath] = oldProfileData;
-            ProfileClient.DataStore = dataStore;
+            AzureSession.DataStore = dataStore;
             ProfileClient client = new ProfileClient();
 
             var account = client.AddAccountAndLoadSubscriptions(new AzureAccount { Id = "test", Type = AzureAccount.AccountType.User }, AzureEnvironment.PublicEnvironments[EnvironmentName.AzureCloud], null);
@@ -245,7 +327,7 @@ namespace Common.Authorization.Test
             SetMocks(new[] { rdfeSubscription1, rdfeSubscription2 }.ToList(), new[] { csmSubscription1 }.ToList());
             MockDataStore dataStore = new MockDataStore();
             dataStore.VirtualStore[oldProfileDataPath] = oldProfileData;
-            ProfileClient.DataStore = dataStore;
+            AzureSession.DataStore = dataStore;
             ProfileClient client = new ProfileClient();
 
             var account = client.AddAccountAndLoadSubscriptions(new AzureAccount { Id = "test", Type = AzureAccount.AccountType.User }, AzureEnvironment.PublicEnvironments[EnvironmentName.AzureCloud], null);
@@ -279,7 +361,7 @@ namespace Common.Authorization.Test
                 });
             MockDataStore dataStore = new MockDataStore();
             dataStore.VirtualStore[oldProfileDataPath] = oldProfileData;
-            ProfileClient.DataStore = dataStore;
+            AzureSession.DataStore = dataStore;
             ProfileClient client = new ProfileClient();
 
             var account = client.AddAccountAndLoadSubscriptions(new AzureAccount { Id = "UserA", Type = AzureAccount.AccountType.User }, AzureEnvironment.PublicEnvironments[EnvironmentName.AzureCloud], null);
@@ -318,7 +400,7 @@ namespace Common.Authorization.Test
                 });
             MockDataStore dataStore = new MockDataStore();
             dataStore.VirtualStore[oldProfileDataPath] = oldProfileData;
-            ProfileClient.DataStore = dataStore;
+            AzureSession.DataStore = dataStore;
             ProfileClient client = new ProfileClient();
 
             var account = client.AddAccountAndLoadSubscriptions(new AzureAccount { Id = "UserA", Type = AzureAccount.AccountType.User }, 
@@ -360,7 +442,7 @@ namespace Common.Authorization.Test
                 });
             MockDataStore dataStore = new MockDataStore();
             dataStore.VirtualStore[oldProfileDataPath] = oldProfileData;
-            ProfileClient.DataStore = dataStore;
+            AzureSession.DataStore = dataStore;
             ProfileClient client = new ProfileClient();
 
             var account = client.AddAccountAndLoadSubscriptions(new AzureAccount { Id = "UserA", Type = AzureAccount.AccountType.User }, 
@@ -377,7 +459,7 @@ namespace Common.Authorization.Test
         public void GetAzureAccountReturnsAccountWithSubscriptions()
         {
             MockDataStore dataStore = new MockDataStore();
-            ProfileClient.DataStore = dataStore;
+            AzureSession.DataStore = dataStore;
             ProfileClient client = new ProfileClient();
             client.Profile.Subscriptions[azureSubscription1.Id] = azureSubscription1;
             client.Profile.Subscriptions[azureSubscription2.Id] = azureSubscription2;
@@ -398,7 +480,7 @@ namespace Common.Authorization.Test
         public void GetAzureAccountWithoutEnvironmentReturnsAccount()
         {
             MockDataStore dataStore = new MockDataStore();
-            ProfileClient.DataStore = dataStore;
+            AzureSession.DataStore = dataStore;
             ProfileClient client = new ProfileClient();
             client.Profile.Subscriptions[azureSubscription1.Id] = azureSubscription1;
             client.Profile.Subscriptions[azureSubscription2.Id] = azureSubscription2;
@@ -419,7 +501,7 @@ namespace Common.Authorization.Test
         public void GetAzureAccountReturnsEmptyEnumerationForNonExistingUser()
         {
             MockDataStore dataStore = new MockDataStore();
-            ProfileClient.DataStore = dataStore;
+            AzureSession.DataStore = dataStore;
             ProfileClient client = new ProfileClient();
             client.Profile.Subscriptions[azureSubscription1.Id] = azureSubscription1;
             client.Profile.Subscriptions[azureSubscription2.Id] = azureSubscription2;
@@ -429,14 +511,14 @@ namespace Common.Authorization.Test
 
             var account = client.ListAccounts("test2").ToList();
 
-            Assert.Equal(1, account.Count);
+            Assert.Equal(0, account.Count);
         }
 
         [Fact]
         public void GetAzureAccountReturnsAllAccountsWithNullUser()
         {
             MockDataStore dataStore = new MockDataStore();
-            ProfileClient.DataStore = dataStore;
+            AzureSession.DataStore = dataStore;
             ProfileClient client = new ProfileClient();
             client.Profile.Subscriptions[azureSubscription1.Id] = azureSubscription1;
             client.Profile.Subscriptions[azureSubscription2.Id] = azureSubscription2;
@@ -463,7 +545,7 @@ namespace Common.Authorization.Test
         public void RemoveAzureAccountRemovesSubscriptions()
         {
             MockDataStore dataStore = new MockDataStore();
-            ProfileClient.DataStore = dataStore;
+            AzureSession.DataStore = dataStore;
             ProfileClient client = new ProfileClient();
             client.Profile.Subscriptions[azureSubscription1.Id] = azureSubscription1;
             client.Profile.Subscriptions[azureSubscription2.Id] = azureSubscription2;
@@ -495,7 +577,7 @@ namespace Common.Authorization.Test
         public void RemoveAzureAccountRemovesDefaultSubscriptionAndWritesWarning()
         {
             MockDataStore dataStore = new MockDataStore();
-            ProfileClient.DataStore = dataStore;
+            AzureSession.DataStore = dataStore;
             ProfileClient client = new ProfileClient();
             client.Profile.Subscriptions[azureSubscription1.Id] = azureSubscription1;
             client.Profile.Subscriptions[azureSubscription2.Id] = azureSubscription2;
@@ -532,7 +614,7 @@ namespace Common.Authorization.Test
         public void RemoveAzureAccountRemovesDefaultAccountFromSubscription()
         {
             MockDataStore dataStore = new MockDataStore();
-            ProfileClient.DataStore = dataStore;
+            AzureSession.DataStore = dataStore;
             ProfileClient client = new ProfileClient();
             client.Profile.Subscriptions[azureSubscription1.Id] = azureSubscription1;
             client.Profile.Subscriptions[azureSubscription2.Id] = azureSubscription2;
@@ -559,7 +641,7 @@ namespace Common.Authorization.Test
         public void RemoveAzureAccountRemovesInMemoryAccount()
         {
             MockDataStore dataStore = new MockDataStore();
-            ProfileClient.DataStore = dataStore;
+            AzureSession.DataStore = dataStore;
             ProfileClient client = new ProfileClient();
             client.Profile.Subscriptions[azureSubscription1.Id] = azureSubscription1;
             client.Profile.Subscriptions[azureSubscription2.Id] = azureSubscription2;
@@ -595,7 +677,7 @@ namespace Common.Authorization.Test
         public void AddAzureEnvironmentAddsEnvironment()
         {
             MockDataStore dataStore = new MockDataStore();
-            ProfileClient.DataStore = dataStore;
+            AzureSession.DataStore = dataStore;
             ProfileClient client = new ProfileClient();
 
             Assert.Equal(2, client.Profile.Environments.Count);
@@ -611,7 +693,7 @@ namespace Common.Authorization.Test
         public void GetAzureEnvironmentsListsEnvironments()
         {
             MockDataStore dataStore = new MockDataStore();
-            ProfileClient.DataStore = dataStore;
+            AzureSession.DataStore = dataStore;
             ProfileClient client = new ProfileClient();
 
             var env1 = client.ListEnvironments(null);
@@ -631,7 +713,7 @@ namespace Common.Authorization.Test
         public void RemoveAzureEnvironmentRemovesEnvironmentSubscriptionsAndAccounts()
         {
             MockDataStore dataStore = new MockDataStore();
-            ProfileClient.DataStore = dataStore;
+            AzureSession.DataStore = dataStore;
             ProfileClient client = new ProfileClient();
 
             client.Profile.Accounts[azureAccount.Id] = azureAccount;
@@ -658,7 +740,7 @@ namespace Common.Authorization.Test
         public void RemoveAzureEnvironmentDoesNotRemoveEnvironmentSubscriptionsAndAccountsForAzureCloudOrChinaCloud()
         {
             MockDataStore dataStore = new MockDataStore();
-            ProfileClient.DataStore = dataStore;
+            AzureSession.DataStore = dataStore;
             ProfileClient client = new ProfileClient();
 
             client.Profile.Accounts[azureAccount.Id] = azureAccount;
@@ -685,7 +767,7 @@ namespace Common.Authorization.Test
         public void SetAzureEnvironmentUpdatesEnvironment()
         {
             MockDataStore dataStore = new MockDataStore();
-            ProfileClient.DataStore = dataStore;
+            AzureSession.DataStore = dataStore;
             ProfileClient client = new ProfileClient();
 
             Assert.Equal(2, client.Profile.Environments.Count);
@@ -709,7 +791,7 @@ namespace Common.Authorization.Test
         public void GetAzureEnvironmentReturnsCorrectValue()
         {
             MockDataStore dataStore = new MockDataStore();
-            ProfileClient.DataStore = dataStore;
+            AzureSession.DataStore = dataStore;
             ProfileClient client = new ProfileClient();
             client.AddOrSetEnvironment(azureEnvironment);
 
@@ -730,7 +812,7 @@ namespace Common.Authorization.Test
         public void GetCurrentEnvironmentReturnsCorrectValue()
         {
             MockDataStore dataStore = new MockDataStore();
-            ProfileClient.DataStore = dataStore;
+            AzureSession.DataStore = dataStore;
             ProfileClient client = new ProfileClient();
 
             AzureSession.SetCurrentContext(azureSubscription1, azureEnvironment, azureAccount);
@@ -744,7 +826,7 @@ namespace Common.Authorization.Test
         public void AddOrSetAzureSubscriptionChecksAndUpdates()
         {
             MockDataStore dataStore = new MockDataStore();
-            ProfileClient.DataStore = dataStore;
+            AzureSession.DataStore = dataStore;
             ProfileClient client = new ProfileClient();
 
             client.AddOrSetAccount(azureAccount);
@@ -767,7 +849,7 @@ namespace Common.Authorization.Test
         public void AddOrSetAzureSubscriptionUpdatesInMemory()
         {
             MockDataStore dataStore = new MockDataStore();
-            ProfileClient.DataStore = dataStore;
+            AzureSession.DataStore = dataStore;
             ProfileClient client = new ProfileClient();
 
             client.AddOrSetAccount(azureAccount);
@@ -803,7 +885,7 @@ namespace Common.Authorization.Test
         public void RemoveAzureSubscriptionChecksAndRemoves()
         {
             MockDataStore dataStore = new MockDataStore();
-            ProfileClient.DataStore = dataStore;
+            AzureSession.DataStore = dataStore;
             ProfileClient client = new ProfileClient();
 
             client.Profile.Accounts[azureAccount.Id] = azureAccount;
@@ -837,7 +919,7 @@ namespace Common.Authorization.Test
         {
             SetMocks(new[] { rdfeSubscription1, rdfeSubscription2 }.ToList(), new[] { csmSubscription1, csmSubscription1withDuplicateId }.ToList());
             MockDataStore dataStore = new MockDataStore();
-            ProfileClient.DataStore = dataStore;
+            AzureSession.DataStore = dataStore;
             ProfileClient client = new ProfileClient();
             client.AddOrSetEnvironment(azureEnvironment);
             client.Profile.Accounts[azureAccount.Id] = azureAccount;
@@ -856,7 +938,7 @@ namespace Common.Authorization.Test
         {
             SetMocks(new[] { rdfeSubscription1, rdfeSubscription2 }.ToList(), new[] { csmSubscription1, csmSubscription1withDuplicateId }.ToList());
             MockDataStore dataStore = new MockDataStore();
-            ProfileClient.DataStore = dataStore;
+            AzureSession.DataStore = dataStore;
             ProfileClient client = new ProfileClient();
             client.AddOrSetEnvironment(azureEnvironment);
             client.Profile.Accounts[azureAccount.Id] = azureAccount;
@@ -878,7 +960,7 @@ namespace Common.Authorization.Test
         {
             SetMocks(new[] { rdfeSubscription1, rdfeSubscription2 }.ToList(), new[] { csmSubscription1, csmSubscription1withDuplicateId }.ToList());
             MockDataStore dataStore = new MockDataStore();
-            ProfileClient.DataStore = dataStore;
+            AzureSession.DataStore = dataStore;
             ProfileClient client = new ProfileClient();
 
             client.Profile.Accounts[azureAccount.Id] = azureAccount;
@@ -897,7 +979,7 @@ namespace Common.Authorization.Test
         {
             SetMocks(new[] { rdfeSubscription1, rdfeSubscription2 }.ToList(), new[] { csmSubscription1, csmSubscription1withDuplicateId }.ToList());
             MockDataStore dataStore = new MockDataStore();
-            ProfileClient.DataStore = dataStore;
+            AzureSession.DataStore = dataStore;
             ProfileClient client = new ProfileClient();
             client.AddOrSetAccount(azureAccount);
             client.AddOrSetEnvironment(azureEnvironment);
@@ -918,7 +1000,7 @@ namespace Common.Authorization.Test
         {
             SetMocks(new[] { rdfeSubscription1, rdfeSubscription2 }.ToList(), new[] { csmSubscription1, csmSubscription1withDuplicateId }.ToList());
             MockDataStore dataStore = new MockDataStore();
-            ProfileClient.DataStore = dataStore;
+            AzureSession.DataStore = dataStore;
             ProfileClient client = new ProfileClient();
             client.AddOrSetAccount(azureAccount);
             client.AddOrSetEnvironment(azureEnvironment);
@@ -936,7 +1018,7 @@ namespace Common.Authorization.Test
         {
             SetMocks(new[] { rdfeSubscription1, rdfeSubscription2 }.ToList(), new[] { csmSubscription1, csmSubscription1withDuplicateId }.ToList());
             MockDataStore dataStore = new MockDataStore();
-            ProfileClient.DataStore = dataStore;
+            AzureSession.DataStore = dataStore;
             ProfileClient client = new ProfileClient();
             client.AddOrSetAccount(azureAccount);
             client.AddOrSetEnvironment(azureEnvironment);
@@ -953,7 +1035,7 @@ namespace Common.Authorization.Test
         public void SetAzureSubscriptionAsDefaultSetsDefaultAndCurrent()
         {
             MockDataStore dataStore = new MockDataStore();
-            ProfileClient.DataStore = dataStore;
+            AzureSession.DataStore = dataStore;
             ProfileClient client = new ProfileClient();
             client.Profile.Accounts[azureAccount.Id] = azureAccount;
             client.AddOrSetEnvironment(azureEnvironment);
@@ -973,7 +1055,7 @@ namespace Common.Authorization.Test
         public void ClearDefaultAzureSubscriptionClearsDefault()
         {
             MockDataStore dataStore = new MockDataStore();
-            ProfileClient.DataStore = dataStore;
+            AzureSession.DataStore = dataStore;
             ProfileClient client = new ProfileClient();
             client.Profile.Accounts[azureAccount.Id] = azureAccount;
             client.AddOrSetEnvironment(azureEnvironment);
@@ -992,7 +1074,7 @@ namespace Common.Authorization.Test
         public void SetAzureSubscriptionAsCurrentSetsCurrent()
         {
             MockDataStore dataStore = new MockDataStore();
-            ProfileClient.DataStore = dataStore;
+            AzureSession.DataStore = dataStore;
             ProfileClient client = new ProfileClient();
             client.Profile.Accounts[azureAccount.Id] = azureAccount;
             client.AddOrSetEnvironment(azureEnvironment);
@@ -1012,7 +1094,7 @@ namespace Common.Authorization.Test
         public void ImportPublishSettingsLoadsAndReturnsSubscriptions()
         {
             MockDataStore dataStore = new MockDataStore();
-            ProfileClient.DataStore = dataStore;
+            AzureSession.DataStore = dataStore;
             ProfileClient client = new ProfileClient();
 
             dataStore.WriteFile("ImportPublishSettingsLoadsAndReturnsSubscriptions.publishsettings",
@@ -1031,7 +1113,7 @@ namespace Common.Authorization.Test
         public void ImportPublishSettingsDefaultsToAzureCloudEnvironmentWithManagementUrl()
         {
             MockDataStore dataStore = new MockDataStore();
-            ProfileClient.DataStore = dataStore;
+            AzureSession.DataStore = dataStore;
             ProfileClient client = new ProfileClient();
             client.AddOrSetAccount(azureAccount);
             client.AddOrSetEnvironment(azureEnvironment);
@@ -1056,7 +1138,7 @@ namespace Common.Authorization.Test
         public void ImportPublishSettingsUsesProperEnvironmentWithManagementUrl()
         {
             MockDataStore dataStore = new MockDataStore();
-            ProfileClient.DataStore = dataStore;
+            AzureSession.DataStore = dataStore;
             ProfileClient client = new ProfileClient();
             client.AddOrSetAccount(azureAccount);
             azureEnvironment.Endpoints[AzureEnvironment.Endpoint.ServiceManagement] = "https://newmanagement.core.windows.net/";
@@ -1082,7 +1164,7 @@ namespace Common.Authorization.Test
         public void ImportPublishSettingsUsesProperEnvironmentWithChinaManagementUrl()
         {
             MockDataStore dataStore = new MockDataStore();
-            ProfileClient.DataStore = dataStore;
+            AzureSession.DataStore = dataStore;
             ProfileClient client = new ProfileClient();
 
             dataStore.WriteFile("ImportPublishSettingsLoadsAndReturnsSubscriptions.publishsettings",
@@ -1100,7 +1182,7 @@ namespace Common.Authorization.Test
         public void ImportPublishSettingsUsesProperEnvironmentWithChinaManagementUrlOld()
         {
             MockDataStore dataStore = new MockDataStore();
-            ProfileClient.DataStore = dataStore;
+            AzureSession.DataStore = dataStore;
             ProfileClient client = new ProfileClient();
 
             dataStore.WriteFile("ImportPublishSettingsLoadsAndReturnsSubscriptions.publishsettings",
@@ -1118,7 +1200,7 @@ namespace Common.Authorization.Test
         public void ImportPublishSettingsDefaultsToAzureCloudWithIncorrectManagementUrl()
         {
             MockDataStore dataStore = new MockDataStore();
-            ProfileClient.DataStore = dataStore;
+            AzureSession.DataStore = dataStore;
             ProfileClient client = new ProfileClient();
             client.AddOrSetAccount(azureAccount);
             client.AddOrSetEnvironment(azureEnvironment);
@@ -1143,7 +1225,7 @@ namespace Common.Authorization.Test
         public void ImportPublishSettingsUsesPassedInEnvironment()
         {
             MockDataStore dataStore = new MockDataStore();
-            ProfileClient.DataStore = dataStore;
+            AzureSession.DataStore = dataStore;
             ProfileClient client = new ProfileClient();
             client.AddOrSetAccount(azureAccount);
             client.AddOrSetEnvironment(azureEnvironment);
@@ -1168,7 +1250,7 @@ namespace Common.Authorization.Test
         public void ImportPublishSettingsAddsSecondCertificate()
         {
             MockDataStore dataStore = new MockDataStore();
-            ProfileClient.DataStore = dataStore;
+            AzureSession.DataStore = dataStore;
             ProfileClient client = new ProfileClient();
             var newSubscription = new AzureSubscription
             {

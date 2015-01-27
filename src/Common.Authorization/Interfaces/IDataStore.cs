@@ -16,7 +16,7 @@ using System.IO;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
-namespace Microsoft.Azure.Common.Authorization.Interfaces
+namespace Microsoft.Azure.Common.Authorization
 {
     public interface IDataStore
     {

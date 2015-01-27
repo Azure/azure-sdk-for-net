@@ -85,6 +85,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Resources\Azure.publishsettings" />
+    <None Include="Resources\GB18030ServiceDefinition.csdef" />
+    <None Include="Resources\InvalidProfile.PublishSettings" />
+    <None Include="Resources\ValidProfile.PublishSettings" />
+    <None Include="Resources\ValidProfile2.PublishSettings" />
+    <None Include="Resources\ValidProfile3.PublishSettings" />
+    <None Include="Resources\ValidProfileChina.PublishSettings" />
+    <None Include="Resources\ValidProfileChinaOld.PublishSettings" />
     <EmbeddedResource Include="Resources\Azure.publishsettings" />
     <EmbeddedResource Include="Resources\GB18030ServiceDefinition.csdef" />
     <EmbeddedResource Include="Resources\InvalidProfile.PublishSettings" />

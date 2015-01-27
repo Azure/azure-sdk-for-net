@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Common.Authorization
             // TODO: fix and uncomment. second parameter is wrong
             // Validate.ValidateFileFull(fileName, string.Format(Resources.PathDoesNotExistForElement, string.Empty, fileName));
 
-            T item = default(T);
+            T item;
 
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(T));
             using (TextReader reader = new StreamReader(FileUtilities.DataStore.ReadFileAsStream(fileName)))

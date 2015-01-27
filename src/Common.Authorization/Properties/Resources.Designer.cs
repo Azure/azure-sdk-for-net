@@ -8,10 +8,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Microsoft.Azure.Common.Authorization.Properties
-{
-
-
+namespace Microsoft.Azure.Common.Authorization.Properties {
+    using System;
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -75,6 +75,15 @@ namespace Microsoft.Azure.Common.Authorization.Properties
         public static string AccountIdDoesntMatchSubscription {
             get {
                 return ResourceManager.GetString("AccountIdDoesntMatchSubscription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Account needs to be specified..
+        /// </summary>
+        public static string AccountNeedsToBeSpecified {
+            get {
+                return ResourceManager.GetString("AccountNeedsToBeSpecified", resourceCulture);
             }
         }
         
@@ -1043,6 +1052,24 @@ namespace Microsoft.Azure.Common.Authorization.Properties
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Environment name needs to be specified..
+        /// </summary>
+        public static string EnvironmentNameNeedsToBeSpecified {
+            get {
+                return ResourceManager.GetString("EnvironmentNameNeedsToBeSpecified", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Environment needs to be specified..
+        /// </summary>
+        public static string EnvironmentNeedsToBeSpecified {
+            get {
+                return ResourceManager.GetString("EnvironmentNeedsToBeSpecified", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The environment name &apos;{0}&apos; is not found..
         /// </summary>
         public static string EnvironmentNotFound {
@@ -1102,6 +1129,15 @@ namespace Microsoft.Azure.Common.Authorization.Properties
         public static string FailedJobErrorMessage {
             get {
                 return ResourceManager.GetString("FailedJobErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File path is not valid..
+        /// </summary>
+        public static string FilePathIsNotValid {
+            get {
+                return ResourceManager.GetString("FilePathIsNotValid", resourceCulture);
             }
         }
         
@@ -3973,11 +4009,29 @@ namespace Microsoft.Azure.Common.Authorization.Properties
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Subscription name needs to be specified..
+        /// </summary>
+        public static string SubscriptionNameNeedsToBeSpecified {
+            get {
+                return ResourceManager.GetString("SubscriptionNameNeedsToBeSpecified", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The subscription name {0} doesn&apos;t exist..
         /// </summary>
         public static string SubscriptionNameNotFoundMessage {
             get {
                 return ResourceManager.GetString("SubscriptionNameNotFoundMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subscription needs to be specified..
+        /// </summary>
+        public static string SubscriptionNeedsToBeSpecified {
+            get {
+                return ResourceManager.GetString("SubscriptionNeedsToBeSpecified", resourceCulture);
             }
         }
         
@@ -4077,6 +4131,24 @@ namespace Microsoft.Azure.Common.Authorization.Properties
         public static string UpdatedSettings {
             get {
                 return ResourceManager.GetString("UpdatedSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User name is not valid..
+        /// </summary>
+        public static string UserNameIsNotValid {
+            get {
+                return ResourceManager.GetString("UserNameIsNotValid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User name needs to be specified..
+        /// </summary>
+        public static string UserNameNeedsToBeSpecified {
+            get {
+                return ResourceManager.GetString("UserNameNeedsToBeSpecified", resourceCulture);
             }
         }
         
