@@ -16,15 +16,15 @@ using System.Security.Cryptography.X509Certificates;
 using Microsoft.Azure.Common.Authorization;
 using Microsoft.Azure.Common.Authorization.Authentication;
 using Microsoft.Azure.Common.Authorization.Models;
-using Microsoft.Azure.Subscriptions.Models;
+using Microsoft.Azure.Internal.Subscriptions.Csm.Models;
 using Microsoft.WindowsAzure.Commands.Common.Test.Mocks;
-using Microsoft.WindowsAzure.Subscriptions.Models;
+using Microsoft.Azure.Internal.Subscriptions.Rdfe.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
-using CSMSubscription = Microsoft.Azure.Subscriptions.Models.Subscription;
-using RDFESubscription = Microsoft.WindowsAzure.Subscriptions.Models.SubscriptionListOperationResponse.Subscription;
+using CSMSubscription = Microsoft.Azure.Internal.Subscriptions.Csm.Models.Subscription;
+using RDFESubscription = Microsoft.Azure.Internal.Subscriptions.Rdfe.Models.Subscription;
 
 namespace Common.Authorization.Test
 {
@@ -38,11 +38,11 @@ namespace Common.Authorization.Test
         private string newProfileDataPath;
         private string defaultSubscription = "06E3F6FD-A3AA-439A-8FC4-1F5C41D2AD1F";
         private string dummyCertificate = "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";
-        private SubscriptionListOperationResponse.Subscription rdfeSubscription1;
-        private SubscriptionListOperationResponse.Subscription rdfeSubscription2;
-        private Subscription csmSubscription1;
-        private Subscription csmSubscription1withDuplicateId;
-        private Subscription csmSubscription2;
+        private RDFESubscription rdfeSubscription1;
+        private RDFESubscription rdfeSubscription2;
+        private CSMSubscription csmSubscription1;
+        private CSMSubscription csmSubscription1withDuplicateId;
+        private CSMSubscription csmSubscription2;
         private AzureSubscription azureSubscription1;
         private AzureSubscription azureSubscription2;
         private AzureSubscription azureSubscription3withoutUser;
@@ -346,9 +346,10 @@ namespace Common.Authorization.Test
         [Fact]
         public void AddAzureAccountWithImpersonatedGuestWithNoSubscriptions()
         {
-            SetMocks(new[] { rdfeSubscription1 }.ToList(), new List<Subscription>(),
-                new[] { commonTenant, guestTenant }.ToList(),
-                (userAccount, environment, tenant) =>
+            SetMocks(new[] { rdfeSubscription1 }.ToList(), 
+                     new List<Microsoft.Azure.Internal.Subscriptions.Csm.Models.Subscription>(),
+                     new[] { commonTenant, guestTenant }.ToList(),
+                    (userAccount, environment, tenant) =>
                 {
                     var token = new MockAccessToken
                     {
@@ -386,7 +387,9 @@ namespace Common.Authorization.Test
         [Fact]
         public void AddAzureAccountWithImpersonatedGuestWithSubscriptions()
         {
-            SetMocks(new[] { rdfeSubscription1, guestRdfeSubscription }.ToList(), new List<Subscription>(), new[] { commonTenant, guestTenant }.ToList(),
+            SetMocks(new[] { rdfeSubscription1, guestRdfeSubscription }.ToList(), 
+                     new List<Microsoft.Azure.Internal.Subscriptions.Csm.Models.Subscription>(), 
+                     new[] { commonTenant, guestTenant }.ToList(),
                     (userAccount, environment, tenant) =>
                 {
                     var token = new MockAccessToken
@@ -428,8 +431,10 @@ namespace Common.Authorization.Test
         [Fact]
         public void AddAzureAccountIsCaseInsensitive()
         {
-            SetMocks(new[] { rdfeSubscription1, guestRdfeSubscription }.ToList(), new List<Subscription>(), new[] { commonTenant, guestTenant }.ToList(),
-                    (userAccount, environment, tenant) =>
+            SetMocks(new[] { rdfeSubscription1, guestRdfeSubscription }.ToList(), 
+                     new List<Microsoft.Azure.Internal.Subscriptions.Csm.Models.Subscription>(), 
+                     new[] { commonTenant, guestTenant }.ToList(),
+                     (userAccount, environment, tenant) =>
                 {
                     var token = new MockAccessToken
                     {
@@ -1286,8 +1291,8 @@ namespace Common.Authorization.Test
             Assert.Equal(6, client.Profile.Subscriptions.Count);
         }
 
-        private void SetMocks(List<SubscriptionListOperationResponse.Subscription> rdfeSubscriptions,
-            List<Subscription> csmSubscriptions,
+        private void SetMocks(List<Microsoft.Azure.Internal.Subscriptions.Rdfe.Models.Subscription> rdfeSubscriptions,
+            List<Microsoft.Azure.Internal.Subscriptions.Csm.Models.Subscription> csmSubscriptions,
             List<TenantIdDescription> tenants = null,
             Func<AzureAccount, AzureEnvironment, string, IAccessToken> tokenProvider = null)
         {
@@ -1325,21 +1330,21 @@ namespace Common.Authorization.Test
             {
                 SubscriptionId = "16E3F6FD-A3AA-439A-8FC4-1F5C41D2AD1E",
                 SubscriptionName = "RdfeSub1",
-                SubscriptionStatus = Microsoft.WindowsAzure.Subscriptions.Models.SubscriptionStatus.Active,
+                SubscriptionStatus = Microsoft.Azure.Internal.Subscriptions.Rdfe.Models.SubscriptionStatus.Active,
                 ActiveDirectoryTenantId = "Common"
             };
             rdfeSubscription2 = new RDFESubscription
             {
                 SubscriptionId = "26E3F6FD-A3AA-439A-8FC4-1F5C41D2AD1E",
                 SubscriptionName = "RdfeSub2",
-                SubscriptionStatus = Microsoft.WindowsAzure.Subscriptions.Models.SubscriptionStatus.Active,
+                SubscriptionStatus = Microsoft.Azure.Internal.Subscriptions.Rdfe.Models.SubscriptionStatus.Active,
                 ActiveDirectoryTenantId = "Common"
             };
             guestRdfeSubscription = new RDFESubscription
             {
                 SubscriptionId = "26E3F6FD-A3AA-439A-8FC4-1F5C41D2AD1C",
                 SubscriptionName = "RdfeSub2",
-                SubscriptionStatus = Microsoft.WindowsAzure.Subscriptions.Models.SubscriptionStatus.Active,
+                SubscriptionStatus = Microsoft.Azure.Internal.Subscriptions.Rdfe.Models.SubscriptionStatus.Active,
                 ActiveDirectoryTenantId = "Guest"
             };
             csmSubscription1 = new CSMSubscription

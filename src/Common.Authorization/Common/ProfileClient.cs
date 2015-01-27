@@ -17,16 +17,16 @@ using Microsoft.Azure.Common.Authorization.Authentication;
 using Microsoft.Azure.Common.Authorization.Factories;
 using Microsoft.Azure.Common.Authorization.Models;
 using Microsoft.Azure.Common.Authorization.Properties;
-using Microsoft.Azure.Subscriptions;
-using Microsoft.WindowsAzure.Subscriptions;
+using Microsoft.Azure.Internal.Subscriptions.Csm;
+using Microsoft.Azure.Internal.Subscriptions.Rdfe;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Security;
 using System.Security.Cryptography.X509Certificates;
-using CSMSubscriptionClient = Microsoft.Azure.Subscriptions.SubscriptionClient;
-using RDFESubscriptionClient = Microsoft.WindowsAzure.Subscriptions.SubscriptionClient;
+using CSMSubscriptionClient = Microsoft.Azure.Internal.Subscriptions.Csm.SubscriptionClient;
+using RDFESubscriptionClient = Microsoft.Azure.Internal.Subscriptions.Rdfe.SubscriptionClient;
 
 namespace Microsoft.Azure.Common.Authorization
 {
@@ -1027,7 +1027,7 @@ namespace Microsoft.Azure.Common.Authorization
 
                     tenantAccount.SetOrAppendProperty(AzureAccount.Property.Tenants, new string[] { tenant });
 
-                    using (var subscriptionClient = AzureSession.ClientFactory.CreateCustomClient<Azure.Subscriptions.SubscriptionClient>(
+                    using (var subscriptionClient = AzureSession.ClientFactory.CreateCustomClient<CSMSubscriptionClient>(
                                 new TokenCloudCredentials(tenantToken.AccessToken),
                                 environment.GetEndpointAsUri(AzureEnvironment.Endpoint.ResourceManager)))
                     {
@@ -1092,7 +1092,7 @@ namespace Microsoft.Azure.Common.Authorization
                     }
 
                     tenantAccount.SetOrAppendProperty(AzureAccount.Property.Tenants, new string[] { tenant });
-                    using (var subscriptionClient = AzureSession.ClientFactory.CreateCustomClient<WindowsAzure.Subscriptions.SubscriptionClient>(
+                    using (var subscriptionClient = AzureSession.ClientFactory.CreateCustomClient<RDFESubscriptionClient>(
                             new TokenCloudCredentials(tenantToken.AccessToken),
                             environment.GetEndpointAsUri(AzureEnvironment.Endpoint.ServiceManagement)))
                     {

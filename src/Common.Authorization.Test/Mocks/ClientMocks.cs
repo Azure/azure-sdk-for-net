@@ -32,20 +32,20 @@ namespace Microsoft.WindowsAzure.Commands.Common.Test.Mocks
     public class ClientMocks
     {
         private readonly MockRepository repository;
-        public Mock<WindowsAzure.Management.ManagementClient> ManagementClientMock { get; private set; }
-        public Mock<Azure.Management.Resources.ResourceManagementClient> ResourceManagementClientMock { get; private set; }
-        public Mock<Azure.Subscriptions.SubscriptionClient> CsmSubscriptionClientMock { get; private set; }
-        public Mock<WindowsAzure.Subscriptions.SubscriptionClient> RdfeSubscriptionClientMock { get; private set; }
+        internal Mock<Microsoft.Azure.Internal.Management.Rdfe.ManagementClient> ManagementClientMock { get; private set; }
+        internal Mock<Microsoft.Azure.Internal.Management.Csm.ResourceManagementClient> ResourceManagementClientMock { get; private set; }
+        internal Mock<Microsoft.Azure.Internal.Subscriptions.Csm.SubscriptionClient> CsmSubscriptionClientMock { get; private set; }
+        internal Mock<Microsoft.Azure.Internal.Subscriptions.Rdfe.SubscriptionClient> RdfeSubscriptionClientMock { get; private set; }
 
         public ClientMocks(Guid subscriptionId)
         {
             repository = new MockRepository(MockBehavior.Default) {DefaultValue = DefaultValue.Mock};
 
             var creds = CreateCredentials(subscriptionId);
-            ManagementClientMock = repository.Create<WindowsAzure.Management.ManagementClient>(creds);
-            ResourceManagementClientMock = repository.Create<Azure.Management.Resources.ResourceManagementClient>(creds);
-            RdfeSubscriptionClientMock = repository.Create<WindowsAzure.Subscriptions.SubscriptionClient>(creds);
-            CsmSubscriptionClientMock = repository.Create<Azure.Subscriptions.SubscriptionClient>(creds);
+            ManagementClientMock = repository.Create<Microsoft.Azure.Internal.Management.Rdfe.ManagementClient>(creds);
+            ResourceManagementClientMock = repository.Create<Microsoft.Azure.Internal.Management.Csm.ResourceManagementClient>(creds);
+            RdfeSubscriptionClientMock = repository.Create<Microsoft.Azure.Internal.Subscriptions.Rdfe.SubscriptionClient>(creds);
+            CsmSubscriptionClientMock = repository.Create<Microsoft.Azure.Internal.Subscriptions.Csm.SubscriptionClient>(creds);
         }
 
         private SubscriptionCloudCredentials CreateCredentials(Guid subscriptionId)
@@ -64,11 +64,11 @@ namespace Microsoft.WindowsAzure.Commands.Common.Test.Mocks
                 "<Error><Message>Not found</Message></Error>");
         }
 
-        public void LoadCsmSubscriptions(List<Azure.Subscriptions.Models.Subscription> subscriptions)
+        public void LoadCsmSubscriptions(List<Microsoft.Azure.Internal.Subscriptions.Csm.Models.Subscription> subscriptions)
         {
-            var subscriptionOperationsMock = new Mock<Azure.Subscriptions.ISubscriptionOperations>();
+            var subscriptionOperationsMock = new Mock<Microsoft.Azure.Internal.Subscriptions.Csm.ISubscriptionOperations>();
             subscriptionOperationsMock.Setup(f => f.ListAsync(new CancellationToken()))
-                .Returns(Task.Factory.StartNew(() => new Azure.Subscriptions.Models.SubscriptionListResult
+                .Returns(Task.Factory.StartNew(() => new Microsoft.Azure.Internal.Subscriptions.Csm.Models.SubscriptionListResult
                 {
                     Subscriptions = subscriptions
                 }));
@@ -76,11 +76,11 @@ namespace Microsoft.WindowsAzure.Commands.Common.Test.Mocks
             CsmSubscriptionClientMock.Setup(f => f.Subscriptions).Returns(subscriptionOperationsMock.Object);
         }
 
-        public void LoadRdfeSubscriptions(List<WindowsAzure.Subscriptions.Models.SubscriptionListOperationResponse.Subscription> subscriptions)
+        public void LoadRdfeSubscriptions(List<Microsoft.Azure.Internal.Subscriptions.Rdfe.Models.Subscription> subscriptions)
         {
-            var subscriptionOperationsMock = new Mock<WindowsAzure.Subscriptions.ISubscriptionOperations>();
+            var subscriptionOperationsMock = new Mock<Microsoft.Azure.Internal.Subscriptions.Rdfe.ISubscriptionOperations>();
             subscriptionOperationsMock.Setup(f => f.ListAsync(new CancellationToken()))
-                .Returns(Task.Factory.StartNew(() => new WindowsAzure.Subscriptions.Models.SubscriptionListOperationResponse
+                .Returns(Task.Factory.StartNew(() => new Microsoft.Azure.Internal.Subscriptions.Rdfe.Models.SubscriptionListOperationResponse
                 {
                     Subscriptions = subscriptions
                 }));
@@ -88,20 +88,20 @@ namespace Microsoft.WindowsAzure.Commands.Common.Test.Mocks
             RdfeSubscriptionClientMock.Setup(f => f.Subscriptions).Returns(subscriptionOperationsMock.Object);
         }
 
-        public void LoadTenants(List<Azure.Subscriptions.Models.TenantIdDescription> tenantIds = null)
+        public void LoadTenants(List<Microsoft.Azure.Internal.Subscriptions.Csm.Models.TenantIdDescription> tenantIds = null)
         {
 
             tenantIds = tenantIds ?? new[]
             {
-                new Azure.Subscriptions.Models.TenantIdDescription
+                new Microsoft.Azure.Internal.Subscriptions.Csm.Models.TenantIdDescription
                 {
                     Id = "Common",
                     TenantId = "Common"
                 }
             }.ToList();
-            var tenantOperationsMock = new Mock<Azure.Subscriptions.ITenantOperations>();
+            var tenantOperationsMock = new Mock<Microsoft.Azure.Internal.Subscriptions.Csm.ITenantOperations>();
             tenantOperationsMock.Setup(f => f.ListAsync(new CancellationToken()))
-                .Returns(Task.Factory.StartNew(() => new Azure.Subscriptions.Models.TenantListResult
+                .Returns(Task.Factory.StartNew(() => new Microsoft.Azure.Internal.Subscriptions.Csm.Models.TenantListResult
                 {
                     TenantIds = tenantIds
                 }));
