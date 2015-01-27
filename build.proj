@@ -22,12 +22,21 @@
     publishing key when running. Include: /p:NuGetKey=YOUR_PUBLISHING_KEY
 
   Properties of interest:
+  /p:Scope 
+    'Common' : build Azure Common
+    '<Path to a project file>': build that specific package
+    'Authorization': build the Authorization package
+    By default, it builds all.
+
+  /p:CodeGen
+    True if you want to invoke codegen tool to regenerate libraries. Default is false.  
+    
   /P:CodeSign=True
-    Code sign binaries, mainly for official release 
+    Code sign binaries, mainly for official release. Default is false.
 
   /p:CodeSign=True;DelaySign=True
-    Test the code sign workflow locally
-
+    Test the code sign workflow locally. 
+  
   /p:NuGetKey=NUGET_PUBLISHING_KEY
     Provides the key used to publish to a NuGet or MyGet server.
 
@@ -43,8 +52,6 @@
   /p:NuGetSymbolPublishingSource=Uri
     The NuGet Server to push symbol + source packages to.
 
-  /p:CodeGen
-    True if you want to invoke codegen tool to regenerate libraries. 
   -->  
   
   <PropertyGroup>
