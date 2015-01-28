@@ -23,9 +23,9 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Resources
 {
@@ -151,7 +151,7 @@ namespace Microsoft.Azure.Management.Resources
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Delete(this IResourceOperations operations, string resourceGroupName, ResourceIdentity identity)
+        public static AzureOperationResponse Delete(this IResourceOperations operations, string resourceGroupName, ResourceIdentity identity)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -178,7 +178,7 @@ namespace Microsoft.Azure.Management.Resources
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> DeleteAsync(this IResourceOperations operations, string resourceGroupName, ResourceIdentity identity)
+        public static Task<AzureOperationResponse> DeleteAsync(this IResourceOperations operations, string resourceGroupName, ResourceIdentity identity)
         {
             return operations.DeleteAsync(resourceGroupName, identity, CancellationToken.None);
         }
@@ -313,6 +313,54 @@ namespace Microsoft.Azure.Management.Resources
         public static Task<ResourceListResult> ListNextAsync(this IResourceOperations operations, string nextLink)
         {
             return operations.ListNextAsync(nextLink, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Move resources within or across subscriptions.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Resources.IResourceOperations.
+        /// </param>
+        /// <param name='sourceResourceGroupName'>
+        /// Required. Source resource group name.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. move resources' parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static AzureOperationResponse MoveResources(this IResourceOperations operations, string sourceResourceGroupName, ResourcesMoveInfo parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IResourceOperations)s).MoveResourcesAsync(sourceResourceGroupName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Move resources within or across subscriptions.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Resources.IResourceOperations.
+        /// </param>
+        /// <param name='sourceResourceGroupName'>
+        /// Required. Source resource group name.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. move resources' parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<AzureOperationResponse> MoveResourcesAsync(this IResourceOperations operations, string sourceResourceGroupName, ResourcesMoveInfo parameters)
+        {
+            return operations.MoveResourcesAsync(sourceResourceGroupName, parameters, CancellationToken.None);
         }
     }
 }

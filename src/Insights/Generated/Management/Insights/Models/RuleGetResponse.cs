@@ -22,16 +22,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Insights.Models;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Management.Insights.Models
 {
     /// <summary>
     /// The Get Rule operation response.
     /// </summary>
-    public partial class RuleGetResponse : OperationResponse
+    public partial class RuleGetResponse : AzureOperationResponse
     {
         private string _id;
         

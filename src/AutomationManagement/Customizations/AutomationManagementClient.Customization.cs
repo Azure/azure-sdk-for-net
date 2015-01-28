@@ -15,60 +15,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net.Http;
-
-using Microsoft.Azure.Management.Automation;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
-
-
-namespace Microsoft.Azure
-{
-    public static class AutomationManagementDiscoveryExtensions
-    {
-        public static AutomationManagementClient CreateAutomationManagementClient(this CloudClients clients, SubscriptionCloudCredentials credentials)
-        {
-            return new AutomationManagementClient(credentials);
-        }
-
-        public static AutomationManagementClient CreateAutomationManagementClient(this CloudClients clients, SubscriptionCloudCredentials credentials, Uri baseUri)
-        {
-            return new AutomationManagementClient(credentials, baseUri);
-        }
-
-        public static AutomationManagementClient CreateAutomationManagementClient(this CloudClients clients)
-        {
-            return ConfigurationHelper.CreateFromSettings<AutomationManagementClient>(AutomationManagementClient.Create);
-        }
-    }
-}
 
 namespace Microsoft.Azure.Management.Automation
 {
     public partial class AutomationManagementClient
     {
-        public static AutomationManagementClient Create(IDictionary<string, object> settings)
-        {
-            if (settings == null)
-            {
-                throw new ArgumentNullException("settings");
-            }
-
-            SubscriptionCloudCredentials credentials = ConfigurationHelper.GetCredentials<SubscriptionCloudCredentials>(settings);
-
-            Uri baseUri = ConfigurationHelper.GetUri(settings, "BaseUri", false);
-
-            return baseUri != null ?
-                new AutomationManagementClient(credentials, baseUri) :
-                new AutomationManagementClient(credentials);
-        }
-
-        public override AutomationManagementClient WithHandler(DelegatingHandler handler)
-        {
-            return (AutomationManagementClient)WithHandler(new AutomationManagementClient(), handler);
-        }
-
         public static List<T> ContinuationTokenHandler<T>(Func<string, ResponseWithSkipToken<T>> listFunc)
         {
             var models = new List<T>();

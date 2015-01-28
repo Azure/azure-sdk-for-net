@@ -23,9 +23,9 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Insights;
 using Microsoft.Azure.Management.Insights.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Insights
 {
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse CreateOrUpdateConfiguration(this IMonitoringConfigurationOperations operations, string resourceUri, MonitoringConfigurationCreateOrUpdateParameters parameters)
+        public static AzureOperationResponse CreateOrUpdateConfiguration(this IMonitoringConfigurationOperations operations, string resourceUri, MonitoringConfigurationCreateOrUpdateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> CreateOrUpdateConfigurationAsync(this IMonitoringConfigurationOperations operations, string resourceUri, MonitoringConfigurationCreateOrUpdateParameters parameters)
+        public static Task<AzureOperationResponse> CreateOrUpdateConfigurationAsync(this IMonitoringConfigurationOperations operations, string resourceUri, MonitoringConfigurationCreateOrUpdateParameters parameters)
         {
             return operations.CreateOrUpdateConfigurationAsync(resourceUri, parameters, CancellationToken.None);
         }
@@ -201,7 +201,7 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse UpdateConfiguration(this IMonitoringConfigurationOperations operations, string resourceUri, MonitoringConfigurationCreateOrUpdateParameters parameters)
+        public static AzureOperationResponse UpdateConfiguration(this IMonitoringConfigurationOperations operations, string resourceUri, MonitoringConfigurationCreateOrUpdateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -224,7 +224,7 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> UpdateConfigurationAsync(this IMonitoringConfigurationOperations operations, string resourceUri, MonitoringConfigurationCreateOrUpdateParameters parameters)
+        public static Task<AzureOperationResponse> UpdateConfigurationAsync(this IMonitoringConfigurationOperations operations, string resourceUri, MonitoringConfigurationCreateOrUpdateParameters parameters)
         {
             return operations.UpdateConfigurationAsync(resourceUri, parameters, CancellationToken.None);
         }
@@ -243,7 +243,7 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse UpdateStorageConfiguration(this IMonitoringConfigurationOperations operations, string resourceUri, CreateOrUpdateStorageConfigurationParameters parameters)
+        public static AzureOperationResponse UpdateStorageConfiguration(this IMonitoringConfigurationOperations operations, string resourceUri, CreateOrUpdateStorageConfigurationParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -266,7 +266,7 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> UpdateStorageConfigurationAsync(this IMonitoringConfigurationOperations operations, string resourceUri, CreateOrUpdateStorageConfigurationParameters parameters)
+        public static Task<AzureOperationResponse> UpdateStorageConfigurationAsync(this IMonitoringConfigurationOperations operations, string resourceUri, CreateOrUpdateStorageConfigurationParameters parameters)
         {
             return operations.UpdateStorageConfigurationAsync(resourceUri, parameters, CancellationToken.None);
         }

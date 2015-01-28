@@ -22,7 +22,7 @@
 using System;
 using System.Linq;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.Management.SiteRecovery
 {
     public static partial class SiteRecoveryManagementClientExtensions
     {

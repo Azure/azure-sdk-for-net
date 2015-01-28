@@ -1,22 +1,31 @@
-﻿//------------------------------------------------------------
-// Copyright (c) Microsoft Corporation.  All rights reserved.
-//------------------------------------------------------------
+﻿//
+// Copyright (c) Microsoft.  All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//   http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Text;
 
 namespace Microsoft.Azure.Insights
 {
     /// <summary>
     /// MetricFilterDimensionFilter class represents a dimension filter tied to a particular metric (by name) and containing an optional list of dimensions
     /// </summary>
-    public class MetricDimension
+    internal class MetricDimension
     {
         private string name;
-        private IEnumerable<Dimension> dimensions;
+        private IEnumerable<FilterDimension> dimensions;
 
         /// <summary>
         /// Gets or sets the Name of the dimension
@@ -52,7 +61,7 @@ namespace Microsoft.Azure.Insights
         /// <summary>
         /// Gets or sets the Values of the dimension
         /// </summary>
-        public IEnumerable<Dimension> Dimensions
+        public IEnumerable<FilterDimension> Dimensions
         {
             get
             {

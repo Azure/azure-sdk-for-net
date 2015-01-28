@@ -21,15 +21,15 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.DataFactories.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
     /// The Get pipeline operation response.
     /// </summary>
-    public partial class PipelineGetResponse : OperationResponse
+    public partial class PipelineGetResponse : AzureOperationResponse
     {
         private Pipeline _pipeline;
         

@@ -21,7 +21,7 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.WebSitesExtensions.Models;
 
 namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
@@ -29,7 +29,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
     /// <summary>
     /// The get log for a deployments operation response.
     /// </summary>
-    public partial class DeploymentGetLogResponse : OperationResponse
+    public partial class DeploymentGetLogResponse : AzureOperationResponse
     {
         private DeploymentLog _log;
         

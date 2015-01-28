@@ -13,11 +13,10 @@
 // limitations under the License.
 //
 
-using System;
 using System.Net.Http;
 using System.Threading;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.Azure
 {
     public class ClientRequestTrackingHandler
         : MessageProcessingHandler

@@ -21,7 +21,7 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models;
 
 namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
@@ -29,7 +29,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
     /// <summary>
     /// The List Metric values operation response.
     /// </summary>
-    public partial class MetricValueListResponse : OperationResponse
+    public partial class MetricValueListResponse : AzureOperationResponse
     {
         private MetricValueSetCollection _metricValueSetCollection;
         

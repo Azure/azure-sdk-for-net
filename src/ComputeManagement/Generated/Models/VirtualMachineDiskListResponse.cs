@@ -22,8 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
@@ -31,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
     /// <summary>
     /// The List Disks operation response.
     /// </summary>
-    public partial class VirtualMachineDiskListResponse : OperationResponse, IEnumerable<VirtualMachineDiskListResponse.VirtualMachineDisk>
+    public partial class VirtualMachineDiskListResponse : AzureOperationResponse, IEnumerable<VirtualMachineDiskListResponse.VirtualMachineDisk>
     {
         private IList<VirtualMachineDiskListResponse.VirtualMachineDisk> _disks;
         

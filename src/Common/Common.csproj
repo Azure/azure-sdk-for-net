@@ -4,102 +4,35 @@
   <PropertyGroup>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <WindowsAzureLibraryProfileSet>portable/net45/net40</WindowsAzureLibraryProfileSet>
     <ProjectGuid>{856A1D19-C3BF-439A-BEBF-E822A332BC12}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Microsoft.WindowsAzure.Common</RootNamespace>
-    <AssemblyName>Microsoft.WindowsAzure.Common</AssemblyName>
+    <RootNamespace>Microsoft.Azure.Common</RootNamespace>
+    <AssemblyName>Microsoft.Azure.Common</AssemblyName>
     <OutputType>Library</OutputType>
     <RestorePackages>true</RestorePackages>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Profile259</TargetFrameworkProfile>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <RunCodeAnalysis>false</RunCodeAnalysis>
-  </PropertyGroup>
-  <Import Project="..\library.props" />
+  <Import Project="..\..\tools\Library.Settings.targets" />
   <ItemGroup>
-    <None Include="Microsoft.WindowsAzure.Common.Dependencies.nuget.proj" />
-    <None Include="Microsoft.WindowsAzure.Common.Dependencies.nuspec" />
-    <None Include="Microsoft.WindowsAzure.Common.nuget.proj" />
-    <None Include="Microsoft.WindowsAzure.Common.nuspec" />
+    <None Include="Microsoft.Azure.Common.Dependencies.nuget.proj" />
+    <None Include="Microsoft.Azure.Common.Dependencies.nuspec" />
+    <None Include="Microsoft.Azure.Common.nuget.proj" />
+    <None Include="Microsoft.Azure.Common.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration\ConnectionStringSettingsFormat.cs" />
-    <Compile Include="Credentials\AnonymousCloudCredentials.cs" />
-    <Compile Include="Credentials\BasicAuthenticationCloudCredentials.cs" />
     <Compile Include="Credentials\TokenCloudCredentials.cs" />
     <Compile Include="Credentials\SubscriptionCloudCredentials.cs" />
-    <Compile Include="Exception\CloudError.cs" />
-    <Compile Include="Exception\CloudExceptionType.cs" />
-    <Compile Include="Exception\CloudHttpErrorInfo.cs" />
-    <Compile Include="Exception\CloudHttpRequestErrorInfo.cs" />
-    <Compile Include="Exception\CloudHttpResponseErrorInfo.cs" />
-    <Compile Include="Internals\Cryptography.cs" />
-    <Compile Include="Internals\HttpExtensions.cs" />
-    <Compile Include="Internals\ICloudSettingsFormat.cs" />
-    <Compile Include="Configuration\JsonSettingsFormat.cs" />
-    <Compile Include="Internals\IndisposableDelegatingHandler.cs" />
-    <Compile Include="Internals\ParserHelper.cs" />
-    <Compile Include="Internals\TypeConversion.cs" />
-    <Compile Include="Internals\UriHelper.cs" />
-    <Compile Include="Internals\ILazyCollection.cs" />
-    <Compile Include="Internals\LazyDictionary.cs" />
-    <Compile Include="Internals\LazyList.cs" />
-    <Compile Include="Models\OperationResponse.cs" />
+    <Compile Include="Models\AzureOperationResponse.cs" />
     <Compile Include="Models\OperationStatus.cs" />
     <Compile Include="Models\OperationStatusResponse.cs" />
-    <Compile Include="Models\Patchable.cs" />
-    <Compile Include="OData\FilterParameterAttribute.cs" />
-    <Compile Include="OData\FilterString.cs" />
-    <Compile Include="OData\UrlExpressionVisitor.cs" />
-    <Compile Include="Platform\ICloudCredentialsProvider.cs" />
-    <Compile Include="Platform\ICryptographyProvider.cs" />
-    <Compile Include="Tracing\CloudTracing.cs" />
-    <Compile Include="Credentials\CloudCredentials.cs" />
     <Compile Include="Handlers\ClientRequestTrackingHandler.cs" />
-    <Compile Include="Handlers\RetryHandler.cs" />
-    <Compile Include="Internals\ConfigurationHelper.cs" />
-    <Compile Include="Internals\Tracing.cs" />
-    <Compile Include="ServiceClient.cs" />
-    <Compile Include="ServiceOperations.cs" />
-    <Compile Include="CloudClients.cs" />
-    <Compile Include="Configuration\CloudConfiguration.cs" />
-    <Compile Include="CloudContext.cs" />
-    <Compile Include="Internals\ConnectionStringParser.cs" />
-    <Compile Include="Internals\DisposableReference.cs" />
-    <Compile Include="Platform\ICloudConfigurationProvider.cs" />
-    <Compile Include="Exception\CloudException.cs" />
-    <Compile Include="Internals\CloudExtensions.cs" />
-    <Compile Include="Internals\PortablePlatformAbstraction.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Platform\IHttpTransportHandlerProvider.cs" />
-    <Compile Include="Tracing\CloudTracingExtensions.cs" />
-    <Compile Include="Tracing\ICloudTracingInterceptor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="TransientFaultHandling\AsyncExecution.cs" />
-    <Compile Include="TransientFaultHandling\DefaultHttpErrorDetectionStrategy.cs" />
-    <Compile Include="TransientFaultHandling\ExponentialBackoff.cs" />
-    <Compile Include="TransientFaultHandling\FixedInterval.cs" />
-    <Compile Include="TransientFaultHandling\Guard.cs" />
-    <Compile Include="TransientFaultHandling\HttpRequestExceptionWithStatus.cs" />
-    <Compile Include="TransientFaultHandling\Incremental.cs" />
-    <Compile Include="TransientFaultHandling\ITransientErrorDetectionStrategy.cs" />
-    <Compile Include="TransientFaultHandling\RetryingEventArgs.cs" />
-    <Compile Include="TransientFaultHandling\RetryLimitExceededException.cs" />
-    <Compile Include="TransientFaultHandling\RetryManager.cs" />
-    <Compile Include="TransientFaultHandling\RetryPolicy.cs" />
-    <Compile Include="TransientFaultHandling\RetryPolicy.Generic.cs" />
-    <Compile Include="TransientFaultHandling\RetryStrategy.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -107,13 +40,12 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(WindowsAzureCurrentConfiguration)' == 'portable' " />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(WindowsAzureCurrentConfiguration)' != 'portable' " />
-  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets') " />
-  <Import Project="$(SolutionDir)\src\library.targets" />
+  <ItemGroup>
+    <Reference Include="Hyak.Common">
+      <HintPath>..\..\packages\Hyak.Common.1.0.1\lib\portable-net403+win+wpa81\Hyak.Common.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(LibraryFxTarget)' == 'portable' " />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(LibraryFxTarget)' != 'portable' " />
   <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
-  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
-    <Error Condition="!Exists('..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
-    <Error Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
-  </Target>
 </Project>

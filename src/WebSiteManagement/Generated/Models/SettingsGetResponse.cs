@@ -21,14 +21,14 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
 {
     /// <summary>
     /// The get setting operation response.
     /// </summary>
-    public partial class SettingsGetResponse : OperationResponse
+    public partial class SettingsGetResponse : AzureOperationResponse
     {
         private string _value;
         

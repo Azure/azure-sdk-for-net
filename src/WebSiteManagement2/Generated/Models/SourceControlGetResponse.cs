@@ -21,15 +21,15 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.WebSites.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
     /// <summary>
     /// The get source control operation response.
     /// </summary>
-    public partial class SourceControlGetResponse : OperationResponse
+    public partial class SourceControlGetResponse : AzureOperationResponse
     {
         private SourceControl _sourceControl;
         

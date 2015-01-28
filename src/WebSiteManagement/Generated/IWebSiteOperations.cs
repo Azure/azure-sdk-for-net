@@ -23,7 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.WebSites.Models;
 
 namespace Microsoft.WindowsAzure.Management.WebSites
@@ -35,6 +35,24 @@ namespace Microsoft.WindowsAzure.Management.WebSites
     /// </summary>
     public partial interface IWebSiteOperations
     {
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='targetSwapSlot'>
+        /// The name of the target slot to be swapped with.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<AzureOperationResponse> ApplySlotConfigurationAsync(string webSpaceName, string webSiteName, string targetSwapSlot, CancellationToken cancellationToken);
+        
         /// <summary>
         /// Backups a site on-demand.
         /// </summary>
@@ -105,6 +123,26 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         Task<WebSiteCreateResponse> CreateAsync(string webSpaceName, WebSiteCreateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Creates an association to a hybrid connection for a web site.
+        /// </summary>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='siteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Create Hybrid Connection operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Create Hybrid Connection operation response.
+        /// </returns>
+        Task<HybridConnectionCreateResponse> CreateHybridConnectionAsync(string webSpaceName, string siteName, HybridConnectionCreateParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// A web site repository is essentially a Git repository that you can
         /// use to manage your web site content. By using Git source control
         /// tools, you can push or pull version-controlled changes to your
@@ -125,7 +163,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> CreateRepositoryAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> CreateRepositoryAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken);
         
         /// <summary>
         /// You can delete a web site by issuing an HTTP DELETE request. If the
@@ -151,7 +189,28 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> DeleteAsync(string webSpaceName, string webSiteName, WebSiteDeleteParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> DeleteAsync(string webSpaceName, string webSiteName, WebSiteDeleteParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Deletes a hybrid connection on a specific site.
+        /// </summary>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='hybridConnectionName'>
+        /// The name of the hybrid connection entity
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<AzureOperationResponse> DeleteHybridConnectionAsync(string webSpaceName, string webSiteName, string hybridConnectionName, CancellationToken cancellationToken);
         
         /// <summary>
         /// A web site repository is essentially a Git repository that you can
@@ -222,7 +281,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> GeneratePasswordAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> GeneratePasswordAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken);
         
         /// <summary>
         /// You can retrieve details for a web site by issuing an HTTP GET
@@ -307,6 +366,27 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// The Get Historical Usage Metrics Web Site operation response.
         /// </returns>
         Task<WebSiteGetHistoricalUsageMetricsResponse> GetHistoricalUsageMetricsAsync(string webSpaceName, string webSiteName, WebSiteGetHistoricalUsageMetricsParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Retrieves a particular hybrid connection that belongs to a specific
+        /// site.
+        /// </summary>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='hybridConnectionName'>
+        /// The name of the hybrid connection entity
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Get Hybrid Connection operation response.
+        /// </returns>
+        Task<HybridConnectionGetResponse> GetHybridConnectionAsync(string webSpaceName, string webSiteName, string hybridConnectionName, CancellationToken cancellationToken);
         
         /// <summary>
         /// You can retrieve the list of active instances by ids for a web site
@@ -440,6 +520,38 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         Task<WebSiteGetBackupsResponse> ListBackupsAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Retrieves a list of all hybrid connections on a specific web site.
+        /// </summary>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List Hybrid Connection operation response.
+        /// </returns>
+        Task<HybridConnectionListResponse> ListHybridConnectionsAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken);
+        
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<AzureOperationResponse> ResetSlotConfigurationAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// You can restart a web site by issuing an HTTP POST request.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn236425.aspx
         /// for more information)
@@ -457,7 +569,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> RestartAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> RestartAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Restores a site to either a new site or existing site (Overwrite
@@ -529,7 +641,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> SyncRepositoryAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> SyncRepositoryAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken);
         
         /// <summary>
         /// You can update the settings for a web site by using the HTTP PUT
@@ -573,7 +685,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> UpdateBackupConfigurationAsync(string webSpaceName, string webSiteName, BackupRequest backupRequest, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> UpdateBackupConfigurationAsync(string webSpaceName, string webSiteName, BackupRequest backupRequest, CancellationToken cancellationToken);
         
         /// <summary>
         /// You can update the config settings for a web site by issuing an
@@ -597,7 +709,28 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> UpdateConfigurationAsync(string webSpaceName, string webSiteName, WebSiteUpdateConfigurationParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> UpdateConfigurationAsync(string webSpaceName, string webSiteName, WebSiteUpdateConfigurationParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Updates an association to a hybrid connection for a web site.
+        /// </summary>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='siteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Create Hybrid Connection operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<AzureOperationResponse> UpdateHybridConnectionAsync(string webSpaceName, string siteName, HybridConnectionUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <param name='webSpaceName'>
         /// The name of the web space.
@@ -615,6 +748,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> UpdateSlotConfigNamesAsync(string webSpaceName, string webSiteName, SlotConfigNamesUpdate parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> UpdateSlotConfigNamesAsync(string webSpaceName, string webSiteName, SlotConfigNamesUpdate parameters, CancellationToken cancellationToken);
     }
 }

@@ -22,8 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.SiteRecovery.Models;
 
 namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
@@ -31,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
     /// <summary>
     /// The response model for the list Vm Group operation.
     /// </summary>
-    public partial class VirtualMachineGroupListResponse : OperationResponse, IEnumerable<VirtualMachineGroup>
+    public partial class VirtualMachineGroupListResponse : AzureOperationResponse, IEnumerable<VirtualMachineGroup>
     {
         private IList<VirtualMachineGroup> _vmGroups;
         

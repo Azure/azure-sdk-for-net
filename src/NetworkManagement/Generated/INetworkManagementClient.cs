@@ -23,7 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Network;
 
 namespace Microsoft.WindowsAzure.Management.Network
@@ -76,6 +76,17 @@ namespace Microsoft.WindowsAzure.Management.Network
         int LongRunningOperationRetryTimeout
         {
             get; set; 
+        }
+        
+        /// <summary>
+        /// The Application Gateway Management API includes operations for
+        /// managing application gateways in your subscription.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154113.aspx
+        /// for more information)
+        /// </summary>
+        IApplicationGatewayOperations ApplicationGateways
+        {
+            get; 
         }
         
         /// <summary>

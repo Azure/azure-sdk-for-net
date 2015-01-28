@@ -22,22 +22,22 @@ using System.IO;
 using System.Reflection;
 
 [assembly: CLSCompliant(true)]
-namespace Microsoft.WindowsAzure
+namespace Microsoft.Azure
 {
     /// <summary>
     /// Microsoft Azure settings.
     /// </summary>
     internal class AzureApplicationSettings
     {
-        private const string RoleEnvironmentTypeName = "Microsoft.WindowsAzure.ServiceRuntime.RoleEnvironment";
-        private const string RoleEnvironmentExceptionTypeName = "Microsoft.WindowsAzure.ServiceRuntime.RoleEnvironmentException";
+        private const string RoleEnvironmentTypeName = "Microsoft.Azure.ServiceRuntime.RoleEnvironment";
+        private const string RoleEnvironmentExceptionTypeName = "Microsoft.Azure.ServiceRuntime.RoleEnvironmentException";
         private const string IsAvailablePropertyName = "IsAvailable";
         private const string GetSettingValueMethodName = "GetConfigurationSettingValue";
 
         // Keep this array sorted by the version in the descendant order.
         private readonly string[] knownAssemblyNames = new string[]
         {
-            "Microsoft.WindowsAzure.ServiceRuntime, Culture=neutral, PublicKeyToken=31bf3856ad364e35, ProcessorArchitecture=MSIL"
+            "Microsoft.Azure.ServiceRuntime, Culture=neutral, PublicKeyToken=31bf3856ad364e35, ProcessorArchitecture=MSIL"
         };
 
         private Type _roleEnvironmentExceptionType;         // Exception thrown for missing settings.

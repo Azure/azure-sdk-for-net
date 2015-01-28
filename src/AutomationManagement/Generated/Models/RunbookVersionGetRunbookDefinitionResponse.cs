@@ -21,14 +21,14 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
     /// The response model for the get runbook definition operation.
     /// </summary>
-    public partial class RunbookVersionGetRunbookDefinitionResponse : OperationResponse
+    public partial class RunbookVersionGetRunbookDefinitionResponse : AzureOperationResponse
     {
         private string _eTag;
         

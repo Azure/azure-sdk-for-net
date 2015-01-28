@@ -23,11 +23,11 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Sql;
 using Microsoft.WindowsAzure.Management.Sql.Models;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.Management.Sql
 {
     /// <summary>
     /// This is the main client class for interacting with the Azure SQL
@@ -103,7 +103,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Delete(this IDatabaseOperations operations, string serverName, string databaseName)
+        public static AzureOperationResponse Delete(this IDatabaseOperations operations, string serverName, string databaseName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -130,7 +130,7 @@ namespace Microsoft.WindowsAzure
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> DeleteAsync(this IDatabaseOperations operations, string serverName, string databaseName)
+        public static Task<AzureOperationResponse> DeleteAsync(this IDatabaseOperations operations, string serverName, string databaseName)
         {
             return operations.DeleteAsync(serverName, databaseName, CancellationToken.None);
         }

@@ -22,16 +22,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.DataFactories.Models;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
     /// The list hub operation response.
     /// </summary>
-    public partial class HubListResponse : OperationResponse
+    public partial class HubListResponse : AzureOperationResponse
     {
         private IList<Hub> _hubs;
         

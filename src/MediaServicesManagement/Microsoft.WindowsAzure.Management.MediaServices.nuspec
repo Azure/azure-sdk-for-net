@@ -23,14 +23,14 @@
       </group>
     </references>
     <dependencies>
-      <dependency id="Microsoft.WindowsAzure.Common" version="[1.4.1,2.0)" />
+      <dependency id="Microsoft.Azure.Common" version="[2.0.1,3.0)" />
     </dependencies>
   </metadata>
   <files>
     <file src="MediaServicesManagement\**\*.cs" target="src" />
-    <file src="..\binaries\Microsoft.WindowsAzure.Management.MediaServices.dll" target="lib\portable-net45+wp8+wpa81+win" />
-    <file src="..\binaries\Microsoft.WindowsAzure.Management.MediaServices.pdb" target="lib\portable-net45+wp8+wpa81+win" />
-    <file src="..\binaries\Microsoft.WindowsAzure.Management.MediaServices.xml" target="lib\portable-net45+wp8+wpa81+win" />
+    <file src="..\binaries\portable\Microsoft.WindowsAzure.Management.MediaServices.dll" target="lib\portable-net45+wp8+wpa81+win" />
+    <file src="..\binaries\portable\Microsoft.WindowsAzure.Management.MediaServices.pdb" target="lib\portable-net45+wp8+wpa81+win" />
+    <file src="..\binaries\portable\Microsoft.WindowsAzure.Management.MediaServices.xml" target="lib\portable-net45+wp8+wpa81+win" />
     <file src="..\binaries\net40\Microsoft.WindowsAzure.Management.MediaServices.dll" target="lib\net40" />
     <file src="..\binaries\net40\Microsoft.WindowsAzure.Management.MediaServices.pdb" target="lib\net40" />
     <file src="..\binaries\net40\Microsoft.WindowsAzure.Management.MediaServices.xml" target="lib\net40" />

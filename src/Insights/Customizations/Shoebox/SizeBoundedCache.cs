@@ -1,14 +1,24 @@
-﻿using System;
-using System.Collections.Concurrent;
+﻿//
+// Copyright (c) Microsoft.  All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//   http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Insights
 {
     // TODO: Add locking (thread safety)
-    public class SizeBoundedCache<TKey, TValue>
+    internal class SizeBoundedCache<TKey, TValue>
     {
         private Dictionary<TKey, LinkedListNode<KeyValuePair<TKey, TValue>>> dictionary;
         private LinkedList<KeyValuePair<TKey, TValue>> list;
@@ -65,7 +75,7 @@ namespace Microsoft.Azure.Insights
         // Removes the oldest item from the dictionary and list
         private void RemoveOldest()
         {
-            LinkedListNode<KeyValuePair<TKey, TValue>> val;
+            //LinkedListNode<KeyValuePair<TKey, TValue>> val;
 
             // TODO: Lock
             //while (!dictionary.TryRemove(list.Last.Value.Key, out val))

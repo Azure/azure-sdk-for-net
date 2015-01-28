@@ -22,7 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
 
 namespace Microsoft.Azure.Management.Resources.Models
 {
@@ -31,6 +31,17 @@ namespace Microsoft.Azure.Management.Resources.Models
     /// </summary>
     public partial class ProviderResourceType
     {
+        private IList<string> _apiVersions;
+        
+        /// <summary>
+        /// Optional. Gets or sets the api version.
+        /// </summary>
+        public IList<string> ApiVersions
+        {
+            get { return this._apiVersions; }
+            set { this._apiVersions = value; }
+        }
+        
         private IList<string> _locations;
         
         /// <summary>
@@ -54,12 +65,25 @@ namespace Microsoft.Azure.Management.Resources.Models
             set { this._name = value; }
         }
         
+        private IDictionary<string, string> _properties;
+        
+        /// <summary>
+        /// Optional. Gets or sets the properties.
+        /// </summary>
+        public IDictionary<string, string> Properties
+        {
+            get { return this._properties; }
+            set { this._properties = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the ProviderResourceType class.
         /// </summary>
         public ProviderResourceType()
         {
+            this.ApiVersions = new LazyList<string>();
             this.Locations = new LazyList<string>();
+            this.Properties = new LazyDictionary<string, string>();
         }
     }
 }

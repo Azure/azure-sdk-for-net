@@ -23,7 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models;
 
 namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
@@ -44,7 +44,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> CreateOrUpdateAsync(MetricSettingsPutParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> CreateOrUpdateAsync(MetricSettingsPutParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The List Metric Settings operation lists the metric settings for

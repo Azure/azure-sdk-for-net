@@ -21,15 +21,15 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.DataFactories.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
     /// The create or update hub operation response.
     /// </summary>
-    public partial class HubCreateOrUpdateResponse : OperationResponse
+    public partial class HubCreateOrUpdateResponse : AzureOperationResponse
     {
         private Hub _hub;
         

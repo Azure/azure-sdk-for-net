@@ -13,7 +13,6 @@
 // limitations under the License.
 //
 
-using Microsoft.WindowsAzure.Common;
 using System.Net.Http;
 
 namespace Microsoft.Azure.Management.Insights

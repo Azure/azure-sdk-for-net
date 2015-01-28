@@ -22,9 +22,9 @@
 using System;
 using System.Linq;
 using System.Net.Http;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Insights;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
 
 namespace Microsoft.Azure.Management.Insights
 {
@@ -148,7 +148,7 @@ namespace Microsoft.Azure.Management.Insights
         /// <summary>
         /// Initializes a new instance of the InsightsManagementClient class.
         /// </summary>
-        private InsightsManagementClient()
+        public InsightsManagementClient()
             : base()
         {
             this._agentDiagnosticSettingsOperations = new AgentDiagnosticSettingsOperations(this);
@@ -219,7 +219,7 @@ namespace Microsoft.Azure.Management.Insights
         /// <param name='httpClient'>
         /// The Http client
         /// </param>
-        private InsightsManagementClient(HttpClient httpClient)
+        public InsightsManagementClient(HttpClient httpClient)
             : base(httpClient)
         {
             this._agentDiagnosticSettingsOperations = new AgentDiagnosticSettingsOperations(this);

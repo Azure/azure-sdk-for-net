@@ -23,7 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models;
 
 namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
@@ -43,7 +43,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> CreateOrUpdateAsync(RuleCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> CreateOrUpdateAsync(RuleCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <param name='ruleId'>
         /// The id of the rule to delete.
@@ -55,7 +55,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> DeleteAsync(string ruleId, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> DeleteAsync(string ruleId, CancellationToken cancellationToken);
         
         /// <param name='ruleId'>
         /// The id of the rule to retrieve.

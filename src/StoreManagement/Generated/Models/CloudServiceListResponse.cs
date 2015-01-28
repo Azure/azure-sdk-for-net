@@ -22,8 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Store.Models;
 
 namespace Microsoft.WindowsAzure.Management.Store.Models
@@ -31,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.Store.Models
     /// <summary>
     /// The response structure for the Cloud Service List operation.
     /// </summary>
-    public partial class CloudServiceListResponse : OperationResponse, IEnumerable<CloudServiceListResponse.CloudService>
+    public partial class CloudServiceListResponse : AzureOperationResponse, IEnumerable<CloudServiceListResponse.CloudService>
     {
         private IList<CloudServiceListResponse.CloudService> _cloudServices;
         

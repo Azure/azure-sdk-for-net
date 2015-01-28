@@ -21,14 +21,14 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
     /// The response model for the publish runbook operation.
     /// </summary>
-    public partial class RunbookPublishResponse : OperationResponse
+    public partial class RunbookPublishResponse : AzureOperationResponse
     {
         private string _publishedRunbookVersionId;
         

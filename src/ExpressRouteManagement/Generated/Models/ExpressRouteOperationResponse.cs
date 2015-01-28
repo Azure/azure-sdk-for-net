@@ -21,7 +21,7 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
 {
@@ -29,7 +29,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
     /// A standard service response including an HTTP status code and request
     /// ID.
     /// </summary>
-    public partial class ExpressRouteOperationResponse : OperationResponse
+    public partial class ExpressRouteOperationResponse : AzureOperationResponse
     {
         private string _operationId;
         

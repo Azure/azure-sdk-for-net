@@ -21,14 +21,14 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
     /// A standard service response for long running operations.
     /// </summary>
-    public partial class LongRunningOperationResponse : OperationResponse
+    public partial class LongRunningOperationResponse : AzureOperationResponse
     {
         private string _operationStatusLink;
         

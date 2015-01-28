@@ -21,15 +21,15 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Batch.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Batch.Models
 {
     /// <summary>
     /// Values returned by the Get operation.
     /// </summary>
-    public partial class BatchAccountGetResponse : OperationResponse
+    public partial class BatchAccountGetResponse : AzureOperationResponse
     {
         private AccountResource _resource;
         

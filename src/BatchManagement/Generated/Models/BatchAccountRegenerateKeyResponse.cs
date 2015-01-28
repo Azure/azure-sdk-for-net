@@ -21,14 +21,14 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.Azure.Management.Batch.Models
 {
     /// <summary>
     /// Values returned by the RegenerateKey operation.
     /// </summary>
-    public partial class BatchAccountRegenerateKeyResponse : OperationResponse
+    public partial class BatchAccountRegenerateKeyResponse : AzureOperationResponse
     {
         private string _primaryKey;
         

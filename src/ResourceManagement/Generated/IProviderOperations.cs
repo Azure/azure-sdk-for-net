@@ -24,7 +24,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.Management.Resources.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Resources
 {
@@ -85,10 +84,9 @@ namespace Microsoft.Azure.Management.Resources
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Resource provider registration information.
         /// </returns>
-        Task<OperationResponse> RegisterAsync(string resourceProviderNamespace, CancellationToken cancellationToken);
+        Task<ProviderRegistionResult> RegisterAsync(string resourceProviderNamespace, CancellationToken cancellationToken);
         
         /// <summary>
         /// Unregisters provider from a subscription.
@@ -100,9 +98,8 @@ namespace Microsoft.Azure.Management.Resources
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Resource provider registration information.
         /// </returns>
-        Task<OperationResponse> UnregisterAsync(string resourceProviderNamespace, CancellationToken cancellationToken);
+        Task<ProviderUnregistionResult> UnregisterAsync(string resourceProviderNamespace, CancellationToken cancellationToken);
     }
 }

@@ -22,8 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Network.Models;
 
 namespace Microsoft.WindowsAzure.Management.Network.Models
@@ -31,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
     /// <summary>
     /// A Network Security Group associated with your subscription.
     /// </summary>
-    public partial class NetworkSecurityGroupGetResponse : OperationResponse
+    public partial class NetworkSecurityGroupGetResponse : AzureOperationResponse
     {
         private string _label;
         

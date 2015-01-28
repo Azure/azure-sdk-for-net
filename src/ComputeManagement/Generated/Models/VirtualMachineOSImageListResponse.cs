@@ -22,8 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
@@ -31,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
     /// <summary>
     /// The List OS Images operation response.
     /// </summary>
-    public partial class VirtualMachineOSImageListResponse : OperationResponse, IEnumerable<VirtualMachineOSImageListResponse.VirtualMachineOSImage>
+    public partial class VirtualMachineOSImageListResponse : AzureOperationResponse, IEnumerable<VirtualMachineOSImageListResponse.VirtualMachineOSImage>
     {
         private IList<VirtualMachineOSImageListResponse.VirtualMachineOSImage> _images;
         

@@ -17,16 +17,17 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
+using Hyak.Common;
 using Xunit;
 
-namespace Microsoft.WindowsAzure.Common.Tracing.Etw.Test
+namespace Microsoft.Azure.Common.Tracing.Etw.Test
 {
     public class CloudTracingExtensionsTest
     {
         [Fact]
         public void HttpRequestMessageAsFormattedStringThrowsArgumentNullException()
         {
-            Assert.Throws<ArgumentNullException>(() => CloudTracingExtensions.AsFormattedString((HttpRequestMessage)null));
+            Assert.Throws<ArgumentNullException>(() => TracingExtensions.AsFormattedString((HttpRequestMessage)null));
         }
 
         [Fact]
@@ -34,7 +35,7 @@ namespace Microsoft.WindowsAzure.Common.Tracing.Etw.Test
         {
             using (var httpRequest = new HttpRequestMessage())
             {
-                var formattedString = CloudTracingExtensions.AsFormattedString(httpRequest);
+                var formattedString = TracingExtensions.AsFormattedString(httpRequest);
 
                 Assert.Contains("Method: GET", formattedString);
             }
@@ -46,7 +47,7 @@ namespace Microsoft.WindowsAzure.Common.Tracing.Etw.Test
             using (var httpRequest = new HttpRequestMessage(HttpMethod.Get, "http://www.windowsazure.com/test"))
             {
                 httpRequest.Headers.Add("x-ms-version", "2013-11-01");
-                var formattedString = CloudTracingExtensions.AsFormattedString(httpRequest);
+                var formattedString = TracingExtensions.AsFormattedString(httpRequest);
 
                 Assert.Contains("Method: GET", formattedString);
                 Assert.Contains("RequestUri: 'http://www.windowsazure.com/test'", formattedString);
@@ -60,7 +61,7 @@ namespace Microsoft.WindowsAzure.Common.Tracing.Etw.Test
             using (var httpRequest = new HttpRequestMessage(HttpMethod.Get, "http://www.windowsazure.com/test"))
             {
                 httpRequest.Content = new StringContent("<body/>");
-                var formattedString = CloudTracingExtensions.AsFormattedString(httpRequest);
+                var formattedString = TracingExtensions.AsFormattedString(httpRequest);
 
                 Assert.Contains("Method: GET", formattedString);
                 Assert.Contains("RequestUri: 'http://www.windowsazure.com/test'", formattedString);
@@ -71,7 +72,7 @@ namespace Microsoft.WindowsAzure.Common.Tracing.Etw.Test
         [Fact]
         public void HttpResponseMessageAsFormattedStringThrowsArgumentNullException()
         {
-            Assert.Throws<ArgumentNullException>(() => CloudTracingExtensions.AsFormattedString((HttpResponseMessage)null));
+            Assert.Throws<ArgumentNullException>(() => TracingExtensions.AsFormattedString((HttpResponseMessage)null));
         }
 
         [Fact]
@@ -79,7 +80,7 @@ namespace Microsoft.WindowsAzure.Common.Tracing.Etw.Test
         {
             using (var httpRequest = new HttpResponseMessage())
             {
-                var formattedString = CloudTracingExtensions.AsFormattedString(httpRequest);
+                var formattedString = TracingExtensions.AsFormattedString(httpRequest);
 
                 Assert.Contains("StatusCode: 200", formattedString);
             }
@@ -91,7 +92,7 @@ namespace Microsoft.WindowsAzure.Common.Tracing.Etw.Test
             using (var httpRequest = new HttpResponseMessage(HttpStatusCode.OK))
             {
                 httpRequest.Headers.Add("x-ms-version", "2013-11-01");
-                var formattedString = CloudTracingExtensions.AsFormattedString(httpRequest);
+                var formattedString = TracingExtensions.AsFormattedString(httpRequest);
 
                 Assert.Contains("StatusCode: 200", formattedString);
                 Assert.Contains("x-ms-version: 2013-11-01", formattedString);
@@ -104,7 +105,7 @@ namespace Microsoft.WindowsAzure.Common.Tracing.Etw.Test
             using (var httpRequest = new HttpResponseMessage(HttpStatusCode.OK))
             {
                 httpRequest.Content = new StringContent("<body/>");
-                var formattedString = CloudTracingExtensions.AsFormattedString(httpRequest);
+                var formattedString = TracingExtensions.AsFormattedString(httpRequest);
 
                 Assert.Contains("StatusCode: 200", formattedString);
                 Assert.Contains("<body/>", formattedString);
@@ -114,7 +115,7 @@ namespace Microsoft.WindowsAzure.Common.Tracing.Etw.Test
         [Fact]
         public void DictionaryAsFormattedStringReturnsEmptyBracesForNull()
         {
-            var formattedString = CloudTracingExtensions.AsFormattedString((Dictionary<string, object>)null);
+            var formattedString = TracingExtensions.AsFormattedString((Dictionary<string, object>)null);
 
             Assert.Equal("{}", formattedString);
         }
@@ -122,7 +123,7 @@ namespace Microsoft.WindowsAzure.Common.Tracing.Etw.Test
         [Fact]
         public void DictionaryAsFormattedStringReturnsEmptyBracesForEmptySet()
         {
-            var formattedString = CloudTracingExtensions.AsFormattedString(new Dictionary<string, object>());
+            var formattedString = TracingExtensions.AsFormattedString(new Dictionary<string, object>());
 
             Assert.Equal("{}", formattedString);
         }
@@ -134,7 +135,7 @@ namespace Microsoft.WindowsAzure.Common.Tracing.Etw.Test
             parameters["a"] = 1;
             parameters["b"] = "str";
             parameters["c"] = true;
-            var formattedString = CloudTracingExtensions.AsFormattedString(parameters);
+            var formattedString = TracingExtensions.AsFormattedString(parameters);
 
             Assert.Equal("{a=1,b=str,c=True}", formattedString);
         }
@@ -146,7 +147,7 @@ namespace Microsoft.WindowsAzure.Common.Tracing.Etw.Test
             parameters["a"] = 1;
             parameters["b"] = "str";
             parameters["c"] = null;
-            var formattedString = CloudTracingExtensions.AsFormattedString(parameters);
+            var formattedString = TracingExtensions.AsFormattedString(parameters);
 
             Assert.Equal("{a=1,b=str,c=}", formattedString);
         }

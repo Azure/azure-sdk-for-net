@@ -22,16 +22,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Automation.Models;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
     /// The response model for the list runbook version operation.
     /// </summary>
-    public partial class RunbookVersionListResponse : OperationResponse, IEnumerable<RunbookVersion>
+    public partial class RunbookVersionListResponse : AzureOperationResponse, IEnumerable<RunbookVersion>
     {
         private IList<RunbookVersion> _runbookVersions;
         

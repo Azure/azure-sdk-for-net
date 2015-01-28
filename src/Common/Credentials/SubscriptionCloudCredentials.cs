@@ -13,7 +13,9 @@
 // limitations under the License.
 //
 
-namespace Microsoft.WindowsAzure
+using Hyak.Common;
+
+namespace Microsoft.Azure
 {
     /// <summary>
     /// Base class for credentials associated with a particular subscription.

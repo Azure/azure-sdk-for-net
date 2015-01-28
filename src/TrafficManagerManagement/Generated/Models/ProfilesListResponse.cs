@@ -22,8 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.TrafficManager.Models;
 
 namespace Microsoft.WindowsAzure.Management.TrafficManager.Models
@@ -31,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager.Models
     /// <summary>
     /// The List Profiles operation response.
     /// </summary>
-    public partial class ProfilesListResponse : OperationResponse, IEnumerable<Profile>
+    public partial class ProfilesListResponse : AzureOperationResponse, IEnumerable<Profile>
     {
         private IList<Profile> _profiles;
         

@@ -21,14 +21,14 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.Azure.Management.Resources.Models
 {
     /// <summary>
     /// Resource group information.
     /// </summary>
-    public partial class ResourceGroupExistsResult : OperationResponse
+    public partial class ResourceGroupExistsResult : AzureOperationResponse
     {
         private bool _exists;
         

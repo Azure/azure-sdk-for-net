@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ServiceDefinition xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="gbcheck" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition">
+  <WebRole name="WebRole1" vmsize="ExtraSmall">
+    <Imports />
+    <Startup>
+      <Task commandLine="setup_web.cmd &gt; log.txt" executionContext="elevated">
+        <Environment>
+          <Variable name="EMULATED">
+            <RoleInstanceValue xpath="/RoleEnvironment/Deployment/@emulated" />
+          </Variable>
+          <Variable name="RUNTIMEID" value="node;iisnode" />
+          <Variable name="RUNTIMEURL" value="" />
+          <Variable name="𢨭𠺉𨎅𡭖" value="𡬁𠻝𩂻耨鬲㑜䊑㓣䟉䋮䦓ᡨᠥ᠙ᡰᢇ᠘�࿋ཇ࿂ོ༇ྒꃌꈗꈉꋽUighurᥗᥩᥬᥜ�" />
+        </Environment>
+      </Task>
+      <Task commandLine="node.cmd ..\startup.js" executionContext="elevated" />
+    </Startup>
+    <Endpoints>
+      <InputEndpoint name="Endpoint1" protocol="http" port="80" />
+    </Endpoints>
+    <Sites>
+      <Site name="Web">
+        <Bindings>
+          <Binding name="Endpoint1" endpointName="Endpoint1" />
+        </Bindings>
+      </Site>
+    </Sites>
+  </WebRole>
+</ServiceDefinition>

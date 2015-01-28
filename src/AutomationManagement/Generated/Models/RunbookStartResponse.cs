@@ -21,14 +21,14 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
     /// The response model for the start runbook operation.
     /// </summary>
-    public partial class RunbookStartResponse : OperationResponse
+    public partial class RunbookStartResponse : AzureOperationResponse
     {
         private string _jobId;
         

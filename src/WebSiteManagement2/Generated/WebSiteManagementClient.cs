@@ -22,9 +22,9 @@
 using System;
 using System.Linq;
 using System.Net.Http;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.WebSites;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
 
 namespace Microsoft.Azure.Management.WebSites
 {
@@ -138,7 +138,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <summary>
         /// Initializes a new instance of the WebSiteManagementClient class.
         /// </summary>
-        private WebSiteManagementClient()
+        public WebSiteManagementClient()
             : base()
         {
             this._sourceControls = new SourceControlOperations(this);
@@ -206,7 +206,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='httpClient'>
         /// The Http client
         /// </param>
-        private WebSiteManagementClient(HttpClient httpClient)
+        public WebSiteManagementClient(HttpClient httpClient)
             : base(httpClient)
         {
             this._sourceControls = new SourceControlOperations(this);

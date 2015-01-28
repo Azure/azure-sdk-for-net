@@ -21,15 +21,15 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.StreamAnalytics.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.StreamAnalytics.Models
 {
     /// <summary>
     /// The response of the transformation patch operation.
     /// </summary>
-    public partial class TransformationPatchResponse : OperationResponse
+    public partial class TransformationPatchResponse : AzureOperationResponse
     {
         private DateTime _date;
         

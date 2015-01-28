@@ -1,6 +1,17 @@
-﻿//------------------------------------------------------------
-// Copyright (c) Microsoft Corporation.  All rights reserved.
-//------------------------------------------------------------
+﻿//
+// Copyright (c) Microsoft.  All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//   http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
 
 using System;
 using System.Collections.Generic;
@@ -18,7 +29,7 @@ namespace Microsoft.Azure.Insights
     /// No parentheses are allowed outside the names clause
     /// NOTE: The regex parser does not currently support dimensions (dimensionname.value, dimensionvalue.value)
     /// </summary>
-    public static class MetricFilterRegexParser
+    internal static class MetricFilterRegexParser
     {
         private static Regex splitOnAndRegex = new Regex("\\sand\\s", RegexOptions.Compiled);
         private static Regex splitOnORegex = new Regex("\\sor\\s", RegexOptions.Compiled);
