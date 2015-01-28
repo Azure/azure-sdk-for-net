@@ -21,9 +21,6 @@
   <PropertyGroup Condition=" '$(Configuration)' == 'Portable-Debug' or '$(Configuration)' == 'Portable-Release' ">
     <LibraryFxTarget>portable</LibraryFxTarget>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'WP80-Debug' or '$(Configuration)' == 'WP80-Release' ">
-    <LibraryFxTarget>wp80</LibraryFxTarget>
-  </PropertyGroup>
 
   <Import Project="references.$(LibraryFxTarget).props" />  
   
@@ -56,7 +53,7 @@
     <LibraryCustomConstants>$(LibraryCustomConstants);PORTABLE</LibraryCustomConstants>
   </PropertyGroup>
   
-  <PropertyGroup Condition=" '$(Configuration)' == 'Net45-Debug' or '$(Configuration)' == 'Net40-Debug' or '$(Configuration)' == 'Portable-Debug'  or '$(Configuration)' == 'WP80-Debug'">
+  <PropertyGroup Condition=" '$(Configuration)' == 'Net45-Debug' or '$(Configuration)' == 'Net40-Debug' or '$(Configuration)' == 'Portable-Debug'">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -64,7 +61,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Net45-Release' or '$(Configuration)' == 'Net40-Release' or '$(Configuration)' == 'Portable-Release' or '$(Configuration)' == 'WP80-Release'">
+  <PropertyGroup Condition=" '$(Configuration)' == 'Net45-Release' or '$(Configuration)' == 'Net40-Release' or '$(Configuration)' == 'Portable-Release'">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <DefineConstants>TRACE;$(LibraryCustomConstants)</DefineConstants>
@@ -93,12 +90,6 @@
   <PropertyGroup Condition=" '$(LibraryFxTarget)' == 'windows8' ">
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(LibraryFxTarget)' == 'wp80' ">
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Profile102</TargetFrameworkProfile>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(LibraryFxTarget)' == 'wpa81' ">
     <FileAlignment>512</FileAlignment>

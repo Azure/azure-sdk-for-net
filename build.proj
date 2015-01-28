@@ -68,7 +68,7 @@
   <ItemGroup>
     <ManagementLibrariesProjects Include="$(ManagementLibrariesSolution)" Condition="$(MamlProjectName) == ''" />
     <ManagementLibrariesProjects Include="$(LibrarySourceFolder)\$(MamlProjectName)\*.csproj" Condition="$(MamlProjectName) != ''" />
-    <LibraryFxTargetList Condition=" '$(FxTargetList)' == '' " Include="wp80;portable;net40;net45" />
+    <LibraryFxTargetList Condition=" '$(FxTargetList)' == '' " Include="portable;net40;net45" />
     <LibraryFxTargetList Condition=" '$(FxTargetList)' != '' " Include="$(FxTargetList)" />
   </ItemGroup>
   

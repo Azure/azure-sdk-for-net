@@ -44,7 +44,6 @@ Global
 		Net40-Debug|Any CPU = Net40-Debug|Any CPU
 		Net45-Debug|Any CPU = Net45-Debug|Any CPU
 		Portable-Debug|Any CPU = Portable-Debug|Any CPU
-		WP80-Debug|Any CPU = WP80-Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{856A1D19-C3BF-439A-BEBF-E822A332BC12}.Net40-Debug|Any CPU.ActiveCfg = Net40-Debug|Any CPU
@@ -53,22 +52,17 @@ Global
 		{856A1D19-C3BF-439A-BEBF-E822A332BC12}.Net45-Debug|Any CPU.Build.0 = Net45-Debug|Any CPU
 		{856A1D19-C3BF-439A-BEBF-E822A332BC12}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
 		{856A1D19-C3BF-439A-BEBF-E822A332BC12}.Portable-Debug|Any CPU.Build.0 = Portable-Debug|Any CPU
-		{856A1D19-C3BF-439A-BEBF-E822A332BC12}.WP80-Debug|Any CPU.ActiveCfg = WP80-Debug|Any CPU
-		{856A1D19-C3BF-439A-BEBF-E822A332BC12}.WP80-Debug|Any CPU.Build.0 = WP80-Debug|Any CPU
 		{8FF949EE-73BD-48BF-ABDF-A6711E573FDF}.Net40-Debug|Any CPU.ActiveCfg = Net40-Debug|Any CPU
 		{8FF949EE-73BD-48BF-ABDF-A6711E573FDF}.Net40-Debug|Any CPU.Build.0 = Net40-Debug|Any CPU
 		{8FF949EE-73BD-48BF-ABDF-A6711E573FDF}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
 		{8FF949EE-73BD-48BF-ABDF-A6711E573FDF}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
-		{8FF949EE-73BD-48BF-ABDF-A6711E573FDF}.WP80-Debug|Any CPU.ActiveCfg = WP80-Debug|Any CPU
 		{CB18ACEB-2825-4884-91FA-05C31AC779FE}.Net40-Debug|Any CPU.ActiveCfg = Net40-Debug|Any CPU
 		{CB18ACEB-2825-4884-91FA-05C31AC779FE}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
 		{CB18ACEB-2825-4884-91FA-05C31AC779FE}.Net45-Debug|Any CPU.Build.0 = Net45-Debug|Any CPU
 		{CB18ACEB-2825-4884-91FA-05C31AC779FE}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
-		{CB18ACEB-2825-4884-91FA-05C31AC779FE}.WP80-Debug|Any CPU.ActiveCfg = WP80-Debug|Any CPU
 		{0645E75E-9C0B-47EE-B5A2-239286E1DED9}.Net40-Debug|Any CPU.ActiveCfg = Net40-Debug|Any CPU
 		{0645E75E-9C0B-47EE-B5A2-239286E1DED9}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
 		{0645E75E-9C0B-47EE-B5A2-239286E1DED9}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
-		{0645E75E-9C0B-47EE-B5A2-239286E1DED9}.WP80-Debug|Any CPU.ActiveCfg = WP80-Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
