@@ -93,11 +93,7 @@ namespace Microsoft.Azure.Common.Authentication.Models
         /// </summary>
         public AzureProfile()
         {
-
-            Environments = new Dictionary<string, AzureEnvironment>(StringComparer.InvariantCultureIgnoreCase);
-            Subscriptions = new Dictionary<Guid, AzureSubscription>();
-            Accounts = new Dictionary<string, AzureAccount>(StringComparer.InvariantCultureIgnoreCase);
-            CurrentContext = new AzureContext();
+            Initialize();
             LoadDefaultEnvironments();
         }
 
@@ -108,10 +104,8 @@ namespace Microsoft.Azure.Common.Authentication.Models
         /// <param name="path">Location of profile file on disk.</param>
         public AzureProfile(string path)
         {
+            Initialize();
             ProfilePath = path;
-            Environments = new Dictionary<string, AzureEnvironment>(StringComparer.InvariantCultureIgnoreCase);
-            Subscriptions = new Dictionary<Guid, AzureSubscription>();
-            Accounts = new Dictionary<string, AzureAccount>(StringComparer.InvariantCultureIgnoreCase);
             ProfileLoadErrors = new List<string>();
 
             if (!AzureSession.DataStore.DirectoryExists(AzureSession.ProfileDirectory))
@@ -144,6 +138,14 @@ namespace Microsoft.Azure.Common.Authentication.Models
             }
 
             LoadDefaultEnvironments();
+        }
+
+        private void Initialize()
+        {
+            Environments = new Dictionary<string, AzureEnvironment>(StringComparer.InvariantCultureIgnoreCase);
+            Subscriptions = new Dictionary<Guid, AzureSubscription>();
+            Accounts = new Dictionary<string, AzureAccount>(StringComparer.InvariantCultureIgnoreCase);
+            CurrentContext = new AzureContext();
         }
 
         private void LoadDefaultEnvironments()
