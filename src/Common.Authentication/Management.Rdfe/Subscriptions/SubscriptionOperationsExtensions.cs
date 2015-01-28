@@ -25,7 +25,7 @@ using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Internal.Subscriptions.Rdfe
 {
-    internal static partial class SubscriptionOperationsExtensions
+    public static partial class SubscriptionOperationsExtensions
     {
         /// <param name='operations'>
         /// Reference to the

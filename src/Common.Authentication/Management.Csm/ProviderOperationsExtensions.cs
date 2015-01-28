@@ -25,7 +25,7 @@ using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Internal.Management.Csm
 {
-    internal static partial class ProviderOperationsExtensions
+    public static partial class ProviderOperationsExtensions
     {
         /// <summary>
         /// Gets a resource provider.
