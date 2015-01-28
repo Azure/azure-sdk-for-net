@@ -24,31 +24,16 @@ namespace Microsoft.Azure.Common.Authentication
     /// Represents current Azure session.
     /// </summary>
     public static class AzureSession
-    {
-        static AzureSession()
-        {
-            ClientFactory = new ClientFactory();
-            AuthenticationFactory = new AuthenticationFactory();
-            DataStore = new DiskDataStore();
-            Profile = new AzureProfile();
-            AzureSession.OldProfileFile = "WindowsAzureProfile.xml";
-            AzureSession.OldProfileFileBackup = "WindowsAzureProfile.xml.bak";
-            AzureSession.ProfileDirectory = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                Resources.AzureDirectoryName); ;
-            AzureSession.ProfileFile = "AzureProfile.json";
-            AzureSession.TokenCacheFile = "TokenCache.dat";
-        }
-        
+    {        
         /// <summary>
         /// Gets or sets Azure client factory.
         /// </summary>
         public static IClientFactory ClientFactory { get; set; }
 
         /// <summary>
-        /// Gets current Azure profile
+        /// Gets or sets current Azure profile
         /// </summary>
-        public static AzureProfile Profile { get; private set; }
+        public static AzureProfile Profile { get; set; }
 
         /// <summary>
         /// Gets or sets Azure authentication factory.
@@ -84,5 +69,20 @@ namespace Microsoft.Azure.Common.Authentication
         /// Gets or sets old profile file name.
         /// </summary>
         public static string OldProfileFile { get; set; }
+
+        static AzureSession()
+        {
+            ClientFactory = new ClientFactory();
+            AuthenticationFactory = new AuthenticationFactory();
+            DataStore = new DiskDataStore();
+            Profile = new AzureProfile();
+            AzureSession.OldProfileFile = "WindowsAzureProfile.xml";
+            AzureSession.OldProfileFileBackup = "WindowsAzureProfile.xml.bak";
+            AzureSession.ProfileDirectory = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                Resources.AzureDirectoryName); ;
+            AzureSession.ProfileFile = "AzureProfile.json";
+            AzureSession.TokenCacheFile = "TokenCache.dat";
+        }
     }
 }
