@@ -36,11 +36,11 @@ function SyncNuspecFile([string]$FolderPath)
         $tokens = $packageVersion.split(".")
         if ($tokens.Length -ne 3) {
             Throw "Invalid package version from $nuproj"
-		}
-		$majorVersion = $tokens[0]
-		$minorVersion = $tokens[1]
-		$buildDate =  [string]::Format("{0}{1:00}{2:00}", (get-date).year - 2012, (get-date).month, (get-date).day)
-		$assemblyFileVersion = "$majorVersion.$minorVersion.$buildDate.0" 
+        }
+        $majorVersion = $tokens[0]
+        $minorVersion = $tokens[1]
+        $buildDate =  [string]::Format("{0}{1:00}{2:00}", (get-date).year - 2012, (get-date).month, (get-date).day)
+        $assemblyFileVersion = "$majorVersion.$minorVersion.$buildDate.0" 
         $assemblyContent = $assemblyContent -replace "\[assembly\:\s*AssemblyFileVersion\s*\(\s*`"[\d\.\s]+`"\s*\)\s*\]","[assembly: AssemblyFileVersion(`"$assemblyFileVersion`")]"
 
         #Updating AssemblyVersion

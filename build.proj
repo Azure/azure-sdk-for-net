@@ -266,7 +266,7 @@
     <Exec Command="$(NuGetCommand) sources add -Name AzureSdkInternalFeed -Source &quot;https://www.myget.org/F/azure-sdk-internal/&quot; $(NuGetRestoreConfigSwitch)"/>
 
     <!--TODO: respect the 'scope', and do not always restore all of them-->
-    <Exec Command="$(NuGetCogmmand) restore $(CommonSolution) $(NuGetRestoreConfigSwitch)"/>
+    <Exec Command="$(NuGetCommand) restore $(CommonSolution) $(NuGetRestoreConfigSwitch)"/>
     <Exec Command="$(NuGetCommand) restore $(AuthenticationSolution) $(NuGetRestoreConfigSwitch)"/>
     <Exec Command="$(NuGetCommand) restore $(ManagementLibrariesSolution) $(NuGetRestoreConfigSwitch)" />
 
