@@ -51,6 +51,10 @@
     <Reference Include="Microsoft.Rest.Common">
       <HintPath>..\..\packages\Microsoft.Rest.Common.2.0.4\lib\portable-net403+win+wpa81\Microsoft.Rest.Common.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Rest.Common, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Microsoft.Rest.Common.2.0.5\lib\net45\Microsoft.Rest.Common.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(LibraryFxTarget)' == 'portable'" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(LibraryFxTarget)' == 'net45' or '$(LibraryFxTarget)' == 'net40'" />

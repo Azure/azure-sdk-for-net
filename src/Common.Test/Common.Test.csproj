@@ -20,6 +20,10 @@
     <Reference Include="Microsoft.Rest.Common">
       <HintPath>..\..\packages\Microsoft.Rest.Common.2.0.4\lib\net45\Microsoft.Rest.Common.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Rest.Common, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Microsoft.Rest.Common.2.0.5\lib\net45\Microsoft.Rest.Common.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
