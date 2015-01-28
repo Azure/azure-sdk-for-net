@@ -6,7 +6,6 @@
     <LibraryToolsFolder>$(LibraryRoot)\tools</LibraryToolsFolder>
     <LibraryNugetPackageFolder>$(LibraryRoot)\packages</LibraryNugetPackageFolder>
     <AssemblyOriginatorKeyFile Condition=" '$(AssemblyOriginatorKeyFile)' == '' ">$(LibraryRoot)\tools\MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
-    <LibraryFxTarget Condition="'$(HyakFxTarget)' == ''">net45</LibraryFxTarget>
     <!--'GenerateHydraSpecs' is not a great name, means whether or not to invoke hyak.exe to regenerate the code. -->
     <!--If we are inside visual studio, we always invoke code-gen. This is the optimization made for parnter service teams-->
     <GenerateHydraSpecs Condition=" '$(GenerateHydraSpecs)' == '' and '$(BuildingInsideVisualStudio)' == 'true' " >true</GenerateHydraSpecs>
@@ -22,6 +21,10 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Portable-Debug' or '$(Configuration)' == 'Portable-Release' ">
     <LibraryFxTarget>portable</LibraryFxTarget>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <LibraryFxTarget Condition="'$(LibraryFxTarget)' == ''">net45</LibraryFxTarget>
   </PropertyGroup>
   
   <Import Project="references.$(LibraryFxTarget).props" />  
