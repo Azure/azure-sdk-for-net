@@ -10,16 +10,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Common.Authentication.Test</RootNamespace>
     <AssemblyName>Common.Authentication.Test</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <RootNamespace>Common.Authentication.Test</RootNamespace>
-    <AssemblyName>Common.Authentication.Test</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <NuGetPackageImportStamp>9fdcb6f4</NuGetPackageImportStamp>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)' == 'Net45-Release'">
-    <DocumentationFile>bin\Net45-Release\Common.Authentication.Test.xml</DocumentationFile>
   </PropertyGroup>
   <Import Project="..\..\tools\Library.Settings.targets" />
   <ItemGroup>

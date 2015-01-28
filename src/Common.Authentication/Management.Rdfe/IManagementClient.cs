@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Internal.Management.Rdfe
     /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460799.aspx for
     /// more information)
     /// </summary>
-    public partial interface IManagementClient : IDisposable
+    internal partial interface IManagementClient : IDisposable
     {
         /// <summary>
         /// Gets the API version.

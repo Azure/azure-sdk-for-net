@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Internal.Management.Csm
     /// <summary>
     /// Operations for managing providers.
     /// </summary>
-    public partial class ProviderOperations : IServiceOperations<ResourceManagementClient>, IProviderOperations
+    internal partial class ProviderOperations : IServiceOperations<ResourceManagementClient>, IProviderOperations
     {
         /// <summary>
         /// Initializes a new instance of the ProviderOperations class.

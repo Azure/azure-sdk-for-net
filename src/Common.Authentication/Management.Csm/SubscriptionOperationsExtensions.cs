@@ -25,7 +25,7 @@ using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Internal.Subscriptions.Csm
 {
-    public static partial class SubscriptionOperationsExtensions
+    internal static partial class SubscriptionOperationsExtensions
     {
         /// <summary>
         /// Gets details about particular subscription.

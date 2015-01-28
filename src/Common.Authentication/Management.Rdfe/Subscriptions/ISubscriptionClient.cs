@@ -24,7 +24,7 @@ using System;
 
 namespace Microsoft.Azure.Internal.Subscriptions.Rdfe
 {
-    public partial interface ISubscriptionClient : IDisposable
+    internal partial interface ISubscriptionClient : IDisposable
     {
         /// <summary>
         /// Gets the API version.

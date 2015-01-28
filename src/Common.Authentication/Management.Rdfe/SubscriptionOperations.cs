@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Internal.Management.Rdfe
     /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715315.aspx for
     /// more information)
     /// </summary>
-    public partial class SubscriptionOperations : IServiceOperations<ManagementClient>, ISubscriptionOperations
+    internal partial class SubscriptionOperations : IServiceOperations<ManagementClient>, ISubscriptionOperations
     {
         /// <summary>
         /// Initializes a new instance of the SubscriptionOperations class.

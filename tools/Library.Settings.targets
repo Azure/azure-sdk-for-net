@@ -50,6 +50,10 @@
     <LibraryCustomConstants>NET45</LibraryCustomConstants>
   </PropertyGroup>
   
+  <PropertyGroup Condition=" '$(CodeSign)' == 'true' " >
+    <LibraryCustomConstants>$(LibraryCustomConstants);CODESIGN</LibraryCustomConstants>
+  </PropertyGroup>
+
   <PropertyGroup Condition=" '$(Configuration)' == 'Net45-Debug' or '$(Configuration)' == 'Net40-Debug' or '$(Configuration)' == 'Portable-Debug' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
