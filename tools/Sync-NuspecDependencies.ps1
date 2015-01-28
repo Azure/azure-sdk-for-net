@@ -33,10 +33,17 @@ function SyncNuspecFile([string]$FolderPath)
         #Updating AssemblyFileVersion
         $packageVersion = $nuproj.Project.ItemGroup.SdkNuGetPackage.PackageVersion
         $packageVersion = ([regex]"[\d\.]+").Match($packageVersion).Value
-        $assemblyContent = $assemblyContent -replace "\[assembly\:\s*AssemblyFileVersion\s*\(\s*`"[\d\.\s]+`"\s*\)\s*\]","[assembly: AssemblyFileVersion(`"$packageVersion.0`")]"
+        $tokens = $packageVersion.split(".")
+        if ($tokens.Length -ne 3) {
+            Throw "Invalid package version from $nuproj"
+		}
+		$majorVersion = $tokens[0]
+		$minorVersion = $tokens[1]
+		$buildDate =  [string]::Format("{0}{1:00}{2:00}", (get-date).year - 2012, (get-date).month, (get-date).day)
+		$assemblyFileVersion = "$majorVersion.$minorVersion.$buildDate.0" 
+        $assemblyContent = $assemblyContent -replace "\[assembly\:\s*AssemblyFileVersion\s*\(\s*`"[\d\.\s]+`"\s*\)\s*\]","[assembly: AssemblyFileVersion(`"$assemblyFileVersion`")]"
 
         #Updating AssemblyVersion
-        $majorVersion = ([regex]"\d+").Match($packageVersion).Captures[0].Value
         $assemblyVersion = "$majorVersion.0.0.0"
         if ($majorVersion -eq "0") {
             $assemblyVersion = "0.9.0.0"

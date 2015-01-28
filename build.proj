@@ -87,7 +87,6 @@
     <NuGetCommand>&quot;$(LibraryToolsFolder)\nuget.exe&quot;</NuGetCommand>
   </PropertyGroup>
 
-  <Import Project="$(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.msbuild" />
   <UsingTask AssemblyFile="$(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks.dll" TaskName="RegexReplacementTask" />
   <UsingTask AssemblyFile="$(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks.dll" TaskName="ValidateStrongNameSignatureTask" />
 
@@ -267,7 +266,7 @@
     <Exec Command="$(NuGetCommand) sources add -Name AzureSdkInternalFeed -Source &quot;https://www.myget.org/F/azure-sdk-internal/&quot; $(NuGetRestoreConfigSwitch)"/>
 
     <!--TODO: respect the 'scope', and do not always restore all of them-->
-    <Exec Command="$(NuGetCommand) restore $(CommonSolution) $(NuGetRestoreConfigSwitch)"/>
+    <Exec Command="$(NuGetCogmmand) restore $(CommonSolution) $(NuGetRestoreConfigSwitch)"/>
     <Exec Command="$(NuGetCommand) restore $(AuthenticationSolution) $(NuGetRestoreConfigSwitch)"/>
     <Exec Command="$(NuGetCommand) restore $(ManagementLibrariesSolution) $(NuGetRestoreConfigSwitch)" />
 
@@ -314,36 +313,6 @@
     <Message Text="Libraries Solution : $(ManagementLibrariesSolution)" />
     <Message Text="Library            : $(LibraryFriendlyName)" />
     <Message Text="Source folder      : $(LibrarySourceFolder)" />
-
-    <!-- Modify local files -->
-    <CallTarget Targets="BurnBuildVersions" />
-  </Target>
-
-  <!--
-  Burn the build information into the assembly file information, NuGet specs,
-  and other source files before beginning a build.
-
-  This updates the AssemblyFileVersion for .NET assemblies. 
-  
-  If you accidentally run this within your enlistment, revert AssemblyInfo.cs
-  changes before commiting to Git.
-  -->
-  <Target Name="BurnBuildVersions"
-          DependsOnTargets="GetGeneratedBuildDate">
-    <Message Text="Destructive burn of assembly file versions to include the build number in the revision component." />
-    <ItemGroup>
-      <AssemblyInfoFilesToUpdate Include="$(LibrarySourceFolder)\*\Properties\AssemblyInfo.cs" />
-    </ItemGroup>
-    <RegexReplacementTask Files="@(AssemblyInfoFilesToUpdate)"
-                          Find="AssemblyFileVersion\(&quot;(?&lt;semver&gt;\d{1,3}\.\d{1,3}\.\d{1,3}).(?&lt;revision&gt;)\d{1,3}&quot;\)"
-                          Replace="AssemblyFileVersion(&quot;${semver}.$(GeneratedBuildDate)&quot;)"
-                          LogReplacement="true" />
-  </Target>
-
-  <Target Name="GetGeneratedBuildDate">
-    <GetBuildVersionTask>
-      <Output TaskParameter="Date" PropertyName="GeneratedBuildDate" />
-    </GetBuildVersionTask>
   </Target>
 
   <Import Project="$(LibraryToolsFolder)\nuget.targets" />
