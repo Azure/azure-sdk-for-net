@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Internal.Subscriptions.Csm
     /// <summary>
     /// Operations for managing subscriptions.
     /// </summary>
-    public partial interface ISubscriptionOperations
+    internal partial interface ISubscriptionOperations
     {
         /// <summary>
         /// Gets details about particular subscription.

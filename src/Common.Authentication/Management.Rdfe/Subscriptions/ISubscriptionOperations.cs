@@ -25,7 +25,7 @@ using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Internal.Subscriptions.Rdfe
 {
-    public partial interface ISubscriptionOperations
+    internal partial interface ISubscriptionOperations
     {
         /// <param name='cancellationToken'>
         /// Cancellation token.

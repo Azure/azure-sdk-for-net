@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Internal.Management.Rdfe
     /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460799.aspx for
     /// more information)
     /// </summary>
-    public static partial class SubscriptionOperationsExtensions
+    internal static partial class SubscriptionOperationsExtensions
     {
         /// <summary>
         /// The Get Subscription operation returns account and resource

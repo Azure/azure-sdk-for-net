@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Internal.Subscriptions.Csm
     /// <summary>
     /// Operations for managing subscriptions.
     /// </summary>
-    public partial class SubscriptionOperations : IServiceOperations<SubscriptionClient>, ISubscriptionOperations
+    internal partial class SubscriptionOperations : IServiceOperations<SubscriptionClient>, ISubscriptionOperations
     {
         /// <summary>
         /// Initializes a new instance of the SubscriptionOperations class.

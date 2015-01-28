@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Internal.Management.Csm
     /// <summary>
     /// Operations for managing providers.
     /// </summary>
-    public partial interface IProviderOperations
+    internal partial interface IProviderOperations
     {
         /// <summary>
         /// Gets a resource provider.

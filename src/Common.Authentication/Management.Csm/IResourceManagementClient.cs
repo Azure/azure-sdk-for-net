@@ -23,7 +23,7 @@ using System;
 
 namespace Microsoft.Azure.Internal.Management.Csm
 {
-    public partial interface IResourceManagementClient : IDisposable
+    internal partial interface IResourceManagementClient : IDisposable
     {
         /// <summary>
         /// Gets the API version.

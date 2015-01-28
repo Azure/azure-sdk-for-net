@@ -33,7 +33,7 @@ using System.Xml.Linq;
 
 namespace Microsoft.Azure.Internal.Subscriptions.Rdfe
 {
-    public partial class SubscriptionOperations : IServiceOperations<SubscriptionClient>, ISubscriptionOperations
+    internal partial class SubscriptionOperations : IServiceOperations<SubscriptionClient>, ISubscriptionOperations
     {
         /// <summary>
         /// Initializes a new instance of the SubscriptionOperations class.

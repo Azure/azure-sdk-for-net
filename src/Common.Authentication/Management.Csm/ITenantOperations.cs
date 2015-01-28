@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Internal.Subscriptions.Csm
     /// <summary>
     /// Operations for managing tenants.
     /// </summary>
-    public partial interface ITenantOperations
+    internal partial interface ITenantOperations
     {
         /// <summary>
         /// Gets a list of the tenantIds.
