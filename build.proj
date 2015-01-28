@@ -25,7 +25,7 @@
   /p:Scope 
     'Common' : build Azure Common
     '<Path to a project file>': build that specific package
-    'Authentication': build the Authorization package
+    'Authentication': build the Authentication package
     By default, it builds all.
 
   /p:CodeGen
@@ -74,7 +74,7 @@
     <FxTargetList Condition=" '$(FxTargetList)' == '' and '$(Scope)' == 'Authentication' " >net45</FxTargetList>
     <FxTargetList Condition=" '$(FxTargetList)' == '' and ('$(Scope)' == '' or '$(Scope)' == 'all' or '$(Scope)' == 'Common') ">portable;net40;net45</FxTargetList>
     <!--If FxTargetList still has no value, it must be an individual maml package-->
-    <FxTargetList Condition=" '$(FxTargetList)' == '' " >portable;net40</FxTargetList>
+    <FxTargetList Condition=" '$(FxTargetList)' == '' ">portable;net40</FxTargetList>
   </PropertyGroup>
 
   <ItemGroup>
