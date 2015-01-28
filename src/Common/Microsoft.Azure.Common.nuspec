@@ -17,17 +17,13 @@
 At this time, applications looking to use the Microsoft Azure Management Libraries should use the .NET Framework. Management operations require the X509Certificate2 type that is not present in the Portable Class Library API surface area. The Common.NetFramework library exposes this functionality. Looking to the future, we are enabling PCL early: Microsoft Azure Active Directory integration enables token-based authentication. Coupled with appropriate platform-specific libraries, in the future more platforms will light up with support for managing Microsoft Azure services.
 
 Supported Portable Library Platforms:
-- .NET Framework 4.5, 4.5.1
+- .NET Framework 4.0, 4.5, 4.5.1
 - .NET for Windows Store apps
-- Windows Phone 8, 8.1
-- Silverlight 5
+- Windows Phone 8.1
 - Portable Class Libraries</description>
     <copyright>Copyright © Microsoft Corporation</copyright>
     <tags>Microsoft "Microsoft Azure" Azure cloud REST HTTP client core common azureofficial windowsazureofficial</tags>
     <references>
-      <group targetFramework="windowsphone8">
-        <reference file="Microsoft.Azure.Common.dll" />
-      </group>
       <group targetFramework="portable-net45+wp8+wpa81+win">
         <reference file="Microsoft.Azure.Common.dll" />
       </group>
@@ -49,9 +45,6 @@ Supported Portable Library Platforms:
     <file src="..\binaries\portable\Microsoft.Azure.Common.dll" target="lib\portable-net45+wp8+wpa81+win" />
     <file src="..\binaries\portable\Microsoft.Azure.Common.pdb" target="lib\portable-net45+wp8+wpa81+win" />
     <file src="..\binaries\portable\Microsoft.Azure.Common.xml" target="lib\portable-net45+wp8+wpa81+win" />
-    <file src="..\binaries\wp80\Microsoft.Azure.Common.dll" target="lib\windowsphone8" />
-    <file src="..\binaries\wp80\Microsoft.Azure.Common.pdb" target="lib\windowsphone8" />
-    <file src="..\binaries\wp80\Microsoft.Azure.Common.xml" target="lib\windowsphone8" />
     <file src="..\binaries\net45\Microsoft.Azure.Common.dll" target="lib\net45" />
     <file src="..\binaries\net45\Microsoft.Azure.Common.pdb" target="lib\net45" />
     <file src="..\binaries\net45\Microsoft.Azure.Common.xml" target="lib\net45" />
