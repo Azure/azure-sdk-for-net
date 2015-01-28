@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Internal.Management.Rdfe
     /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715315.aspx for
     /// more information)
     /// </summary>
-    internal partial interface ISubscriptionOperations
+    public partial interface ISubscriptionOperations
     {
         /// <summary>
         /// The Get Subscription operation returns account and resource

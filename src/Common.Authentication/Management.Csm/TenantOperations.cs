@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Internal.Subscriptions.Csm
     /// <summary>
     /// Operations for managing tenants.
     /// </summary>
-    internal partial class TenantOperations : IServiceOperations<SubscriptionClient>, ITenantOperations
+    public partial class TenantOperations : IServiceOperations<SubscriptionClient>, ITenantOperations
     {
         /// <summary>
         /// Initializes a new instance of the TenantOperations class.

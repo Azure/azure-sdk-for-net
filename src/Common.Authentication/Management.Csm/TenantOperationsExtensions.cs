@@ -25,7 +25,7 @@ using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Internal.Subscriptions.Csm
 {
-    internal static partial class TenantOperationsExtensions
+    public static partial class TenantOperationsExtensions
     {
         /// <summary>
         /// Gets a list of the tenantIds.

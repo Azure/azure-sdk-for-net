@@ -25,7 +25,7 @@ using System.Net.Http;
 
 namespace Microsoft.Azure.Internal.Subscriptions.Csm
 {
-    internal partial class SubscriptionClient : ServiceClient<SubscriptionClient>, ISubscriptionClient
+    public partial class SubscriptionClient : ServiceClient<SubscriptionClient>, ISubscriptionClient
     {
         private string _apiVersion;
         

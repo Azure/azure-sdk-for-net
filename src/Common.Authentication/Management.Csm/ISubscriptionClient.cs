@@ -24,7 +24,7 @@ using System;
 
 namespace Microsoft.Azure.Internal.Subscriptions.Csm
 {
-    internal partial interface ISubscriptionClient : IDisposable
+    public partial interface ISubscriptionClient : IDisposable
     {
         /// <summary>
         /// Gets the API version.

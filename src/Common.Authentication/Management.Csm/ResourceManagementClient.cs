@@ -25,7 +25,7 @@ using System.Net.Http;
 
 namespace Microsoft.Azure.Internal.Management.Csm
 {
-    internal partial class ResourceManagementClient : ServiceClient<ResourceManagementClient>, IResourceManagementClient
+    public partial class ResourceManagementClient : ServiceClient<ResourceManagementClient>, IResourceManagementClient
     {
         private string _apiVersion;
         
