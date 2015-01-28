@@ -21,8 +21,8 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Insights.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Insights.Models
 {
@@ -30,10 +30,10 @@ namespace Microsoft.Azure.Management.Insights.Models
     /// A standard service response including an HTTP status code and request
     /// ID.
     /// </summary>
-    internal partial class AntaresSkuGetResponse : OperationResponse
+    internal partial class AntaresSkuGetResponse : AzureOperationResponse
     {
         private AntaresSku _properties;
-        
+
         /// <summary>
         /// Optional.
         /// </summary>
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.Insights.Models
             get { return this._properties; }
             set { this._properties = value; }
         }
-        
+
         /// <summary>
         /// Initializes a new instance of the AntaresSkuGetResponse class.
         /// </summary>

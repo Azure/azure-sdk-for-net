@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.Insights.Models
     internal partial class AntaresSku
     {
         private int _currentNumberOfWorkers;
-        
+
         /// <summary>
         /// Optional.
         /// </summary>
@@ -36,9 +36,9 @@ namespace Microsoft.Azure.Management.Insights.Models
             get { return this._currentNumberOfWorkers; }
             set { this._currentNumberOfWorkers = value; }
         }
-        
+
         private int _currentWorkerSize;
-        
+
         /// <summary>
         /// Optional.
         /// </summary>
@@ -47,9 +47,9 @@ namespace Microsoft.Azure.Management.Insights.Models
             get { return this._currentWorkerSize; }
             set { this._currentWorkerSize = value; }
         }
-        
+
         private string _sku;
-        
+
         /// <summary>
         /// Optional.
         /// </summary>
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.Insights.Models
             get { return this._sku; }
             set { this._sku = value; }
         }
-        
+
         /// <summary>
         /// Initializes a new instance of the AntaresSku class.
         /// </summary>

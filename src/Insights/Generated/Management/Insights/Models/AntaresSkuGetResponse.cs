@@ -30,23 +30,23 @@ namespace Microsoft.Azure.Management.Insights.Models
     /// A standard service response including an HTTP status code and request
     /// ID.
     /// </summary>
-    public partial class SkuListResponse : AzureOperationResponse
+    internal partial class AntaresSkuGetResponse : AzureOperationResponse
     {
-        private SkuCollection _skus;
+        private AntaresSku _properties;
         
         /// <summary>
-        /// Optional. List of available Skus.
+        /// Optional.
         /// </summary>
-        public SkuCollection Skus
+        public AntaresSku Properties
         {
-            get { return this._skus; }
-            set { this._skus = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the SkuListResponse class.
+        /// Initializes a new instance of the AntaresSkuGetResponse class.
         /// </summary>
-        public SkuListResponse()
+        public AntaresSkuGetResponse()
         {
         }
     }

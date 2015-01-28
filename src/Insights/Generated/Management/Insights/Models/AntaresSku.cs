@@ -21,32 +21,48 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
-using Microsoft.Azure.Management.Insights.Models;
 
 namespace Microsoft.Azure.Management.Insights.Models
 {
-    /// <summary>
-    /// A standard service response including an HTTP status code and request
-    /// ID.
-    /// </summary>
-    public partial class SkuListResponse : AzureOperationResponse
+    internal partial class AntaresSku
     {
-        private SkuCollection _skus;
+        private int _currentNumberOfWorkers;
         
         /// <summary>
-        /// Optional. List of available Skus.
+        /// Optional.
         /// </summary>
-        public SkuCollection Skus
+        public int CurrentNumberOfWorkers
         {
-            get { return this._skus; }
-            set { this._skus = value; }
+            get { return this._currentNumberOfWorkers; }
+            set { this._currentNumberOfWorkers = value; }
+        }
+        
+        private int _currentWorkerSize;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public int CurrentWorkerSize
+        {
+            get { return this._currentWorkerSize; }
+            set { this._currentWorkerSize = value; }
+        }
+        
+        private string _sku;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public string Sku
+        {
+            get { return this._sku; }
+            set { this._sku = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the SkuListResponse class.
+        /// Initializes a new instance of the AntaresSku class.
         /// </summary>
-        public SkuListResponse()
+        public AntaresSku()
         {
         }
     }

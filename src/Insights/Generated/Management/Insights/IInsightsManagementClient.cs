@@ -112,6 +112,14 @@ namespace Microsoft.Azure.Management.Insights
         }
         
         /// <summary>
+        /// Operations for managing resources sku.
+        /// </summary>
+        ISkuOperations SkuOperations
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Operations for managing storage diagnostic settings.
         /// </summary>
         IStorageDiagnosticSettingsOperations StorageDiagnosticSettingsOperations

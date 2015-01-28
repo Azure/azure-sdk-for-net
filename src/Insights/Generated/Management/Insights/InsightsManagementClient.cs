@@ -135,6 +135,16 @@ namespace Microsoft.Azure.Management.Insights
             get { return this._serviceDiagnosticSettingsOperations; }
         }
         
+        private ISkuOperations _skuOperations;
+        
+        /// <summary>
+        /// Operations for managing resources sku.
+        /// </summary>
+        public virtual ISkuOperations SkuOperations
+        {
+            get { return this._skuOperations; }
+        }
+        
         private IStorageDiagnosticSettingsOperations _storageDiagnosticSettingsOperations;
         
         /// <summary>
@@ -156,6 +166,7 @@ namespace Microsoft.Azure.Management.Insights
             this._autoscaleOperations = new AutoscaleOperations(this);
             this._monitoringConfigurationOperations = new MonitoringConfigurationOperations(this);
             this._serviceDiagnosticSettingsOperations = new ServiceDiagnosticSettingsOperations(this);
+            this._skuOperations = new SkuOperations(this);
             this._storageDiagnosticSettingsOperations = new StorageDiagnosticSettingsOperations(this);
             this._apiVersion = "2014-04-01";
             this._longRunningOperationInitialTimeout = -1;
@@ -227,6 +238,7 @@ namespace Microsoft.Azure.Management.Insights
             this._autoscaleOperations = new AutoscaleOperations(this);
             this._monitoringConfigurationOperations = new MonitoringConfigurationOperations(this);
             this._serviceDiagnosticSettingsOperations = new ServiceDiagnosticSettingsOperations(this);
+            this._skuOperations = new SkuOperations(this);
             this._storageDiagnosticSettingsOperations = new StorageDiagnosticSettingsOperations(this);
             this._apiVersion = "2014-04-01";
             this._longRunningOperationInitialTimeout = -1;

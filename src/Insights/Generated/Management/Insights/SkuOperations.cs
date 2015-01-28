@@ -50,9 +50,9 @@ namespace Microsoft.Azure.Management.Insights
         {
             this._client = client;
         }
-
+        
         private InsightsManagementClient _client;
-
+        
         /// <summary>
         /// Gets a reference to the
         /// Microsoft.Azure.Management.Insights.InsightsManagementClient.
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.Insights
         {
             get { return this._client; }
         }
-
+        
         /// <param name='resourceId'>
         /// Required. The resource id.
         /// </param>
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.Insights
             {
                 throw new ArgumentNullException("resourceId");
             }
-
+            
             // Tracing
             bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Management.Insights
                 tracingParameters.Add("resourceId", resourceId);
                 TracingAdapter.Enter(invocationId, this, "GetAntaresCurrentSkuInternalAsync", tracingParameters);
             }
-
+            
             // Construct URL
             string url = "/" + Uri.EscapeDataString(resourceId) + "?";
             url = url + "api-version=2014-04-01";
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.Management.Insights
             }
             url = baseUrl + "/" + url;
             url = url.Replace(" ", "%20");
-
+            
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
             try
@@ -114,14 +114,14 @@ namespace Microsoft.Azure.Management.Insights
                 httpRequest = new HttpRequestMessage();
                 httpRequest.Method = HttpMethod.Get;
                 httpRequest.RequestUri = new Uri(url);
-
+                
                 // Set Headers
                 httpRequest.Headers.Add("Accept", "application/json");
-
+                
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-
+                
                 // Send Request
                 HttpResponseMessage httpResponse = null;
                 try
@@ -147,7 +147,7 @@ namespace Microsoft.Azure.Management.Insights
                         }
                         throw ex;
                     }
-
+                    
                     // Create Result
                     AntaresSkuGetResponse result = null;
                     // Deserialize Response
@@ -161,7 +161,7 @@ namespace Microsoft.Azure.Management.Insights
                         {
                             responseDoc = JToken.Parse(responseContent);
                         }
-
+                        
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
                             JToken propertiesValue = responseDoc["properties"];
@@ -169,21 +169,21 @@ namespace Microsoft.Azure.Management.Insights
                             {
                                 AntaresSku propertiesInstance = new AntaresSku();
                                 result.Properties = propertiesInstance;
-
+                                
                                 JToken skuValue = propertiesValue["sku"];
                                 if (skuValue != null && skuValue.Type != JTokenType.Null)
                                 {
                                     string skuInstance = ((string)skuValue);
                                     propertiesInstance.Sku = skuInstance;
                                 }
-
+                                
                                 JToken currentNumberOfWorkersValue = propertiesValue["currentNumberOfWorkers"];
                                 if (currentNumberOfWorkersValue != null && currentNumberOfWorkersValue.Type != JTokenType.Null)
                                 {
                                     int currentNumberOfWorkersInstance = ((int)currentNumberOfWorkersValue);
                                     propertiesInstance.CurrentNumberOfWorkers = currentNumberOfWorkersInstance;
                                 }
-
+                                
                                 JToken currentWorkerSizeValue = propertiesValue["currentWorkerSize"];
                                 if (currentWorkerSizeValue != null && currentWorkerSizeValue.Type != JTokenType.Null)
                                 {
@@ -192,14 +192,14 @@ namespace Microsoft.Azure.Management.Insights
                                 }
                             }
                         }
-
+                        
                     }
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-
+                    
                     if (shouldTrace)
                     {
                         TracingAdapter.Exit(invocationId, result);
@@ -222,7 +222,7 @@ namespace Microsoft.Azure.Management.Insights
                 }
             }
         }
-
+        
         /// <param name='resourceId'>
         /// Required.
         /// </param>
@@ -247,7 +247,7 @@ namespace Microsoft.Azure.Management.Insights
             {
                 throw new ArgumentNullException("parameters");
             }
-
+            
             // Tracing
             bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
@@ -259,7 +259,7 @@ namespace Microsoft.Azure.Management.Insights
                 tracingParameters.Add("parameters", parameters);
                 TracingAdapter.Enter(invocationId, this, "UpdateAntaresCurrentSkuInternalAsync", tracingParameters);
             }
-
+            
             // Construct URL
             string url = "/" + Uri.EscapeDataString(resourceId) + "?";
             url = url + "api-version=2014-04-01";
@@ -275,7 +275,7 @@ namespace Microsoft.Azure.Management.Insights
             }
             url = baseUrl + "/" + url;
             url = url.Replace(" ", "%20");
-
+            
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
             try
@@ -283,35 +283,35 @@ namespace Microsoft.Azure.Management.Insights
                 httpRequest = new HttpRequestMessage();
                 httpRequest.Method = new HttpMethod("PATCH");
                 httpRequest.RequestUri = new Uri(url);
-
+                
                 // Set Headers
                 httpRequest.Headers.Add("Accept", "application/json");
-
+                
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-
+                
                 // Serialize Request
                 string requestContent = null;
                 JToken requestDoc = null;
-
+                
                 JObject propertiesValue = new JObject();
                 requestDoc = new JObject();
                 requestDoc["properties"] = propertiesValue;
-
+                
                 if (parameters.Sku != null)
                 {
                     propertiesValue["sku"] = parameters.Sku;
                 }
-
+                
                 propertiesValue["workerSize"] = parameters.WorkerSize;
-
+                
                 propertiesValue["numberOfWorkers"] = parameters.NumberOfWorkers;
-
+                
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
-
+                
                 // Send Request
                 HttpResponseMessage httpResponse = null;
                 try
@@ -337,7 +337,7 @@ namespace Microsoft.Azure.Management.Insights
                         }
                         throw ex;
                     }
-
+                    
                     // Create Result
                     SkuUpdateResponse result = null;
                     // Deserialize Response
@@ -351,18 +351,18 @@ namespace Microsoft.Azure.Management.Insights
                         {
                             responseDoc = JToken.Parse(responseContent);
                         }
-
+                        
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
                         }
-
+                        
                     }
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-
+                    
                     if (shouldTrace)
                     {
                         TracingAdapter.Exit(invocationId, result);

@@ -21,7 +21,7 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.Azure.Management.Insights.Models
 {
@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Insights.Models
     /// A standard service response including an HTTP status code and request
     /// ID.
     /// </summary>
-    public partial class SkuUpdateResponse : OperationResponse
+    public partial class SkuUpdateResponse : AzureOperationResponse
     {
         /// <summary>
         /// Initializes a new instance of the SkuUpdateResponse class.

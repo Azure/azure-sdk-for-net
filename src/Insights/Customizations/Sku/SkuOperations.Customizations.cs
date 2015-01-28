@@ -29,11 +29,10 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Hyak.Common;
 using Microsoft.Azure.Management.Insights;
 using Microsoft.Azure.Management.Insights.Models;
 using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -62,7 +61,7 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public Task<SkuListResponse> ListAvailableSkusAsync(string resourceId, CancellationToken cancellationToken)
+        public async Task<SkuListResponse> ListAvailableSkusAsync(string resourceId, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceId == null)
@@ -178,7 +177,7 @@ namespace Microsoft.Azure.Management.Insights
                 }
             };
 
-            return Task.FromResult(response);
+            return response;
         }
 
         /// <param name='resourceId'>
@@ -197,8 +196,6 @@ namespace Microsoft.Azure.Management.Insights
 
             return new SkuGetResponse
             {
-                RequestId = response.RequestId,
-                StatusCode = response.StatusCode,
                 Name = SkuOperations.GetSkuName(response.Properties.CurrentWorkerSize, response.Properties.Sku),
                 Tier = response.Properties.Sku,
                 Capacity = response.Properties.CurrentNumberOfWorkers
