@@ -20,7 +20,6 @@
   <files>
     <file src="Configuration\**\*.cs" target="src" />
     <file src="Configuration\Properties\*.resx" target="src\Properties" />
-
     <file src="..\binaries\net40\Microsoft.WindowsAzure.Configuration.dll" target="lib\net40" />
     <file src="..\binaries\net40\Microsoft.WindowsAzure.Configuration.pdb" target="lib\net40" />
     <file src="..\binaries\net40\Microsoft.WindowsAzure.Configuration.xml" target="lib\net40" />

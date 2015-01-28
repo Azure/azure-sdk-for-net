@@ -6,10 +6,11 @@
     <LibraryToolsFolder>$(LibraryRoot)\tools</LibraryToolsFolder>
     <LibraryNugetPackageFolder>$(LibraryRoot)\packages</LibraryNugetPackageFolder>
     <AssemblyOriginatorKeyFile Condition=" '$(AssemblyOriginatorKeyFile)' == '' ">$(LibraryRoot)\tools\MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
-    <LibraryFxTarget Condition="'$(LibraryFxTarget)' == ''">net45</LibraryFxTarget>
     <!--'GenerateHydraSpecs' is not a great name, means whether or not to invoke hyak.exe to regenerate the code. -->
-    <GenerateHydraSpecs Condition=" '$(GenerateHydraSpecs)' == '' and '$(PRIVATE_FEED_URL)' == '' and '$(SECONDARY_FEED_URL)' == '' ">false</GenerateHydraSpecs>
-    <GenerateHydraSpecs Condition=" '$(GenerateHydraSpecs)' == '' and ('$(PRIVATE_FEED_URL)' != '' or '$(SECONDARY_FEED_URL)' != '') ">true</GenerateHydraSpecs>
+    <!--If we are inside visual studio, we always invoke code-gen. This is the optimization made for parnter service teams-->
+    <GenerateHydraSpecs Condition=" '$(GenerateHydraSpecs)' == '' and '$(BuildingInsideVisualStudio)' == 'true' " >true</GenerateHydraSpecs>
+    <GenerateHydraSpecs Condition=" '$(GenerateHydraSpecs)' == '' and '$(PRIVATE_FEED_URL)' == '' ">false</GenerateHydraSpecs>
+    <GenerateHydraSpecs Condition=" '$(GenerateHydraSpecs)' == '' and '$(PRIVATE_FEED_URL)' != '' ">true</GenerateHydraSpecs>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Net45-Debug' or '$(Configuration)' == 'Net45-Release'">
@@ -22,6 +23,10 @@
     <LibraryFxTarget>portable</LibraryFxTarget>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <LibraryFxTarget Condition="'$(LibraryFxTarget)' == ''">net45</LibraryFxTarget>
+  </PropertyGroup>
+  
   <Import Project="references.$(LibraryFxTarget).props" />  
   
   <!--
@@ -53,7 +58,11 @@
     <LibraryCustomConstants>$(LibraryCustomConstants);PORTABLE</LibraryCustomConstants>
   </PropertyGroup>
   
-  <PropertyGroup Condition=" '$(Configuration)' == 'Net45-Debug' or '$(Configuration)' == 'Net40-Debug' or '$(Configuration)' == 'Portable-Debug'">
+  <PropertyGroup Condition=" '$(CodeSign)' == 'true' " >
+    <LibraryCustomConstants>$(LibraryCustomConstants);CODESIGN</LibraryCustomConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Net45-Debug' or '$(Configuration)' == 'Net40-Debug' or '$(Configuration)' == 'Portable-Debug' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>

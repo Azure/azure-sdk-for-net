@@ -22,12 +22,21 @@
     publishing key when running. Include: /p:NuGetKey=YOUR_PUBLISHING_KEY
 
   Properties of interest:
+  /p:Scope 
+    'Common' : build Azure Common
+    '<Path to a project file>': build that specific package
+    'Authentication': build the Authentication package
+    By default, it builds all.
+
+  /p:CodeGen
+    True if you want to invoke codegen tool to regenerate libraries. Default is false.  
+    
   /P:CodeSign=True
-    Code sign binaries, mainly for official release 
+    Code sign binaries, mainly for official release. Default is false.
 
   /p:CodeSign=True;DelaySign=True
-    Test the code sign workflow locally
-
+    Test the code sign workflow locally. 
+  
   /p:NuGetKey=NUGET_PUBLISHING_KEY
     Provides the key used to publish to a NuGet or MyGet server.
 
@@ -43,8 +52,6 @@
   /p:NuGetSymbolPublishingSource=Uri
     The NuGet Server to push symbol + source packages to.
 
-  /p:GenerateCodeFromSpecs
-    True if you want to invoke codegen tool to regenerate libraries. 
   -->  
   
   <PropertyGroup>
@@ -53,7 +60,7 @@
     <LibraryToolsFolder>$(LibraryRoot)tools</LibraryToolsFolder>
     <LibraryFriendlyName>Microsoft Azure Management Libraries</LibraryFriendlyName>
     <CommonSolution>AzureCommonLibraries.sln</CommonSolution>
-    <ExtensionsSolution>AzureExtensions.sln</ExtensionsSolution>
+    <AuthenticationSolution>AzureAuthentication.sln</AuthenticationSolution>
     <ManagementLibrariesSolution>AzureManagementLibraries.sln</ManagementLibrariesSolution>
     <BinariesFolder>$(LibraryRoot)binaries</BinariesFolder>
     <PackageOutputDir>$(BinariesFolder)\packages</PackageOutputDir>
@@ -61,19 +68,23 @@
     <CodeSign Condition=" '$(CodeSign)' == '' ">false</CodeSign>
     <!--Set this true only if you want to test the code sign workflow locally-->
     <DelaySign Condition =" '$(DelaySign)' == '' ">false</DelaySign>
-    <!-- 'Common': only build common; 'All': Both common and servies; "Extensions": Azure Extensions; 'full path to a library project': build that project -->
+    <!-- 'Common': only build common; 'All': Both common and servies; "Authentication": Azure Authentication; 'full path to a library project': build that project -->
     <Scope Condition=" '$(Scope)' == '' ">All</Scope>
+    <CodeGen Condition=" '$(CodeGen)' == '' ">false</CodeGen>
+    <FxTargetList Condition=" '$(FxTargetList)' == '' and '$(Scope)' == 'Authentication' " >net45</FxTargetList>
+    <FxTargetList Condition=" '$(FxTargetList)' == '' and ('$(Scope)' == '' or '$(Scope)' == 'all' or '$(Scope)' == 'Common') ">portable;net40;net45</FxTargetList>
+    <!--If FxTargetList still has no value, it must be an individual maml package-->
+    <FxTargetList Condition=" '$(FxTargetList)' == '' ">portable;net40</FxTargetList>
   </PropertyGroup>
 
   <ItemGroup>
     <ManagementLibrariesProjects Include="$(ManagementLibrariesSolution)" Condition="$(MamlProjectName) == ''" />
     <ManagementLibrariesProjects Include="$(LibrarySourceFolder)\$(MamlProjectName)\*.csproj" Condition="$(MamlProjectName) != ''" />
-    <LibraryFxTargetList Condition=" '$(FxTargetList)' == '' " Include="portable;net40;net45" />
-    <LibraryFxTargetList Condition=" '$(FxTargetList)' != '' " Include="$(FxTargetList)" />
+    <LibraryFxTargetList Include="$(FxTargetList)" />
   </ItemGroup>
   
   <PropertyGroup>
-    <NuGetCommand>$(LibraryToolsFolder)\nuget.exe</NuGetCommand>
+    <NuGetCommand>&quot;$(LibraryToolsFolder)\nuget.exe&quot;</NuGetCommand>
   </PropertyGroup>
 
   <Import Project="$(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.msbuild" />
@@ -95,7 +106,7 @@
 
   <Target Name="Build" DependsOnTargets="RestoreNugetPackages">
     <PropertyGroup>
-      <_ExtraPropertyList>CodeSign=$(CodeSign);GenerateHydraSpecs=$(GenerateCodeFromSpecs)</_ExtraPropertyList>
+      <_ExtraPropertyList>CodeSign=$(CodeSign);GenerateHydraSpecs=$(CodeGen)</_ExtraPropertyList>
     </PropertyGroup>
     <CallTarget Targets="BuildMsBuildTask" />
     <CallTarget Targets="BuildServerPreparation" Condition=" '$(CodeSign)' == 'true' " />
@@ -106,10 +117,10 @@
              Targets="Build"
              Condition=" '$(Scope)' == 'Common' or '$(Scope)' == 'All' " />
     
-    <MSBuild Projects="$(ExtensionsSolution)"
+    <MSBuild Projects="$(AuthenticationSolution)"
              Properties="Configuration=Net45-$(Configuration);Platform=Any CPU;$(_ExtraPropertyList)"
              Targets="Build"
-             Condition=" '$(Scope)' == 'Extensions' or '$(Scope)' == 'All' " />
+             Condition=" '$(Scope)' == 'Authentication' or '$(Scope)' == 'All' " />
     
     <MSBuild Projects="$(ManagementLibrariesSolution)"
              Properties="Configuration=%(LibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU;$(_ExtraPropertyList)"
@@ -119,16 +130,18 @@
     <MSBuild Projects="$(Scope)"
              Properties="Configuration=%(LibraryFxTargetList.Identity)-$(Configuration);Platform=AnyCPU;$(_ExtraPropertyList)"
              Targets="Build"
-             Condition=" '$(Scope)' != 'Common' and '$(Scope)' != 'All' and '$(Scope)' != 'Extensions' " />
+             Condition=" '$(Scope)' != 'Common' and '$(Scope)' != 'All' and '$(Scope)' != 'Authentication' " />
 
     <CallTarget Targets="CodeSignBinaries" Condition=" '$(CodeSign)' == 'true' " />
 
   </Target>
 
-  <!-- Projects import BCL target, so make sure the packages get restored first -->
   <Target Name="Clean" DependsOnTargets="RestoreNugetPackages">
     <MSBuild Projects="$(CommonSolution)"
              Properties="Configuration=%(LibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU"
+             Targets="Clean" />
+    <MSBuild Projects="$(AuthenticationSolution)"
+             Properties="Configuration=Net45-$(Configuration);Platform=Any CPU"
              Targets="Clean" />
     <MSBuild Projects="$(ManagementLibrariesSolution)"
              Properties="Configuration=%(LibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU"
@@ -136,14 +149,11 @@
     <RemoveDir Directories="$(BinariesFolder)" />
   </Target>
 
-  <!--
-  Run all tests
-  -->
   <UsingTask TaskName="Xunit.Runner.msbuild.xunit" AssemblyFile="packages\xunit.1.9.2\lib\net20\xunit.runner.msbuild.dll" />
   <Target Name="Test">
     <ItemGroup>
       <!--test projects should always have net45 in its target framework list-->
-      <TestDlls Include=".\src\*.Test\bin\net45*\*Test.dll"/>
+      <TestDlls Include=".\src\*.Test\bin\*\*Test.dll"/>
     </ItemGroup>
     <MakeDir Directories="$(LibraryRoot)TestResults"/>
     <Message Text="%(TestDlls.Filename)" />
@@ -184,8 +194,6 @@
     <!--If we are testing locally then we copy the binaries and do not submit to the code sign server-->
     <Copy SourceFiles="@(DelaySignedAssembliesToValidate)" DestinationFolder="binaries\$(LibraryFxTarget)" Condition="$(DelaySign)" />
     
-    <Error Condition=" !Exists('binaries\$(LibraryFxTarget)\Microsoft.Azure.Common.dll') " Text="The Microsoft.Azure.Common.dll binary is not in the .\binaries\$(LibraryFxTarget) folder. Code signing likely failed." />
-
     <ItemGroup>
       <AfterSignedAssembliesToValidate Include="binaries\$(LibraryFxTarget)\*.dll" />
     </ItemGroup>
@@ -226,8 +234,8 @@
   </Target>
 
   <Target Name="RestoreNugetPackages">
-    <CallTarget Targets="RestoreAllNugetPackages"  Condition=" '$(PRIVATE_FEED_URL)' != '' or '$(SECONDARY_FEED_URL)' != '' " />
-    <CallTarget Targets="RestorePublicNugetPackages"  Condition=" '$(PRIVATE_FEED_URL)' == '' and '$(SECONDARY_FEED_URL)' == '' " />
+    <CallTarget Targets="RestoreAllNugetPackages" Condition=" '$(CodeGen)' ==  'true' " />
+    <CallTarget Targets="RestorePublicNugetPackages" Condition=" '$(CodeGen)' !=  'true' " />
   </Target>
   <!--
   Force nuget package restore so that packages that include .targets files
@@ -258,7 +266,9 @@
     <Exec Command="$(NuGetCommand) sources Update -Name SecondaryFeed -UserName $(SECONDARY_FEED_USER_NAME) -Password &quot;$(SECONDARY_FEED_PASSWORD)&quot; $(NuGetRestoreConfigSwitch)" EchoOff="true" Condition=" '$(SECONDARY_FEED_PASSWORD)'!='' AND '$(SECONDARY_FEED_USER_NAME)'!='' "/>
     <Exec Command="$(NuGetCommand) sources add -Name AzureSdkInternalFeed -Source &quot;https://www.myget.org/F/azure-sdk-internal/&quot; $(NuGetRestoreConfigSwitch)"/>
 
+    <!--TODO: respect the 'scope', and do not always restore all of them-->
     <Exec Command="$(NuGetCommand) restore $(CommonSolution) $(NuGetRestoreConfigSwitch)"/>
+    <Exec Command="$(NuGetCommand) restore $(AuthenticationSolution) $(NuGetRestoreConfigSwitch)"/>
     <Exec Command="$(NuGetCommand) restore $(ManagementLibrariesSolution) $(NuGetRestoreConfigSwitch)" />
 
     <!-- delete config file, don't want to leave passwords hanging around on the build server file system -->
@@ -266,9 +276,21 @@
   </Target>
 
   <Target Name="RestorePublicNugetPackages">
-    <Exec Command="$(NuGetCommand) restore $(LibraryToolsFolder)\Packages.config -PackagesDirectory $(LibraryRoot)\packages -NonInteractive" />
+    <Exec Command="$(NuGetCommand) restore &quot;$(LibraryToolsFolder)\Packages.config&quot; -PackagesDirectory &quot;$(LibraryRoot)\packages&quot; -source &quot;https://www.nuget.org/api/v2/;https://www.myget.org/F/azure-sdk-internal/&quot; -NonInteractive" />
   </Target>
 
+  <!--Smoke test the packages under the output dir-->
+  <Target Name="VerifyPackages">
+    <PropertyGroup>
+      <_TestProject>$(LibraryToolsFolder)\VerifyPackages\VerifyPackages.sln</_TestProject>
+      <_TestExecutable>$(LibraryToolsFolder)\VerifyPackages\bin\debug\VerifyPackages.exe</_TestExecutable>
+    </PropertyGroup>
+    <Error Text="Please provide a publish settings file for the 'Creds' property" Condition=" '$(Creds)' == '' " />
+    <Exec Command="$(NuGetCommand) restore $(_TestProject) -source &quot;$(PackageOutputDir)&quot;"/>
+    <MSBuild Projects="$(_TestProject)" Targets="Build" Properties="Configuration=Debug;Platform=Any CPU" />
+    <Exec Command="$(_TestExecutable) $(Creds)" />
+  </Target>
+  
   <!--
   We have some important work to do when building our official Library bits.
   -->
