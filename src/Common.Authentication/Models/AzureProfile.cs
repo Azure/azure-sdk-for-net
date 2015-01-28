@@ -14,6 +14,7 @@
 
 using Hyak.Common;
 using Microsoft.Azure.Common.Authentication;
+using Microsoft.Azure.Common.Authentication.Properties;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,19 +27,77 @@ namespace Microsoft.Azure.Common.Authentication.Models
     public sealed class AzureProfile
     {
         /// <summary>
+        /// Gets Azure Accounts
+        /// </summary>
+        public Dictionary<string, AzureAccount> Accounts { get; set; }
+
+        /// <summary>
+        /// Gets current Azure context 
+        /// </summary>
+        public AzureContext CurrentContext { get; private set; }
+
+        /// <summary>
+        /// Gets or sets default Azure Subscription
+        /// </summary>
+        public AzureSubscription DefaultSubscription
+        {
+            get
+            {
+                return Subscriptions.Values.FirstOrDefault(
+                    s => s.Properties.ContainsKey(AzureSubscription.Property.Default));
+            }
+
+            set
+            {
+                if (value == null)
+                {
+                    foreach (var subscription in Subscriptions.Values)
+                    {
+                        subscription.SetProperty(AzureSubscription.Property.Default, null);
+                    }
+                }
+                else if (Subscriptions.ContainsKey(value.Id))
+                {
+                    foreach (var subscription in Subscriptions.Values)
+                    {
+                        subscription.SetProperty(AzureSubscription.Property.Default, null);
+                    }
+
+                    Subscriptions[value.Id].Properties[AzureSubscription.Property.Default] = "True";
+                    value.Properties[AzureSubscription.Property.Default] = "True";
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets Azure Environments
+        /// </summary>
+        public Dictionary<string, AzureEnvironment> Environments { get; set; }
+        /// <summary>
+        /// Gets errors from loading the profile.
+        /// </summary>
+        public List<string> ProfileLoadErrors { get; private set; }
+
+        /// <summary>
         /// Location of the profile file. 
         /// </summary>
         public string ProfilePath { get; private set; }
+
+        /// <summary>
+        /// Gets Azure Subscriptions
+        /// </summary>
+        public Dictionary<Guid, AzureSubscription> Subscriptions { get; set; }
 
         /// <summary>
         /// Initializes a new instance of AzureProfile
         /// </summary>
         public AzureProfile()
         {
+
             Environments = new Dictionary<string, AzureEnvironment>(StringComparer.InvariantCultureIgnoreCase);
             Subscriptions = new Dictionary<Guid, AzureSubscription>();
             Accounts = new Dictionary<string, AzureAccount>(StringComparer.InvariantCultureIgnoreCase);
-
+            CurrentContext = new AzureContext();
             LoadDefaultEnvironments();
         }
 
@@ -94,6 +153,8 @@ namespace Microsoft.Azure.Common.Authentication.Models
             {
                 Environments[env.Name] = env;
             }
+
+            CurrentContext.Environment = AzureEnvironment.PublicEnvironments[EnvironmentName.AzureCloud];
         }
 
         /// <summary>
@@ -135,58 +196,62 @@ namespace Microsoft.Azure.Common.Authentication.Models
                 AzureSession.DataStore.WriteFile(path, contents);
             }
         }
-
+        
         /// <summary>
-        /// Gets errors from loading the profile.
+        /// Sets current session context.
         /// </summary>
-        public List<string> ProfileLoadErrors { get; private set; }
-
-        /// <summary>
-        /// Gets Azure Environments
-        /// </summary>
-        public Dictionary<string, AzureEnvironment> Environments { get; set; }
-
-        /// <summary>
-        /// Gets Azure Subscriptions
-        /// </summary>
-        public Dictionary<Guid, AzureSubscription> Subscriptions { get; set; }
-
-        /// <summary>
-        /// Gets Azure Accounts
-        /// </summary>
-        public Dictionary<string, AzureAccount> Accounts { get; set; }
-
-        /// <summary>
-        /// Gets or sets default Azure Subscription
-        /// </summary>
-        public AzureSubscription DefaultSubscription
+        /// <param name="subscription"></param>
+        /// <param name="environment"></param>
+        /// <param name="account"></param>
+        public void SetCurrentContext(AzureSubscription subscription, AzureEnvironment environment, AzureAccount account)
         {
-            get
+            if (environment == null)
             {
-                return Subscriptions.Values.FirstOrDefault(
-                    s => s.Properties.ContainsKey(AzureSubscription.Property.Default));
-            }
-
-            set
-            {
-                if (value == null)
+                if (subscription != null && CurrentContext != null &&
+                    subscription.Environment == CurrentContext.Environment.Name)
                 {
-                    foreach (var subscription in Subscriptions.Values)
-                    {
-                        subscription.SetProperty(AzureSubscription.Property.Default, null);
-                    }
+                    environment = CurrentContext.Environment;
                 }
-                else if (Subscriptions.ContainsKey(value.Id))
+                else
                 {
-                    foreach (var subscription in Subscriptions.Values)
-                    {
-                        subscription.SetProperty(AzureSubscription.Property.Default, null);
-                    }
+                    environment = AzureEnvironment.PublicEnvironments[EnvironmentName.AzureCloud];
+                }
 
-                    Subscriptions[value.Id].Properties[AzureSubscription.Property.Default] = "True";
-                    value.Properties[AzureSubscription.Property.Default] = "True";
+                if (subscription != null)
+                {
+                    subscription.Environment = environment.Name;
                 }
             }
+
+            if (account == null)
+            {
+                if (subscription != null && CurrentContext != null && subscription.Account != null)
+                {
+                    if (CurrentContext.Account != null && subscription.Account == CurrentContext.Account.Id)
+                    {
+                        account = CurrentContext.Account;
+                    }
+                    else
+                    {
+                        throw new ArgumentException(Resources.AccountIdDoesntMatchSubscription, "account");
+                    }
+
+                    subscription.Account = account.Id;
+
+                }
+            }
+
+            if (subscription != null && subscription.Environment != environment.Name)
+            {
+                throw new ArgumentException(Resources.EnvironmentNameDoesntMatchSubscription, "environment");
+            }
+
+            CurrentContext = new AzureContext
+            {
+                Subscription = subscription,
+                Account = account,
+                Environment = environment
+            };
         }
     }
 }
