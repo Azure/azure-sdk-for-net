@@ -185,7 +185,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 throw new ArgumentNullException("credentials");
             }
             this._credentials = credentials;
-            this._baseUri = new Uri("https://management.core.windows.net");
+            this._baseUri = new Uri("https://management.azure.com");
             
             this.Credentials.InitializeServiceClient(this);
         }
@@ -269,7 +269,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 throw new ArgumentNullException("credentials");
             }
             this._credentials = credentials;
-            this._baseUri = new Uri("https://management.core.windows.net");
+            this._baseUri = new Uri("https://management.azure.com");
             
             this.Credentials.InitializeServiceClient(this);
         }
