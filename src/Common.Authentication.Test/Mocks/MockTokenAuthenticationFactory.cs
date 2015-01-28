@@ -14,7 +14,6 @@
 
 using Microsoft.Azure;
 using Microsoft.Azure.Common.Authentication;
-using Microsoft.Azure.Common.Authentication;
 using Microsoft.Azure.Common.Authentication.Models;
 using System;
 using System.Security;

@@ -25,7 +25,7 @@
   /p:Scope 
     'Common' : build Azure Common
     '<Path to a project file>': build that specific package
-    'Authorization': build the Authorization package
+    'Authentication': build the Authorization package
     By default, it builds all.
 
   /p:CodeGen
@@ -70,15 +70,17 @@
     <DelaySign Condition =" '$(DelaySign)' == '' ">false</DelaySign>
     <!-- 'Common': only build common; 'All': Both common and servies; "Authentication": Azure Authentication; 'full path to a library project': build that project -->
     <Scope Condition=" '$(Scope)' == '' ">All</Scope>
-    <CodeGen Condition=" '$(GenerateCodeFromSpecs)' == '' and '$(PRIVATE_FEED_URL)' == '' ">false</CodeGen>
-    <CodeGen Condition=" '$(GenerateCodeFromSpecs)' == '' and '$(PRIVATE_FEED_URL)' != '' ">true</CodeGen>
+    <CodeGen Condition=" '$(CodeGen)' == '' ">false</CodeGen>
+    <FxTargetList Condition=" '$(FxTargetList)' == '' and '$(Scope)' == 'Authentication' " >net45</FxTargetList>
+    <FxTargetList Condition=" '$(FxTargetList)' == '' and ('$(Scope)' == '' or '$(Scope)' == 'all' or '$(Scope)' == 'Common') ">portable;net40;net45</FxTargetList>
+    <!--If FxTargetList still has no value, it must be an individual maml package-->
+    <FxTargetList Condition=" '$(FxTargetList)' == '' " >portable;net40</FxTargetList>
   </PropertyGroup>
 
   <ItemGroup>
     <ManagementLibrariesProjects Include="$(ManagementLibrariesSolution)" Condition="$(MamlProjectName) == ''" />
     <ManagementLibrariesProjects Include="$(LibrarySourceFolder)\$(MamlProjectName)\*.csproj" Condition="$(MamlProjectName) != ''" />
-    <LibraryFxTargetList Condition=" '$(FxTargetList)' == '' " Include="portable;net40;net45" />
-    <LibraryFxTargetList Condition=" '$(FxTargetList)' != '' " Include="$(FxTargetList)" />
+    <LibraryFxTargetList Include="$(FxTargetList)" />
   </ItemGroup>
   
   <PropertyGroup>
@@ -192,8 +194,6 @@
     <!--If we are testing locally then we copy the binaries and do not submit to the code sign server-->
     <Copy SourceFiles="@(DelaySignedAssembliesToValidate)" DestinationFolder="binaries\$(LibraryFxTarget)" Condition="$(DelaySign)" />
     
-    <Error Condition=" !Exists('binaries\$(LibraryFxTarget)\Microsoft.Azure.Common.dll') " Text="The Microsoft.Azure.Common.dll binary is not in the .\binaries\$(LibraryFxTarget) folder. Code signing likely failed." />
-
     <ItemGroup>
       <AfterSignedAssembliesToValidate Include="binaries\$(LibraryFxTarget)\*.dll" />
     </ItemGroup>

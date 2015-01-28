@@ -14,7 +14,6 @@
 
 using System.Security.Cryptography.X509Certificates;
 using Microsoft.Azure.Common.Authentication;
-using Microsoft.Azure.Common.Authentication;
 using Microsoft.Azure.Common.Authentication.Models;
 using Microsoft.Azure.Internal.Subscriptions.Csm.Models;
 using Microsoft.WindowsAzure.Commands.Common.Test.Mocks;
