@@ -28,7 +28,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Microsoft.Hadoop.WebClient")]
 [assembly: AssemblyCopyright("Copyright (c) Microsoft 2012")]
-[assembly: AssemblyVersion("1.4.3.0")]
+[assembly: AssemblyVersion("1.4.4.0")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: Guid("018f9996-42cc-4b94-8206-3353f1689318")]
