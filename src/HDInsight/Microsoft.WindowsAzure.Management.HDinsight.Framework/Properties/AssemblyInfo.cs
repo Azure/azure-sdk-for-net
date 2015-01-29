@@ -24,6 +24,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Microsoft.WindowsAzure.Management.Framework")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
+[assembly: AssemblyVersion("1.4.2.0")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Microsoft.WindowsAzure.Management.Framework")]
 [assembly: AssemblyCopyright("Copyright (c) Microsoft Corporation")]

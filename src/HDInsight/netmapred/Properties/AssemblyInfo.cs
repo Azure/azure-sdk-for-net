@@ -10,6 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("netmapred")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
+[assembly: AssemblyVersion("1.4.2.0")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("netmapred")]
 [assembly: AssemblyCopyright("Copyright (c) Microsoft Corporation")]
