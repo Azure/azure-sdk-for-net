@@ -32,14 +32,14 @@ namespace Microsoft.Azure.Common.Authentication.Models
         public Dictionary<string, AzureAccount> Accounts { get; set; }
 
         /// <summary>
-        /// Gets current Azure context 
+        /// Gets Azure Subscriptions
         /// </summary>
-        public AzureContext CurrentContext { get; private set; }
+        public Dictionary<Guid, AzureSubscription> Subscriptions { get; set; }
 
         /// <summary>
-        /// Gets or sets default Azure Subscription
+        /// Gets or sets current Azure Subscription
         /// </summary>
-        public AzureSubscription DefaultSubscription
+        public AzureSubscription CurrentSubscription
         {
             get
             {
@@ -73,6 +73,27 @@ namespace Microsoft.Azure.Common.Authentication.Models
         /// Gets Azure Environments
         /// </summary>
         public Dictionary<string, AzureEnvironment> Environments { get; set; }
+
+        /// <summary>
+        /// Gets current Azure context 
+        /// </summary>
+        public AzureContext CurrentContext 
+        { 
+            get
+            {
+                var context = new AzureContext();
+
+                if (CurrentSubscription != null)
+                {
+                    context = new AzureContext(CurrentSubscription,
+                        Accounts[CurrentSubscription.Account],
+                        Environments[CurrentSubscription.Environment]);
+                }
+
+                return context;
+            } 
+        }
+
         /// <summary>
         /// Gets errors from loading the profile.
         /// </summary>
@@ -82,11 +103,6 @@ namespace Microsoft.Azure.Common.Authentication.Models
         /// Location of the profile file. 
         /// </summary>
         public string ProfilePath { get; private set; }
-
-        /// <summary>
-        /// Gets Azure Subscriptions
-        /// </summary>
-        public Dictionary<Guid, AzureSubscription> Subscriptions { get; set; }
 
         /// <summary>
         /// Initializes a new instance of AzureProfile
@@ -145,7 +161,6 @@ namespace Microsoft.Azure.Common.Authentication.Models
             Environments = new Dictionary<string, AzureEnvironment>(StringComparer.InvariantCultureIgnoreCase);
             Subscriptions = new Dictionary<Guid, AzureSubscription>();
             Accounts = new Dictionary<string, AzureAccount>(StringComparer.InvariantCultureIgnoreCase);
-            CurrentContext = new AzureContext();
         }
 
         private void LoadDefaultEnvironments()
@@ -197,63 +212,6 @@ namespace Microsoft.Azure.Common.Authentication.Models
             {
                 AzureSession.DataStore.WriteFile(path, contents);
             }
-        }
-        
-        /// <summary>
-        /// Sets current session context.
-        /// </summary>
-        /// <param name="subscription"></param>
-        /// <param name="environment"></param>
-        /// <param name="account"></param>
-        public void SetCurrentContext(AzureSubscription subscription, AzureEnvironment environment, AzureAccount account)
-        {
-            if (environment == null)
-            {
-                if (subscription != null && CurrentContext != null &&
-                    subscription.Environment == CurrentContext.Environment.Name)
-                {
-                    environment = CurrentContext.Environment;
-                }
-                else
-                {
-                    environment = AzureEnvironment.PublicEnvironments[EnvironmentName.AzureCloud];
-                }
-
-                if (subscription != null)
-                {
-                    subscription.Environment = environment.Name;
-                }
-            }
-
-            if (account == null)
-            {
-                if (subscription != null && CurrentContext != null && subscription.Account != null)
-                {
-                    if (CurrentContext.Account != null && subscription.Account == CurrentContext.Account.Id)
-                    {
-                        account = CurrentContext.Account;
-                    }
-                    else
-                    {
-                        throw new ArgumentException(Resources.AccountIdDoesntMatchSubscription, "account");
-                    }
-
-                    subscription.Account = account.Id;
-
-                }
-            }
-
-            if (subscription != null && subscription.Environment != environment.Name)
-            {
-                throw new ArgumentException(Resources.EnvironmentNameDoesntMatchSubscription, "environment");
-            }
-
-            CurrentContext = new AzureContext
-            {
-                Subscription = subscription,
-                Account = account,
-                Environment = environment
-            };
         }
     }
 }

@@ -19,10 +19,22 @@ namespace Microsoft.Azure.Common.Authentication.Models
     /// </summary>
     public class AzureContext
     {
-        public AzureAccount Account { get; set; }
+        public AzureContext()
+        {
 
-        public AzureSubscription Subscription { get; set; }
+        }
 
-        public AzureEnvironment Environment { get; set; }
+        public AzureContext(AzureSubscription subscription, AzureAccount account, AzureEnvironment environment)
+        {
+            Subscription = subscription;
+            Account = account;
+            Environment = environment;
+        }
+
+        public AzureAccount Account { get; private set; }
+
+        public AzureSubscription Subscription { get; private set; }
+
+        public AzureEnvironment Environment { get; private set; }
     }
 }

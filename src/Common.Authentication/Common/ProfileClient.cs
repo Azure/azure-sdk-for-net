@@ -289,7 +289,7 @@ namespace Microsoft.Azure.Common.Authentication
                     AddOrSetSubscription(subscription);
                 }
 
-                if (Profile.DefaultSubscription == null)
+                if (Profile.CurrentSubscription == null)
                 {
                     var firstSubscription = Profile.Subscriptions.Values.FirstOrDefault();
                     if (firstSubscription != null)
@@ -323,15 +323,6 @@ namespace Microsoft.Azure.Common.Authentication
                 Profile.Accounts[account.Id] = account;
             }
 
-            // Update in-memory environment
-            if (AzureSession.Profile.CurrentContext != null && AzureSession.Profile.CurrentContext.Account != null &&
-                AzureSession.Profile.CurrentContext.Account.Id == account.Id)
-            {
-                AzureSession.Profile.SetCurrentContext(AzureSession.Profile.CurrentContext.Subscription,
-                    AzureSession.Profile.CurrentContext.Environment,
-                    Profile.Accounts[account.Id]);
-            }
-
             return Profile.Accounts[account.Id];
         }
 
@@ -339,11 +330,7 @@ namespace Microsoft.Azure.Common.Authentication
         {
             if (string.IsNullOrEmpty(accountName))
             {
-                return AzureSession.Profile.CurrentContext.Account;
-            }
-            else if (AzureSession.Profile.CurrentContext.Account != null && AzureSession.Profile.CurrentContext.Account.Id == accountName)
-            {
-                return AzureSession.Profile.CurrentContext.Account;
+                return Profile.CurrentContext.Account;
             }
             else if (Profile.Accounts.ContainsKey(accountName))
             {
@@ -433,10 +420,9 @@ namespace Microsoft.Azure.Common.Authentication
                         }
 
                         // Warn the user if the removed subscription is the current one.
-                        if (subscription.Equals(AzureSession.Profile.CurrentContext.Subscription))
+                        if (subscription.Equals(Profile.CurrentSubscription))
                         {
                             WriteWarningMessage(Resources.RemoveCurrentSubscription);
-                            AzureSession.Profile.SetCurrentContext(null, null, null);
                         }
 
                         Profile.Subscriptions.Remove(subscription.Id);
@@ -501,15 +487,6 @@ namespace Microsoft.Azure.Common.Authentication
                 Profile.Subscriptions[subscription.Id] = subscription;
             }
 
-            // Update in-memory subscription
-            if (AzureSession.Profile.CurrentContext != null && AzureSession.Profile.CurrentContext.Subscription != null &&
-                AzureSession.Profile.CurrentContext.Subscription.Id == subscription.Id)
-            {
-                var account = GetAccountOrDefault(subscription.Account);
-                var environment = GetEnvironmentOrDefault(subscription.Environment);
-                AzureSession.Profile.SetCurrentContext(Profile.Subscriptions[subscription.Id], environment, account);
-            }
-
             return Profile.Subscriptions[subscription.Id];
         }
 
@@ -547,10 +524,9 @@ namespace Microsoft.Azure.Common.Authentication
             }
 
             // Warn the user if the removed subscription is the current one.
-            if (AzureSession.Profile.CurrentContext.Subscription != null && subscription.Id == AzureSession.Profile.CurrentContext.Subscription.Id)
+            if (Profile.CurrentSubscription == subscription)
             {
                 WriteWarningMessage(Resources.RemoveCurrentSubscription);
-                AzureSession.Profile.SetCurrentContext(null, null, null);
             }
 
             Profile.Subscriptions.Remove(id);
@@ -619,47 +595,7 @@ namespace Microsoft.Azure.Common.Authentication
                 throw new ArgumentException(string.Format(Resources.SubscriptionNameNotFoundMessage, name), "name");
             }
         }
-
-        public AzureSubscription SetSubscriptionAsCurrent(string name, string accountName)
-        {
-            var subscription = Profile.Subscriptions.Values.FirstOrDefault(s => s.Name == name);
-
-            if (subscription == null)
-            {
-                throw new ArgumentException(string.Format(Resources.InvalidSubscriptionName, name), "name");
-            }
-
-            return SetSubscriptionAsCurrent(subscription.Id, accountName);
-        }
-
-        public AzureSubscription SetSubscriptionAsCurrent(Guid id, string accountName)
-        {
-            if (Guid.Empty == id)
-            {
-                throw new ArgumentNullException("id", string.Format(Resources.InvalidSubscriptionId, id));
-            }
-
-            AzureSubscription currentSubscription;
-            var subscription = Profile.Subscriptions.Values.FirstOrDefault(s => s.Id == id);
-
-            if (subscription == null)
-            {
-                throw new ArgumentException(string.Format(Resources.InvalidSubscriptionId, id), "id");
-            }
-            else
-            {
-                currentSubscription = new AzureSubscription { Id = subscription.Id };
-                currentSubscription = MergeSubscriptionProperties(subscription, currentSubscription);
-                var environment = GetEnvironmentOrDefault(subscription.Environment);
-                accountName = string.IsNullOrEmpty(accountName) ? subscription.Account : accountName;
-                var account = GetAccount(accountName);
-                currentSubscription.Account = account.Id;
-                AzureSession.Profile.SetCurrentContext(currentSubscription, environment, account);
-            }
-
-            return currentSubscription;
-        }
-
+        
         public AzureSubscription SetSubscriptionAsDefault(string name, string accountName)
         {
             var subscription = Profile.Subscriptions.Values.FirstOrDefault(s => s.Name == name);
@@ -674,11 +610,12 @@ namespace Microsoft.Azure.Common.Authentication
 
         public AzureSubscription SetSubscriptionAsDefault(Guid id, string accountName)
         {
-            AzureSubscription subscription = SetSubscriptionAsCurrent(id, accountName);
+            AzureSubscription subscription = GetSubscription(id);
 
             if (subscription != null)
             {
-                Profile.DefaultSubscription = subscription;
+                Profile.CurrentSubscription = subscription;
+                Profile.CurrentSubscription.Account = accountName;
             }
 
             return subscription;
@@ -687,10 +624,9 @@ namespace Microsoft.Azure.Common.Authentication
         public void ClearAll()
         {
             Profile.Accounts.Clear();
-            Profile.DefaultSubscription = null;
+            Profile.CurrentSubscription = null;
             Profile.Environments.Clear();
             Profile.Subscriptions.Clear();
-            AzureSession.Profile.SetCurrentContext(null, null, null);
             Profile.Save();
 
             ProtectedFileTokenCache.Instance.Clear();
@@ -698,7 +634,7 @@ namespace Microsoft.Azure.Common.Authentication
 
         public void ClearDefaultSubscription()
         {
-            Profile.DefaultSubscription = null;
+            Profile.CurrentSubscription = null;
         }
 
         public void ImportCertificate(X509Certificate2 certificate)
@@ -734,9 +670,9 @@ namespace Microsoft.Azure.Common.Authentication
                         AddOrSetSubscription(subscription);
                     }
 
-                    if (Profile.DefaultSubscription == null)
+                    if (Profile.CurrentSubscription == null)
                     {
-                        Profile.DefaultSubscription = subscription;
+                        Profile.CurrentSubscription = subscription;
                     }
                 }
             }
@@ -1164,11 +1100,7 @@ namespace Microsoft.Azure.Common.Authentication
         {
             if (string.IsNullOrEmpty(name))
             {
-                return AzureSession.Profile.CurrentContext.Environment;
-            }
-            else if (AzureSession.Profile.CurrentContext.Environment != null && AzureSession.Profile.CurrentContext.Environment.Name == name)
-            {
-                return AzureSession.Profile.CurrentContext.Environment;
+                return Profile.CurrentContext.Environment;
             }
             else if (Profile.Environments.ContainsKey(name))
             {
@@ -1187,37 +1119,30 @@ namespace Microsoft.Azure.Common.Authentication
                 // Set to invalid value
                 serviceEndpoint = Guid.NewGuid().ToString();
             }
+
             if (resourceEndpoint == null)
             {
                 // Set to invalid value
                 resourceEndpoint = Guid.NewGuid().ToString();
             }
+            
             if (name != null)
             {
                 if (Profile.Environments.ContainsKey(name))
                 {
                     return Profile.Environments[name];
                 }
-                else if (AzureSession.Profile.CurrentContext.Environment != null &&
-                         AzureSession.Profile.CurrentContext.Environment.Name == name)
+                else
                 {
-                    return AzureSession.Profile.CurrentContext.Environment;
+                    return null;
                 }
             }
             else
             {
-                if (AzureSession.Profile.CurrentContext.Environment != null &&
-                    (AzureSession.Profile.CurrentContext.Environment.IsEndpointSetToValue(AzureEnvironment.Endpoint.ServiceManagement, serviceEndpoint) ||
-                    AzureSession.Profile.CurrentContext.Environment.IsEndpointSetToValue(AzureEnvironment.Endpoint.ResourceManager, resourceEndpoint)))
-                {
-                    return AzureSession.Profile.CurrentContext.Environment;
-                }
-
                 return Profile.Environments.Values.FirstOrDefault(e =>
                     e.IsEndpointSetToValue(AzureEnvironment.Endpoint.ServiceManagement, serviceEndpoint) ||
                     e.IsEndpointSetToValue(AzureEnvironment.Endpoint.ResourceManager, resourceEndpoint));
             }
-            return null;
         }
 
         public List<AzureEnvironment> ListEnvironments(string name)
@@ -1284,15 +1209,6 @@ namespace Microsoft.Azure.Common.Authentication
             else
             {
                 Profile.Environments[environment.Name] = environment;
-            }
-
-            // Update in-memory environment
-            if (AzureSession.Profile.CurrentContext != null && AzureSession.Profile.CurrentContext.Environment != null &&
-                AzureSession.Profile.CurrentContext.Environment.Name == environment.Name)
-            {
-                AzureSession.Profile.SetCurrentContext(AzureSession.Profile.CurrentContext.Subscription,
-                    Profile.Environments[environment.Name],
-                    AzureSession.Profile.CurrentContext.Account);
             }
 
             return Profile.Environments[environment.Name];
