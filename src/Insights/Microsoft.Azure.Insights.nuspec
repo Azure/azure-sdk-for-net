@@ -29,8 +29,8 @@
     <file src="..\binaries\net40\Microsoft.Azure.Insights.dll" target="lib\net40" />
     <file src="..\binaries\net40\Microsoft.Azure.Insights.pdb" target="lib\net40" />
     <file src="..\binaries\net40\Microsoft.Azure.Insights.xml" target="lib\net40" />
-    <file src="..\binaries\Microsoft.Azure.Insights.dll" target="lib\net45" />
-    <file src="..\binaries\Microsoft.Azure.Insights.pdb" target="lib\net45" />
-    <file src="..\binaries\Microsoft.Azure.Insights.xml" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.Azure.Insights.dll" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.Azure.Insights.pdb" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.Azure.Insights.xml" target="lib\net45" />
   </files>
 </package>

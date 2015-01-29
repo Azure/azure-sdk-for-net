@@ -314,5 +314,53 @@ namespace Microsoft.Azure.Management.Resources
         {
             return operations.ListNextAsync(nextLink, CancellationToken.None);
         }
+        
+        /// <summary>
+        /// Move resources within or across subscriptions.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Resources.IResourceOperations.
+        /// </param>
+        /// <param name='sourceResourceGroupName'>
+        /// Required. Source resource group name.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. move resources' parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static AzureOperationResponse MoveResources(this IResourceOperations operations, string sourceResourceGroupName, ResourcesMoveInfo parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IResourceOperations)s).MoveResourcesAsync(sourceResourceGroupName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Move resources within or across subscriptions.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Resources.IResourceOperations.
+        /// </param>
+        /// <param name='sourceResourceGroupName'>
+        /// Required. Source resource group name.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. move resources' parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<AzureOperationResponse> MoveResourcesAsync(this IResourceOperations operations, string sourceResourceGroupName, ResourcesMoveInfo parameters)
+        {
+            return operations.MoveResourcesAsync(sourceResourceGroupName, parameters, CancellationToken.None);
+        }
     }
 }

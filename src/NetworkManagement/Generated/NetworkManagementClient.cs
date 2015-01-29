@@ -95,6 +95,19 @@ namespace Microsoft.WindowsAzure.Management.Network
             set { this._longRunningOperationRetryTimeout = value; }
         }
         
+        private IApplicationGatewayOperations _applicationGateways;
+        
+        /// <summary>
+        /// The Application Gateway Management API includes operations for
+        /// managing application gateways in your subscription.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154113.aspx
+        /// for more information)
+        /// </summary>
+        public virtual IApplicationGatewayOperations ApplicationGateways
+        {
+            get { return this._applicationGateways; }
+        }
+        
         private IClientRootCertificateOperations _clientRootCertificates;
         
         /// <summary>
@@ -184,6 +197,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         public NetworkManagementClient()
             : base()
         {
+            this._applicationGateways = new ApplicationGatewayOperations(this);
             this._clientRootCertificates = new ClientRootCertificateOperations(this);
             this._gateways = new GatewayOperations(this);
             this._networks = new NetworkOperations(this);
@@ -256,6 +270,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         public NetworkManagementClient(HttpClient httpClient)
             : base(httpClient)
         {
+            this._applicationGateways = new ApplicationGatewayOperations(this);
             this._clientRootCertificates = new ClientRootCertificateOperations(this);
             this._gateways = new GatewayOperations(this);
             this._networks = new NetworkOperations(this);
