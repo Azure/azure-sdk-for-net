@@ -30,6 +30,17 @@ namespace Microsoft.Azure
         }
 
         /// <summary>
+        /// Create a Cloud Exception with a given exception message and existing error model.
+        /// </summary>
+        /// <param name="message">A description of the error.</param>
+        /// <param name="errorModel">The model for the error response body.</param>
+        /// <param name="innerException">The exception which caused the current exception.</param>
+        public CloudException(string message, CloudError errorModel, params Exception innerException) : this(message, innerException)
+        {
+            Model = errorModel;
+        }
+
+        /// <summary>
         /// Create a new CloudException using the given exception details
         /// </summary>
         /// <param name="request">The request message that generated the http error response</param>
