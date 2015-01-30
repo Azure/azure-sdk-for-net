@@ -74,13 +74,6 @@
     </PreBuildEvent>
   </PropertyGroup>
   <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="'$(GenerateHydraSpecs)' == 'true' and !Exists('..\..\packages\Hyak.Generator.1.0.5478.27459-prerelease\build\Hyak.Generator.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Hyak.Generator.1.0.5478.27459-prerelease\build\Hyak.Generator.targets'))" />
-    <Error Condition="!Exists('..\..\packages\Hyak.Generator.1.0.5500.29444-prerelease\build\Hyak.Generator.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Hyak.Generator.1.0.5500.29444-prerelease\build\Hyak.Generator.targets'))" />
-  </Target>
   <Import Project="GenerateCode.props" />
   <Import Project="..\..\packages\Hyak.Generator.1.0.5500.29444-prerelease\build\Hyak.Generator.targets" Condition="Exists('..\..\packages\Hyak.Generator.1.0.5500.29444-prerelease\build\Hyak.Generator.targets')" />
   <Target Name="DoSpecGeneration"  BeforeTargets="BeforeBuild" Condition="'$(GenerateHydraSpecs)' == 'true'">
