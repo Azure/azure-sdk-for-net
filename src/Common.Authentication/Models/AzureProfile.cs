@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Common.Authentication.Models
         /// <summary>
         /// Gets or sets current Azure Subscription
         /// </summary>
-        public AzureSubscription CurrentSubscription
+        public AzureSubscription DefaultSubscription
         {
             get
             {
@@ -81,13 +81,13 @@ namespace Microsoft.Azure.Common.Authentication.Models
         { 
             get
             {
-                var context = new AzureContext();
+                var context = new AzureContext(null, null, null);
 
-                if (CurrentSubscription != null)
+                if (DefaultSubscription != null)
                 {
-                    context = new AzureContext(CurrentSubscription,
-                        Accounts[CurrentSubscription.Account],
-                        Environments[CurrentSubscription.Environment]);
+                    context = new AzureContext(DefaultSubscription,
+                        Accounts.Values.FirstOrDefault(a => a.Id == DefaultSubscription.Account),
+                        Environments.Values.FirstOrDefault(e => e.Name == DefaultSubscription.Environment)); ;
                 }
 
                 return context;
@@ -109,8 +109,15 @@ namespace Microsoft.Azure.Common.Authentication.Models
         /// </summary>
         public AzureProfile()
         {
-            Initialize();
-            LoadDefaultEnvironments();
+            Environments = new Dictionary<string, AzureEnvironment>(StringComparer.InvariantCultureIgnoreCase);
+            Subscriptions = new Dictionary<Guid, AzureSubscription>();
+            Accounts = new Dictionary<string, AzureAccount>(StringComparer.InvariantCultureIgnoreCase);
+
+            // Adding predefined environments
+            foreach (AzureEnvironment env in AzureEnvironment.PublicEnvironments.Values)
+            {
+                Environments[env.Name] = env;
+            }
         }
 
         /// <summary>
@@ -118,9 +125,8 @@ namespace Microsoft.Azure.Common.Authentication.Models
         /// Any errors generated in the process are stored in ProfileLoadErrors collection.
         /// </summary>
         /// <param name="path">Location of profile file on disk.</param>
-        public AzureProfile(string path)
+        public AzureProfile(string path) : this()
         {
-            Initialize();
             ProfilePath = path;
             ProfileLoadErrors = new List<string>();
 
@@ -152,26 +158,6 @@ namespace Microsoft.Azure.Common.Authentication.Models
                     }
                 }
             }
-
-            LoadDefaultEnvironments();
-        }
-
-        private void Initialize()
-        {
-            Environments = new Dictionary<string, AzureEnvironment>(StringComparer.InvariantCultureIgnoreCase);
-            Subscriptions = new Dictionary<Guid, AzureSubscription>();
-            Accounts = new Dictionary<string, AzureAccount>(StringComparer.InvariantCultureIgnoreCase);
-        }
-
-        private void LoadDefaultEnvironments()
-        {
-            // Adding predefined environments
-            foreach (AzureEnvironment env in AzureEnvironment.PublicEnvironments.Values)
-            {
-                Environments[env.Name] = env;
-            }
-
-            CurrentContext.Environment = AzureEnvironment.PublicEnvironments[EnvironmentName.AzureCloud];
         }
 
         /// <summary>

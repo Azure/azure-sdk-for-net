@@ -19,11 +19,6 @@ namespace Microsoft.Azure.Common.Authentication.Models
     /// </summary>
     public class AzureContext
     {
-        public AzureContext()
-        {
-
-        }
-
         public AzureContext(AzureSubscription subscription, AzureAccount account, AzureEnvironment environment)
         {
             Subscription = subscription;

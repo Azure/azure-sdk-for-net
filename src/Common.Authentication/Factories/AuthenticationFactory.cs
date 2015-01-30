@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Common.Authentication.Factories
         {
             if (context.Subscription == null)
             {
-                throw new ApplicationException(Resources.InvalidCurrentSubscription);
+                throw new ApplicationException(Resources.InvalidDefaultSubscription);
             }
             
             if (context.Account == null)

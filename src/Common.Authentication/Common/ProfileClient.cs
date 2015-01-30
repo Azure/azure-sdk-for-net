@@ -289,7 +289,7 @@ namespace Microsoft.Azure.Common.Authentication
                     AddOrSetSubscription(subscription);
                 }
 
-                if (Profile.CurrentSubscription == null)
+                if (Profile.DefaultSubscription == null)
                 {
                     var firstSubscription = Profile.Subscriptions.Values.FirstOrDefault();
                     if (firstSubscription != null)
@@ -416,13 +416,8 @@ namespace Microsoft.Azure.Common.Authentication
                         // Warn the user if the removed subscription is the default one.
                         if (subscription.IsPropertySet(AzureSubscription.Property.Default))
                         {
+                            Debug.Assert(subscription.Equals(Profile.DefaultSubscription));
                             WriteWarningMessage(Resources.RemoveDefaultSubscription);
-                        }
-
-                        // Warn the user if the removed subscription is the current one.
-                        if (subscription.Equals(Profile.CurrentSubscription))
-                        {
-                            WriteWarningMessage(Resources.RemoveCurrentSubscription);
                         }
 
                         Profile.Subscriptions.Remove(subscription.Id);
@@ -520,13 +515,8 @@ namespace Microsoft.Azure.Common.Authentication
 
             if (subscription.IsPropertySet(AzureSubscription.Property.Default))
             {
+                Debug.Assert(Profile.DefaultSubscription == subscription);
                 WriteWarningMessage(Resources.RemoveDefaultSubscription);
-            }
-
-            // Warn the user if the removed subscription is the current one.
-            if (Profile.CurrentSubscription == subscription)
-            {
-                WriteWarningMessage(Resources.RemoveCurrentSubscription);
             }
 
             Profile.Subscriptions.Remove(id);
@@ -614,8 +604,8 @@ namespace Microsoft.Azure.Common.Authentication
 
             if (subscription != null)
             {
-                Profile.CurrentSubscription = subscription;
-                Profile.CurrentSubscription.Account = accountName;
+                Profile.DefaultSubscription = subscription;
+                Profile.DefaultSubscription.Account = accountName;
             }
 
             return subscription;
@@ -624,7 +614,7 @@ namespace Microsoft.Azure.Common.Authentication
         public void ClearAll()
         {
             Profile.Accounts.Clear();
-            Profile.CurrentSubscription = null;
+            Profile.DefaultSubscription = null;
             Profile.Environments.Clear();
             Profile.Subscriptions.Clear();
             Profile.Save();
@@ -634,7 +624,7 @@ namespace Microsoft.Azure.Common.Authentication
 
         public void ClearDefaultSubscription()
         {
-            Profile.CurrentSubscription = null;
+            Profile.DefaultSubscription = null;
         }
 
         public void ImportCertificate(X509Certificate2 certificate)
@@ -670,9 +660,9 @@ namespace Microsoft.Azure.Common.Authentication
                         AddOrSetSubscription(subscription);
                     }
 
-                    if (Profile.CurrentSubscription == null)
+                    if (Profile.DefaultSubscription == null)
                     {
-                        Profile.CurrentSubscription = subscription;
+                        Profile.DefaultSubscription = subscription;
                     }
                 }
             }
@@ -1098,7 +1088,13 @@ namespace Microsoft.Azure.Common.Authentication
 
         public AzureEnvironment GetEnvironmentOrDefault(string name)
         {
-            if (string.IsNullOrEmpty(name))
+            if (string.IsNullOrEmpty(name) &&
+                Profile.DefaultSubscription == null)
+            {
+                return AzureEnvironment.PublicEnvironments[EnvironmentName.AzureCloud];
+            }
+            else if (string.IsNullOrEmpty(name) &&
+                Profile.DefaultSubscription != null)
             {
                 return Profile.CurrentContext.Environment;
             }

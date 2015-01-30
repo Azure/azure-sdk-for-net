@@ -55,7 +55,7 @@ namespace Common.Authentication.Test
         public ProfileClientTests()
         {
             SetMockData();
-            AzureSession.Profile.CurrentSubscription = null;
+            AzureSession.Profile = new AzureProfile();
         }
 
         [Fact]
@@ -103,10 +103,10 @@ namespace Common.Authentication.Test
             client1.InitializeProfile(AzureEnvironment.PublicEnvironments["AzureCloud"],
                 subscriptionId, certificate, null);
 
-            Assert.Equal("AzureCloud", newProfile.CurrentSubscription.Environment);
-            Assert.Equal(subscriptionId, newProfile.CurrentSubscription.Id);
-            Assert.Equal(certificate.Thumbprint, newProfile.CurrentSubscription.Account);
-            Assert.False(newProfile.CurrentSubscription.Properties.ContainsKey(AzureSubscription.Property.StorageAccount));
+            Assert.Equal("AzureCloud", newProfile.DefaultSubscription.Environment);
+            Assert.Equal(subscriptionId, newProfile.DefaultSubscription.Id);
+            Assert.Equal(certificate.Thumbprint, newProfile.DefaultSubscription.Account);
+            Assert.False(newProfile.DefaultSubscription.Properties.ContainsKey(AzureSubscription.Property.StorageAccount));
         }
 
         [Fact]
@@ -136,10 +136,10 @@ namespace Common.Authentication.Test
             client1.InitializeProfile(AzureEnvironment.PublicEnvironments["AzureCloud"],
                 new Guid(csmSubscription1.SubscriptionId), newAccount, null, null);
 
-            Assert.Equal("AzureCloud", newProfile.CurrentSubscription.Environment);
-            Assert.Equal(new Guid(csmSubscription1.SubscriptionId), newProfile.CurrentSubscription.Id);
-            Assert.Equal(newAccount.Id, newProfile.CurrentSubscription.Account);
-            Assert.False(newProfile.CurrentSubscription.Properties.ContainsKey(AzureSubscription.Property.StorageAccount));
+            Assert.Equal("AzureCloud", newProfile.DefaultSubscription.Environment);
+            Assert.Equal(new Guid(csmSubscription1.SubscriptionId), newProfile.DefaultSubscription.Id);
+            Assert.Equal(newAccount.Id, newProfile.DefaultSubscription.Account);
+            Assert.False(newProfile.DefaultSubscription.Properties.ContainsKey(AzureSubscription.Property.StorageAccount));
         }
 
         [Fact]
@@ -582,7 +582,8 @@ namespace Common.Authentication.Test
         {
             MockDataStore dataStore = new MockDataStore();
             AzureSession.DataStore = dataStore;
-            ProfileClient client = new ProfileClient();
+            ProfileClient client = new ProfileClient(AzureSession.Profile);
+
             client.Profile.Subscriptions[azureSubscription1.Id] = azureSubscription1;
             client.Profile.Subscriptions[azureSubscription2.Id] = azureSubscription2;
             client.Profile.Accounts[azureAccount.Id] = azureAccount;
@@ -646,7 +647,7 @@ namespace Common.Authentication.Test
         {
             MockDataStore dataStore = new MockDataStore();
             AzureSession.DataStore = dataStore;
-            ProfileClient client = new ProfileClient();
+            ProfileClient client = new ProfileClient(AzureSession.Profile);
             client.Profile.Subscriptions[azureSubscription1.Id] = azureSubscription1;
             client.Profile.Subscriptions[azureSubscription2.Id] = azureSubscription2;
             client.Profile.Accounts[azureAccount.Id] = azureAccount;
@@ -662,7 +663,7 @@ namespace Common.Authentication.Test
             };
             client.Profile.Subscriptions[azureSubscription1.Id].Account = azureAccount.Id;
             client.Profile.Environments[azureEnvironment.Name] = azureEnvironment;
-            AzureSession.Profile.SetCurrentContext(azureSubscription1, azureEnvironment, azureAccount);
+            AzureSession.Profile.DefaultSubscription = azureSubscription1;
 
             client.RemoveAccount(azureAccount.Id);
 
@@ -674,7 +675,7 @@ namespace Common.Authentication.Test
 
             Assert.Null(AzureSession.Profile.CurrentContext.Account);
             Assert.Null(AzureSession.Profile.CurrentContext.Subscription);
-            Assert.Equal(EnvironmentName.AzureCloud, AzureSession.Profile.CurrentContext.Environment.Name);
+            Assert.Null(AzureSession.Profile.CurrentContext.Environment);
         }
 
         [Fact]
@@ -796,11 +797,9 @@ namespace Common.Authentication.Test
         {
             MockDataStore dataStore = new MockDataStore();
             AzureSession.DataStore = dataStore;
-            ProfileClient client = new ProfileClient();
+            ProfileClient client = new ProfileClient(AzureSession.Profile);
             client.AddOrSetEnvironment(azureEnvironment);
-
-            Assert.Equal(EnvironmentName.AzureCloud, AzureSession.Profile.CurrentContext.Environment.Name);
-
+            
             var defaultEnv = client.GetEnvironmentOrDefault(null);
 
             Assert.Equal(EnvironmentName.AzureCloud, defaultEnv.Name);
@@ -817,11 +816,13 @@ namespace Common.Authentication.Test
         {
             MockDataStore dataStore = new MockDataStore();
             AzureSession.DataStore = dataStore;
-            ProfileClient client = new ProfileClient();
+            ProfileClient client = new ProfileClient(AzureSession.Profile);
 
-            AzureSession.Profile.CurrentSubscription = azureSubscription1;
-            AzureSession.Profile.CurrentSubscription.Account = azureSubscription1.Account;
-            AzureSession.Profile.CurrentSubscription.Environment = azureSubscription1.Environment;
+            client.AddOrSetEnvironment(azureEnvironment);
+            client.AddOrSetAccount(azureAccount);
+            client.AddOrSetSubscription(azureSubscription1);
+
+            AzureSession.Profile.DefaultSubscription = azureSubscription1;
 
             var newEnv = client.GetEnvironmentOrDefault(azureEnvironment.Name);
 
@@ -856,12 +857,12 @@ namespace Common.Authentication.Test
         {
             MockDataStore dataStore = new MockDataStore();
             AzureSession.DataStore = dataStore;
-            ProfileClient client = new ProfileClient();
+            ProfileClient client = new ProfileClient(AzureSession.Profile);
 
             client.AddOrSetAccount(azureAccount);
             client.AddOrSetEnvironment(azureEnvironment);
             client.AddOrSetSubscription(azureSubscription1);
-            AzureSession.Profile.SetCurrentContext(azureSubscription1, azureEnvironment, azureAccount);
+            AzureSession.Profile.DefaultSubscription = azureSubscription1;
             azureSubscription1.Properties[AzureSubscription.Property.StorageAccount] = "testAccount";
             Assert.Equal(azureSubscription1.Id, AzureSession.Profile.CurrentContext.Subscription.Id);
             Assert.Equal(azureSubscription1.Properties[AzureSubscription.Property.StorageAccount],
@@ -897,7 +898,6 @@ namespace Common.Authentication.Test
             client.Profile.Accounts[azureAccount.Id] = azureAccount;
             client.AddOrSetEnvironment(azureEnvironment);
             client.AddOrSetSubscription(azureSubscription1);
-            client.SetSubscriptionAsCurrent(azureSubscription1.Name, azureSubscription1.Account);
             client.SetSubscriptionAsDefault(azureSubscription1.Name, azureSubscription1.Account);
 
             Assert.Equal(1, client.Profile.Subscriptions.Count);
@@ -909,13 +909,10 @@ namespace Common.Authentication.Test
 
             Assert.Equal(0, client.Profile.Subscriptions.Count);
             Assert.Equal(azureSubscription1.Name, subscription.Name);
-            Assert.Equal(2, log.Count);
+            Assert.Equal(1, log.Count);
             Assert.Equal(
                 "The default subscription is being removed. Use Select-AzureSubscription -Default <subscriptionName> to select a new default subscription.",
                 log[0]);
-            Assert.Equal(
-                "The current subscription is being removed. Use Select-AzureSubscription <subscriptionName> to select a new current subscription.",
-                log[1]);
             Assert.Throws<ArgumentException>(() => client.RemoveSubscription("bad"));
             Assert.Throws<ArgumentNullException>(() => client.RemoveSubscription(null));
         }
@@ -1042,16 +1039,16 @@ namespace Common.Authentication.Test
         {
             MockDataStore dataStore = new MockDataStore();
             AzureSession.DataStore = dataStore;
-            ProfileClient client = new ProfileClient();
+            ProfileClient client = new ProfileClient(AzureSession.Profile);
             client.Profile.Accounts[azureAccount.Id] = azureAccount;
             client.AddOrSetEnvironment(azureEnvironment);
             client.AddOrSetSubscription(azureSubscription2);
 
-            Assert.Null(client.Profile.CurrentSubscription);
+            Assert.Null(client.Profile.DefaultSubscription);
 
             client.SetSubscriptionAsDefault(azureSubscription2.Name, azureSubscription2.Account);
 
-            Assert.Equal(azureSubscription2.Id, client.Profile.CurrentSubscription.Id);
+            Assert.Equal(azureSubscription2.Id, client.Profile.DefaultSubscription.Id);
             Assert.Equal(azureSubscription2.Id, AzureSession.Profile.CurrentContext.Subscription.Id);
             Assert.Throws<ArgumentException>(() => client.SetSubscriptionAsDefault("bad", null));
             Assert.Throws<ArgumentException>(() => client.SetSubscriptionAsDefault(null, null));
@@ -1067,33 +1064,13 @@ namespace Common.Authentication.Test
             client.AddOrSetEnvironment(azureEnvironment);
             client.AddOrSetSubscription(azureSubscription2);
 
-            Assert.Null(client.Profile.CurrentSubscription);
+            Assert.Null(client.Profile.DefaultSubscription);
             client.SetSubscriptionAsDefault(azureSubscription2.Name, azureSubscription2.Account);
-            Assert.Equal(azureSubscription2.Id, client.Profile.CurrentSubscription.Id);
+            Assert.Equal(azureSubscription2.Id, client.Profile.DefaultSubscription.Id);
 
             client.ClearDefaultSubscription();
 
-            Assert.Null(client.Profile.CurrentSubscription);
-        }
-
-        [Fact]
-        public void SetAzureSubscriptionAsCurrentSetsCurrent()
-        {
-            MockDataStore dataStore = new MockDataStore();
-            AzureSession.DataStore = dataStore;
-            ProfileClient client = new ProfileClient();
-            client.Profile.Accounts[azureAccount.Id] = azureAccount;
-            client.AddOrSetEnvironment(azureEnvironment);
-            client.AddOrSetSubscription(azureSubscription1);
-            client.AddOrSetSubscription(azureSubscription2);
-
-            Assert.Null(AzureSession.Profile.CurrentContext.Subscription);
-
-            client.SetSubscriptionAsCurrent(azureSubscription2.Name, azureSubscription2.Account);
-
-            Assert.Equal(azureSubscription2.Id, AzureSession.Profile.CurrentContext.Subscription.Id);
-            Assert.Throws<ArgumentException>(() => client.SetSubscriptionAsCurrent("bad", null));
-            Assert.Throws<ArgumentException>(() => client.SetSubscriptionAsCurrent(null, null));
+            Assert.Null(client.Profile.DefaultSubscription);
         }
 
         [Fact]
