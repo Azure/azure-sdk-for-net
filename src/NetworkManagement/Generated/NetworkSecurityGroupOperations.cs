@@ -228,7 +228,17 @@ namespace Microsoft.WindowsAzure.Management.Network
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/networking/virtualnetwork/" + Uri.EscapeDataString(virtualNetworkName) + "/subnets/" + Uri.EscapeDataString(subnetName) + "/networksecuritygroups";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/networking/virtualnetwork/";
+            url = url + Uri.EscapeDataString(virtualNetworkName);
+            url = url + "/subnets/";
+            url = url + Uri.EscapeDataString(subnetName);
+            url = url + "/networksecuritygroups";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -380,7 +390,13 @@ namespace Microsoft.WindowsAzure.Management.Network
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/networking/networksecuritygroups";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/networking/networksecuritygroups";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -537,7 +553,14 @@ namespace Microsoft.WindowsAzure.Management.Network
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/networking/networksecuritygroups/" + Uri.EscapeDataString(networkSecurityGroupName);
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/networking/networksecuritygroups/";
+            url = url + Uri.EscapeDataString(networkSecurityGroupName);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -673,7 +696,16 @@ namespace Microsoft.WindowsAzure.Management.Network
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/networking/networksecuritygroups/" + Uri.EscapeDataString(networkSecurityGroupName) + "/rules/" + Uri.EscapeDataString(ruleName);
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/networking/networksecuritygroups/";
+            url = url + Uri.EscapeDataString(networkSecurityGroupName);
+            url = url + "/rules/";
+            url = url + Uri.EscapeDataString(ruleName);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -817,7 +849,18 @@ namespace Microsoft.WindowsAzure.Management.Network
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/networking/virtualnetwork/" + Uri.EscapeDataString(virtualNetworkName) + "/subnets/" + Uri.EscapeDataString(subnetName) + "/networksecuritygroups/" + Uri.EscapeDataString(networkSecurityGroupName);
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/networking/virtualnetwork/";
+            url = url + Uri.EscapeDataString(virtualNetworkName);
+            url = url + "/subnets/";
+            url = url + Uri.EscapeDataString(subnetName);
+            url = url + "/networksecuritygroups/";
+            url = url + Uri.EscapeDataString(networkSecurityGroupName);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -982,7 +1025,22 @@ namespace Microsoft.WindowsAzure.Management.Network
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/networking/networksecuritygroups/" + (networkSecurityGroupName == null ? "" : Uri.EscapeDataString(networkSecurityGroupName)) + "/rules/" + (ruleName == null ? "" : Uri.EscapeDataString(ruleName));
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/networking/networksecuritygroups/";
+            if (networkSecurityGroupName != null)
+            {
+                url = url + Uri.EscapeDataString(networkSecurityGroupName);
+            }
+            url = url + "/rules/";
+            if (ruleName != null)
+            {
+                url = url + Uri.EscapeDataString(ruleName);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1436,10 +1494,22 @@ namespace Microsoft.WindowsAzure.Management.Network
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/networking/networksecuritygroups/" + Uri.EscapeDataString(networkSecurityGroupName) + "?";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/networking/networksecuritygroups/";
+            url = url + Uri.EscapeDataString(networkSecurityGroupName);
+            List<string> queryParameters = new List<string>();
             if (detailLevel != null)
             {
-                url = url + "detaillevel=" + Uri.EscapeDataString(detailLevel);
+                queryParameters.Add("detaillevel=" + Uri.EscapeDataString(detailLevel));
+            }
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
             }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -1687,7 +1757,17 @@ namespace Microsoft.WindowsAzure.Management.Network
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/networking/virtualnetwork/" + Uri.EscapeDataString(virtualNetworkName) + "/subnets/" + Uri.EscapeDataString(subnetName) + "/networksecuritygroups";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/networking/virtualnetwork/";
+            url = url + Uri.EscapeDataString(virtualNetworkName);
+            url = url + "/subnets/";
+            url = url + Uri.EscapeDataString(subnetName);
+            url = url + "/networksecuritygroups";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1824,7 +1904,13 @@ namespace Microsoft.WindowsAzure.Management.Network
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/networking/networksecuritygroups";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/networking/networksecuritygroups";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')

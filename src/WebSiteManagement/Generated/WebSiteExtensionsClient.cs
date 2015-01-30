@@ -99,6 +99,16 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             set { this._siteName = value; }
         }
         
+        private ICommandsOperations _commands;
+        
+        /// <summary>
+        /// Operations for invoking commands.
+        /// </summary>
+        public virtual ICommandsOperations Commands
+        {
+            get { return this._commands; }
+        }
+        
         private IContinuousWebJobOperations _continuousWebJobs;
         
         /// <summary>
@@ -165,6 +175,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         public WebSiteExtensionsClient()
             : base()
         {
+            this._commands = new CommandsOperations(this);
             this._continuousWebJobs = new ContinuousWebJobOperations(this);
             this._deployments = new DeploymentOperations(this);
             this._diagnostics = new DiagnosticOperations(this);
@@ -234,7 +245,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             this._siteName = siteName;
             this._credentials = credentials;
-            this._baseUri = TypeConversion.TryParseUri("https://" + SiteName + ".scm.azurewebsites.net:443");
+            this._baseUri = TypeConversion.TryParseUri("https://" + this.SiteName + ".scm.azurewebsites.net:443");
             
             this.Credentials.InitializeServiceClient(this);
         }
@@ -248,6 +259,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         public WebSiteExtensionsClient(HttpClient httpClient)
             : base(httpClient)
         {
+            this._commands = new CommandsOperations(this);
             this._continuousWebJobs = new ContinuousWebJobOperations(this);
             this._deployments = new DeploymentOperations(this);
             this._diagnostics = new DiagnosticOperations(this);
@@ -323,7 +335,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             this._siteName = siteName;
             this._credentials = credentials;
-            this._baseUri = TypeConversion.TryParseUri("https://" + SiteName + ".scm.azurewebsites.net:443");
+            this._baseUri = TypeConversion.TryParseUri("https://" + this.SiteName + ".scm.azurewebsites.net:443");
             
             this.Credentials.InitializeServiceClient(this);
         }
