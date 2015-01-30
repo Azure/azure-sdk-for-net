@@ -35,7 +35,7 @@ namespace Microsoft.Azure
         /// <param name="message">A description of the error.</param>
         /// <param name="errorModel">The model for the error response body.</param>
         /// <param name="innerException">The exception which caused the current exception.</param>
-        public CloudException(string message, CloudError errorModel, params Exception innerException) : this(message, innerException)
+        public CloudException(string message, CloudError errorModel, Exception innerException = null) : this(message, innerException)
         {
             Model = errorModel;
         }
