@@ -22,9 +22,9 @@
 using System;
 using System.Linq;
 using System.Net.Http;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.ApiManagement;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
 
 namespace Microsoft.Azure.Management.ApiManagement
 {
@@ -100,7 +100,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <summary>
         /// Initializes a new instance of the ApiManagementClient class.
         /// </summary>
-        private ApiManagementClient()
+        public ApiManagementClient()
             : base()
         {
             this._apiManagement = new ApiManagementOperations(this);
@@ -166,7 +166,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='httpClient'>
         /// The Http client
         /// </param>
-        private ApiManagementClient(HttpClient httpClient)
+        public ApiManagementClient(HttpClient httpClient)
             : base(httpClient)
         {
             this._apiManagement = new ApiManagementOperations(this);

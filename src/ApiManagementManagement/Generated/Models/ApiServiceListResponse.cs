@@ -22,16 +22,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.ApiManagement.Models;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Management.ApiManagement.Models
 {
     /// <summary>
     /// The response of the List Api Management services operation.
     /// </summary>
-    public partial class ApiServiceListResponse : OperationResponse
+    public partial class ApiServiceListResponse : AzureOperationResponse
     {
         private string _nextLink;
         

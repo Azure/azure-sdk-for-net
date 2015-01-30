@@ -21,15 +21,15 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.ApiManagement.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.ApiManagement.Models
 {
     /// <summary>
     /// A standard service response for long running operations.
     /// </summary>
-    public partial class LongRunningOperationResponse : OperationResponse
+    public partial class LongRunningOperationResponse : AzureOperationResponse
     {
         private ApiManagementError _error;
         

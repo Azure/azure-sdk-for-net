@@ -21,15 +21,15 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.ApiManagement.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.ApiManagement.Models
 {
     /// <summary>
     /// The response of the Get Api Management service operation.
     /// </summary>
-    public partial class ApiServiceGetResponse : OperationResponse
+    public partial class ApiServiceGetResponse : AzureOperationResponse
     {
         private ApiServiceResource _value;
         

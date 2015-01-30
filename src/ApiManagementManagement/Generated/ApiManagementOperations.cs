@@ -29,12 +29,11 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Hyak.Common;
+using Hyak.Common.Internals;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.ApiManagement;
 using Microsoft.Azure.Management.ApiManagement.Models;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Common.Internals;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.Management.ApiManagement
@@ -85,71 +84,57 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> BackupAsync(string resourceGroupName, string name, ApiServiceBackupRestoreParameters parameters, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> BackupAsync(string resourceGroupName, string name, ApiServiceBackupRestoreParameters parameters, CancellationToken cancellationToken)
         {
             ApiManagementClient client = this.Client;
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "BackupAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "BackupAsync", tracingParameters);
             }
-            try
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            LongRunningOperationResponse response = await client.ApiManagement.BeginBackupAsync(resourceGroupName, name, parameters, cancellationToken).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested();
+            LongRunningOperationResponse result = await client.ApiManagement.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = response.RetryAfter;
+            if (delayInSeconds == 0)
             {
-                if (shouldTrace)
-                {
-                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
-                }
-                
+                delayInSeconds = 60;
+            }
+            if (client.LongRunningOperationInitialTimeout >= 0)
+            {
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
+            }
+            while ((result.Status != Microsoft.Azure.OperationStatus.InProgress) == false)
+            {
                 cancellationToken.ThrowIfCancellationRequested();
-                LongRunningOperationResponse response = await client.ApiManagement.BeginBackupAsync(resourceGroupName, name, parameters, cancellationToken).ConfigureAwait(false);
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
-                LongRunningOperationResponse result = await client.ApiManagement.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
-                int delayInSeconds = response.RetryAfter;
+                result = await client.ApiManagement.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = result.RetryAfter;
                 if (delayInSeconds == 0)
                 {
                     delayInSeconds = 60;
                 }
-                if (client.LongRunningOperationInitialTimeout >= 0)
+                if (client.LongRunningOperationRetryTimeout >= 0)
                 {
-                    delayInSeconds = client.LongRunningOperationInitialTimeout;
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
                 }
-                while ((result.Status != Microsoft.WindowsAzure.OperationStatus.InProgress) == false)
-                {
-                    cancellationToken.ThrowIfCancellationRequested();
-                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    result = await client.ApiManagement.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
-                    delayInSeconds = result.RetryAfter;
-                    if (delayInSeconds == 0)
-                    {
-                        delayInSeconds = 60;
-                    }
-                    if (client.LongRunningOperationRetryTimeout >= 0)
-                    {
-                        delayInSeconds = client.LongRunningOperationRetryTimeout;
-                    }
-                }
-                
-                if (shouldTrace)
-                {
-                    Tracing.Exit(invocationId, result);
-                }
-                
-                return result;
             }
-            finally
+            
+            if (shouldTrace)
             {
-                if (client != null && shouldTrace)
-                {
-                    client.Dispose();
-                }
+                TracingAdapter.Exit(invocationId, result);
             }
+            
+            return result;
         }
         
         /// <summary>
@@ -205,20 +190,20 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "BeginBackupAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "BeginBackupAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourceGroups/" + resourceGroupName.Trim() + "/providers/Microsoft.ApiManagement/service/" + name.Trim() + "/backup?";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourceGroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.ApiManagement/service/" + Uri.EscapeDataString(name) + "/backup?";
             url = url + "api-version=2014-02-14";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -262,7 +247,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                 
                 apiServiceBackupRestoreParametersValue["backupName"] = parameters.BackupName;
                 
-                requestContent = requestDoc.ToString(Formatting.Indented);
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
                 
@@ -272,13 +257,13 @@ namespace Microsoft.Azure.Management.ApiManagement
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted)
@@ -287,13 +272,14 @@ namespace Microsoft.Azure.Management.ApiManagement
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
                     LongRunningOperationResponse result = null;
+                    // Deserialize Response
                     result = new LongRunningOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("Location"))
@@ -319,7 +305,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -409,20 +395,20 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "BeginCreatingOrUpdatingAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "BeginCreatingOrUpdatingAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourceGroups/" + resourceGroupName.Trim() + "/providers/Microsoft.ApiManagement/service/" + name.Trim() + "?";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourceGroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.ApiManagement/service/" + Uri.EscapeDataString(name) + "?";
             url = url + "api-version=2014-02-14";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -619,7 +605,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                     }
                 }
                 
-                requestContent = requestDoc.ToString(Formatting.Indented);
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
                 
@@ -629,13 +615,13 @@ namespace Microsoft.Azure.Management.ApiManagement
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created && statusCode != HttpStatusCode.Accepted)
@@ -644,7 +630,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -652,322 +638,325 @@ namespace Microsoft.Azure.Management.ApiManagement
                     // Create Result
                     ApiServiceLongRunningOperationResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new ApiServiceLongRunningOperationResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Created || statusCode == HttpStatusCode.Accepted)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        ApiServiceResource valueInstance = new ApiServiceResource();
-                        result.Value = valueInstance;
-                        
-                        JToken idValue = responseDoc["id"];
-                        if (idValue != null && idValue.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new ApiServiceLongRunningOperationResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            string idInstance = ((string)idValue);
-                            valueInstance.Id = idInstance;
+                            responseDoc = JToken.Parse(responseContent);
                         }
                         
-                        JToken locationValue = responseDoc["location"];
-                        if (locationValue != null && locationValue.Type != JTokenType.Null)
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            string locationInstance = ((string)locationValue);
-                            valueInstance.Location = locationInstance;
-                        }
-                        
-                        JToken nameValue = responseDoc["name"];
-                        if (nameValue != null && nameValue.Type != JTokenType.Null)
-                        {
-                            string nameInstance = ((string)nameValue);
-                            valueInstance.Name = nameInstance;
-                        }
-                        
-                        JToken typeValue = responseDoc["type"];
-                        if (typeValue != null && typeValue.Type != JTokenType.Null)
-                        {
-                            string typeInstance = ((string)typeValue);
-                            valueInstance.Type = typeInstance;
-                        }
-                        
-                        JToken subscriptionIdValue = responseDoc["subscriptionId"];
-                        if (subscriptionIdValue != null && subscriptionIdValue.Type != JTokenType.Null)
-                        {
-                            string subscriptionIdInstance = ((string)subscriptionIdValue);
-                            valueInstance.SubscriptionId = subscriptionIdInstance;
-                        }
-                        
-                        JToken resourceGroupNameValue = responseDoc["resourceGroupName"];
-                        if (resourceGroupNameValue != null && resourceGroupNameValue.Type != JTokenType.Null)
-                        {
-                            string resourceGroupNameInstance = ((string)resourceGroupNameValue);
-                            valueInstance.ResourceGroupName = resourceGroupNameInstance;
-                        }
-                        
-                        JToken etagValue = responseDoc["etag"];
-                        if (etagValue != null && etagValue.Type != JTokenType.Null)
-                        {
-                            string etagInstance = ((string)etagValue);
-                            valueInstance.ETag = etagInstance;
-                        }
-                        
-                        JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
-                        if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                        {
-                            foreach (JProperty property in tagsSequenceElement)
-                            {
-                                string tagsKey2 = ((string)property.Name);
-                                string tagsValue2 = ((string)property.Value);
-                                valueInstance.Tags.Add(tagsKey2, tagsValue2);
-                            }
-                        }
-                        
-                        JToken propertiesValue2 = responseDoc["properties"];
-                        if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
-                        {
-                            ApiServiceProperties propertiesInstance = new ApiServiceProperties();
-                            valueInstance.Properties = propertiesInstance;
+                            ApiServiceResource valueInstance = new ApiServiceResource();
+                            result.Value = valueInstance;
                             
-                            JToken publisherEmailValue = propertiesValue2["publisherEmail"];
-                            if (publisherEmailValue != null && publisherEmailValue.Type != JTokenType.Null)
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
                             {
-                                string publisherEmailInstance = ((string)publisherEmailValue);
-                                propertiesInstance.PublisherEmail = publisherEmailInstance;
+                                string idInstance = ((string)idValue);
+                                valueInstance.Id = idInstance;
                             }
                             
-                            JToken publisherNameValue = propertiesValue2["publisherName"];
-                            if (publisherNameValue != null && publisherNameValue.Type != JTokenType.Null)
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
                             {
-                                string publisherNameInstance = ((string)publisherNameValue);
-                                propertiesInstance.PublisherName = publisherNameInstance;
+                                string locationInstance = ((string)locationValue);
+                                valueInstance.Location = locationInstance;
                             }
                             
-                            JToken skuValue2 = propertiesValue2["sku"];
-                            if (skuValue2 != null && skuValue2.Type != JTokenType.Null)
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
                             {
-                                ApiServiceSkuProperties skuInstance = new ApiServiceSkuProperties();
-                                propertiesInstance.SkuProperties = skuInstance;
-                                
-                                JToken nameValue2 = skuValue2["name"];
-                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                string nameInstance = ((string)nameValue);
+                                valueInstance.Name = nameInstance;
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                valueInstance.Type = typeInstance;
+                            }
+                            
+                            JToken subscriptionIdValue = responseDoc["subscriptionId"];
+                            if (subscriptionIdValue != null && subscriptionIdValue.Type != JTokenType.Null)
+                            {
+                                string subscriptionIdInstance = ((string)subscriptionIdValue);
+                                valueInstance.SubscriptionId = subscriptionIdInstance;
+                            }
+                            
+                            JToken resourceGroupNameValue = responseDoc["resourceGroupName"];
+                            if (resourceGroupNameValue != null && resourceGroupNameValue.Type != JTokenType.Null)
+                            {
+                                string resourceGroupNameInstance = ((string)resourceGroupNameValue);
+                                valueInstance.ResourceGroupName = resourceGroupNameInstance;
+                            }
+                            
+                            JToken etagValue = responseDoc["etag"];
+                            if (etagValue != null && etagValue.Type != JTokenType.Null)
+                            {
+                                string etagInstance = ((string)etagValue);
+                                valueInstance.ETag = etagInstance;
+                            }
+                            
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property in tagsSequenceElement)
                                 {
-                                    SkuType nameInstance2 = ((SkuType)Enum.Parse(typeof(SkuType), ((string)nameValue2), true));
-                                    skuInstance.SkuType = nameInstance2;
+                                    string tagsKey2 = ((string)property.Name);
+                                    string tagsValue2 = ((string)property.Value);
+                                    valueInstance.Tags.Add(tagsKey2, tagsValue2);
+                                }
+                            }
+                            
+                            JToken propertiesValue2 = responseDoc["properties"];
+                            if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                            {
+                                ApiServiceProperties propertiesInstance = new ApiServiceProperties();
+                                valueInstance.Properties = propertiesInstance;
+                                
+                                JToken publisherEmailValue = propertiesValue2["publisherEmail"];
+                                if (publisherEmailValue != null && publisherEmailValue.Type != JTokenType.Null)
+                                {
+                                    string publisherEmailInstance = ((string)publisherEmailValue);
+                                    propertiesInstance.PublisherEmail = publisherEmailInstance;
                                 }
                                 
-                                JToken capacityValue = skuValue2["capacity"];
-                                if (capacityValue != null && capacityValue.Type != JTokenType.Null)
+                                JToken publisherNameValue = propertiesValue2["publisherName"];
+                                if (publisherNameValue != null && publisherNameValue.Type != JTokenType.Null)
                                 {
-                                    int capacityInstance = ((int)capacityValue);
-                                    skuInstance.Capacity = capacityInstance;
+                                    string publisherNameInstance = ((string)publisherNameValue);
+                                    propertiesInstance.PublisherName = publisherNameInstance;
+                                }
+                                
+                                JToken skuValue2 = propertiesValue2["sku"];
+                                if (skuValue2 != null && skuValue2.Type != JTokenType.Null)
+                                {
+                                    ApiServiceSkuProperties skuInstance = new ApiServiceSkuProperties();
+                                    propertiesInstance.SkuProperties = skuInstance;
+                                    
+                                    JToken nameValue2 = skuValue2["name"];
+                                    if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                    {
+                                        SkuType nameInstance2 = ((SkuType)Enum.Parse(typeof(SkuType), ((string)nameValue2), true));
+                                        skuInstance.SkuType = nameInstance2;
+                                    }
+                                    
+                                    JToken capacityValue = skuValue2["capacity"];
+                                    if (capacityValue != null && capacityValue.Type != JTokenType.Null)
+                                    {
+                                        int capacityInstance = ((int)capacityValue);
+                                        skuInstance.Capacity = capacityInstance;
+                                    }
+                                }
+                                
+                                JToken provisioningStateValue = propertiesValue2["provisioningState"];
+                                if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
+                                {
+                                    string provisioningStateInstance = ((string)provisioningStateValue);
+                                    propertiesInstance.ProvisioningState = provisioningStateInstance;
+                                }
+                                
+                                JToken targetProvisioningStateValue = propertiesValue2["targetProvisioningState"];
+                                if (targetProvisioningStateValue != null && targetProvisioningStateValue.Type != JTokenType.Null)
+                                {
+                                    string targetProvisioningStateInstance = ((string)targetProvisioningStateValue);
+                                    propertiesInstance.TargetProvisioningState = targetProvisioningStateInstance;
+                                }
+                                
+                                JToken createdAtUtcValue = propertiesValue2["createdAtUtc"];
+                                if (createdAtUtcValue != null && createdAtUtcValue.Type != JTokenType.Null)
+                                {
+                                    DateTime createdAtUtcInstance = ((DateTime)createdAtUtcValue);
+                                    propertiesInstance.CreatedAtUtc = createdAtUtcInstance;
+                                }
+                                
+                                JToken runtimeUrlValue = propertiesValue2["runtimeUrl"];
+                                if (runtimeUrlValue != null && runtimeUrlValue.Type != JTokenType.Null)
+                                {
+                                    string runtimeUrlInstance = ((string)runtimeUrlValue);
+                                    propertiesInstance.ProxyEndpoint = runtimeUrlInstance;
+                                }
+                                
+                                JToken portalUrlValue = propertiesValue2["portalUrl"];
+                                if (portalUrlValue != null && portalUrlValue.Type != JTokenType.Null)
+                                {
+                                    string portalUrlInstance = ((string)portalUrlValue);
+                                    propertiesInstance.ManagementPortalEndpoint = portalUrlInstance;
+                                }
+                                
+                                JToken addresserEmailValue = propertiesValue2["addresserEmail"];
+                                if (addresserEmailValue != null && addresserEmailValue.Type != JTokenType.Null)
+                                {
+                                    string addresserEmailInstance = ((string)addresserEmailValue);
+                                    propertiesInstance.AddresserEmail = addresserEmailInstance;
+                                }
+                                
+                                JToken hostnameConfigurationsArray2 = propertiesValue2["hostnameConfigurations"];
+                                if (hostnameConfigurationsArray2 != null && hostnameConfigurationsArray2.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken hostnameConfigurationsValue in ((JArray)hostnameConfigurationsArray2))
+                                    {
+                                        HostnameConfiguration hostnameConfigurationInstance = new HostnameConfiguration();
+                                        propertiesInstance.HostnameConfigurations.Add(hostnameConfigurationInstance);
+                                        
+                                        JToken typeValue2 = hostnameConfigurationsValue["type"];
+                                        if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                                        {
+                                            HostnameType typeInstance2 = ((HostnameType)Enum.Parse(typeof(HostnameType), ((string)typeValue2), true));
+                                            hostnameConfigurationInstance.Type = typeInstance2;
+                                        }
+                                        
+                                        JToken hostnameValue = hostnameConfigurationsValue["hostname"];
+                                        if (hostnameValue != null && hostnameValue.Type != JTokenType.Null)
+                                        {
+                                            string hostnameInstance = ((string)hostnameValue);
+                                            hostnameConfigurationInstance.Hostname = hostnameInstance;
+                                        }
+                                        
+                                        JToken certificateValue2 = hostnameConfigurationsValue["certificate"];
+                                        if (certificateValue2 != null && certificateValue2.Type != JTokenType.Null)
+                                        {
+                                            CertificateInformation certificateInstance = new CertificateInformation();
+                                            hostnameConfigurationInstance.Certificate = certificateInstance;
+                                            
+                                            JToken expiryValue = certificateValue2["expiry"];
+                                            if (expiryValue != null && expiryValue.Type != JTokenType.Null)
+                                            {
+                                                DateTime expiryInstance = ((DateTime)expiryValue);
+                                                certificateInstance.Expiry = expiryInstance;
+                                            }
+                                            
+                                            JToken thumbprintValue = certificateValue2["thumbprint"];
+                                            if (thumbprintValue != null && thumbprintValue.Type != JTokenType.Null)
+                                            {
+                                                string thumbprintInstance = ((string)thumbprintValue);
+                                                certificateInstance.Thumbprint = thumbprintInstance;
+                                            }
+                                            
+                                            JToken subjectValue = certificateValue2["subject"];
+                                            if (subjectValue != null && subjectValue.Type != JTokenType.Null)
+                                            {
+                                                string subjectInstance = ((string)subjectValue);
+                                                certificateInstance.Subject = subjectInstance;
+                                            }
+                                        }
+                                    }
+                                }
+                                
+                                JToken staticIPsArray3 = propertiesValue2["staticIPs"];
+                                if (staticIPsArray3 != null && staticIPsArray3.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken staticIPsValue in ((JArray)staticIPsArray3))
+                                    {
+                                        propertiesInstance.StaticIPs.Add(((string)staticIPsValue));
+                                    }
+                                }
+                                
+                                JToken additionalLocationsArray2 = propertiesValue2["additionalLocations"];
+                                if (additionalLocationsArray2 != null && additionalLocationsArray2.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken additionalLocationsValue in ((JArray)additionalLocationsArray2))
+                                    {
+                                        AdditionalRegion additionalRegionInstance = new AdditionalRegion();
+                                        propertiesInstance.AdditionalRegions.Add(additionalRegionInstance);
+                                        
+                                        JToken locationValue2 = additionalLocationsValue["location"];
+                                        if (locationValue2 != null && locationValue2.Type != JTokenType.Null)
+                                        {
+                                            string locationInstance2 = ((string)locationValue2);
+                                            additionalRegionInstance.Location = locationInstance2;
+                                        }
+                                        
+                                        JToken skuTypeValue = additionalLocationsValue["skuType"];
+                                        if (skuTypeValue != null && skuTypeValue.Type != JTokenType.Null)
+                                        {
+                                            SkuType skuTypeInstance = ((SkuType)Enum.Parse(typeof(SkuType), ((string)skuTypeValue), true));
+                                            additionalRegionInstance.SkuType = skuTypeInstance;
+                                        }
+                                        
+                                        JToken skuUnitCountValue = additionalLocationsValue["skuUnitCount"];
+                                        if (skuUnitCountValue != null && skuUnitCountValue.Type != JTokenType.Null)
+                                        {
+                                            int skuUnitCountInstance = ((int)skuUnitCountValue);
+                                            additionalRegionInstance.SkuUnitCount = skuUnitCountInstance;
+                                        }
+                                        
+                                        JToken staticIPsArray4 = additionalLocationsValue["staticIPs"];
+                                        if (staticIPsArray4 != null && staticIPsArray4.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken staticIPsValue2 in ((JArray)staticIPsArray4))
+                                            {
+                                                additionalRegionInstance.StaticIPs.Add(((string)staticIPsValue2));
+                                            }
+                                        }
+                                        
+                                        JToken vpnConfigurationValue2 = additionalLocationsValue["vpnConfiguration"];
+                                        if (vpnConfigurationValue2 != null && vpnConfigurationValue2.Type != JTokenType.Null)
+                                        {
+                                            VirtualNetworkConfiguration vpnConfigurationInstance = new VirtualNetworkConfiguration();
+                                            additionalRegionInstance.VirtualNetworkConfiguration = vpnConfigurationInstance;
+                                            
+                                            JToken vnetidValue = vpnConfigurationValue2["vnetid"];
+                                            if (vnetidValue != null && vnetidValue.Type != JTokenType.Null)
+                                            {
+                                                Guid vnetidInstance = Guid.Parse(((string)vnetidValue));
+                                                vpnConfigurationInstance.VnetId = vnetidInstance;
+                                            }
+                                            
+                                            JToken subnetnameValue = vpnConfigurationValue2["subnetname"];
+                                            if (subnetnameValue != null && subnetnameValue.Type != JTokenType.Null)
+                                            {
+                                                string subnetnameInstance = ((string)subnetnameValue);
+                                                vpnConfigurationInstance.SubnetName = subnetnameInstance;
+                                            }
+                                            
+                                            JToken locationValue3 = vpnConfigurationValue2["location"];
+                                            if (locationValue3 != null && locationValue3.Type != JTokenType.Null)
+                                            {
+                                                string locationInstance3 = ((string)locationValue3);
+                                                vpnConfigurationInstance.Location = locationInstance3;
+                                            }
+                                        }
+                                    }
                                 }
                             }
                             
-                            JToken provisioningStateValue = propertiesValue2["provisioningState"];
-                            if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
+                            ApiManagementError errorInstance = new ApiManagementError();
+                            result.Error = errorInstance;
+                            
+                            JToken codeValue = responseDoc["code"];
+                            if (codeValue != null && codeValue.Type != JTokenType.Null)
                             {
-                                string provisioningStateInstance = ((string)provisioningStateValue);
-                                propertiesInstance.ProvisioningState = provisioningStateInstance;
+                                string codeInstance = ((string)codeValue);
+                                errorInstance.Code = codeInstance;
                             }
                             
-                            JToken targetProvisioningStateValue = propertiesValue2["targetProvisioningState"];
-                            if (targetProvisioningStateValue != null && targetProvisioningStateValue.Type != JTokenType.Null)
+                            JToken messageValue = responseDoc["message"];
+                            if (messageValue != null && messageValue.Type != JTokenType.Null)
                             {
-                                string targetProvisioningStateInstance = ((string)targetProvisioningStateValue);
-                                propertiesInstance.TargetProvisioningState = targetProvisioningStateInstance;
+                                string messageInstance = ((string)messageValue);
+                                errorInstance.Message = messageInstance;
                             }
                             
-                            JToken createdAtUtcValue = propertiesValue2["createdAtUtc"];
-                            if (createdAtUtcValue != null && createdAtUtcValue.Type != JTokenType.Null)
+                            JToken detailsSequenceElement = ((JToken)responseDoc["details"]);
+                            if (detailsSequenceElement != null && detailsSequenceElement.Type != JTokenType.Null)
                             {
-                                DateTime createdAtUtcInstance = ((DateTime)createdAtUtcValue);
-                                propertiesInstance.CreatedAtUtc = createdAtUtcInstance;
-                            }
-                            
-                            JToken runtimeUrlValue = propertiesValue2["runtimeUrl"];
-                            if (runtimeUrlValue != null && runtimeUrlValue.Type != JTokenType.Null)
-                            {
-                                string runtimeUrlInstance = ((string)runtimeUrlValue);
-                                propertiesInstance.ProxyEndpoint = runtimeUrlInstance;
-                            }
-                            
-                            JToken portalUrlValue = propertiesValue2["portalUrl"];
-                            if (portalUrlValue != null && portalUrlValue.Type != JTokenType.Null)
-                            {
-                                string portalUrlInstance = ((string)portalUrlValue);
-                                propertiesInstance.ManagementPortalEndpoint = portalUrlInstance;
-                            }
-                            
-                            JToken addresserEmailValue = propertiesValue2["addresserEmail"];
-                            if (addresserEmailValue != null && addresserEmailValue.Type != JTokenType.Null)
-                            {
-                                string addresserEmailInstance = ((string)addresserEmailValue);
-                                propertiesInstance.AddresserEmail = addresserEmailInstance;
-                            }
-                            
-                            JToken hostnameConfigurationsArray2 = propertiesValue2["hostnameConfigurations"];
-                            if (hostnameConfigurationsArray2 != null && hostnameConfigurationsArray2.Type != JTokenType.Null)
-                            {
-                                foreach (JToken hostnameConfigurationsValue in ((JArray)hostnameConfigurationsArray2))
+                                foreach (JProperty property2 in detailsSequenceElement)
                                 {
-                                    HostnameConfiguration hostnameConfigurationInstance = new HostnameConfiguration();
-                                    propertiesInstance.HostnameConfigurations.Add(hostnameConfigurationInstance);
-                                    
-                                    JToken typeValue2 = hostnameConfigurationsValue["type"];
-                                    if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
-                                    {
-                                        HostnameType typeInstance2 = ((HostnameType)Enum.Parse(typeof(HostnameType), ((string)typeValue2), true));
-                                        hostnameConfigurationInstance.Type = typeInstance2;
-                                    }
-                                    
-                                    JToken hostnameValue = hostnameConfigurationsValue["hostname"];
-                                    if (hostnameValue != null && hostnameValue.Type != JTokenType.Null)
-                                    {
-                                        string hostnameInstance = ((string)hostnameValue);
-                                        hostnameConfigurationInstance.Hostname = hostnameInstance;
-                                    }
-                                    
-                                    JToken certificateValue2 = hostnameConfigurationsValue["certificate"];
-                                    if (certificateValue2 != null && certificateValue2.Type != JTokenType.Null)
-                                    {
-                                        CertificateInformation certificateInstance = new CertificateInformation();
-                                        hostnameConfigurationInstance.Certificate = certificateInstance;
-                                        
-                                        JToken expiryValue = certificateValue2["expiry"];
-                                        if (expiryValue != null && expiryValue.Type != JTokenType.Null)
-                                        {
-                                            DateTime expiryInstance = ((DateTime)expiryValue);
-                                            certificateInstance.Expiry = expiryInstance;
-                                        }
-                                        
-                                        JToken thumbprintValue = certificateValue2["thumbprint"];
-                                        if (thumbprintValue != null && thumbprintValue.Type != JTokenType.Null)
-                                        {
-                                            string thumbprintInstance = ((string)thumbprintValue);
-                                            certificateInstance.Thumbprint = thumbprintInstance;
-                                        }
-                                        
-                                        JToken subjectValue = certificateValue2["subject"];
-                                        if (subjectValue != null && subjectValue.Type != JTokenType.Null)
-                                        {
-                                            string subjectInstance = ((string)subjectValue);
-                                            certificateInstance.Subject = subjectInstance;
-                                        }
-                                    }
-                                }
-                            }
-                            
-                            JToken staticIPsArray3 = propertiesValue2["staticIPs"];
-                            if (staticIPsArray3 != null && staticIPsArray3.Type != JTokenType.Null)
-                            {
-                                foreach (JToken staticIPsValue in ((JArray)staticIPsArray3))
-                                {
-                                    propertiesInstance.StaticIPs.Add(((string)staticIPsValue));
-                                }
-                            }
-                            
-                            JToken additionalLocationsArray2 = propertiesValue2["additionalLocations"];
-                            if (additionalLocationsArray2 != null && additionalLocationsArray2.Type != JTokenType.Null)
-                            {
-                                foreach (JToken additionalLocationsValue in ((JArray)additionalLocationsArray2))
-                                {
-                                    AdditionalRegion additionalRegionInstance = new AdditionalRegion();
-                                    propertiesInstance.AdditionalRegions.Add(additionalRegionInstance);
-                                    
-                                    JToken locationValue2 = additionalLocationsValue["location"];
-                                    if (locationValue2 != null && locationValue2.Type != JTokenType.Null)
-                                    {
-                                        string locationInstance2 = ((string)locationValue2);
-                                        additionalRegionInstance.Location = locationInstance2;
-                                    }
-                                    
-                                    JToken skuTypeValue = additionalLocationsValue["skuType"];
-                                    if (skuTypeValue != null && skuTypeValue.Type != JTokenType.Null)
-                                    {
-                                        SkuType skuTypeInstance = ((SkuType)Enum.Parse(typeof(SkuType), ((string)skuTypeValue), true));
-                                        additionalRegionInstance.SkuType = skuTypeInstance;
-                                    }
-                                    
-                                    JToken skuUnitCountValue = additionalLocationsValue["skuUnitCount"];
-                                    if (skuUnitCountValue != null && skuUnitCountValue.Type != JTokenType.Null)
-                                    {
-                                        int skuUnitCountInstance = ((int)skuUnitCountValue);
-                                        additionalRegionInstance.SkuUnitCount = skuUnitCountInstance;
-                                    }
-                                    
-                                    JToken staticIPsArray4 = additionalLocationsValue["staticIPs"];
-                                    if (staticIPsArray4 != null && staticIPsArray4.Type != JTokenType.Null)
-                                    {
-                                        foreach (JToken staticIPsValue2 in ((JArray)staticIPsArray4))
-                                        {
-                                            additionalRegionInstance.StaticIPs.Add(((string)staticIPsValue2));
-                                        }
-                                    }
-                                    
-                                    JToken vpnConfigurationValue2 = additionalLocationsValue["vpnConfiguration"];
-                                    if (vpnConfigurationValue2 != null && vpnConfigurationValue2.Type != JTokenType.Null)
-                                    {
-                                        VirtualNetworkConfiguration vpnConfigurationInstance = new VirtualNetworkConfiguration();
-                                        additionalRegionInstance.VirtualNetworkConfiguration = vpnConfigurationInstance;
-                                        
-                                        JToken vnetidValue = vpnConfigurationValue2["vnetid"];
-                                        if (vnetidValue != null && vnetidValue.Type != JTokenType.Null)
-                                        {
-                                            Guid vnetidInstance = Guid.Parse(((string)vnetidValue));
-                                            vpnConfigurationInstance.VnetId = vnetidInstance;
-                                        }
-                                        
-                                        JToken subnetnameValue = vpnConfigurationValue2["subnetname"];
-                                        if (subnetnameValue != null && subnetnameValue.Type != JTokenType.Null)
-                                        {
-                                            string subnetnameInstance = ((string)subnetnameValue);
-                                            vpnConfigurationInstance.SubnetName = subnetnameInstance;
-                                        }
-                                        
-                                        JToken locationValue3 = vpnConfigurationValue2["location"];
-                                        if (locationValue3 != null && locationValue3.Type != JTokenType.Null)
-                                        {
-                                            string locationInstance3 = ((string)locationValue3);
-                                            vpnConfigurationInstance.Location = locationInstance3;
-                                        }
-                                    }
+                                    string detailsKey = ((string)property2.Name);
+                                    string detailsValue = ((string)property2.Value);
+                                    errorInstance.Details.Add(detailsKey, detailsValue);
                                 }
                             }
                         }
                         
-                        ApiManagementError errorInstance = new ApiManagementError();
-                        result.Error = errorInstance;
-                        
-                        JToken codeValue = responseDoc["code"];
-                        if (codeValue != null && codeValue.Type != JTokenType.Null)
-                        {
-                            string codeInstance = ((string)codeValue);
-                            errorInstance.Code = codeInstance;
-                        }
-                        
-                        JToken messageValue = responseDoc["message"];
-                        if (messageValue != null && messageValue.Type != JTokenType.Null)
-                        {
-                            string messageInstance = ((string)messageValue);
-                            errorInstance.Message = messageInstance;
-                        }
-                        
-                        JToken detailsSequenceElement = ((JToken)responseDoc["details"]);
-                        if (detailsSequenceElement != null && detailsSequenceElement.Type != JTokenType.Null)
-                        {
-                            foreach (JProperty property2 in detailsSequenceElement)
-                            {
-                                string detailsKey = ((string)property2.Name);
-                                string detailsValue = ((string)property2.Value);
-                                errorInstance.Details.Add(detailsKey, detailsValue);
-                            }
-                        }
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("Location"))
                     {
@@ -992,7 +981,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -1054,20 +1043,20 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "BeginManagingScaleAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "BeginManagingScaleAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourceGroups/" + resourceGroupName.Trim() + "/providers/Microsoft.ApiManagement/service/" + name.Trim() + "/managescale?";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourceGroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.ApiManagement/service/" + Uri.EscapeDataString(name) + "/managescale?";
             url = url + "api-version=2014-02-14";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -1114,28 +1103,77 @@ namespace Microsoft.Azure.Management.ApiManagement
                 
                 if (parameters.AdditionalRegions != null)
                 {
-                    apiServiceManageScaleParametersValue["additionalLocations"] = parameters.AdditionalRegions.ToString();
+                    if (parameters.AdditionalRegions is ILazyCollection == false || ((ILazyCollection)parameters.AdditionalRegions).IsInitialized)
+                    {
+                        JArray additionalLocationsArray = new JArray();
+                        foreach (AdditionalRegion additionalLocationsItem in parameters.AdditionalRegions)
+                        {
+                            if (additionalLocationsItem.Location != null)
+                            {
+                                requestDoc["location"] = additionalLocationsItem.Location;
+                            }
+                            
+                            requestDoc["skuType"] = additionalLocationsItem.SkuType.ToString();
+                            
+                            if (additionalLocationsItem.SkuUnitCount != null)
+                            {
+                                requestDoc["skuUnitCount"] = additionalLocationsItem.SkuUnitCount.Value;
+                            }
+                            
+                            if (additionalLocationsItem.StaticIPs != null)
+                            {
+                                if (additionalLocationsItem.StaticIPs is ILazyCollection == false || ((ILazyCollection)additionalLocationsItem.StaticIPs).IsInitialized)
+                                {
+                                    JArray staticIPsArray = new JArray();
+                                    foreach (string staticIPsItem in additionalLocationsItem.StaticIPs)
+                                    {
+                                        staticIPsArray.Add(staticIPsItem);
+                                    }
+                                    requestDoc = staticIPsArray;
+                                }
+                            }
+                            
+                            if (additionalLocationsItem.VirtualNetworkConfiguration != null)
+                            {
+                                JObject vpnConfigurationValue = new JObject();
+                                requestDoc["vpnConfiguration"] = vpnConfigurationValue;
+                                
+                                vpnConfigurationValue["vnetid"] = additionalLocationsItem.VirtualNetworkConfiguration.VnetId.ToString();
+                                
+                                if (additionalLocationsItem.VirtualNetworkConfiguration.SubnetName != null)
+                                {
+                                    vpnConfigurationValue["subnetname"] = additionalLocationsItem.VirtualNetworkConfiguration.SubnetName;
+                                }
+                                
+                                if (additionalLocationsItem.VirtualNetworkConfiguration.Location != null)
+                                {
+                                    vpnConfigurationValue["location"] = additionalLocationsItem.VirtualNetworkConfiguration.Location;
+                                }
+                            }
+                        }
+                        apiServiceManageScaleParametersValue["additionalLocations"] = additionalLocationsArray;
+                    }
                 }
                 
                 if (parameters.VirtualNetworkConfiguration != null)
                 {
-                    JObject vpnConfigurationValue = new JObject();
-                    apiServiceManageScaleParametersValue["vpnConfiguration"] = vpnConfigurationValue;
+                    JObject vpnConfigurationValue2 = new JObject();
+                    apiServiceManageScaleParametersValue["vpnConfiguration"] = vpnConfigurationValue2;
                     
-                    vpnConfigurationValue["vnetid"] = parameters.VirtualNetworkConfiguration.VnetId.ToString();
+                    vpnConfigurationValue2["vnetid"] = parameters.VirtualNetworkConfiguration.VnetId.ToString();
                     
                     if (parameters.VirtualNetworkConfiguration.SubnetName != null)
                     {
-                        vpnConfigurationValue["subnetname"] = parameters.VirtualNetworkConfiguration.SubnetName;
+                        vpnConfigurationValue2["subnetname"] = parameters.VirtualNetworkConfiguration.SubnetName;
                     }
                     
                     if (parameters.VirtualNetworkConfiguration.Location != null)
                     {
-                        vpnConfigurationValue["location"] = parameters.VirtualNetworkConfiguration.Location;
+                        vpnConfigurationValue2["location"] = parameters.VirtualNetworkConfiguration.Location;
                     }
                 }
                 
-                requestContent = requestDoc.ToString(Formatting.Indented);
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
                 
@@ -1145,13 +1183,13 @@ namespace Microsoft.Azure.Management.ApiManagement
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted)
@@ -1160,13 +1198,14 @@ namespace Microsoft.Azure.Management.ApiManagement
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
                     LongRunningOperationResponse result = null;
+                    // Deserialize Response
                     result = new LongRunningOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("Location"))
@@ -1192,7 +1231,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -1251,20 +1290,20 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "BeginManagingVirtualNetworksAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "BeginManagingVirtualNetworksAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourceGroups/" + resourceGroupName.Trim() + "/providers/Microsoft.ApiManagement/service/" + name.Trim() + "/managevpn?";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourceGroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.ApiManagement/service/" + Uri.EscapeDataString(name) + "/managevpn?";
             url = url + "api-version=2014-02-14";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -1302,10 +1341,28 @@ namespace Microsoft.Azure.Management.ApiManagement
                 
                 if (parameters.VirtualNetworkConfigurations != null)
                 {
-                    apiServiceManageVirtualNetworksParametersValue["vpnconfigurations"] = parameters.VirtualNetworkConfigurations.ToString();
+                    if (parameters.VirtualNetworkConfigurations is ILazyCollection == false || ((ILazyCollection)parameters.VirtualNetworkConfigurations).IsInitialized)
+                    {
+                        JArray vpnconfigurationsArray = new JArray();
+                        foreach (VirtualNetworkConfiguration vpnconfigurationsItem in parameters.VirtualNetworkConfigurations)
+                        {
+                            requestDoc["vnetid"] = vpnconfigurationsItem.VnetId.ToString();
+                            
+                            if (vpnconfigurationsItem.SubnetName != null)
+                            {
+                                requestDoc["subnetname"] = vpnconfigurationsItem.SubnetName;
+                            }
+                            
+                            if (vpnconfigurationsItem.Location != null)
+                            {
+                                requestDoc["location"] = vpnconfigurationsItem.Location;
+                            }
+                        }
+                        apiServiceManageVirtualNetworksParametersValue["vpnconfigurations"] = vpnconfigurationsArray;
+                    }
                 }
                 
-                requestContent = requestDoc.ToString(Formatting.Indented);
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
                 
@@ -1315,13 +1372,13 @@ namespace Microsoft.Azure.Management.ApiManagement
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted)
@@ -1330,13 +1387,14 @@ namespace Microsoft.Azure.Management.ApiManagement
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
                     LongRunningOperationResponse result = null;
+                    // Deserialize Response
                     result = new LongRunningOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("Location"))
@@ -1362,7 +1420,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -1437,20 +1495,20 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "BeginRestoringAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "BeginRestoringAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourceGroups/" + resourceGroupName.Trim() + "/providers/Microsoft.ApiManagement/service/" + name.Trim() + "/restore?";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourceGroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.ApiManagement/service/" + Uri.EscapeDataString(name) + "/restore?";
             url = url + "api-version=2014-02-14";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -1494,7 +1552,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                 
                 apiServiceBackupRestoreParametersValue["backupName"] = parameters.BackupName;
                 
-                requestContent = requestDoc.ToString(Formatting.Indented);
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
                 
@@ -1504,13 +1562,13 @@ namespace Microsoft.Azure.Management.ApiManagement
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted)
@@ -1519,13 +1577,14 @@ namespace Microsoft.Azure.Management.ApiManagement
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
                     LongRunningOperationResponse result = null;
+                    // Deserialize Response
                     result = new LongRunningOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("Location"))
@@ -1551,7 +1610,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -1631,20 +1690,20 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "BeginUpdatingHostnameAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "BeginUpdatingHostnameAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourceGroups/" + resourceGroupName.Trim() + "/providers/Microsoft.ApiManagement/service/" + name.Trim() + "/updatehostname?";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourceGroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.ApiManagement/service/" + Uri.EscapeDataString(name) + "/updatehostname?";
             url = url + "api-version=2014-02-14";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -1682,15 +1741,42 @@ namespace Microsoft.Azure.Management.ApiManagement
                 
                 if (parameters.HostnamesToCreateOrUpdate != null)
                 {
-                    apiServiceUpdateHostnameParametersValue["update"] = parameters.HostnamesToCreateOrUpdate.ToString();
+                    if (parameters.HostnamesToCreateOrUpdate is ILazyCollection == false || ((ILazyCollection)parameters.HostnamesToCreateOrUpdate).IsInitialized)
+                    {
+                        JArray updateArray = new JArray();
+                        foreach (HostnameConfiguration updateItem in parameters.HostnamesToCreateOrUpdate)
+                        {
+                            requestDoc["type"] = updateItem.Type.ToString();
+                            
+                            requestDoc["hostname"] = updateItem.Hostname;
+                            
+                            JObject certificateValue = new JObject();
+                            requestDoc["certificate"] = certificateValue;
+                            
+                            certificateValue["expiry"] = updateItem.Certificate.Expiry;
+                            
+                            certificateValue["thumbprint"] = updateItem.Certificate.Thumbprint;
+                            
+                            certificateValue["subject"] = updateItem.Certificate.Subject;
+                        }
+                        apiServiceUpdateHostnameParametersValue["update"] = updateArray;
+                    }
                 }
                 
                 if (parameters.HostnamesToDelete != null)
                 {
-                    apiServiceUpdateHostnameParametersValue["delete"] = parameters.HostnamesToDelete.ToString();
+                    if (parameters.HostnamesToDelete is ILazyCollection == false || ((ILazyCollection)parameters.HostnamesToDelete).IsInitialized)
+                    {
+                        JArray deleteArray = new JArray();
+                        foreach (HostnameType deleteItem in parameters.HostnamesToDelete)
+                        {
+                            deleteArray.Add(((int)deleteItem));
+                        }
+                        apiServiceUpdateHostnameParametersValue["delete"] = deleteArray;
+                    }
                 }
                 
-                requestContent = requestDoc.ToString(Formatting.Indented);
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
                 
@@ -1700,13 +1786,13 @@ namespace Microsoft.Azure.Management.ApiManagement
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted)
@@ -1715,13 +1801,14 @@ namespace Microsoft.Azure.Management.ApiManagement
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
                     LongRunningOperationResponse result = null;
+                    // Deserialize Response
                     result = new LongRunningOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("Location"))
@@ -1747,7 +1834,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -1805,20 +1892,20 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "BeginUpdatingSkuAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "BeginUpdatingSkuAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourceGroups/" + resourceGroupName.Trim() + "/providers/Microsoft.ApiManagement/service/" + name.Trim() + "/updatesku?";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourceGroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.ApiManagement/service/" + Uri.EscapeDataString(name) + "/updatesku?";
             url = url + "api-version=2014-02-14";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -1860,7 +1947,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                 
                 apiServiceUpdateSkuParametersValue["updateOperationType"] = parameters.UpdateSkuOperationType.ToString();
                 
-                requestContent = requestDoc.ToString(Formatting.Indented);
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
                 
@@ -1870,13 +1957,13 @@ namespace Microsoft.Azure.Management.ApiManagement
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted)
@@ -1885,13 +1972,14 @@ namespace Microsoft.Azure.Management.ApiManagement
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
                     LongRunningOperationResponse result = null;
+                    // Deserialize Response
                     result = new LongRunningOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("Location"))
@@ -1917,7 +2005,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -1996,20 +2084,20 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "CheckCustomHostnameAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "CheckCustomHostnameAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourceGroups/" + resourceGroupName.Trim() + "/providers/Microsoft.ApiManagement/service/" + name.Trim() + "/checkcustomhostname?";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourceGroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.ApiManagement/service/" + Uri.EscapeDataString(name) + "/checkcustomhostname?";
             url = url + "api-version=2014-02-14";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -2047,10 +2135,29 @@ namespace Microsoft.Azure.Management.ApiManagement
                 
                 if (parameters.HostnamesToCheck != null)
                 {
-                    apiServiceCheckCustomHostnameParametersValue["update"] = parameters.HostnamesToCheck.ToString();
+                    if (parameters.HostnamesToCheck is ILazyCollection == false || ((ILazyCollection)parameters.HostnamesToCheck).IsInitialized)
+                    {
+                        JArray updateArray = new JArray();
+                        foreach (HostnameConfiguration updateItem in parameters.HostnamesToCheck)
+                        {
+                            requestDoc["type"] = updateItem.Type.ToString();
+                            
+                            requestDoc["hostname"] = updateItem.Hostname;
+                            
+                            JObject certificateValue = new JObject();
+                            requestDoc["certificate"] = certificateValue;
+                            
+                            certificateValue["expiry"] = updateItem.Certificate.Expiry;
+                            
+                            certificateValue["thumbprint"] = updateItem.Certificate.Thumbprint;
+                            
+                            certificateValue["subject"] = updateItem.Certificate.Subject;
+                        }
+                        apiServiceCheckCustomHostnameParametersValue["update"] = updateArray;
+                    }
                 }
                 
-                requestContent = requestDoc.ToString(Formatting.Indented);
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
                 
@@ -2060,13 +2167,13 @@ namespace Microsoft.Azure.Management.ApiManagement
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -2075,7 +2182,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -2083,42 +2190,45 @@ namespace Microsoft.Azure.Management.ApiManagement
                     // Create Result
                     ApiServiceCheckCustomHostnameResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new ApiServiceCheckCustomHostnameResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        JToken valueArray = responseDoc["Value"];
-                        if (valueArray != null && valueArray.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new ApiServiceCheckCustomHostnameResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            foreach (JToken valueValue in ((JArray)valueArray))
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueArray = responseDoc["Value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
                             {
-                                CheckCustomHostnameResult checkCustomHostnameResultInstance = new CheckCustomHostnameResult();
-                                result.Value.Add(checkCustomHostnameResultInstance);
-                                
-                                JToken hostnameValue = valueValue["hostname"];
-                                if (hostnameValue != null && hostnameValue.Type != JTokenType.Null)
+                                foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    string hostnameInstance = ((string)hostnameValue);
-                                    checkCustomHostnameResultInstance.Hostname = hostnameInstance;
-                                }
-                                
-                                JToken isMappedValue = valueValue["isMapped"];
-                                if (isMappedValue != null && isMappedValue.Type != JTokenType.Null)
-                                {
-                                    bool isMappedInstance = ((bool)isMappedValue);
-                                    checkCustomHostnameResultInstance.IsMapped = isMappedInstance;
+                                    CheckCustomHostnameResult checkCustomHostnameResultInstance = new CheckCustomHostnameResult();
+                                    result.Value.Add(checkCustomHostnameResultInstance);
+                                    
+                                    JToken hostnameValue = valueValue["hostname"];
+                                    if (hostnameValue != null && hostnameValue.Type != JTokenType.Null)
+                                    {
+                                        string hostnameInstance = ((string)hostnameValue);
+                                        checkCustomHostnameResultInstance.Hostname = hostnameInstance;
+                                    }
+                                    
+                                    JToken isMappedValue = valueValue["isMapped"];
+                                    if (isMappedValue != null && isMappedValue.Type != JTokenType.Null)
+                                    {
+                                        bool isMappedInstance = ((bool)isMappedValue);
+                                        checkCustomHostnameResultInstance.IsMapped = isMappedInstance;
+                                    }
                                 }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -2127,7 +2237,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -2175,18 +2285,18 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "CheckServiceNameAvailabilityAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "CheckServiceNameAvailabilityAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/providers/Microsoft.ApiManagement/checkServiceNameAvailability?";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/providers/Microsoft.ApiManagement/checkServiceNameAvailability?";
             url = url + "api-version=2014-02-14";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -2224,7 +2334,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                 
                 apiServiceCheckNameAvailabilityParametersValue["name"] = parameters.Name;
                 
-                requestContent = requestDoc.ToString(Formatting.Indented);
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
                 
@@ -2234,13 +2344,13 @@ namespace Microsoft.Azure.Management.ApiManagement
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -2249,7 +2359,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -2257,32 +2367,35 @@ namespace Microsoft.Azure.Management.ApiManagement
                     // Create Result
                     ApiServiceCheckNameAvailabilityResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new ApiServiceCheckNameAvailabilityResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        JToken isAvailableValue = responseDoc["isAvailable"];
-                        if (isAvailableValue != null && isAvailableValue.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new ApiServiceCheckNameAvailabilityResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            bool isAvailableInstance = ((bool)isAvailableValue);
-                            result.IsAvailable = isAvailableInstance;
+                            responseDoc = JToken.Parse(responseContent);
                         }
                         
-                        JToken reasonValue = responseDoc["reason"];
-                        if (reasonValue != null && reasonValue.Type != JTokenType.Null)
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            string reasonInstance = ((string)reasonValue);
-                            result.Reason = reasonInstance;
+                            JToken isAvailableValue = responseDoc["isAvailable"];
+                            if (isAvailableValue != null && isAvailableValue.Type != JTokenType.Null)
+                            {
+                                bool isAvailableInstance = ((bool)isAvailableValue);
+                                result.IsAvailable = isAvailableInstance;
+                            }
+                            
+                            JToken reasonValue = responseDoc["reason"];
+                            if (reasonValue != null && reasonValue.Type != JTokenType.Null)
+                            {
+                                string reasonInstance = ((string)reasonValue);
+                                result.Reason = reasonInstance;
+                            }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -2291,7 +2404,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -2335,72 +2448,58 @@ namespace Microsoft.Azure.Management.ApiManagement
         public async Task<ApiServiceLongRunningOperationResponse> CreateOrUpdateAsync(string resourceGroupName, string name, ApiServiceCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
         {
             ApiManagementClient client = this.Client;
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "CreateOrUpdateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "CreateOrUpdateAsync", tracingParameters);
             }
-            try
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            ApiServiceLongRunningOperationResponse response = await client.ApiManagement.BeginCreatingOrUpdatingAsync(resourceGroupName, name, parameters, cancellationToken).ConfigureAwait(false);
+            if (response.Status == OperationStatus.Succeeded)
             {
-                if (shouldTrace)
-                {
-                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
-                }
-                
+                return response;
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            ApiServiceLongRunningOperationResponse result = await client.ApiManagement.GetApiServiceLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = response.RetryAfter;
+            if (delayInSeconds == 0)
+            {
+                delayInSeconds = 60;
+            }
+            if (client.LongRunningOperationInitialTimeout >= 0)
+            {
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
+            }
+            while ((result.Status != OperationStatus.InProgress) == false)
+            {
                 cancellationToken.ThrowIfCancellationRequested();
-                ApiServiceLongRunningOperationResponse response = await client.ApiManagement.BeginCreatingOrUpdatingAsync(resourceGroupName, name, parameters, cancellationToken).ConfigureAwait(false);
-                if (response.Status == OperationStatus.Succeeded)
-                {
-                    return response;
-                }
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
-                ApiServiceLongRunningOperationResponse result = await client.ApiManagement.GetApiServiceLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
-                int delayInSeconds = response.RetryAfter;
+                result = await client.ApiManagement.GetApiServiceLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = result.RetryAfter;
                 if (delayInSeconds == 0)
                 {
                     delayInSeconds = 60;
                 }
-                if (client.LongRunningOperationInitialTimeout >= 0)
+                if (client.LongRunningOperationRetryTimeout >= 0)
                 {
-                    delayInSeconds = client.LongRunningOperationInitialTimeout;
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
                 }
-                while ((result.Status != OperationStatus.InProgress) == false)
-                {
-                    cancellationToken.ThrowIfCancellationRequested();
-                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    result = await client.ApiManagement.GetApiServiceLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
-                    delayInSeconds = result.RetryAfter;
-                    if (delayInSeconds == 0)
-                    {
-                        delayInSeconds = 60;
-                    }
-                    if (client.LongRunningOperationRetryTimeout >= 0)
-                    {
-                        delayInSeconds = client.LongRunningOperationRetryTimeout;
-                    }
-                }
-                
-                if (shouldTrace)
-                {
-                    Tracing.Exit(invocationId, result);
-                }
-                
-                return result;
             }
-            finally
+            
+            if (shouldTrace)
             {
-                if (client != null && shouldTrace)
-                {
-                    client.Dispose();
-                }
+                TracingAdapter.Exit(invocationId, result);
             }
+            
+            return result;
         }
         
         /// <summary>
@@ -2419,7 +2518,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> DeleteAsync(string resourceGroupName, string name, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> DeleteAsync(string resourceGroupName, string name, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -2432,19 +2531,19 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
-                Tracing.Enter(invocationId, this, "DeleteAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "DeleteAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourceGroups/" + resourceGroupName.Trim() + "/providers/Microsoft.ApiManagement/service/" + name.Trim() + "?";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourceGroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.ApiManagement/service/" + Uri.EscapeDataString(name) + "?";
             url = url + "api-version=2014-02-14";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -2479,13 +2578,13 @@ namespace Microsoft.Azure.Management.ApiManagement
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.NoContent)
@@ -2494,14 +2593,15 @@ namespace Microsoft.Azure.Management.ApiManagement
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
-                    OperationResponse result = null;
-                    result = new OperationResponse();
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -2510,7 +2610,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -2559,19 +2659,19 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
-                Tracing.Enter(invocationId, this, "GetAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourceGroups/" + resourceGroupName.Trim() + "/providers/Microsoft.ApiManagement/service/" + name.Trim() + "?";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourceGroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.ApiManagement/service/" + Uri.EscapeDataString(name) + "?";
             url = url + "api-version=2014-02-14";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -2606,13 +2706,13 @@ namespace Microsoft.Azure.Management.ApiManagement
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -2621,7 +2721,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -2629,294 +2729,297 @@ namespace Microsoft.Azure.Management.ApiManagement
                     // Create Result
                     ApiServiceGetResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new ApiServiceGetResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        ApiServiceResource valueInstance = new ApiServiceResource();
-                        result.Value = valueInstance;
-                        
-                        JToken idValue = responseDoc["id"];
-                        if (idValue != null && idValue.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new ApiServiceGetResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            string idInstance = ((string)idValue);
-                            valueInstance.Id = idInstance;
+                            responseDoc = JToken.Parse(responseContent);
                         }
                         
-                        JToken locationValue = responseDoc["location"];
-                        if (locationValue != null && locationValue.Type != JTokenType.Null)
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            string locationInstance = ((string)locationValue);
-                            valueInstance.Location = locationInstance;
-                        }
-                        
-                        JToken nameValue = responseDoc["name"];
-                        if (nameValue != null && nameValue.Type != JTokenType.Null)
-                        {
-                            string nameInstance = ((string)nameValue);
-                            valueInstance.Name = nameInstance;
-                        }
-                        
-                        JToken typeValue = responseDoc["type"];
-                        if (typeValue != null && typeValue.Type != JTokenType.Null)
-                        {
-                            string typeInstance = ((string)typeValue);
-                            valueInstance.Type = typeInstance;
-                        }
-                        
-                        JToken subscriptionIdValue = responseDoc["subscriptionId"];
-                        if (subscriptionIdValue != null && subscriptionIdValue.Type != JTokenType.Null)
-                        {
-                            string subscriptionIdInstance = ((string)subscriptionIdValue);
-                            valueInstance.SubscriptionId = subscriptionIdInstance;
-                        }
-                        
-                        JToken resourceGroupNameValue = responseDoc["resourceGroupName"];
-                        if (resourceGroupNameValue != null && resourceGroupNameValue.Type != JTokenType.Null)
-                        {
-                            string resourceGroupNameInstance = ((string)resourceGroupNameValue);
-                            valueInstance.ResourceGroupName = resourceGroupNameInstance;
-                        }
-                        
-                        JToken etagValue = responseDoc["etag"];
-                        if (etagValue != null && etagValue.Type != JTokenType.Null)
-                        {
-                            string etagInstance = ((string)etagValue);
-                            valueInstance.ETag = etagInstance;
-                        }
-                        
-                        JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
-                        if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                        {
-                            foreach (JProperty property in tagsSequenceElement)
-                            {
-                                string tagsKey = ((string)property.Name);
-                                string tagsValue = ((string)property.Value);
-                                valueInstance.Tags.Add(tagsKey, tagsValue);
-                            }
-                        }
-                        
-                        JToken propertiesValue = responseDoc["properties"];
-                        if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                        {
-                            ApiServiceProperties propertiesInstance = new ApiServiceProperties();
-                            valueInstance.Properties = propertiesInstance;
+                            ApiServiceResource valueInstance = new ApiServiceResource();
+                            result.Value = valueInstance;
                             
-                            JToken publisherEmailValue = propertiesValue["publisherEmail"];
-                            if (publisherEmailValue != null && publisherEmailValue.Type != JTokenType.Null)
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
                             {
-                                string publisherEmailInstance = ((string)publisherEmailValue);
-                                propertiesInstance.PublisherEmail = publisherEmailInstance;
+                                string idInstance = ((string)idValue);
+                                valueInstance.Id = idInstance;
                             }
                             
-                            JToken publisherNameValue = propertiesValue["publisherName"];
-                            if (publisherNameValue != null && publisherNameValue.Type != JTokenType.Null)
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
                             {
-                                string publisherNameInstance = ((string)publisherNameValue);
-                                propertiesInstance.PublisherName = publisherNameInstance;
+                                string locationInstance = ((string)locationValue);
+                                valueInstance.Location = locationInstance;
                             }
                             
-                            JToken skuValue = propertiesValue["sku"];
-                            if (skuValue != null && skuValue.Type != JTokenType.Null)
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
                             {
-                                ApiServiceSkuProperties skuInstance = new ApiServiceSkuProperties();
-                                propertiesInstance.SkuProperties = skuInstance;
-                                
-                                JToken nameValue2 = skuValue["name"];
-                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                string nameInstance = ((string)nameValue);
+                                valueInstance.Name = nameInstance;
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                valueInstance.Type = typeInstance;
+                            }
+                            
+                            JToken subscriptionIdValue = responseDoc["subscriptionId"];
+                            if (subscriptionIdValue != null && subscriptionIdValue.Type != JTokenType.Null)
+                            {
+                                string subscriptionIdInstance = ((string)subscriptionIdValue);
+                                valueInstance.SubscriptionId = subscriptionIdInstance;
+                            }
+                            
+                            JToken resourceGroupNameValue = responseDoc["resourceGroupName"];
+                            if (resourceGroupNameValue != null && resourceGroupNameValue.Type != JTokenType.Null)
+                            {
+                                string resourceGroupNameInstance = ((string)resourceGroupNameValue);
+                                valueInstance.ResourceGroupName = resourceGroupNameInstance;
+                            }
+                            
+                            JToken etagValue = responseDoc["etag"];
+                            if (etagValue != null && etagValue.Type != JTokenType.Null)
+                            {
+                                string etagInstance = ((string)etagValue);
+                                valueInstance.ETag = etagInstance;
+                            }
+                            
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property in tagsSequenceElement)
                                 {
-                                    SkuType nameInstance2 = ((SkuType)Enum.Parse(typeof(SkuType), ((string)nameValue2), true));
-                                    skuInstance.SkuType = nameInstance2;
+                                    string tagsKey = ((string)property.Name);
+                                    string tagsValue = ((string)property.Value);
+                                    valueInstance.Tags.Add(tagsKey, tagsValue);
+                                }
+                            }
+                            
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                            {
+                                ApiServiceProperties propertiesInstance = new ApiServiceProperties();
+                                valueInstance.Properties = propertiesInstance;
+                                
+                                JToken publisherEmailValue = propertiesValue["publisherEmail"];
+                                if (publisherEmailValue != null && publisherEmailValue.Type != JTokenType.Null)
+                                {
+                                    string publisherEmailInstance = ((string)publisherEmailValue);
+                                    propertiesInstance.PublisherEmail = publisherEmailInstance;
                                 }
                                 
-                                JToken capacityValue = skuValue["capacity"];
-                                if (capacityValue != null && capacityValue.Type != JTokenType.Null)
+                                JToken publisherNameValue = propertiesValue["publisherName"];
+                                if (publisherNameValue != null && publisherNameValue.Type != JTokenType.Null)
                                 {
-                                    int capacityInstance = ((int)capacityValue);
-                                    skuInstance.Capacity = capacityInstance;
+                                    string publisherNameInstance = ((string)publisherNameValue);
+                                    propertiesInstance.PublisherName = publisherNameInstance;
                                 }
-                            }
-                            
-                            JToken provisioningStateValue = propertiesValue["provisioningState"];
-                            if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
-                            {
-                                string provisioningStateInstance = ((string)provisioningStateValue);
-                                propertiesInstance.ProvisioningState = provisioningStateInstance;
-                            }
-                            
-                            JToken targetProvisioningStateValue = propertiesValue["targetProvisioningState"];
-                            if (targetProvisioningStateValue != null && targetProvisioningStateValue.Type != JTokenType.Null)
-                            {
-                                string targetProvisioningStateInstance = ((string)targetProvisioningStateValue);
-                                propertiesInstance.TargetProvisioningState = targetProvisioningStateInstance;
-                            }
-                            
-                            JToken createdAtUtcValue = propertiesValue["createdAtUtc"];
-                            if (createdAtUtcValue != null && createdAtUtcValue.Type != JTokenType.Null)
-                            {
-                                DateTime createdAtUtcInstance = ((DateTime)createdAtUtcValue);
-                                propertiesInstance.CreatedAtUtc = createdAtUtcInstance;
-                            }
-                            
-                            JToken runtimeUrlValue = propertiesValue["runtimeUrl"];
-                            if (runtimeUrlValue != null && runtimeUrlValue.Type != JTokenType.Null)
-                            {
-                                string runtimeUrlInstance = ((string)runtimeUrlValue);
-                                propertiesInstance.ProxyEndpoint = runtimeUrlInstance;
-                            }
-                            
-                            JToken portalUrlValue = propertiesValue["portalUrl"];
-                            if (portalUrlValue != null && portalUrlValue.Type != JTokenType.Null)
-                            {
-                                string portalUrlInstance = ((string)portalUrlValue);
-                                propertiesInstance.ManagementPortalEndpoint = portalUrlInstance;
-                            }
-                            
-                            JToken addresserEmailValue = propertiesValue["addresserEmail"];
-                            if (addresserEmailValue != null && addresserEmailValue.Type != JTokenType.Null)
-                            {
-                                string addresserEmailInstance = ((string)addresserEmailValue);
-                                propertiesInstance.AddresserEmail = addresserEmailInstance;
-                            }
-                            
-                            JToken hostnameConfigurationsArray = propertiesValue["hostnameConfigurations"];
-                            if (hostnameConfigurationsArray != null && hostnameConfigurationsArray.Type != JTokenType.Null)
-                            {
-                                foreach (JToken hostnameConfigurationsValue in ((JArray)hostnameConfigurationsArray))
+                                
+                                JToken skuValue = propertiesValue["sku"];
+                                if (skuValue != null && skuValue.Type != JTokenType.Null)
                                 {
-                                    HostnameConfiguration hostnameConfigurationInstance = new HostnameConfiguration();
-                                    propertiesInstance.HostnameConfigurations.Add(hostnameConfigurationInstance);
+                                    ApiServiceSkuProperties skuInstance = new ApiServiceSkuProperties();
+                                    propertiesInstance.SkuProperties = skuInstance;
                                     
-                                    JToken typeValue2 = hostnameConfigurationsValue["type"];
-                                    if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                                    JToken nameValue2 = skuValue["name"];
+                                    if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
                                     {
-                                        HostnameType typeInstance2 = ((HostnameType)Enum.Parse(typeof(HostnameType), ((string)typeValue2), true));
-                                        hostnameConfigurationInstance.Type = typeInstance2;
+                                        SkuType nameInstance2 = ((SkuType)Enum.Parse(typeof(SkuType), ((string)nameValue2), true));
+                                        skuInstance.SkuType = nameInstance2;
                                     }
                                     
-                                    JToken hostnameValue = hostnameConfigurationsValue["hostname"];
-                                    if (hostnameValue != null && hostnameValue.Type != JTokenType.Null)
+                                    JToken capacityValue = skuValue["capacity"];
+                                    if (capacityValue != null && capacityValue.Type != JTokenType.Null)
                                     {
-                                        string hostnameInstance = ((string)hostnameValue);
-                                        hostnameConfigurationInstance.Hostname = hostnameInstance;
-                                    }
-                                    
-                                    JToken certificateValue = hostnameConfigurationsValue["certificate"];
-                                    if (certificateValue != null && certificateValue.Type != JTokenType.Null)
-                                    {
-                                        CertificateInformation certificateInstance = new CertificateInformation();
-                                        hostnameConfigurationInstance.Certificate = certificateInstance;
-                                        
-                                        JToken expiryValue = certificateValue["expiry"];
-                                        if (expiryValue != null && expiryValue.Type != JTokenType.Null)
-                                        {
-                                            DateTime expiryInstance = ((DateTime)expiryValue);
-                                            certificateInstance.Expiry = expiryInstance;
-                                        }
-                                        
-                                        JToken thumbprintValue = certificateValue["thumbprint"];
-                                        if (thumbprintValue != null && thumbprintValue.Type != JTokenType.Null)
-                                        {
-                                            string thumbprintInstance = ((string)thumbprintValue);
-                                            certificateInstance.Thumbprint = thumbprintInstance;
-                                        }
-                                        
-                                        JToken subjectValue = certificateValue["subject"];
-                                        if (subjectValue != null && subjectValue.Type != JTokenType.Null)
-                                        {
-                                            string subjectInstance = ((string)subjectValue);
-                                            certificateInstance.Subject = subjectInstance;
-                                        }
+                                        int capacityInstance = ((int)capacityValue);
+                                        skuInstance.Capacity = capacityInstance;
                                     }
                                 }
-                            }
-                            
-                            JToken staticIPsArray = propertiesValue["staticIPs"];
-                            if (staticIPsArray != null && staticIPsArray.Type != JTokenType.Null)
-                            {
-                                foreach (JToken staticIPsValue in ((JArray)staticIPsArray))
+                                
+                                JToken provisioningStateValue = propertiesValue["provisioningState"];
+                                if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
                                 {
-                                    propertiesInstance.StaticIPs.Add(((string)staticIPsValue));
+                                    string provisioningStateInstance = ((string)provisioningStateValue);
+                                    propertiesInstance.ProvisioningState = provisioningStateInstance;
                                 }
-                            }
-                            
-                            JToken additionalLocationsArray = propertiesValue["additionalLocations"];
-                            if (additionalLocationsArray != null && additionalLocationsArray.Type != JTokenType.Null)
-                            {
-                                foreach (JToken additionalLocationsValue in ((JArray)additionalLocationsArray))
+                                
+                                JToken targetProvisioningStateValue = propertiesValue["targetProvisioningState"];
+                                if (targetProvisioningStateValue != null && targetProvisioningStateValue.Type != JTokenType.Null)
                                 {
-                                    AdditionalRegion additionalRegionInstance = new AdditionalRegion();
-                                    propertiesInstance.AdditionalRegions.Add(additionalRegionInstance);
-                                    
-                                    JToken locationValue2 = additionalLocationsValue["location"];
-                                    if (locationValue2 != null && locationValue2.Type != JTokenType.Null)
+                                    string targetProvisioningStateInstance = ((string)targetProvisioningStateValue);
+                                    propertiesInstance.TargetProvisioningState = targetProvisioningStateInstance;
+                                }
+                                
+                                JToken createdAtUtcValue = propertiesValue["createdAtUtc"];
+                                if (createdAtUtcValue != null && createdAtUtcValue.Type != JTokenType.Null)
+                                {
+                                    DateTime createdAtUtcInstance = ((DateTime)createdAtUtcValue);
+                                    propertiesInstance.CreatedAtUtc = createdAtUtcInstance;
+                                }
+                                
+                                JToken runtimeUrlValue = propertiesValue["runtimeUrl"];
+                                if (runtimeUrlValue != null && runtimeUrlValue.Type != JTokenType.Null)
+                                {
+                                    string runtimeUrlInstance = ((string)runtimeUrlValue);
+                                    propertiesInstance.ProxyEndpoint = runtimeUrlInstance;
+                                }
+                                
+                                JToken portalUrlValue = propertiesValue["portalUrl"];
+                                if (portalUrlValue != null && portalUrlValue.Type != JTokenType.Null)
+                                {
+                                    string portalUrlInstance = ((string)portalUrlValue);
+                                    propertiesInstance.ManagementPortalEndpoint = portalUrlInstance;
+                                }
+                                
+                                JToken addresserEmailValue = propertiesValue["addresserEmail"];
+                                if (addresserEmailValue != null && addresserEmailValue.Type != JTokenType.Null)
+                                {
+                                    string addresserEmailInstance = ((string)addresserEmailValue);
+                                    propertiesInstance.AddresserEmail = addresserEmailInstance;
+                                }
+                                
+                                JToken hostnameConfigurationsArray = propertiesValue["hostnameConfigurations"];
+                                if (hostnameConfigurationsArray != null && hostnameConfigurationsArray.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken hostnameConfigurationsValue in ((JArray)hostnameConfigurationsArray))
                                     {
-                                        string locationInstance2 = ((string)locationValue2);
-                                        additionalRegionInstance.Location = locationInstance2;
-                                    }
-                                    
-                                    JToken skuTypeValue = additionalLocationsValue["skuType"];
-                                    if (skuTypeValue != null && skuTypeValue.Type != JTokenType.Null)
-                                    {
-                                        SkuType skuTypeInstance = ((SkuType)Enum.Parse(typeof(SkuType), ((string)skuTypeValue), true));
-                                        additionalRegionInstance.SkuType = skuTypeInstance;
-                                    }
-                                    
-                                    JToken skuUnitCountValue = additionalLocationsValue["skuUnitCount"];
-                                    if (skuUnitCountValue != null && skuUnitCountValue.Type != JTokenType.Null)
-                                    {
-                                        int skuUnitCountInstance = ((int)skuUnitCountValue);
-                                        additionalRegionInstance.SkuUnitCount = skuUnitCountInstance;
-                                    }
-                                    
-                                    JToken staticIPsArray2 = additionalLocationsValue["staticIPs"];
-                                    if (staticIPsArray2 != null && staticIPsArray2.Type != JTokenType.Null)
-                                    {
-                                        foreach (JToken staticIPsValue2 in ((JArray)staticIPsArray2))
-                                        {
-                                            additionalRegionInstance.StaticIPs.Add(((string)staticIPsValue2));
-                                        }
-                                    }
-                                    
-                                    JToken vpnConfigurationValue = additionalLocationsValue["vpnConfiguration"];
-                                    if (vpnConfigurationValue != null && vpnConfigurationValue.Type != JTokenType.Null)
-                                    {
-                                        VirtualNetworkConfiguration vpnConfigurationInstance = new VirtualNetworkConfiguration();
-                                        additionalRegionInstance.VirtualNetworkConfiguration = vpnConfigurationInstance;
+                                        HostnameConfiguration hostnameConfigurationInstance = new HostnameConfiguration();
+                                        propertiesInstance.HostnameConfigurations.Add(hostnameConfigurationInstance);
                                         
-                                        JToken vnetidValue = vpnConfigurationValue["vnetid"];
-                                        if (vnetidValue != null && vnetidValue.Type != JTokenType.Null)
+                                        JToken typeValue2 = hostnameConfigurationsValue["type"];
+                                        if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
                                         {
-                                            Guid vnetidInstance = Guid.Parse(((string)vnetidValue));
-                                            vpnConfigurationInstance.VnetId = vnetidInstance;
-                                        }
-                                        
-                                        JToken subnetnameValue = vpnConfigurationValue["subnetname"];
-                                        if (subnetnameValue != null && subnetnameValue.Type != JTokenType.Null)
-                                        {
-                                            string subnetnameInstance = ((string)subnetnameValue);
-                                            vpnConfigurationInstance.SubnetName = subnetnameInstance;
+                                            HostnameType typeInstance2 = ((HostnameType)Enum.Parse(typeof(HostnameType), ((string)typeValue2), true));
+                                            hostnameConfigurationInstance.Type = typeInstance2;
                                         }
                                         
-                                        JToken locationValue3 = vpnConfigurationValue["location"];
-                                        if (locationValue3 != null && locationValue3.Type != JTokenType.Null)
+                                        JToken hostnameValue = hostnameConfigurationsValue["hostname"];
+                                        if (hostnameValue != null && hostnameValue.Type != JTokenType.Null)
                                         {
-                                            string locationInstance3 = ((string)locationValue3);
-                                            vpnConfigurationInstance.Location = locationInstance3;
+                                            string hostnameInstance = ((string)hostnameValue);
+                                            hostnameConfigurationInstance.Hostname = hostnameInstance;
+                                        }
+                                        
+                                        JToken certificateValue = hostnameConfigurationsValue["certificate"];
+                                        if (certificateValue != null && certificateValue.Type != JTokenType.Null)
+                                        {
+                                            CertificateInformation certificateInstance = new CertificateInformation();
+                                            hostnameConfigurationInstance.Certificate = certificateInstance;
+                                            
+                                            JToken expiryValue = certificateValue["expiry"];
+                                            if (expiryValue != null && expiryValue.Type != JTokenType.Null)
+                                            {
+                                                DateTime expiryInstance = ((DateTime)expiryValue);
+                                                certificateInstance.Expiry = expiryInstance;
+                                            }
+                                            
+                                            JToken thumbprintValue = certificateValue["thumbprint"];
+                                            if (thumbprintValue != null && thumbprintValue.Type != JTokenType.Null)
+                                            {
+                                                string thumbprintInstance = ((string)thumbprintValue);
+                                                certificateInstance.Thumbprint = thumbprintInstance;
+                                            }
+                                            
+                                            JToken subjectValue = certificateValue["subject"];
+                                            if (subjectValue != null && subjectValue.Type != JTokenType.Null)
+                                            {
+                                                string subjectInstance = ((string)subjectValue);
+                                                certificateInstance.Subject = subjectInstance;
+                                            }
+                                        }
+                                    }
+                                }
+                                
+                                JToken staticIPsArray = propertiesValue["staticIPs"];
+                                if (staticIPsArray != null && staticIPsArray.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken staticIPsValue in ((JArray)staticIPsArray))
+                                    {
+                                        propertiesInstance.StaticIPs.Add(((string)staticIPsValue));
+                                    }
+                                }
+                                
+                                JToken additionalLocationsArray = propertiesValue["additionalLocations"];
+                                if (additionalLocationsArray != null && additionalLocationsArray.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken additionalLocationsValue in ((JArray)additionalLocationsArray))
+                                    {
+                                        AdditionalRegion additionalRegionInstance = new AdditionalRegion();
+                                        propertiesInstance.AdditionalRegions.Add(additionalRegionInstance);
+                                        
+                                        JToken locationValue2 = additionalLocationsValue["location"];
+                                        if (locationValue2 != null && locationValue2.Type != JTokenType.Null)
+                                        {
+                                            string locationInstance2 = ((string)locationValue2);
+                                            additionalRegionInstance.Location = locationInstance2;
+                                        }
+                                        
+                                        JToken skuTypeValue = additionalLocationsValue["skuType"];
+                                        if (skuTypeValue != null && skuTypeValue.Type != JTokenType.Null)
+                                        {
+                                            SkuType skuTypeInstance = ((SkuType)Enum.Parse(typeof(SkuType), ((string)skuTypeValue), true));
+                                            additionalRegionInstance.SkuType = skuTypeInstance;
+                                        }
+                                        
+                                        JToken skuUnitCountValue = additionalLocationsValue["skuUnitCount"];
+                                        if (skuUnitCountValue != null && skuUnitCountValue.Type != JTokenType.Null)
+                                        {
+                                            int skuUnitCountInstance = ((int)skuUnitCountValue);
+                                            additionalRegionInstance.SkuUnitCount = skuUnitCountInstance;
+                                        }
+                                        
+                                        JToken staticIPsArray2 = additionalLocationsValue["staticIPs"];
+                                        if (staticIPsArray2 != null && staticIPsArray2.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken staticIPsValue2 in ((JArray)staticIPsArray2))
+                                            {
+                                                additionalRegionInstance.StaticIPs.Add(((string)staticIPsValue2));
+                                            }
+                                        }
+                                        
+                                        JToken vpnConfigurationValue = additionalLocationsValue["vpnConfiguration"];
+                                        if (vpnConfigurationValue != null && vpnConfigurationValue.Type != JTokenType.Null)
+                                        {
+                                            VirtualNetworkConfiguration vpnConfigurationInstance = new VirtualNetworkConfiguration();
+                                            additionalRegionInstance.VirtualNetworkConfiguration = vpnConfigurationInstance;
+                                            
+                                            JToken vnetidValue = vpnConfigurationValue["vnetid"];
+                                            if (vnetidValue != null && vnetidValue.Type != JTokenType.Null)
+                                            {
+                                                Guid vnetidInstance = Guid.Parse(((string)vnetidValue));
+                                                vpnConfigurationInstance.VnetId = vnetidInstance;
+                                            }
+                                            
+                                            JToken subnetnameValue = vpnConfigurationValue["subnetname"];
+                                            if (subnetnameValue != null && subnetnameValue.Type != JTokenType.Null)
+                                            {
+                                                string subnetnameInstance = ((string)subnetnameValue);
+                                                vpnConfigurationInstance.SubnetName = subnetnameInstance;
+                                            }
+                                            
+                                            JToken locationValue3 = vpnConfigurationValue["location"];
+                                            if (locationValue3 != null && locationValue3.Type != JTokenType.Null)
+                                            {
+                                                string locationInstance3 = ((string)locationValue3);
+                                                vpnConfigurationInstance.Location = locationInstance3;
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -2925,7 +3028,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -2973,18 +3076,18 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("operationStatusLink", operationStatusLink);
-                Tracing.Enter(invocationId, this, "GetApiServiceLongRunningOperationStatusAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetApiServiceLongRunningOperationStatusAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = operationStatusLink.Trim();
+            string url = operationStatusLink;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -3007,13 +3110,13 @@ namespace Microsoft.Azure.Management.ApiManagement
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted)
@@ -3022,7 +3125,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -3030,322 +3133,325 @@ namespace Microsoft.Azure.Management.ApiManagement
                     // Create Result
                     ApiServiceLongRunningOperationResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new ApiServiceLongRunningOperationResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Accepted)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        ApiServiceResource valueInstance = new ApiServiceResource();
-                        result.Value = valueInstance;
-                        
-                        JToken idValue = responseDoc["id"];
-                        if (idValue != null && idValue.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new ApiServiceLongRunningOperationResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            string idInstance = ((string)idValue);
-                            valueInstance.Id = idInstance;
+                            responseDoc = JToken.Parse(responseContent);
                         }
                         
-                        JToken locationValue = responseDoc["location"];
-                        if (locationValue != null && locationValue.Type != JTokenType.Null)
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            string locationInstance = ((string)locationValue);
-                            valueInstance.Location = locationInstance;
-                        }
-                        
-                        JToken nameValue = responseDoc["name"];
-                        if (nameValue != null && nameValue.Type != JTokenType.Null)
-                        {
-                            string nameInstance = ((string)nameValue);
-                            valueInstance.Name = nameInstance;
-                        }
-                        
-                        JToken typeValue = responseDoc["type"];
-                        if (typeValue != null && typeValue.Type != JTokenType.Null)
-                        {
-                            string typeInstance = ((string)typeValue);
-                            valueInstance.Type = typeInstance;
-                        }
-                        
-                        JToken subscriptionIdValue = responseDoc["subscriptionId"];
-                        if (subscriptionIdValue != null && subscriptionIdValue.Type != JTokenType.Null)
-                        {
-                            string subscriptionIdInstance = ((string)subscriptionIdValue);
-                            valueInstance.SubscriptionId = subscriptionIdInstance;
-                        }
-                        
-                        JToken resourceGroupNameValue = responseDoc["resourceGroupName"];
-                        if (resourceGroupNameValue != null && resourceGroupNameValue.Type != JTokenType.Null)
-                        {
-                            string resourceGroupNameInstance = ((string)resourceGroupNameValue);
-                            valueInstance.ResourceGroupName = resourceGroupNameInstance;
-                        }
-                        
-                        JToken etagValue = responseDoc["etag"];
-                        if (etagValue != null && etagValue.Type != JTokenType.Null)
-                        {
-                            string etagInstance = ((string)etagValue);
-                            valueInstance.ETag = etagInstance;
-                        }
-                        
-                        JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
-                        if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                        {
-                            foreach (JProperty property in tagsSequenceElement)
-                            {
-                                string tagsKey = ((string)property.Name);
-                                string tagsValue = ((string)property.Value);
-                                valueInstance.Tags.Add(tagsKey, tagsValue);
-                            }
-                        }
-                        
-                        JToken propertiesValue = responseDoc["properties"];
-                        if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                        {
-                            ApiServiceProperties propertiesInstance = new ApiServiceProperties();
-                            valueInstance.Properties = propertiesInstance;
+                            ApiServiceResource valueInstance = new ApiServiceResource();
+                            result.Value = valueInstance;
                             
-                            JToken publisherEmailValue = propertiesValue["publisherEmail"];
-                            if (publisherEmailValue != null && publisherEmailValue.Type != JTokenType.Null)
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
                             {
-                                string publisherEmailInstance = ((string)publisherEmailValue);
-                                propertiesInstance.PublisherEmail = publisherEmailInstance;
+                                string idInstance = ((string)idValue);
+                                valueInstance.Id = idInstance;
                             }
                             
-                            JToken publisherNameValue = propertiesValue["publisherName"];
-                            if (publisherNameValue != null && publisherNameValue.Type != JTokenType.Null)
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
                             {
-                                string publisherNameInstance = ((string)publisherNameValue);
-                                propertiesInstance.PublisherName = publisherNameInstance;
+                                string locationInstance = ((string)locationValue);
+                                valueInstance.Location = locationInstance;
                             }
                             
-                            JToken skuValue = propertiesValue["sku"];
-                            if (skuValue != null && skuValue.Type != JTokenType.Null)
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
                             {
-                                ApiServiceSkuProperties skuInstance = new ApiServiceSkuProperties();
-                                propertiesInstance.SkuProperties = skuInstance;
-                                
-                                JToken nameValue2 = skuValue["name"];
-                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                string nameInstance = ((string)nameValue);
+                                valueInstance.Name = nameInstance;
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                valueInstance.Type = typeInstance;
+                            }
+                            
+                            JToken subscriptionIdValue = responseDoc["subscriptionId"];
+                            if (subscriptionIdValue != null && subscriptionIdValue.Type != JTokenType.Null)
+                            {
+                                string subscriptionIdInstance = ((string)subscriptionIdValue);
+                                valueInstance.SubscriptionId = subscriptionIdInstance;
+                            }
+                            
+                            JToken resourceGroupNameValue = responseDoc["resourceGroupName"];
+                            if (resourceGroupNameValue != null && resourceGroupNameValue.Type != JTokenType.Null)
+                            {
+                                string resourceGroupNameInstance = ((string)resourceGroupNameValue);
+                                valueInstance.ResourceGroupName = resourceGroupNameInstance;
+                            }
+                            
+                            JToken etagValue = responseDoc["etag"];
+                            if (etagValue != null && etagValue.Type != JTokenType.Null)
+                            {
+                                string etagInstance = ((string)etagValue);
+                                valueInstance.ETag = etagInstance;
+                            }
+                            
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property in tagsSequenceElement)
                                 {
-                                    SkuType nameInstance2 = ((SkuType)Enum.Parse(typeof(SkuType), ((string)nameValue2), true));
-                                    skuInstance.SkuType = nameInstance2;
+                                    string tagsKey = ((string)property.Name);
+                                    string tagsValue = ((string)property.Value);
+                                    valueInstance.Tags.Add(tagsKey, tagsValue);
+                                }
+                            }
+                            
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                            {
+                                ApiServiceProperties propertiesInstance = new ApiServiceProperties();
+                                valueInstance.Properties = propertiesInstance;
+                                
+                                JToken publisherEmailValue = propertiesValue["publisherEmail"];
+                                if (publisherEmailValue != null && publisherEmailValue.Type != JTokenType.Null)
+                                {
+                                    string publisherEmailInstance = ((string)publisherEmailValue);
+                                    propertiesInstance.PublisherEmail = publisherEmailInstance;
                                 }
                                 
-                                JToken capacityValue = skuValue["capacity"];
-                                if (capacityValue != null && capacityValue.Type != JTokenType.Null)
+                                JToken publisherNameValue = propertiesValue["publisherName"];
+                                if (publisherNameValue != null && publisherNameValue.Type != JTokenType.Null)
                                 {
-                                    int capacityInstance = ((int)capacityValue);
-                                    skuInstance.Capacity = capacityInstance;
+                                    string publisherNameInstance = ((string)publisherNameValue);
+                                    propertiesInstance.PublisherName = publisherNameInstance;
+                                }
+                                
+                                JToken skuValue = propertiesValue["sku"];
+                                if (skuValue != null && skuValue.Type != JTokenType.Null)
+                                {
+                                    ApiServiceSkuProperties skuInstance = new ApiServiceSkuProperties();
+                                    propertiesInstance.SkuProperties = skuInstance;
+                                    
+                                    JToken nameValue2 = skuValue["name"];
+                                    if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                    {
+                                        SkuType nameInstance2 = ((SkuType)Enum.Parse(typeof(SkuType), ((string)nameValue2), true));
+                                        skuInstance.SkuType = nameInstance2;
+                                    }
+                                    
+                                    JToken capacityValue = skuValue["capacity"];
+                                    if (capacityValue != null && capacityValue.Type != JTokenType.Null)
+                                    {
+                                        int capacityInstance = ((int)capacityValue);
+                                        skuInstance.Capacity = capacityInstance;
+                                    }
+                                }
+                                
+                                JToken provisioningStateValue = propertiesValue["provisioningState"];
+                                if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
+                                {
+                                    string provisioningStateInstance = ((string)provisioningStateValue);
+                                    propertiesInstance.ProvisioningState = provisioningStateInstance;
+                                }
+                                
+                                JToken targetProvisioningStateValue = propertiesValue["targetProvisioningState"];
+                                if (targetProvisioningStateValue != null && targetProvisioningStateValue.Type != JTokenType.Null)
+                                {
+                                    string targetProvisioningStateInstance = ((string)targetProvisioningStateValue);
+                                    propertiesInstance.TargetProvisioningState = targetProvisioningStateInstance;
+                                }
+                                
+                                JToken createdAtUtcValue = propertiesValue["createdAtUtc"];
+                                if (createdAtUtcValue != null && createdAtUtcValue.Type != JTokenType.Null)
+                                {
+                                    DateTime createdAtUtcInstance = ((DateTime)createdAtUtcValue);
+                                    propertiesInstance.CreatedAtUtc = createdAtUtcInstance;
+                                }
+                                
+                                JToken runtimeUrlValue = propertiesValue["runtimeUrl"];
+                                if (runtimeUrlValue != null && runtimeUrlValue.Type != JTokenType.Null)
+                                {
+                                    string runtimeUrlInstance = ((string)runtimeUrlValue);
+                                    propertiesInstance.ProxyEndpoint = runtimeUrlInstance;
+                                }
+                                
+                                JToken portalUrlValue = propertiesValue["portalUrl"];
+                                if (portalUrlValue != null && portalUrlValue.Type != JTokenType.Null)
+                                {
+                                    string portalUrlInstance = ((string)portalUrlValue);
+                                    propertiesInstance.ManagementPortalEndpoint = portalUrlInstance;
+                                }
+                                
+                                JToken addresserEmailValue = propertiesValue["addresserEmail"];
+                                if (addresserEmailValue != null && addresserEmailValue.Type != JTokenType.Null)
+                                {
+                                    string addresserEmailInstance = ((string)addresserEmailValue);
+                                    propertiesInstance.AddresserEmail = addresserEmailInstance;
+                                }
+                                
+                                JToken hostnameConfigurationsArray = propertiesValue["hostnameConfigurations"];
+                                if (hostnameConfigurationsArray != null && hostnameConfigurationsArray.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken hostnameConfigurationsValue in ((JArray)hostnameConfigurationsArray))
+                                    {
+                                        HostnameConfiguration hostnameConfigurationInstance = new HostnameConfiguration();
+                                        propertiesInstance.HostnameConfigurations.Add(hostnameConfigurationInstance);
+                                        
+                                        JToken typeValue2 = hostnameConfigurationsValue["type"];
+                                        if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                                        {
+                                            HostnameType typeInstance2 = ((HostnameType)Enum.Parse(typeof(HostnameType), ((string)typeValue2), true));
+                                            hostnameConfigurationInstance.Type = typeInstance2;
+                                        }
+                                        
+                                        JToken hostnameValue = hostnameConfigurationsValue["hostname"];
+                                        if (hostnameValue != null && hostnameValue.Type != JTokenType.Null)
+                                        {
+                                            string hostnameInstance = ((string)hostnameValue);
+                                            hostnameConfigurationInstance.Hostname = hostnameInstance;
+                                        }
+                                        
+                                        JToken certificateValue = hostnameConfigurationsValue["certificate"];
+                                        if (certificateValue != null && certificateValue.Type != JTokenType.Null)
+                                        {
+                                            CertificateInformation certificateInstance = new CertificateInformation();
+                                            hostnameConfigurationInstance.Certificate = certificateInstance;
+                                            
+                                            JToken expiryValue = certificateValue["expiry"];
+                                            if (expiryValue != null && expiryValue.Type != JTokenType.Null)
+                                            {
+                                                DateTime expiryInstance = ((DateTime)expiryValue);
+                                                certificateInstance.Expiry = expiryInstance;
+                                            }
+                                            
+                                            JToken thumbprintValue = certificateValue["thumbprint"];
+                                            if (thumbprintValue != null && thumbprintValue.Type != JTokenType.Null)
+                                            {
+                                                string thumbprintInstance = ((string)thumbprintValue);
+                                                certificateInstance.Thumbprint = thumbprintInstance;
+                                            }
+                                            
+                                            JToken subjectValue = certificateValue["subject"];
+                                            if (subjectValue != null && subjectValue.Type != JTokenType.Null)
+                                            {
+                                                string subjectInstance = ((string)subjectValue);
+                                                certificateInstance.Subject = subjectInstance;
+                                            }
+                                        }
+                                    }
+                                }
+                                
+                                JToken staticIPsArray = propertiesValue["staticIPs"];
+                                if (staticIPsArray != null && staticIPsArray.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken staticIPsValue in ((JArray)staticIPsArray))
+                                    {
+                                        propertiesInstance.StaticIPs.Add(((string)staticIPsValue));
+                                    }
+                                }
+                                
+                                JToken additionalLocationsArray = propertiesValue["additionalLocations"];
+                                if (additionalLocationsArray != null && additionalLocationsArray.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken additionalLocationsValue in ((JArray)additionalLocationsArray))
+                                    {
+                                        AdditionalRegion additionalRegionInstance = new AdditionalRegion();
+                                        propertiesInstance.AdditionalRegions.Add(additionalRegionInstance);
+                                        
+                                        JToken locationValue2 = additionalLocationsValue["location"];
+                                        if (locationValue2 != null && locationValue2.Type != JTokenType.Null)
+                                        {
+                                            string locationInstance2 = ((string)locationValue2);
+                                            additionalRegionInstance.Location = locationInstance2;
+                                        }
+                                        
+                                        JToken skuTypeValue = additionalLocationsValue["skuType"];
+                                        if (skuTypeValue != null && skuTypeValue.Type != JTokenType.Null)
+                                        {
+                                            SkuType skuTypeInstance = ((SkuType)Enum.Parse(typeof(SkuType), ((string)skuTypeValue), true));
+                                            additionalRegionInstance.SkuType = skuTypeInstance;
+                                        }
+                                        
+                                        JToken skuUnitCountValue = additionalLocationsValue["skuUnitCount"];
+                                        if (skuUnitCountValue != null && skuUnitCountValue.Type != JTokenType.Null)
+                                        {
+                                            int skuUnitCountInstance = ((int)skuUnitCountValue);
+                                            additionalRegionInstance.SkuUnitCount = skuUnitCountInstance;
+                                        }
+                                        
+                                        JToken staticIPsArray2 = additionalLocationsValue["staticIPs"];
+                                        if (staticIPsArray2 != null && staticIPsArray2.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken staticIPsValue2 in ((JArray)staticIPsArray2))
+                                            {
+                                                additionalRegionInstance.StaticIPs.Add(((string)staticIPsValue2));
+                                            }
+                                        }
+                                        
+                                        JToken vpnConfigurationValue = additionalLocationsValue["vpnConfiguration"];
+                                        if (vpnConfigurationValue != null && vpnConfigurationValue.Type != JTokenType.Null)
+                                        {
+                                            VirtualNetworkConfiguration vpnConfigurationInstance = new VirtualNetworkConfiguration();
+                                            additionalRegionInstance.VirtualNetworkConfiguration = vpnConfigurationInstance;
+                                            
+                                            JToken vnetidValue = vpnConfigurationValue["vnetid"];
+                                            if (vnetidValue != null && vnetidValue.Type != JTokenType.Null)
+                                            {
+                                                Guid vnetidInstance = Guid.Parse(((string)vnetidValue));
+                                                vpnConfigurationInstance.VnetId = vnetidInstance;
+                                            }
+                                            
+                                            JToken subnetnameValue = vpnConfigurationValue["subnetname"];
+                                            if (subnetnameValue != null && subnetnameValue.Type != JTokenType.Null)
+                                            {
+                                                string subnetnameInstance = ((string)subnetnameValue);
+                                                vpnConfigurationInstance.SubnetName = subnetnameInstance;
+                                            }
+                                            
+                                            JToken locationValue3 = vpnConfigurationValue["location"];
+                                            if (locationValue3 != null && locationValue3.Type != JTokenType.Null)
+                                            {
+                                                string locationInstance3 = ((string)locationValue3);
+                                                vpnConfigurationInstance.Location = locationInstance3;
+                                            }
+                                        }
+                                    }
                                 }
                             }
                             
-                            JToken provisioningStateValue = propertiesValue["provisioningState"];
-                            if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
+                            ApiManagementError errorInstance = new ApiManagementError();
+                            result.Error = errorInstance;
+                            
+                            JToken codeValue = responseDoc["code"];
+                            if (codeValue != null && codeValue.Type != JTokenType.Null)
                             {
-                                string provisioningStateInstance = ((string)provisioningStateValue);
-                                propertiesInstance.ProvisioningState = provisioningStateInstance;
+                                string codeInstance = ((string)codeValue);
+                                errorInstance.Code = codeInstance;
                             }
                             
-                            JToken targetProvisioningStateValue = propertiesValue["targetProvisioningState"];
-                            if (targetProvisioningStateValue != null && targetProvisioningStateValue.Type != JTokenType.Null)
+                            JToken messageValue = responseDoc["message"];
+                            if (messageValue != null && messageValue.Type != JTokenType.Null)
                             {
-                                string targetProvisioningStateInstance = ((string)targetProvisioningStateValue);
-                                propertiesInstance.TargetProvisioningState = targetProvisioningStateInstance;
+                                string messageInstance = ((string)messageValue);
+                                errorInstance.Message = messageInstance;
                             }
                             
-                            JToken createdAtUtcValue = propertiesValue["createdAtUtc"];
-                            if (createdAtUtcValue != null && createdAtUtcValue.Type != JTokenType.Null)
+                            JToken detailsSequenceElement = ((JToken)responseDoc["details"]);
+                            if (detailsSequenceElement != null && detailsSequenceElement.Type != JTokenType.Null)
                             {
-                                DateTime createdAtUtcInstance = ((DateTime)createdAtUtcValue);
-                                propertiesInstance.CreatedAtUtc = createdAtUtcInstance;
-                            }
-                            
-                            JToken runtimeUrlValue = propertiesValue["runtimeUrl"];
-                            if (runtimeUrlValue != null && runtimeUrlValue.Type != JTokenType.Null)
-                            {
-                                string runtimeUrlInstance = ((string)runtimeUrlValue);
-                                propertiesInstance.ProxyEndpoint = runtimeUrlInstance;
-                            }
-                            
-                            JToken portalUrlValue = propertiesValue["portalUrl"];
-                            if (portalUrlValue != null && portalUrlValue.Type != JTokenType.Null)
-                            {
-                                string portalUrlInstance = ((string)portalUrlValue);
-                                propertiesInstance.ManagementPortalEndpoint = portalUrlInstance;
-                            }
-                            
-                            JToken addresserEmailValue = propertiesValue["addresserEmail"];
-                            if (addresserEmailValue != null && addresserEmailValue.Type != JTokenType.Null)
-                            {
-                                string addresserEmailInstance = ((string)addresserEmailValue);
-                                propertiesInstance.AddresserEmail = addresserEmailInstance;
-                            }
-                            
-                            JToken hostnameConfigurationsArray = propertiesValue["hostnameConfigurations"];
-                            if (hostnameConfigurationsArray != null && hostnameConfigurationsArray.Type != JTokenType.Null)
-                            {
-                                foreach (JToken hostnameConfigurationsValue in ((JArray)hostnameConfigurationsArray))
+                                foreach (JProperty property2 in detailsSequenceElement)
                                 {
-                                    HostnameConfiguration hostnameConfigurationInstance = new HostnameConfiguration();
-                                    propertiesInstance.HostnameConfigurations.Add(hostnameConfigurationInstance);
-                                    
-                                    JToken typeValue2 = hostnameConfigurationsValue["type"];
-                                    if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
-                                    {
-                                        HostnameType typeInstance2 = ((HostnameType)Enum.Parse(typeof(HostnameType), ((string)typeValue2), true));
-                                        hostnameConfigurationInstance.Type = typeInstance2;
-                                    }
-                                    
-                                    JToken hostnameValue = hostnameConfigurationsValue["hostname"];
-                                    if (hostnameValue != null && hostnameValue.Type != JTokenType.Null)
-                                    {
-                                        string hostnameInstance = ((string)hostnameValue);
-                                        hostnameConfigurationInstance.Hostname = hostnameInstance;
-                                    }
-                                    
-                                    JToken certificateValue = hostnameConfigurationsValue["certificate"];
-                                    if (certificateValue != null && certificateValue.Type != JTokenType.Null)
-                                    {
-                                        CertificateInformation certificateInstance = new CertificateInformation();
-                                        hostnameConfigurationInstance.Certificate = certificateInstance;
-                                        
-                                        JToken expiryValue = certificateValue["expiry"];
-                                        if (expiryValue != null && expiryValue.Type != JTokenType.Null)
-                                        {
-                                            DateTime expiryInstance = ((DateTime)expiryValue);
-                                            certificateInstance.Expiry = expiryInstance;
-                                        }
-                                        
-                                        JToken thumbprintValue = certificateValue["thumbprint"];
-                                        if (thumbprintValue != null && thumbprintValue.Type != JTokenType.Null)
-                                        {
-                                            string thumbprintInstance = ((string)thumbprintValue);
-                                            certificateInstance.Thumbprint = thumbprintInstance;
-                                        }
-                                        
-                                        JToken subjectValue = certificateValue["subject"];
-                                        if (subjectValue != null && subjectValue.Type != JTokenType.Null)
-                                        {
-                                            string subjectInstance = ((string)subjectValue);
-                                            certificateInstance.Subject = subjectInstance;
-                                        }
-                                    }
-                                }
-                            }
-                            
-                            JToken staticIPsArray = propertiesValue["staticIPs"];
-                            if (staticIPsArray != null && staticIPsArray.Type != JTokenType.Null)
-                            {
-                                foreach (JToken staticIPsValue in ((JArray)staticIPsArray))
-                                {
-                                    propertiesInstance.StaticIPs.Add(((string)staticIPsValue));
-                                }
-                            }
-                            
-                            JToken additionalLocationsArray = propertiesValue["additionalLocations"];
-                            if (additionalLocationsArray != null && additionalLocationsArray.Type != JTokenType.Null)
-                            {
-                                foreach (JToken additionalLocationsValue in ((JArray)additionalLocationsArray))
-                                {
-                                    AdditionalRegion additionalRegionInstance = new AdditionalRegion();
-                                    propertiesInstance.AdditionalRegions.Add(additionalRegionInstance);
-                                    
-                                    JToken locationValue2 = additionalLocationsValue["location"];
-                                    if (locationValue2 != null && locationValue2.Type != JTokenType.Null)
-                                    {
-                                        string locationInstance2 = ((string)locationValue2);
-                                        additionalRegionInstance.Location = locationInstance2;
-                                    }
-                                    
-                                    JToken skuTypeValue = additionalLocationsValue["skuType"];
-                                    if (skuTypeValue != null && skuTypeValue.Type != JTokenType.Null)
-                                    {
-                                        SkuType skuTypeInstance = ((SkuType)Enum.Parse(typeof(SkuType), ((string)skuTypeValue), true));
-                                        additionalRegionInstance.SkuType = skuTypeInstance;
-                                    }
-                                    
-                                    JToken skuUnitCountValue = additionalLocationsValue["skuUnitCount"];
-                                    if (skuUnitCountValue != null && skuUnitCountValue.Type != JTokenType.Null)
-                                    {
-                                        int skuUnitCountInstance = ((int)skuUnitCountValue);
-                                        additionalRegionInstance.SkuUnitCount = skuUnitCountInstance;
-                                    }
-                                    
-                                    JToken staticIPsArray2 = additionalLocationsValue["staticIPs"];
-                                    if (staticIPsArray2 != null && staticIPsArray2.Type != JTokenType.Null)
-                                    {
-                                        foreach (JToken staticIPsValue2 in ((JArray)staticIPsArray2))
-                                        {
-                                            additionalRegionInstance.StaticIPs.Add(((string)staticIPsValue2));
-                                        }
-                                    }
-                                    
-                                    JToken vpnConfigurationValue = additionalLocationsValue["vpnConfiguration"];
-                                    if (vpnConfigurationValue != null && vpnConfigurationValue.Type != JTokenType.Null)
-                                    {
-                                        VirtualNetworkConfiguration vpnConfigurationInstance = new VirtualNetworkConfiguration();
-                                        additionalRegionInstance.VirtualNetworkConfiguration = vpnConfigurationInstance;
-                                        
-                                        JToken vnetidValue = vpnConfigurationValue["vnetid"];
-                                        if (vnetidValue != null && vnetidValue.Type != JTokenType.Null)
-                                        {
-                                            Guid vnetidInstance = Guid.Parse(((string)vnetidValue));
-                                            vpnConfigurationInstance.VnetId = vnetidInstance;
-                                        }
-                                        
-                                        JToken subnetnameValue = vpnConfigurationValue["subnetname"];
-                                        if (subnetnameValue != null && subnetnameValue.Type != JTokenType.Null)
-                                        {
-                                            string subnetnameInstance = ((string)subnetnameValue);
-                                            vpnConfigurationInstance.SubnetName = subnetnameInstance;
-                                        }
-                                        
-                                        JToken locationValue3 = vpnConfigurationValue["location"];
-                                        if (locationValue3 != null && locationValue3.Type != JTokenType.Null)
-                                        {
-                                            string locationInstance3 = ((string)locationValue3);
-                                            vpnConfigurationInstance.Location = locationInstance3;
-                                        }
-                                    }
+                                    string detailsKey = ((string)property2.Name);
+                                    string detailsValue = ((string)property2.Value);
+                                    errorInstance.Details.Add(detailsKey, detailsValue);
                                 }
                             }
                         }
                         
-                        ApiManagementError errorInstance = new ApiManagementError();
-                        result.Error = errorInstance;
-                        
-                        JToken codeValue = responseDoc["code"];
-                        if (codeValue != null && codeValue.Type != JTokenType.Null)
-                        {
-                            string codeInstance = ((string)codeValue);
-                            errorInstance.Code = codeInstance;
-                        }
-                        
-                        JToken messageValue = responseDoc["message"];
-                        if (messageValue != null && messageValue.Type != JTokenType.Null)
-                        {
-                            string messageInstance = ((string)messageValue);
-                            errorInstance.Message = messageInstance;
-                        }
-                        
-                        JToken detailsSequenceElement = ((JToken)responseDoc["details"]);
-                        if (detailsSequenceElement != null && detailsSequenceElement.Type != JTokenType.Null)
-                        {
-                            foreach (JProperty property2 in detailsSequenceElement)
-                            {
-                                string detailsKey = ((string)property2.Name);
-                                string detailsValue = ((string)property2.Value);
-                                errorInstance.Details.Add(detailsKey, detailsValue);
-                            }
-                        }
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -3362,7 +3468,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -3407,18 +3513,18 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("operationStatusLink", operationStatusLink);
-                Tracing.Enter(invocationId, this, "GetLongRunningOperationStatusAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetLongRunningOperationStatusAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = operationStatusLink.Trim();
+            string url = operationStatusLink;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -3441,13 +3547,13 @@ namespace Microsoft.Azure.Management.ApiManagement
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted)
@@ -3456,13 +3562,14 @@ namespace Microsoft.Azure.Management.ApiManagement
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
                     
                     // Create Result
                     LongRunningOperationResponse result = null;
+                    // Deserialize Response
                     result = new LongRunningOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -3480,7 +3587,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -3529,19 +3636,19 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
-                Tracing.Enter(invocationId, this, "GetSsoTokenAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetSsoTokenAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourceGroups/" + resourceGroupName.Trim() + "/providers/Microsoft.ApiManagement/service/" + name.Trim() + "/getssotoken?";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourceGroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.ApiManagement/service/" + Uri.EscapeDataString(name) + "/getssotoken?";
             url = url + "api-version=2014-02-14";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -3576,13 +3683,13 @@ namespace Microsoft.Azure.Management.ApiManagement
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -3591,7 +3698,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -3599,25 +3706,28 @@ namespace Microsoft.Azure.Management.ApiManagement
                     // Create Result
                     ApiServiceGetSsoTokenResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new ApiServiceGetSsoTokenResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        JToken redirectUriValue = responseDoc["redirect_uri"];
-                        if (redirectUriValue != null && redirectUriValue.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new ApiServiceGetSsoTokenResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            string redirectUriInstance = ((string)redirectUriValue);
-                            result.RedirectUrl = redirectUriInstance;
+                            responseDoc = JToken.Parse(responseContent);
                         }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken redirectUriValue = responseDoc["redirect_uri"];
+                            if (redirectUriValue != null && redirectUriValue.Type != JTokenType.Null)
+                            {
+                                string redirectUriInstance = ((string)redirectUriValue);
+                                result.RedirectUrl = redirectUriInstance;
+                            }
+                        }
+                        
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -3626,7 +3736,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -3666,21 +3776,21 @@ namespace Microsoft.Azure.Management.ApiManagement
             // Validate
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                Tracing.Enter(invocationId, this, "ListAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "");
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId));
             if (resourceGroupName != null)
             {
-                url = url + "/resourceGroups/" + Uri.EscapeDataString(resourceGroupName != null ? resourceGroupName.Trim() : "");
+                url = url + "/resourceGroups/" + Uri.EscapeDataString(resourceGroupName);
             }
             url = url + "/providers/Microsoft.ApiManagement/service/?";
             url = url + "api-version=2014-02-14";
@@ -3717,13 +3827,13 @@ namespace Microsoft.Azure.Management.ApiManagement
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -3732,7 +3842,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -3740,308 +3850,311 @@ namespace Microsoft.Azure.Management.ApiManagement
                     // Create Result
                     ApiServiceListResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new ApiServiceListResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        JToken valueArray = responseDoc["value"];
-                        if (valueArray != null && valueArray.Type != JTokenType.Null)
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new ApiServiceListResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
                         {
-                            foreach (JToken valueValue in ((JArray)valueArray))
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
                             {
-                                ApiServiceResource apiServiceResourceInstance = new ApiServiceResource();
-                                result.Value.Add(apiServiceResourceInstance);
-                                
-                                JToken idValue = valueValue["id"];
-                                if (idValue != null && idValue.Type != JTokenType.Null)
+                                foreach (JToken valueValue in ((JArray)valueArray))
                                 {
-                                    string idInstance = ((string)idValue);
-                                    apiServiceResourceInstance.Id = idInstance;
-                                }
-                                
-                                JToken locationValue = valueValue["location"];
-                                if (locationValue != null && locationValue.Type != JTokenType.Null)
-                                {
-                                    string locationInstance = ((string)locationValue);
-                                    apiServiceResourceInstance.Location = locationInstance;
-                                }
-                                
-                                JToken nameValue = valueValue["name"];
-                                if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                {
-                                    string nameInstance = ((string)nameValue);
-                                    apiServiceResourceInstance.Name = nameInstance;
-                                }
-                                
-                                JToken typeValue = valueValue["type"];
-                                if (typeValue != null && typeValue.Type != JTokenType.Null)
-                                {
-                                    string typeInstance = ((string)typeValue);
-                                    apiServiceResourceInstance.Type = typeInstance;
-                                }
-                                
-                                JToken subscriptionIdValue = valueValue["subscriptionId"];
-                                if (subscriptionIdValue != null && subscriptionIdValue.Type != JTokenType.Null)
-                                {
-                                    string subscriptionIdInstance = ((string)subscriptionIdValue);
-                                    apiServiceResourceInstance.SubscriptionId = subscriptionIdInstance;
-                                }
-                                
-                                JToken resourceGroupNameValue = valueValue["resourceGroupName"];
-                                if (resourceGroupNameValue != null && resourceGroupNameValue.Type != JTokenType.Null)
-                                {
-                                    string resourceGroupNameInstance = ((string)resourceGroupNameValue);
-                                    apiServiceResourceInstance.ResourceGroupName = resourceGroupNameInstance;
-                                }
-                                
-                                JToken etagValue = valueValue["etag"];
-                                if (etagValue != null && etagValue.Type != JTokenType.Null)
-                                {
-                                    string etagInstance = ((string)etagValue);
-                                    apiServiceResourceInstance.ETag = etagInstance;
-                                }
-                                
-                                JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
-                                if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                                {
-                                    foreach (JProperty property in tagsSequenceElement)
-                                    {
-                                        string tagsKey = ((string)property.Name);
-                                        string tagsValue = ((string)property.Value);
-                                        apiServiceResourceInstance.Tags.Add(tagsKey, tagsValue);
-                                    }
-                                }
-                                
-                                JToken propertiesValue = valueValue["properties"];
-                                if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                                {
-                                    ApiServiceProperties propertiesInstance = new ApiServiceProperties();
-                                    apiServiceResourceInstance.Properties = propertiesInstance;
+                                    ApiServiceResource apiServiceResourceInstance = new ApiServiceResource();
+                                    result.Value.Add(apiServiceResourceInstance);
                                     
-                                    JToken publisherEmailValue = propertiesValue["publisherEmail"];
-                                    if (publisherEmailValue != null && publisherEmailValue.Type != JTokenType.Null)
+                                    JToken idValue = valueValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
                                     {
-                                        string publisherEmailInstance = ((string)publisherEmailValue);
-                                        propertiesInstance.PublisherEmail = publisherEmailInstance;
+                                        string idInstance = ((string)idValue);
+                                        apiServiceResourceInstance.Id = idInstance;
                                     }
                                     
-                                    JToken publisherNameValue = propertiesValue["publisherName"];
-                                    if (publisherNameValue != null && publisherNameValue.Type != JTokenType.Null)
+                                    JToken locationValue = valueValue["location"];
+                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
                                     {
-                                        string publisherNameInstance = ((string)publisherNameValue);
-                                        propertiesInstance.PublisherName = publisherNameInstance;
+                                        string locationInstance = ((string)locationValue);
+                                        apiServiceResourceInstance.Location = locationInstance;
                                     }
                                     
-                                    JToken skuValue = propertiesValue["sku"];
-                                    if (skuValue != null && skuValue.Type != JTokenType.Null)
+                                    JToken nameValue = valueValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
                                     {
-                                        ApiServiceSkuProperties skuInstance = new ApiServiceSkuProperties();
-                                        propertiesInstance.SkuProperties = skuInstance;
-                                        
-                                        JToken nameValue2 = skuValue["name"];
-                                        if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                        string nameInstance = ((string)nameValue);
+                                        apiServiceResourceInstance.Name = nameInstance;
+                                    }
+                                    
+                                    JToken typeValue = valueValue["type"];
+                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                    {
+                                        string typeInstance = ((string)typeValue);
+                                        apiServiceResourceInstance.Type = typeInstance;
+                                    }
+                                    
+                                    JToken subscriptionIdValue = valueValue["subscriptionId"];
+                                    if (subscriptionIdValue != null && subscriptionIdValue.Type != JTokenType.Null)
+                                    {
+                                        string subscriptionIdInstance = ((string)subscriptionIdValue);
+                                        apiServiceResourceInstance.SubscriptionId = subscriptionIdInstance;
+                                    }
+                                    
+                                    JToken resourceGroupNameValue = valueValue["resourceGroupName"];
+                                    if (resourceGroupNameValue != null && resourceGroupNameValue.Type != JTokenType.Null)
+                                    {
+                                        string resourceGroupNameInstance = ((string)resourceGroupNameValue);
+                                        apiServiceResourceInstance.ResourceGroupName = resourceGroupNameInstance;
+                                    }
+                                    
+                                    JToken etagValue = valueValue["etag"];
+                                    if (etagValue != null && etagValue.Type != JTokenType.Null)
+                                    {
+                                        string etagInstance = ((string)etagValue);
+                                        apiServiceResourceInstance.ETag = etagInstance;
+                                    }
+                                    
+                                    JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
+                                    if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property in tagsSequenceElement)
                                         {
-                                            SkuType nameInstance2 = ((SkuType)Enum.Parse(typeof(SkuType), ((string)nameValue2), true));
-                                            skuInstance.SkuType = nameInstance2;
+                                            string tagsKey = ((string)property.Name);
+                                            string tagsValue = ((string)property.Value);
+                                            apiServiceResourceInstance.Tags.Add(tagsKey, tagsValue);
+                                        }
+                                    }
+                                    
+                                    JToken propertiesValue = valueValue["properties"];
+                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                                    {
+                                        ApiServiceProperties propertiesInstance = new ApiServiceProperties();
+                                        apiServiceResourceInstance.Properties = propertiesInstance;
+                                        
+                                        JToken publisherEmailValue = propertiesValue["publisherEmail"];
+                                        if (publisherEmailValue != null && publisherEmailValue.Type != JTokenType.Null)
+                                        {
+                                            string publisherEmailInstance = ((string)publisherEmailValue);
+                                            propertiesInstance.PublisherEmail = publisherEmailInstance;
                                         }
                                         
-                                        JToken capacityValue = skuValue["capacity"];
-                                        if (capacityValue != null && capacityValue.Type != JTokenType.Null)
+                                        JToken publisherNameValue = propertiesValue["publisherName"];
+                                        if (publisherNameValue != null && publisherNameValue.Type != JTokenType.Null)
                                         {
-                                            int capacityInstance = ((int)capacityValue);
-                                            skuInstance.Capacity = capacityInstance;
+                                            string publisherNameInstance = ((string)publisherNameValue);
+                                            propertiesInstance.PublisherName = publisherNameInstance;
                                         }
-                                    }
-                                    
-                                    JToken provisioningStateValue = propertiesValue["provisioningState"];
-                                    if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
-                                    {
-                                        string provisioningStateInstance = ((string)provisioningStateValue);
-                                        propertiesInstance.ProvisioningState = provisioningStateInstance;
-                                    }
-                                    
-                                    JToken targetProvisioningStateValue = propertiesValue["targetProvisioningState"];
-                                    if (targetProvisioningStateValue != null && targetProvisioningStateValue.Type != JTokenType.Null)
-                                    {
-                                        string targetProvisioningStateInstance = ((string)targetProvisioningStateValue);
-                                        propertiesInstance.TargetProvisioningState = targetProvisioningStateInstance;
-                                    }
-                                    
-                                    JToken createdAtUtcValue = propertiesValue["createdAtUtc"];
-                                    if (createdAtUtcValue != null && createdAtUtcValue.Type != JTokenType.Null)
-                                    {
-                                        DateTime createdAtUtcInstance = ((DateTime)createdAtUtcValue);
-                                        propertiesInstance.CreatedAtUtc = createdAtUtcInstance;
-                                    }
-                                    
-                                    JToken runtimeUrlValue = propertiesValue["runtimeUrl"];
-                                    if (runtimeUrlValue != null && runtimeUrlValue.Type != JTokenType.Null)
-                                    {
-                                        string runtimeUrlInstance = ((string)runtimeUrlValue);
-                                        propertiesInstance.ProxyEndpoint = runtimeUrlInstance;
-                                    }
-                                    
-                                    JToken portalUrlValue = propertiesValue["portalUrl"];
-                                    if (portalUrlValue != null && portalUrlValue.Type != JTokenType.Null)
-                                    {
-                                        string portalUrlInstance = ((string)portalUrlValue);
-                                        propertiesInstance.ManagementPortalEndpoint = portalUrlInstance;
-                                    }
-                                    
-                                    JToken addresserEmailValue = propertiesValue["addresserEmail"];
-                                    if (addresserEmailValue != null && addresserEmailValue.Type != JTokenType.Null)
-                                    {
-                                        string addresserEmailInstance = ((string)addresserEmailValue);
-                                        propertiesInstance.AddresserEmail = addresserEmailInstance;
-                                    }
-                                    
-                                    JToken hostnameConfigurationsArray = propertiesValue["hostnameConfigurations"];
-                                    if (hostnameConfigurationsArray != null && hostnameConfigurationsArray.Type != JTokenType.Null)
-                                    {
-                                        foreach (JToken hostnameConfigurationsValue in ((JArray)hostnameConfigurationsArray))
+                                        
+                                        JToken skuValue = propertiesValue["sku"];
+                                        if (skuValue != null && skuValue.Type != JTokenType.Null)
                                         {
-                                            HostnameConfiguration hostnameConfigurationInstance = new HostnameConfiguration();
-                                            propertiesInstance.HostnameConfigurations.Add(hostnameConfigurationInstance);
+                                            ApiServiceSkuProperties skuInstance = new ApiServiceSkuProperties();
+                                            propertiesInstance.SkuProperties = skuInstance;
                                             
-                                            JToken typeValue2 = hostnameConfigurationsValue["type"];
-                                            if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
+                                            JToken nameValue2 = skuValue["name"];
+                                            if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
                                             {
-                                                HostnameType typeInstance2 = ((HostnameType)Enum.Parse(typeof(HostnameType), ((string)typeValue2), true));
-                                                hostnameConfigurationInstance.Type = typeInstance2;
+                                                SkuType nameInstance2 = ((SkuType)Enum.Parse(typeof(SkuType), ((string)nameValue2), true));
+                                                skuInstance.SkuType = nameInstance2;
                                             }
                                             
-                                            JToken hostnameValue = hostnameConfigurationsValue["hostname"];
-                                            if (hostnameValue != null && hostnameValue.Type != JTokenType.Null)
+                                            JToken capacityValue = skuValue["capacity"];
+                                            if (capacityValue != null && capacityValue.Type != JTokenType.Null)
                                             {
-                                                string hostnameInstance = ((string)hostnameValue);
-                                                hostnameConfigurationInstance.Hostname = hostnameInstance;
-                                            }
-                                            
-                                            JToken certificateValue = hostnameConfigurationsValue["certificate"];
-                                            if (certificateValue != null && certificateValue.Type != JTokenType.Null)
-                                            {
-                                                CertificateInformation certificateInstance = new CertificateInformation();
-                                                hostnameConfigurationInstance.Certificate = certificateInstance;
-                                                
-                                                JToken expiryValue = certificateValue["expiry"];
-                                                if (expiryValue != null && expiryValue.Type != JTokenType.Null)
-                                                {
-                                                    DateTime expiryInstance = ((DateTime)expiryValue);
-                                                    certificateInstance.Expiry = expiryInstance;
-                                                }
-                                                
-                                                JToken thumbprintValue = certificateValue["thumbprint"];
-                                                if (thumbprintValue != null && thumbprintValue.Type != JTokenType.Null)
-                                                {
-                                                    string thumbprintInstance = ((string)thumbprintValue);
-                                                    certificateInstance.Thumbprint = thumbprintInstance;
-                                                }
-                                                
-                                                JToken subjectValue = certificateValue["subject"];
-                                                if (subjectValue != null && subjectValue.Type != JTokenType.Null)
-                                                {
-                                                    string subjectInstance = ((string)subjectValue);
-                                                    certificateInstance.Subject = subjectInstance;
-                                                }
+                                                int capacityInstance = ((int)capacityValue);
+                                                skuInstance.Capacity = capacityInstance;
                                             }
                                         }
-                                    }
-                                    
-                                    JToken staticIPsArray = propertiesValue["staticIPs"];
-                                    if (staticIPsArray != null && staticIPsArray.Type != JTokenType.Null)
-                                    {
-                                        foreach (JToken staticIPsValue in ((JArray)staticIPsArray))
+                                        
+                                        JToken provisioningStateValue = propertiesValue["provisioningState"];
+                                        if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
                                         {
-                                            propertiesInstance.StaticIPs.Add(((string)staticIPsValue));
+                                            string provisioningStateInstance = ((string)provisioningStateValue);
+                                            propertiesInstance.ProvisioningState = provisioningStateInstance;
                                         }
-                                    }
-                                    
-                                    JToken additionalLocationsArray = propertiesValue["additionalLocations"];
-                                    if (additionalLocationsArray != null && additionalLocationsArray.Type != JTokenType.Null)
-                                    {
-                                        foreach (JToken additionalLocationsValue in ((JArray)additionalLocationsArray))
+                                        
+                                        JToken targetProvisioningStateValue = propertiesValue["targetProvisioningState"];
+                                        if (targetProvisioningStateValue != null && targetProvisioningStateValue.Type != JTokenType.Null)
                                         {
-                                            AdditionalRegion additionalRegionInstance = new AdditionalRegion();
-                                            propertiesInstance.AdditionalRegions.Add(additionalRegionInstance);
-                                            
-                                            JToken locationValue2 = additionalLocationsValue["location"];
-                                            if (locationValue2 != null && locationValue2.Type != JTokenType.Null)
+                                            string targetProvisioningStateInstance = ((string)targetProvisioningStateValue);
+                                            propertiesInstance.TargetProvisioningState = targetProvisioningStateInstance;
+                                        }
+                                        
+                                        JToken createdAtUtcValue = propertiesValue["createdAtUtc"];
+                                        if (createdAtUtcValue != null && createdAtUtcValue.Type != JTokenType.Null)
+                                        {
+                                            DateTime createdAtUtcInstance = ((DateTime)createdAtUtcValue);
+                                            propertiesInstance.CreatedAtUtc = createdAtUtcInstance;
+                                        }
+                                        
+                                        JToken runtimeUrlValue = propertiesValue["runtimeUrl"];
+                                        if (runtimeUrlValue != null && runtimeUrlValue.Type != JTokenType.Null)
+                                        {
+                                            string runtimeUrlInstance = ((string)runtimeUrlValue);
+                                            propertiesInstance.ProxyEndpoint = runtimeUrlInstance;
+                                        }
+                                        
+                                        JToken portalUrlValue = propertiesValue["portalUrl"];
+                                        if (portalUrlValue != null && portalUrlValue.Type != JTokenType.Null)
+                                        {
+                                            string portalUrlInstance = ((string)portalUrlValue);
+                                            propertiesInstance.ManagementPortalEndpoint = portalUrlInstance;
+                                        }
+                                        
+                                        JToken addresserEmailValue = propertiesValue["addresserEmail"];
+                                        if (addresserEmailValue != null && addresserEmailValue.Type != JTokenType.Null)
+                                        {
+                                            string addresserEmailInstance = ((string)addresserEmailValue);
+                                            propertiesInstance.AddresserEmail = addresserEmailInstance;
+                                        }
+                                        
+                                        JToken hostnameConfigurationsArray = propertiesValue["hostnameConfigurations"];
+                                        if (hostnameConfigurationsArray != null && hostnameConfigurationsArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken hostnameConfigurationsValue in ((JArray)hostnameConfigurationsArray))
                                             {
-                                                string locationInstance2 = ((string)locationValue2);
-                                                additionalRegionInstance.Location = locationInstance2;
-                                            }
-                                            
-                                            JToken skuTypeValue = additionalLocationsValue["skuType"];
-                                            if (skuTypeValue != null && skuTypeValue.Type != JTokenType.Null)
-                                            {
-                                                SkuType skuTypeInstance = ((SkuType)Enum.Parse(typeof(SkuType), ((string)skuTypeValue), true));
-                                                additionalRegionInstance.SkuType = skuTypeInstance;
-                                            }
-                                            
-                                            JToken skuUnitCountValue = additionalLocationsValue["skuUnitCount"];
-                                            if (skuUnitCountValue != null && skuUnitCountValue.Type != JTokenType.Null)
-                                            {
-                                                int skuUnitCountInstance = ((int)skuUnitCountValue);
-                                                additionalRegionInstance.SkuUnitCount = skuUnitCountInstance;
-                                            }
-                                            
-                                            JToken staticIPsArray2 = additionalLocationsValue["staticIPs"];
-                                            if (staticIPsArray2 != null && staticIPsArray2.Type != JTokenType.Null)
-                                            {
-                                                foreach (JToken staticIPsValue2 in ((JArray)staticIPsArray2))
-                                                {
-                                                    additionalRegionInstance.StaticIPs.Add(((string)staticIPsValue2));
-                                                }
-                                            }
-                                            
-                                            JToken vpnConfigurationValue = additionalLocationsValue["vpnConfiguration"];
-                                            if (vpnConfigurationValue != null && vpnConfigurationValue.Type != JTokenType.Null)
-                                            {
-                                                VirtualNetworkConfiguration vpnConfigurationInstance = new VirtualNetworkConfiguration();
-                                                additionalRegionInstance.VirtualNetworkConfiguration = vpnConfigurationInstance;
+                                                HostnameConfiguration hostnameConfigurationInstance = new HostnameConfiguration();
+                                                propertiesInstance.HostnameConfigurations.Add(hostnameConfigurationInstance);
                                                 
-                                                JToken vnetidValue = vpnConfigurationValue["vnetid"];
-                                                if (vnetidValue != null && vnetidValue.Type != JTokenType.Null)
+                                                JToken typeValue2 = hostnameConfigurationsValue["type"];
+                                                if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
                                                 {
-                                                    Guid vnetidInstance = Guid.Parse(((string)vnetidValue));
-                                                    vpnConfigurationInstance.VnetId = vnetidInstance;
-                                                }
-                                                
-                                                JToken subnetnameValue = vpnConfigurationValue["subnetname"];
-                                                if (subnetnameValue != null && subnetnameValue.Type != JTokenType.Null)
-                                                {
-                                                    string subnetnameInstance = ((string)subnetnameValue);
-                                                    vpnConfigurationInstance.SubnetName = subnetnameInstance;
+                                                    HostnameType typeInstance2 = ((HostnameType)Enum.Parse(typeof(HostnameType), ((string)typeValue2), true));
+                                                    hostnameConfigurationInstance.Type = typeInstance2;
                                                 }
                                                 
-                                                JToken locationValue3 = vpnConfigurationValue["location"];
-                                                if (locationValue3 != null && locationValue3.Type != JTokenType.Null)
+                                                JToken hostnameValue = hostnameConfigurationsValue["hostname"];
+                                                if (hostnameValue != null && hostnameValue.Type != JTokenType.Null)
                                                 {
-                                                    string locationInstance3 = ((string)locationValue3);
-                                                    vpnConfigurationInstance.Location = locationInstance3;
+                                                    string hostnameInstance = ((string)hostnameValue);
+                                                    hostnameConfigurationInstance.Hostname = hostnameInstance;
+                                                }
+                                                
+                                                JToken certificateValue = hostnameConfigurationsValue["certificate"];
+                                                if (certificateValue != null && certificateValue.Type != JTokenType.Null)
+                                                {
+                                                    CertificateInformation certificateInstance = new CertificateInformation();
+                                                    hostnameConfigurationInstance.Certificate = certificateInstance;
+                                                    
+                                                    JToken expiryValue = certificateValue["expiry"];
+                                                    if (expiryValue != null && expiryValue.Type != JTokenType.Null)
+                                                    {
+                                                        DateTime expiryInstance = ((DateTime)expiryValue);
+                                                        certificateInstance.Expiry = expiryInstance;
+                                                    }
+                                                    
+                                                    JToken thumbprintValue = certificateValue["thumbprint"];
+                                                    if (thumbprintValue != null && thumbprintValue.Type != JTokenType.Null)
+                                                    {
+                                                        string thumbprintInstance = ((string)thumbprintValue);
+                                                        certificateInstance.Thumbprint = thumbprintInstance;
+                                                    }
+                                                    
+                                                    JToken subjectValue = certificateValue["subject"];
+                                                    if (subjectValue != null && subjectValue.Type != JTokenType.Null)
+                                                    {
+                                                        string subjectInstance = ((string)subjectValue);
+                                                        certificateInstance.Subject = subjectInstance;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken staticIPsArray = propertiesValue["staticIPs"];
+                                        if (staticIPsArray != null && staticIPsArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken staticIPsValue in ((JArray)staticIPsArray))
+                                            {
+                                                propertiesInstance.StaticIPs.Add(((string)staticIPsValue));
+                                            }
+                                        }
+                                        
+                                        JToken additionalLocationsArray = propertiesValue["additionalLocations"];
+                                        if (additionalLocationsArray != null && additionalLocationsArray.Type != JTokenType.Null)
+                                        {
+                                            foreach (JToken additionalLocationsValue in ((JArray)additionalLocationsArray))
+                                            {
+                                                AdditionalRegion additionalRegionInstance = new AdditionalRegion();
+                                                propertiesInstance.AdditionalRegions.Add(additionalRegionInstance);
+                                                
+                                                JToken locationValue2 = additionalLocationsValue["location"];
+                                                if (locationValue2 != null && locationValue2.Type != JTokenType.Null)
+                                                {
+                                                    string locationInstance2 = ((string)locationValue2);
+                                                    additionalRegionInstance.Location = locationInstance2;
+                                                }
+                                                
+                                                JToken skuTypeValue = additionalLocationsValue["skuType"];
+                                                if (skuTypeValue != null && skuTypeValue.Type != JTokenType.Null)
+                                                {
+                                                    SkuType skuTypeInstance = ((SkuType)Enum.Parse(typeof(SkuType), ((string)skuTypeValue), true));
+                                                    additionalRegionInstance.SkuType = skuTypeInstance;
+                                                }
+                                                
+                                                JToken skuUnitCountValue = additionalLocationsValue["skuUnitCount"];
+                                                if (skuUnitCountValue != null && skuUnitCountValue.Type != JTokenType.Null)
+                                                {
+                                                    int skuUnitCountInstance = ((int)skuUnitCountValue);
+                                                    additionalRegionInstance.SkuUnitCount = skuUnitCountInstance;
+                                                }
+                                                
+                                                JToken staticIPsArray2 = additionalLocationsValue["staticIPs"];
+                                                if (staticIPsArray2 != null && staticIPsArray2.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken staticIPsValue2 in ((JArray)staticIPsArray2))
+                                                    {
+                                                        additionalRegionInstance.StaticIPs.Add(((string)staticIPsValue2));
+                                                    }
+                                                }
+                                                
+                                                JToken vpnConfigurationValue = additionalLocationsValue["vpnConfiguration"];
+                                                if (vpnConfigurationValue != null && vpnConfigurationValue.Type != JTokenType.Null)
+                                                {
+                                                    VirtualNetworkConfiguration vpnConfigurationInstance = new VirtualNetworkConfiguration();
+                                                    additionalRegionInstance.VirtualNetworkConfiguration = vpnConfigurationInstance;
+                                                    
+                                                    JToken vnetidValue = vpnConfigurationValue["vnetid"];
+                                                    if (vnetidValue != null && vnetidValue.Type != JTokenType.Null)
+                                                    {
+                                                        Guid vnetidInstance = Guid.Parse(((string)vnetidValue));
+                                                        vpnConfigurationInstance.VnetId = vnetidInstance;
+                                                    }
+                                                    
+                                                    JToken subnetnameValue = vpnConfigurationValue["subnetname"];
+                                                    if (subnetnameValue != null && subnetnameValue.Type != JTokenType.Null)
+                                                    {
+                                                        string subnetnameInstance = ((string)subnetnameValue);
+                                                        vpnConfigurationInstance.SubnetName = subnetnameInstance;
+                                                    }
+                                                    
+                                                    JToken locationValue3 = vpnConfigurationValue["location"];
+                                                    if (locationValue3 != null && locationValue3.Type != JTokenType.Null)
+                                                    {
+                                                        string locationInstance3 = ((string)locationValue3);
+                                                        vpnConfigurationInstance.Location = locationInstance3;
+                                                    }
                                                 }
                                             }
                                         }
                                     }
                                 }
                             }
+                            
+                            JToken nextLinkValue = responseDoc["nextLink"];
+                            if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
+                            {
+                                string nextLinkInstance = ((string)nextLinkValue);
+                                result.NextLink = nextLinkInstance;
+                            }
                         }
                         
-                        JToken nextLinkValue = responseDoc["nextLink"];
-                        if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
-                        {
-                            string nextLinkInstance = ((string)nextLinkValue);
-                            result.NextLink = nextLinkInstance;
-                        }
                     }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -4050,7 +4163,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -4090,71 +4203,57 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> ManageScaleAsync(string resourceGroupName, string name, ApiServiceManageScaleParameters parameters, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> ManageScaleAsync(string resourceGroupName, string name, ApiServiceManageScaleParameters parameters, CancellationToken cancellationToken)
         {
             ApiManagementClient client = this.Client;
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "ManageScaleAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ManageScaleAsync", tracingParameters);
             }
-            try
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            LongRunningOperationResponse response = await client.ApiManagement.BeginManagingScaleAsync(resourceGroupName, name, parameters, cancellationToken).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested();
+            LongRunningOperationResponse result = await client.ApiManagement.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = response.RetryAfter;
+            if (delayInSeconds == 0)
             {
-                if (shouldTrace)
-                {
-                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
-                }
-                
+                delayInSeconds = 60;
+            }
+            if (client.LongRunningOperationInitialTimeout >= 0)
+            {
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
+            }
+            while ((result.Status != Microsoft.Azure.OperationStatus.InProgress) == false)
+            {
                 cancellationToken.ThrowIfCancellationRequested();
-                LongRunningOperationResponse response = await client.ApiManagement.BeginManagingScaleAsync(resourceGroupName, name, parameters, cancellationToken).ConfigureAwait(false);
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
-                LongRunningOperationResponse result = await client.ApiManagement.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
-                int delayInSeconds = response.RetryAfter;
+                result = await client.ApiManagement.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = result.RetryAfter;
                 if (delayInSeconds == 0)
                 {
                     delayInSeconds = 60;
                 }
-                if (client.LongRunningOperationInitialTimeout >= 0)
+                if (client.LongRunningOperationRetryTimeout >= 0)
                 {
-                    delayInSeconds = client.LongRunningOperationInitialTimeout;
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
                 }
-                while ((result.Status != Microsoft.WindowsAzure.OperationStatus.InProgress) == false)
-                {
-                    cancellationToken.ThrowIfCancellationRequested();
-                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    result = await client.ApiManagement.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
-                    delayInSeconds = result.RetryAfter;
-                    if (delayInSeconds == 0)
-                    {
-                        delayInSeconds = 60;
-                    }
-                    if (client.LongRunningOperationRetryTimeout >= 0)
-                    {
-                        delayInSeconds = client.LongRunningOperationRetryTimeout;
-                    }
-                }
-                
-                if (shouldTrace)
-                {
-                    Tracing.Exit(invocationId, result);
-                }
-                
-                return result;
             }
-            finally
+            
+            if (shouldTrace)
             {
-                if (client != null && shouldTrace)
-                {
-                    client.Dispose();
-                }
+                TracingAdapter.Exit(invocationId, result);
             }
+            
+            return result;
         }
         
         /// <summary>
@@ -4177,71 +4276,57 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> ManageVirtualNetworksAsync(string resourceGroupName, string name, ApiServiceManageVirtualNetworksParameters parameters, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> ManageVirtualNetworksAsync(string resourceGroupName, string name, ApiServiceManageVirtualNetworksParameters parameters, CancellationToken cancellationToken)
         {
             ApiManagementClient client = this.Client;
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "ManageVirtualNetworksAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "ManageVirtualNetworksAsync", tracingParameters);
             }
-            try
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            LongRunningOperationResponse response = await client.ApiManagement.BeginManagingVirtualNetworksAsync(resourceGroupName, name, parameters, cancellationToken).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested();
+            LongRunningOperationResponse result = await client.ApiManagement.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = response.RetryAfter;
+            if (delayInSeconds == 0)
             {
-                if (shouldTrace)
-                {
-                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
-                }
-                
+                delayInSeconds = 60;
+            }
+            if (client.LongRunningOperationInitialTimeout >= 0)
+            {
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
+            }
+            while ((result.Status != Microsoft.Azure.OperationStatus.InProgress) == false)
+            {
                 cancellationToken.ThrowIfCancellationRequested();
-                LongRunningOperationResponse response = await client.ApiManagement.BeginManagingVirtualNetworksAsync(resourceGroupName, name, parameters, cancellationToken).ConfigureAwait(false);
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
-                LongRunningOperationResponse result = await client.ApiManagement.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
-                int delayInSeconds = response.RetryAfter;
+                result = await client.ApiManagement.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = result.RetryAfter;
                 if (delayInSeconds == 0)
                 {
                     delayInSeconds = 60;
                 }
-                if (client.LongRunningOperationInitialTimeout >= 0)
+                if (client.LongRunningOperationRetryTimeout >= 0)
                 {
-                    delayInSeconds = client.LongRunningOperationInitialTimeout;
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
                 }
-                while ((result.Status != Microsoft.WindowsAzure.OperationStatus.InProgress) == false)
-                {
-                    cancellationToken.ThrowIfCancellationRequested();
-                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    result = await client.ApiManagement.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
-                    delayInSeconds = result.RetryAfter;
-                    if (delayInSeconds == 0)
-                    {
-                        delayInSeconds = 60;
-                    }
-                    if (client.LongRunningOperationRetryTimeout >= 0)
-                    {
-                        delayInSeconds = client.LongRunningOperationRetryTimeout;
-                    }
-                }
-                
-                if (shouldTrace)
-                {
-                    Tracing.Exit(invocationId, result);
-                }
-                
-                return result;
             }
-            finally
+            
+            if (shouldTrace)
             {
-                if (client != null && shouldTrace)
-                {
-                    client.Dispose();
-                }
+                TracingAdapter.Exit(invocationId, result);
             }
+            
+            return result;
         }
         
         /// <summary>
@@ -4264,71 +4349,57 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> RestoreAsync(string resourceGroupName, string name, ApiServiceBackupRestoreParameters parameters, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> RestoreAsync(string resourceGroupName, string name, ApiServiceBackupRestoreParameters parameters, CancellationToken cancellationToken)
         {
             ApiManagementClient client = this.Client;
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "RestoreAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "RestoreAsync", tracingParameters);
             }
-            try
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            LongRunningOperationResponse response = await client.ApiManagement.BeginRestoringAsync(resourceGroupName, name, parameters, cancellationToken).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested();
+            LongRunningOperationResponse result = await client.ApiManagement.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = response.RetryAfter;
+            if (delayInSeconds == 0)
             {
-                if (shouldTrace)
-                {
-                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
-                }
-                
+                delayInSeconds = 60;
+            }
+            if (client.LongRunningOperationInitialTimeout >= 0)
+            {
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
+            }
+            while ((result.Status != Microsoft.Azure.OperationStatus.InProgress) == false)
+            {
                 cancellationToken.ThrowIfCancellationRequested();
-                LongRunningOperationResponse response = await client.ApiManagement.BeginRestoringAsync(resourceGroupName, name, parameters, cancellationToken).ConfigureAwait(false);
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
-                LongRunningOperationResponse result = await client.ApiManagement.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
-                int delayInSeconds = response.RetryAfter;
+                result = await client.ApiManagement.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = result.RetryAfter;
                 if (delayInSeconds == 0)
                 {
                     delayInSeconds = 60;
                 }
-                if (client.LongRunningOperationInitialTimeout >= 0)
+                if (client.LongRunningOperationRetryTimeout >= 0)
                 {
-                    delayInSeconds = client.LongRunningOperationInitialTimeout;
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
                 }
-                while ((result.Status != Microsoft.WindowsAzure.OperationStatus.InProgress) == false)
-                {
-                    cancellationToken.ThrowIfCancellationRequested();
-                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    result = await client.ApiManagement.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
-                    delayInSeconds = result.RetryAfter;
-                    if (delayInSeconds == 0)
-                    {
-                        delayInSeconds = 60;
-                    }
-                    if (client.LongRunningOperationRetryTimeout >= 0)
-                    {
-                        delayInSeconds = client.LongRunningOperationRetryTimeout;
-                    }
-                }
-                
-                if (shouldTrace)
-                {
-                    Tracing.Exit(invocationId, result);
-                }
-                
-                return result;
             }
-            finally
+            
+            if (shouldTrace)
             {
-                if (client != null && shouldTrace)
-                {
-                    client.Dispose();
-                }
+                TracingAdapter.Exit(invocationId, result);
             }
+            
+            return result;
         }
         
         /// <summary>
@@ -4380,20 +4451,20 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             
             // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "UpdateCertificateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "UpdateCertificateAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourceGroups/" + resourceGroupName.Trim() + "/providers/Microsoft.ApiManagement/service/" + name.Trim() + "/updatecertificate?";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourceGroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.ApiManagement/service/" + Uri.EscapeDataString(name) + "/updatecertificate?";
             url = url + "api-version=2014-02-14";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -4437,7 +4508,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                 
                 apiServiceUpdateCertificateParametersValue["certificate_password"] = parameters.CertificatePassword;
                 
-                requestContent = requestDoc.ToString(Formatting.Indented);
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
                 
@@ -4447,13 +4518,13 @@ namespace Microsoft.Azure.Management.ApiManagement
                 {
                     if (shouldTrace)
                     {
-                        Tracing.SendRequest(invocationId, httpRequest);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
                     cancellationToken.ThrowIfCancellationRequested();
                     httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK)
@@ -4462,7 +4533,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
-                            Tracing.Error(invocationId, ex);
+                            TracingAdapter.Error(invocationId, ex);
                         }
                         throw ex;
                     }
@@ -4470,42 +4541,45 @@ namespace Microsoft.Azure.Management.ApiManagement
                     // Create Result
                     ApiServiceUpdateCertificateResponse result = null;
                     // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new ApiServiceUpdateCertificateResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
+                    if (statusCode == HttpStatusCode.OK)
                     {
-                        responseDoc = JToken.Parse(responseContent);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new ApiServiceUpdateCertificateResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            CertificateInformation valueInstance = new CertificateInformation();
+                            result.Value = valueInstance;
+                            
+                            JToken expiryValue = responseDoc["expiry"];
+                            if (expiryValue != null && expiryValue.Type != JTokenType.Null)
+                            {
+                                DateTime expiryInstance = ((DateTime)expiryValue);
+                                valueInstance.Expiry = expiryInstance;
+                            }
+                            
+                            JToken thumbprintValue = responseDoc["thumbprint"];
+                            if (thumbprintValue != null && thumbprintValue.Type != JTokenType.Null)
+                            {
+                                string thumbprintInstance = ((string)thumbprintValue);
+                                valueInstance.Thumbprint = thumbprintInstance;
+                            }
+                            
+                            JToken subjectValue = responseDoc["subject"];
+                            if (subjectValue != null && subjectValue.Type != JTokenType.Null)
+                            {
+                                string subjectInstance = ((string)subjectValue);
+                                valueInstance.Subject = subjectInstance;
+                            }
+                        }
+                        
                     }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        CertificateInformation valueInstance = new CertificateInformation();
-                        result.Value = valueInstance;
-                        
-                        JToken expiryValue = responseDoc["expiry"];
-                        if (expiryValue != null && expiryValue.Type != JTokenType.Null)
-                        {
-                            DateTime expiryInstance = ((DateTime)expiryValue);
-                            valueInstance.Expiry = expiryInstance;
-                        }
-                        
-                        JToken thumbprintValue = responseDoc["thumbprint"];
-                        if (thumbprintValue != null && thumbprintValue.Type != JTokenType.Null)
-                        {
-                            string thumbprintInstance = ((string)thumbprintValue);
-                            valueInstance.Thumbprint = thumbprintInstance;
-                        }
-                        
-                        JToken subjectValue = responseDoc["subject"];
-                        if (subjectValue != null && subjectValue.Type != JTokenType.Null)
-                        {
-                            string subjectInstance = ((string)subjectValue);
-                            valueInstance.Subject = subjectInstance;
-                        }
-                    }
-                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -4514,7 +4588,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                     
                     if (shouldTrace)
                     {
-                        Tracing.Exit(invocationId, result);
+                        TracingAdapter.Exit(invocationId, result);
                     }
                     return result;
                 }
@@ -4554,71 +4628,57 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> UpdateHostnameAsync(string resourceGroupName, string name, ApiServiceUpdateHostnameParameters parameters, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> UpdateHostnameAsync(string resourceGroupName, string name, ApiServiceUpdateHostnameParameters parameters, CancellationToken cancellationToken)
         {
             ApiManagementClient client = this.Client;
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "UpdateHostnameAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "UpdateHostnameAsync", tracingParameters);
             }
-            try
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            LongRunningOperationResponse response = await client.ApiManagement.BeginUpdatingHostnameAsync(resourceGroupName, name, parameters, cancellationToken).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested();
+            LongRunningOperationResponse result = await client.ApiManagement.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = response.RetryAfter;
+            if (delayInSeconds == 0)
             {
-                if (shouldTrace)
-                {
-                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
-                }
-                
+                delayInSeconds = 60;
+            }
+            if (client.LongRunningOperationInitialTimeout >= 0)
+            {
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
+            }
+            while ((result.Status != Microsoft.Azure.OperationStatus.InProgress) == false)
+            {
                 cancellationToken.ThrowIfCancellationRequested();
-                LongRunningOperationResponse response = await client.ApiManagement.BeginUpdatingHostnameAsync(resourceGroupName, name, parameters, cancellationToken).ConfigureAwait(false);
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
-                LongRunningOperationResponse result = await client.ApiManagement.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
-                int delayInSeconds = response.RetryAfter;
+                result = await client.ApiManagement.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = result.RetryAfter;
                 if (delayInSeconds == 0)
                 {
                     delayInSeconds = 60;
                 }
-                if (client.LongRunningOperationInitialTimeout >= 0)
+                if (client.LongRunningOperationRetryTimeout >= 0)
                 {
-                    delayInSeconds = client.LongRunningOperationInitialTimeout;
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
                 }
-                while ((result.Status != Microsoft.WindowsAzure.OperationStatus.InProgress) == false)
-                {
-                    cancellationToken.ThrowIfCancellationRequested();
-                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    result = await client.ApiManagement.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
-                    delayInSeconds = result.RetryAfter;
-                    if (delayInSeconds == 0)
-                    {
-                        delayInSeconds = 60;
-                    }
-                    if (client.LongRunningOperationRetryTimeout >= 0)
-                    {
-                        delayInSeconds = client.LongRunningOperationRetryTimeout;
-                    }
-                }
-                
-                if (shouldTrace)
-                {
-                    Tracing.Exit(invocationId, result);
-                }
-                
-                return result;
             }
-            finally
+            
+            if (shouldTrace)
             {
-                if (client != null && shouldTrace)
-                {
-                    client.Dispose();
-                }
+                TracingAdapter.Exit(invocationId, result);
             }
+            
+            return result;
         }
         
         /// <summary>
@@ -4640,71 +4700,57 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> UpdateSkuAsync(string resourceGroupName, string name, ApiServiceUpdateSkuParameters parameters, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> UpdateSkuAsync(string resourceGroupName, string name, ApiServiceUpdateSkuParameters parameters, CancellationToken cancellationToken)
         {
             ApiManagementClient client = this.Client;
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
             {
-                invocationId = Tracing.NextInvocationId.ToString();
+                invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "UpdateSkuAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "UpdateSkuAsync", tracingParameters);
             }
-            try
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            LongRunningOperationResponse response = await client.ApiManagement.BeginUpdatingSkuAsync(resourceGroupName, name, parameters, cancellationToken).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested();
+            LongRunningOperationResponse result = await client.ApiManagement.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = response.RetryAfter;
+            if (delayInSeconds == 0)
             {
-                if (shouldTrace)
-                {
-                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
-                }
-                
+                delayInSeconds = 60;
+            }
+            if (client.LongRunningOperationInitialTimeout >= 0)
+            {
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
+            }
+            while ((result.Status != Microsoft.Azure.OperationStatus.InProgress) == false)
+            {
                 cancellationToken.ThrowIfCancellationRequested();
-                LongRunningOperationResponse response = await client.ApiManagement.BeginUpdatingSkuAsync(resourceGroupName, name, parameters, cancellationToken).ConfigureAwait(false);
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
-                LongRunningOperationResponse result = await client.ApiManagement.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
-                int delayInSeconds = response.RetryAfter;
+                result = await client.ApiManagement.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = result.RetryAfter;
                 if (delayInSeconds == 0)
                 {
                     delayInSeconds = 60;
                 }
-                if (client.LongRunningOperationInitialTimeout >= 0)
+                if (client.LongRunningOperationRetryTimeout >= 0)
                 {
-                    delayInSeconds = client.LongRunningOperationInitialTimeout;
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
                 }
-                while ((result.Status != Microsoft.WindowsAzure.OperationStatus.InProgress) == false)
-                {
-                    cancellationToken.ThrowIfCancellationRequested();
-                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    result = await client.ApiManagement.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
-                    delayInSeconds = result.RetryAfter;
-                    if (delayInSeconds == 0)
-                    {
-                        delayInSeconds = 60;
-                    }
-                    if (client.LongRunningOperationRetryTimeout >= 0)
-                    {
-                        delayInSeconds = client.LongRunningOperationRetryTimeout;
-                    }
-                }
-                
-                if (shouldTrace)
-                {
-                    Tracing.Exit(invocationId, result);
-                }
-                
-                return result;
             }
-            finally
+            
+            if (shouldTrace)
             {
-                if (client != null && shouldTrace)
-                {
-                    client.Dispose();
-                }
+                TracingAdapter.Exit(invocationId, result);
             }
+            
+            return result;
         }
     }
 }

@@ -21,14 +21,14 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.Azure.Management.ApiManagement.Models
 {
     /// <summary>
     /// Response of the CheckServiceNameAvailability operation.
     /// </summary>
-    public partial class ApiServiceCheckNameAvailabilityResponse : OperationResponse
+    public partial class ApiServiceCheckNameAvailabilityResponse : AzureOperationResponse
     {
         private bool _isAvailable;
         

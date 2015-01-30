@@ -23,9 +23,9 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.ApiManagement;
 using Microsoft.Azure.Management.ApiManagement.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.ApiManagement
 {
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Backup(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceBackupRestoreParameters parameters)
+        public static AzureOperationResponse Backup(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceBackupRestoreParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BackupAsync(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceBackupRestoreParameters parameters)
+        public static Task<AzureOperationResponse> BackupAsync(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceBackupRestoreParameters parameters)
         {
             return operations.BackupAsync(resourceGroupName, name, parameters, CancellationToken.None);
         }
@@ -659,7 +659,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Delete(this IApiManagementOperations operations, string resourceGroupName, string name)
+        public static AzureOperationResponse Delete(this IApiManagementOperations operations, string resourceGroupName, string name)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -685,7 +685,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> DeleteAsync(this IApiManagementOperations operations, string resourceGroupName, string name)
+        public static Task<AzureOperationResponse> DeleteAsync(this IApiManagementOperations operations, string resourceGroupName, string name)
         {
             return operations.DeleteAsync(resourceGroupName, name, CancellationToken.None);
         }
@@ -944,7 +944,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse ManageScale(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceManageScaleParameters parameters)
+        public static AzureOperationResponse ManageScale(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceManageScaleParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -973,7 +973,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> ManageScaleAsync(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceManageScaleParameters parameters)
+        public static Task<AzureOperationResponse> ManageScaleAsync(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceManageScaleParameters parameters)
         {
             return operations.ManageScaleAsync(resourceGroupName, name, parameters, CancellationToken.None);
         }
@@ -999,7 +999,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse ManageVirtualNetworks(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceManageVirtualNetworksParameters parameters)
+        public static AzureOperationResponse ManageVirtualNetworks(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceManageVirtualNetworksParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -1029,7 +1029,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> ManageVirtualNetworksAsync(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceManageVirtualNetworksParameters parameters)
+        public static Task<AzureOperationResponse> ManageVirtualNetworksAsync(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceManageVirtualNetworksParameters parameters)
         {
             return operations.ManageVirtualNetworksAsync(resourceGroupName, name, parameters, CancellationToken.None);
         }
@@ -1055,7 +1055,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Restore(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceBackupRestoreParameters parameters)
+        public static AzureOperationResponse Restore(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceBackupRestoreParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -1085,7 +1085,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> RestoreAsync(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceBackupRestoreParameters parameters)
+        public static Task<AzureOperationResponse> RestoreAsync(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceBackupRestoreParameters parameters)
         {
             return operations.RestoreAsync(resourceGroupName, name, parameters, CancellationToken.None);
         }
@@ -1166,7 +1166,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse UpdateHostname(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceUpdateHostnameParameters parameters)
+        public static AzureOperationResponse UpdateHostname(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceUpdateHostnameParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -1195,7 +1195,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> UpdateHostnameAsync(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceUpdateHostnameParameters parameters)
+        public static Task<AzureOperationResponse> UpdateHostnameAsync(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceUpdateHostnameParameters parameters)
         {
             return operations.UpdateHostnameAsync(resourceGroupName, name, parameters, CancellationToken.None);
         }
@@ -1220,7 +1220,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse UpdateSku(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceUpdateSkuParameters parameters)
+        public static AzureOperationResponse UpdateSku(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceUpdateSkuParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -1249,7 +1249,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> UpdateSkuAsync(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceUpdateSkuParameters parameters)
+        public static Task<AzureOperationResponse> UpdateSkuAsync(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceUpdateSkuParameters parameters)
         {
             return operations.UpdateSkuAsync(resourceGroupName, name, parameters, CancellationToken.None);
         }

@@ -21,8 +21,8 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.ApiManagement.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.ApiManagement.Models
 {
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     /// The response of the Upload SSL certificate for an Api Management
     /// service operation.
     /// </summary>
-    public partial class ApiServiceUpdateCertificateResponse : OperationResponse
+    public partial class ApiServiceUpdateCertificateResponse : AzureOperationResponse
     {
         private CertificateInformation _value;
         

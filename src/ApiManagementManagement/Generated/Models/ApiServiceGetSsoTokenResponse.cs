@@ -21,14 +21,14 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure;
 
 namespace Microsoft.Azure.Management.ApiManagement.Models
 {
     /// <summary>
     /// The response of the GetSsoToken operation.
     /// </summary>
-    public partial class ApiServiceGetSsoTokenResponse : OperationResponse
+    public partial class ApiServiceGetSsoTokenResponse : AzureOperationResponse
     {
         private string _redirectUrl;
         

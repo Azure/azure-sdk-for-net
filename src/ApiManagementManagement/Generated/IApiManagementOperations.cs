@@ -23,8 +23,8 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.ApiManagement.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.ApiManagement
 {
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BackupAsync(string resourceGroupName, string name, ApiServiceBackupRestoreParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> BackupAsync(string resourceGroupName, string name, ApiServiceBackupRestoreParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Begin backup operation of an Api Management service.To determine
@@ -285,7 +285,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> DeleteAsync(string resourceGroupName, string name, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> DeleteAsync(string resourceGroupName, string name, CancellationToken cancellationToken);
         
         /// <summary>
         /// Get an Api Management service resource description.
@@ -392,7 +392,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> ManageScaleAsync(string resourceGroupName, string name, ApiServiceManageScaleParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> ManageScaleAsync(string resourceGroupName, string name, ApiServiceManageScaleParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Manage (CUD) VPN configuration of an Api Management service.
@@ -413,7 +413,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> ManageVirtualNetworksAsync(string resourceGroupName, string name, ApiServiceManageVirtualNetworksParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> ManageVirtualNetworksAsync(string resourceGroupName, string name, ApiServiceManageVirtualNetworksParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Restore an Api Management service from backup.
@@ -435,7 +435,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> RestoreAsync(string resourceGroupName, string name, ApiServiceBackupRestoreParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> RestoreAsync(string resourceGroupName, string name, ApiServiceBackupRestoreParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Upload SSL certificate for an Api Management service.
@@ -478,7 +478,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> UpdateHostnameAsync(string resourceGroupName, string name, ApiServiceUpdateHostnameParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> UpdateHostnameAsync(string resourceGroupName, string name, ApiServiceUpdateHostnameParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Update SKU of an Api Management service.
@@ -499,6 +499,6 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> UpdateSkuAsync(string resourceGroupName, string name, ApiServiceUpdateSkuParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> UpdateSkuAsync(string resourceGroupName, string name, ApiServiceUpdateSkuParameters parameters, CancellationToken cancellationToken);
     }
 }

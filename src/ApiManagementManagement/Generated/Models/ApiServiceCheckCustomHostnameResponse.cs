@@ -22,16 +22,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.ApiManagement.Models;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Management.ApiManagement.Models
 {
     /// <summary>
     /// The response of the CheckCustomHostname operation.
     /// </summary>
-    public partial class ApiServiceCheckCustomHostnameResponse : OperationResponse, IEnumerable<CheckCustomHostnameResult>
+    public partial class ApiServiceCheckCustomHostnameResponse : AzureOperationResponse, IEnumerable<CheckCustomHostnameResult>
     {
         private IList<CheckCustomHostnameResult> _value;
         
