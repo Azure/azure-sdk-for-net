@@ -304,7 +304,13 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
             
             // Construct URL
-            string url = (this.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Credentials.SubscriptionId)) + "/operations/" + Uri.EscapeDataString(requestId);
+            string url = "";
+            if (this.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Credentials.SubscriptionId);
+            }
+            url = url + "/operations/";
+            url = url + Uri.EscapeDataString(requestId);
             string baseUrl = this.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -470,8 +476,20 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
             
             // Construct URL
-            string url = (this.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Credentials.SubscriptionId)) + "/resourceproviders/scheduler/Properties?";
-            url = url + "resourceType=JobCollections";
+            string url = "";
+            if (this.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceproviders/";
+            url = url + "scheduler";
+            url = url + "/Properties";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("resourceType=JobCollections");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -602,9 +620,19 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
             
             // Construct URL
-            string url = (this.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Credentials.SubscriptionId)) + "/services?";
-            url = url + "service=scheduler.JobCollections";
-            url = url + "&action=register";
+            string url = "";
+            if (this.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Credentials.SubscriptionId);
+            }
+            url = url + "/services";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("service=scheduler.JobCollections");
+            queryParameters.Add("action=register");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -717,9 +745,19 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
             
             // Construct URL
-            string url = (this.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Credentials.SubscriptionId)) + "/services?";
-            url = url + "service=scheduler.JobCollections";
-            url = url + "&action=unregister";
+            string url = "";
+            if (this.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Credentials.SubscriptionId);
+            }
+            url = url + "/services";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("service=scheduler.JobCollections");
+            queryParameters.Add("action=unregister");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')

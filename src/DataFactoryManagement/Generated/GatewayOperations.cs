@@ -142,8 +142,27 @@ namespace Microsoft.Azure.Management.DataFactories
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.DataFactory/datafactories/" + Uri.EscapeDataString(dataFactoryName) + "/gateways/" + (parameters.Gateway.Name == null ? "" : Uri.EscapeDataString(parameters.Gateway.Name)) + "?";
-            url = url + "api-version=2015-01-01-preview";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/Microsoft.DataFactory/datafactories/";
+            url = url + Uri.EscapeDataString(dataFactoryName);
+            url = url + "/gateways/";
+            if (parameters.Gateway != null && parameters.Gateway.Name != null)
+            {
+                url = url + Uri.EscapeDataString(parameters.Gateway.Name);
+            }
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-01-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -466,8 +485,24 @@ namespace Microsoft.Azure.Management.DataFactories
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.DataFactory/datafactories/" + Uri.EscapeDataString(dataFactoryName) + "/gateways/" + Uri.EscapeDataString(gatewayName) + "?";
-            url = url + "api-version=2015-01-01-preview";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/Microsoft.DataFactory/datafactories/";
+            url = url + Uri.EscapeDataString(dataFactoryName);
+            url = url + "/gateways/";
+            url = url + Uri.EscapeDataString(gatewayName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-01-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -759,8 +794,24 @@ namespace Microsoft.Azure.Management.DataFactories
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.DataFactory/datafactories/" + Uri.EscapeDataString(dataFactoryName) + "/gateways/" + Uri.EscapeDataString(gatewayName) + "?";
-            url = url + "api-version=2015-01-01-preview";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/Microsoft.DataFactory/datafactories/";
+            url = url + Uri.EscapeDataString(dataFactoryName);
+            url = url + "/gateways/";
+            url = url + Uri.EscapeDataString(gatewayName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-01-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -984,7 +1035,9 @@ namespace Microsoft.Azure.Management.DataFactories
             }
             
             // Construct URL
-            string url = operationStatusLink;
+            string url = "";
+            url = url + operationStatusLink;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1227,8 +1280,23 @@ namespace Microsoft.Azure.Management.DataFactories
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.DataFactory/datafactories/" + Uri.EscapeDataString(dataFactoryName) + "/gateways?";
-            url = url + "api-version=2015-01-01-preview";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/Microsoft.DataFactory/datafactories/";
+            url = url + Uri.EscapeDataString(dataFactoryName);
+            url = url + "/gateways";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-01-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1488,8 +1556,25 @@ namespace Microsoft.Azure.Management.DataFactories
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.DataFactory/datafactories/" + Uri.EscapeDataString(dataFactoryName) + "/gateways/" + Uri.EscapeDataString(gatewayName) + "/regeneratekey?";
-            url = url + "api-version=2015-01-01-preview";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/Microsoft.DataFactory/datafactories/";
+            url = url + Uri.EscapeDataString(dataFactoryName);
+            url = url + "/gateways/";
+            url = url + Uri.EscapeDataString(gatewayName);
+            url = url + "/regeneratekey";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-01-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1662,8 +1747,25 @@ namespace Microsoft.Azure.Management.DataFactories
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.DataFactory/datafactories/" + Uri.EscapeDataString(dataFactoryName) + "/gateways/" + Uri.EscapeDataString(gatewayName) + "/connectioninfo?";
-            url = url + "api-version=2015-01-01-preview";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/Microsoft.DataFactory/datafactories/";
+            url = url + Uri.EscapeDataString(dataFactoryName);
+            url = url + "/gateways/";
+            url = url + Uri.EscapeDataString(gatewayName);
+            url = url + "/connectioninfo";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-01-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1872,8 +1974,27 @@ namespace Microsoft.Azure.Management.DataFactories
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.DataFactory/datafactories/" + Uri.EscapeDataString(dataFactoryName) + "/gateways/" + (parameters.Gateway.Name == null ? "" : Uri.EscapeDataString(parameters.Gateway.Name)) + "?";
-            url = url + "api-version=2015-01-01-preview";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/Microsoft.DataFactory/datafactories/";
+            url = url + Uri.EscapeDataString(dataFactoryName);
+            url = url + "/gateways/";
+            if (parameters.Gateway != null && parameters.Gateway.Name != null)
+            {
+                url = url + Uri.EscapeDataString(parameters.Gateway.Name);
+            }
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-01-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')

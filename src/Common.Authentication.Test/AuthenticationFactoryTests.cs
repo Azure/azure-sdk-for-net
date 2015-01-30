@@ -35,9 +35,16 @@ namespace Common.Authentication.Test
             var subscriptionId = Guid.NewGuid();
 
             var credential = authFactory.GetSubscriptionCloudCredentials(new AzureContext
-            {
-                Environment = AzureEnvironment.PublicEnvironments["AzureCloud"],
-                Account = new AzureAccount
+            (
+                new AzureSubscription
+                {
+                    Id = subscriptionId,
+                    Properties = new Dictionary<AzureSubscription.Property, string>
+                    {
+                        { AzureSubscription.Property.Tenants, "123"}
+                    }
+                },
+                new AzureAccount
                 {
                     Id = "testuser",
                     Type = AzureAccount.AccountType.User,
@@ -46,16 +53,8 @@ namespace Common.Authentication.Test
                         { AzureAccount.Property.Tenants, "123" }
                     }
                 },
-                Subscription = new AzureSubscription
-                {
-                    Id = subscriptionId,
-                    Properties = new Dictionary<AzureSubscription.Property, string>
-                    {
-                        { AzureSubscription.Property.Tenants, "123"}
-                    }
-                }
-                
-            });
+                AzureEnvironment.PublicEnvironments["AzureCloud"]
+            ));
 
             Assert.True(credential is AccessTokenCredential);
             Assert.Equal(subscriptionId, new Guid(((AccessTokenCredential)credential).SubscriptionId));

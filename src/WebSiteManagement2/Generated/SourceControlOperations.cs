@@ -95,8 +95,17 @@ namespace Microsoft.Azure.Management.WebSites
             }
             
             // Construct URL
-            string url = "/providers/Microsoft.Web/SourceControls/" + Uri.EscapeDataString(name) + "?";
-            url = url + "api-version=2014-06-01";
+            string url = "";
+            url = url + "/providers/";
+            url = url + "Microsoft.Web";
+            url = url + "/SourceControls/";
+            url = url + Uri.EscapeDataString(name);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-06-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -284,8 +293,16 @@ namespace Microsoft.Azure.Management.WebSites
             }
             
             // Construct URL
-            string url = "/providers/Microsoft.Web/SourceControls?";
-            url = url + "api-version=2014-06-01";
+            string url = "";
+            url = url + "/providers/";
+            url = url + "Microsoft.Web";
+            url = url + "/SourceControls";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-06-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -502,8 +519,17 @@ namespace Microsoft.Azure.Management.WebSites
             }
             
             // Construct URL
-            string url = "/providers/Microsoft.Web/SourceControls/" + Uri.EscapeDataString(name) + "?";
-            url = url + "api-version=2014-06-01";
+            string url = "";
+            url = url + "/providers/";
+            url = url + "Microsoft.Web";
+            url = url + "/SourceControls/";
+            url = url + Uri.EscapeDataString(name);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-06-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')

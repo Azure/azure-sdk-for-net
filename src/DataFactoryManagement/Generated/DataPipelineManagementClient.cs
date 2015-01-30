@@ -389,7 +389,9 @@ namespace Microsoft.Azure.Management.DataFactories
             }
             
             // Construct URL
-            string url = operationStatusLink;
+            string url = "";
+            url = url + operationStatusLink;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

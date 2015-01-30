@@ -154,12 +154,32 @@ namespace Microsoft.Azure.Management.DataFactories
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.DataFactory/datafactories/" + Uri.EscapeDataString(dataFactoryName) + "/datapipelines/" + Uri.EscapeDataString(pipelineName) + "/getruns?";
-            url = url + "activityName=" + Uri.EscapeDataString(parameters.ActivityName.ToString());
-            url = url + "&start=" + Uri.EscapeDataString(parameters.RunRangeStartTime.ToString());
-            url = url + "&end=" + Uri.EscapeDataString(parameters.RunRangeEndTime.ToString());
-            url = url + "&status=" + Uri.EscapeDataString(parameters.RunRecordStatus.ToString());
-            url = url + "&api-version=2015-01-01-preview";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/Microsoft.DataFactory/datafactories/";
+            url = url + Uri.EscapeDataString(dataFactoryName);
+            url = url + "/datapipelines/";
+            url = url + Uri.EscapeDataString(pipelineName);
+            url = url + "/getruns";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("activityName=" + Uri.EscapeDataString(parameters.ActivityName.ToString()));
+            queryParameters.Add("start=" + Uri.EscapeDataString(parameters.RunRangeStartTime.ToString()));
+            queryParameters.Add("end=" + Uri.EscapeDataString(parameters.RunRangeEndTime.ToString()));
+            if (parameters.RunRecordStatus != null)
+            {
+                queryParameters.Add("status=" + Uri.EscapeDataString(parameters.RunRecordStatus.ToString()));
+            }
+            queryParameters.Add("api-version=2015-01-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -440,7 +460,9 @@ namespace Microsoft.Azure.Management.DataFactories
             }
             
             // Construct URL
-            string url = nextLink;
+            string url = "";
+            url = url + nextLink;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
