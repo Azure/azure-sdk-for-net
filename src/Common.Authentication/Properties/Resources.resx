@@ -373,9 +373,6 @@
   <data name="DatacenterBlobQuery" xml:space="preserve">
     <value>//blobcontainer[@datacenter='{0}']</value>
   </data>
-  <data name="DefaultAndCurrentSubscription" xml:space="preserve">
-    <value>Setting: {0} as the default and current subscription. To view other subscriptions use Get-AzureSubscription</value>
-  </data>
   <data name="DefaultFileVersion" xml:space="preserve">
     <value>none</value>
   </data>
@@ -529,15 +526,6 @@
   </data>
   <data name="InvalidCountryNameMessage" xml:space="preserve">
     <value>The country name is invalid, please use a valid two character country code, as described in ISO 3166-1 alpha-2.</value>
-  </data>
-  <data name="InvalidCurrentSubscription" xml:space="preserve">
-    <value>No current subscription has been designated. Use Select-AzureSubscription -Current &lt;subscriptionName&gt; to set the current subscription.</value>
-  </data>
-  <data name="InvalidCurrentSubscriptionId" xml:space="preserve">
-    <value>The ID of the current subscription is invalid. Use Set-AzureSubscription to fix the subscription ID or use Select-AzureSubscription to use a different subscription.</value>
-  </data>
-  <data name="InvalidCurrentSuscriptionCertificate" xml:space="preserve">
-    <value>The management certificate of the current subscription is invalid. Use Set-AzureSubscription to fix the management certificate or use Select-AzureSubscription to use a different subscription.</value>
   </data>
   <data name="InvalidDefaultSubscription" xml:space="preserve">
     <value>No default subscription has been designated. Use Select-AzureSubscription -Default &lt;subscriptionName&gt; to set the default subscription.</value>
@@ -1059,9 +1047,6 @@ Please follow these steps in the portal:
   </data>
   <data name="RemoveAzureServiceWaitMessage" xml:space="preserve">
     <value>Removing cloud service {0}...</value>
-  </data>
-  <data name="RemoveCurrentSubscription" xml:space="preserve">
-    <value>The current subscription is being removed. Use Select-AzureSubscription &lt;subscriptionName&gt; to select a new current subscription.</value>
   </data>
   <data name="RemoveDefaultSubscription" xml:space="preserve">
     <value>The default subscription is being removed. Use Select-AzureSubscription -Default &lt;subscriptionName&gt; to select a new default subscription.</value>

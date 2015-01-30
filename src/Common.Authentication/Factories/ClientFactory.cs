@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Common.Authentication.Factories
         {
             if (context == null)
             {
-                throw new ApplicationException(Resources.InvalidCurrentSubscription);
+                throw new ApplicationException(Resources.InvalidDefaultSubscription);
             }
 
             SubscriptionCloudCredentials creds = AzureSession.AuthenticationFactory.GetSubscriptionCloudCredentials(context);
@@ -64,16 +64,13 @@ namespace Microsoft.Azure.Common.Authentication.Factories
         {
             if (subscription == null)
             {
-                throw new ApplicationException(Resources.InvalidCurrentSubscription);
+                throw new ApplicationException(Resources.InvalidDefaultSubscription);
             }
 
             ProfileClient profileClient = new ProfileClient();
-            AzureContext context = new AzureContext
-            {
-                Subscription = subscription,
-                Environment = profileClient.GetEnvironmentOrDefault(subscription.Environment),
-                Account = profileClient.GetAccount(subscription.Account)
-            };
+            AzureContext context = new AzureContext(subscription,
+                profileClient.GetAccount(subscription.Account),
+                profileClient.GetEnvironmentOrDefault(subscription.Environment));
 
             return CreateClient<TClient>(context, endpoint);
         }
