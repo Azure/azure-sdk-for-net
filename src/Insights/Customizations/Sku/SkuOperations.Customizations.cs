@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.Insights
             }
 
             // Confirm resourceId is supported
-            if (IsSupportedResourceType(resourceId))
+            if (!IsSupportedResourceType(resourceId))
             {
                 throw new NotSupportedException(string.Format(CultureInfo.InvariantCulture, "Manual scaling not currently supported for resourceId {0}", resourceId));
             }
@@ -192,6 +192,12 @@ namespace Microsoft.Azure.Management.Insights
         /// </returns>
         public async Task<SkuGetResponse> GetCurrentSkuAsync(string resourceId, CancellationToken cancellationToken)
         {
+            // Confirm resourceId is supported
+            if (!IsSupportedResourceType(resourceId))
+            {
+                throw new NotSupportedException(string.Format(CultureInfo.InvariantCulture, "Manual scaling not currently supported for resourceId {0}", resourceId));
+            }
+
             AntaresSkuGetResponse response = await this.GetAntaresCurrentSkuInternalAsync(resourceId, cancellationToken);
 
             return new SkuGetResponse
@@ -235,6 +241,12 @@ namespace Microsoft.Azure.Management.Insights
             if (skuTier == null)
             {
                 throw new ArgumentNullException("skuTier");
+            }
+
+            // Confirm resourceId is supported
+            if (!IsSupportedResourceType(resourceId))
+            {
+                throw new NotSupportedException(string.Format(CultureInfo.InvariantCulture, "Manual scaling not currently supported for resourceId {0}", resourceId));
             }
 
             AntaresSkuUpdateRequest parameters = new AntaresSkuUpdateRequest
