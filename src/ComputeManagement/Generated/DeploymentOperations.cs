@@ -169,7 +169,23 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/hostedservices/" + Uri.EscapeDataString(serviceName) + "/deployments/" + Uri.EscapeDataString(deploymentName) + "/?comp=config";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/hostedservices/";
+            url = url + Uri.EscapeDataString(serviceName);
+            url = url + "/deployments/";
+            url = url + Uri.EscapeDataString(deploymentName);
+            url = url + "/";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("comp=config");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -464,7 +480,23 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/hostedservices/" + Uri.EscapeDataString(serviceName) + "/deploymentslots/" + Uri.EscapeDataString(deploymentSlot.ToString()) + "/?comp=config";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/hostedservices/";
+            url = url + Uri.EscapeDataString(serviceName);
+            url = url + "/deploymentslots/";
+            url = url + Uri.EscapeDataString(deploymentSlot.ToString());
+            url = url + "/";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("comp=config");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -776,7 +808,16 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/hostedservices/" + Uri.EscapeDataString(serviceName) + "/deploymentslots/" + Uri.EscapeDataString(deploymentSlot.ToString());
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/hostedservices/";
+            url = url + Uri.EscapeDataString(serviceName);
+            url = url + "/deploymentslots/";
+            url = url + Uri.EscapeDataString(deploymentSlot.ToString());
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1041,10 +1082,24 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/hostedservices/" + Uri.EscapeDataString(serviceName) + "/deployments/" + Uri.EscapeDataString(deploymentName) + "?";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/hostedservices/";
+            url = url + Uri.EscapeDataString(serviceName);
+            url = url + "/deployments/";
+            url = url + Uri.EscapeDataString(deploymentName);
+            List<string> queryParameters = new List<string>();
             if (deleteFromStorage == true)
             {
-                url = url + "comp=media";
+                queryParameters.Add("comp=media");
+            }
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
             }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -1179,7 +1234,16 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/hostedservices/" + Uri.EscapeDataString(serviceName) + "/deploymentslots/" + Uri.EscapeDataString(deploymentSlot.ToString());
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/hostedservices/";
+            url = url + Uri.EscapeDataString(serviceName);
+            url = url + "/deploymentslots/";
+            url = url + Uri.EscapeDataString(deploymentSlot.ToString());
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1319,7 +1383,23 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/hostedservices/" + Uri.EscapeDataString(serviceName) + "/deploymentslots/" + Uri.EscapeDataString(deploymentSlot) + "/roleinstances/?comp=delete";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/hostedservices/";
+            url = url + Uri.EscapeDataString(serviceName);
+            url = url + "/deploymentslots/";
+            url = url + Uri.EscapeDataString(deploymentSlot);
+            url = url + "/roleinstances/";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("comp=delete");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1482,7 +1562,23 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/hostedservices/" + Uri.EscapeDataString(serviceName) + "/deployments/" + Uri.EscapeDataString(deploymentName) + "/roleinstances/?comp=delete";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/hostedservices/";
+            url = url + Uri.EscapeDataString(serviceName);
+            url = url + "/deployments/";
+            url = url + Uri.EscapeDataString(deploymentName);
+            url = url + "/roleinstances/";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("comp=delete");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1655,11 +1751,26 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/hostedservices/" + Uri.EscapeDataString(serviceName) + "/deployments/" + Uri.EscapeDataString(deploymentName) + "/package?";
-            url = url + "containerUri=" + Uri.EscapeDataString(parameters.ContainerUri.AbsoluteUri) + " +";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/hostedservices/";
+            url = url + Uri.EscapeDataString(serviceName);
+            url = url + "/deployments/";
+            url = url + Uri.EscapeDataString(deploymentName);
+            url = url + "/package";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("containerUri=" + Uri.EscapeDataString(parameters.ContainerUri.AbsoluteUri) + " +");
             if (parameters.OverwriteExisting != null)
             {
-                url = url + "&overwriteExisting=" + Uri.EscapeDataString(parameters.OverwriteExisting.Value.ToString().ToLower());
+                queryParameters.Add("overwriteExisting=" + Uri.EscapeDataString(parameters.OverwriteExisting.Value.ToString().ToLower()));
+            }
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
             }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -1806,11 +1917,26 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/hostedservices/" + Uri.EscapeDataString(serviceName) + "/deploymentslots/" + Uri.EscapeDataString(deploymentSlot.ToString()) + "/package?";
-            url = url + "containerUri=" + Uri.EscapeDataString(parameters.ContainerUri.AbsoluteUri) + " +";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/hostedservices/";
+            url = url + Uri.EscapeDataString(serviceName);
+            url = url + "/deploymentslots/";
+            url = url + Uri.EscapeDataString(deploymentSlot.ToString());
+            url = url + "/package";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("containerUri=" + Uri.EscapeDataString(parameters.ContainerUri.AbsoluteUri) + " +");
             if (parameters.OverwriteExisting != null)
             {
-                url = url + "&overwriteExisting=" + Uri.EscapeDataString(parameters.OverwriteExisting.Value.ToString().ToLower());
+                queryParameters.Add("overwriteExisting=" + Uri.EscapeDataString(parameters.OverwriteExisting.Value.ToString().ToLower()));
+            }
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
             }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -1958,7 +2084,24 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/hostedservices/" + Uri.EscapeDataString(serviceName) + "/deployments/" + Uri.EscapeDataString(deploymentName) + "/roleinstances/" + Uri.EscapeDataString(roleInstanceName) + "?comp=reboot";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/hostedservices/";
+            url = url + Uri.EscapeDataString(serviceName);
+            url = url + "/deployments/";
+            url = url + Uri.EscapeDataString(deploymentName);
+            url = url + "/roleinstances/";
+            url = url + Uri.EscapeDataString(roleInstanceName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("comp=reboot");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -2101,7 +2244,24 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/hostedservices/" + Uri.EscapeDataString(serviceName) + "/deploymentslots/" + Uri.EscapeDataString(deploymentSlot.ToString()) + "/roleinstances/" + Uri.EscapeDataString(roleInstanceName) + "?comp=reboot";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/hostedservices/";
+            url = url + Uri.EscapeDataString(serviceName);
+            url = url + "/deploymentslots/";
+            url = url + Uri.EscapeDataString(deploymentSlot.ToString());
+            url = url + "/roleinstances/";
+            url = url + Uri.EscapeDataString(roleInstanceName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("comp=reboot");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -2257,9 +2417,25 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/hostedservices/" + Uri.EscapeDataString(serviceName) + "/deployments/" + Uri.EscapeDataString(deploymentName) + "/roleinstances/" + Uri.EscapeDataString(roleInstanceName) + "?";
-            url = url + "comp=rebuild";
-            url = url + "&resources=" + Uri.EscapeDataString(resources);
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/hostedservices/";
+            url = url + Uri.EscapeDataString(serviceName);
+            url = url + "/deployments/";
+            url = url + Uri.EscapeDataString(deploymentName);
+            url = url + "/roleinstances/";
+            url = url + Uri.EscapeDataString(roleInstanceName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("comp=rebuild");
+            queryParameters.Add("resources=" + Uri.EscapeDataString(resources));
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -2415,9 +2591,25 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/hostedservices/" + Uri.EscapeDataString(serviceName) + "/deploymentslots/" + Uri.EscapeDataString(deploymentSlot) + "/roleinstances/" + Uri.EscapeDataString(roleInstanceName) + "?";
-            url = url + "comp=rebuild";
-            url = url + "&resources=" + Uri.EscapeDataString(resources);
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/hostedservices/";
+            url = url + Uri.EscapeDataString(serviceName);
+            url = url + "/deploymentslots/";
+            url = url + Uri.EscapeDataString(deploymentSlot);
+            url = url + "/roleinstances/";
+            url = url + Uri.EscapeDataString(roleInstanceName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("comp=rebuild");
+            queryParameters.Add("resources=" + Uri.EscapeDataString(resources));
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -2564,7 +2756,24 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/hostedservices/" + Uri.EscapeDataString(serviceName) + "/deployments/" + Uri.EscapeDataString(deploymentName) + "/roleinstances/" + Uri.EscapeDataString(roleInstanceName) + "?comp=reimage";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/hostedservices/";
+            url = url + Uri.EscapeDataString(serviceName);
+            url = url + "/deployments/";
+            url = url + Uri.EscapeDataString(deploymentName);
+            url = url + "/roleinstances/";
+            url = url + Uri.EscapeDataString(roleInstanceName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("comp=reimage");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -2707,7 +2916,24 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/hostedservices/" + Uri.EscapeDataString(serviceName) + "/deploymentslots/" + Uri.EscapeDataString(deploymentSlot.ToString()) + "/roleinstances/" + Uri.EscapeDataString(roleInstanceName) + "?comp=reimage";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/hostedservices/";
+            url = url + Uri.EscapeDataString(serviceName);
+            url = url + "/deploymentslots/";
+            url = url + Uri.EscapeDataString(deploymentSlot.ToString());
+            url = url + "/roleinstances/";
+            url = url + Uri.EscapeDataString(roleInstanceName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("comp=reimage");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -2852,7 +3078,14 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/hostedservices/" + Uri.EscapeDataString(serviceName);
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/hostedservices/";
+            url = url + Uri.EscapeDataString(serviceName);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -3023,7 +3256,23 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/hostedservices/" + Uri.EscapeDataString(serviceName) + "/deployments/" + Uri.EscapeDataString(deploymentName) + "/?comp=status";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/hostedservices/";
+            url = url + Uri.EscapeDataString(serviceName);
+            url = url + "/deployments/";
+            url = url + Uri.EscapeDataString(deploymentName);
+            url = url + "/";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("comp=status");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -3183,7 +3432,23 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/hostedservices/" + Uri.EscapeDataString(serviceName) + "/deploymentslots/" + Uri.EscapeDataString(deploymentSlot.ToString()) + "/?comp=status";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/hostedservices/";
+            url = url + Uri.EscapeDataString(serviceName);
+            url = url + "/deploymentslots/";
+            url = url + Uri.EscapeDataString(deploymentSlot.ToString());
+            url = url + "/";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("comp=status");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -3425,7 +3690,23 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/hostedservices/" + Uri.EscapeDataString(serviceName) + "/deployments/" + Uri.EscapeDataString(deploymentName) + "/?comp=upgrade";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/hostedservices/";
+            url = url + Uri.EscapeDataString(serviceName);
+            url = url + "/deployments/";
+            url = url + Uri.EscapeDataString(deploymentName);
+            url = url + "/";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("comp=upgrade");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -3767,7 +4048,23 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/hostedservices/" + Uri.EscapeDataString(serviceName) + "/deploymentslots/" + Uri.EscapeDataString(deploymentSlot.ToString()) + "/?comp=upgrade";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/hostedservices/";
+            url = url + Uri.EscapeDataString(serviceName);
+            url = url + "/deploymentslots/";
+            url = url + Uri.EscapeDataString(deploymentSlot.ToString());
+            url = url + "/";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("comp=upgrade");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -4057,7 +4354,22 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/hostedservices/" + Uri.EscapeDataString(serviceName) + "/deployments/" + Uri.EscapeDataString(deploymentName) + "?comp=walkupgradedomain";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/hostedservices/";
+            url = url + Uri.EscapeDataString(serviceName);
+            url = url + "/deployments/";
+            url = url + Uri.EscapeDataString(deploymentName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("comp=walkupgradedomain");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -4239,7 +4551,23 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/hostedservices/" + Uri.EscapeDataString(serviceName) + "/deploymentslots/" + Uri.EscapeDataString(deploymentSlot.ToString()) + "/?comp=walkupgradedomain";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/hostedservices/";
+            url = url + Uri.EscapeDataString(serviceName);
+            url = url + "/deploymentslots/";
+            url = url + Uri.EscapeDataString(deploymentSlot.ToString());
+            url = url + "/";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("comp=walkupgradedomain");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -5106,7 +5434,16 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/hostedservices/" + Uri.EscapeDataString(serviceName) + "/deployments/" + Uri.EscapeDataString(deploymentName);
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/hostedservices/";
+            url = url + Uri.EscapeDataString(serviceName);
+            url = url + "/deployments/";
+            url = url + Uri.EscapeDataString(deploymentName);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -6947,7 +7284,16 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/hostedservices/" + Uri.EscapeDataString(serviceName) + "/deploymentslots/" + Uri.EscapeDataString(deploymentSlot.ToString());
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/hostedservices/";
+            url = url + Uri.EscapeDataString(serviceName);
+            url = url + "/deploymentslots/";
+            url = url + Uri.EscapeDataString(deploymentSlot.ToString());
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -9009,9 +9355,24 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/hostedservices/" + Uri.EscapeDataString(serviceName) + "/deployments/" + Uri.EscapeDataString(deploymentName) + "/events?";
-            url = url + "starttime=" + Uri.EscapeDataString(string.Format(CultureInfo.InvariantCulture, "{0:O}", startTime.ToUniversalTime()));
-            url = url + "&endtime=" + Uri.EscapeDataString(string.Format(CultureInfo.InvariantCulture, "{0:O}", endTime.ToUniversalTime()));
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/hostedservices/";
+            url = url + Uri.EscapeDataString(serviceName);
+            url = url + "/deployments/";
+            url = url + Uri.EscapeDataString(deploymentName);
+            url = url + "/events";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("starttime=" + Uri.EscapeDataString(string.Format(CultureInfo.InvariantCulture, "{0:O}", startTime.ToUniversalTime())));
+            queryParameters.Add("endtime=" + Uri.EscapeDataString(string.Format(CultureInfo.InvariantCulture, "{0:O}", endTime.ToUniversalTime())));
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -9201,9 +9562,24 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/hostedservices/" + Uri.EscapeDataString(serviceName) + "/deploymentslots/" + Uri.EscapeDataString(deploymentSlot.ToString()) + "/events?";
-            url = url + "starttime=" + Uri.EscapeDataString(string.Format(CultureInfo.InvariantCulture, "{0:O}", startTime.ToUniversalTime()));
-            url = url + "&endtime=" + Uri.EscapeDataString(string.Format(CultureInfo.InvariantCulture, "{0:O}", endTime.ToUniversalTime()));
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/hostedservices/";
+            url = url + Uri.EscapeDataString(serviceName);
+            url = url + "/deploymentslots/";
+            url = url + Uri.EscapeDataString(deploymentSlot.ToString());
+            url = url + "/events";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("starttime=" + Uri.EscapeDataString(string.Format(CultureInfo.InvariantCulture, "{0:O}", startTime.ToUniversalTime())));
+            queryParameters.Add("endtime=" + Uri.EscapeDataString(string.Format(CultureInfo.InvariantCulture, "{0:O}", endTime.ToUniversalTime())));
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -10049,7 +10425,23 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/hostedservices/" + Uri.EscapeDataString(serviceName) + "/deployments/" + Uri.EscapeDataString(deploymentName) + "/?comp=rollback";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/hostedservices/";
+            url = url + Uri.EscapeDataString(serviceName);
+            url = url + "/deployments/";
+            url = url + Uri.EscapeDataString(deploymentName);
+            url = url + "/";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("comp=rollback");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -10212,7 +10604,23 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/hostedservices/" + Uri.EscapeDataString(serviceName) + "/deploymentslots/" + Uri.EscapeDataString(deploymentSlot.ToString()) + "/?comp=rollback";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/hostedservices/";
+            url = url + Uri.EscapeDataString(serviceName);
+            url = url + "/deploymentslots/";
+            url = url + Uri.EscapeDataString(deploymentSlot.ToString());
+            url = url + "/";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("comp=rollback");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')

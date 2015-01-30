@@ -106,7 +106,19 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/networking/dedicatedcircuits?api-version=1.0";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/networking/dedicatedcircuits";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=1.0");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -274,7 +286,20 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/networking/dedicatedcircuits/" + Uri.EscapeDataString(serviceKey) + "?api-version=1.0";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/networking/dedicatedcircuits/";
+            url = url + Uri.EscapeDataString(serviceKey);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=1.0");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -413,7 +438,20 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/networking/dedicatedcircuits/" + Uri.EscapeDataString(serviceKey) + "?api-version=1.0";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/networking/dedicatedcircuits/";
+            url = url + Uri.EscapeDataString(serviceKey);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=1.0");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -589,7 +627,19 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/networking/dedicatedcircuits?api-version=1.0";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/networking/dedicatedcircuits";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=1.0");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -788,7 +838,19 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/networking/dedicatedcircuits?api-version=1.0";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/networking/dedicatedcircuits";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=1.0");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -913,7 +975,20 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/networking/dedicatedcircuits/" + Uri.EscapeDataString(serviceKey) + "?api-version=1.0";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/networking/dedicatedcircuits/";
+            url = url + Uri.EscapeDataString(serviceKey);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=1.0");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')

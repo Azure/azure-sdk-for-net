@@ -103,8 +103,19 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/ServiceBus/CheckNamespaceAvailability?";
-            url = url + "namespace=" + Uri.EscapeDataString(namespaceName);
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/ServiceBus/CheckNamespaceAvailability";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("namespace=" + Uri.EscapeDataString(namespaceName));
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -265,7 +276,14 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/servicebus/namespaces/" + Uri.EscapeDataString(namespaceName);
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/servicebus/namespaces/";
+            url = url + Uri.EscapeDataString(namespaceName);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -516,7 +534,15 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/servicebus/namespaces/" + Uri.EscapeDataString(namespaceName) + "/AuthorizationRules";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/servicebus/namespaces/";
+            url = url + Uri.EscapeDataString(namespaceName);
+            url = url + "/AuthorizationRules";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -816,7 +842,14 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/servicebus/namespaces/" + Uri.EscapeDataString(namespaceName);
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/servicebus/namespaces/";
+            url = url + Uri.EscapeDataString(namespaceName);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1071,7 +1104,14 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/servicebus/namespaces/" + Uri.EscapeDataString(namespaceName);
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/servicebus/namespaces/";
+            url = url + Uri.EscapeDataString(namespaceName);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1202,7 +1242,16 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/servicebus/namespaces/" + Uri.EscapeDataString(namespaceName) + "/AuthorizationRules/" + Uri.EscapeDataString(ruleName);
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/servicebus/namespaces/";
+            url = url + Uri.EscapeDataString(namespaceName);
+            url = url + "/AuthorizationRules/";
+            url = url + Uri.EscapeDataString(ruleName);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1324,7 +1373,14 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/servicebus/namespaces/" + Uri.EscapeDataString(namespaceName);
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/servicebus/namespaces/";
+            url = url + Uri.EscapeDataString(namespaceName);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1546,7 +1602,16 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/servicebus/namespaces/" + Uri.EscapeDataString(namespaceName) + "/AuthorizationRules/" + Uri.EscapeDataString(entityName);
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/servicebus/namespaces/";
+            url = url + Uri.EscapeDataString(namespaceName);
+            url = url + "/AuthorizationRules/";
+            url = url + Uri.EscapeDataString(entityName);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1758,7 +1823,15 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/servicebus/namespaces/" + Uri.EscapeDataString(namespaceName) + "/ConnectionDetails";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/servicebus/namespaces/";
+            url = url + Uri.EscapeDataString(namespaceName);
+            url = url + "/ConnectionDetails";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1938,7 +2011,13 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/servicebus/namespaces/";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/servicebus/namespaces/";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -2158,7 +2237,15 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/servicebus/namespaces/" + Uri.EscapeDataString(namespaceName) + "/AuthorizationRules";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/servicebus/namespaces/";
+            url = url + Uri.EscapeDataString(namespaceName);
+            url = url + "/AuthorizationRules";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -2377,7 +2464,19 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/servicebus/namespaces/" + Uri.EscapeDataString(namespaceName) + "/AuthorizationRules/" + (rule.KeyName == null ? "" : Uri.EscapeDataString(rule.KeyName));
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/servicebus/namespaces/";
+            url = url + Uri.EscapeDataString(namespaceName);
+            url = url + "/AuthorizationRules/";
+            if (rule != null && rule.KeyName != null)
+            {
+                url = url + Uri.EscapeDataString(rule.KeyName);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')

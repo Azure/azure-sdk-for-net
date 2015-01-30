@@ -137,7 +137,22 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/networking/dedicatedcircuits/" + Uri.EscapeDataString(serviceKey) + "/bgppeerings/" + Uri.EscapeDataString(ExpressRouteManagementClient.BgpPeeringAccessTypeToString(accessType)) + "?api-version=1.0";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/networking/dedicatedcircuits/";
+            url = url + Uri.EscapeDataString(serviceKey);
+            url = url + "/bgppeerings/";
+            url = url + Uri.EscapeDataString(ExpressRouteManagementClient.BgpPeeringAccessTypeToString(accessType));
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=1.0");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -316,7 +331,22 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/networking/dedicatedcircuits/" + Uri.EscapeDataString(serviceKey) + "/bgppeerings/" + Uri.EscapeDataString(ExpressRouteManagementClient.BgpPeeringAccessTypeToString(accessType)) + "?api-version=1.0";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/networking/dedicatedcircuits/";
+            url = url + Uri.EscapeDataString(serviceKey);
+            url = url + "/bgppeerings/";
+            url = url + Uri.EscapeDataString(ExpressRouteManagementClient.BgpPeeringAccessTypeToString(accessType));
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=1.0");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -490,7 +520,22 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/networking/dedicatedcircuits/" + Uri.EscapeDataString(serviceKey) + "/bgppeerings/" + Uri.EscapeDataString(ExpressRouteManagementClient.BgpPeeringAccessTypeToString(accessType)) + "?api-version=1.0";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/networking/dedicatedcircuits/";
+            url = url + Uri.EscapeDataString(serviceKey);
+            url = url + "/bgppeerings/";
+            url = url + Uri.EscapeDataString(ExpressRouteManagementClient.BgpPeeringAccessTypeToString(accessType));
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=1.0");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -673,7 +718,22 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/networking/dedicatedcircuits/" + Uri.EscapeDataString(serviceKey) + "/bgppeerings/" + Uri.EscapeDataString(ExpressRouteManagementClient.BgpPeeringAccessTypeToString(accessType)) + "?api-version=1.0";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/networking/dedicatedcircuits/";
+            url = url + Uri.EscapeDataString(serviceKey);
+            url = url + "/bgppeerings/";
+            url = url + Uri.EscapeDataString(ExpressRouteManagementClient.BgpPeeringAccessTypeToString(accessType));
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=1.0");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -902,7 +962,22 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/networking/dedicatedcircuits/" + Uri.EscapeDataString(serviceKey) + "/bgppeerings/" + Uri.EscapeDataString(ExpressRouteManagementClient.BgpPeeringAccessTypeToString(accessType)) + "?api-version=1.0";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/networking/dedicatedcircuits/";
+            url = url + Uri.EscapeDataString(serviceKey);
+            url = url + "/bgppeerings/";
+            url = url + Uri.EscapeDataString(ExpressRouteManagementClient.BgpPeeringAccessTypeToString(accessType));
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=1.0");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1031,7 +1106,22 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/networking/dedicatedcircuits/" + Uri.EscapeDataString(serviceKey) + "/bgppeerings/" + Uri.EscapeDataString(ExpressRouteManagementClient.BgpPeeringAccessTypeToString(accessType)) + "?api-version=1.0";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/networking/dedicatedcircuits/";
+            url = url + Uri.EscapeDataString(serviceKey);
+            url = url + "/bgppeerings/";
+            url = url + Uri.EscapeDataString(ExpressRouteManagementClient.BgpPeeringAccessTypeToString(accessType));
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=1.0");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1178,7 +1268,21 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/networking/dedicatedcircuits/" + Uri.EscapeDataString(serviceKey) + "/bgppeering?api-version=1.0";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/networking/dedicatedcircuits/";
+            url = url + Uri.EscapeDataString(serviceKey);
+            url = url + "/bgppeering";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=1.0");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')

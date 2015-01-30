@@ -42,7 +42,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GetBuildVersionTask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegexReplacementTask.cs" />
     <Compile Include="StrongNameUtility.cs" />

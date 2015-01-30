@@ -115,7 +115,32 @@ namespace Microsoft.Azure.Management.Authorization
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/" + Uri.EscapeDataString(identity.ResourceProviderNamespace) + "/" + identity.ParentResourcePath + "/" + identity.ResourceType + "/" + Uri.EscapeDataString(identity.ResourceName) + "/providers/Microsoft.Authorization/permissions?api-version=2014-07-01-preview";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + Uri.EscapeDataString(identity.ResourceProviderNamespace);
+            url = url + "/";
+            if (identity.ParentResourcePath != null)
+            {
+                url = url + identity.ParentResourcePath;
+            }
+            url = url + "/";
+            url = url + identity.ResourceType;
+            url = url + "/";
+            url = url + Uri.EscapeDataString(identity.ResourceName);
+            url = url + "/providers/Microsoft.Authorization/permissions";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-07-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -277,7 +302,21 @@ namespace Microsoft.Azure.Management.Authorization
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.Authorization/permissions?api-version=2014-07-01-preview";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/Microsoft.Authorization/permissions";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-07-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')

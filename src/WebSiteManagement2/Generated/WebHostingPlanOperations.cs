@@ -125,8 +125,27 @@ namespace Microsoft.Azure.Management.WebSites
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourceGroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.Web/serverFarms/" + Uri.EscapeDataString(parameters.WebHostingPlan.Name) + "?";
-            url = url + "api-version=2014-06-01";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.Web";
+            url = url + "/serverFarms/";
+            if (parameters.WebHostingPlan.Name != null)
+            {
+                url = url + Uri.EscapeDataString(parameters.WebHostingPlan.Name);
+            }
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-06-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -407,8 +426,24 @@ namespace Microsoft.Azure.Management.WebSites
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourceGroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.Web/serverFarms/" + Uri.EscapeDataString(webHostingPlanName) + "?";
-            url = url + "api-version=2014-06-01";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.Web";
+            url = url + "/serverFarms/";
+            url = url + Uri.EscapeDataString(webHostingPlanName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-06-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -537,8 +572,24 @@ namespace Microsoft.Azure.Management.WebSites
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourceGroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.Web/serverFarms/" + Uri.EscapeDataString(webHostingPlanName) + "?";
-            url = url + "api-version=2014-06-01";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.Web";
+            url = url + "/serverFarms/";
+            url = url + Uri.EscapeDataString(webHostingPlanName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-06-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -769,25 +820,42 @@ namespace Microsoft.Azure.Management.WebSites
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourceGroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.Web/serverFarms/" + Uri.EscapeDataString(webHostingPlanName) + "/metrics?";
-            url = url + "api-version=2014-06-01";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.Web";
+            url = url + "/serverFarms/";
+            url = url + Uri.EscapeDataString(webHostingPlanName);
+            url = url + "/metrics";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-06-01");
             if (parameters.MetricNames != null && parameters.MetricNames.Count > 0)
             {
-                url = url + "&names=" + Uri.EscapeDataString(string.Join(",", parameters.MetricNames));
+                queryParameters.Add("names=" + Uri.EscapeDataString(string.Join(",", parameters.MetricNames)));
             }
             if (parameters.StartTime != null)
             {
-                url = url + "&StartTime=" + Uri.EscapeDataString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.StartTime.Value.ToUniversalTime()));
+                queryParameters.Add("StartTime=" + Uri.EscapeDataString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.StartTime.Value.ToUniversalTime())));
             }
             if (parameters.EndTime != null)
             {
-                url = url + "&EndTime=" + Uri.EscapeDataString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.EndTime.Value.ToUniversalTime()));
+                queryParameters.Add("EndTime=" + Uri.EscapeDataString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.EndTime.Value.ToUniversalTime())));
             }
             if (parameters.TimeGrain != null)
             {
-                url = url + "&timeGrain=" + Uri.EscapeDataString(parameters.TimeGrain);
+                queryParameters.Add("timeGrain=" + Uri.EscapeDataString(parameters.TimeGrain));
             }
-            url = url + "&details=" + Uri.EscapeDataString(parameters.IncludeInstanceBreakdown.ToString().ToLower());
+            queryParameters.Add("details=" + Uri.EscapeDataString(parameters.IncludeInstanceBreakdown.ToString().ToLower()));
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1056,8 +1124,23 @@ namespace Microsoft.Azure.Management.WebSites
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourceGroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.Web/serverFarms?";
-            url = url + "api-version=2014-06-01";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.Web";
+            url = url + "/serverFarms";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-06-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')

@@ -107,8 +107,17 @@ namespace Microsoft.Azure.Management.Authorization
             }
             
             // Construct URL
-            string url = "/" + scope + "/providers/Microsoft.Authorization/roleAssignments/" + Uri.EscapeDataString(roleAssignmentName.ToString()) + "?";
-            url = url + "api-version=2014-10-01-preview";
+            string url = "";
+            url = url + "/";
+            url = url + scope;
+            url = url + "/providers/Microsoft.Authorization/roleAssignments/";
+            url = url + Uri.EscapeDataString(roleAssignmentName.ToString());
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-10-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -320,8 +329,15 @@ namespace Microsoft.Azure.Management.Authorization
             }
             
             // Construct URL
-            string url = "/" + roleAssignmentId + "?";
-            url = url + "api-version=2014-10-01-preview";
+            string url = "";
+            url = url + "/";
+            url = url + roleAssignmentId;
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-10-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -529,8 +545,17 @@ namespace Microsoft.Azure.Management.Authorization
             }
             
             // Construct URL
-            string url = "/" + scope + "/providers/Microsoft.Authorization/roleAssignments/" + Uri.EscapeDataString(roleAssignmentName.ToString()) + "?";
-            url = url + "api-version=2014-10-01-preview";
+            string url = "";
+            url = url + "/";
+            url = url + scope;
+            url = url + "/providers/Microsoft.Authorization/roleAssignments/";
+            url = url + Uri.EscapeDataString(roleAssignmentName.ToString());
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-10-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -716,8 +741,15 @@ namespace Microsoft.Azure.Management.Authorization
             }
             
             // Construct URL
-            string url = "/" + roleAssignmentId + "?";
-            url = url + "api-version=2014-10-01-preview";
+            string url = "";
+            url = url + "/";
+            url = url + roleAssignmentId;
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-10-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -907,8 +939,17 @@ namespace Microsoft.Azure.Management.Authorization
             }
             
             // Construct URL
-            string url = "/" + scope + "/providers/Microsoft.Authorization/roleAssignments/" + Uri.EscapeDataString(roleAssignmentName.ToString()) + "?";
-            url = url + "api-version=2014-10-01-preview";
+            string url = "";
+            url = url + "/";
+            url = url + scope;
+            url = url + "/providers/Microsoft.Authorization/roleAssignments/";
+            url = url + Uri.EscapeDataString(roleAssignmentName.ToString());
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-10-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1094,8 +1135,15 @@ namespace Microsoft.Azure.Management.Authorization
             }
             
             // Construct URL
-            string url = "/" + roleAssignmentId + "?";
-            url = url + "api-version=2014-10-01-preview";
+            string url = "";
+            url = url + "/";
+            url = url + roleAssignmentId;
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-10-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1278,18 +1326,37 @@ namespace Microsoft.Azure.Management.Authorization
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/providers/Microsoft.Authorization/roleAssignments?";
-            bool appendFilter = true;
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/providers/Microsoft.Authorization/roleAssignments";
+            List<string> queryParameters = new List<string>();
+            List<string> odataFilter = new List<string>();
             if (parameters != null && parameters.AtScope == true)
             {
-                appendFilter = false;
-                url = url + "$filter=atScope()";
+                odataFilter.Add("atScope()");
             }
+            if (odataFilter.Count > 0)
+            {
+                queryParameters.Add("$filter=" + string.Join(null, odataFilter));
+            }
+            List<string> odataFilter2 = new List<string>();
             if (parameters != null && parameters.PrincipalId != null)
             {
-                url = url + "&$filter=principalId eq '" + Uri.EscapeDataString(parameters.PrincipalId.Value.ToString()) + "'";
+                odataFilter2.Add("principalId eq '" + Uri.EscapeDataString(parameters.PrincipalId.Value.ToString()) + "'");
             }
-            url = url + "&api-version=2014-10-01-preview";
+            if (odataFilter2.Count > 0)
+            {
+                queryParameters.Add("$filter=" + string.Join(null, odataFilter2));
+            }
+            queryParameters.Add("api-version=2014-10-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1507,18 +1574,50 @@ namespace Microsoft.Azure.Management.Authorization
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/" + Uri.EscapeDataString(identity.ResourceProviderNamespace) + "/" + identity.ParentResourcePath + "/" + identity.ResourceType + "/" + Uri.EscapeDataString(identity.ResourceName) + "providers/Microsoft.Authorization/roleAssignments?";
-            bool appendFilter = true;
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + Uri.EscapeDataString(identity.ResourceProviderNamespace);
+            url = url + "/";
+            if (identity.ParentResourcePath != null)
+            {
+                url = url + identity.ParentResourcePath;
+            }
+            url = url + "/";
+            url = url + identity.ResourceType;
+            url = url + "/";
+            url = url + Uri.EscapeDataString(identity.ResourceName);
+            url = url + "providers/Microsoft.Authorization/roleAssignments";
+            List<string> queryParameters = new List<string>();
+            List<string> odataFilter = new List<string>();
             if (parameters != null && parameters.AtScope == true)
             {
-                appendFilter = false;
-                url = url + "$filter=atScope()";
+                odataFilter.Add("atScope()");
             }
+            if (odataFilter.Count > 0)
+            {
+                queryParameters.Add("$filter=" + string.Join(null, odataFilter));
+            }
+            List<string> odataFilter2 = new List<string>();
             if (parameters != null && parameters.PrincipalId != null)
             {
-                url = url + "&$filter=principalId eq '" + Uri.EscapeDataString(parameters.PrincipalId.Value.ToString()) + "'";
+                odataFilter2.Add("principalId eq '" + Uri.EscapeDataString(parameters.PrincipalId.Value.ToString()) + "'");
             }
-            url = url + "&api-version=2014-10-01-preview";
+            if (odataFilter2.Count > 0)
+            {
+                queryParameters.Add("$filter=" + string.Join(null, odataFilter2));
+            }
+            queryParameters.Add("api-version=2014-10-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1712,18 +1811,42 @@ namespace Microsoft.Azure.Management.Authorization
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourceGroups/" + (resourceGroupName == null ? "" : Uri.EscapeDataString(resourceGroupName)) + "/providers/Microsoft.Authorization/roleAssignments?";
-            bool appendFilter = true;
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            if (resourceGroupName != null)
+            {
+                url = url + Uri.EscapeDataString(resourceGroupName);
+            }
+            url = url + "/providers/Microsoft.Authorization/roleAssignments";
+            List<string> queryParameters = new List<string>();
+            List<string> odataFilter = new List<string>();
             if (parameters != null && parameters.AtScope == true)
             {
-                appendFilter = false;
-                url = url + "$filter=atScope()";
+                odataFilter.Add("atScope()");
             }
+            if (odataFilter.Count > 0)
+            {
+                queryParameters.Add("$filter=" + string.Join(null, odataFilter));
+            }
+            List<string> odataFilter2 = new List<string>();
             if (parameters != null && parameters.PrincipalId != null)
             {
-                url = url + "&$filter=principalId eq '" + Uri.EscapeDataString(parameters.PrincipalId.Value.ToString()) + "'";
+                odataFilter2.Add("principalId eq '" + Uri.EscapeDataString(parameters.PrincipalId.Value.ToString()) + "'");
             }
-            url = url + "&api-version=2014-10-01-preview";
+            if (odataFilter2.Count > 0)
+            {
+                queryParameters.Add("$filter=" + string.Join(null, odataFilter2));
+            }
+            queryParameters.Add("api-version=2014-10-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1921,18 +2044,34 @@ namespace Microsoft.Azure.Management.Authorization
             }
             
             // Construct URL
-            string url = "/" + scope + "/providers/Microsoft.Authorization/roleAssignments?";
-            bool appendFilter = true;
+            string url = "";
+            url = url + "/";
+            url = url + scope;
+            url = url + "/providers/Microsoft.Authorization/roleAssignments";
+            List<string> queryParameters = new List<string>();
+            List<string> odataFilter = new List<string>();
             if (parameters != null && parameters.AtScope == true)
             {
-                appendFilter = false;
-                url = url + "$filter=atScope()";
+                odataFilter.Add("atScope()");
             }
+            if (odataFilter.Count > 0)
+            {
+                queryParameters.Add("$filter=" + string.Join(null, odataFilter));
+            }
+            List<string> odataFilter2 = new List<string>();
             if (parameters != null && parameters.PrincipalId != null)
             {
-                url = url + "&$filter=principalId eq '" + Uri.EscapeDataString(parameters.PrincipalId.Value.ToString()) + "'";
+                odataFilter2.Add("principalId eq '" + Uri.EscapeDataString(parameters.PrincipalId.Value.ToString()) + "'");
             }
-            url = url + "&api-version=2014-10-01-preview";
+            if (odataFilter2.Count > 0)
+            {
+                queryParameters.Add("$filter=" + string.Join(null, odataFilter2));
+            }
+            queryParameters.Add("api-version=2014-10-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')

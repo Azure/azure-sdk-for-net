@@ -84,7 +84,8 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = "/api/scm";
+            string url = "";
+            url = url + "/api/scm";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
