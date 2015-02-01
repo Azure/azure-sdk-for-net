@@ -11,7 +11,7 @@
     <AssemblyName>Microsoft.WindowsAzure.Management.Monitoring</AssemblyName>
     <OutputType>Library</OutputType>
     <RestorePackages>true</RestorePackages>
-    <NuGetPackageImportStamp>bfd1bab7</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>0a65310d</NuGetPackageImportStamp>
   </PropertyGroup>
   <Import Project="..\..\tools\Library.Settings.targets" />
   <ItemGroup>

@@ -139,7 +139,20 @@ namespace Microsoft.WindowsAzure.Management.Store
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/CloudServices/" + Uri.EscapeDataString(cloudServiceName) + "/resources/" + Uri.EscapeDataString(parameters.Type) + "/" + Uri.EscapeDataString(resourceName) + "/" + Uri.EscapeDataString(addOnName);
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/CloudServices/";
+            url = url + Uri.EscapeDataString(cloudServiceName);
+            url = url + "/resources/";
+            url = url + Uri.EscapeDataString(parameters.Type);
+            url = url + "/";
+            url = url + Uri.EscapeDataString(resourceName);
+            url = url + "/";
+            url = url + Uri.EscapeDataString(addOnName);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -319,7 +332,20 @@ namespace Microsoft.WindowsAzure.Management.Store
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/CloudServices/" + Uri.EscapeDataString(cloudServiceName) + "/resources/" + Uri.EscapeDataString(resourceProviderNamespace) + "/" + Uri.EscapeDataString(resourceProviderType) + "/" + Uri.EscapeDataString(resourceProviderName);
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/CloudServices/";
+            url = url + Uri.EscapeDataString(cloudServiceName);
+            url = url + "/resources/";
+            url = url + Uri.EscapeDataString(resourceProviderNamespace);
+            url = url + "/";
+            url = url + Uri.EscapeDataString(resourceProviderType);
+            url = url + "/";
+            url = url + Uri.EscapeDataString(resourceProviderName);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -695,7 +721,20 @@ namespace Microsoft.WindowsAzure.Management.Store
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/CloudServices/" + Uri.EscapeDataString(cloudServiceName) + "/resources/" + Uri.EscapeDataString(parameters.Type) + "/" + Uri.EscapeDataString(resourceName) + "/" + Uri.EscapeDataString(addOnName);
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/CloudServices/";
+            url = url + Uri.EscapeDataString(cloudServiceName);
+            url = url + "/resources/";
+            url = url + Uri.EscapeDataString(parameters.Type);
+            url = url + "/";
+            url = url + Uri.EscapeDataString(resourceName);
+            url = url + "/";
+            url = url + Uri.EscapeDataString(addOnName);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')

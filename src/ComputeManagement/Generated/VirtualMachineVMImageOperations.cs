@@ -138,7 +138,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/vmimages";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/vmimages";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -238,10 +244,6 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             XElement mediaLinkElement2 = new XElement(XName.Get("MediaLink", "http://schemas.microsoft.com/windowsazure"));
                             mediaLinkElement2.Value = dataDiskConfigurationsItem.MediaLink.AbsoluteUri;
                             dataDiskConfigurationElement.Add(mediaLinkElement2);
-                            
-                            XElement logicalSizeInGBElement = new XElement(XName.Get("LogicalSizeInGB", "http://schemas.microsoft.com/windowsazure"));
-                            logicalSizeInGBElement.Value = dataDiskConfigurationsItem.LogicalSizeInGB.ToString();
-                            dataDiskConfigurationElement.Add(logicalSizeInGBElement);
                         }
                         vMImageElement.Add(dataDiskConfigurationsSequenceElement);
                     }
@@ -278,14 +280,14 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 if (parameters.IconUri != null)
                 {
                     XElement iconUriElement = new XElement(XName.Get("IconUri", "http://schemas.microsoft.com/windowsazure"));
-                    iconUriElement.Value = parameters.IconUri.AbsoluteUri;
+                    iconUriElement.Value = parameters.IconUri;
                     vMImageElement.Add(iconUriElement);
                 }
                 
                 if (parameters.SmallIconUri != null)
                 {
                     XElement smallIconUriElement = new XElement(XName.Get("SmallIconUri", "http://schemas.microsoft.com/windowsazure"));
-                    smallIconUriElement.Value = parameters.SmallIconUri.AbsoluteUri;
+                    smallIconUriElement.Value = parameters.SmallIconUri;
                     vMImageElement.Add(smallIconUriElement);
                 }
                 
@@ -412,10 +414,22 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/vmimages/" + Uri.EscapeDataString(vmImageName) + "?";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/vmimages/";
+            url = url + Uri.EscapeDataString(vmImageName);
+            List<string> queryParameters = new List<string>();
             if (deleteFromStorage == true)
             {
-                url = url + "comp=media";
+                queryParameters.Add("comp=media");
+            }
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
             }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -547,8 +561,21 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/vmimages/" + Uri.EscapeDataString(vmImageName) + "/share?";
-            url = url + "permission=" + Uri.EscapeDataString(permission);
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/vmimages/";
+            url = url + Uri.EscapeDataString(vmImageName);
+            url = url + "/share";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("permission=" + Uri.EscapeDataString(permission));
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -676,7 +703,15 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/vmimages/" + Uri.EscapeDataString(vmImageName) + "/unreplicate";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/vmimages/";
+            url = url + Uri.EscapeDataString(vmImageName);
+            url = url + "/unreplicate";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -984,7 +1019,15 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/vmimages/" + Uri.EscapeDataString(vmImageName) + "/details";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/vmimages/";
+            url = url + Uri.EscapeDataString(vmImageName);
+            url = url + "/details";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1275,14 +1318,14 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             XElement iconUriElement = vMImageDetailsElement.Element(XName.Get("IconUri", "http://schemas.microsoft.com/windowsazure"));
                             if (iconUriElement != null)
                             {
-                                Uri iconUriInstance = TypeConversion.TryParseUri(iconUriElement.Value);
+                                string iconUriInstance = iconUriElement.Value;
                                 result.IconUri = iconUriInstance;
                             }
                             
                             XElement smallIconUriElement = vMImageDetailsElement.Element(XName.Get("SmallIconUri", "http://schemas.microsoft.com/windowsazure"));
                             if (smallIconUriElement != null)
                             {
-                                Uri smallIconUriInstance = TypeConversion.TryParseUri(smallIconUriElement.Value);
+                                string smallIconUriInstance = smallIconUriElement.Value;
                                 result.SmallIconUri = smallIconUriInstance;
                             }
                             
@@ -1422,7 +1465,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/vmimages";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/vmimages";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1718,14 +1767,14 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement iconUriElement = vMImagesElement.Element(XName.Get("IconUri", "http://schemas.microsoft.com/windowsazure"));
                                 if (iconUriElement != null)
                                 {
-                                    Uri iconUriInstance = TypeConversion.TryParseUri(iconUriElement.Value);
+                                    string iconUriInstance = iconUriElement.Value;
                                     vMImageInstance.IconUri = iconUriInstance;
                                 }
                                 
                                 XElement smallIconUriElement = vMImagesElement.Element(XName.Get("SmallIconUri", "http://schemas.microsoft.com/windowsazure"));
                                 if (smallIconUriElement != null)
                                 {
-                                    Uri smallIconUriInstance = TypeConversion.TryParseUri(smallIconUriElement.Value);
+                                    string smallIconUriInstance = smallIconUriElement.Value;
                                     vMImageInstance.SmallIconUri = smallIconUriInstance;
                                 }
                                 
@@ -1839,7 +1888,15 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/vmimages/" + Uri.EscapeDataString(vmImageName) + "/replicate";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/vmimages/";
+            url = url + Uri.EscapeDataString(vmImageName);
+            url = url + "/replicate";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -2205,7 +2262,14 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/vmimages/" + Uri.EscapeDataString(imageName);
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/vmimages/";
+            url = url + Uri.EscapeDataString(imageName);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -2331,14 +2395,14 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 if (parameters.IconUri != null)
                 {
                     XElement iconUriElement = new XElement(XName.Get("IconUri", "http://schemas.microsoft.com/windowsazure"));
-                    iconUriElement.Value = parameters.IconUri.AbsoluteUri;
+                    iconUriElement.Value = parameters.IconUri;
                     vMImageElement.Add(iconUriElement);
                 }
                 
                 if (parameters.SmallIconUri != null)
                 {
                     XElement smallIconUriElement = new XElement(XName.Get("SmallIconUri", "http://schemas.microsoft.com/windowsazure"));
-                    smallIconUriElement.Value = parameters.SmallIconUri.AbsoluteUri;
+                    smallIconUriElement.Value = parameters.SmallIconUri;
                     vMImageElement.Add(smallIconUriElement);
                 }
                 

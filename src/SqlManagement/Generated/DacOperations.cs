@@ -137,7 +137,15 @@ namespace Microsoft.WindowsAzure.Management.Sql
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/sqlservers/servers/" + Uri.EscapeDataString(serverName) + "/DacOperations/Export";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/sqlservers/servers/";
+            url = url + Uri.EscapeDataString(serverName);
+            url = url + "/DacOperations/Export";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -366,11 +374,24 @@ namespace Microsoft.WindowsAzure.Management.Sql
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/sqlservers/servers/" + Uri.EscapeDataString(serverName) + "/DacOperations/Status?";
-            url = url + "servername=" + Uri.EscapeDataString(fullyQualifiedServerName);
-            url = url + "&username=" + Uri.EscapeDataString(username);
-            url = url + "&password=" + Uri.EscapeDataString(password);
-            url = url + "&reqId=" + Uri.EscapeDataString(requestId);
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/sqlservers/servers/";
+            url = url + Uri.EscapeDataString(serverName);
+            url = url + "/DacOperations/Status";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("servername=" + Uri.EscapeDataString(fullyQualifiedServerName));
+            queryParameters.Add("username=" + Uri.EscapeDataString(username));
+            queryParameters.Add("password=" + Uri.EscapeDataString(password));
+            queryParameters.Add("reqId=" + Uri.EscapeDataString(requestId));
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -611,7 +632,15 @@ namespace Microsoft.WindowsAzure.Management.Sql
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/sqlservers/servers/" + Uri.EscapeDataString(serverName) + "/DacOperations/Status";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/sqlservers/servers/";
+            url = url + Uri.EscapeDataString(serverName);
+            url = url + "/DacOperations/Status";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -890,7 +919,15 @@ namespace Microsoft.WindowsAzure.Management.Sql
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/sqlservers/servers/" + Uri.EscapeDataString(serverName) + "/DacOperations/Import";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/sqlservers/servers/";
+            url = url + Uri.EscapeDataString(serverName);
+            url = url + "/DacOperations/Import";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')

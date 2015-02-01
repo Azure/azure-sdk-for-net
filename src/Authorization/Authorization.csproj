@@ -11,7 +11,7 @@
     <AssemblyName>Microsoft.Azure.Management.Authorization</AssemblyName>
     <OutputType>Library</OutputType>
     <RestorePackages>true</RestorePackages>
-    <NuGetPackageImportStamp>a7270363</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>3e2389e6</NuGetPackageImportStamp>
   </PropertyGroup>
   <Import Project="..\..\tools\Library.Settings.targets" />
   <ItemGroup>

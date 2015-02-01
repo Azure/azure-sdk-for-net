@@ -11,7 +11,7 @@
     <AssemblyName>Microsoft.WindowsAzure.Management.Store</AssemblyName>
     <OutputType>Library</OutputType>
     <RestorePackages>true</RestorePackages>
-    <NuGetPackageImportStamp>54558857</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>50431397</NuGetPackageImportStamp>
   </PropertyGroup>
   <Import Project="..\..\tools\Library.Settings.targets" />
   <ItemGroup>

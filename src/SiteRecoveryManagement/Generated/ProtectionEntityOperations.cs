@@ -108,8 +108,30 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
             }
             
             // Construct URL
-            string url = (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/cloudservices/" + Uri.EscapeDataString(this.Client.CloudServiceName) + "/resources/WAHyperVRecoveryManager/~/HyperVRecoveryManagerVault/" + Uri.EscapeDataString(this.Client.ResourceName) + "/ProtectionContainers/" + Uri.EscapeDataString(protectionContainerId) + "/ProtectionEntities/" + Uri.EscapeDataString(protectionEntityId) + "/CommitFailover?";
-            url = url + "api-version=2014-10-27";
+            string url = "";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/cloudservices/";
+            url = url + Uri.EscapeDataString(this.Client.CloudServiceName);
+            url = url + "/resources/";
+            url = url + "WAHyperVRecoveryManager";
+            url = url + "/~/";
+            url = url + "HyperVRecoveryManagerVault";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(this.Client.ResourceName);
+            url = url + "/ProtectionContainers/";
+            url = url + Uri.EscapeDataString(protectionContainerId);
+            url = url + "/ProtectionEntities/";
+            url = url + Uri.EscapeDataString(protectionEntityId);
+            url = url + "/CommitFailover";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-10-27");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -517,8 +539,30 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
             }
             
             // Construct URL
-            string url = (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/cloudservices/" + Uri.EscapeDataString(this.Client.CloudServiceName) + "/resources/WAHyperVRecoveryManager/~/HyperVRecoveryManagerVault/" + Uri.EscapeDataString(this.Client.ResourceName) + "/ProtectionContainers/" + Uri.EscapeDataString(protectionContainerId) + "/ProtectionEntities/" + Uri.EscapeDataString(protectionEntityId) + "/DisableProtection?";
-            url = url + "api-version=2014-10-27";
+            string url = "";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/cloudservices/";
+            url = url + Uri.EscapeDataString(this.Client.CloudServiceName);
+            url = url + "/resources/";
+            url = url + "WAHyperVRecoveryManager";
+            url = url + "/~/";
+            url = url + "HyperVRecoveryManagerVault";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(this.Client.ResourceName);
+            url = url + "/ProtectionContainers/";
+            url = url + Uri.EscapeDataString(protectionContainerId);
+            url = url + "/ProtectionEntities/";
+            url = url + Uri.EscapeDataString(protectionEntityId);
+            url = url + "/DisableProtection";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-10-27");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -926,8 +970,30 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
             }
             
             // Construct URL
-            string url = (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/cloudservices/" + Uri.EscapeDataString(this.Client.CloudServiceName) + "/resources/WAHyperVRecoveryManager/~/HyperVRecoveryManagerVault/" + Uri.EscapeDataString(this.Client.ResourceName) + "/ProtectionContainers/" + Uri.EscapeDataString(protectionContainerId) + "/ProtectionEntities/" + Uri.EscapeDataString(protectionEntityId) + "/EnableProtection?";
-            url = url + "api-version=2014-10-27";
+            string url = "";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/cloudservices/";
+            url = url + Uri.EscapeDataString(this.Client.CloudServiceName);
+            url = url + "/resources/";
+            url = url + "WAHyperVRecoveryManager";
+            url = url + "/~/";
+            url = url + "HyperVRecoveryManagerVault";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(this.Client.ResourceName);
+            url = url + "/ProtectionContainers/";
+            url = url + Uri.EscapeDataString(protectionContainerId);
+            url = url + "/ProtectionEntities/";
+            url = url + Uri.EscapeDataString(protectionEntityId);
+            url = url + "/EnableProtection";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-10-27");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1335,8 +1401,29 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
             }
             
             // Construct URL
-            string url = (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/cloudservices/" + Uri.EscapeDataString(this.Client.CloudServiceName) + "/resources/WAHyperVRecoveryManager/~/HyperVRecoveryManagerVault/" + Uri.EscapeDataString(this.Client.ResourceName) + "/ProtectionContainers/" + Uri.EscapeDataString(protectionContainerId) + "/ProtectionEntities/" + Uri.EscapeDataString(protectionEntityId) + "?";
-            url = url + "api-version=2014-10-27";
+            string url = "";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/cloudservices/";
+            url = url + Uri.EscapeDataString(this.Client.CloudServiceName);
+            url = url + "/resources/";
+            url = url + "WAHyperVRecoveryManager";
+            url = url + "/~/";
+            url = url + "HyperVRecoveryManagerVault";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(this.Client.ResourceName);
+            url = url + "/ProtectionContainers/";
+            url = url + Uri.EscapeDataString(protectionContainerId);
+            url = url + "/ProtectionEntities/";
+            url = url + Uri.EscapeDataString(protectionEntityId);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-10-27");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1581,8 +1668,28 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
             }
             
             // Construct URL
-            string url = (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/cloudservices/" + Uri.EscapeDataString(this.Client.CloudServiceName) + "/resources/WAHyperVRecoveryManager/~/HyperVRecoveryManagerVault/" + Uri.EscapeDataString(this.Client.ResourceName) + "/ProtectionContainers/" + Uri.EscapeDataString(protectionContainerId) + "/ProtectionEntities?";
-            url = url + "api-version=2014-10-27";
+            string url = "";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/cloudservices/";
+            url = url + Uri.EscapeDataString(this.Client.CloudServiceName);
+            url = url + "/resources/";
+            url = url + "WAHyperVRecoveryManager";
+            url = url + "/~/";
+            url = url + "HyperVRecoveryManagerVault";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(this.Client.ResourceName);
+            url = url + "/ProtectionContainers/";
+            url = url + Uri.EscapeDataString(protectionContainerId);
+            url = url + "/ProtectionEntities";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-10-27");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1846,8 +1953,30 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
             }
             
             // Construct URL
-            string url = (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/cloudservices/" + Uri.EscapeDataString(this.Client.CloudServiceName) + "/resources/WAHyperVRecoveryManager/~/HyperVRecoveryManagerVault/" + Uri.EscapeDataString(this.Client.ResourceName) + "/ProtectionContainers/" + Uri.EscapeDataString(protectionContainerId) + "/ProtectionEntities/" + Uri.EscapeDataString(protectionEntityId) + "/PlannedFailover?";
-            url = url + "api-version=2014-10-27";
+            string url = "";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/cloudservices/";
+            url = url + Uri.EscapeDataString(this.Client.CloudServiceName);
+            url = url + "/resources/";
+            url = url + "WAHyperVRecoveryManager";
+            url = url + "/~/";
+            url = url + "HyperVRecoveryManagerVault";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(this.Client.ResourceName);
+            url = url + "/ProtectionContainers/";
+            url = url + Uri.EscapeDataString(protectionContainerId);
+            url = url + "/ProtectionEntities/";
+            url = url + Uri.EscapeDataString(protectionEntityId);
+            url = url + "/PlannedFailover";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-10-27");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -2295,8 +2424,30 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
             }
             
             // Construct URL
-            string url = (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/cloudservices/" + Uri.EscapeDataString(this.Client.CloudServiceName) + "/resources/WAHyperVRecoveryManager/~/HyperVRecoveryManagerVault/" + Uri.EscapeDataString(this.Client.ResourceName) + "/ProtectionContainers/" + Uri.EscapeDataString(protectionContainerId) + "/ProtectionEntities/" + Uri.EscapeDataString(protectionEntityId) + "/Reprotect?";
-            url = url + "api-version=2014-10-27";
+            string url = "";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/cloudservices/";
+            url = url + Uri.EscapeDataString(this.Client.CloudServiceName);
+            url = url + "/resources/";
+            url = url + "WAHyperVRecoveryManager";
+            url = url + "/~/";
+            url = url + "HyperVRecoveryManagerVault";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(this.Client.ResourceName);
+            url = url + "/ProtectionContainers/";
+            url = url + Uri.EscapeDataString(protectionContainerId);
+            url = url + "/ProtectionEntities/";
+            url = url + Uri.EscapeDataString(protectionEntityId);
+            url = url + "/Reprotect";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-10-27");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -2752,8 +2903,30 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
             }
             
             // Construct URL
-            string url = (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/cloudservices/" + Uri.EscapeDataString(this.Client.CloudServiceName) + "/resources/WAHyperVRecoveryManager/~/HyperVRecoveryManagerVault/" + Uri.EscapeDataString(this.Client.ResourceName) + "/ProtectionContainers/" + Uri.EscapeDataString(protectionContainerId) + "/ProtectionEntities/" + Uri.EscapeDataString(protectionEntityId) + "/TestFailover?";
-            url = url + "api-version=2014-10-27";
+            string url = "";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/cloudservices/";
+            url = url + Uri.EscapeDataString(this.Client.CloudServiceName);
+            url = url + "/resources/";
+            url = url + "WAHyperVRecoveryManager";
+            url = url + "/~/";
+            url = url + "HyperVRecoveryManagerVault";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(this.Client.ResourceName);
+            url = url + "/ProtectionContainers/";
+            url = url + Uri.EscapeDataString(protectionContainerId);
+            url = url + "/ProtectionEntities/";
+            url = url + Uri.EscapeDataString(protectionEntityId);
+            url = url + "/TestFailover";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-10-27");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -3209,8 +3382,30 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
             }
             
             // Construct URL
-            string url = (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/cloudservices/" + Uri.EscapeDataString(this.Client.CloudServiceName) + "/resources/WAHyperVRecoveryManager/~/HyperVRecoveryManagerVault/" + Uri.EscapeDataString(this.Client.ResourceName) + "/ProtectionContainers/" + Uri.EscapeDataString(protectionContainerId) + "/ProtectionEntities/" + Uri.EscapeDataString(protectionEntityId) + "/UnplannedFailover?";
-            url = url + "api-version=2014-10-27";
+            string url = "";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/cloudservices/";
+            url = url + Uri.EscapeDataString(this.Client.CloudServiceName);
+            url = url + "/resources/";
+            url = url + "WAHyperVRecoveryManager";
+            url = url + "/~/";
+            url = url + "HyperVRecoveryManagerVault";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(this.Client.ResourceName);
+            url = url + "/ProtectionContainers/";
+            url = url + Uri.EscapeDataString(protectionContainerId);
+            url = url + "/ProtectionEntities/";
+            url = url + Uri.EscapeDataString(protectionEntityId);
+            url = url + "/UnplannedFailover";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-10-27");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')

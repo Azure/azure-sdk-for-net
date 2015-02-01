@@ -599,8 +599,28 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
             }
             
             // Construct URL
-            string url = "/" + (this.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Credentials.SubscriptionId)) + "/cloudservices/" + Uri.EscapeDataString(this.CloudServiceName) + "/resources/" + Uri.EscapeDataString(this.ResourceNamespace) + "/~/CiSVault/" + Uri.EscapeDataString(this.ResourceName) + "/api/jobs/" + Uri.EscapeDataString(taskId) + "?";
-            url = url + "api-version=2014-01-01.1.0";
+            string url = "";
+            url = url + "/";
+            if (this.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Credentials.SubscriptionId);
+            }
+            url = url + "/cloudservices/";
+            url = url + Uri.EscapeDataString(this.CloudServiceName);
+            url = url + "/resources/";
+            url = url + Uri.EscapeDataString(this.ResourceNamespace);
+            url = url + "/~/";
+            url = url + "CiSVault";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(this.ResourceName);
+            url = url + "/api/jobs/";
+            url = url + Uri.EscapeDataString(taskId);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-01-01.1.0");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')

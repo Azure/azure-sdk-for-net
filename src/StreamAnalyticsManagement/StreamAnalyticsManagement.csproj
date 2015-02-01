@@ -12,7 +12,7 @@
     <RootNamespace>Microsoft.Azure.Management.StreamAnalytics</RootNamespace>
     <AssemblyName>Microsoft.Azure.Management.StreamAnalytics</AssemblyName>
     <RestorePackages>true</RestorePackages>
-    <NuGetPackageImportStamp>bcd5129c</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>fcd97154</NuGetPackageImportStamp>
   </PropertyGroup>
   <Import Project="..\..\tools\Library.Settings.targets" />
   <ItemGroup>

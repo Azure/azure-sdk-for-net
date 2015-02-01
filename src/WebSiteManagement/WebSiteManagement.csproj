@@ -11,16 +11,19 @@
     <AssemblyName>Microsoft.WindowsAzure.Management.WebSites</AssemblyName>
     <OutputType>Library</OutputType>
     <RestorePackages>true</RestorePackages>
-    <NuGetPackageImportStamp>174234d6</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>fe7ddb34</NuGetPackageImportStamp>
   </PropertyGroup>
   <Import Project="..\..\tools\Library.Settings.targets" />
   <ItemGroup>
+    <Compile Include="Generated\CommandsOperations.cs" />
+    <Compile Include="Generated\CommandsOperationsExtensions.cs" />
     <Compile Include="Generated\ContinuousWebJobOperations.cs" />
     <Compile Include="Generated\ContinuousWebJobOperationsExtensions.cs" />
     <Compile Include="Generated\DeploymentOperations.cs" />
     <Compile Include="Generated\DeploymentOperationsExtensions.cs" />
     <Compile Include="Generated\DiagnosticOperations.cs" />
     <Compile Include="Generated\DiagnosticOperationsExtensions.cs" />
+    <Compile Include="Generated\ICommandsOperations.cs" />
     <Compile Include="Generated\IContinuousWebJobOperations.cs" />
     <Compile Include="Generated\IDeploymentOperations.cs" />
     <Compile Include="Generated\IDiagnosticOperations.cs" />
@@ -36,6 +39,7 @@
     <Compile Include="Generated\Models\BackupItemStatus.cs" />
     <Compile Include="Generated\Models\BackupRequest.cs" />
     <Compile Include="Generated\Models\BackupSchedule.cs" />
+    <Compile Include="Generated\Models\CommandResult.cs" />
     <Compile Include="Generated\Models\ConnectionStringType.cs" />
     <Compile Include="Generated\Models\ContinuousWebJob.cs" />
     <Compile Include="Generated\Models\ContinuousWebJobGetResponse.cs" />
@@ -65,6 +69,8 @@
     <Compile Include="Generated\Models\HybridConnectionGetResponse.cs" />
     <Compile Include="Generated\Models\HybridConnectionListResponse.cs" />
     <Compile Include="Generated\Models\HybridConnectionUpdateParameters.cs" />
+    <Compile Include="Generated\Models\InvokeCommandParameters.cs" />
+    <Compile Include="Generated\Models\InvokeCommandResponse.cs" />
     <Compile Include="Generated\Models\LogEntryType.cs" />
     <Compile Include="Generated\Models\ManagedPipelineMode.cs" />
     <Compile Include="Generated\Models\RampUpRule.cs" />

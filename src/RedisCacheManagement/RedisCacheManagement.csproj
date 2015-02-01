@@ -11,7 +11,7 @@
     <AssemblyName>Microsoft.Azure.Management.Redis</AssemblyName>
     <OutputType>Library</OutputType>
     <RestorePackages>true</RestorePackages>
-    <NuGetPackageImportStamp>5209a4e3</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>f578a99f</NuGetPackageImportStamp>
   </PropertyGroup>
   <Import Project="..\..\tools\Library.Settings.targets" />
   <ItemGroup>

@@ -11,7 +11,7 @@
     <AssemblyName>Microsoft.Azure.Management.WebSites</AssemblyName>
     <OutputType>Library</OutputType>
     <RestorePackages>true</RestorePackages>
-    <NuGetPackageImportStamp>d509c1c3</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>8e96f578</NuGetPackageImportStamp>
   </PropertyGroup>
   <Import Project="..\..\tools\Library.Settings.targets" />
   <ItemGroup>

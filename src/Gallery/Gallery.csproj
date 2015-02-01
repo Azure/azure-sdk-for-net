@@ -11,7 +11,7 @@
     <AssemblyName>Microsoft.Azure.Gallery</AssemblyName>
     <OutputType>Library</OutputType>
     <RestorePackages>true</RestorePackages>
-    <NuGetPackageImportStamp>109f8634</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>df055320</NuGetPackageImportStamp>
   </PropertyGroup>
   <Import Project="..\..\tools\Library.Settings.targets" />
   <ItemGroup>

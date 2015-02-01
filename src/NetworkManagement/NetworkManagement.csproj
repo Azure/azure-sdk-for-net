@@ -11,7 +11,7 @@
     <AssemblyName>Microsoft.WindowsAzure.Management.Network</AssemblyName>
     <OutputType>Library</OutputType>
     <RestorePackages>true</RestorePackages>
-    <NuGetPackageImportStamp>e7cebd7c</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>bd71385c</NuGetPackageImportStamp>
   </PropertyGroup>
   <Import Project="..\..\tools\Library.Settings.targets" />
   <ItemGroup>

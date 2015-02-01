@@ -104,7 +104,15 @@ namespace Microsoft.WindowsAzure.Management.Sql
             }
             
             // Construct URL
-            string url = (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/sqlservers/servers/" + Uri.EscapeDataString(serverName) + "/serviceobjectives/" + Uri.EscapeDataString(serviceObjectiveId);
+            string url = "";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/sqlservers/servers/";
+            url = url + Uri.EscapeDataString(serverName);
+            url = url + "/serviceobjectives/";
+            url = url + Uri.EscapeDataString(serviceObjectiveId);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -355,7 +363,14 @@ namespace Microsoft.WindowsAzure.Management.Sql
             }
             
             // Construct URL
-            string url = (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/sqlservers/servers/" + Uri.EscapeDataString(serverName) + "/serviceobjectives";
+            string url = "";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/sqlservers/servers/";
+            url = url + Uri.EscapeDataString(serverName);
+            url = url + "/serviceobjectives";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')

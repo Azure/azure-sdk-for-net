@@ -11,7 +11,7 @@
     <AssemblyName>Microsoft.WindowsAzure.Management.MediaServices</AssemblyName>
     <OutputType>Library</OutputType>
     <RestorePackages>true</RestorePackages>
-    <NuGetPackageImportStamp>1ad50407</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>771bf969</NuGetPackageImportStamp>
   </PropertyGroup>
   <Import Project="..\..\tools\Library.Settings.targets" />
   <ItemGroup>

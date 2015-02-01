@@ -11,7 +11,7 @@
     <AssemblyName>Microsoft.Azure.Management.Automation</AssemblyName>
     <OutputType>Library</OutputType>
     <RestorePackages>true</RestorePackages>
-    <NuGetPackageImportStamp>0026487c</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>de17033c</NuGetPackageImportStamp>
   </PropertyGroup>
   <Import Project="..\..\tools\Library.Settings.targets" />
   <ItemGroup>

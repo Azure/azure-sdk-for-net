@@ -11,7 +11,7 @@
     <AssemblyName>Microsoft.WindowsAzure.Management.ExpressRoute</AssemblyName>
     <OutputType>Library</OutputType>
     <RestorePackages>true</RestorePackages>
-    <NuGetPackageImportStamp>8a80d37d</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>56133d78</NuGetPackageImportStamp>
   </PropertyGroup>
   <Import Project="..\..\tools\Library.Settings.targets" />
   <ItemGroup>

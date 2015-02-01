@@ -12,7 +12,7 @@
     <OutputType>Library</OutputType>
     <RestorePackages>true</RestorePackages>
     <NuGetPackageImportStamp>55dcd0dc</NuGetPackageImportStamp>
-    <NuGetPackageImportStamp>e43c59b4</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>ac37f11b</NuGetPackageImportStamp>
   </PropertyGroup>
   <Import Project="..\..\tools\Library.Settings.targets" />
   <ItemGroup>

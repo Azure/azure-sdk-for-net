@@ -11,7 +11,7 @@
     <AssemblyName>Microsoft.Azure.Management.Sql</AssemblyName>
     <OutputType>Library</OutputType>
     <RestorePackages>true</RestorePackages>
-    <NuGetPackageImportStamp>41ff1ab8</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>56948a52</NuGetPackageImportStamp>
   </PropertyGroup>
   <Import Project="..\..\tools\Library.Settings.targets" />
   <ItemGroup>

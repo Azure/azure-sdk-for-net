@@ -81,6 +81,14 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         }
         
         /// <summary>
+        /// Operations for invoking commands.
+        /// </summary>
+        ICommandsOperations Commands
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Operations for managing continuous WebJobs.
         /// </summary>
         IContinuousWebJobOperations ContinuousWebJobs
