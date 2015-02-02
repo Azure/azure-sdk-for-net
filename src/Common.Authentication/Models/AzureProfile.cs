@@ -178,7 +178,7 @@ namespace Microsoft.Azure.Common.Authentication.Models
             {
                 throw new ArgumentNullException("path");
             }
-
+            
             // Removing predefined environments
             foreach (string env in AzureEnvironment.PublicEnvironments.Keys)
             {
@@ -186,17 +186,27 @@ namespace Microsoft.Azure.Common.Authentication.Models
             }
 
             JsonProfileSerializer jsonSerializer = new JsonProfileSerializer();
-
-            string contents = jsonSerializer.Serialize(this);
-            string diskContents = string.Empty;
-            if (AzureSession.DataStore.FileExists(path))
+            try
             {
-                diskContents = AzureSession.DataStore.ReadFileAsText(path);
+                string contents = jsonSerializer.Serialize(this);
+                string diskContents = string.Empty;
+                if (AzureSession.DataStore.FileExists(path))
+                {
+                    diskContents = AzureSession.DataStore.ReadFileAsText(path);
+                }
+
+                if (diskContents != contents)
+                {
+                    AzureSession.DataStore.WriteFile(path, contents);
+                }
             }
-
-            if (diskContents != contents)
+            finally
             {
-                AzureSession.DataStore.WriteFile(path, contents);
+                // Adding back predefined environments
+                foreach (AzureEnvironment env in AzureEnvironment.PublicEnvironments.Values)
+                {
+                    Environments[env.Name] = env;
+                }
             }
         }
     }
