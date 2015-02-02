@@ -206,10 +206,17 @@
             AmbariConfigurationDocumentManager ambariConfigurationDocumentManager = new AmbariConfigurationDocumentManager(clusterDetailsFromServer.DeploymentDocuments[IaasClusterDocumentTypes.EmbeddedAmbariConfigurationDocument]);
 
             // Populate user name, passowrd, and server address information
-            // TODO: remove hardcoding
-            clusterDetails.ConnectionUrl = String.Format("http://{0}.cloudapp.net/", clusterDetails.Name);
             clusterDetails.HttpUserName = "admin";
             clusterDetails.HttpPassword = ambariConfigurationDocumentManager.GetPassword();
+            foreach (var endpoint in clusterDetailsFromServer.ConnectivityEndpoints)
+            {
+                var webEndPoint = endpoint as WebConnectivityEndpoint;
+                if (webEndPoint != null)
+                {
+                    clusterDetails.ConnectionUrl = String.Format("https://{0}{1}", webEndPoint.Location, webEndPoint.Port > 0 ? String.Format(":{0}", webEndPoint.Port) : "");
+                    break;
+                }
+            }
 
             clusterDetails.DefaultStorageAccount = ambariConfigurationDocumentManager.GetDefaultStorageAccount();
 
