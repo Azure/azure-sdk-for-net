@@ -238,12 +238,18 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
                 throw new ArgumentException("clusterCreateParameters.ClusterSizeInNodes must be > 0");
             }
 
-            if (clusterCreateParameters.ClusterType != ClusterType.HBase
-                && clusterCreateParameters.ZookeeperNodeSize != null)
+            //allow zookeeper to be specified only for Hbase and Storm clusters
+            if (clusterCreateParameters.ZookeeperNodeSize != null)
             {
-                throw new ArgumentException("clusterCreateParameters.ZookeeperNodeSize must be null for non-hbase clusters.");                   
+                if (clusterCreateParameters.ClusterType != ClusterType.HBase &&
+                    clusterCreateParameters.ClusterType != ClusterType.Storm)
+                {
+                    throw new ArgumentException(
+                        string.Format("clusterCreateParameters.ZookeeperNodeSize must be null for {0} clusters.",
+                        clusterCreateParameters.ClusterType));
+                }
             }
-
+            
             try
             {
                 //Validate 

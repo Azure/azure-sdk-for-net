@@ -523,7 +523,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClustersTests
                     HeadNodeSize = "ExtraLarge",
                     DataNodeSize = "Large",
                     ZookeeperNodeSize = "Medium",
-                    ClusterType = ClusterType.Hadoop,
+                    ClusterType = ClusterType.Spark,
                 };
 
                 // Add in valid config action.
@@ -537,7 +537,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClustersTests
             catch (ArgumentException aex)
             {
                 Assert.AreEqual(aex.Message,
-                    "clusterCreateParameters.ZookeeperNodeSize must be null for non-hbase clusters.");
+                    "clusterCreateParameters.ZookeeperNodeSize must be null for Spark clusters.");
             }
         }
 
