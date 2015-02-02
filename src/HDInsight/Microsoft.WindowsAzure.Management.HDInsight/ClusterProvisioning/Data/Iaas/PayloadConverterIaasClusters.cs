@@ -285,7 +285,7 @@
                 throw new ArgumentNullException("clusterCreateParameters");
             }
 
-            string document = VersionToDocumentMapper.GetDocument(IaasClusterDocumentTypes.EmbeddedAzureConfigurationDocument, clusterCreateParameters.Version);
+            string document = VersionToDocumentMapper.GetAzureCsmDocument(!String.IsNullOrEmpty(clusterCreateParameters.SshPassword));
             AzureCsmDocumentManager azureCsmDocumentManager = new AzureCsmDocumentManager(document);
 
             // Set basic cluster parameters
@@ -296,8 +296,15 @@
             // Set SSH parameters
             if (!String.IsNullOrEmpty(clusterCreateParameters.SshUserName))
             {
-                var x509cert = GetOpenSshCertificate(clusterCreateParameters.SshPublicKey, String.Format("CN={0}", clusterCreateParameters.Name));
-                azureCsmDocumentManager.SetSshProfile(clusterCreateParameters.SshUserName, x509cert);
+                if (!String.IsNullOrEmpty(clusterCreateParameters.SshPassword))
+                {
+                    azureCsmDocumentManager.SetSshProfile(clusterCreateParameters.SshUserName, clusterCreateParameters.SshPassword);
+                }
+                else
+                {
+                    var x509cert = GetOpenSshCertificate(clusterCreateParameters.SshPublicKey, String.Format("CN={0}", clusterCreateParameters.Name));
+                    azureCsmDocumentManager.SetSshProfile(clusterCreateParameters.SshUserName, x509cert);
+                }
             }
             
             return azureCsmDocumentManager.Document;
@@ -310,7 +317,7 @@
                 throw new ArgumentNullException("clusterCreateParameters");
             }
 
-            string document = VersionToDocumentMapper.GetDocument(IaasClusterDocumentTypes.EmbeddedAmbariConfigurationDocument, clusterCreateParameters.Version);
+            string document = VersionToDocumentMapper.GetAmbariConfigurationDocument(clusterCreateParameters.Version);
             AmbariConfigurationDocumentManager ambariConfigurationManager = new AmbariConfigurationDocumentManager(document);
 
             // Set password

@@ -15,8 +15,11 @@
 
         private const string DnsNameParameterTag = "#DnsName";
         private const string LocationParameterTag = "#Location";
-        private const string UserNameParameterTag = "#Username";
         private const string WorkerNodeInstanceCountParameterTag = "#WorkerNodeInstanceCount";
+
+        private const string SshUserNameParameterTag = "#SshUsername";
+        private const string SshPasswordParameterTag = "#SshPassword";
+        private const string SshPasswordAuthDisabledParameterTag = "#IsSshPasswordAuthenticationDisabled";
         private const string CertificateFingerprintParameterTag = "#CertificateFingerPrint";
         private const string PublicKeyPathParameterTag = "#PublicKeyPath";
         private const string SshCertificateDataParameterTag = "#SshCertificateData";
@@ -77,10 +80,26 @@
             }
 
 
-            Document = Document.Replace(UserNameParameterTag, JsonHelper.EncodeStringForJson(sshUserName));
+            Document = Document.Replace(SshUserNameParameterTag, JsonHelper.EncodeStringForJson(sshUserName));
             Document = Document.Replace(CertificateFingerprintParameterTag, JsonHelper.EncodeStringForJson(x509cert.Thumbprint));
             Document = Document.Replace(PublicKeyPathParameterTag, JsonHelper.EncodeStringForJson(string.Format("/home/{0}/.ssh/authorized_keys", sshUserName)));
             Document = Document.Replace(SshCertificateDataParameterTag, JsonHelper.EncodeByteArrayForJson(x509cert.GetRawCertData()));
+        }
+
+        public void SetSshProfile(string sshUserName, string sshPassword)
+        {
+            if (String.IsNullOrEmpty(sshUserName))
+            {
+                throw new ArgumentNullException("sshUserName");
+            }
+
+            if (String.IsNullOrEmpty(sshPassword))
+            {
+                throw new ArgumentNullException("sshPassword");
+            }
+
+            Document = Document.Replace(SshUserNameParameterTag, JsonHelper.EncodeStringForJson(sshUserName));
+            Document = Document.Replace(SshPasswordParameterTag, JsonHelper.EncodeStringForJson(sshPassword));
         }
 
         public void SetWorkerNodeCount(int workerNodeCount)

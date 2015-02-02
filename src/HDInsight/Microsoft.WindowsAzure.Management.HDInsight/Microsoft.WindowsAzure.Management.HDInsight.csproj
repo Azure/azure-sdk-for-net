@@ -178,8 +178,9 @@
     <Compile Include="JobSubmission\PocoClient\HDInsightJobSubmissionPocoClient.cs" />
     <Compile Include="JobSubmission\PocoClient\HDInsightJobSubmissionPocoClientFactory.cs" />
     <None Include="app.config" />
-    <EmbeddedResource Include="ClusterProvisioning\Data\DocumentTemplates\Common\hadoop-azure.json" />
+    <EmbeddedResource Include="ClusterProvisioning\Data\DocumentTemplates\Common\hadoop-azure-sshkey.json" />
     <EmbeddedResource Include="ClusterProvisioning\Data\DocumentTemplates\3.2\hadoop-configuration.json" />
+    <EmbeddedResource Include="ClusterProvisioning\Data\DocumentTemplates\Common\hadoop-azure-sshpassword.json" />
     <None Include="JobSubmission\PocoClient\RDFE\HDInsightRdfeJobSubmissionPocoClient.cs" />
     <None Include="JobSubmission\PocoClient\RDFE\HDInsightRdfeJobSubmissionPocoClientFactory.cs" />
     <Compile Include="JobSubmission\PocoClient\IHDInsightJobSubmissionPocoClient.cs" />

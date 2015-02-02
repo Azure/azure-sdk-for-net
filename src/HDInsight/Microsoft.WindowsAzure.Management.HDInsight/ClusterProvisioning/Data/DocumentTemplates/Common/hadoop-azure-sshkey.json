@@ -71,7 +71,7 @@
                     "computerNamePattern": "headnode####",
                     "linuxOperatingSystemProfile": {
                         "DisableSshPasswordAuthentication": true,
-                        "username": "#Username",
+                        "username": "#SshUsername",
                         "sshProfile": {
                             "publicKeys": [
                                 {
@@ -149,12 +149,12 @@
             "type": "VirtualMachineGroup",
             "location": "#Location",
             "properties": {
-                "instanceCount": 2,
+                "instanceCount": #WorkerNodeInstanceCount,
                 "osProfile": {
                     "computerNamePattern": "workernode####",
                     "linuxOperatingSystemProfile": {
                         "DisableSshPasswordAuthentication": true,
-                        "username": "#Username",
+                        "username": "#SshUsername",
                         "sshProfile": {
                             "publicKeys": [
                                 {

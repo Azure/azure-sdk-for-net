@@ -16,23 +16,16 @@
     {
         private static Dictionary<string, string> supportedVersions;
         private const string locationOfCommonDocuments = "Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Data.DocumentTemplates.Common";
-        private const string azureCsmDocumentName = "hadoop-azure.json";
-        private const string ambariBluprintDocumentName = "hadoop-blueprint.json";
+        private const string azureCsmDocumentSshKeyName = "hadoop-azure-sshkey.json";
+        private const string azureCsmDocumentSshPasswordName = "hadoop-azure-sshpassword.json";
         private const string ambariConfigurationDocumentName = "hadoop-configuration.json";
 
-        public static string GetDocument(string documentType, string clusterVersion)
+        public static string GetAmbariConfigurationDocument(string clusterVersion)
         {
-            if (String.IsNullOrEmpty(documentType))
-            {
-                throw new ArgumentException("documentType");
-            }
-
             if (String.IsNullOrEmpty(clusterVersion))
             {
                 throw new ArgumentException("clusterVersion");
             }
-
-            string documentName;
 
             Version version = new Version(clusterVersion);
             string twoPartVersion = String.Format("{0}.{1}", version.Major, version.Minor);
@@ -43,28 +36,15 @@
             }
 
             string locationOfVersionedDocuments = SupportedVersions[twoPartVersion];
-            switch (documentType)
-            {
-                case IaasClusterDocumentTypes.EmbeddedAzureConfigurationDocument:
-                {
-                    documentName = String.Format("{0}.{1}", locationOfCommonDocuments, azureCsmDocumentName);
-                    break;
-                }
-                case IaasClusterDocumentTypes.EmbeddedAmbariBlueprintDocument:
-                {
-                    documentName = String.Format("{0}.{1}", locationOfVersionedDocuments, ambariBluprintDocumentName);
-                    break;
-                }
-                case IaasClusterDocumentTypes.EmbeddedAmbariConfigurationDocument:
-                {
-                    documentName = String.Format("{0}.{1}", locationOfVersionedDocuments, ambariConfigurationDocumentName);
-                    break;
-                }
-                default:
-                {
-                    throw new InvalidOperationException(String.Format("Specified document type {0} is invalid.", documentType));
-                }
-            }
+
+            string documentName = String.Format("{0}.{1}", locationOfVersionedDocuments, ambariConfigurationDocumentName);
+
+            return ReadEmbeddedResource(documentName);
+        }
+
+        public static string GetAzureCsmDocument(bool forPasswordBasedSshAuth)
+        {
+            string documentName = String.Format("{0}.{1}", locationOfCommonDocuments, forPasswordBasedSshAuth ? azureCsmDocumentSshPasswordName : azureCsmDocumentSshKeyName);
 
             return ReadEmbeddedResource(documentName);
         }

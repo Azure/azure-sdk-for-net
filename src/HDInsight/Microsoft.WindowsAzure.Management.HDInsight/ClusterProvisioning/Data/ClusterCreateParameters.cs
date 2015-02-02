@@ -173,6 +173,11 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         public string SshUserName { get; set; }
 
         /// <summary>
+        /// Gets or sets SSH password.
+        /// </summary>
+        public string SshPassword { get; set; }
+
+        /// <summary>
         /// Gets or sets the public key to be used for SSH.
         /// </summary>
         public string SshPublicKey { get; set; }
