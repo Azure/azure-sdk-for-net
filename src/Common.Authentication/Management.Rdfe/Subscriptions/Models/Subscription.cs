@@ -19,10 +19,7 @@
 // Changes to this file may cause incorrect behavior and will be lost if the
 // code is regenerated.
 
-using Hyak.Common;
-using Microsoft.Azure;
 using System;
-using System.Collections.Generic;
 
 namespace Microsoft.Azure.Internal.Subscriptions.Rdfe.Models
 {

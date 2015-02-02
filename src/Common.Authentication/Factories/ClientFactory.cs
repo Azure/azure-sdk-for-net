@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Common.Authentication.Factories
                 throw new ApplicationException(Resources.InvalidDefaultSubscription);
             }
 
-            ProfileClient profileClient = new ProfileClient();
+            ProfileClient profileClient = new ProfileClient(AzureSession.Profile);
             AzureContext context = new AzureContext(subscription,
                 profileClient.GetAccount(subscription.Account),
                 profileClient.GetEnvironmentOrDefault(subscription.Environment));

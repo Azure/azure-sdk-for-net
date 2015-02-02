@@ -20,7 +20,6 @@
 // code is regenerated.
 
 using Hyak.Common;
-using Microsoft.Azure;
 using Microsoft.Azure.Internal.Management.Rdfe.Models;
 using System;
 using System.Collections.Generic;
