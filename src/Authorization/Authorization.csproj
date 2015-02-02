@@ -15,33 +15,7 @@
   </PropertyGroup>
   <Import Project="..\..\tools\Library.Settings.targets" />
   <ItemGroup>
-    <Compile Include="Generated\IAuthorizationManagementClient.cs" />
-    <Compile Include="Generated\IPermissionOperations.cs" />
-    <Compile Include="Generated\IRoleAssignmentOperations.cs" />
-    <Compile Include="Generated\IRoleDefinitionOperations.cs" />
-    <Compile Include="Generated\ListAssignmentsFilterParameters.cs" />
-    <Compile Include="Generated\Models\Permission.cs" />
-    <Compile Include="Generated\Models\PermissionGetResult.cs" />
-    <Compile Include="Generated\Models\RoleAssignment.cs" />
-    <Compile Include="Generated\Models\RoleAssignmentCreateParameters.cs" />
-    <Compile Include="Generated\Models\RoleAssignmentCreateResult.cs" />
-    <Compile Include="Generated\Models\RoleAssignmentDeleteResult.cs" />
-    <Compile Include="Generated\Models\RoleAssignmentGetResult.cs" />
-    <Compile Include="Generated\Models\RoleAssignmentListResult.cs" />
-    <Compile Include="Generated\Models\RoleAssignmentProperties.cs" />
-    <Compile Include="Generated\Models\RoleDefinition.cs" />
-    <Compile Include="Generated\Models\RoleDefinitionGetResult.cs" />
-    <Compile Include="Generated\Models\RoleDefinitionListResult.cs" />
-    <Compile Include="Generated\Models\RoleDefinitionProperties.cs" />
-    <Compile Include="Generated\AuthorizationManagementClient.cs" />
-    <Compile Include="Generated\AuthorizationManagementClientExtensions.cs" />
-    <Compile Include="Generated\PermissionOperations.cs" />
-    <Compile Include="Generated\PermissionOperationsExtensions.cs" />
-    <Compile Include="Generated\RoleAssignmentOperations.cs" />
-    <Compile Include="Generated\RoleAssignmentOperationsExtensions.cs" />
-    <Compile Include="Generated\RoleDefinitionOperations.cs" />
-    <Compile Include="Generated\RoleDefinitionOperationsExtensions.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Generated\**\*.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Microsoft.Azure.Management.Authorization.nuget.proj" />

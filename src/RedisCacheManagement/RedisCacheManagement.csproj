@@ -20,64 +20,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Generated\IRedisManagementClient.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Generated\IRedisOperations.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Generated\Models\MaxMemoryPolicy.cs" />
-    <Compile Include="Generated\Models\RedisAccessKeys.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Generated\Models\RedisCreateOrUpdateParameters.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Generated\Models\RedisCreateOrUpdateResponse.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Generated\Models\RedisGetResponse.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Generated\Models\RedisKeyType.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Generated\Models\RedisListKeysResponse.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Generated\Models\RedisListResponse.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Generated\Models\RedisProperties.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Generated\Models\RedisReadableProperties.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Generated\Models\RedisReadablePropertiesWithAccessKey.cs" />
-    <Compile Include="Generated\Models\RedisRegenerateKeyParameters.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Generated\Models\RedisResource.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Generated\Models\Sku.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Generated\Models\SkuFamily.cs" />
-    <Compile Include="Generated\Models\SkuName.cs" />
-    <Compile Include="Generated\RedisManagementClient.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Generated\RedisManagementClientExtensions.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Generated\RedisOperations.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Generated\RedisOperationsExtensions.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Generated\**\*.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

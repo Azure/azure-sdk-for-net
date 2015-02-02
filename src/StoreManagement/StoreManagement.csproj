@@ -15,19 +15,7 @@
   </PropertyGroup>
   <Import Project="..\..\tools\Library.Settings.targets" />
   <ItemGroup>
-    <Compile Include="Generated\AddOnOperations.cs" />
-    <Compile Include="Generated\AddOnOperationsExtensions.cs" />
-    <Compile Include="Generated\CloudServiceOperations.cs" />
-    <Compile Include="Generated\CloudServiceOperationsExtensions.cs" />
-    <Compile Include="Generated\IAddOnOperations.cs" />
-    <Compile Include="Generated\ICloudServiceOperations.cs" />
-    <Compile Include="Generated\IStoreManagementClient.cs" />
-    <Compile Include="Generated\Models\AddOnCreateParameters.cs" />
-    <Compile Include="Generated\Models\AddOnUpdateParameters.cs" />
-    <Compile Include="Generated\Models\CloudServiceCreateParameters.cs" />
-    <Compile Include="Generated\Models\CloudServiceListResponse.cs" />
-    <Compile Include="Generated\StoreManagementClient.cs" />
-    <Compile Include="Generated\StoreManagementClientExtensions.cs" />
+    <Compile Include="Generated\**\*.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -15,39 +15,7 @@
   </PropertyGroup>
   <Import Project="..\..\tools\Library.Settings.targets" />
   <ItemGroup>
-    <Compile Include="Generated\DefinitionOperations.cs" />
-    <Compile Include="Generated\DefinitionOperationsExtensions.cs" />
-    <Compile Include="Generated\IDefinitionOperations.cs" />
-    <Compile Include="Generated\IProfileOperations.cs" />
-    <Compile Include="Generated\ITrafficManagerManagementClient.cs" />
-    <Compile Include="Generated\Models\Definition.cs" />
-    <Compile Include="Generated\Models\DefinitionCreateParameters.cs" />
-    <Compile Include="Generated\Models\DefinitionDnsOptions.cs" />
-    <Compile Include="Generated\Models\DefinitionEndpointCreateParameters.cs" />
-    <Compile Include="Generated\Models\DefinitionEndpointMonitorStatus.cs" />
-    <Compile Include="Generated\Models\DefinitionEndpointResponse.cs" />
-    <Compile Include="Generated\Models\DefinitionGetResponse.cs" />
-    <Compile Include="Generated\Models\DefinitionMonitor.cs" />
-    <Compile Include="Generated\Models\DefinitionMonitorHTTPOptions.cs" />
-    <Compile Include="Generated\Models\DefinitionMonitorProtocol.cs" />
-    <Compile Include="Generated\Models\DefinitionPolicyCreateParameters.cs" />
-    <Compile Include="Generated\Models\DefinitionPolicyMonitorStatus.cs" />
-    <Compile Include="Generated\Models\DefinitionPolicyResponse.cs" />
-    <Compile Include="Generated\Models\DefinitionsListResponse.cs" />
-    <Compile Include="Generated\Models\DefinitionStatusAndVersion.cs" />
-    <Compile Include="Generated\Models\DnsPrefixAvailabilityCheckResponse.cs" />
-    <Compile Include="Generated\Models\EndpointStatus.cs" />
-    <Compile Include="Generated\Models\EndpointType.cs" />
-    <Compile Include="Generated\Models\LoadBalancingMethod.cs" />
-    <Compile Include="Generated\Models\Profile.cs" />
-    <Compile Include="Generated\Models\ProfileDefinitionStatus.cs" />
-    <Compile Include="Generated\Models\ProfileGetResponse.cs" />
-    <Compile Include="Generated\Models\ProfilesListResponse.cs" />
-    <Compile Include="Generated\Models\ProfileStatusDetails.cs" />
-    <Compile Include="Generated\ProfileOperations.cs" />
-    <Compile Include="Generated\ProfileOperationsExtensions.cs" />
-    <Compile Include="Generated\TrafficManagerManagementClient.cs" />
-    <Compile Include="Generated\TrafficManagerManagementClientExtensions.cs" />
+    <Compile Include="Generated\**\*.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

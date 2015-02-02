@@ -16,51 +16,7 @@
   </PropertyGroup>
   <Import Project="..\..\tools\Library.Settings.targets" />
   <ItemGroup>
-    <Compile Include="Generated\INamespaceOperations.cs" />
-    <Compile Include="Generated\INotificationHubOperations.cs" />
-    <Compile Include="Generated\IQueueOperations.cs" />
-    <Compile Include="Generated\IRelayOperations.cs" />
-    <Compile Include="Generated\IServiceBusManagementClient.cs" />
-    <Compile Include="Generated\ITopicOperations.cs" />
-    <Compile Include="Generated\Models\AccessRight.cs" />
-    <Compile Include="Generated\Models\CheckNamespaceAvailabilityResponse.cs" />
-    <Compile Include="Generated\Models\CountDetails.cs" />
-    <Compile Include="Generated\Models\NamespaceDescription.cs" />
-    <Compile Include="Generated\Models\NamespaceType.cs" />
-    <Compile Include="Generated\Models\ServiceBusAuthorizationRuleResponse.cs" />
-    <Compile Include="Generated\Models\ServiceBusAuthorizationRulesResponse.cs" />
-    <Compile Include="Generated\Models\ServiceBusConnectionDetail.cs" />
-    <Compile Include="Generated\Models\ServiceBusConnectionDetailsResponse.cs" />
-    <Compile Include="Generated\Models\ServiceBusLocation.cs" />
-    <Compile Include="Generated\Models\ServiceBusNamespace.cs" />
-    <Compile Include="Generated\Models\ServiceBusNamespaceCreateParameters.cs" />
-    <Compile Include="Generated\Models\ServiceBusNamespaceDescriptionResponse.cs" />
-    <Compile Include="Generated\Models\ServiceBusNamespaceResponse.cs" />
-    <Compile Include="Generated\Models\ServiceBusNamespacesResponse.cs" />
-    <Compile Include="Generated\Models\ServiceBusNotificationHub.cs" />
-    <Compile Include="Generated\Models\ServiceBusNotificationHubResponse.cs" />
-    <Compile Include="Generated\Models\ServiceBusNotificationHubsResponse.cs" />
-    <Compile Include="Generated\Models\ServiceBusQueue.cs" />
-    <Compile Include="Generated\Models\ServiceBusQueueCreateParameters.cs" />
-    <Compile Include="Generated\Models\ServiceBusQueueResponse.cs" />
-    <Compile Include="Generated\Models\ServiceBusQueuesResponse.cs" />
-    <Compile Include="Generated\Models\ServiceBusRegionsResponse.cs" />
-    <Compile Include="Generated\Models\ServiceBusSharedAccessAuthorizationRule.cs" />
-    <Compile Include="Generated\Models\ServiceBusTopic.cs" />
-    <Compile Include="Generated\Models\ServiceBusTopicResponse.cs" />
-    <Compile Include="Generated\Models\ServiceBusTopicsResponse.cs" />
-    <Compile Include="Generated\NamespaceOperations.cs" />
-    <Compile Include="Generated\NamespaceOperationsExtensions.cs" />
-    <Compile Include="Generated\NotificationHubOperations.cs" />
-    <Compile Include="Generated\NotificationHubOperationsExtensions.cs" />
-    <Compile Include="Generated\QueueOperations.cs" />
-    <Compile Include="Generated\QueueOperationsExtensions.cs" />
-    <Compile Include="Generated\RelayOperations.cs" />
-    <Compile Include="Generated\RelayOperationsExtensions.cs" />
-    <Compile Include="Generated\ServiceBusManagementClient.cs" />
-    <Compile Include="Generated\ServiceBusManagementClientExtensions.cs" />
-    <Compile Include="Generated\TopicOperations.cs" />
-    <Compile Include="Generated\TopicOperationsExtensions.cs" />
+    <Compile Include="Generated\**\*.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

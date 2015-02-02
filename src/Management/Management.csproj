@@ -15,51 +15,7 @@
   </PropertyGroup>
   <Import Project="..\..\tools\Library.Settings.targets" />
   <ItemGroup>
-    <Compile Include="Generated\AffinityGroupOperations.cs" />
-    <Compile Include="Generated\AffinityGroupOperationsExtensions.cs" />
-    <Compile Include="Generated\IAffinityGroupOperations.cs" />
-    <Compile Include="Generated\ILocationOperations.cs" />
-    <Compile Include="Generated\IManagementCertificateOperations.cs" />
-    <Compile Include="Generated\IManagementClient.cs" />
-    <Compile Include="Generated\IRoleSizeOperations.cs" />
-    <Compile Include="Generated\ISubscriptionOperations.cs" />
-    <Compile Include="Generated\ListSubscriptions\ISubscriptionClient.cs" />
-    <Compile Include="Generated\ListSubscriptions\ISubscriptionOperations.cs" />
-    <Compile Include="Generated\ListSubscriptions\Models\SubscriptionListOperationResponse.cs" />
-    <Compile Include="Generated\ListSubscriptions\Models\SubscriptionStatus.cs" />
-    <Compile Include="Generated\ListSubscriptions\SubscriptionClient.cs" />
-    <Compile Include="Generated\ListSubscriptions\SubscriptionClientExtensions.cs" />
-    <Compile Include="Generated\ListSubscriptions\SubscriptionOperations.cs" />
-    <Compile Include="Generated\ListSubscriptions\SubscriptionOperationsExtensions.cs" />
-    <Compile Include="Generated\LocationOperations.cs" />
-    <Compile Include="Generated\LocationOperationsExtensions.cs" />
-    <Compile Include="Generated\ManagementCertificateOperations.cs" />
-    <Compile Include="Generated\ManagementCertificateOperationsExtensions.cs" />
-    <Compile Include="Generated\ManagementClient.cs" />
-    <Compile Include="Generated\ManagementClientExtensions.cs" />
-    <Compile Include="Generated\Models\AffinityGroupCapabilities.cs" />
-    <Compile Include="Generated\Models\AffinityGroupCreateParameters.cs" />
-    <Compile Include="Generated\Models\AffinityGroupGetResponse.cs" />
-    <Compile Include="Generated\Models\AffinityGroupListResponse.cs" />
-    <Compile Include="Generated\Models\AffinityGroupUpdateParameters.cs" />
-    <Compile Include="Generated\Models\ComputeCapabilities.cs" />
-    <Compile Include="Generated\Models\LocationAvailableServiceNames.cs" />
-    <Compile Include="Generated\Models\LocationNames.cs" />
-    <Compile Include="Generated\Models\LocationsListResponse.cs" />
-    <Compile Include="Generated\Models\ManagementCertificateCreateParameters.cs" />
-    <Compile Include="Generated\Models\ManagementCertificateGetResponse.cs" />
-    <Compile Include="Generated\Models\ManagementCertificateListResponse.cs" />
-    <Compile Include="Generated\Models\RoleSizeListResponse.cs" />
-    <Compile Include="Generated\Models\StorageCapabilities.cs" />
-    <Compile Include="Generated\Models\SubscriptionGetResponse.cs" />
-    <Compile Include="Generated\Models\SubscriptionListOperationsParameters.cs" />
-    <Compile Include="Generated\Models\SubscriptionListOperationsResponse.cs" />
-    <Compile Include="Generated\Models\SubscriptionOperationNames.cs" />
-    <Compile Include="Generated\Models\SubscriptionStatus.cs" />
-    <Compile Include="Generated\RoleSizeOperations.cs" />
-    <Compile Include="Generated\RoleSizeOperationsExtensions.cs" />
-    <Compile Include="Generated\SubscriptionOperations.cs" />
-    <Compile Include="Generated\SubscriptionOperationsExtensions.cs" />
+    <Compile Include="Generated\**\*.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -15,46 +15,7 @@
   </PropertyGroup>
   <Import Project="..\..\tools\Library.Settings.targets" />
   <ItemGroup>
-    <Compile Include="Generated\SecurityOperations.cs" />
-    <Compile Include="Generated\SecurityOperationsExtensions.cs" />
-    <Compile Include="Generated\ISecurityOperations.cs" />
-    <Compile Include="Generated\Models\DatabaseSecurityPolicyGetResponse.cs" />
-    <Compile Include="Generated\Models\DatabaseSecurityPolicyUpdateParameters.cs" />
-    <Compile Include="Generated\Models\DatabaseSecurityPolicy.cs" />
-    <Compile Include="Generated\Models\DatabaseSecurityPolicyProperties.cs" />
-    <Compile Include="Generated\DatabaseOperations.cs" />
-    <Compile Include="Generated\DatabaseOperationsExtensions.cs" />
-    <Compile Include="Generated\FirewallRuleOperations.cs" />
-    <Compile Include="Generated\FirewallRuleOperationsExtensions.cs" />
-    <Compile Include="Generated\IDatabaseOperations.cs" />
-    <Compile Include="Generated\IFirewallRuleOperations.cs" />
-    <Compile Include="Generated\IServerOperations.cs" />
-    <Compile Include="Generated\ISqlManagementClient.cs" />
-    <Compile Include="Generated\Models\CreateUpdateBase.cs" />
-    <Compile Include="Generated\Models\Database.cs" />
-    <Compile Include="Generated\Models\DatabaseCreateOrUpdateParameters.cs" />
-    <Compile Include="Generated\Models\DatabaseCreateOrUpdateProperties.cs" />
-    <Compile Include="Generated\Models\DatabaseEditions.cs" />
-    <Compile Include="Generated\Models\DatabaseGetResponse.cs" />
-    <Compile Include="Generated\Models\DatabaseListResponse.cs" />
-    <Compile Include="Generated\Models\DatabaseProperties.cs" />
-    <Compile Include="Generated\Models\FirewallRule.cs" />
-    <Compile Include="Generated\Models\FirewallRuleCreateOrUpdateParameters.cs" />
-    <Compile Include="Generated\Models\FirewallRuleCreateOrUpdateProperties.cs" />
-    <Compile Include="Generated\Models\FirewallRuleGetResponse.cs" />
-    <Compile Include="Generated\Models\FirewallRuleListResponse.cs" />
-    <Compile Include="Generated\Models\FirewallRuleProperties.cs" />
-    <Compile Include="Generated\Models\ResourceBase.cs" />
-    <Compile Include="Generated\Models\Server.cs" />
-    <Compile Include="Generated\Models\ServerCreateOrUpdateParameters.cs" />
-    <Compile Include="Generated\Models\ServerCreateOrUpdateProperties.cs" />
-    <Compile Include="Generated\Models\ServerGetResponse.cs" />
-    <Compile Include="Generated\Models\ServerListResponse.cs" />
-    <Compile Include="Generated\Models\ServerProperties.cs" />
-    <Compile Include="Generated\ServerOperations.cs" />
-    <Compile Include="Generated\ServerOperationsExtensions.cs" />
-    <Compile Include="Generated\SqlManagementClient.cs" />
-    <Compile Include="Generated\SqlManagementClientExtensions.cs" />
+    <Compile Include="Generated\**\*.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

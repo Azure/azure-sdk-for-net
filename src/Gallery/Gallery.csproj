@@ -19,19 +19,8 @@
     <Compile Include="Customizations\FilterParameterAttribute.cs" />
     <Compile Include="Customizations\FilterString.cs" />
     <Compile Include="Customizations\UrlExpressionVisitor.cs" />
-    <Compile Include="Generated\DefinitionTemplates.cs" />
-    <Compile Include="Generated\GalleryClient.cs" />
-    <Compile Include="Generated\GalleryClientExtensions.cs" />
-    <Compile Include="Generated\GalleryItem.cs" />
-    <Compile Include="Generated\IconKind.cs" />
-    <Compile Include="Generated\IGalleryClient.cs" />
-    <Compile Include="Generated\IItemOperations.cs" />
-    <Compile Include="Generated\ItemOperations.cs" />
-    <Compile Include="Generated\ItemOperationsExtensions.cs" />
-    <Compile Include="Generated\Models\ItemGetParameters.cs" />
-    <Compile Include="Generated\Models\ItemListParameters.cs" />
-    <Compile Include="Generated\Models\ItemListResult.cs" />
     <Compile Include="Customizations\ItemListFilter.cs" />
+    <Compile Include="Generated\**\*.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
