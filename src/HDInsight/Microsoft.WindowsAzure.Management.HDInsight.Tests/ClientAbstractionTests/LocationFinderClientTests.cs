@@ -50,7 +50,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
                     new KeyValuePair<string, string>("CAPABILITY_REGION_EAST_US_2","East US 2"),
                     new KeyValuePair<string, string>("CAPABILITY_REGION_NORTH_EUROPE","North Europe")
                 };
-            var locations = LocationFinderClient.ParseLocations(capabilities);
+            var locations = LocationFinderClient.ParseLocations(capabilities, "CAPABILITY_REGION_");
             Assert.AreEqual(3, locations.Count);
             Assert.AreEqual(1, locations.Count(location => location == "East US"));
             Assert.AreEqual(1, locations.Count(location => location == "East US 2"));
@@ -67,7 +67,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClientAbstractionTes
                     new KeyValuePair<string, string>("CAPABILITY_REGION_EAST_US","East US"),
                     new KeyValuePair<string, string>("P","P"),
                 };
-            var locations = LocationFinderClient.ParseLocations(capabilities);
+            var locations = LocationFinderClient.ParseLocations(capabilities, "CAPABILITY_REGION_");
             Assert.AreEqual(1, locations.Count);
             Assert.AreEqual("East US", locations[0]);
         }
