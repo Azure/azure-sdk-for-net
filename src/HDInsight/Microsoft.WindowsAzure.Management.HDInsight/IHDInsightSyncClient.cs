@@ -30,6 +30,12 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         Collection<string> ListAvailableLocations();
 
         /// <summary>
+        /// Queries the locations where HDInsight deployments for the specified OS type have been enabled for the subscription.
+        /// </summary>
+        /// <returns>List of Windows Azure locations.</returns>
+        Collection<string> ListAvailableLocations(OSType osType);
+
+        /// <summary>
         /// Queries the locations where HDInsight has been enabled for the subscription.
         /// </summary>
         /// <returns>List of Windows Azure locations.</returns>

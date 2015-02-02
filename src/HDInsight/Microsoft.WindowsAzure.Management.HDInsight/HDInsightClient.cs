@@ -58,6 +58,9 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         ///     Default HDInsight version.
         /// </summary>
         internal const string DEFAULTHDINSIGHTVERSION = "default";
+        internal const string ClustersContractCapabilityVersion1 = "CAPABILITY_FEATURE_CLUSTERS_CONTRACT_1_SDK";
+        internal static string ClustersContractCapabilityVersion2 = "CAPABILITY_FEATURE_CLUSTERS_CONTRACT_2_SDK";
+        internal static string IaasClustersCapability = "CAPABILITY_FEATURE_IAAS_DEPLOYMENTS";
         internal const string ClusterAlreadyExistsError = "The condition specified by the ETag is not satisfied.";
 
         private IHDInsightSubscriptionCredentials credentials;
@@ -134,8 +137,23 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         /// <inheritdoc />
         public async Task<Collection<string>> ListAvailableLocationsAsync()
         {
+            return await ListAvailableLocationsAsync(OSType.Windows);
+        }
+
+        /// <inheritdoc />
+        public async Task<Collection<string>> ListAvailableLocationsAsync(OSType osType)
+        {
             var client = ServiceLocator.Instance.Locate<ILocationFinderClientFactory>().Create(this.credentials, this.Context, this.IgnoreSslErrors);
-            return await client.ListAvailableLocations();
+
+            switch (osType)
+            {
+                case OSType.Windows:
+                    return await client.ListAvailableLocations();
+                case OSType.Linux:
+                    return await client.ListAvailableIaasLocations();
+                default:
+                    throw new InvalidProgramException(String.Format("Encountered unhandled value for OSType: {0}", osType));
+            }
         }
 
         /// <inheritdoc />
@@ -174,10 +192,13 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
             }
 
             // List all clusters using the iaas clusters client
-            using (var client = this.CreateIaasClustersPocoClient(this.capabilities.Value))
+            if (this.HasIaasCapability())
             {
-                var iaasClusters = await client.ListContainers();
-                allClusters = iaasClusters.Concat(allClusters).ToList();
+                using (var client = this.CreateIaasClustersPocoClient(this.capabilities.Value))
+                {
+                    var iaasClusters = await client.ListContainers();
+                    allClusters = iaasClusters.Concat(allClusters).ToList();
+                }
             }
 
             return allClusters;
@@ -402,6 +423,16 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", Justification = "They are not",
             MessageId = "Microsoft.WindowsAzure.Management.HDInsight.Logging.LogProviderExtensions.LogMessage(Microsoft.WindowsAzure.Management.HDInsight.Logging.ILogProvider,System.String,Microsoft.WindowsAzure.Management.HDInsight.Logging.Severity,Microsoft.WindowsAzure.Management.HDInsight.Logging.Verbosity)")]
+        private bool HasIaasCapability()
+        {
+            bool retval = this.capabilities.Value.Contains(IaasClustersCapability);
+            this.LogMessage(string.Format(CultureInfo.InvariantCulture, "Iaas Clusters resource type is enabled '{0}'", retval), Severity.Critical, Verbosity.Detailed);
+
+            return retval;
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", Justification = "They are not",
+            MessageId = "Microsoft.WindowsAzure.Management.HDInsight.Logging.LogProviderExtensions.LogMessage(Microsoft.WindowsAzure.Management.HDInsight.Logging.ILogProvider,System.String,Microsoft.WindowsAzure.Management.HDInsight.Logging.Severity,Microsoft.WindowsAzure.Management.HDInsight.Logging.Verbosity)")]
         private List<string> GetCapabilities()
         {
             this.LogMessage(string.Format(CultureInfo.InvariantCulture,
@@ -564,6 +595,12 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         public Collection<string> ListAvailableLocations()
         {
             return this.ListAvailableLocationsAsync().WaitForResult();
+        }
+
+        /// <inheritdoc />
+        public Collection<string> ListAvailableLocations(OSType osType)
+        {
+            return this.ListAvailableLocationsAsync(osType).WaitForResult();
         }
 
         /// <inheritdoc />

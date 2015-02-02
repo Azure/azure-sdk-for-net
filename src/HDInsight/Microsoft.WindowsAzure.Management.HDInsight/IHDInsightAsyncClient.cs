@@ -46,6 +46,12 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         Task<Collection<string>> ListAvailableLocationsAsync();
 
         /// <summary>
+        /// Queries the locations where HDInsight deployments for the specified OS type have been enabled for the subscription.
+        /// </summary>
+        /// <returns>List of Windows Azure locations.</returns>
+        Task<Collection<string>> ListAvailableLocationsAsync(OSType osType);
+
+        /// <summary>
         /// Queries the HDInsight Clusters registered.
         /// </summary>
         /// <returns>Task that returns a list of HDInsight Clusters.</returns>

@@ -33,10 +33,25 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Locati
         Task<Collection<string>> ListAvailableLocations();
 
         /// <summary>
+        /// Lists the available locations that allow IaaS deployments for a subscription id.
+        /// </summary>
+        /// <returns>
+        /// Available locations for a subscription id.
+        /// </returns>
+        Task<Collection<string>> ListAvailableIaasLocations();
+
+        /// <summary>
         /// Parses the available locations for a subscription id.
         /// </summary>
         /// <param name="capabilities">Key value pair containing location capabilities for a subscription id.</param>
         /// <returns>Available locations for a subscription id.</returns>
         Collection<string> ListAvailableLocations(IEnumerable<KeyValuePair<string, string>> capabilities);
+
+        /// <summary>
+        /// Parses the available IaaS locations for a subscription id.
+        /// </summary>
+        /// <param name="capabilities">Key value pair containing location capabilities for a subscription id.</param>
+        /// <returns>Available locations for a subscription id.</returns>
+        Collection<string> ListAvailableIaasLocations(IEnumerable<KeyValuePair<string, string>> capabilities);
     }
 }

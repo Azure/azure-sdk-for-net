@@ -28,6 +28,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Locati
     internal class LocationFinderClient : ILocationFinderClient
     {
         private const string RegionPrefix = "CAPABILITY_REGION_";
+        private const string IaasRegionPrefix = "CAPABILITY_IAAS_REGION_";
         private readonly IHDInsightSubscriptionCredentials credentials;
         private readonly IAbstractionContext context;
         private readonly bool ignoreSslErrors;
@@ -48,6 +49,15 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Locati
             return this.ListAvailableLocations(capabilities);
         }
 
+        public async Task<Collection<string>> ListAvailableIaasLocations()
+        {
+            // Creates an HTTP client
+            var client = ServiceLocator.Instance.Locate<IRdfeServiceRestClientFactory>().Create(this.credentials, this.context, this.ignoreSslErrors);
+
+            var capabilities = await client.GetResourceProviderProperties();
+            return this.ListAvailableIaasLocations(capabilities);
+        }
+
         public Collection<string> ListAvailableLocations(IEnumerable<KeyValuePair<string, string>> capabilities)
         {
             if (capabilities.IsNull())
@@ -55,13 +65,23 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Locati
                 throw new ArgumentNullException("capabilities");
             }
 
-            return ParseLocations(capabilities);
+            return ParseLocations(capabilities, RegionPrefix);
         }
 
-        internal static Collection<string> ParseLocations(IEnumerable<KeyValuePair<string, string>> capabilities)
+        public Collection<string> ListAvailableIaasLocations(IEnumerable<KeyValuePair<string, string>> capabilities)
+        {
+            if (capabilities.IsNull())
+            {
+                throw new ArgumentNullException("capabilities");
+            }
+
+            return ParseLocations(capabilities, IaasRegionPrefix);
+        }
+
+        internal static Collection<string> ParseLocations(IEnumerable<KeyValuePair<string, string>> capabilities, string regionCapabilityPrefix)
         {
             var supportedLocations = from capability in capabilities
-                                     where capability.Key.StartsWith(RegionPrefix, StringComparison.OrdinalIgnoreCase)
+                                     where capability.Key.StartsWith(regionCapabilityPrefix, StringComparison.OrdinalIgnoreCase)
                                      select capability.Value;
 
             return new Collection<string>(supportedLocations.ToList());
