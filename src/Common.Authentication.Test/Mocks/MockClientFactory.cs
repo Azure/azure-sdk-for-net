@@ -15,7 +15,6 @@
 using Hyak.Common;
 using Microsoft.Azure;
 using Microsoft.Azure.Common.Authentication;
-using Microsoft.Azure.Common.Authentication.Factories;
 using Microsoft.Azure.Common.Authentication.Models;
 using System;
 using System.Collections.Generic;
@@ -36,7 +35,7 @@ namespace Microsoft.WindowsAzure.Commands.Common.Test.Mocks
         public TClient CreateClient<TClient>(AzureSubscription subscription, AzureEnvironment.Endpoint endpoint) where TClient : ServiceClient<TClient>
         {
             SubscriptionCloudCredentials creds = new TokenCloudCredentials(subscription.Id.ToString(), "fake_token");
-            Uri endpointUri = (new ProfileClient()).Profile.Environments[subscription.Environment].GetEndpointAsUri(endpoint);
+            Uri endpointUri = (new ProfileClient(AzureSession.Profile)).Profile.Environments[subscription.Environment].GetEndpointAsUri(endpoint);
             return CreateCustomClient<TClient>(creds, endpointUri);
         }
 
