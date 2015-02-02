@@ -104,6 +104,16 @@ namespace Microsoft.Azure.Management.Insights
             get { return this._alertOperations; }
         }
         
+        private IAutomatedExportOperations _automatedExportOperations;
+        
+        /// <summary>
+        /// Operations for managing automated export.
+        /// </summary>
+        public virtual IAutomatedExportOperations AutomatedExportOperations
+        {
+            get { return this._automatedExportOperations; }
+        }
+        
         private IAutoscaleOperations _autoscaleOperations;
         
         /// <summary>
@@ -163,6 +173,7 @@ namespace Microsoft.Azure.Management.Insights
         {
             this._agentDiagnosticSettingsOperations = new AgentDiagnosticSettingsOperations(this);
             this._alertOperations = new AlertOperations(this);
+            this._automatedExportOperations = new AutomatedExportOperations(this);
             this._autoscaleOperations = new AutoscaleOperations(this);
             this._monitoringConfigurationOperations = new MonitoringConfigurationOperations(this);
             this._serviceDiagnosticSettingsOperations = new ServiceDiagnosticSettingsOperations(this);
@@ -235,6 +246,7 @@ namespace Microsoft.Azure.Management.Insights
         {
             this._agentDiagnosticSettingsOperations = new AgentDiagnosticSettingsOperations(this);
             this._alertOperations = new AlertOperations(this);
+            this._automatedExportOperations = new AutomatedExportOperations(this);
             this._autoscaleOperations = new AutoscaleOperations(this);
             this._monitoringConfigurationOperations = new MonitoringConfigurationOperations(this);
             this._serviceDiagnosticSettingsOperations = new ServiceDiagnosticSettingsOperations(this);

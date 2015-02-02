@@ -87,6 +87,14 @@ namespace Microsoft.Azure.Management.Insights
         }
         
         /// <summary>
+        /// Operations for managing automated export.
+        /// </summary>
+        IAutomatedExportOperations AutomatedExportOperations
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Operations for managing autoscale.
         /// </summary>
         IAutoscaleOperations AutoscaleOperations
