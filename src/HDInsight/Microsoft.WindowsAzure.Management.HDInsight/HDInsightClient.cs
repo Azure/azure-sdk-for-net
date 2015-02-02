@@ -283,8 +283,9 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
                 client = this.CreateClustersPocoClient(this.capabilities.Value);
             }
 
+            // Perform cluster creation parameter validations
+            clusterCreateParameters.ValidateClusterCreateParameters();
             this.LogMessage("Validating Cluster Versions", Severity.Informational, Verbosity.Detailed);
-
             await this.ValidateClusterVersion(clusterCreateParameters);
 
             // listen to cluster provisioning events on the POCO client.
@@ -349,6 +350,11 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
             {
                 throw new ArgumentNullException("clusterCreateParameters");
             }
+
+            // Validate cluster creation parameters
+            clusterCreateParameters.ValidateClusterCreateParameters();
+            this.LogMessage("Validating Cluster Versions", Severity.Informational, Verbosity.Detailed);
+            await this.ValidateClusterVersion(clusterCreateParameters);
 
             IHDInsightManagementPocoClient client = this.CreateIaasClustersPocoClient(this.capabilities.Value);
 
@@ -811,8 +817,14 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
                             string.Join(",", availableVersions)));
                 }
 
-                // HBase cluster only supported after version 3.0
+                // Clusters with OSType.Linux only supported from version 3.2 onwards
                 var version = new Version(cluster.Version);
+                if (cluster.OSType == OSType.Linux && version.CompareTo(new Version("3.2")) < 0)
+                {
+                    throw new NotSupportedException(string.Format("Clusters with OSType {0} are only supported from version 3.2", cluster.OSType));
+                }
+
+                // HBase cluster only supported after version 3.0
                 if (version.CompareTo(new Version("3.0")) < 0 && cluster.ClusterType == ClusterType.HBase)
                 {
                     throw new InvalidOperationException(
