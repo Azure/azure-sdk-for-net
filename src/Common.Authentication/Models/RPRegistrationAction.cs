@@ -17,6 +17,7 @@ using Microsoft.Azure.Internal.Management.Csm;
 using Microsoft.Azure.Internal.Management.Rdfe;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net;
 
@@ -106,7 +107,8 @@ namespace Microsoft.Azure.Common.Authentication.Models
                     providers.ToArray());
                 try
                 {
-                    ProfileClient profileClient = new ProfileClient();
+                    AzureSession.Profile = new AzureProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
+                    ProfileClient profileClient = new ProfileClient(AzureSession.Profile);
                     profileClient.AddOrSetSubscription(subscription);
                     profileClient.Profile.Save();
                 }
