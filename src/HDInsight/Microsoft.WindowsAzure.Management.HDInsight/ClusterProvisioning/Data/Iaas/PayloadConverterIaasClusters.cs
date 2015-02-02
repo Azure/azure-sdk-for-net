@@ -333,6 +333,17 @@
                 ambariConfigurationManager.SetAdditionalStorageAccount(storageAccount.Name, storageAccount.Key);
             }
 
+            // Set custom metastores
+            if (clusterCreateParameters.HiveMetastore != null)
+            {
+                ambariConfigurationManager.SetCustomHiveMetastore(clusterCreateParameters.HiveMetastore);
+            }
+
+            if (clusterCreateParameters.OozieMetastore != null)
+            {
+                ambariConfigurationManager.SetCustomOozieMetastore(clusterCreateParameters.OozieMetastore);
+            }
+
             // Set user specified Hadoop configurations
             ambariConfigurationManager.SetCustomConfigurations(AmbariConfigurationDocumentManager.CoreConfigurationKeyName, clusterCreateParameters.CoreConfiguration);
             ambariConfigurationManager.SetCustomConfigurations(AmbariConfigurationDocumentManager.HdfsConfigurationKeyName, clusterCreateParameters.HdfsConfiguration);

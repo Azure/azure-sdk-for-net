@@ -24,6 +24,12 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Data
         public const string HiveConfigurationKeyName = "hive-site";
         public const string OozieConfigurationKeyName = "oozie-site";
 
+        public const string HiveEnvironmentKeyName = "hive-env";
+        public const string OozieEnvironmentKeyName = "oozie-env";
+
+        public const string MsSqlDatabaseType = "mssql";
+        public const string MsSqlDriverName = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+
         public AmbariConfigurationDocumentManager(string ambariConfigurationDocument)
         {
             if (String.IsNullOrEmpty(ambariConfigurationDocument))
@@ -109,6 +115,50 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Data
             {
                 configuration.Add(new JProperty(configValue.Key, configValue.Value));
             }
+        }
+
+        public void SetCustomHiveMetastore(Metastore metastore)
+        {
+            if (metastore == null)
+            {
+                return;
+            }
+
+            JObject hiveConfiguration = GetOrCreateConfigurationObject(HiveConfigurationKeyName);
+            hiveConfiguration.Add(new JProperty("javax.jdo.option.ConnectionUserName", String.Format("{0}@{1}", metastore.User, metastore.Server)));
+            hiveConfiguration.Add(new JProperty("javax.jdo.option.ConnectionPassword", metastore.Password));
+            hiveConfiguration.Add(new JProperty("javax.jdo.option.ConnectionDriverName", MsSqlDriverName));
+            hiveConfiguration.Add(new JProperty("javax.jdo.option.ConnectionURL", String.Format("jdbc:sqlserver://{0};databaseName={1}", metastore.Server, metastore.Database)));
+
+            JObject hiveEnvironment = GetOrCreateConfigurationObject(HiveEnvironmentKeyName);
+            hiveEnvironment.Add(new JProperty("hive_database", "Existing MSSQL Server database with SQL authentication"));
+            hiveEnvironment.Add(new JProperty("hive_database_name", metastore.Database));
+            hiveEnvironment.Add(new JProperty("hive_database_type", MsSqlDatabaseType));
+            hiveEnvironment.Add(new JProperty("hive_existing_mssql_server_database", metastore.Database));
+            hiveEnvironment.Add(new JProperty("hive_existing_mssql_server_host", metastore.Server));
+            hiveEnvironment.Add(new JProperty("hive_hostname", metastore.Server));
+        }
+
+        public void SetCustomOozieMetastore(Metastore metastore)
+        {
+            if (metastore == null)
+            {
+                return;
+            }
+
+            JObject oozieConfiguration = GetOrCreateConfigurationObject(OozieConfigurationKeyName);
+            oozieConfiguration.Add(new JProperty("oozie.db.schema.name", metastore.Database));
+            oozieConfiguration.Add(new JProperty("oozie.service.JPAService.jdbc.username", String.Format("{0}@{1}", metastore.User, metastore.Server)));
+            oozieConfiguration.Add(new JProperty("oozie.service.JPAService.jdbc.password", metastore.Password));
+            oozieConfiguration.Add(new JProperty("oozie.service.JPAService.jdbc.driver", MsSqlDriverName));
+            oozieConfiguration.Add(new JProperty("oozie.service.JPAService.jdbc.url", String.Format("jdbc:sqlserver://{0};databaseName={1}", metastore.Server, metastore.Database)));
+
+            JObject oozieEnvironment = GetOrCreateConfigurationObject(OozieEnvironmentKeyName);
+            oozieEnvironment.Add(new JProperty("oozie_database", "Existing MSSQL Server database with SQL authentication"));
+            oozieEnvironment.Add(new JProperty("oozie_database_type", MsSqlDatabaseType));
+            oozieEnvironment.Add(new JProperty("oozie_existing_mssql_server_database", metastore.Database));
+            oozieEnvironment.Add(new JProperty("oozie_existing_mssql_server_host", metastore.Server));
+            oozieEnvironment.Add(new JProperty("oozie_hostname", metastore.Server));
         }
 
         public string GetPassword()
