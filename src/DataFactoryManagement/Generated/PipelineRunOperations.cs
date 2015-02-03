@@ -114,11 +114,11 @@ namespace Microsoft.Azure.Management.DataFactories
             {
                 throw new ArgumentNullException("pipelineName");
             }
-            if (pipelineName != null && pipelineName.Length > 260)
+            if (pipelineName != null && pipelineName.Length > 63)
             {
                 throw new ArgumentOutOfRangeException("pipelineName");
             }
-            if (Regex.IsMatch(pipelineName, "^[A-Za-z0-9_][^<>*#.%&:\\\\+?/]*$") == false)
+            if (Regex.IsMatch(pipelineName, "^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$") == false)
             {
                 throw new ArgumentOutOfRangeException("pipelineName");
             }
