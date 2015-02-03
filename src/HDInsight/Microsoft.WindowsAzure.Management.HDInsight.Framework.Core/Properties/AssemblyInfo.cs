@@ -24,7 +24,6 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Microsoft.WindowsAzure.Management.HDInsight.Framework.Core")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyVersion("1.4.3.0")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Microsoft.WindowsAzure.Management.HDInsight.Framework.Core")]
 [assembly: AssemblyCopyright("Copyright (c) Microsoft Corporation")]
