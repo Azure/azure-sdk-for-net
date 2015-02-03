@@ -28,9 +28,6 @@
     'Authentication': build the Authentication package
     By default, it builds all.
 
-  /p:CodeGen
-    True if you want to invoke codegen tool to regenerate libraries. Default is false.  
-    
   /P:CodeSign=True
     Code sign binaries, mainly for official release. Default is false.
 
@@ -70,7 +67,6 @@
     <DelaySign Condition =" '$(DelaySign)' == '' ">false</DelaySign>
     <!-- 'Common': only build common; 'All': Both common and servies; "Authentication": Azure Authentication; 'full path to a library project': build that project -->
     <Scope Condition=" '$(Scope)' == '' ">All</Scope>
-    <CodeGen Condition=" '$(CodeGen)' == '' ">false</CodeGen>
     <FxTargetList Condition=" '$(FxTargetList)' == '' and '$(Scope)' == 'Authentication' " >net45</FxTargetList>
     <FxTargetList Condition=" '$(FxTargetList)' == '' and ('$(Scope)' == '' or '$(Scope)' == 'all' or '$(Scope)' == 'Common') ">portable;net40;net45</FxTargetList>
     <!--If FxTargetList still has no value, it must be an individual maml package-->
@@ -105,7 +101,7 @@
 
   <Target Name="Build" DependsOnTargets="RestoreNugetPackages">
     <PropertyGroup>
-      <_ExtraPropertyList>CodeSign=$(CodeSign);GenerateHydraSpecs=$(CodeGen)</_ExtraPropertyList>
+      <_ExtraPropertyList>CodeSign=$(CodeSign)</_ExtraPropertyList>
     </PropertyGroup>
     <CallTarget Targets="BuildMsBuildTask" />
     <CallTarget Targets="BuildServerPreparation" Condition=" '$(CodeSign)' == 'true' " />
@@ -233,49 +229,10 @@
   </Target>
 
   <Target Name="RestoreNugetPackages">
-    <CallTarget Targets="RestoreAllNugetPackages" Condition=" '$(CodeGen)' ==  'true' " />
-    <CallTarget Targets="RestorePublicNugetPackages" Condition=" '$(CodeGen)' !=  'true' " />
-  </Target>
-  <!--
-  Force nuget package restore so that packages that include .targets files
-  do not need to be checked into source control.
-
-  Assumes use of a private feed.
-    PRIVATE_FEED_URL: The url of the feed to pull from with specific credentials (in addition to the public default feed)
-    PRIVATE_FEED_USER_NAME: User name for access to the feed
-    PRIVATE_FEED_PASSWORD: Password for access to the feed
-  -->
-  <Target Name="RestoreAllNugetPackages">
-    <PropertyGroup>
-      <NuGetRestoreConfigFile>$(LibraryRoot)restore.config</NuGetRestoreConfigFile>
-      <NuGetRestoreConfigSwitch>-ConfigFile &quot;$(NuGetRestoreConfigFile)&quot;</NuGetRestoreConfigSwitch>
-    </PropertyGroup>
-
-    <!-- Create config for user name and password for private feed access -->
-    <Delete Files="$(NuGetRestoreConfigFile)" />
-    <WriteLinesToFile
-      File="$(NuGetRestoreConfigFile)"
-      Lines="&lt;configuration&gt;&lt;/configuration&gt;"
-      Overwrite="true"
-      Encoding="Unicode"/>
-    <!-- Private versions of packages are picked up from these feeds, defined with environment variables -->
-    <Exec Command="$(NuGetCommand) sources add -Name PrimaryFeed -Source &quot;$(PRIVATE_FEED_URL)&quot; $(NuGetRestoreConfigSwitch)" Condition=" '$(PRIVATE_FEED_URL)'!='' "/>
-    <Exec Command="$(NuGetCommand) sources Update -Name PrimaryFeed -UserName $(PRIVATE_FEED_USER_NAME) -Password &quot;$(PRIVATE_FEED_PASSWORD)&quot; $(NuGetRestoreConfigSwitch)" EchoOff="true" Condition=" '$(PRIVATE_FEED_PASSWORD)'!='' AND '$(PRIVATE_FEED_USER_NAME)'!='' "/>
-    <Exec Command="$(NuGetCommand) sources add -Name SecondaryFeed -Source &quot;$(SECONDARY_FEED_URL)&quot; $(NuGetRestoreConfigSwitch)" Condition=" '$(SECONDARY_FEED_URL)'!='' "/>
-    <Exec Command="$(NuGetCommand) sources Update -Name SecondaryFeed -UserName $(SECONDARY_FEED_USER_NAME) -Password &quot;$(SECONDARY_FEED_PASSWORD)&quot; $(NuGetRestoreConfigSwitch)" EchoOff="true" Condition=" '$(SECONDARY_FEED_PASSWORD)'!='' AND '$(SECONDARY_FEED_USER_NAME)'!='' "/>
-    <Exec Command="$(NuGetCommand) sources add -Name AzureSdkInternalFeed -Source &quot;https://www.myget.org/F/azure-sdk-internal/&quot; $(NuGetRestoreConfigSwitch)"/>
-
     <!--TODO: respect the 'scope', and do not always restore all of them-->
     <Exec Command="$(NuGetCommand) restore $(CommonSolution) $(NuGetRestoreConfigSwitch)"/>
     <Exec Command="$(NuGetCommand) restore $(AuthenticationSolution) $(NuGetRestoreConfigSwitch)"/>
     <Exec Command="$(NuGetCommand) restore $(ManagementLibrariesSolution) $(NuGetRestoreConfigSwitch)" />
-
-    <!-- delete config file, don't want to leave passwords hanging around on the build server file system -->
-    <Delete Files="$(NuGetRestoreConfigFile)" />
-  </Target>
-
-  <Target Name="RestorePublicNugetPackages">
-    <Exec Command="$(NuGetCommand) restore &quot;$(LibraryToolsFolder)\Packages.config&quot; -PackagesDirectory &quot;$(LibraryRoot)\packages&quot; -source &quot;https://www.nuget.org/api/v2/;https://www.myget.org/F/azure-sdk-internal/&quot; -NonInteractive" />
   </Target>
 
   <!--Smoke test the packages under the output dir-->
