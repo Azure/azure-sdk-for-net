@@ -12,7 +12,6 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
-using Microsoft.Azure.Common.Authentication;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;

@@ -87,6 +87,14 @@ namespace Microsoft.Azure.Management.Insights
         }
         
         /// <summary>
+        /// Operations for managing automated export.
+        /// </summary>
+        IAutomatedExportOperations AutomatedExportOperations
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Operations for managing autoscale.
         /// </summary>
         IAutoscaleOperations AutoscaleOperations
@@ -107,6 +115,14 @@ namespace Microsoft.Azure.Management.Insights
         /// Operations for managing service diagnostic settings.
         /// </summary>
         IServiceDiagnosticSettingsOperations ServiceDiagnosticSettingsOperations
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Operations for managing resources sku.
+        /// </summary>
+        ISkuOperations SkuOperations
         {
             get; 
         }

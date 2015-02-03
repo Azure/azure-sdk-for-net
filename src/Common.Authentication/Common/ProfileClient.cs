@@ -13,7 +13,6 @@
 // ----------------------------------------------------------------------------------
 
 using Hyak.Common;
-using Microsoft.Azure.Common.Authentication;
 using Microsoft.Azure.Common.Authentication.Factories;
 using Microsoft.Azure.Common.Authentication.Models;
 using Microsoft.Azure.Common.Authentication.Properties;
@@ -22,6 +21,7 @@ using Microsoft.Azure.Internal.Subscriptions.Rdfe;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Security;
 using System.Security.Cryptography.X509Certificates;
@@ -57,14 +57,14 @@ namespace Microsoft.Azure.Common.Authentication
             }
         }
 
-        private static void UpgradeProfile()
+        private void UpgradeProfile()
         {
-            string oldProfileFilePath = System.IO.Path.Combine(AzureSession.ProfileDirectory, AzureSession.OldProfileFile);
-            string oldProfileFilePathBackup = System.IO.Path.Combine(AzureSession.ProfileDirectory, AzureSession.OldProfileFileBackup);
-            string newProfileFilePath = System.IO.Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile);
+            string oldProfileFilePath = Path.Combine(AzureSession.ProfileDirectory, AzureSession.OldProfileFile);
+            string oldProfileFilePathBackup = Path.Combine(AzureSession.ProfileDirectory, AzureSession.OldProfileFileBackup);
+            string newProfileFilePath = Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile);
             if (AzureSession.DataStore.FileExists(oldProfileFilePath))
             {
-                string oldProfilePath = System.IO.Path.Combine(AzureSession.ProfileDirectory,
+                string oldProfilePath = Path.Combine(AzureSession.ProfileDirectory,
                     AzureSession.OldProfileFile);
 
                 try
@@ -128,37 +128,28 @@ namespace Microsoft.Azure.Common.Authentication
                         // Ignore any errors
                     }
                 }
+
+                // In case that we changed a disk profile, reload it
+                if (Profile != null && Profile.ProfilePath == newProfileFilePath)
+                {
+                    Profile = new AzureProfile(Profile.ProfilePath);
+                }
             }
-        }
-
-
-        public ProfileClient()
-            : this(System.IO.Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile))
-        {
-
-        }
-
-        public ProfileClient(string profilePath)
-        {
-            try
-            {
-                ProfileClient.UpgradeProfile();
-
-                Profile = new AzureProfile(profilePath);
-            }
-            catch
-            {
-                // Should never fail in constructor
-            }
-
-            WarningLog = (s) => Debug.WriteLine(s);
         }
 
         public ProfileClient(AzureProfile profile)
         {
             Profile = profile;
-
             WarningLog = (s) => Debug.WriteLine(s);
+            
+            try
+            {
+                UpgradeProfile();
+            }
+            catch
+            {
+                // Should never fail in constructor
+            }
         }
 
         #region Profile management
