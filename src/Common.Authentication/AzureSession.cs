@@ -12,11 +12,11 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
+using System;
+using System.IO;
 using Microsoft.Azure.Common.Authentication.Factories;
 using Microsoft.Azure.Common.Authentication.Models;
 using Microsoft.Azure.Common.Authentication.Properties;
-using System;
-using System.IO;
 
 namespace Microsoft.Azure.Common.Authentication
 {
@@ -75,7 +75,6 @@ namespace Microsoft.Azure.Common.Authentication
             ClientFactory = new ClientFactory();
             AuthenticationFactory = new AuthenticationFactory();
             DataStore = new DiskDataStore();
-            Profile = new AzureProfile();
             AzureSession.OldProfileFile = "WindowsAzureProfile.xml";
             AzureSession.OldProfileFileBackup = "WindowsAzureProfile.xml.bak";
             AzureSession.ProfileDirectory = Path.Combine(

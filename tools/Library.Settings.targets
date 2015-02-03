@@ -6,11 +6,6 @@
     <LibraryToolsFolder>$(LibraryRoot)\tools</LibraryToolsFolder>
     <LibraryNugetPackageFolder>$(LibraryRoot)\packages</LibraryNugetPackageFolder>
     <AssemblyOriginatorKeyFile Condition=" '$(AssemblyOriginatorKeyFile)' == '' ">$(LibraryRoot)\tools\MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
-    <!--'GenerateHydraSpecs' is not a great name, means whether or not to invoke hyak.exe to regenerate the code. -->
-    <!--If we are inside visual studio, we always invoke code-gen. This is the optimization made for parnter service teams-->
-    <GenerateHydraSpecs Condition=" '$(GenerateHydraSpecs)' == '' and '$(BuildingInsideVisualStudio)' == 'true' " >true</GenerateHydraSpecs>
-    <GenerateHydraSpecs Condition=" '$(GenerateHydraSpecs)' == '' and '$(PRIVATE_FEED_URL)' == '' ">false</GenerateHydraSpecs>
-    <GenerateHydraSpecs Condition=" '$(GenerateHydraSpecs)' == '' and '$(PRIVATE_FEED_URL)' != '' ">true</GenerateHydraSpecs>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Net45-Debug' or '$(Configuration)' == 'Net45-Release'">
@@ -124,7 +119,7 @@
     <MakeDir Directories="$(_BinariesDirectory)" Condition="!Exists($(_BinariesDirectory))" />
     <Copy SourceFiles="$(ProjectDir)$(OutputPath)$(AssemblyName).xml;$(ProjectDir)$(OutputPath)$(AssemblyName).pdb"
           DestinationFolder="$(_ArtifactsDirectory)"/>
-     <Copy SourceFiles="$(ProjectDir)$(OutputPath)$(AssemblyName).dll"
+    <Copy SourceFiles="$(ProjectDir)$(OutputPath)$(AssemblyName).dll"
           DestinationFolder="$(_BinariesDirectory)"/>
   </Target>
 
@@ -137,11 +132,6 @@
 
     <!-- Update all explicit references to dependent versions. -->
     <Exec Command="$(PowerShellExe) -NonInteractive -ExecutionPolicy bypass -Command &quot;&amp; { &amp;&apos;$(NuSpecSyncScript)&apos; &apos;$(MSBuildProjectDirectory)&apos; -BasePath &apos;$(ProductSourceFolder)&apos; }&quot;" />
-  </Target>
-  
-  <Target Name="BeforeCodeGen" BeforeTargets="GenerateCodeFromSpecs" Condition=" '$(GenerateHydraSpecs)' == 'true' ">
-    <Message Text="Removing Hydra generated files before building project $(ProjectFileName)"/>
-    <RemoveDir Directories="Generated" ContinueOnError="True" />
   </Target>
   
   <!-- 
