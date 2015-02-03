@@ -29,17 +29,19 @@ namespace Microsoft.Azure.Common.Authentication.Models
         /// Registers resource providers for Sparta.
         /// </summary>
         /// <typeparam name="T">The client type</typeparam>
-        private void RegisterResourceManagerProviders<T>(AzureContext context) where T : ServiceClient<T>
+        private void RegisterResourceManagerProviders<T>(AzureProfile profile) where T : ServiceClient<T>
         {
             var providersToRegister = RequiredResourceLookup.RequiredProvidersForResourceManager<T>();
-            var registeredProviders = context.Subscription.GetPropertyAsArray(AzureSubscription.Property.RegisteredResourceProviders);
+            var registeredProviders = profile.Context.Subscription.GetPropertyAsArray(AzureSubscription.Property.RegisteredResourceProviders);
             var unregisteredProviders = providersToRegister.Where(p => !registeredProviders.Contains(p)).ToList();
             var successfullyRegisteredProvider = new List<string>();
-            SubscriptionCloudCredentials creds = AzureSession.AuthenticationFactory.GetSubscriptionCloudCredentials(context);
+            SubscriptionCloudCredentials creds = AzureSession.AuthenticationFactory.GetSubscriptionCloudCredentials(profile.Context);
 
             if (unregisteredProviders.Count > 0)
             {
-                using (var client = ClientFactory.CreateCustomClient<ResourceManagementClient>(creds, context.Environment.GetEndpointAsUri(AzureEnvironment.Endpoint.ResourceManager)))
+                using (var client = ClientFactory.CreateCustomClient<ResourceManagementClient>(
+                                                        creds, 
+                                                        profile.Context.Environment.GetEndpointAsUri(AzureEnvironment.Endpoint.ResourceManager)))
                 {
                     foreach (string provider in unregisteredProviders)
                     {
@@ -55,7 +57,7 @@ namespace Microsoft.Azure.Common.Authentication.Models
                     }
                 }
 
-                UpdateSubscriptionRegisteredProviders(context.Subscription, successfullyRegisteredProvider);
+                UpdateSubscriptionRegisteredProviders(profile, profile.Context.Subscription, successfullyRegisteredProvider);
             }
         }
 
@@ -63,17 +65,19 @@ namespace Microsoft.Azure.Common.Authentication.Models
         /// Registers resource providers for RDFE.
         /// </summary>
         /// <typeparam name="T">The client type</typeparam>
-        private void RegisterServiceManagementProviders<T>(AzureContext context) where T : ServiceClient<T>
+        private void RegisterServiceManagementProviders<T>(AzureProfile profile) where T : ServiceClient<T>
         {
-            var credentials = AzureSession.AuthenticationFactory.GetSubscriptionCloudCredentials(context);
+            var credentials = AzureSession.AuthenticationFactory.GetSubscriptionCloudCredentials(profile.Context);
             var providersToRegister = RequiredResourceLookup.RequiredProvidersForServiceManagement<T>();
-            var registeredProviders = context.Subscription.GetPropertyAsArray(AzureSubscription.Property.RegisteredResourceProviders);
+            var registeredProviders = profile.Context.Subscription.GetPropertyAsArray(AzureSubscription.Property.RegisteredResourceProviders);
             var unregisteredProviders = providersToRegister.Where(p => !registeredProviders.Contains(p)).ToList();
             var successfullyRegisteredProvider = new List<string>();
 
             if (unregisteredProviders.Count > 0)
             {
-                using (var client = new ManagementClient(credentials, context.Environment.GetEndpointAsUri(AzureEnvironment.Endpoint.ServiceManagement)))
+                using (var client = new ManagementClient(
+                                            credentials, 
+                                            profile.Context.Environment.GetEndpointAsUri(AzureEnvironment.Endpoint.ServiceManagement)))
                 {
                     foreach (var provider in unregisteredProviders)
                     {
@@ -95,11 +99,11 @@ namespace Microsoft.Azure.Common.Authentication.Models
                     }
                 }
 
-                UpdateSubscriptionRegisteredProviders(context.Subscription, successfullyRegisteredProvider);
+                UpdateSubscriptionRegisteredProviders(profile, profile.Context.Subscription, successfullyRegisteredProvider);
             }
         }
 
-        private void UpdateSubscriptionRegisteredProviders(AzureSubscription subscription, List<string> providers)
+        private void UpdateSubscriptionRegisteredProviders(AzureProfile profile, AzureSubscription subscription, List<string> providers)
         {
             if (providers != null && providers.Count > 0)
             {
@@ -107,8 +111,7 @@ namespace Microsoft.Azure.Common.Authentication.Models
                     providers.ToArray());
                 try
                 {
-                    AzureSession.Profile = new AzureProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
-                    ProfileClient profileClient = new ProfileClient(AzureSession.Profile);
+                    ProfileClient profileClient = new ProfileClient(profile);
                     profileClient.AddOrSetSubscription(subscription);
                     profileClient.Profile.Save();
                 }
@@ -120,17 +123,17 @@ namespace Microsoft.Azure.Common.Authentication.Models
             }
         }
 
-        public void Apply<TClient>(TClient client, AzureContext context, AzureEnvironment.Endpoint endpoint) where TClient : ServiceClient<TClient>
+        public void Apply<TClient>(TClient client, AzureProfile profile, AzureEnvironment.Endpoint endpoint) where TClient : ServiceClient<TClient>
         {
             Debug.Assert(ClientFactory != null);
 
             if (endpoint == AzureEnvironment.Endpoint.ServiceManagement)
             {
-                RegisterServiceManagementProviders<TClient>(context);
+                RegisterServiceManagementProviders<TClient>(profile);
             }
             else if (endpoint == AzureEnvironment.Endpoint.ResourceManager)
             {
-                RegisterResourceManagerProviders<TClient>(context);
+                RegisterResourceManagerProviders<TClient>(profile);
             }
         }
 

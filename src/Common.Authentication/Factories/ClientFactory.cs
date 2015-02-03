@@ -45,9 +45,16 @@ namespace Microsoft.Azure.Common.Authentication.Factories
             SubscriptionCloudCredentials creds = AzureSession.AuthenticationFactory.GetSubscriptionCloudCredentials(context);
             TClient client = CreateCustomClient<TClient>(creds, context.Environment.GetEndpointAsUri(endpoint));
 
+            return client;
+        }
+
+        public virtual TClient CreateClient<TClient>(AzureProfile profile, AzureEnvironment.Endpoint endpoint) where TClient : ServiceClient<TClient>
+        {
+            TClient client = CreateClient<TClient>(profile.Context, endpoint);
+
             foreach (IClientAction action in actions.Values)
             {
-                action.Apply<TClient>(client, context, endpoint);
+                action.Apply<TClient>(client, profile, endpoint);
             }
 
             return client;
@@ -60,14 +67,14 @@ namespace Microsoft.Azure.Common.Authentication.Factories
         /// <param name="subscription"></param>
         /// <param name="endpoint"></param>
         /// <returns></returns>
-        public virtual TClient CreateClient<TClient>(AzureSubscription subscription, AzureEnvironment.Endpoint endpoint) where TClient : ServiceClient<TClient>
+        public virtual TClient CreateClient<TClient>(AzureProfile profile, AzureSubscription subscription, AzureEnvironment.Endpoint endpoint) where TClient : ServiceClient<TClient>
         {
             if (subscription == null)
             {
                 throw new ApplicationException(Resources.InvalidDefaultSubscription);
             }
 
-            ProfileClient profileClient = new ProfileClient(AzureSession.Profile);
+            ProfileClient profileClient = new ProfileClient(profile);
             AzureContext context = new AzureContext(subscription,
                 profileClient.GetAccount(subscription.Account),
                 profileClient.GetEnvironmentOrDefault(subscription.Environment));

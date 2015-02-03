@@ -321,7 +321,7 @@ namespace Microsoft.Azure.Common.Authentication
         {
             if (string.IsNullOrEmpty(accountName))
             {
-                return Profile.CurrentContext.Account;
+                return Profile.Context.Account;
             }
             else if (Profile.Accounts.ContainsKey(accountName))
             {
@@ -1087,7 +1087,7 @@ namespace Microsoft.Azure.Common.Authentication
             else if (string.IsNullOrEmpty(name) &&
                 Profile.DefaultSubscription != null)
             {
-                return Profile.CurrentContext.Environment;
+                return Profile.Context.Environment;
             }
             else if (Profile.Environments.ContainsKey(name))
             {

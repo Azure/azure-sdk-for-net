@@ -32,20 +32,29 @@ namespace Microsoft.WindowsAzure.Commands.Common.Test.Mocks
             ManagementClients = clients.ToList();
         }
 
-        public TClient CreateClient<TClient>(AzureSubscription subscription, AzureEnvironment.Endpoint endpoint) where TClient : ServiceClient<TClient>
+        public TClient CreateClient<TClient>(AzureProfile profile, AzureSubscription subscription, AzureEnvironment.Endpoint endpoint) 
+            where TClient : ServiceClient<TClient>
         {
             SubscriptionCloudCredentials creds = new TokenCloudCredentials(subscription.Id.ToString(), "fake_token");
-            Uri endpointUri = (new ProfileClient(AzureSession.Profile)).Profile.Environments[subscription.Environment].GetEndpointAsUri(endpoint);
+            Uri endpointUri = (new ProfileClient(profile)).Profile.Environments[subscription.Environment].GetEndpointAsUri(endpoint);
             return CreateCustomClient<TClient>(creds, endpointUri);
         }
 
-        public TClient CreateClient<TClient>(AzureContext context, AzureEnvironment.Endpoint endpoint) where TClient : Hyak.Common.ServiceClient<TClient>
+        public TClient CreateClient<TClient>(AzureContext context, AzureEnvironment.Endpoint endpoint) 
+            where TClient : ServiceClient<TClient>
         {
             SubscriptionCloudCredentials creds = AzureSession.AuthenticationFactory.GetSubscriptionCloudCredentials(context);
             return CreateCustomClient<TClient>(creds, context.Environment.GetEndpointAsUri(endpoint));
         }
 
-        public TClient CreateCustomClient<TClient>(params object[] parameters) where TClient : ServiceClient<TClient>
+        public TClient CreateClient<TClient>(AzureProfile profile, AzureEnvironment.Endpoint endpoint) 
+            where TClient : ServiceClient<TClient>
+        {
+            return CreateClient<TClient>(profile.Context, endpoint);
+        }
+
+        public TClient CreateCustomClient<TClient>(params object[] parameters) 
+            where TClient : ServiceClient<TClient>
         {
             return ManagementClients.FirstOrDefault(o => o is TClient) as TClient;
         }
