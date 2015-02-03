@@ -1,6 +1,4 @@
-﻿using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoClient;
-
-namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClustersTests
+﻿namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClustersTests
 {
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoClient.PaasClusters;
