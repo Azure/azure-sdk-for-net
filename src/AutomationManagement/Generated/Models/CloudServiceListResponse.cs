@@ -36,7 +36,8 @@ namespace Microsoft.Azure.Management.Automation.Models
         private IList<CloudService> _cloudServices;
         
         /// <summary>
-        /// Optional. The list of cloud service locations for this subscription.
+        /// Optional. Gets or sets the list of cloud service locations for this
+        /// subscription.
         /// </summary>
         public IList<CloudService> CloudServices
         {

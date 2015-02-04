@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         private IList<Job> _jobs;
         
         /// <summary>
-        /// Optional. A list of jobs.
+        /// Optional. Gets or sets a list of jobs.
         /// </summary>
         public IList<Job> Jobs
         {

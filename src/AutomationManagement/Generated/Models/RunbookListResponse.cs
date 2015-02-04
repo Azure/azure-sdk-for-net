@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         private IList<Runbook> _runbooks;
         
         /// <summary>
-        /// Optional. A list of runbooks.
+        /// Optional. Gets or sets a list of runbooks.
         /// </summary>
         public IList<Runbook> Runbooks
         {

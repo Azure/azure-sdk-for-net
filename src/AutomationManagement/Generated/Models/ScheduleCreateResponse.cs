@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         private Schedule _schedule;
         
         /// <summary>
-        /// Optional. The schedule created.
+        /// Optional. Gets or sets a schedule.
         /// </summary>
         public Schedule Schedule
         {

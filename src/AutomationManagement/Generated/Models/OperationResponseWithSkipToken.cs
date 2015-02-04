@@ -30,10 +30,21 @@ namespace Microsoft.Azure.Management.Automation.Models
     /// </summary>
     public partial class OperationResponseWithSkipToken : AzureOperationResponse
     {
+        private string _nextLink;
+        
+        /// <summary>
+        /// Optional. Gets or sets the next link.
+        /// </summary>
+        public string NextLink
+        {
+            get { return this._nextLink; }
+            set { this._nextLink = value; }
+        }
+        
         private string _skipToken;
         
         /// <summary>
-        /// Optional. The skip token.
+        /// Optional. Gets or sets the skip token.
         /// </summary>
         public string SkipToken
         {

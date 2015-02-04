@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         private Job _job;
         
         /// <summary>
-        /// Optional. A job.
+        /// Optional. Gets or sets a job.
         /// </summary>
         public Job Job
         {

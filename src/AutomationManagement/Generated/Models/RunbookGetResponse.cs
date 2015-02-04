@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         private Runbook _runbook;
         
         /// <summary>
-        /// Optional. A runbook.
+        /// Optional. Gets or sets a runbook.
         /// </summary>
         public Runbook Runbook
         {

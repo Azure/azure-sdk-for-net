@@ -33,8 +33,8 @@ namespace Microsoft.Azure.Management.Automation
     {
         /// <summary>
         /// Create a schedule.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// http://aka.ms/azureautomationsdk/scheduleoperations for more
+        /// information)
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -60,8 +60,8 @@ namespace Microsoft.Azure.Management.Automation
         
         /// <summary>
         /// Create a schedule.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// http://aka.ms/azureautomationsdk/scheduleoperations for more
+        /// information)
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -82,161 +82,9 @@ namespace Microsoft.Azure.Management.Automation
         }
         
         /// <summary>
-        /// Delete the schedule identified by scheduleId.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IScheduleOperations.
-        /// </param>
-        /// <param name='automationAccount'>
-        /// Required. The automation account name.
-        /// </param>
-        /// <param name='scheduleId'>
-        /// Required. The schedule id.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public static AzureOperationResponse Delete(this IScheduleOperations operations, string automationAccount, string scheduleId)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IScheduleOperations)s).DeleteAsync(automationAccount, scheduleId);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// Delete the schedule identified by scheduleId.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IScheduleOperations.
-        /// </param>
-        /// <param name='automationAccount'>
-        /// Required. The automation account name.
-        /// </param>
-        /// <param name='scheduleId'>
-        /// Required. The schedule id.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public static Task<AzureOperationResponse> DeleteAsync(this IScheduleOperations operations, string automationAccount, string scheduleId)
-        {
-            return operations.DeleteAsync(automationAccount, scheduleId, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// Retrieve the schedule identified by scheduleId.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IScheduleOperations.
-        /// </param>
-        /// <param name='automationAccount'>
-        /// Required. The automation account name.
-        /// </param>
-        /// <param name='scheduleId'>
-        /// Required. The schedule id.
-        /// </param>
-        /// <returns>
-        /// The response model for the get schedule operation.
-        /// </returns>
-        public static ScheduleGetResponse Get(this IScheduleOperations operations, string automationAccount, string scheduleId)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IScheduleOperations)s).GetAsync(automationAccount, scheduleId);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// Retrieve the schedule identified by scheduleId.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IScheduleOperations.
-        /// </param>
-        /// <param name='automationAccount'>
-        /// Required. The automation account name.
-        /// </param>
-        /// <param name='scheduleId'>
-        /// Required. The schedule id.
-        /// </param>
-        /// <returns>
-        /// The response model for the get schedule operation.
-        /// </returns>
-        public static Task<ScheduleGetResponse> GetAsync(this IScheduleOperations operations, string automationAccount, string scheduleId)
-        {
-            return operations.GetAsync(automationAccount, scheduleId, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// Retrieve a list of schedules for the given automation account.
-        /// (see http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IScheduleOperations.
-        /// </param>
-        /// <param name='automationAccount'>
-        /// Required. The automation account name.
-        /// </param>
-        /// <param name='skipToken'>
-        /// Optional. The skip token.
-        /// </param>
-        /// <returns>
-        /// The response model for the list schedule operation.
-        /// </returns>
-        public static ScheduleListResponse List(this IScheduleOperations operations, string automationAccount, string skipToken)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IScheduleOperations)s).ListAsync(automationAccount, skipToken);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// Retrieve a list of schedules for the given automation account.
-        /// (see http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IScheduleOperations.
-        /// </param>
-        /// <param name='automationAccount'>
-        /// Required. The automation account name.
-        /// </param>
-        /// <param name='skipToken'>
-        /// Optional. The skip token.
-        /// </param>
-        /// <returns>
-        /// The response model for the list schedule operation.
-        /// </returns>
-        public static Task<ScheduleListResponse> ListAsync(this IScheduleOperations operations, string automationAccount, string skipToken)
-        {
-            return operations.ListAsync(automationAccount, skipToken, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// Retrieve a list of one schedule identified by scheduleName.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
+        /// Delete the schedule identified by schedule name.  (see
+        /// http://aka.ms/azureautomationsdk/scheduleoperations for more
+        /// information)
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -249,21 +97,22 @@ namespace Microsoft.Azure.Management.Automation
         /// Required. The schedule name.
         /// </param>
         /// <returns>
-        /// The response model for the list schedule operation.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        public static ScheduleListResponse ListByName(this IScheduleOperations operations, string automationAccount, string scheduleName)
+        public static AzureOperationResponse Delete(this IScheduleOperations operations, string automationAccount, string scheduleName)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IScheduleOperations)s).ListByNameAsync(automationAccount, scheduleName);
+                return ((IScheduleOperations)s).DeleteAsync(automationAccount, scheduleName);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// Retrieve a list of one schedule identified by scheduleName.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
+        /// Delete the schedule identified by schedule name.  (see
+        /// http://aka.ms/azureautomationsdk/scheduleoperations for more
+        /// information)
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -276,17 +125,156 @@ namespace Microsoft.Azure.Management.Automation
         /// Required. The schedule name.
         /// </param>
         /// <returns>
-        /// The response model for the list schedule operation.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        public static Task<ScheduleListResponse> ListByNameAsync(this IScheduleOperations operations, string automationAccount, string scheduleName)
+        public static Task<AzureOperationResponse> DeleteAsync(this IScheduleOperations operations, string automationAccount, string scheduleName)
         {
-            return operations.ListByNameAsync(automationAccount, scheduleName, CancellationToken.None);
+            return operations.DeleteAsync(automationAccount, scheduleName, CancellationToken.None);
         }
         
         /// <summary>
-        /// Update the schedule identified by scheduleId.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
+        /// Retrieve the schedule identified by schedule name.  (see
+        /// http://aka.ms/azureautomationsdk/scheduleoperations for more
+        /// information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Automation.IScheduleOperations.
+        /// </param>
+        /// <param name='automationAccount'>
+        /// Required. The automation account name.
+        /// </param>
+        /// <param name='scheduleName'>
+        /// Required. The schedule name.
+        /// </param>
+        /// <returns>
+        /// The response model for the get schedule operation.
+        /// </returns>
+        public static ScheduleGetResponse Get(this IScheduleOperations operations, string automationAccount, string scheduleName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IScheduleOperations)s).GetAsync(automationAccount, scheduleName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Retrieve the schedule identified by schedule name.  (see
+        /// http://aka.ms/azureautomationsdk/scheduleoperations for more
+        /// information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Automation.IScheduleOperations.
+        /// </param>
+        /// <param name='automationAccount'>
+        /// Required. The automation account name.
+        /// </param>
+        /// <param name='scheduleName'>
+        /// Required. The schedule name.
+        /// </param>
+        /// <returns>
+        /// The response model for the get schedule operation.
+        /// </returns>
+        public static Task<ScheduleGetResponse> GetAsync(this IScheduleOperations operations, string automationAccount, string scheduleName)
+        {
+            return operations.GetAsync(automationAccount, scheduleName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Retrieve a list of schedules.  (see
+        /// http://aka.ms/azureautomationsdk/scheduleoperations for more
+        /// information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Automation.IScheduleOperations.
+        /// </param>
+        /// <param name='automationAccount'>
+        /// Required. The automation account name.
+        /// </param>
+        /// <returns>
+        /// The response model for the list schedule operation.
+        /// </returns>
+        public static ScheduleListResponse List(this IScheduleOperations operations, string automationAccount)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IScheduleOperations)s).ListAsync(automationAccount);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Retrieve a list of schedules.  (see
+        /// http://aka.ms/azureautomationsdk/scheduleoperations for more
+        /// information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Automation.IScheduleOperations.
+        /// </param>
+        /// <param name='automationAccount'>
+        /// Required. The automation account name.
+        /// </param>
+        /// <returns>
+        /// The response model for the list schedule operation.
+        /// </returns>
+        public static Task<ScheduleListResponse> ListAsync(this IScheduleOperations operations, string automationAccount)
+        {
+            return operations.ListAsync(automationAccount, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Retrieve next list of schedules.  (see
+        /// http://aka.ms/azureautomationsdk/scheduleoperations for more
+        /// information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Automation.IScheduleOperations.
+        /// </param>
+        /// <param name='nextLink'>
+        /// Required. The link to retrieve next set of items.
+        /// </param>
+        /// <returns>
+        /// The response model for the list schedule operation.
+        /// </returns>
+        public static ScheduleListResponse ListNext(this IScheduleOperations operations, string nextLink)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IScheduleOperations)s).ListNextAsync(nextLink);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Retrieve next list of schedules.  (see
+        /// http://aka.ms/azureautomationsdk/scheduleoperations for more
+        /// information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Automation.IScheduleOperations.
+        /// </param>
+        /// <param name='nextLink'>
+        /// Required. The link to retrieve next set of items.
+        /// </param>
+        /// <returns>
+        /// The response model for the list schedule operation.
+        /// </returns>
+        public static Task<ScheduleListResponse> ListNextAsync(this IScheduleOperations operations, string nextLink)
+        {
+            return operations.ListNextAsync(nextLink, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Update the schedule identified by schedule name.  (see
+        /// http://aka.ms/azureautomationsdk/scheduleoperations for more
+        /// information)
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -312,9 +300,9 @@ namespace Microsoft.Azure.Management.Automation
         }
         
         /// <summary>
-        /// Update the schedule identified by scheduleId.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
+        /// Update the schedule identified by schedule name.  (see
+        /// http://aka.ms/azureautomationsdk/scheduleoperations for more
+        /// information)
         /// </summary>
         /// <param name='operations'>
         /// Reference to the

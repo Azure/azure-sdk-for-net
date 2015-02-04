@@ -40,5 +40,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         public const string Debug = "Debug";
         
         public const string Verbose = "Verbose";
+        
+        public const string Any = "Any";
     }
 }

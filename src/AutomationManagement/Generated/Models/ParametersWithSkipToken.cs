@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         private string _skipToken;
         
         /// <summary>
-        /// Optional. The skip token.
+        /// Optional. Gets or sets the skip token.
         /// </summary>
         public string SkipToken
         {

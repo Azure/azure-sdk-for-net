@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         private IList<Schedule> _schedules;
         
         /// <summary>
-        /// Optional. A list of schedules.
+        /// Optional. Gets or sets a list of schedules.
         /// </summary>
         public IList<Schedule> Schedules
         {
