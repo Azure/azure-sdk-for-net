@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Common.Authentication.Factories
 
             if (context.Account.Type == AzureAccount.AccountType.AccessToken)
             {
-                return new AccessTokenCredential(context.Subscription.Id, context.Account.AccessToken);
+                return new TokenCloudCredentials(context.Subscription.Id.ToString(), context.Account.Id);
             }
 
             var tenant = context.Subscription.GetPropertyAsArray(AzureSubscription.Property.Tenants)
