@@ -9,6 +9,7 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyTitle("Microsoft.HDInsight.Net.Http.Formatting")]
 [assembly: AssemblyDescription("")]
+[assembly: AssemblyVersion("1.4.3.0")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Microsoft.HDInsight.Net.Http.Formatting")]

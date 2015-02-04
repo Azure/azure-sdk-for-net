@@ -25,6 +25,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("procdetails")]
 [assembly: AssemblyDescription("Provides the details it's execution space for diagnostic purposes")]
 [assembly: AssemblyConfiguration("")]
+[assembly: AssemblyVersion("1.4.3.0")]
 [assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Microsoft.Hadoop.MapReduce.Test")]
 [assembly: AssemblyCopyright("Copyright (c) Microsoft Corporation")]

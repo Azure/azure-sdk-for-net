@@ -23,6 +23,7 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyTitle("Microsoft.WindowsAzure.Management.Configuration")]
 [assembly: AssemblyDescription("")]
+[assembly: AssemblyVersion("1.4.3.0")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Microsoft.WindowsAzure.Management.Configuration")]

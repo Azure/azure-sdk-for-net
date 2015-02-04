@@ -25,6 +25,7 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("Microsoft.HadoopAppliance.Client")]
 [assembly: AssemblyDescription("")]
+[assembly: AssemblyVersion("1.4.3.0")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Microsoft.HadoopAppliance.Client")]

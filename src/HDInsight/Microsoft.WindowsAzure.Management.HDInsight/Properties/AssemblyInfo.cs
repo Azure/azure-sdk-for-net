@@ -23,10 +23,11 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 
 [assembly: AssemblyTitle("Microsoft.Hadoop.WebClient")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("")]\n[assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Microsoft.Hadoop.WebClient")]
+[assembly: AssemblyVersion("1.4.3.0")]
 [assembly: AssemblyCopyright("Copyright (c) Microsoft 2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

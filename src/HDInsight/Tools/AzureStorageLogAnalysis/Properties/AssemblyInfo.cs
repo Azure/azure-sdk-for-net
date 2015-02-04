@@ -7,6 +7,7 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("AzureLogAnalysis")]
 [assembly: AssemblyDescription("")]
+[assembly: AssemblyVersion("1.4.3.0")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("AzureLogAnalysis")]

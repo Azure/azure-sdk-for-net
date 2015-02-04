@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyTitle("Microsoft.Hadoop.Avro.Tests")]
 [assembly: AssemblyDescription("")]
+[assembly: AssemblyVersion("1.4.3.0")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Microsoft.Hadoop.Avro.Tests")]

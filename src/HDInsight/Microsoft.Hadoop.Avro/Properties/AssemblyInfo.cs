@@ -16,6 +16,7 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("Microsoft.Hadoop.Avro")]
 [assembly: AssemblyDescription("")]
+[assembly: AssemblyVersion("1.4.3.0")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Microsoft.Hadoop.Avro")]
