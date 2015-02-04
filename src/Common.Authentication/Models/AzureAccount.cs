@@ -24,11 +24,14 @@ namespace Microsoft.Azure.Common.Authentication.Models
 
         public Dictionary<Property, string> Properties { get; set; }
 
+        public IAccessToken AccessToken { get; set; }
+
         public enum AccountType
         {
             Certificate,
             User,
-            ServicePrincipal
+            ServicePrincipal,
+            AccessToken
         }
 
         public enum Property
