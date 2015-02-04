@@ -31,7 +31,6 @@ namespace Microsoft.Azure.Common.Authentication.Factories
 
         public ITokenProvider TokenProvider { get; set; }
 
-
         public IAccessToken Authenticate(AzureAccount account, AzureEnvironment environment, string tenant, SecureString password, ShowDialog promptBehavior,
             AzureEnvironment.Endpoint resourceId = AzureEnvironment.Endpoint.ActiveDirectoryServiceEndpointResourceId)
         {
@@ -58,6 +57,11 @@ namespace Microsoft.Azure.Common.Authentication.Factories
                 return new CertificateCloudCredentials(context.Subscription.Id.ToString(), certificate);
             }
 
+            if (context.Account.Type == AzureAccount.AccountType.AccessToken)
+            {
+                return new TokenCloudCredentials(context.Subscription.Id.ToString(), context.Account.Id);
+            }
+
             var tenant = context.Subscription.GetPropertyAsArray(AzureSubscription.Property.Tenants)
                   .Intersect(context.Account.GetPropertyAsArray(AzureAccount.Property.Tenants))
                   .FirstOrDefault();
@@ -77,7 +81,6 @@ namespace Microsoft.Azure.Common.Authentication.Factories
                 throw new ArgumentException(Resources.InvalidSubscriptionState, ex);
             }
         }
-
 
         private AdalConfiguration GetAdalConfiguration(AzureEnvironment environment, string tenantId,
             AzureEnvironment.Endpoint resourceId)
