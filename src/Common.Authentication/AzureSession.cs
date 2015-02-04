@@ -31,11 +31,6 @@ namespace Microsoft.Azure.Common.Authentication
         public static IClientFactory ClientFactory { get; set; }
 
         /// <summary>
-        /// Gets or sets current Azure profile
-        /// </summary>
-        public static AzureProfile Profile { get; set; }
-
-        /// <summary>
         /// Gets or sets Azure authentication factory.
         /// </summary>
         public static IAuthenticationFactory AuthenticationFactory { get; set; }

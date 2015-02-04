@@ -128,26 +128,8 @@ namespace Microsoft.Azure.Management.Sql
             }
             
             // Construct URL
-            string url = "";
-            url = url + "/subscriptions/";
-            if (this.Client.Credentials.SubscriptionId != null)
-            {
-                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
-            }
-            url = url + "/resourceGroups/";
-            url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/";
-            url = url + "Microsoft.Sql";
-            url = url + "/servers/";
-            url = url + Uri.EscapeDataString(serverName);
-            url = url + "/firewallRules/";
-            url = url + Uri.EscapeDataString(firewallRule);
-            List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-04-01");
-            if (queryParameters.Count > 0)
-            {
-                url = url + "?" + string.Join("&", queryParameters);
-            }
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourceGroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.Sql/servers/" + Uri.EscapeDataString(serverName) + "/firewallRules/" + Uri.EscapeDataString(firewallRule) + "?";
+            url = url + "api-version=2014-04-01";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -386,26 +368,8 @@ namespace Microsoft.Azure.Management.Sql
             }
             
             // Construct URL
-            string url = "";
-            url = url + "/subscriptions/";
-            if (this.Client.Credentials.SubscriptionId != null)
-            {
-                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
-            }
-            url = url + "/resourceGroups/";
-            url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/";
-            url = url + "Microsoft.Sql";
-            url = url + "/servers/";
-            url = url + Uri.EscapeDataString(serverName);
-            url = url + "/firewallRules/";
-            url = url + Uri.EscapeDataString(firewallRule);
-            List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-04-01");
-            if (queryParameters.Count > 0)
-            {
-                url = url + "?" + string.Join("&", queryParameters);
-            }
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourceGroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.Sql/servers/" + Uri.EscapeDataString(serverName) + "/firewallRules/" + Uri.EscapeDataString(firewallRule) + "?";
+            url = url + "api-version=2014-04-01";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -542,26 +506,8 @@ namespace Microsoft.Azure.Management.Sql
             }
             
             // Construct URL
-            string url = "";
-            url = url + "/subscriptions/";
-            if (this.Client.Credentials.SubscriptionId != null)
-            {
-                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
-            }
-            url = url + "/resourceGroups/";
-            url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/";
-            url = url + "Microsoft.Sql";
-            url = url + "/servers/";
-            url = url + Uri.EscapeDataString(serverName);
-            url = url + "/firewallRules/";
-            url = url + Uri.EscapeDataString(firewallRule);
-            List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-04-01");
-            if (queryParameters.Count > 0)
-            {
-                url = url + "?" + string.Join("&", queryParameters);
-            }
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourceGroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.Sql/servers/" + Uri.EscapeDataString(serverName) + "/firewallRules/" + Uri.EscapeDataString(firewallRule) + "?";
+            url = url + "api-version=2014-04-01";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -767,25 +713,8 @@ namespace Microsoft.Azure.Management.Sql
             }
             
             // Construct URL
-            string url = "";
-            url = url + "/subscriptions/";
-            if (this.Client.Credentials.SubscriptionId != null)
-            {
-                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
-            }
-            url = url + "/resourceGroups/";
-            url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/";
-            url = url + "Microsoft.Sql";
-            url = url + "/servers/";
-            url = url + Uri.EscapeDataString(serverName);
-            url = url + "/firewallRules";
-            List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-04-01");
-            if (queryParameters.Count > 0)
-            {
-                url = url + "?" + string.Join("&", queryParameters);
-            }
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourceGroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.Sql/servers/" + Uri.EscapeDataString(serverName) + "/firewallRules?";
+            url = url + "api-version=2014-04-01";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
