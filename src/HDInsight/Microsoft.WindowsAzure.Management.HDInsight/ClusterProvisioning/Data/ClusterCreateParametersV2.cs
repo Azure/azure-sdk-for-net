@@ -211,7 +211,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
             this.ZookeeperNodeSize = null;
         }
 
-        public ClusterCreateParametersV2(ClusterCreateParameters versionOneParams)
+        public ClusterCreateParametersV2(ClusterCreateParameters versionOneParams) : this()
         {
             this.Name = versionOneParams.Name;
             this.Location = versionOneParams.Location;
