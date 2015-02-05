@@ -838,12 +838,20 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
                         string.Format("Cannot create a customized cluster with version '{0}'. Customized clusters only supported after version 3.0", cluster.Version));
                 }
 
+                // Various VM sizes only supported starting with version 3.1
                 if (version.CompareTo(new Version("3.1")) < 0 && createHasNewVMSizesSpecified(cluster))
                 {
                     throw new InvalidOperationException(
                         string.Format(
                             "Cannot use various VM sizes with cluster version '{0}'. Custom VM sizes are only supported for cluster versions 3.1 and above.",
                             cluster.Version));
+                }
+
+                // Spark cluster only supported after version 3.2
+                if (version.CompareTo(new Version("3.2")) < 0 && cluster.ClusterType == ClusterType.Spark)
+                {
+                    throw new InvalidOperationException(
+                        string.Format("Cannot create a Spark cluster with version '{0}'. Spark cluster only supported after version 3.2", cluster.Version));
                 }
             }
             else
