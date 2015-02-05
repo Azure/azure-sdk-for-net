@@ -23,7 +23,7 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyTitle("Microsoft.Hadoop.Client")]
 [assembly: AssemblyDescription("")]
-[assembly: AssemblyVersion("1.4.3.0")]
+[assembly: AssemblyVersion("1.4.4.0")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Microsoft.Hadoop.Client")]
