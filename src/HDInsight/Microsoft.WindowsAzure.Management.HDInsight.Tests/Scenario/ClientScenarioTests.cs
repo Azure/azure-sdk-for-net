@@ -368,6 +368,25 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.Scenario
         [TestCategory("CheckIn")]
         [TestCategory("Scenario")]
         [Timeout(30 * 1000)] // ms
+        public void CreateDeleteContainer_BasicClusterAsyncClient_DeprecatedAPI()
+        {
+            // Creates the client
+            IHDInsightCertificateCredential credentials = IntegrationTestBase.GetValidCredentials();
+            var client = HDInsightClient.Connect(new HDInsightCertificateCredential(credentials.SubscriptionId, credentials.Certificate));
+            client.PollingInterval = TimeSpan.FromMilliseconds(100);
+
+            TestClusterEndToEndOldAPI(
+                GetRandomClusterOldSchema(),
+                () => client.ListClustersAsync().WaitForResult(),
+                dnsName => client.GetClusterAsync(dnsName).WaitForResult(),
+                cluster => client.CreateClusterAsync(cluster).WaitForResult(),
+                dnsName => client.DeleteClusterAsync(dnsName).WaitForResult());
+        }
+
+        [TestMethod]
+        [TestCategory("CheckIn")]
+        [TestCategory("Scenario")]
+        [Timeout(30 * 1000)] // ms
         public void ValidCreateDeleteContainerWithOnlyHiveMetastore_WorksOnSdk()
         {
             var clusterRequest = GetRandomCluster();
@@ -696,6 +715,16 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.Scenario
         public void CreateCluster_VersionValid()
         {
             var clusterRequest = GetRandomCluster();
+            IHDInsightCertificateCredential credentials = IntegrationTestBase.GetValidCredentials();
+            var client = HDInsightClient.Connect(new HDInsightCertificateCredential(credentials.SubscriptionId, credentials.Certificate));
+            client.CreateCluster(clusterRequest);
+        }
+
+        [TestMethod]
+        [TestCategory("CheckIn")]
+        public void CreateCluster_VersionValid_DeprecatedAPI()
+        {
+            var clusterRequest = GetRandomClusterOldSchema();
             IHDInsightCertificateCredential credentials = IntegrationTestBase.GetValidCredentials();
             var client = HDInsightClient.Connect(new HDInsightCertificateCredential(credentials.SubscriptionId, credentials.Certificate));
             client.CreateCluster(clusterRequest);

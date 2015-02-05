@@ -58,9 +58,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         ///     Default HDInsight version.
         /// </summary>
         internal const string DEFAULTHDINSIGHTVERSION = "default";
-        internal const string ClustersContractCapabilityVersion1 = "CAPABILITY_FEATURE_CLUSTERS_CONTRACT_1_SDK";
-        internal static string ClustersContractCapabilityVersion2 = "CAPABILITY_FEATURE_CLUSTERS_CONTRACT_2_SDK";
-        internal static string IaasClustersCapability = "CAPABILITY_FEATURE_IAAS_DEPLOYMENTS";
         internal const string ClusterAlreadyExistsError = "The condition specified by the ETag is not satisfied.";
 
         private IHDInsightSubscriptionCredentials credentials;
@@ -252,7 +249,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
                 return null;
             }
         }
-
+		
         public async Task<ClusterDetails> CreateClusterAsync(ClusterCreateParameters clusterCreateParameters)
         {
             if (clusterCreateParameters == null)
@@ -643,27 +640,23 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         /// <inheritdoc />
         public ClusterDetails CreateCluster(ClusterCreateParameters cluster)
         {
-            if (cluster.OSType == OSType.Linux)
-            {
-                return this.CreateIaasClusterAsync(cluster).WaitForResult();
-            }
-            else
-            {
-                return this.CreateClusterAsync(cluster).WaitForResult();
-            }
+            return this.CreateClusterAsync(new ClusterCreateParametersV2(cluster)).WaitForResult();
         }
 
         /// <inheritdoc />
         public ClusterDetails CreateCluster(ClusterCreateParameters cluster, TimeSpan timeout)
         {
-            if (cluster.OSType == OSType.Linux)
-            {
-                return this.CreateIaasClusterAsync(cluster).WaitForResult(timeout);
-            }
-            else
-            {
-                return this.CreateClusterAsync(cluster).WaitForResult(timeout);
-            }
+            return this.CreateClusterAsync(new ClusterCreateParametersV2(cluster)).WaitForResult(timeout);
+        }
+
+        public ClusterDetails CreateCluster(ClusterCreateParametersV2 cluster)
+        {
+            return this.CreateClusterAsync(cluster).WaitForResult();
+        }
+
+        public ClusterDetails CreateCluster(ClusterCreateParametersV2 cluster, TimeSpan timeout)
+        {
+            return this.CreateClusterAsync(cluster).WaitForResult(timeout);
         }
 
         /// <inheritdoc />

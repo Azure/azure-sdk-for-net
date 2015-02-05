@@ -35,7 +35,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClustersTests
         public void CanCreatePocoClient()
         {
             var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
-                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, ClustersPocoClient.GetSchemaVersion(Capabilities));
+                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(Capabilities));
             Assert.IsNotNull(restClient);
 
             using (var paasClustersPocoClient = new PaasClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient))
@@ -49,7 +49,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClustersTests
         public void CanListCloudServicesEmpty()
         {
             var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
-                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, ClustersPocoClient.GetSchemaVersion(Capabilities));
+                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(Capabilities));
             using (var clustersPocoClient = new ClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient))
             {
                 var containersList = paasClustersPocoClient.ListContainers().Result;
@@ -62,7 +62,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClustersTests
         public void CanListCloudServices()
         {
             var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
-                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, ClustersPocoClient.GetSchemaVersion(Capabilities));
+                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(Capabilities));
             using (var clustersPocoClient = new ClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient))
             {
                 CreateCluster("testcluster1", "West US");
@@ -81,7 +81,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClustersTests
         public void CanListCloudServicesWithDuplicateNames()
         {
             var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
-                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, ClustersPocoClient.GetSchemaVersion(Capabilities));
+                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(Capabilities));
             using (var clustersPocoClient = new ClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient))
             {
                 CreateCluster("testcluster1", "West US");
@@ -98,7 +98,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClustersTests
         public void CanGetCloudServicesWithDuplicateNames()
         {
             var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
-                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, ClustersPocoClient.GetSchemaVersion(Capabilities));
+                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(Capabilities));
             using (var clustersPocoClient = new ClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient))
             {
                 CreateCluster("testcluster1", "West US");
@@ -121,7 +121,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClustersTests
         public void CanDeleteCloudServicesWithDuplicateNames()
         {
             var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
-                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, ClustersPocoClient.GetSchemaVersion(Capabilities));
+                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(Capabilities));
             using (var clustersPocoClient = new ClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient))
             {
                 CreateCluster("testcluster1", "West US");
@@ -150,7 +150,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClustersTests
         public void CanDeleteCloudServiceWithRegionWithDuplicateNames()
         {
             var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
-                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, ClustersPocoClient.GetSchemaVersion(Capabilities));
+                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(Capabilities));
             using (var clustersPocoClient = new ClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient))
             {
                 CreateCluster("testcluster1", "West US");
@@ -172,7 +172,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClustersTests
         public async Task CannotDeserializeClusterWithoutClusterCapability()
         {
             var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
-                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, ClustersPocoClient.GetSchemaVersion(Capabilities));
+                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(Capabilities));
             var clustersPocoClient = new ClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient);
             CreateClusterWithoutCapability("testcluster", "West US");
             var cluster = paasClustersPocoClient.ListContainer("testcluster").Result;
@@ -190,7 +190,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClustersTests
         public async Task CanResizeCluster()
         {
             var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
-                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, ClustersPocoClient.GetSchemaVersion(Capabilities));
+                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(Capabilities));
             var clustersPocoClient = new ClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient);
             CreateCluster("testcluster", "West US");
             var cluster = paasClustersPocoClient.ListContainer("testcluster").Result;
@@ -208,7 +208,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClustersTests
         public async Task ResizeToSameSizeReturnsEmptyGuidOperationId()
         {
             var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
-                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, ClustersPocoClient.GetSchemaVersion(Capabilities));
+                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(Capabilities));
             var clustersPocoClient = new ClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient);
             CreateCluster("testcluster", "West US");
             var cluster = paasClustersPocoClient.ListContainer("testcluster").Result;
@@ -225,7 +225,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClustersTests
             var capabilities = new List<string>();
             capabilities.Add("CAPABILITY_FEATURE_CLUSTERS_CONTRACT_1_SDK");
             var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
-                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, ClustersPocoClient.GetSchemaVersion(capabilities));
+                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(capabilities));
             var clustersPocoClient = new ClustersPocoClient(this.HdInsightCertCred, false, this.Context, capabilities, restClient);
             CreateCluster("testcluster", "West US");
             try
@@ -243,7 +243,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClustersTests
         public async Task CannotResizeClusterToLessThanOne()
         {
             var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
-                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, ClustersPocoClient.GetSchemaVersion(Capabilities));
+                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(Capabilities));
             var clustersPocoClient = new ClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient);
             CreateCluster("testcluster", "West US");
             var cluster = paasClustersPocoClient.ListContainer("testcluster").Result;
@@ -265,7 +265,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClustersTests
         public async Task CannotCreateCustomizedClusterWithoutCapability()
         {
             var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
-                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, ClustersPocoClient.GetSchemaVersion(Capabilities));
+                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(Capabilities));
             var clustersPocoClient = new ClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient);
             try
             {
@@ -286,6 +286,213 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClustersTests
                 clusterCreateParameters.ConfigActions.Add(new ScriptAction("TestScriptAction", new ClusterNodeType[] { ClusterNodeType.HeadNode }, new Uri("http://www.microsoft.com"), null));
 
                 await paasClustersPocoClient.CreateContainer(clusterCreateParameters);
+            }
+            catch (NotSupportedException ex)
+            {
+                Assert.IsNotNull(ex);
+            }
+        }
+
+        [TestMethod]
+        [TestCategory("CheckIn")]
+        public async Task CanCreateSparkCluster()
+        {
+            Capabilities.Add("CAPABILITY_FEATURE_CLUSTERS_CONTRACT_1_SDK");
+            Capabilities.Add("CAPABILITY_FEATURE_CLUSTERS_CONTRACT_3_SDK");
+            var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
+                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(Capabilities));
+            var clustersPocoClient = new ClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient);
+            var clusterCreateParameters = new HDInsight.ClusterCreateParametersV2
+            {
+                Name = "SparkCreationTest",
+                DefaultStorageAccountKey = IntegrationTestBase.TestCredentials.Environments[0].DefaultStorageAccount.Key,
+                DefaultStorageAccountName = IntegrationTestBase.TestCredentials.Environments[0].DefaultStorageAccount.Name,
+                DefaultStorageContainer = "SparkCreationTest",
+                ClusterSizeInNodes = 2,
+                Location = "East US",
+                UserName = "hdinsightuser",
+                Password = "Password1!",
+                Version = "3.1",
+                ClusterType = ClusterType.Spark,
+            };
+
+            await clustersPocoClient.CreateContainer(clusterCreateParameters);
+
+            var containersList = clustersPocoClient.ListContainers().Result;
+            Assert.AreEqual(containersList.Count, 1);
+            Assert.IsNotNull(containersList.SingleOrDefault(cluster => cluster.Name.Equals("SparkCreationTest")));
+        }
+
+        [TestMethod]
+        [TestCategory("CheckIn")]
+        public async Task ICanCreateACluster_WithNewVmSizes_Headnode_Specified()
+        {
+            var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
+                                                    .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(Capabilities));
+            var clustersPocoClient = new ClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient);
+            try
+            {
+                var clusterCreateParameters = new HDInsight.ClusterCreateParametersV2
+                {
+                    Name = "ConfigActionTest",
+                    DefaultStorageAccountKey = IntegrationTestBase.TestCredentials.Environments[0].DefaultStorageAccount.Key,
+                    DefaultStorageAccountName = IntegrationTestBase.TestCredentials.Environments[0].DefaultStorageAccount.Name,
+                    DefaultStorageContainer = "ConfigActionTest",
+                    ClusterSizeInNodes = 2,
+                    Location = "East US",
+                    UserName = "hdinsightuser",
+                    Password = "Password1!",
+                    Version = "3.1",
+                    HeadNodeSize = "A6",
+                };
+
+                // Add in valid config action.
+                clusterCreateParameters.ConfigActions.Add(new ScriptAction("TestScriptAction", new ClusterNodeType[] { ClusterNodeType.HeadNode }, new Uri("http://www.microsoft.com"), null));
+
+                await clustersPocoClient.CreateContainer(clusterCreateParameters);
+            }
+            catch (NotSupportedException ex)
+            {
+                Assert.IsNotNull(ex);
+            }
+        }
+
+        [TestMethod]
+        [TestCategory("CheckIn")]
+        public async Task ICanCreateACluster_WithNewVmSizes_Datanode_Specified()
+        {
+            var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
+                                                     .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(Capabilities));
+            var clustersPocoClient = new ClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient);
+            try
+            {
+                var clusterCreateParameters = new HDInsight.ClusterCreateParametersV2
+                {
+                    Name = "ConfigActionTest",
+                    DefaultStorageAccountKey = IntegrationTestBase.TestCredentials.Environments[0].DefaultStorageAccount.Key,
+                    DefaultStorageAccountName = IntegrationTestBase.TestCredentials.Environments[0].DefaultStorageAccount.Name,
+                    DefaultStorageContainer = "ConfigActionTest",
+                    ClusterSizeInNodes = 2,
+                    Location = "East US",
+                    UserName = "hdinsightuser",
+                    Password = "Password1!",
+                    Version = "3.1",
+                    DataNodeSize = "A5",
+                };
+
+                // Add in valid config action.
+                clusterCreateParameters.ConfigActions.Add(new ScriptAction("TestScriptAction", new ClusterNodeType[] { ClusterNodeType.HeadNode }, new Uri("http://www.microsoft.com"), null));
+
+                await clustersPocoClient.CreateContainer(clusterCreateParameters);
+            }
+            catch (NotSupportedException ex)
+            {
+                Assert.IsNotNull(ex);
+            }
+        }
+
+        [TestMethod]
+        [TestCategory("CheckIn")]
+        public async Task ICanCreateACluster_WithNewVmSizes_Zookeeper_Specified()
+        {
+            var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
+                                                    .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(Capabilities));
+            var clustersPocoClient = new ClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient);
+            try
+            {
+                var clusterCreateParameters = new HDInsight.ClusterCreateParametersV2
+                {
+                    Name = "ConfigActionTest",
+                    DefaultStorageAccountKey = IntegrationTestBase.TestCredentials.Environments[0].DefaultStorageAccount.Key,
+                    DefaultStorageAccountName = IntegrationTestBase.TestCredentials.Environments[0].DefaultStorageAccount.Name,
+                    DefaultStorageContainer = "ConfigActionTest",
+                    ClusterSizeInNodes = 2,
+                    Location = "East US",
+                    UserName = "hdinsightuser",
+                    Password = "Password1!",
+                    Version = "3.1",
+                    ZookeeperNodeSize = "Large",
+                    ClusterType = ClusterType.HBase,
+                };
+
+                // Add in valid config action.
+                clusterCreateParameters.ConfigActions.Add(new ScriptAction("TestScriptAction", new ClusterNodeType[] { ClusterNodeType.HeadNode }, new Uri("http://www.microsoft.com"), null));
+
+                await clustersPocoClient.CreateContainer(clusterCreateParameters);
+            }
+            catch (NotSupportedException ex)
+            {
+                Assert.IsNotNull(ex);
+            }
+        }
+
+        [TestMethod]
+        [TestCategory("CheckIn")]
+        public async Task ICanCreateACluster_WithNewVmSizes_All_Specified()
+        {
+            var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
+                                                     .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(Capabilities));
+            var clustersPocoClient = new ClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient);
+            try
+            {
+                var clusterCreateParameters = new HDInsight.ClusterCreateParametersV2
+                {
+                    Name = "ConfigActionTest",
+                    DefaultStorageAccountKey = IntegrationTestBase.TestCredentials.Environments[0].DefaultStorageAccount.Key,
+                    DefaultStorageAccountName = IntegrationTestBase.TestCredentials.Environments[0].DefaultStorageAccount.Name,
+                    DefaultStorageContainer = "ConfigActionTest",
+                    ClusterSizeInNodes = 2,
+                    Location = "East US",
+                    UserName = "hdinsightuser",
+                    Password = "Password1!",
+                    Version = "3.1",
+                    HeadNodeSize = "A6",
+                    DataNodeSize = "A5",
+                    ZookeeperNodeSize = "Large",
+                    ClusterType = ClusterType.HBase,
+                };
+
+                // Add in valid config action.
+                clusterCreateParameters.ConfigActions.Add(new ScriptAction("TestScriptAction", new ClusterNodeType[] { ClusterNodeType.HeadNode }, new Uri("http://www.microsoft.com"), null));
+
+                await clustersPocoClient.CreateContainer(clusterCreateParameters);
+            }
+            catch (NotSupportedException ex)
+            {
+                Assert.IsNotNull(ex);
+            }
+        }
+
+        [TestMethod]
+        [TestCategory("CheckIn")]
+        public async Task ICanCreateACluster_WithOldVmSizes_All_Specified()
+        {
+            var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
+                                                     .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(Capabilities));
+            var clustersPocoClient = new ClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient);
+            try
+            {
+                var clusterCreateParameters = new HDInsight.ClusterCreateParametersV2
+                {
+                    Name = "ConfigActionTest",
+                    DefaultStorageAccountKey = IntegrationTestBase.TestCredentials.Environments[0].DefaultStorageAccount.Key,
+                    DefaultStorageAccountName = IntegrationTestBase.TestCredentials.Environments[0].DefaultStorageAccount.Name,
+                    DefaultStorageContainer = "ConfigActionTest",
+                    ClusterSizeInNodes = 2,
+                    Location = "East US",
+                    UserName = "hdinsightuser",
+                    Password = "Password1!",
+                    Version = "3.1",
+                    HeadNodeSize = "ExtraLarge",
+                    DataNodeSize = "Large",
+                    ZookeeperNodeSize = "Medium",
+                    ClusterType = ClusterType.HBase,
+                };
+
+                // Add in valid config action.
+                clusterCreateParameters.ConfigActions.Add(new ScriptAction("TestScriptAction", new ClusterNodeType[] { ClusterNodeType.HeadNode }, new Uri("http://www.microsoft.com"), null));
+
+                await clustersPocoClient.CreateContainer(clusterCreateParameters);
             }
             catch (NotSupportedException ex)
             {

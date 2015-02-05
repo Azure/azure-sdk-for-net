@@ -13,7 +13,8 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities
     using System.Runtime.Serialization;
     using System.Xml;
     using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Data.Rdfe;
-    using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoClient.PaasClusters;
+    using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Data;
+    using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoClient.ClustersResource;
     using Microsoft.WindowsAzure.Management.HDInsight.Contracts;
     using Microsoft.WindowsAzure.Management.HDInsight.Contracts.May2014;
     using Microsoft.WindowsAzure.Management.HDInsight.Contracts.May2014.Components;
