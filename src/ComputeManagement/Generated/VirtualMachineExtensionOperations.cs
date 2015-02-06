@@ -301,6 +301,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     DateTime publishedDateInstance = DateTime.Parse(publishedDateElement.Value, CultureInfo.InvariantCulture);
                                     resourceExtensionInstance.PublishedDate = publishedDateInstance;
                                 }
+                                
+                                XElement regionsElement = resourceExtensionsElement.Element(XName.Get("Regions", "http://schemas.microsoft.com/windowsazure"));
+                                if (regionsElement != null)
+                                {
+                                    string regionsInstance = regionsElement.Value;
+                                    resourceExtensionInstance.Regions = regionsInstance;
+                                }
                             }
                         }
                         
@@ -587,6 +594,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 {
                                     DateTime publishedDateInstance = DateTime.Parse(publishedDateElement.Value, CultureInfo.InvariantCulture);
                                     resourceExtensionInstance.PublishedDate = publishedDateInstance;
+                                }
+                                
+                                XElement regionsElement = resourceExtensionsElement.Element(XName.Get("Regions", "http://schemas.microsoft.com/windowsazure"));
+                                if (regionsElement != null)
+                                {
+                                    string regionsInstance = regionsElement.Value;
+                                    resourceExtensionInstance.Regions = regionsInstance;
                                 }
                             }
                         }
