@@ -46,11 +46,10 @@ namespace Microsoft.Azure.Management.Batch
         /// <param name='accountName'>
         /// Required. A name for the Batch account which must be unique within
         /// Azure. Batch account names must be between 3 and 24 characters in
-        /// length, must use only numbers and lower-case letters and not start
-        /// with a number. This name is used as part of the DNS name that is
-        /// used to access the batch service in the region in which the
-        /// account is created. For example:
-        /// http://AccountName.batch.core.windows.net/.
+        /// length and must use only numbers and lower-case letters. This name
+        /// is used as part of the DNS name that is used to access the batch
+        /// service in the region in which the account is created. For
+        /// example: http://AccountName.batch.core.windows.net/.
         /// </param>
         /// <param name='parameters'>
         /// Required. Additional parameters for account creation
@@ -83,11 +82,10 @@ namespace Microsoft.Azure.Management.Batch
         /// <param name='accountName'>
         /// Required. A name for the Batch account which must be unique within
         /// Azure. Batch account names must be between 3 and 24 characters in
-        /// length, must use only numbers and lower-case letters and not start
-        /// with a number. This name is used as part of the DNS name that is
-        /// used to access the batch service in the region in which the
-        /// account is created. For example:
-        /// http://AccountName.batch.core.windows.net/.
+        /// length and must use only numbers and lower-case letters. This name
+        /// is used as part of the DNS name that is used to access the batch
+        /// service in the region in which the account is created. For
+        /// example: http://AccountName.batch.core.windows.net/.
         /// </param>
         /// <param name='parameters'>
         /// Required. Additional parameters for account creation
@@ -167,11 +165,10 @@ namespace Microsoft.Azure.Management.Batch
         /// <param name='accountName'>
         /// Required. A name for the Batch account which must be unique within
         /// Azure. Batch account names must be between 3 and 24 characters in
-        /// length, must use only numbers and lower-case letters and not start
-        /// with a number. This name is used as part of the DNS name that is
-        /// used to access the batch service in the region in which the
-        /// account is created. For example:
-        /// http://AccountName.batch.core.windows.net/.
+        /// length and must use only numbers and lower-case letters. This name
+        /// is used as part of the DNS name that is used to access the batch
+        /// service in the region in which the account is created. For
+        /// example: http://AccountName.batch.core.windows.net/.
         /// </param>
         /// <param name='parameters'>
         /// Required. Additional parameters for account creation
@@ -203,11 +200,10 @@ namespace Microsoft.Azure.Management.Batch
         /// <param name='accountName'>
         /// Required. A name for the Batch account which must be unique within
         /// Azure. Batch account names must be between 3 and 24 characters in
-        /// length, must use only numbers and lower-case letters and not start
-        /// with a number. This name is used as part of the DNS name that is
-        /// used to access the batch service in the region in which the
-        /// account is created. For example:
-        /// http://AccountName.batch.core.windows.net/.
+        /// length and must use only numbers and lower-case letters. This name
+        /// is used as part of the DNS name that is used to access the batch
+        /// service in the region in which the account is created. For
+        /// example: http://AccountName.batch.core.windows.net/.
         /// </param>
         /// <param name='parameters'>
         /// Required. Additional parameters for account creation

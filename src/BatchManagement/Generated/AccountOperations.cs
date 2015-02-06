@@ -27,6 +27,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
@@ -77,11 +78,10 @@ namespace Microsoft.Azure.Management.Batch
         /// <param name='accountName'>
         /// Required. A name for the Batch account which must be unique within
         /// Azure. Batch account names must be between 3 and 24 characters in
-        /// length, must use only numbers and lower-case letters and not start
-        /// with a number. This name is used as part of the DNS name that is
-        /// used to access the batch service in the region in which the
-        /// account is created. For example:
-        /// http://AccountName.batch.core.windows.net/.
+        /// length and must use only numbers and lower-case letters. This name
+        /// is used as part of the DNS name that is used to access the batch
+        /// service in the region in which the account is created. For
+        /// example: http://AccountName.batch.core.windows.net/.
         /// </param>
         /// <param name='parameters'>
         /// Required. Additional parameters for account creation
@@ -99,6 +99,14 @@ namespace Microsoft.Azure.Management.Batch
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
+            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (Regex.IsMatch(resourceGroupName, "^[-\\w\\._]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
             if (accountName == null)
             {
                 throw new ArgumentNullException("accountName");
@@ -107,7 +115,11 @@ namespace Microsoft.Azure.Management.Batch
             {
                 throw new ArgumentOutOfRangeException("accountName");
             }
-            if (accountName.Length > 24)
+            if (accountName != null && accountName.Length > 24)
+            {
+                throw new ArgumentOutOfRangeException("accountName");
+            }
+            if (Regex.IsMatch(accountName, "^[-\\w\\._]+$") == false)
             {
                 throw new ArgumentOutOfRangeException("accountName");
             }
@@ -405,9 +417,25 @@ namespace Microsoft.Azure.Management.Batch
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
+            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (Regex.IsMatch(resourceGroupName, "^[-\\w\\._]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
             if (accountName == null)
             {
                 throw new ArgumentNullException("accountName");
+            }
+            if (accountName != null && accountName.Length > 24)
+            {
+                throw new ArgumentOutOfRangeException("accountName");
+            }
+            if (Regex.IsMatch(accountName, "^[-\\w\\._]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("accountName");
             }
             
             // Tracing
@@ -556,11 +584,10 @@ namespace Microsoft.Azure.Management.Batch
         /// <param name='accountName'>
         /// Required. A name for the Batch account which must be unique within
         /// Azure. Batch account names must be between 3 and 24 characters in
-        /// length, must use only numbers and lower-case letters and not start
-        /// with a number. This name is used as part of the DNS name that is
-        /// used to access the batch service in the region in which the
-        /// account is created. For example:
-        /// http://AccountName.batch.core.windows.net/.
+        /// length and must use only numbers and lower-case letters. This name
+        /// is used as part of the DNS name that is used to access the batch
+        /// service in the region in which the account is created. For
+        /// example: http://AccountName.batch.core.windows.net/.
         /// </param>
         /// <param name='parameters'>
         /// Required. Additional parameters for account creation
@@ -726,9 +753,25 @@ namespace Microsoft.Azure.Management.Batch
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
+            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (Regex.IsMatch(resourceGroupName, "^[-\\w\\._]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
             if (accountName == null)
             {
                 throw new ArgumentNullException("accountName");
+            }
+            if (accountName != null && accountName.Length > 24)
+            {
+                throw new ArgumentOutOfRangeException("accountName");
+            }
+            if (Regex.IsMatch(accountName, "^[-\\w\\._]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("accountName");
             }
             
             // Tracing
@@ -1362,9 +1405,25 @@ namespace Microsoft.Azure.Management.Batch
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
+            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (Regex.IsMatch(resourceGroupName, "^[-\\w\\._]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
             if (accountName == null)
             {
                 throw new ArgumentNullException("accountName");
+            }
+            if (accountName != null && accountName.Length > 24)
+            {
+                throw new ArgumentOutOfRangeException("accountName");
+            }
+            if (Regex.IsMatch(accountName, "^[-\\w\\._]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("accountName");
             }
             
             // Tracing
@@ -1745,9 +1804,25 @@ namespace Microsoft.Azure.Management.Batch
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
+            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (Regex.IsMatch(resourceGroupName, "^[-\\w\\._]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
             if (accountName == null)
             {
                 throw new ArgumentNullException("accountName");
+            }
+            if (accountName != null && accountName.Length > 24)
+            {
+                throw new ArgumentOutOfRangeException("accountName");
+            }
+            if (Regex.IsMatch(accountName, "^[-\\w\\._]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("accountName");
             }
             if (parameters == null)
             {
@@ -1944,9 +2019,25 @@ namespace Microsoft.Azure.Management.Batch
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
+            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (Regex.IsMatch(resourceGroupName, "^[-\\w\\._]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
             if (accountName == null)
             {
                 throw new ArgumentNullException("accountName");
+            }
+            if (accountName != null && accountName.Length > 24)
+            {
+                throw new ArgumentOutOfRangeException("accountName");
+            }
+            if (Regex.IsMatch(accountName, "^[-\\w\\._]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("accountName");
             }
             if (parameters == null)
             {
