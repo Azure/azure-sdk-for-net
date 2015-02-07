@@ -163,26 +163,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         public string SubnetName { get; set; }
 
         /// <summary>
-        /// Gets or sets the type of operating system installed on cluster nodes.
-        /// </summary>
-        public OSType OSType { get; set; }
-
-        /// <summary>
-        /// Gets or sets SSH user name.
-        /// </summary>
-        public string SshUserName { get; set; }
-
-        /// <summary>
-        /// Gets or sets SSH password.
-        /// </summary>
-        public string SshPassword { get; set; }
-
-        /// <summary>
-        /// Gets or sets the public key to be used for SSH.
-        /// </summary>
-        public string SshPublicKey { get; set; }
-
-        /// <summary>
         /// Initializes a new instance of the ClusterCreateParameters class.
         /// </summary>
         public ClusterCreateParameters()
@@ -205,48 +185,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
 
             // By default choose Windows
             this.OSType = HDInsight.OSType.Windows;
-        }
-
-        /// <summary>
-        /// Performs parameter validations
-        /// </summary>
-        internal void ValidateClusterCreateParameters()
-        {
-            // if OSType == Linux then Username must be "admin"
-            if (this.OSType == HDInsight.OSType.Linux && this.UserName != "admin")
-            {
-                throw new NotSupportedException(string.Format("For clusters with OSType {0}, cluster' connectivity username must be admin.", this.OSType));
-            }
-
-            // if OSType == Linux then ClusterType must be Hadoop
-            if (this.OSType == HDInsight.OSType.Linux && this.ClusterType != ClusterType.Hadoop)
-            {
-                throw new NotSupportedException(string.Format("For clusters with OSType {0}, cluster' type must be {1}.", this.OSType, ClusterType.Hadoop));
-            }
-
-            // if OSType == Linux then VirtualNetworkId must not be set/specified
-            if (this.OSType == HDInsight.OSType.Linux && !String.IsNullOrEmpty(this.VirtualNetworkId))
-            {
-                throw new NotSupportedException(string.Format("For clusters with OSType {0}, setting virtual network Id is not supported.", this.OSType));
-            }
-
-            // if OSType == Linux then SubnetName must not be set/specified
-            if (this.OSType == HDInsight.OSType.Linux && !String.IsNullOrEmpty(this.SubnetName))
-            {
-                throw new NotSupportedException(string.Format("For clusters with OSType {0}, setting subnet name is not supported.", this.OSType));
-            }
-
-            // if OSType == Windows then SSH credentials must not be specified
-            if (this.OSType == HDInsight.OSType.Windows && !String.IsNullOrEmpty(this.SshUserName))
-            {
-                throw new NotSupportedException(string.Format("SSH is not supported for clusters with OSType {0}", this.OSType));
-            }
-
-            // if SSH user name is specified then either SSH password or SSH public key must be specified
-            if (!String.IsNullOrEmpty(this.SshUserName) && String.IsNullOrEmpty(this.SshPassword) && String.IsNullOrEmpty(this.SshPublicKey))
-            {
-                throw new InvalidOperationException("For SSH connectivity, either a password or a public key is required. If a password is specified, the public key will be ignored.");
-            }
         }
     }
 }
