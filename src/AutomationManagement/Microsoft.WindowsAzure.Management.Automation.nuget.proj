@@ -2,9 +2,9 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <!--
-    Microsoft.Azure.Management.Automation
+    Microsoft.WindowsAzure.Management.Automation
     -->
-    <SdkNuGetPackage Include="Microsoft.Azure.Management.Automation">
+    <SdkNuGetPackage Include="Microsoft.WindowsAzure.Management.Automation">
       <PackageVersion>1.0.0</PackageVersion>
       <Folder>$(MSBuildThisFileDirectory)</Folder>
     </SdkNuGetPackage>
