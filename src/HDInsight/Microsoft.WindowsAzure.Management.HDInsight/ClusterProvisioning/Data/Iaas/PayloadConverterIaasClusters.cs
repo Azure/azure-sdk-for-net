@@ -125,6 +125,8 @@
                 clusterDetails.VersionNumber = new Version(0, 0);
             }
 
+            clusterDetails.Version = clusterDetails.VersionNumber.ToString();
+
             //Operation status is populated with failed, then let us mark the state as error
             if (resource.OperationStatus != null && resource.OperationStatus.Result.Equals("Failed", StringComparison.OrdinalIgnoreCase))
             {
@@ -188,6 +190,8 @@
             {
                 clusterDetails.VersionNumber = new Version(0, 0);
             }
+
+            clusterDetails.Version = clusterDetails.VersionNumber.ToString();
 
             // TODO: Determine this from the documents?
             clusterDetails.ClusterType = ClusterType.Hadoop;
