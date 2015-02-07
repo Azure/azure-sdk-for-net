@@ -137,7 +137,7 @@
                                         : ClusterType.Unknown;
 
             // This code will only execute for PaaS clusters which only support Windows
-            clusterDetails.ClusterOSType = OSType.Windows;
+            clusterDetails.OSType = OSType.Windows;
 
             if (clusterDetailsFromServer.Error != null)
             {

@@ -133,7 +133,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         /// <summary>
         /// Gets or sets the OS Type for the nodes of this cluster.
         /// </summary>
-        public OSType ClusterOSType { get; set; }
+        public OSType OSType { get; set; }
 
         /// <summary>
         /// Gets or sets the id of virtual network to deploy the cluster.

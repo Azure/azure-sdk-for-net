@@ -194,7 +194,7 @@
 
             // This code will only run for IaasCluster which only supports Linux today
             // We would need to put this information in one of the documents at some point
-            clusterDetails.ClusterOSType = OSType.Linux;
+            clusterDetails.OSType = OSType.Linux;
 
             if (clusterDetailsFromServer.Errors != null && clusterDetailsFromServer.Errors.Any())
             {
@@ -208,13 +208,16 @@
             // Populate user name, passowrd, and server address information
             clusterDetails.HttpUserName = "admin";
             clusterDetails.HttpPassword = ambariConfigurationDocumentManager.GetPassword();
-            foreach (var endpoint in clusterDetailsFromServer.ConnectivityEndpoints)
+            if (clusterDetailsFromServer.ConnectivityEndpoints != null)
             {
-                var webEndPoint = endpoint as WebConnectivityEndpoint;
-                if (webEndPoint != null)
+                foreach (var endpoint in clusterDetailsFromServer.ConnectivityEndpoints)
                 {
-                    clusterDetails.ConnectionUrl = String.Format("https://{0}{1}", webEndPoint.Location, webEndPoint.Port > 0 ? String.Format(":{0}", webEndPoint.Port) : "");
-                    break;
+                    var webEndPoint = endpoint as WebConnectivityEndpoint;
+                    if (webEndPoint != null)
+                    {
+                        clusterDetails.ConnectionUrl = String.Format("https://{0}{1}", webEndPoint.Location, webEndPoint.Port > 0 ? String.Format(":{0}", webEndPoint.Port) : "");
+                        break;
+                    }
                 }
             }
 
