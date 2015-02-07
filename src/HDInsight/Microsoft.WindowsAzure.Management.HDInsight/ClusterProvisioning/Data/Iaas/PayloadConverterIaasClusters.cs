@@ -20,7 +20,7 @@
         /// <param name="clusterCreateParameters">User supplied cluster create parameters.</param>
         /// <param name="userSubscriptionId">User's subscription Id.</param>
         /// <returns>An Instance of IaasCluster</returns>
-        public static IaasCluster ConvertToIaasCluster(ClusterCreateParameters clusterCreateParameters, string userSubscriptionId)
+        public static IaasCluster ConvertToIaasCluster(ClusterCreateParametersV2 clusterCreateParameters, string userSubscriptionId)
         {
             if (clusterCreateParameters == null)
             {
@@ -285,7 +285,7 @@
             return item.Value;
         }
 
-        private static string GenerateAzureDocument(ClusterCreateParameters clusterCreateParameters)
+        private static string GenerateAzureDocument(ClusterCreateParametersV2 clusterCreateParameters)
         {
             if (clusterCreateParameters == null)
             {
@@ -317,7 +317,7 @@
             return azureCsmDocumentManager.Document;
         }
 
-        private static string GenerateAmbariConfigurationDocument(ClusterCreateParameters clusterCreateParameters)
+        private static string GenerateAmbariConfigurationDocument(ClusterCreateParametersV2 clusterCreateParameters)
         {
             if (clusterCreateParameters == null)
             {

@@ -182,9 +182,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
             // By default create hadoop only cluster unless set otherwise
             this.ClusterType = ClusterType.Hadoop; 
             this.HeadNodeSize = NodeVMSize.Default;
-
-            // By default choose Windows
-            this.OSType = HDInsight.OSType.Windows;
         }
     }
 }

@@ -122,7 +122,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
         }
 
         /// <inheritdoc />
-        public async Task CreateContainer(HDInsight.ClusterCreateParameters clusterCreateParameters)
+        public async Task CreateContainer(HDInsight.ClusterCreateParametersV2 clusterCreateParameters)
         {
             if (clusterCreateParameters == null)
             {
