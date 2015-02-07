@@ -229,6 +229,9 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
             this.HeadNodeSize = VmSize.Large.ToString();
             this.DataNodeSize = VmSize.Large.ToString();
             this.ZookeeperNodeSize = null;
+
+            // By default create Windows clusters
+            this.OSType = HDInsight.OSType.Windows;
         }
 
         public ClusterCreateParametersV2(ClusterCreateParameters versionOneParams) : this()
@@ -268,6 +271,9 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
             //new parameters in version 2 (default values)
             this.DataNodeSize = VmSize.Large.ToString();
             this.ZookeeperNodeSize = null;
+
+            // By default create Windows clusters
+            this.OSType = HDInsight.OSType.Windows;
         }
 
         /// <summary>
