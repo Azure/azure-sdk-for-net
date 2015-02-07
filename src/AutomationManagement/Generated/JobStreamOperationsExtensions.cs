@@ -23,10 +23,10 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.Management.Automation;
-using Microsoft.Azure.Management.Automation.Models;
+using Microsoft.WindowsAzure.Management.Automation;
+using Microsoft.WindowsAzure.Management.Automation.Models;
 
-namespace Microsoft.Azure.Management.Automation
+namespace Microsoft.WindowsAzure.Management.Automation
 {
     public static partial class JobStreamOperationsExtensions
     {
@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Automation
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IJobStreamOperations.
+        /// Microsoft.WindowsAzure.Management.Automation.IJobStreamOperations.
         /// </param>
         /// <param name='automationAccount'>
         /// Required. The automation account name.
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.Automation
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IJobStreamOperations.
+        /// Microsoft.WindowsAzure.Management.Automation.IJobStreamOperations.
         /// </param>
         /// <param name='automationAccount'>
         /// Required. The automation account name.
@@ -93,7 +93,7 @@ namespace Microsoft.Azure.Management.Automation
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IJobStreamOperations.
+        /// Microsoft.WindowsAzure.Management.Automation.IJobStreamOperations.
         /// </param>
         /// <param name='automationAccount'>
         /// Required. The automation account name.
@@ -124,7 +124,7 @@ namespace Microsoft.Azure.Management.Automation
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IJobStreamOperations.
+        /// Microsoft.WindowsAzure.Management.Automation.IJobStreamOperations.
         /// </param>
         /// <param name='automationAccount'>
         /// Required. The automation account name.
@@ -149,7 +149,7 @@ namespace Microsoft.Azure.Management.Automation
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IJobStreamOperations.
+        /// Microsoft.WindowsAzure.Management.Automation.IJobStreamOperations.
         /// </param>
         /// <param name='nextLink'>
         /// Required. NextLink from the previous successful call to List
@@ -172,7 +172,7 @@ namespace Microsoft.Azure.Management.Automation
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IJobStreamOperations.
+        /// Microsoft.WindowsAzure.Management.Automation.IJobStreamOperations.
         /// </param>
         /// <param name='nextLink'>
         /// Required. NextLink from the previous successful call to List
@@ -193,7 +193,7 @@ namespace Microsoft.Azure.Management.Automation
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IJobStreamOperations.
+        /// Microsoft.WindowsAzure.Management.Automation.IJobStreamOperations.
         /// </param>
         /// <param name='automationAccount'>
         /// Required. The automation account name.
@@ -224,7 +224,7 @@ namespace Microsoft.Azure.Management.Automation
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IJobStreamOperations.
+        /// Microsoft.WindowsAzure.Management.Automation.IJobStreamOperations.
         /// </param>
         /// <param name='automationAccount'>
         /// Required. The automation account name.

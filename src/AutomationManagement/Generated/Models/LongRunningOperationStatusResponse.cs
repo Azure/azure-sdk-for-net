@@ -23,9 +23,9 @@ using System;
 using System.Linq;
 using System.Net;
 using Microsoft.Azure;
-using Microsoft.Azure.Management.Automation.Models;
+using Microsoft.WindowsAzure.Management.Automation.Models;
 
-namespace Microsoft.Azure.Management.Automation.Models
+namespace Microsoft.WindowsAzure.Management.Automation.Models
 {
     /// <summary>
     /// The response body contains the status of the specified asynchronous

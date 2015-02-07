@@ -29,10 +29,10 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using Hyak.Common;
 using Microsoft.Azure;
-using Microsoft.Azure.Management.Automation;
-using Microsoft.Azure.Management.Automation.Models;
+using Microsoft.WindowsAzure.Management.Automation;
+using Microsoft.WindowsAzure.Management.Automation.Models;
 
-namespace Microsoft.Azure.Management.Automation
+namespace Microsoft.WindowsAzure.Management.Automation
 {
     public partial class AutomationManagementClient : ServiceClient<AutomationManagementClient>, IAutomationManagementClient
     {

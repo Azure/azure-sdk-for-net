@@ -18,9 +18,9 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using Hyak.Common;
-using Microsoft.Azure.Management.Automation.Models;
+using Microsoft.WindowsAzure.Management.Automation.Models;
 
-namespace Microsoft.Azure.Management.Automation
+namespace Microsoft.WindowsAzure.Management.Automation
 {
     public partial class AutomationManagementClient
     {

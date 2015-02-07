@@ -24,7 +24,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Hyak.Common;
 
-namespace Microsoft.Azure.Management.Automation.Models
+namespace Microsoft.WindowsAzure.Management.Automation.Models
 {
     /// <summary>
     /// The parameters supplied to the create test job operation.

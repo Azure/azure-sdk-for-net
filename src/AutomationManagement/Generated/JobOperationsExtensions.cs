@@ -24,10 +24,10 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure;
-using Microsoft.Azure.Management.Automation;
-using Microsoft.Azure.Management.Automation.Models;
+using Microsoft.WindowsAzure.Management.Automation;
+using Microsoft.WindowsAzure.Management.Automation.Models;
 
-namespace Microsoft.Azure.Management.Automation
+namespace Microsoft.WindowsAzure.Management.Automation
 {
     public static partial class JobOperationsExtensions
     {
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Automation
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IJobOperations.
+        /// Microsoft.WindowsAzure.Management.Automation.IJobOperations.
         /// </param>
         /// <param name='automationAccount'>
         /// Required. The automation account name.
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.Automation
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IJobOperations.
+        /// Microsoft.WindowsAzure.Management.Automation.IJobOperations.
         /// </param>
         /// <param name='automationAccount'>
         /// Required. The automation account name.
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.Automation
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IJobOperations.
+        /// Microsoft.WindowsAzure.Management.Automation.IJobOperations.
         /// </param>
         /// <param name='automationAccount'>
         /// Required. The automation account name.
@@ -115,7 +115,7 @@ namespace Microsoft.Azure.Management.Automation
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IJobOperations.
+        /// Microsoft.WindowsAzure.Management.Automation.IJobOperations.
         /// </param>
         /// <param name='automationAccount'>
         /// Required. The automation account name.
@@ -138,7 +138,7 @@ namespace Microsoft.Azure.Management.Automation
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IJobOperations.
+        /// Microsoft.WindowsAzure.Management.Automation.IJobOperations.
         /// </param>
         /// <param name='automationAccount'>
         /// Required. The automation account name.
@@ -165,7 +165,7 @@ namespace Microsoft.Azure.Management.Automation
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IJobOperations.
+        /// Microsoft.WindowsAzure.Management.Automation.IJobOperations.
         /// </param>
         /// <param name='automationAccount'>
         /// Required. The automation account name.
@@ -188,7 +188,7 @@ namespace Microsoft.Azure.Management.Automation
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IJobOperations.
+        /// Microsoft.WindowsAzure.Management.Automation.IJobOperations.
         /// </param>
         /// <param name='automationAccount'>
         /// Required. The automation account name.
@@ -215,7 +215,7 @@ namespace Microsoft.Azure.Management.Automation
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IJobOperations.
+        /// Microsoft.WindowsAzure.Management.Automation.IJobOperations.
         /// </param>
         /// <param name='automationAccount'>
         /// Required. The automation account name.
@@ -238,7 +238,7 @@ namespace Microsoft.Azure.Management.Automation
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IJobOperations.
+        /// Microsoft.WindowsAzure.Management.Automation.IJobOperations.
         /// </param>
         /// <param name='automationAccount'>
         /// Required. The automation account name.
@@ -265,7 +265,7 @@ namespace Microsoft.Azure.Management.Automation
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IJobOperations.
+        /// Microsoft.WindowsAzure.Management.Automation.IJobOperations.
         /// </param>
         /// <param name='automationAccount'>
         /// Required. The automation account name.
@@ -288,7 +288,7 @@ namespace Microsoft.Azure.Management.Automation
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IJobOperations.
+        /// Microsoft.WindowsAzure.Management.Automation.IJobOperations.
         /// </param>
         /// <param name='nextLink'>
         /// Required. The link to retrieve next set of items.
@@ -312,7 +312,7 @@ namespace Microsoft.Azure.Management.Automation
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IJobOperations.
+        /// Microsoft.WindowsAzure.Management.Automation.IJobOperations.
         /// </param>
         /// <param name='nextLink'>
         /// Required. The link to retrieve next set of items.
@@ -332,7 +332,7 @@ namespace Microsoft.Azure.Management.Automation
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IJobOperations.
+        /// Microsoft.WindowsAzure.Management.Automation.IJobOperations.
         /// </param>
         /// <param name='automationAccount'>
         /// Required. The automation account name.
@@ -360,7 +360,7 @@ namespace Microsoft.Azure.Management.Automation
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IJobOperations.
+        /// Microsoft.WindowsAzure.Management.Automation.IJobOperations.
         /// </param>
         /// <param name='automationAccount'>
         /// Required. The automation account name.
@@ -384,7 +384,7 @@ namespace Microsoft.Azure.Management.Automation
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IJobOperations.
+        /// Microsoft.WindowsAzure.Management.Automation.IJobOperations.
         /// </param>
         /// <param name='automationAccount'>
         /// Required. The automation account name.
@@ -412,7 +412,7 @@ namespace Microsoft.Azure.Management.Automation
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IJobOperations.
+        /// Microsoft.WindowsAzure.Management.Automation.IJobOperations.
         /// </param>
         /// <param name='automationAccount'>
         /// Required. The automation account name.
@@ -436,7 +436,7 @@ namespace Microsoft.Azure.Management.Automation
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IJobOperations.
+        /// Microsoft.WindowsAzure.Management.Automation.IJobOperations.
         /// </param>
         /// <param name='automationAccount'>
         /// Required. The automation account name.
@@ -464,7 +464,7 @@ namespace Microsoft.Azure.Management.Automation
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IJobOperations.
+        /// Microsoft.WindowsAzure.Management.Automation.IJobOperations.
         /// </param>
         /// <param name='automationAccount'>
         /// Required. The automation account name.

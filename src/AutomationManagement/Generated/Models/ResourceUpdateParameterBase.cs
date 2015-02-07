@@ -24,7 +24,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Hyak.Common;
 
-namespace Microsoft.Azure.Management.Automation.Models
+namespace Microsoft.WindowsAzure.Management.Automation.Models
 {
     public partial class ResourceUpdateParameterBase
     {

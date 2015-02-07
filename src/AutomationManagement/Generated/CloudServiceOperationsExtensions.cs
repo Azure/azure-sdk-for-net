@@ -23,10 +23,10 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.Management.Automation;
-using Microsoft.Azure.Management.Automation.Models;
+using Microsoft.WindowsAzure.Management.Automation;
+using Microsoft.WindowsAzure.Management.Automation.Models;
 
-namespace Microsoft.Azure.Management.Automation
+namespace Microsoft.WindowsAzure.Management.Automation
 {
     public static partial class CloudServiceOperationsExtensions
     {
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Automation
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Automation.ICloudServiceOperations.
+        /// Microsoft.WindowsAzure.Management.Automation.ICloudServiceOperations.
         /// </param>
         /// <param name='parameters'>
         /// Required. Parameters supplied to the Create cloud Service operation.
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.Automation
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Automation.ICloudServiceOperations.
+        /// Microsoft.WindowsAzure.Management.Automation.ICloudServiceOperations.
         /// </param>
         /// <param name='parameters'>
         /// Required. Parameters supplied to the Create cloud Service operation.
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.Automation
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Automation.ICloudServiceOperations.
+        /// Microsoft.WindowsAzure.Management.Automation.ICloudServiceOperations.
         /// </param>
         /// <param name='clouldServiceName'>
         /// Required. Cloud service name.
@@ -121,7 +121,7 @@ namespace Microsoft.Azure.Management.Automation
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Automation.ICloudServiceOperations.
+        /// Microsoft.WindowsAzure.Management.Automation.ICloudServiceOperations.
         /// </param>
         /// <param name='clouldServiceName'>
         /// Required. Cloud service name.
@@ -147,7 +147,7 @@ namespace Microsoft.Azure.Management.Automation
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Automation.ICloudServiceOperations.
+        /// Microsoft.WindowsAzure.Management.Automation.ICloudServiceOperations.
         /// </param>
         /// <param name='parameters'>
         /// Required. Parameters supplied to the Create cloud service operation.
@@ -177,7 +177,7 @@ namespace Microsoft.Azure.Management.Automation
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Automation.ICloudServiceOperations.
+        /// Microsoft.WindowsAzure.Management.Automation.ICloudServiceOperations.
         /// </param>
         /// <param name='parameters'>
         /// Required. Parameters supplied to the Create cloud service operation.
@@ -203,7 +203,7 @@ namespace Microsoft.Azure.Management.Automation
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Automation.ICloudServiceOperations.
+        /// Microsoft.WindowsAzure.Management.Automation.ICloudServiceOperations.
         /// </param>
         /// <param name='clouldServiceName'>
         /// Required. Cloud service name.
@@ -233,7 +233,7 @@ namespace Microsoft.Azure.Management.Automation
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Automation.ICloudServiceOperations.
+        /// Microsoft.WindowsAzure.Management.Automation.ICloudServiceOperations.
         /// </param>
         /// <param name='clouldServiceName'>
         /// Required. Cloud service name.
@@ -261,7 +261,7 @@ namespace Microsoft.Azure.Management.Automation
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Automation.ICloudServiceOperations.
+        /// Microsoft.WindowsAzure.Management.Automation.ICloudServiceOperations.
         /// </param>
         /// <param name='cloudServiceName'>
         /// Required. Cloud service name.
@@ -285,7 +285,7 @@ namespace Microsoft.Azure.Management.Automation
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Automation.ICloudServiceOperations.
+        /// Microsoft.WindowsAzure.Management.Automation.ICloudServiceOperations.
         /// </param>
         /// <param name='cloudServiceName'>
         /// Required. Cloud service name.
@@ -305,7 +305,7 @@ namespace Microsoft.Azure.Management.Automation
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Automation.ICloudServiceOperations.
+        /// Microsoft.WindowsAzure.Management.Automation.ICloudServiceOperations.
         /// </param>
         /// <returns>
         /// The response model for the list cloud service operation.
@@ -326,7 +326,7 @@ namespace Microsoft.Azure.Management.Automation
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Automation.ICloudServiceOperations.
+        /// Microsoft.WindowsAzure.Management.Automation.ICloudServiceOperations.
         /// </param>
         /// <returns>
         /// The response model for the list cloud service operation.
