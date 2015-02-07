@@ -16,6 +16,7 @@
         private const string DnsNameParameterTag = "#DnsName";
         private const string LocationParameterTag = "#Location";
         private const string WorkerNodeInstanceCountParameterTag = "#WorkerNodeInstanceCount";
+        private const string HeadNodeVMSizeParameterTag = "#HeadNodeVMSize";
 
         private const string SshUserNameParameterTag = "#SshUsername";
         private const string SshPasswordParameterTag = "#SshPassword";
@@ -105,6 +106,16 @@
         public void SetWorkerNodeCount(int workerNodeCount)
         {
             Document = Document.Replace(WorkerNodeInstanceCountParameterTag, JsonHelper.EncodeStringForJson(workerNodeCount.ToString()));
+        }
+
+        public void SetHeadNodeVMSize(string headnodeSize)
+        {
+            if (String.IsNullOrEmpty(headnodeSize))
+            {
+                throw new ArgumentException("headnodeSize cannot be null or empty.");
+            }
+
+            Document = Document.Replace(HeadNodeVMSizeParameterTag, JsonHelper.EncodeStringForJson(headnodeSize));
         }
 
         public int GetWorkerNodeCount()

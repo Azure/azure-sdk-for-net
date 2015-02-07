@@ -306,6 +306,7 @@
             azureCsmDocumentManager.SetDnsName(clusterCreateParameters.Name);
             azureCsmDocumentManager.SetLocation(clusterCreateParameters.Location);
             azureCsmDocumentManager.SetWorkerNodeCount(clusterCreateParameters.ClusterSizeInNodes);
+            azureCsmDocumentManager.SetHeadNodeVMSize(String.IsNullOrEmpty(clusterCreateParameters.HeadNodeSize) ? NodeVMSize.Large.ToString() : clusterCreateParameters.HeadNodeSize);
 
             // Set SSH parameters
             if (!String.IsNullOrEmpty(clusterCreateParameters.SshUserName))

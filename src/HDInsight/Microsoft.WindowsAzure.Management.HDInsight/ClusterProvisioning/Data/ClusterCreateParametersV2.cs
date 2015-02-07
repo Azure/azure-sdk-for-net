@@ -19,6 +19,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
 {
     using System;
     using System.Collections.ObjectModel;
+    using System.Linq;
     using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Data;
 
     /// <summary>
@@ -315,6 +316,26 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
             if (!String.IsNullOrEmpty(this.SshUserName) && String.IsNullOrEmpty(this.SshPassword) && String.IsNullOrEmpty(this.SshPublicKey))
             {
                 throw new InvalidOperationException("For SSH connectivity, either a password or a public key is required. If a password is specified, the public key will be ignored.");
+            }
+
+            // Allowable values for HeadNodeSize are { Large, ExtraLarge }
+            var allowedValuesForHeadNodeSize = new String[] { NodeVMSize.Large.ToString(), NodeVMSize.ExtraLarge.ToString() };
+            if (!allowedValuesForHeadNodeSize.Contains(HeadNodeSize))
+            {
+                throw new InvalidOperationException(String.Format("Allowed values for Head Node Size are: {0}", String.Join(",", allowedValuesForHeadNodeSize)));
+            }
+
+            // If OSType == Linux, allowable values for DataNodeSize are { Large }
+            var allowedValuesForDataNodeSize = new String[] { NodeVMSize.Large.ToString() };
+            if (this.OSType == HDInsight.OSType.Linux && !allowedValuesForDataNodeSize.Contains(DataNodeSize))
+            {
+                throw new InvalidOperationException(String.Format("Data Node size is not configurable for clusters with OS Type {0}. Allowed values for Data Node Size are: {1}", this.OSType, String.Join(",", allowedValuesForHeadNodeSize)));
+            }
+
+            // If OSType == Linux, Zookeeper node size must not be set
+            if (this.OSType == HDInsight.OSType.Linux && !String.IsNullOrEmpty(ZookeeperNodeSize))
+            {
+                throw new InvalidOperationException(String.Format("Zookeeper node size is not configurable and must not be set for clusters with OS Type {0}.", this.OSType));
             }
         }
         }
