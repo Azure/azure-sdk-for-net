@@ -6785,6 +6785,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                 string stateInstance = stateElement.Value;
                                                 resourceExtensionReferenceInstance.State = stateInstance;
                                             }
+                                            
+                                            XElement forceUpdateElement = resourceExtensionReferencesElement.Element(XName.Get("ForceUpdate", "http://schemas.microsoft.com/windowsazure"));
+                                            if (forceUpdateElement != null && !string.IsNullOrEmpty(forceUpdateElement.Value))
+                                            {
+                                                bool forceUpdateInstance = bool.Parse(forceUpdateElement.Value);
+                                                resourceExtensionReferenceInstance.ForceUpdate = forceUpdateInstance;
+                                            }
                                         }
                                     }
                                     
@@ -8634,6 +8641,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                             {
                                                 string stateInstance = stateElement.Value;
                                                 resourceExtensionReferenceInstance.State = stateInstance;
+                                            }
+                                            
+                                            XElement forceUpdateElement = resourceExtensionReferencesElement.Element(XName.Get("ForceUpdate", "http://schemas.microsoft.com/windowsazure"));
+                                            if (forceUpdateElement != null && !string.IsNullOrEmpty(forceUpdateElement.Value))
+                                            {
+                                                bool forceUpdateInstance = bool.Parse(forceUpdateElement.Value);
+                                                resourceExtensionReferenceInstance.ForceUpdate = forceUpdateInstance;
                                             }
                                         }
                                     }
