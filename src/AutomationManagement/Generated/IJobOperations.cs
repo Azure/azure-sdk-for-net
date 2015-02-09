@@ -24,21 +24,39 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure;
-using Microsoft.Azure.Management.Automation.Models;
+using Microsoft.WindowsAzure.Management.Automation.Models;
 
-namespace Microsoft.Azure.Management.Automation
+namespace Microsoft.WindowsAzure.Management.Automation
 {
     /// <summary>
     /// Service operation for automation jobs.  (see
-    /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
-    /// more information)
+    /// http://aka.ms/azureautomationsdk/joboperations for more information)
     /// </summary>
     public partial interface IJobOperations
     {
         /// <summary>
-        /// Retrieve the job identified by jobId.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
+        /// Create a job of the runbook.  (see
+        /// http://aka.ms/azureautomationsdk/joboperations for more
+        /// information)
+        /// </summary>
+        /// <param name='automationAccount'>
+        /// The automation account name.
+        /// </param>
+        /// <param name='parameters'>
+        /// The parameters supplied to the create job operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response model for the create job operation.
+        /// </returns>
+        Task<JobCreateResponse> CreateAsync(string automationAccount, JobCreateParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Retrieve the job identified by job id.  (see
+        /// http://aka.ms/azureautomationsdk/joboperations for more
+        /// information)
         /// </summary>
         /// <param name='automationAccount'>
         /// The automation account name.
@@ -52,12 +70,50 @@ namespace Microsoft.Azure.Management.Automation
         /// <returns>
         /// The response model for the get job operation.
         /// </returns>
-        Task<JobGetResponse> GetAsync(string automationAccount, string jobId, CancellationToken cancellationToken);
+        Task<JobGetResponse> GetAsync(string automationAccount, Guid jobId, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Retrieve the job output identified by job id.  (see
+        /// http://aka.ms/azureautomationsdk/joboperations for more
+        /// information)
+        /// </summary>
+        /// <param name='automationAccount'>
+        /// The automation account name.
+        /// </param>
+        /// <param name='jobId'>
+        /// The job id.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response model for the get job output operation.
+        /// </returns>
+        Task<JobGetOutputResponse> GetOutputAsync(string automationAccount, Guid jobId, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Retrieve the runbook content of the job identified by job id.  (see
+        /// http://aka.ms/azureautomationsdk/joboperations for more
+        /// information)
+        /// </summary>
+        /// <param name='automationAccount'>
+        /// The automation account name.
+        /// </param>
+        /// <param name='jobId'>
+        /// The job id.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response model for the get runbook content of the job operation.
+        /// </returns>
+        Task<JobGetRunbookContentResponse> GetRunbookContentAsync(string automationAccount, Guid jobId, CancellationToken cancellationToken);
         
         /// <summary>
         /// Retrieve a list of jobs.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
+        /// http://aka.ms/azureautomationsdk/joboperations for more
+        /// information)
         /// </summary>
         /// <param name='automationAccount'>
         /// The automation account name.
@@ -74,16 +130,12 @@ namespace Microsoft.Azure.Management.Automation
         Task<JobListResponse> ListAsync(string automationAccount, JobListParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Retrieve a list of jobs of the runbook identified by runbookId.
-        /// (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
+        /// Retrieve next list of jobs.  (see
+        /// http://aka.ms/azureautomationsdk/joboperations for more
+        /// information)
         /// </summary>
-        /// <param name='automationAccount'>
-        /// The automation account name.
-        /// </param>
-        /// <param name='parameters'>
-        /// The parameters supplied to the list job by runbook id operation.
+        /// <param name='nextLink'>
+        /// The link to retrieve next set of items.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -91,129 +143,12 @@ namespace Microsoft.Azure.Management.Automation
         /// <returns>
         /// The response model for the list job operation.
         /// </returns>
-        Task<JobListResponse> ListByRunbookIdAsync(string automationAccount, JobListByRunbookIdParameters parameters, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Retrieve a list of jobs of the runbook identified by runbookId.
-        /// (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='automationAccount'>
-        /// The automation account name.
-        /// </param>
-        /// <param name='parameters'>
-        /// The parameters supplied to the list job by runbook id operation.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The response model for the list job operation.
-        /// </returns>
-        Task<JobListResponse> ListByRunbookIdFilteredByEndTimeAsync(string automationAccount, JobListByRunbookIdParameters parameters, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Retrieve a list of jobs of the runbook identified by runbookId.
-        /// (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='automationAccount'>
-        /// The automation account name.
-        /// </param>
-        /// <param name='parameters'>
-        /// The parameters supplied to the list job by runbook id operation.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The response model for the list job operation.
-        /// </returns>
-        Task<JobListResponse> ListByRunbookIdFilteredByStartTimeAsync(string automationAccount, JobListByRunbookIdParameters parameters, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Retrieve a list of jobs of the runbook identified by runbookId.
-        /// (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='automationAccount'>
-        /// The automation account name.
-        /// </param>
-        /// <param name='parameters'>
-        /// The parameters supplied to the list job by runbook id operation.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The response model for the list job operation.
-        /// </returns>
-        Task<JobListResponse> ListByRunbookIdFilteredByStartTimeEndTimeAsync(string automationAccount, JobListByRunbookIdParameters parameters, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Retrieve a list of jobs.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='automationAccount'>
-        /// The automation account name.
-        /// </param>
-        /// <param name='parameters'>
-        /// The parameters supplied to the list operation.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The response model for the list job operation.
-        /// </returns>
-        Task<JobListResponse> ListFilteredByEndTimeAsync(string automationAccount, JobListParameters parameters, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Retrieve a list of jobs.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='automationAccount'>
-        /// The automation account name.
-        /// </param>
-        /// <param name='parameters'>
-        /// The parameters supplied to the list operation.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The response model for the list job operation.
-        /// </returns>
-        Task<JobListResponse> ListFilteredByStartTimeAsync(string automationAccount, JobListParameters parameters, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Retrieve a list of jobs.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='automationAccount'>
-        /// The automation account name.
-        /// </param>
-        /// <param name='parameters'>
-        /// The parameters supplied to the list operation.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The response model for the list job operation.
-        /// </returns>
-        Task<JobListResponse> ListFilteredByStartTimeEndTimeAsync(string automationAccount, JobListParameters parameters, CancellationToken cancellationToken);
+        Task<JobListResponse> ListNextAsync(string nextLink, CancellationToken cancellationToken);
         
         /// <summary>
         /// Resume the job identified by jobId.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
+        /// http://aka.ms/azureautomationsdk/joboperations for more
+        /// information)
         /// </summary>
         /// <param name='automationAccount'>
         /// The automation account name.
@@ -228,12 +163,12 @@ namespace Microsoft.Azure.Management.Automation
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<AzureOperationResponse> ResumeAsync(string automationAccount, string jobId, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> ResumeAsync(string automationAccount, Guid jobId, CancellationToken cancellationToken);
         
         /// <summary>
         /// Stop the job identified by jobId.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
+        /// http://aka.ms/azureautomationsdk/joboperations for more
+        /// information)
         /// </summary>
         /// <param name='automationAccount'>
         /// The automation account name.
@@ -248,12 +183,12 @@ namespace Microsoft.Azure.Management.Automation
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<AzureOperationResponse> StopAsync(string automationAccount, string jobId, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> StopAsync(string automationAccount, Guid jobId, CancellationToken cancellationToken);
         
         /// <summary>
         /// Suspend the job identified by jobId.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
+        /// http://aka.ms/azureautomationsdk/joboperations for more
+        /// information)
         /// </summary>
         /// <param name='automationAccount'>
         /// The automation account name.
@@ -268,6 +203,6 @@ namespace Microsoft.Azure.Management.Automation
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<AzureOperationResponse> SuspendAsync(string automationAccount, string jobId, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> SuspendAsync(string automationAccount, Guid jobId, CancellationToken cancellationToken);
     }
 }

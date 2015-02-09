@@ -21,14 +21,13 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.Automation.Models;
 
-namespace Microsoft.Azure.Management.Automation.Models
+namespace Microsoft.WindowsAzure.Management.Automation.Models
 {
     /// <summary>
     /// The parameters supplied to the list job operation.
     /// </summary>
-    public partial class JobListParameters : ParametersWithSkipToken
+    public partial class JobListParameters
     {
         private string _endTime;
         
@@ -43,6 +42,17 @@ namespace Microsoft.Azure.Management.Automation.Models
             set { this._endTime = value; }
         }
         
+        private string _runbookName;
+        
+        /// <summary>
+        /// Optional. Gets or sets the runbook name of the job.
+        /// </summary>
+        public string RunbookName
+        {
+            get { return this._runbookName; }
+            set { this._runbookName = value; }
+        }
+        
         private string _startTime;
         
         /// <summary>
@@ -54,6 +64,17 @@ namespace Microsoft.Azure.Management.Automation.Models
         {
             get { return this._startTime; }
             set { this._startTime = value; }
+        }
+        
+        private string _status;
+        
+        /// <summary>
+        /// Optional. Gets or sets the status of the job.
+        /// </summary>
+        public string Status
+        {
+            get { return this._status; }
+            set { this._status = value; }
         }
         
         /// <summary>
