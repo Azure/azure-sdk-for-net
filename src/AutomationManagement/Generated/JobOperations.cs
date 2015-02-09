@@ -110,7 +110,6 @@ namespace Microsoft.Azure.Management.Automation
             // Construct URL
             string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + Uri.EscapeDataString(automationAccount) + "/Jobs(guid'" + Uri.EscapeDataString(jobId) + "')?";
             url = url + "$expand=JobContext/RunbookVersion/Runbook,JobContext/Schedule,JobContext/JobParameters";
-            url = url + "&$select=JobID,JobContextID,AccountID,JobStatus,JobStatusDetails,StartTime,EndTime,CreationTime,LastModifiedTime,LastStatusModifiedTime,JobException,JobContext/RunbookVersion/Runbook/RunbookID,JobContext/RunbookVersion/Runbook/RunbookName,JobContext/Schedule/Name,JobContext/JobParameters";
             url = url + "&api-version=2014-03-13_Preview";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -783,7 +782,6 @@ namespace Microsoft.Azure.Management.Automation
             appendFilter = false;
             url = url + "$filter=JobContext/RunbookVersion/IsDraft eq false";
             url = url + "&$expand=JobContext/RunbookVersion/Runbook,JobContext/Schedule,JobContext/JobParameters";
-            url = url + "&$select=JobID,JobContextID,AccountID,JobStatus,JobStatusDetails,StartTime,EndTime,CreationTime,LastModifiedTime,LastStatusModifiedTime,JobException,JobContext/RunbookVersion/Runbook/RunbookID,JobContext/RunbookVersion/Runbook/RunbookName,JobContext/Schedule/Name,JobContext/JobParameters";
             if (parameters.SkipToken != null)
             {
                 url = url + "&$skiptoken=" + Uri.EscapeDataString(parameters.SkipToken);
@@ -1481,7 +1479,6 @@ namespace Microsoft.Azure.Management.Automation
             url = url + "$filter=JobContext/RunbookVersion/RunbookID eq guid'" + Uri.EscapeDataString(parameters.RunbookId) + "'";
             url = url + " and JobContext/RunbookVersion/IsDraft eq false";
             url = url + "&$expand=JobContext/RunbookVersion/Runbook,JobContext/Schedule,JobContext/JobParameters";
-            url = url + "&$select=JobID,JobContextID,AccountID,JobStatus,JobStatusDetails,StartTime,EndTime,CreationTime,LastModifiedTime,LastStatusModifiedTime,JobException,JobContext/RunbookVersion/Runbook/RunbookID,JobContext/RunbookVersion/Runbook/RunbookName,JobContext/Schedule/Name,JobContext/JobParameters";
             if (parameters.SkipToken != null)
             {
                 url = url + "&$skiptoken=" + Uri.EscapeDataString(parameters.SkipToken);
@@ -2182,7 +2179,6 @@ namespace Microsoft.Azure.Management.Automation
                 url = url + " and " + "EndTime le datetime'" + Uri.EscapeDataString(parameters.EndTime) + "'";
             }
             url = url + "&$expand=JobContext/RunbookVersion/Runbook,JobContext/Schedule,JobContext/JobParameters";
-            url = url + "&$select=JobID,JobContextID,AccountID,JobStatus,JobStatusDetails,StartTime,EndTime,CreationTime,LastModifiedTime,LastStatusModifiedTime,JobException,JobContext/RunbookVersion/Runbook/RunbookID,JobContext/RunbookVersion/Runbook/RunbookName,JobContext/Schedule/Name,JobContext/JobParameters";
             if (parameters.SkipToken != null)
             {
                 url = url + "&$skiptoken=" + Uri.EscapeDataString(parameters.SkipToken);
@@ -2883,7 +2879,6 @@ namespace Microsoft.Azure.Management.Automation
                 url = url + " and " + "StartTime ge datetime'" + Uri.EscapeDataString(parameters.StartTime) + "'";
             }
             url = url + "&$expand=JobContext/RunbookVersion/Runbook,JobContext/Schedule,JobContext/JobParameters";
-            url = url + "&$select=JobID,JobContextID,AccountID,JobStatus,JobStatusDetails,StartTime,EndTime,CreationTime,LastModifiedTime,LastStatusModifiedTime,JobException,JobContext/RunbookVersion/Runbook/RunbookID,JobContext/RunbookVersion/Runbook/RunbookName,JobContext/Schedule/Name,JobContext/JobParameters";
             if (parameters.SkipToken != null)
             {
                 url = url + "&$skiptoken=" + Uri.EscapeDataString(parameters.SkipToken);
@@ -3588,7 +3583,6 @@ namespace Microsoft.Azure.Management.Automation
                 url = url + " and " + "EndTime le datetime'" + Uri.EscapeDataString(parameters.EndTime) + "'";
             }
             url = url + "&$expand=JobContext/RunbookVersion/Runbook,JobContext/Schedule,JobContext/JobParameters";
-            url = url + "&$select=JobID,JobContextID,AccountID,JobStatus,JobStatusDetails,StartTime,EndTime,CreationTime,LastModifiedTime,LastStatusModifiedTime,JobException,JobContext/RunbookVersion/Runbook/RunbookID,JobContext/RunbookVersion/Runbook/RunbookName,JobContext/Schedule/Name,JobContext/JobParameters";
             if (parameters.SkipToken != null)
             {
                 url = url + "&$skiptoken=" + Uri.EscapeDataString(parameters.SkipToken);
@@ -4282,7 +4276,6 @@ namespace Microsoft.Azure.Management.Automation
                 url = url + "$filter=" + "JobContext/RunbookVersion/IsDraft eq false and EndTime le datetime'" + Uri.EscapeDataString(parameters.EndTime) + "'";
             }
             url = url + "&$expand=JobContext/RunbookVersion/Runbook,JobContext/Schedule,JobContext/JobParameters";
-            url = url + "&$select=JobID,JobContextID,AccountID,JobStatus,JobStatusDetails,StartTime,EndTime,CreationTime,LastModifiedTime,LastStatusModifiedTime,JobException,JobContext/RunbookVersion/Runbook/RunbookID,JobContext/RunbookVersion/Runbook/RunbookName,JobContext/Schedule/Name,JobContext/JobParameters";
             if (parameters.SkipToken != null)
             {
                 url = url + "&$skiptoken=" + Uri.EscapeDataString(parameters.SkipToken);
@@ -4976,7 +4969,6 @@ namespace Microsoft.Azure.Management.Automation
                 url = url + "$filter=" + "JobContext/RunbookVersion/IsDraft eq false and StartTime ge datetime'" + Uri.EscapeDataString(parameters.StartTime) + "'";
             }
             url = url + "&$expand=JobContext/RunbookVersion/Runbook,JobContext/Schedule,JobContext/JobParameters";
-            url = url + "&$select=JobID,JobContextID,AccountID,JobStatus,JobStatusDetails,StartTime,EndTime,CreationTime,LastModifiedTime,LastStatusModifiedTime,JobException,JobContext/RunbookVersion/Runbook/RunbookID,JobContext/RunbookVersion/Runbook/RunbookName,JobContext/Schedule/Name,JobContext/JobParameters";
             if (parameters.SkipToken != null)
             {
                 url = url + "&$skiptoken=" + Uri.EscapeDataString(parameters.SkipToken);
@@ -5683,7 +5675,6 @@ namespace Microsoft.Azure.Management.Automation
                 url = url + "EndTime le datetime'" + Uri.EscapeDataString(parameters.EndTime) + "'";
             }
             url = url + "&$expand=JobContext/RunbookVersion/Runbook,JobContext/Schedule,JobContext/JobParameters";
-            url = url + "&$select=JobID,JobContextID,AccountID,JobStatus,JobStatusDetails,StartTime,EndTime,CreationTime,LastModifiedTime,LastStatusModifiedTime,JobException,JobContext/RunbookVersion/Runbook/RunbookID,JobContext/RunbookVersion/Runbook/RunbookName,JobContext/Schedule/Name,JobContext/JobParameters";
             if (parameters.SkipToken != null)
             {
                 url = url + "&$skiptoken=" + Uri.EscapeDataString(parameters.SkipToken);

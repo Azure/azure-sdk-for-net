@@ -15,9 +15,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Web;
 
 namespace Microsoft.Azure.Insights.Models
 {
@@ -37,7 +35,7 @@ namespace Microsoft.Azure.Insights.Models
         /// <param name="startTime">start time</param>
         /// <param name="endTime">end time</param>
         /// <returns>the event count summary response</returns>
-        public EventStatusCountSummaryItemCollection CreateCrossResourceEventStatusCountSummary(DateTime startTime, DateTime endTime)
+        public EventStatusCountSummaryItemCollection AggregateSummary(DateTime startTime, DateTime endTime)
         {
             int expectedNumberOfItems = (int)((endTime - startTime).Ticks / SupportedTimeGrain.Ticks) + 1;
 
