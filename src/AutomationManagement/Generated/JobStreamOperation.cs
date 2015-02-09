@@ -115,18 +115,38 @@ namespace Microsoft.Azure.Management.Automation
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + Uri.EscapeDataString(automationAccount) + "/JobStreams/GetStreamItems?";
-            url = url + "jobId='" + Uri.EscapeDataString(parameters.JobId) + "'";
-            url = url + "&streamsCreatedSinceDateTime='" + Uri.EscapeDataString(parameters.StartTime) + "'";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/cloudservices/OaaSCS/resources/";
+            url = url + "automation";
+            url = url + "/~/Accounts/";
+            url = url + Uri.EscapeDataString(automationAccount);
+            url = url + "/JobStreams/GetStreamItems";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("jobId='" + Uri.EscapeDataString(parameters.JobId) + "'");
+            queryParameters.Add("streamsCreatedSinceDateTime='" + Uri.EscapeDataString(parameters.StartTime) + "'");
+            List<string> odataFilter = new List<string>();
             if (parameters.StreamType != null)
             {
-                url = url + "&$filter=StreamTypeName eq '" + Uri.EscapeDataString(parameters.StreamType) + "'";
+                odataFilter.Add("StreamTypeName eq '" + Uri.EscapeDataString(parameters.StreamType) + "'");
+            }
+            if (odataFilter.Count > 0)
+            {
+                queryParameters.Add("$filter=" + string.Join(null, odataFilter));
             }
             if (parameters.SkipToken != null)
             {
-                url = url + "&$skiptoken=" + Uri.EscapeDataString(parameters.SkipToken);
+                queryParameters.Add("$skiptoken=" + Uri.EscapeDataString(parameters.SkipToken));
             }
-            url = url + "&api-version=2014-03-13_Preview";
+            queryParameters.Add("api-version=2014-03-13_Preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')

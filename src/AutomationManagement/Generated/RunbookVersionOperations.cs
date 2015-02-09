@@ -108,8 +108,23 @@ namespace Microsoft.Azure.Management.Automation
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + Uri.EscapeDataString(automationAccount) + "/RunbookVersions?";
-            url = url + "api-version=2014-03-13_Preview";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/cloudservices/OaaSCS/resources/";
+            url = url + "automation";
+            url = url + "/~/Accounts/";
+            url = url + Uri.EscapeDataString(automationAccount);
+            url = url + "/RunbookVersions";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-03-13_Preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -526,8 +541,25 @@ namespace Microsoft.Azure.Management.Automation
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + Uri.EscapeDataString(automationAccount) + "/RunbookVersions(guid'" + Uri.EscapeDataString(runbookVersionId) + "')?";
-            url = url + "api-version=2014-03-13_Preview";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/cloudservices/OaaSCS/resources/";
+            url = url + "automation";
+            url = url + "/~/Accounts/";
+            url = url + Uri.EscapeDataString(automationAccount);
+            url = url + "/RunbookVersions(guid'";
+            url = url + Uri.EscapeDataString(runbookVersionId);
+            url = url + "')";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-03-13_Preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -940,8 +972,25 @@ namespace Microsoft.Azure.Management.Automation
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + Uri.EscapeDataString(automationAccount) + "/RunbookVersions(guid'" + Uri.EscapeDataString(runbookVersionId) + "')/$value?";
-            url = url + "api-version=2014-03-13_Preview";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/cloudservices/OaaSCS/resources/";
+            url = url + "automation";
+            url = url + "/~/Accounts/";
+            url = url + Uri.EscapeDataString(automationAccount);
+            url = url + "/RunbookVersions(guid'";
+            url = url + Uri.EscapeDataString(runbookVersionId);
+            url = url + "')/$value";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-03-13_Preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1087,11 +1136,36 @@ namespace Microsoft.Azure.Management.Automation
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + Uri.EscapeDataString(automationAccount) + "/RunbookVersions?";
-            bool appendFilter = true;
-            appendFilter = false;
-            url = url + "$filter=" + "(RunbookVersionID eq Runbook/PublishedRunbookVersionID or RunbookVersionID eq Runbook/DraftRunbookVersionID) and RunbookID eq guid'" + Uri.EscapeDataString(runbookId) + "'";
-            url = url + "&api-version=2014-03-13_Preview";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/cloudservices/OaaSCS/resources/";
+            url = url + "automation";
+            url = url + "/~/Accounts/";
+            url = url + Uri.EscapeDataString(automationAccount);
+            url = url + "/RunbookVersions";
+            List<string> queryParameters = new List<string>();
+            List<string> odataFilter = new List<string>();
+            List<string> odataFilter2 = new List<string>();
+            odataFilter2.Add("RunbookVersionID eq Runbook/PublishedRunbookVersionID");
+            odataFilter2.Add("RunbookVersionID eq Runbook/DraftRunbookVersionID");
+            if (odataFilter2.Count > 0)
+            {
+                odataFilter.Add("(" + string.Join(" or ", odataFilter2) + ")");
+            }
+            odataFilter.Add("RunbookID eq guid'" + Uri.EscapeDataString(runbookId) + "'");
+            if (odataFilter.Count > 0)
+            {
+                queryParameters.Add("$filter=" + string.Join(" and ", odataFilter));
+            }
+            queryParameters.Add("api-version=2014-03-13_Preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1515,12 +1589,37 @@ namespace Microsoft.Azure.Management.Automation
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + Uri.EscapeDataString(automationAccount) + "/RunbookVersions?";
-            bool appendFilter = true;
-            appendFilter = false;
-            url = url + "$filter=(RunbookVersionID eq Runbook/PublishedRunbookVersionID or RunbookVersionID eq Runbook/DraftRunbookVersionID) and RunbookID eq guid'" + Uri.EscapeDataString(parameters.RunbookId) + "'";
-            url = url + " and IsDraft eq " + Uri.EscapeDataString(parameters.IsDraft.ToString().ToLower());
-            url = url + "&api-version=2014-03-13_Preview";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/cloudservices/OaaSCS/resources/";
+            url = url + "automation";
+            url = url + "/~/Accounts/";
+            url = url + Uri.EscapeDataString(automationAccount);
+            url = url + "/RunbookVersions";
+            List<string> queryParameters = new List<string>();
+            List<string> odataFilter = new List<string>();
+            List<string> odataFilter2 = new List<string>();
+            odataFilter2.Add("RunbookVersionID eq Runbook/PublishedRunbookVersionID");
+            odataFilter2.Add("RunbookVersionID eq Runbook/DraftRunbookVersionID");
+            if (odataFilter2.Count > 0)
+            {
+                odataFilter.Add("(" + string.Join(" or ", odataFilter2) + ")");
+            }
+            odataFilter.Add("RunbookID eq guid'" + Uri.EscapeDataString(parameters.RunbookId) + "'");
+            odataFilter.Add("IsDraft eq " + Uri.EscapeDataString(parameters.IsDraft.ToString().ToLower()));
+            if (odataFilter.Count > 0)
+            {
+                queryParameters.Add("$filter=" + string.Join(" and ", odataFilter));
+            }
+            queryParameters.Add("api-version=2014-03-13_Preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1953,8 +2052,25 @@ namespace Microsoft.Azure.Management.Automation
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + Uri.EscapeDataString(automationAccount) + "/RunbookVersions(guid'" + Uri.EscapeDataString(parameters.RunbookVersionId) + "')/$value?";
-            url = url + "api-version=2014-03-13_Preview";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/cloudservices/OaaSCS/resources/";
+            url = url + "automation";
+            url = url + "/~/Accounts/";
+            url = url + Uri.EscapeDataString(automationAccount);
+            url = url + "/RunbookVersions(guid'";
+            url = url + Uri.EscapeDataString(parameters.RunbookVersionId);
+            url = url + "')/$value";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-03-13_Preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')

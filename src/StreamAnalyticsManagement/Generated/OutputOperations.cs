@@ -113,8 +113,25 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.StreamAnalytics/streamingjobs/" + Uri.EscapeDataString(jobName) + "/outputs/" + Uri.EscapeDataString(outputName) + "/test?";
-            url = url + "api-version=2014-12-01-preview";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/Microsoft.StreamAnalytics/streamingjobs/";
+            url = url + Uri.EscapeDataString(jobName);
+            url = url + "/outputs/";
+            url = url + Uri.EscapeDataString(outputName);
+            url = url + "/test";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-12-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -349,8 +366,27 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.StreamAnalytics/streamingjobs/" + Uri.EscapeDataString(jobName) + "/outputs/" + (parameters.Output.Name == null ? "" : Uri.EscapeDataString(parameters.Output.Name)) + "?";
-            url = url + "api-version=2014-12-01-preview";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/Microsoft.StreamAnalytics/streamingjobs/";
+            url = url + Uri.EscapeDataString(jobName);
+            url = url + "/outputs/";
+            if (parameters.Output != null && parameters.Output.Name != null)
+            {
+                url = url + Uri.EscapeDataString(parameters.Output.Name);
+            }
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-12-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -955,8 +991,24 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.StreamAnalytics/streamingjobs/" + Uri.EscapeDataString(jobName) + "/outputs/" + Uri.EscapeDataString(outputName) + "?";
-            url = url + "api-version=2014-12-01-preview";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/Microsoft.StreamAnalytics/streamingjobs/";
+            url = url + Uri.EscapeDataString(jobName);
+            url = url + "/outputs/";
+            url = url + Uri.EscapeDataString(outputName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-12-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1387,8 +1439,24 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.StreamAnalytics/streamingjobs/" + Uri.EscapeDataString(jobName) + "/outputs/" + Uri.EscapeDataString(outputName) + "?";
-            url = url + "api-version=2014-12-01-preview";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/Microsoft.StreamAnalytics/streamingjobs/";
+            url = url + Uri.EscapeDataString(jobName);
+            url = url + "/outputs/";
+            url = url + Uri.EscapeDataString(outputName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-12-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1528,8 +1596,24 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.StreamAnalytics/streamingjobs/" + Uri.EscapeDataString(jobName) + "/outputs/" + Uri.EscapeDataString(outputName) + "?";
-            url = url + "api-version=2014-12-01-preview";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/Microsoft.StreamAnalytics/streamingjobs/";
+            url = url + Uri.EscapeDataString(jobName);
+            url = url + "/outputs/";
+            url = url + Uri.EscapeDataString(outputName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-12-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1947,8 +2031,23 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.StreamAnalytics/streamingjobs/" + Uri.EscapeDataString(jobName) + "/outputs?";
-            url = url + "api-version=2014-12-01-preview";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/Microsoft.StreamAnalytics/streamingjobs/";
+            url = url + Uri.EscapeDataString(jobName);
+            url = url + "/outputs";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-12-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -2472,8 +2571,24 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.StreamAnalytics/streamingjobs/" + Uri.EscapeDataString(jobName) + "/outputs/" + Uri.EscapeDataString(outputName) + "?";
-            url = url + "api-version=2014-12-01-preview";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/Microsoft.StreamAnalytics/streamingjobs/";
+            url = url + Uri.EscapeDataString(jobName);
+            url = url + "/outputs/";
+            url = url + Uri.EscapeDataString(outputName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-12-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')

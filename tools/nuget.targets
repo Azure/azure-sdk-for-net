@@ -35,7 +35,7 @@
   
   <!-- Replacing version token dependency. -->
   <Target Name="BuildDynamicNuSpecs"
-          DependsOnTargets="GetGeneratedBuildDate; EnsureBinariesFolderExists">
+          DependsOnTargets="EnsureBinariesFolderExists">
     <!-- First we copy nuspec files to binaries folder -->
     <ItemGroup>
       <NuspecFilesToUpdate Include="%(SdkNuGetPackage.Folder)%(SdkNuGetPackage.Identity).nuspec" />

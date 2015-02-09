@@ -12,7 +12,6 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
-using Microsoft.Azure.Common.Authentication;
 using Microsoft.Azure.Common.Authentication.Models;
 using Microsoft.Azure.Common.Authentication.Properties;
 using System;
@@ -32,7 +31,6 @@ namespace Microsoft.Azure.Common.Authentication.Factories
 
         public ITokenProvider TokenProvider { get; set; }
 
-
         public IAccessToken Authenticate(AzureAccount account, AzureEnvironment environment, string tenant, SecureString password, ShowDialog promptBehavior,
             AzureEnvironment.Endpoint resourceId = AzureEnvironment.Endpoint.ActiveDirectoryServiceEndpointResourceId)
         {
@@ -45,7 +43,7 @@ namespace Microsoft.Azure.Common.Authentication.Factories
         {
             if (context.Subscription == null)
             {
-                throw new ApplicationException(Resources.InvalidCurrentSubscription);
+                throw new ApplicationException(Resources.InvalidDefaultSubscription);
             }
             
             if (context.Account == null)
@@ -57,6 +55,11 @@ namespace Microsoft.Azure.Common.Authentication.Factories
             {
                 var certificate = AzureSession.DataStore.GetCertificate(context.Account.Id);
                 return new CertificateCloudCredentials(context.Subscription.Id.ToString(), certificate);
+            }
+
+            if (context.Account.Type == AzureAccount.AccountType.AccessToken)
+            {
+                return new TokenCloudCredentials(context.Subscription.Id.ToString(), context.Account.Id);
             }
 
             var tenant = context.Subscription.GetPropertyAsArray(AzureSubscription.Property.Tenants)
@@ -78,7 +81,6 @@ namespace Microsoft.Azure.Common.Authentication.Factories
                 throw new ArgumentException(Resources.InvalidSubscriptionState, ex);
             }
         }
-
 
         private AdalConfiguration GetAdalConfiguration(AzureEnvironment environment, string tenantId,
             AzureEnvironment.Endpoint resourceId)

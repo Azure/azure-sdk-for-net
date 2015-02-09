@@ -11,97 +11,21 @@
     <AssemblyName>Microsoft.Azure.Management.Automation</AssemblyName>
     <OutputType>Library</OutputType>
     <RestorePackages>true</RestorePackages>
-    <NuGetPackageImportStamp>0026487c</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>de17033c</NuGetPackageImportStamp>
   </PropertyGroup>
   <Import Project="..\..\tools\Library.Settings.targets" />
   <ItemGroup>
     <Compile Include="Customizations\ResponseWithSkipToken.cs" />
-    <Compile Include="Generated\AutomationManagementClient.cs" />
-    <Compile Include="Generated\AutomationManagementClientExtensions.cs" />
-    <Compile Include="Generated\CloudServiceOperations.cs" />
-    <Compile Include="Generated\CloudServiceOperationsExtensions.cs" />
-    <Compile Include="Generated\IAutomationManagementClient.cs" />
-    <Compile Include="Generated\ICloudServiceOperations.cs" />
-    <Compile Include="Generated\IJobOperations.cs" />
-    <Compile Include="Generated\IJobStreamOperation.cs" />
-    <Compile Include="Generated\IRunbookOperations.cs" />
-    <Compile Include="Generated\IRunbookParameterOperations.cs" />
-    <Compile Include="Generated\IRunbookVersionOperations.cs" />
-    <Compile Include="Generated\IScheduleOperations.cs" />
-    <Compile Include="Generated\JobOperations.cs" />
-    <Compile Include="Generated\JobOperationsExtensions.cs" />
-    <Compile Include="Generated\JobStreamOperation.cs" />
-    <Compile Include="Generated\JobStreamOperationExtensions.cs" />
-    <Compile Include="Generated\Models\AutomationResource.cs" />
-    <Compile Include="Generated\Models\AutomationResourceState.cs" />
-    <Compile Include="Generated\Models\CloudService.cs" />
-    <Compile Include="Generated\Models\CloudServiceListResponse.cs" />
-    <Compile Include="Generated\Models\Job.cs" />
-    <Compile Include="Generated\Models\JobContext.cs" />
-    <Compile Include="Generated\Models\JobGetResponse.cs" />
-    <Compile Include="Generated\Models\JobListByRunbookIdParameters.cs" />
-    <Compile Include="Generated\Models\JobListParameters.cs" />
-    <Compile Include="Generated\Models\JobListResponse.cs" />
-    <Compile Include="Generated\Models\JobParameter.cs" />
-    <Compile Include="Generated\Models\JobStreamItem.cs" />
-    <Compile Include="Generated\Models\JobStreamListStreamItemsParameters.cs" />
-    <Compile Include="Generated\Models\JobStreamListStreamItemsResponse.cs" />
-    <Compile Include="Generated\Models\JobStreamType.cs" />
-    <Compile Include="Generated\Models\NameValuePair.cs" />
-    <Compile Include="Generated\Models\OperationResponseWithSkipToken.cs" />
-    <Compile Include="Generated\Models\ParametersWithSkipToken.cs" />
-    <Compile Include="Generated\Models\Runbook.cs" />
-    <Compile Include="Generated\Models\RunbookCreateScheduleLinkParameters.cs" />
-    <Compile Include="Generated\Models\RunbookCreateScheduleLinkResponse.cs" />
-    <Compile Include="Generated\Models\RunbookDeleteScheduleLinkParameters.cs" />
-    <Compile Include="Generated\Models\RunbookEditResponse.cs" />
-    <Compile Include="Generated\Models\RunbookGetResponse.cs" />
-    <Compile Include="Generated\Models\RunbookListByScheduleNameParameters.cs" />
-    <Compile Include="Generated\Models\RunbookListResponse.cs" />
-    <Compile Include="Generated\Models\RunbookParameter.cs" />
-    <Compile Include="Generated\Models\RunbookParameterListResponse.cs" />
-    <Compile Include="Generated\Models\RunbookPublishParameters.cs" />
-    <Compile Include="Generated\Models\RunbookPublishResponse.cs" />
-    <Compile Include="Generated\Models\RunbookStartParameters.cs" />
-    <Compile Include="Generated\Models\RunbookStartResponse.cs" />
-    <Compile Include="Generated\Models\RunbookUpdateParameters.cs" />
-    <Compile Include="Generated\Models\RunbookVersion.cs" />
-    <Compile Include="Generated\Models\RunbookVersionCreateResponse.cs" />
-    <Compile Include="Generated\Models\RunbookVersionGetResponse.cs" />
-    <Compile Include="Generated\Models\RunbookVersionGetRunbookDefinitionResponse.cs" />
-    <Compile Include="Generated\Models\RunbookVersionListLatestByRunbookIdSlotParameters.cs" />
-    <Compile Include="Generated\Models\RunbookVersionListResponse.cs" />
-    <Compile Include="Generated\Models\RunbookVersionUpdateRunbookDefinitionParameters.cs" />
-    <Compile Include="Generated\Models\Schedule.cs" />
-    <Compile Include="Generated\Models\ScheduleCreateParameters.cs" />
-    <Compile Include="Generated\Models\ScheduleCreateResponse.cs" />
-    <Compile Include="Generated\Models\ScheduleGetResponse.cs" />
-    <Compile Include="Generated\Models\ScheduleListResponse.cs" />
-    <Compile Include="Generated\Models\ScheduleType.cs" />
-    <Compile Include="Generated\Models\ScheduleUpdateParameters.cs" />
-    <Compile Include="Generated\RunbookOperations.cs" />
-    <Compile Include="Generated\RunbookOperationsExtensions.cs" />
-    <Compile Include="Generated\RunbookParameterOperations.cs" />
-    <Compile Include="Generated\RunbookParameterOperationsExtensions.cs" />
-    <Compile Include="Generated\RunbookVersionOperations.cs" />
-    <Compile Include="Generated\RunbookVersionOperationsExtensions.cs" />
-    <Compile Include="Generated\ScheduleOperations.cs" />
-    <Compile Include="Generated\ScheduleOperationsExtensions.cs" />
+    <Compile Include="Generated\**\*.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Customizations\AutomationManagementClient.Customization.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="GenerateCode.props">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Microsoft.Azure.Management.Automation.nuget.proj" />
     <None Include="Microsoft.Azure.Management.Automation.nuspec" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="hyak.xml" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Hyak.Common">
@@ -114,14 +38,4 @@
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(LibraryFxTarget)' == 'portable' " />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(LibraryFxTarget)' != 'portable' " />
   <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
-  <Import Project="GenerateCode.props" />
-  <Import Project="..\..\packages\Hyak.Generator.1.0.5478.27459-prerelease\build\Hyak.Generator.targets" Condition="Exists('..\..\packages\Hyak.Generator.1.0.5478.27459-prerelease\build\Hyak.Generator.targets')" />
-  <Target Name="DoSpecGeneration"  BeforeTargets="BeforeBuild" Condition="'$(GenerateHydraSpecs)' == 'true'">
-    <CallTarget Targets="GenerateCodeFromSpecs" Condition="'$(HydraGeneratorImported)' != ''" />
-    <Error Text="The Hyak code generator package was restored from nuget. Build the project again to do code generation." Condition="Exists('..\..\packages\Hyak.Generator.1.0.5478.27459-prerelease\build\Hyak.Generator.targets') And '$(HydraGeneratorImported)' == ''" />
-    <Warning Text="The Hyak code generation packages are not available. Compilation will be done on existing generated sources." Condition="!Exists('..\..\packages\Hyak.Generator.1.0.5478.27459-prerelease\build\Hyak.Generator.targets')" />
-  </Target>
-  <Target Name="CopyMicrosoftAzureManagementAutomationSpecification" BeforeTargets="GenerateCodeFromSpecs">
-    <Copy SourceFiles="..\..\packages\Microsoft.Azure.Management.Automation.Specification.1.0.5490.26701-prerelease\tools\Microsoft.Azure.Management.Automation.Specification.dll" DestinationFolder="." />
-  </Target>
 </Project>

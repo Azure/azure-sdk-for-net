@@ -12,7 +12,6 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
-using Microsoft.Azure.Common.Authentication;
 using Microsoft.Azure.Common.Authentication.Properties;
 using System;
 using System.IO;
