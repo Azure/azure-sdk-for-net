@@ -48,6 +48,8 @@
                     {IaasClusterDocumentTypes.EmbeddedAzureConfigurationDocument, GenerateAzureDocument(clusterCreateParameters)}
                 }
             };
+
+            iaasCluster.UserTags.Add("Client", string.Format("HDInsight .Net SDK {0}", Assembly.GetExecutingAssembly().GetName().Version.ToString()));
                 
             return iaasCluster;
         }
@@ -202,8 +204,9 @@
 
             if (clusterDetailsFromServer.Errors != null && clusterDetailsFromServer.Errors.Any())
             {
-                //Populate error details with the most recent one. These occur if the deployment workflow errors out
-                clusterDetails.Error = new ClusterErrorStatus(0, clusterDetailsFromServer.Errors.First().ErrorDescription ?? string.Empty, string.Empty);
+                // Populate error details with the most recent one. These occur if the deployment workflow errors out
+                string errorDescription = string.Join(", ", clusterDetailsFromServer.Errors.Select(x => string.Format("{0} : {1}", x.ErrorCode, x.ErrorDescription)));
+                clusterDetails.Error = new ClusterErrorStatus(0, errorDescription, string.Empty);
             }
 
             AzureCsmDocumentManager azureCsmDocumentManager = new AzureCsmDocumentManager(clusterDetailsFromServer.DeploymentDocuments[IaasClusterDocumentTypes.EmbeddedAzureConfigurationDocument]);

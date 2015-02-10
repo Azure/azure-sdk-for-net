@@ -539,14 +539,15 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
 
                     clusterDetails = PayloadConverterIaasClusters.CreateClusterDetailsFromGetClustersResult(clusterFromGetClusterCall);
                 }
-                catch (InvalidExpectedStatusCodeException ie)
+                catch (Exception)
                 {
-                    //if we got a not found back that we means the RP has no record of this cluster. 
-                    //It would happen if one of the basic validations fail, cluster dns name uniqueness
-                    if (ie.ReceivedStatusCode == HttpStatusCode.NotFound)
+                    // Ignore all exceptions. We don't want ListContainers to fail on customers for whatever reason.
+                    // If there is an issue with obtaining details about the cluster, mark the cluster in Error state with a generic error message
+
+                    clusterDetails.State = ClusterState.Error;
+                    if (clusterDetails.Error != null && string.IsNullOrEmpty(clusterDetails.Error.Message))
                     {
-                        //We may sometimes have a record of the cluster on the server, 
-                        //which means we can populate extended error information
+                        clusterDetails.Error.Message = "Unexpected error occurred. Could not retrieve details about the cluster.";
                     }
                 }
             }
