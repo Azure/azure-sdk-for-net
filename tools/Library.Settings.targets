@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <LibraryRoot>$(MsBuildThisFileDirectory)..</LibraryRoot>
+    <LibraryToolsFolder>$(LibraryRoot)\tools</LibraryToolsFolder>
+    <LibraryNugetPackageFolder>$(LibraryRoot)\packages</LibraryNugetPackageFolder>
+    <AssemblyOriginatorKeyFile Condition=" '$(AssemblyOriginatorKeyFile)' == '' ">$(LibraryRoot)\tools\MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Net45-Debug' or '$(Configuration)' == 'Net45-Release'">
+    <LibraryFxTarget>net45</LibraryFxTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Net40-Debug' or '$(Configuration)' == 'Net40-Release'">
+    <LibraryFxTarget>net40</LibraryFxTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Portable-Debug' or '$(Configuration)' == 'Portable-Release' ">
+    <LibraryFxTarget>portable</LibraryFxTarget>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <LibraryFxTarget Condition="'$(LibraryFxTarget)' == ''">net45</LibraryFxTarget>
+  </PropertyGroup>
+  
+  <Import Project="references.$(LibraryFxTarget).props" />  
+  
+  <!--
+  Shared Project properties
+  -->
+  <PropertyGroup>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <DocumentationFile>bin\$(Configuration)\$(AssemblyName).xml</DocumentationFile>
+    <AdditionalBinariesFolder>$(LibraryFxTarget)\</AdditionalBinariesFolder>
+    <!-- TODO: remove 0219 ('appendFilter' is assigned but its value is never used) -->
+    <NoWarn>0219;1591;1573;1570;1573</NoWarn>
+    <CodeAnalysisRuleSet Condition="'$(CodeAnalysisRuleSet)' == ''">AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <SignAssembly>$(CodeSign)</SignAssembly>
+    <DelaySign>$(CodeSign)</DelaySign>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition=" '$(LibraryFxTarget)' == 'net45'" >
+    <LibraryCustomConstants>NET45</LibraryCustomConstants>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition=" '$(CodeSign)' == 'true' " >
+    <LibraryCustomConstants>$(LibraryCustomConstants);CODESIGN</LibraryCustomConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Net45-Debug' or '$(Configuration)' == 'Net40-Debug' or '$(Configuration)' == 'Portable-Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineConstants>DEBUG;TRACE;$(LibraryCustomConstants)</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Net45-Release' or '$(Configuration)' == 'Net40-Release' or '$(Configuration)' == 'Portable-Release' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineConstants>TRACE;$(LibraryCustomConstants)</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition=" '$(LibraryFxTarget)' == 'portable' ">
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Profile102</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(LibraryFxTarget)' == 'net40' ">
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(LibraryFxTarget)' == 'net45' ">
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(LibraryFxTarget)' == 'windows8' ">
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(LibraryFxTarget)' == 'wp80' ">
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{C089C8C0-30E0-4E22-80C0-CE093F111A43};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(LibraryFxTarget)' == 'wpa81' ">
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{C089C8C0-30E0-4E22-80C0-CE093F111A43};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+  </PropertyGroup>
+
+  <Target Name="InformationAboutThisBuild" BeforeTargets="BeforeBuild">
+    <Error Text="The current build type has not been defined." Condition=" '$(LibraryFxTarget)' == '' " />
+    <Message Text="Current build type:            $(LibraryFxTarget)" />
+    <Message Text="TargetFrameworkVersion: $(TargetFrameworkVersion) TargetFrameworkProfile: $(TargetFrameworkProfile)" />
+  </Target>
+
+  <Target Name="CopySdkBinaries" AfterTargets="AfterBuild">
+    <PropertyGroup>
+      <!--Folder where nuget.exe gets xml and pdb files to create the package-->
+      <_ArtifactsDirectory>$(LibraryRoot)\binaries\$(LibraryFxTarget)</_ArtifactsDirectory>
+      <!--
+      Folder where nuget.exe gets dll. If under codesign, we copy to 'unsigned' first, 
+      codesign task will sign it and copy back to  _ArtifactsDirectory. 
+      (Check out the SignBinariesForAFxTarget in build.proj)
+      -->
+      <_BinariesDirectory Condition="'$(CodeSign)' != 'true'">$(_ArtifactsDirectory)</_BinariesDirectory>
+      <_BinariesDirectory Condition="'$(CodeSign)' == 'true'">$(_ArtifactsDirectory)\unsigned\</_BinariesDirectory>
+    </PropertyGroup>
+    <Message Text="Copying assembly files to $(_BinariesDirectory)." />
+    <Message Text="Copying symbols and documentation files to $(_ArtifactsDirectory)." />
+    <MakeDir Directories="$(_BinariesDirectory)" Condition="!Exists($(_BinariesDirectory))" />
+    <Copy SourceFiles="$(ProjectDir)$(OutputPath)$(AssemblyName).xml;$(ProjectDir)$(OutputPath)$(AssemblyName).pdb"
+          DestinationFolder="$(_ArtifactsDirectory)"/>
+    <Copy SourceFiles="$(ProjectDir)$(OutputPath)$(AssemblyName).dll"
+          DestinationFolder="$(_BinariesDirectory)"/>
+  </Target>
+
+  <Target Name="SyncPackageVersions" BeforeTargets="BeforeBuild">
+    <PropertyGroup>
+      <PowerShellExe Condition=" '$(PowerShellExe)'=='' ">%WINDIR%\System32\WindowsPowerShell\v1.0\powershell.exe</PowerShellExe>   
+      <NuSpecSyncScript>$(LibraryRoot)\tools\Sync-NuspecDependencies.ps1</NuSpecSyncScript>	 
+      <ProductSourceFolder Condition="$(ProductSourceFolder) == ''">$(LibraryRoot)$(ProductSourceFolderPath)</ProductSourceFolder>
+    </PropertyGroup>
+
+    <!-- Update all explicit references to dependent versions. -->
+    <Exec Command="$(PowerShellExe) -NonInteractive -ExecutionPolicy bypass -Command &quot;&amp; { &amp;&apos;$(NuSpecSyncScript)&apos; &apos;$(MSBuildProjectDirectory)&apos; -BasePath &apos;$(ProductSourceFolder)&apos; }&quot;" />
+  </Target>
+  
+  <!-- 
+  StyleCop
+  -->
+  <PropertyGroup>
+    <StyleCopMSBuildTargetsFile>$(LibraryNugetPackageFolder)\StyleCop.MSBuild.4.7.47.0\tools\StyleCop.targets</StyleCopMSBuildTargetsFile>
+  </PropertyGroup>
+  <Import Condition="Exists('$(StyleCopMSBuildTargetsFile)')" Project="$(StyleCopMSBuildTargetsFile)" />
+
+  <PropertyGroup>
+    <StyleCopMSBuildMessageMissing>Failed to import StyleCop.MSBuild targets from '$(StyleCopMSBuildTargetsFile)'. The StyleCop.MSBuild package was either missing or incomplete when the project was loaded. Ensure that the package is present and then restart the build. If you are using an IDE (e.g. Visual Studio), reload the project before restarting the build.</StyleCopMSBuildMessageMissing>
+    <StyleCopMSBuildMessagePresent>Failed to import StyleCop.MSBuild targets from '$(StyleCopMSBuildTargetsFile)'. The StyleCop.MSBuild package was either missing or incomplete when the project was loaded (but is now present). To fix this, restart the build. If you are using an IDE (e.g. Visual Studio), reload the project before restarting the build.</StyleCopMSBuildMessagePresent>
+    <StyleCopMSBuildMessageRestore>Failed to import StyleCop.MSBuild targets from '$(StyleCopMSBuildTargetsFile)'. The StyleCop.MSBuild package was either missing or incomplete when the project was loaded. To fix this, restore the package and then restart the build. If you are using an IDE (e.g. Visual Studio), you may need to reload the project before restarting the build. Note that regular NuGet package restore (during build) does not work with this package because the package needs to be present before the project is loaded. If this is an automated build (e.g. CI server), you may want to ensure that the build process restores the StyleCop.MSBuild package before the project is built.</StyleCopMSBuildMessageRestore>
+    <StyleCopMSBuildMessageRestored>Failed to import StyleCop.MSBuild targets from '$(StyleCopMSBuildTargetsFile)'. The StyleCop.MSBuild package was either missing or incomplete when the project was loaded (but is now present). To fix this, restart the build. If you are using an IDE (e.g. Visual Studio), reload the project before restarting the build. Note that when using regular NuGet package restore (during build) the package will not be available for the initial build because the package needs to be present before the project is loaded. If package restore executes successfully in the initial build then the package will be available for subsequent builds. If this is an automated build (e.g. CI server), you may want to ensure that the build process restores the StyleCop.MSBuild package before the initial build.</StyleCopMSBuildMessageRestored>
+  </PropertyGroup>
+
+  <Target Name="StyleCopMSBuildTargetsNotFound">
+    <Warning Condition="!Exists('$(StyleCopMSBuildTargetsFile)') And $(RestorePackages)!=true And $(StyleCopTreatErrorsAsWarnings)!=false" Text="$(StyleCopMSBuildMessageMissing)" />
+    <Warning Condition="Exists('$(StyleCopMSBuildTargetsFile)')  And $(RestorePackages)!=true And $(StyleCopTreatErrorsAsWarnings)!=false" Text="$(StyleCopMSBuildMessagePresent)" />
+    <Warning Condition="!Exists('$(StyleCopMSBuildTargetsFile)') And $(RestorePackages)==true And $(StyleCopTreatErrorsAsWarnings)!=false" Text="$(StyleCopMSBuildMessageRestore)" />
+    <Warning Condition="Exists('$(StyleCopMSBuildTargetsFile)')  And $(RestorePackages)==true And $(StyleCopTreatErrorsAsWarnings)!=false" Text="$(StyleCopMSBuildMessageRestored)" />
+    <Error Condition="!Exists('$(StyleCopMSBuildTargetsFile)') And $(RestorePackages)!=true And $(StyleCopTreatErrorsAsWarnings)==false" Text="$(StyleCopMSBuildMessageMissing)" />
+    <Error Condition="Exists('$(StyleCopMSBuildTargetsFile)')  And $(RestorePackages)!=true And $(StyleCopTreatErrorsAsWarnings)==false" Text="$(StyleCopMSBuildMessagePresent)" />
+    <Error Condition="!Exists('$(StyleCopMSBuildTargetsFile)') And $(RestorePackages)==true And $(StyleCopTreatErrorsAsWarnings)==false" Text="$(StyleCopMSBuildMessageRestore)" />
+    <Error Condition="Exists('$(StyleCopMSBuildTargetsFile)')  And $(RestorePackages)==true And $(StyleCopTreatErrorsAsWarnings)==false" Text="$(StyleCopMSBuildMessageRestored)" />
+  </Target>
+</Project>
