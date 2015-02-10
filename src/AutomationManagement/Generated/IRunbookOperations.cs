@@ -24,139 +24,21 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure;
-using Microsoft.Azure.Management.Automation.Models;
+using Microsoft.WindowsAzure.Management.Automation.Models;
 
-namespace Microsoft.Azure.Management.Automation
+namespace Microsoft.WindowsAzure.Management.Automation
 {
     /// <summary>
     /// Service operation for automation runbooks.  (see
-    /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
-    /// more information)
+    /// http://aka.ms/azureautomationsdk/runbookoperations for more
+    /// information)
     /// </summary>
     public partial interface IRunbookOperations
     {
         /// <summary>
-        /// Create a runbook schedule link.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='automationAccount'>
-        /// The automation account name.
-        /// </param>
-        /// <param name='parameters'>
-        /// The parameters supplied to the create runbook schedule link
-        /// operation.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The response model for the create runbook schedule link operation.
-        /// </returns>
-        Task<RunbookCreateScheduleLinkResponse> CreateScheduleLinkAsync(string automationAccount, RunbookCreateScheduleLinkParameters parameters, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Delete the runbook identified by runbookId.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='automationAccount'>
-        /// The automation account name.
-        /// </param>
-        /// <param name='runbookId'>
-        /// The runbook id.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        Task<AzureOperationResponse> DeleteAsync(string automationAccount, string runbookId, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Delete the runbook schedule link.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='automationAccount'>
-        /// The automation account name.
-        /// </param>
-        /// <param name='parameters'>
-        /// The parameters supplied to the delete runbook schedule link
-        /// operation.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        Task<AzureOperationResponse> DeleteScheduleLinkAsync(string automationAccount, RunbookDeleteScheduleLinkParameters parameters, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Edit the runbook identified by runbookId.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='automationAccount'>
-        /// The automation account name.
-        /// </param>
-        /// <param name='runbookId'>
-        /// The runbook id.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The response model for the edit runbook operation.
-        /// </returns>
-        Task<RunbookEditResponse> EditAsync(string automationAccount, string runbookId, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Retrieve the runbook identified by runbookId.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='automationAccount'>
-        /// The automation account name.
-        /// </param>
-        /// <param name='runbookId'>
-        /// The runbook id.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The response model for the get runbook operation.
-        /// </returns>
-        Task<RunbookGetResponse> GetAsync(string automationAccount, string runbookId, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Retrieve the runbook identified by runbookId.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='automationAccount'>
-        /// The automation account name.
-        /// </param>
-        /// <param name='runbookId'>
-        /// The runbook id.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The response model for the get runbook operation.
-        /// </returns>
-        Task<RunbookGetResponse> GetWithSchedulesAsync(string automationAccount, string runbookId, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Retrieve a list of one runbook identified by runbookName.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
+        /// Retrieve the content of runbook identified by runbook name.  (see
+        /// http://aka.ms/azureautomationsdk/runbookoperations for more
+        /// information)
         /// </summary>
         /// <param name='automationAccount'>
         /// The automation account name.
@@ -168,14 +50,52 @@ namespace Microsoft.Azure.Management.Automation
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response model for the list runbook operation.
+        /// The response model for the runbook content operation.
         /// </returns>
-        Task<RunbookListResponse> ListByNameAsync(string automationAccount, string runbookName, CancellationToken cancellationToken);
+        Task<RunbookContentResponse> ContentAsync(string automationAccount, string runbookName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Retrieve a list of one runbook identified by runbookName.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
+        /// Create the runbook identified by runbook name.  (see
+        /// http://aka.ms/azureautomationsdk/runbookoperations for more
+        /// information)
+        /// </summary>
+        /// <param name='automationAccount'>
+        /// The automation account name.
+        /// </param>
+        /// <param name='parameters'>
+        /// The create parameters for runbook.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response model for the runbook create response.
+        /// </returns>
+        Task<RunbookCreateResponse> CreateAsync(string automationAccount, RunbookCreateParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Create the runbook identified by runbook name.  (see
+        /// http://aka.ms/azureautomationsdk/runbookoperations for more
+        /// information)
+        /// </summary>
+        /// <param name='automationAccount'>
+        /// The automation account name.
+        /// </param>
+        /// <param name='parameters'>
+        /// The create parameters for runbook.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response model for the runbook create response.
+        /// </returns>
+        Task<RunbookCreateResponse> CreateWithDraftAsync(string automationAccount, RunbookCreateDraftParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Delete the runbook by name.  (see
+        /// http://aka.ms/azureautomationsdk/runbookoperations for more
+        /// information)
         /// </summary>
         /// <param name='automationAccount'>
         /// The automation account name.
@@ -187,125 +107,79 @@ namespace Microsoft.Azure.Management.Automation
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response model for the list runbook operation.
-        /// </returns>
-        Task<RunbookListResponse> ListByNameWithSchedulesAsync(string automationAccount, string runbookName, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Retrieve a list of runbooks which run on the schedule.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='automationAccount'>
-        /// The automation account name.
-        /// </param>
-        /// <param name='parameters'>
-        /// The parameters supplied to the list runbook by schedule name
-        /// operation.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The response model for the list runbook operation.
-        /// </returns>
-        Task<RunbookListResponse> ListByScheduleNameAsync(string automationAccount, RunbookListByScheduleNameParameters parameters, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Retrieve a list of runbooks which run on the schedule.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='automationAccount'>
-        /// The automation account name.
-        /// </param>
-        /// <param name='parameters'>
-        /// The parameters supplied to the list runbook by schedule name
-        /// operation.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The response model for the list runbook operation.
-        /// </returns>
-        Task<RunbookListResponse> ListByScheduleNameWithSchedulesAsync(string automationAccount, RunbookListByScheduleNameParameters parameters, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Retrieve a list of runbooks for the given automation account.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='automationAccount'>
-        /// The automation account name.
-        /// </param>
-        /// <param name='skipToken'>
-        /// The skip token.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The response model for the list runbook operation.
-        /// </returns>
-        Task<RunbookListResponse> ListWithSchedulesAsync(string automationAccount, string skipToken, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Publish the runbook identified by runbookId.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='automationAccount'>
-        /// The automation account name.
-        /// </param>
-        /// <param name='parameters'>
-        /// The parameters supplied to the publish runbook operation.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The response model for the publish runbook operation.
-        /// </returns>
-        Task<RunbookPublishResponse> PublishAsync(string automationAccount, RunbookPublishParameters parameters, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Start the runbook identified by runbookId.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='automationAccount'>
-        /// The automation account name.
-        /// </param>
-        /// <param name='parameters'>
-        /// The parameters supplied to the start runbook operation.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The response model for the start runbook operation.
-        /// </returns>
-        Task<RunbookStartResponse> StartAsync(string automationAccount, RunbookStartParameters parameters, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Update the runbook identified by runbookId.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='automationAccount'>
-        /// The automation account name.
-        /// </param>
-        /// <param name='parameters'>
-        /// The parameters supplied to the update runbook operation.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<AzureOperationResponse> UpdateAsync(string automationAccount, RunbookUpdateParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> DeleteAsync(string automationAccount, string runbookName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Retrieve the runbook identified by runbook name.  (see
+        /// http://aka.ms/azureautomationsdk/runbookoperations for more
+        /// information)
+        /// </summary>
+        /// <param name='automationAccount'>
+        /// The automation account name.
+        /// </param>
+        /// <param name='runbookName'>
+        /// The runbook name.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response model for the get runbook operation.
+        /// </returns>
+        Task<RunbookGetResponse> GetAsync(string automationAccount, string runbookName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Retrieve a list of runbooks.  (see
+        /// http://aka.ms/azureautomationsdk/runbookoperations for more
+        /// information)
+        /// </summary>
+        /// <param name='automationAccount'>
+        /// The automation account name.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response model for the list runbook operation.
+        /// </returns>
+        Task<RunbookListResponse> ListAsync(string automationAccount, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Retrieve next list of runbooks.  (see
+        /// http://aka.ms/azureautomationsdk/runbookoperations for more
+        /// information)
+        /// </summary>
+        /// <param name='nextLink'>
+        /// The link to retrieve next set of items.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response model for the list runbook operation.
+        /// </returns>
+        Task<RunbookListResponse> ListNextAsync(string nextLink, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Update the runbook identified by runbook name.  (see
+        /// http://aka.ms/azureautomationsdk/runbookoperations for more
+        /// information)
+        /// </summary>
+        /// <param name='automationAccount'>
+        /// The automation account name.
+        /// </param>
+        /// <param name='parameters'>
+        /// The update parameters for runbook.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response model for the get runbook operation.
+        /// </returns>
+        Task<RunbookGetResponse> UpdateAsync(string automationAccount, RunbookUpdateParameters parameters, CancellationToken cancellationToken);
     }
 }

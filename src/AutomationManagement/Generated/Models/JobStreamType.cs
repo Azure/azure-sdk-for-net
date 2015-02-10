@@ -22,7 +22,7 @@
 using System;
 using System.Linq;
 
-namespace Microsoft.Azure.Management.Automation.Models
+namespace Microsoft.WindowsAzure.Management.Automation.Models
 {
     /// <summary>
     /// The job stream type.
@@ -40,5 +40,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         public const string Debug = "Debug";
         
         public const string Verbose = "Verbose";
+        
+        public const string Any = "Any";
     }
 }

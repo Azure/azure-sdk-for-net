@@ -24,20 +24,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using Hyak.Common;
-using Microsoft.Azure.Management.Automation;
-using Microsoft.Azure.Management.Automation.Models;
+using Microsoft.Azure;
+using Microsoft.WindowsAzure.Management.Automation;
+using Microsoft.WindowsAzure.Management.Automation.Models;
 
-namespace Microsoft.Azure.Management.Automation
+namespace Microsoft.WindowsAzure.Management.Automation
 {
-    /// <summary>
-    /// Definition of cloud service for the automation extension.  (see
-    /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
-    /// more information)
-    /// </summary>
     internal partial class CloudServiceOperations : IServiceOperations<AutomationManagementClient>, ICloudServiceOperations
     {
         /// <summary>
@@ -55,11 +53,744 @@ namespace Microsoft.Azure.Management.Automation
         
         /// <summary>
         /// Gets a reference to the
-        /// Microsoft.Azure.Management.Automation.AutomationManagementClient.
+        /// Microsoft.WindowsAzure.Management.Automation.AutomationManagementClient.
         /// </summary>
         public AutomationManagementClient Client
         {
             get { return this._client; }
+        }
+        
+        /// <summary>
+        /// Create a cloud service.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Create cloud Service operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public async Task<LongRunningOperationStatusResponse> BeginCreateAsync(CloudServiceCreateParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            if (parameters.Description == null)
+            {
+                throw new ArgumentNullException("parameters.Description");
+            }
+            if (parameters.Description.Length > 1024)
+            {
+                throw new ArgumentOutOfRangeException("parameters.Description");
+            }
+            if (parameters.GeoRegion == null)
+            {
+                throw new ArgumentNullException("parameters.GeoRegion");
+            }
+            if (parameters.Label == null)
+            {
+                throw new ArgumentNullException("parameters.Label");
+            }
+            if (parameters.Label.Length > 100)
+            {
+                throw new ArgumentOutOfRangeException("parameters.Label");
+            }
+            if (parameters.Name == null)
+            {
+                throw new ArgumentNullException("parameters.Name");
+            }
+            if (parameters.Name.Length > 100)
+            {
+                throw new ArgumentOutOfRangeException("parameters.Name");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "BeginCreateAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/CloudServices/";
+            url = url + Uri.EscapeDataString(parameters.Name);
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Put;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2013-06-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                XDocument requestDoc = new XDocument();
+                
+                XElement cloudServiceElement = new XElement(XName.Get("CloudService", "http://schemas.microsoft.com/windowsazure"));
+                requestDoc.Add(cloudServiceElement);
+                
+                XElement nameElement = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                cloudServiceElement.Add(nameElement);
+                
+                XElement labelElement = new XElement(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
+                labelElement.Value = parameters.Label;
+                cloudServiceElement.Add(labelElement);
+                
+                XElement descriptionElement = new XElement(XName.Get("Description", "http://schemas.microsoft.com/windowsazure"));
+                descriptionElement.Value = parameters.Description;
+                cloudServiceElement.Add(descriptionElement);
+                
+                XElement geoRegionElement = new XElement(XName.Get("GeoRegion", "http://schemas.microsoft.com/windowsazure"));
+                geoRegionElement.Value = parameters.GeoRegion;
+                cloudServiceElement.Add(geoRegionElement);
+                
+                requestContent = requestDoc.ToString();
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    LongRunningOperationStatusResponse result = null;
+                    // Deserialize Response
+                    result = new LongRunningOperationStatusResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Create a cloud service.
+        /// </summary>
+        /// <param name='clouldServiceName'>
+        /// Required. Cloud service name.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public async Task<LongRunningOperationStatusResponse> BeginDeleteAsync(string clouldServiceName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (clouldServiceName == null)
+            {
+                throw new ArgumentNullException("clouldServiceName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("clouldServiceName", clouldServiceName);
+                TracingAdapter.Enter(invocationId, this, "BeginDeleteAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/CloudServices/";
+            url = url + Uri.EscapeDataString(clouldServiceName);
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Delete;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2013-06-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    LongRunningOperationStatusResponse result = null;
+                    // Deserialize Response
+                    result = new LongRunningOperationStatusResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Create a cloud service.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Create cloud service operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public async Task<LongRunningOperationStatusResponse> CreateAsync(CloudServiceCreateParameters parameters, CancellationToken cancellationToken)
+        {
+            AutomationManagementClient client = this.Client;
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "CreateAsync", tracingParameters);
+            }
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            LongRunningOperationStatusResponse response = await client.CloudServices.BeginCreateAsync(parameters, cancellationToken).ConfigureAwait(false);
+            if (response.Status == OperationStatus.Succeeded)
+            {
+                return response;
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            LongRunningOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 10;
+            if (client.LongRunningOperationInitialTimeout >= 0)
+            {
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
+            }
+            while ((result.Status != OperationStatus.InProgress) == false)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 5;
+                if (client.LongRunningOperationRetryTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
+                }
+            }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            if (result.Status != OperationStatus.Succeeded)
+            {
+                if (result.Error != null)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.Error = new CloudError();
+                    ex.Error.Code = result.Error.Code;
+                    ex.Error.Message = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                else
+                {
+                    CloudException ex = new CloudException("");
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+            }
+            
+            return result;
+        }
+        
+        /// <summary>
+        /// Create a cloud service.
+        /// </summary>
+        /// <param name='clouldServiceName'>
+        /// Required. Cloud service name.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public async Task<LongRunningOperationStatusResponse> DeleteAsync(string clouldServiceName, CancellationToken cancellationToken)
+        {
+            AutomationManagementClient client = this.Client;
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("clouldServiceName", clouldServiceName);
+                TracingAdapter.Enter(invocationId, this, "DeleteAsync", tracingParameters);
+            }
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            LongRunningOperationStatusResponse response = await client.CloudServices.BeginDeleteAsync(clouldServiceName, cancellationToken).ConfigureAwait(false);
+            if (response.Status == OperationStatus.Succeeded)
+            {
+                return response;
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            LongRunningOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 10;
+            if (client.LongRunningOperationInitialTimeout >= 0)
+            {
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
+            }
+            while ((result.Status != OperationStatus.InProgress) == false)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 5;
+                if (client.LongRunningOperationRetryTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
+                }
+            }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            if (result.Status != OperationStatus.Succeeded)
+            {
+                if (result.Error != null)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.Error = new CloudError();
+                    ex.Error.Code = result.Error.Code;
+                    ex.Error.Message = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                else
+                {
+                    CloudException ex = new CloudException("");
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+            }
+            
+            return result;
+        }
+        
+        /// <summary>
+        /// Retrieve a  Cloud services  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='cloudServiceName'>
+        /// Required. Cloud service name.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response model for the get cloud service operation.
+        /// </returns>
+        public async Task<CloudServiceGetResponse> GetAsync(string cloudServiceName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (cloudServiceName == null)
+            {
+                throw new ArgumentNullException("cloudServiceName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("cloudServiceName", cloudServiceName);
+                TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/cloudservices/";
+            url = url + Uri.EscapeDataString(cloudServiceName);
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2013-06-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    CloudServiceGetResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new CloudServiceGetResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement geoLocationElement = responseDoc.Element(XName.Get("GeoLocation", "http://schemas.microsoft.com/windowsazure"));
+                        if (geoLocationElement != null)
+                        {
+                            string geoLocationInstance = geoLocationElement.Value;
+                            result.GeoLocation = geoLocationInstance;
+                        }
+                        
+                        XElement resourcesSequenceElement = responseDoc.Element(XName.Get("Resources", "http://schemas.microsoft.com/windowsazure"));
+                        if (resourcesSequenceElement != null)
+                        {
+                            foreach (XElement resourcesElement in resourcesSequenceElement.Elements(XName.Get("Resource", "http://schemas.microsoft.com/windowsazure")))
+                            {
+                                CloudServiceGetResponse.Resource resourceInstance = new CloudServiceGetResponse.Resource();
+                                result.Resources.Add(resourceInstance);
+                                
+                                XElement resourceProviderNamespaceElement = resourcesElement.Element(XName.Get("ResourceProviderNamespace", "http://schemas.microsoft.com/windowsazure"));
+                                if (resourceProviderNamespaceElement != null)
+                                {
+                                    string resourceProviderNamespaceInstance = resourceProviderNamespaceElement.Value;
+                                    resourceInstance.ResourceProviderNamespace = resourceProviderNamespaceInstance;
+                                }
+                                
+                                XElement typeElement = resourcesElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
+                                if (typeElement != null)
+                                {
+                                    string typeInstance = typeElement.Value;
+                                    resourceInstance.Type = typeInstance;
+                                }
+                                
+                                XElement eTagElement = resourcesElement.Element(XName.Get("ETag", "http://schemas.microsoft.com/windowsazure"));
+                                if (eTagElement != null)
+                                {
+                                    string eTagInstance = eTagElement.Value;
+                                    resourceInstance.ETag = eTagInstance;
+                                }
+                                
+                                XElement schemaVersionElement = resourcesElement.Element(XName.Get("SchemaVersion", "http://schemas.microsoft.com/windowsazure"));
+                                if (schemaVersionElement != null)
+                                {
+                                    string schemaVersionInstance = schemaVersionElement.Value;
+                                    resourceInstance.SchemaVersion = schemaVersionInstance;
+                                }
+                                
+                                XElement nameElement = resourcesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                if (nameElement != null)
+                                {
+                                    string nameInstance = nameElement.Value;
+                                    resourceInstance.Name = nameInstance;
+                                }
+                                
+                                XElement planElement = resourcesElement.Element(XName.Get("Plan", "http://schemas.microsoft.com/windowsazure"));
+                                if (planElement != null)
+                                {
+                                    string planInstance = planElement.Value;
+                                    resourceInstance.Plan = planInstance;
+                                }
+                                
+                                XElement outputItemsSequenceElement = resourcesElement.Element(XName.Get("OutputItems", "http://schemas.microsoft.com/windowsazure"));
+                                if (outputItemsSequenceElement != null)
+                                {
+                                    foreach (XElement outputItemsElement in outputItemsSequenceElement.Elements(XName.Get("OutputItem", "http://schemas.microsoft.com/windowsazure")))
+                                    {
+                                        string outputItemsKey = outputItemsElement.Element(XName.Get("Key", "http://schemas.microsoft.com/windowsazure")).Value;
+                                        string outputItemsValue = outputItemsElement.Element(XName.Get("Value", "http://schemas.microsoft.com/windowsazure")).Value;
+                                        resourceInstance.OutputItems.Add(outputItemsKey, outputItemsValue);
+                                    }
+                                }
+                                
+                                XElement labelElement = resourcesElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
+                                if (labelElement != null)
+                                {
+                                    string labelInstance = labelElement.Value;
+                                    resourceInstance.Label = labelInstance;
+                                }
+                                
+                                XElement intrinsicSettingsElement = resourcesElement.Element(XName.Get("IntrinsicSettings", "http://schemas.microsoft.com/windowsazure"));
+                                if (intrinsicSettingsElement != null)
+                                {
+                                    SubscriptionIntrinsicSettings intrinsicSettingsInstance = new SubscriptionIntrinsicSettings();
+                                    resourceInstance.IntrinsicSettings = intrinsicSettingsInstance;
+                                    
+                                    XElement subscriptionPlanElement = intrinsicSettingsElement.Element(XName.Get("SubscriptionPlan", "http://schemas.microsoft.com/windowsazure"));
+                                    if (subscriptionPlanElement != null)
+                                    {
+                                        string subscriptionPlanInstance = subscriptionPlanElement.Value;
+                                        intrinsicSettingsInstance.SubscriptionPlan = subscriptionPlanInstance;
+                                    }
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
         }
         
         /// <summary>
@@ -258,6 +989,20 @@ namespace Microsoft.Azure.Management.Automation
                                         {
                                             string stateInstance = stateElement.Value;
                                             resourceInstance.State = stateInstance;
+                                        }
+                                        
+                                        XElement intrinsicSettingsElement = resourcesElement.Element(XName.Get("IntrinsicSettings", "http://schemas.microsoft.com/windowsazure"));
+                                        if (intrinsicSettingsElement != null)
+                                        {
+                                            SubscriptionIntrinsicSettings intrinsicSettingsInstance = new SubscriptionIntrinsicSettings();
+                                            resourceInstance.IntrinsicSettings = intrinsicSettingsInstance;
+                                            
+                                            XElement subscriptionPlanElement = intrinsicSettingsElement.Element(XName.Get("SubscriptionPlan", "http://schemas.microsoft.com/windowsazure"));
+                                            if (subscriptionPlanElement != null)
+                                            {
+                                                string subscriptionPlanInstance = subscriptionPlanElement.Value;
+                                                intrinsicSettingsInstance.SubscriptionPlan = subscriptionPlanInstance;
+                                            }
                                         }
                                     }
                                 }

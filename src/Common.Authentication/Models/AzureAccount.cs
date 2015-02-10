@@ -28,7 +28,8 @@ namespace Microsoft.Azure.Common.Authentication.Models
         {
             Certificate,
             User,
-            ServicePrincipal
+            ServicePrincipal,
+            AccessToken
         }
 
         public enum Property

@@ -24,21 +24,71 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure;
-using Microsoft.Azure.Management.Automation;
-using Microsoft.Azure.Management.Automation.Models;
+using Microsoft.WindowsAzure.Management.Automation;
+using Microsoft.WindowsAzure.Management.Automation.Models;
 
-namespace Microsoft.Azure.Management.Automation
+namespace Microsoft.WindowsAzure.Management.Automation
 {
     public static partial class JobOperationsExtensions
     {
         /// <summary>
-        /// Retrieve the job identified by jobId.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
+        /// Create a job of the runbook.  (see
+        /// http://aka.ms/azureautomationsdk/joboperations for more
+        /// information)
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IJobOperations.
+        /// Microsoft.WindowsAzure.Management.Automation.IJobOperations.
+        /// </param>
+        /// <param name='automationAccount'>
+        /// Required. The automation account name.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The parameters supplied to the create job operation.
+        /// </param>
+        /// <returns>
+        /// The response model for the create job operation.
+        /// </returns>
+        public static JobCreateResponse Create(this IJobOperations operations, string automationAccount, JobCreateParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IJobOperations)s).CreateAsync(automationAccount, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Create a job of the runbook.  (see
+        /// http://aka.ms/azureautomationsdk/joboperations for more
+        /// information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Automation.IJobOperations.
+        /// </param>
+        /// <param name='automationAccount'>
+        /// Required. The automation account name.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The parameters supplied to the create job operation.
+        /// </param>
+        /// <returns>
+        /// The response model for the create job operation.
+        /// </returns>
+        public static Task<JobCreateResponse> CreateAsync(this IJobOperations operations, string automationAccount, JobCreateParameters parameters)
+        {
+            return operations.CreateAsync(automationAccount, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Retrieve the job identified by job id.  (see
+        /// http://aka.ms/azureautomationsdk/joboperations for more
+        /// information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Automation.IJobOperations.
         /// </param>
         /// <param name='automationAccount'>
         /// Required. The automation account name.
@@ -49,7 +99,7 @@ namespace Microsoft.Azure.Management.Automation
         /// <returns>
         /// The response model for the get job operation.
         /// </returns>
-        public static JobGetResponse Get(this IJobOperations operations, string automationAccount, string jobId)
+        public static JobGetResponse Get(this IJobOperations operations, string automationAccount, Guid jobId)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -59,13 +109,13 @@ namespace Microsoft.Azure.Management.Automation
         }
         
         /// <summary>
-        /// Retrieve the job identified by jobId.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
+        /// Retrieve the job identified by job id.  (see
+        /// http://aka.ms/azureautomationsdk/joboperations for more
+        /// information)
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IJobOperations.
+        /// Microsoft.WindowsAzure.Management.Automation.IJobOperations.
         /// </param>
         /// <param name='automationAccount'>
         /// Required. The automation account name.
@@ -76,25 +126,125 @@ namespace Microsoft.Azure.Management.Automation
         /// <returns>
         /// The response model for the get job operation.
         /// </returns>
-        public static Task<JobGetResponse> GetAsync(this IJobOperations operations, string automationAccount, string jobId)
+        public static Task<JobGetResponse> GetAsync(this IJobOperations operations, string automationAccount, Guid jobId)
         {
             return operations.GetAsync(automationAccount, jobId, CancellationToken.None);
         }
         
         /// <summary>
-        /// Retrieve a list of jobs.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
+        /// Retrieve the job output identified by job id.  (see
+        /// http://aka.ms/azureautomationsdk/joboperations for more
+        /// information)
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IJobOperations.
+        /// Microsoft.WindowsAzure.Management.Automation.IJobOperations.
+        /// </param>
+        /// <param name='automationAccount'>
+        /// Required. The automation account name.
+        /// </param>
+        /// <param name='jobId'>
+        /// Required. The job id.
+        /// </param>
+        /// <returns>
+        /// The response model for the get job output operation.
+        /// </returns>
+        public static JobGetOutputResponse GetOutput(this IJobOperations operations, string automationAccount, Guid jobId)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IJobOperations)s).GetOutputAsync(automationAccount, jobId);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Retrieve the job output identified by job id.  (see
+        /// http://aka.ms/azureautomationsdk/joboperations for more
+        /// information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Automation.IJobOperations.
+        /// </param>
+        /// <param name='automationAccount'>
+        /// Required. The automation account name.
+        /// </param>
+        /// <param name='jobId'>
+        /// Required. The job id.
+        /// </param>
+        /// <returns>
+        /// The response model for the get job output operation.
+        /// </returns>
+        public static Task<JobGetOutputResponse> GetOutputAsync(this IJobOperations operations, string automationAccount, Guid jobId)
+        {
+            return operations.GetOutputAsync(automationAccount, jobId, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Retrieve the runbook content of the job identified by job id.  (see
+        /// http://aka.ms/azureautomationsdk/joboperations for more
+        /// information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Automation.IJobOperations.
+        /// </param>
+        /// <param name='automationAccount'>
+        /// Required. The automation account name.
+        /// </param>
+        /// <param name='jobId'>
+        /// Required. The job id.
+        /// </param>
+        /// <returns>
+        /// The response model for the get runbook content of the job operation.
+        /// </returns>
+        public static JobGetRunbookContentResponse GetRunbookContent(this IJobOperations operations, string automationAccount, Guid jobId)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IJobOperations)s).GetRunbookContentAsync(automationAccount, jobId);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Retrieve the runbook content of the job identified by job id.  (see
+        /// http://aka.ms/azureautomationsdk/joboperations for more
+        /// information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Automation.IJobOperations.
+        /// </param>
+        /// <param name='automationAccount'>
+        /// Required. The automation account name.
+        /// </param>
+        /// <param name='jobId'>
+        /// Required. The job id.
+        /// </param>
+        /// <returns>
+        /// The response model for the get runbook content of the job operation.
+        /// </returns>
+        public static Task<JobGetRunbookContentResponse> GetRunbookContentAsync(this IJobOperations operations, string automationAccount, Guid jobId)
+        {
+            return operations.GetRunbookContentAsync(automationAccount, jobId, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Retrieve a list of jobs.  (see
+        /// http://aka.ms/azureautomationsdk/joboperations for more
+        /// information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Automation.IJobOperations.
         /// </param>
         /// <param name='automationAccount'>
         /// Required. The automation account name.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The parameters supplied to the list operation.
+        /// Optional. The parameters supplied to the list operation.
         /// </param>
         /// <returns>
         /// The response model for the list job operation.
@@ -110,18 +260,18 @@ namespace Microsoft.Azure.Management.Automation
         
         /// <summary>
         /// Retrieve a list of jobs.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
+        /// http://aka.ms/azureautomationsdk/joboperations for more
+        /// information)
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IJobOperations.
+        /// Microsoft.WindowsAzure.Management.Automation.IJobOperations.
         /// </param>
         /// <param name='automationAccount'>
         /// Required. The automation account name.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The parameters supplied to the list operation.
+        /// Optional. The parameters supplied to the list operation.
         /// </param>
         /// <returns>
         /// The response model for the list job operation.
@@ -132,379 +282,57 @@ namespace Microsoft.Azure.Management.Automation
         }
         
         /// <summary>
-        /// Retrieve a list of jobs of the runbook identified by runbookId.
-        /// (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
+        /// Retrieve next list of jobs.  (see
+        /// http://aka.ms/azureautomationsdk/joboperations for more
+        /// information)
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IJobOperations.
+        /// Microsoft.WindowsAzure.Management.Automation.IJobOperations.
         /// </param>
-        /// <param name='automationAccount'>
-        /// Required. The automation account name.
-        /// </param>
-        /// <param name='parameters'>
-        /// Required. The parameters supplied to the list job by runbook id
-        /// operation.
+        /// <param name='nextLink'>
+        /// Required. The link to retrieve next set of items.
         /// </param>
         /// <returns>
         /// The response model for the list job operation.
         /// </returns>
-        public static JobListResponse ListByRunbookId(this IJobOperations operations, string automationAccount, JobListByRunbookIdParameters parameters)
+        public static JobListResponse ListNext(this IJobOperations operations, string nextLink)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IJobOperations)s).ListByRunbookIdAsync(automationAccount, parameters);
+                return ((IJobOperations)s).ListNextAsync(nextLink);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// Retrieve a list of jobs of the runbook identified by runbookId.
-        /// (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
+        /// Retrieve next list of jobs.  (see
+        /// http://aka.ms/azureautomationsdk/joboperations for more
+        /// information)
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IJobOperations.
+        /// Microsoft.WindowsAzure.Management.Automation.IJobOperations.
         /// </param>
-        /// <param name='automationAccount'>
-        /// Required. The automation account name.
-        /// </param>
-        /// <param name='parameters'>
-        /// Required. The parameters supplied to the list job by runbook id
-        /// operation.
+        /// <param name='nextLink'>
+        /// Required. The link to retrieve next set of items.
         /// </param>
         /// <returns>
         /// The response model for the list job operation.
         /// </returns>
-        public static Task<JobListResponse> ListByRunbookIdAsync(this IJobOperations operations, string automationAccount, JobListByRunbookIdParameters parameters)
+        public static Task<JobListResponse> ListNextAsync(this IJobOperations operations, string nextLink)
         {
-            return operations.ListByRunbookIdAsync(automationAccount, parameters, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// Retrieve a list of jobs of the runbook identified by runbookId.
-        /// (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IJobOperations.
-        /// </param>
-        /// <param name='automationAccount'>
-        /// Required. The automation account name.
-        /// </param>
-        /// <param name='parameters'>
-        /// Required. The parameters supplied to the list job by runbook id
-        /// operation.
-        /// </param>
-        /// <returns>
-        /// The response model for the list job operation.
-        /// </returns>
-        public static JobListResponse ListByRunbookIdFilteredByEndTime(this IJobOperations operations, string automationAccount, JobListByRunbookIdParameters parameters)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IJobOperations)s).ListByRunbookIdFilteredByEndTimeAsync(automationAccount, parameters);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// Retrieve a list of jobs of the runbook identified by runbookId.
-        /// (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IJobOperations.
-        /// </param>
-        /// <param name='automationAccount'>
-        /// Required. The automation account name.
-        /// </param>
-        /// <param name='parameters'>
-        /// Required. The parameters supplied to the list job by runbook id
-        /// operation.
-        /// </param>
-        /// <returns>
-        /// The response model for the list job operation.
-        /// </returns>
-        public static Task<JobListResponse> ListByRunbookIdFilteredByEndTimeAsync(this IJobOperations operations, string automationAccount, JobListByRunbookIdParameters parameters)
-        {
-            return operations.ListByRunbookIdFilteredByEndTimeAsync(automationAccount, parameters, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// Retrieve a list of jobs of the runbook identified by runbookId.
-        /// (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IJobOperations.
-        /// </param>
-        /// <param name='automationAccount'>
-        /// Required. The automation account name.
-        /// </param>
-        /// <param name='parameters'>
-        /// Required. The parameters supplied to the list job by runbook id
-        /// operation.
-        /// </param>
-        /// <returns>
-        /// The response model for the list job operation.
-        /// </returns>
-        public static JobListResponse ListByRunbookIdFilteredByStartTime(this IJobOperations operations, string automationAccount, JobListByRunbookIdParameters parameters)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IJobOperations)s).ListByRunbookIdFilteredByStartTimeAsync(automationAccount, parameters);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// Retrieve a list of jobs of the runbook identified by runbookId.
-        /// (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IJobOperations.
-        /// </param>
-        /// <param name='automationAccount'>
-        /// Required. The automation account name.
-        /// </param>
-        /// <param name='parameters'>
-        /// Required. The parameters supplied to the list job by runbook id
-        /// operation.
-        /// </param>
-        /// <returns>
-        /// The response model for the list job operation.
-        /// </returns>
-        public static Task<JobListResponse> ListByRunbookIdFilteredByStartTimeAsync(this IJobOperations operations, string automationAccount, JobListByRunbookIdParameters parameters)
-        {
-            return operations.ListByRunbookIdFilteredByStartTimeAsync(automationAccount, parameters, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// Retrieve a list of jobs of the runbook identified by runbookId.
-        /// (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IJobOperations.
-        /// </param>
-        /// <param name='automationAccount'>
-        /// Required. The automation account name.
-        /// </param>
-        /// <param name='parameters'>
-        /// Required. The parameters supplied to the list job by runbook id
-        /// operation.
-        /// </param>
-        /// <returns>
-        /// The response model for the list job operation.
-        /// </returns>
-        public static JobListResponse ListByRunbookIdFilteredByStartTimeEndTime(this IJobOperations operations, string automationAccount, JobListByRunbookIdParameters parameters)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IJobOperations)s).ListByRunbookIdFilteredByStartTimeEndTimeAsync(automationAccount, parameters);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// Retrieve a list of jobs of the runbook identified by runbookId.
-        /// (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IJobOperations.
-        /// </param>
-        /// <param name='automationAccount'>
-        /// Required. The automation account name.
-        /// </param>
-        /// <param name='parameters'>
-        /// Required. The parameters supplied to the list job by runbook id
-        /// operation.
-        /// </param>
-        /// <returns>
-        /// The response model for the list job operation.
-        /// </returns>
-        public static Task<JobListResponse> ListByRunbookIdFilteredByStartTimeEndTimeAsync(this IJobOperations operations, string automationAccount, JobListByRunbookIdParameters parameters)
-        {
-            return operations.ListByRunbookIdFilteredByStartTimeEndTimeAsync(automationAccount, parameters, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// Retrieve a list of jobs.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IJobOperations.
-        /// </param>
-        /// <param name='automationAccount'>
-        /// Required. The automation account name.
-        /// </param>
-        /// <param name='parameters'>
-        /// Required. The parameters supplied to the list operation.
-        /// </param>
-        /// <returns>
-        /// The response model for the list job operation.
-        /// </returns>
-        public static JobListResponse ListFilteredByEndTime(this IJobOperations operations, string automationAccount, JobListParameters parameters)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IJobOperations)s).ListFilteredByEndTimeAsync(automationAccount, parameters);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// Retrieve a list of jobs.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IJobOperations.
-        /// </param>
-        /// <param name='automationAccount'>
-        /// Required. The automation account name.
-        /// </param>
-        /// <param name='parameters'>
-        /// Required. The parameters supplied to the list operation.
-        /// </param>
-        /// <returns>
-        /// The response model for the list job operation.
-        /// </returns>
-        public static Task<JobListResponse> ListFilteredByEndTimeAsync(this IJobOperations operations, string automationAccount, JobListParameters parameters)
-        {
-            return operations.ListFilteredByEndTimeAsync(automationAccount, parameters, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// Retrieve a list of jobs.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IJobOperations.
-        /// </param>
-        /// <param name='automationAccount'>
-        /// Required. The automation account name.
-        /// </param>
-        /// <param name='parameters'>
-        /// Required. The parameters supplied to the list operation.
-        /// </param>
-        /// <returns>
-        /// The response model for the list job operation.
-        /// </returns>
-        public static JobListResponse ListFilteredByStartTime(this IJobOperations operations, string automationAccount, JobListParameters parameters)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IJobOperations)s).ListFilteredByStartTimeAsync(automationAccount, parameters);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// Retrieve a list of jobs.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IJobOperations.
-        /// </param>
-        /// <param name='automationAccount'>
-        /// Required. The automation account name.
-        /// </param>
-        /// <param name='parameters'>
-        /// Required. The parameters supplied to the list operation.
-        /// </param>
-        /// <returns>
-        /// The response model for the list job operation.
-        /// </returns>
-        public static Task<JobListResponse> ListFilteredByStartTimeAsync(this IJobOperations operations, string automationAccount, JobListParameters parameters)
-        {
-            return operations.ListFilteredByStartTimeAsync(automationAccount, parameters, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// Retrieve a list of jobs.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IJobOperations.
-        /// </param>
-        /// <param name='automationAccount'>
-        /// Required. The automation account name.
-        /// </param>
-        /// <param name='parameters'>
-        /// Required. The parameters supplied to the list operation.
-        /// </param>
-        /// <returns>
-        /// The response model for the list job operation.
-        /// </returns>
-        public static JobListResponse ListFilteredByStartTimeEndTime(this IJobOperations operations, string automationAccount, JobListParameters parameters)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IJobOperations)s).ListFilteredByStartTimeEndTimeAsync(automationAccount, parameters);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// Retrieve a list of jobs.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IJobOperations.
-        /// </param>
-        /// <param name='automationAccount'>
-        /// Required. The automation account name.
-        /// </param>
-        /// <param name='parameters'>
-        /// Required. The parameters supplied to the list operation.
-        /// </param>
-        /// <returns>
-        /// The response model for the list job operation.
-        /// </returns>
-        public static Task<JobListResponse> ListFilteredByStartTimeEndTimeAsync(this IJobOperations operations, string automationAccount, JobListParameters parameters)
-        {
-            return operations.ListFilteredByStartTimeEndTimeAsync(automationAccount, parameters, CancellationToken.None);
+            return operations.ListNextAsync(nextLink, CancellationToken.None);
         }
         
         /// <summary>
         /// Resume the job identified by jobId.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
+        /// http://aka.ms/azureautomationsdk/joboperations for more
+        /// information)
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IJobOperations.
+        /// Microsoft.WindowsAzure.Management.Automation.IJobOperations.
         /// </param>
         /// <param name='automationAccount'>
         /// Required. The automation account name.
@@ -516,7 +344,7 @@ namespace Microsoft.Azure.Management.Automation
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static AzureOperationResponse Resume(this IJobOperations operations, string automationAccount, string jobId)
+        public static AzureOperationResponse Resume(this IJobOperations operations, string automationAccount, Guid jobId)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -527,12 +355,12 @@ namespace Microsoft.Azure.Management.Automation
         
         /// <summary>
         /// Resume the job identified by jobId.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
+        /// http://aka.ms/azureautomationsdk/joboperations for more
+        /// information)
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IJobOperations.
+        /// Microsoft.WindowsAzure.Management.Automation.IJobOperations.
         /// </param>
         /// <param name='automationAccount'>
         /// Required. The automation account name.
@@ -544,19 +372,19 @@ namespace Microsoft.Azure.Management.Automation
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<AzureOperationResponse> ResumeAsync(this IJobOperations operations, string automationAccount, string jobId)
+        public static Task<AzureOperationResponse> ResumeAsync(this IJobOperations operations, string automationAccount, Guid jobId)
         {
             return operations.ResumeAsync(automationAccount, jobId, CancellationToken.None);
         }
         
         /// <summary>
         /// Stop the job identified by jobId.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
+        /// http://aka.ms/azureautomationsdk/joboperations for more
+        /// information)
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IJobOperations.
+        /// Microsoft.WindowsAzure.Management.Automation.IJobOperations.
         /// </param>
         /// <param name='automationAccount'>
         /// Required. The automation account name.
@@ -568,7 +396,7 @@ namespace Microsoft.Azure.Management.Automation
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static AzureOperationResponse Stop(this IJobOperations operations, string automationAccount, string jobId)
+        public static AzureOperationResponse Stop(this IJobOperations operations, string automationAccount, Guid jobId)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -579,12 +407,12 @@ namespace Microsoft.Azure.Management.Automation
         
         /// <summary>
         /// Stop the job identified by jobId.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
+        /// http://aka.ms/azureautomationsdk/joboperations for more
+        /// information)
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IJobOperations.
+        /// Microsoft.WindowsAzure.Management.Automation.IJobOperations.
         /// </param>
         /// <param name='automationAccount'>
         /// Required. The automation account name.
@@ -596,19 +424,19 @@ namespace Microsoft.Azure.Management.Automation
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<AzureOperationResponse> StopAsync(this IJobOperations operations, string automationAccount, string jobId)
+        public static Task<AzureOperationResponse> StopAsync(this IJobOperations operations, string automationAccount, Guid jobId)
         {
             return operations.StopAsync(automationAccount, jobId, CancellationToken.None);
         }
         
         /// <summary>
         /// Suspend the job identified by jobId.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
+        /// http://aka.ms/azureautomationsdk/joboperations for more
+        /// information)
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IJobOperations.
+        /// Microsoft.WindowsAzure.Management.Automation.IJobOperations.
         /// </param>
         /// <param name='automationAccount'>
         /// Required. The automation account name.
@@ -620,7 +448,7 @@ namespace Microsoft.Azure.Management.Automation
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static AzureOperationResponse Suspend(this IJobOperations operations, string automationAccount, string jobId)
+        public static AzureOperationResponse Suspend(this IJobOperations operations, string automationAccount, Guid jobId)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -631,12 +459,12 @@ namespace Microsoft.Azure.Management.Automation
         
         /// <summary>
         /// Suspend the job identified by jobId.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
-        /// for more information)
+        /// http://aka.ms/azureautomationsdk/joboperations for more
+        /// information)
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IJobOperations.
+        /// Microsoft.WindowsAzure.Management.Automation.IJobOperations.
         /// </param>
         /// <param name='automationAccount'>
         /// Required. The automation account name.
@@ -648,7 +476,7 @@ namespace Microsoft.Azure.Management.Automation
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<AzureOperationResponse> SuspendAsync(this IJobOperations operations, string automationAccount, string jobId)
+        public static Task<AzureOperationResponse> SuspendAsync(this IJobOperations operations, string automationAccount, Guid jobId)
         {
             return operations.SuspendAsync(automationAccount, jobId, CancellationToken.None);
         }

@@ -21,145 +21,24 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.Automation.Models;
+using Microsoft.WindowsAzure.Management.Automation.Models;
 
-namespace Microsoft.Azure.Management.Automation.Models
+namespace Microsoft.WindowsAzure.Management.Automation.Models
 {
     /// <summary>
-    /// Definition of the job type.
+    /// Definition of the job.
     /// </summary>
     public partial class Job
     {
-        private string _accountId;
+        private JobProperties _properties;
         
         /// <summary>
-        /// Optional. The account ID of the job.
+        /// Optional. Gets or sets the properties of the job.
         /// </summary>
-        public string AccountId
+        public JobProperties Properties
         {
-            get { return this._accountId; }
-            set { this._accountId = value; }
-        }
-        
-        private JobContext _context;
-        
-        /// <summary>
-        /// Optional. The JobContext of the job.
-        /// </summary>
-        public JobContext Context
-        {
-            get { return this._context; }
-            set { this._context = value; }
-        }
-        
-        private string _contextId;
-        
-        /// <summary>
-        /// Optional. The job context ID.
-        /// </summary>
-        public string ContextId
-        {
-            get { return this._contextId; }
-            set { this._contextId = value; }
-        }
-        
-        private DateTime _creationTime;
-        
-        /// <summary>
-        /// Optional. The creation time of the job.
-        /// </summary>
-        public DateTime CreationTime
-        {
-            get { return this._creationTime; }
-            set { this._creationTime = value; }
-        }
-        
-        private System.DateTime? _endTime;
-        
-        /// <summary>
-        /// Optional. The end time of the job.
-        /// </summary>
-        public System.DateTime? EndTime
-        {
-            get { return this._endTime; }
-            set { this._endTime = value; }
-        }
-        
-        private string _exception;
-        
-        /// <summary>
-        /// Optional. The exception of the job.
-        /// </summary>
-        public string Exception
-        {
-            get { return this._exception; }
-            set { this._exception = value; }
-        }
-        
-        private string _id;
-        
-        /// <summary>
-        /// Optional. The job ID.
-        /// </summary>
-        public string Id
-        {
-            get { return this._id; }
-            set { this._id = value; }
-        }
-        
-        private DateTime _lastModifiedTime;
-        
-        /// <summary>
-        /// Optional. The last modified time of the job.
-        /// </summary>
-        public DateTime LastModifiedTime
-        {
-            get { return this._lastModifiedTime; }
-            set { this._lastModifiedTime = value; }
-        }
-        
-        private DateTime _lastStatusModifiedTime;
-        
-        /// <summary>
-        /// Optional. The last time when the job status was modified.
-        /// </summary>
-        public DateTime LastStatusModifiedTime
-        {
-            get { return this._lastStatusModifiedTime; }
-            set { this._lastStatusModifiedTime = value; }
-        }
-        
-        private System.DateTime? _startTime;
-        
-        /// <summary>
-        /// Optional. The start time of the job.
-        /// </summary>
-        public System.DateTime? StartTime
-        {
-            get { return this._startTime; }
-            set { this._startTime = value; }
-        }
-        
-        private string _status;
-        
-        /// <summary>
-        /// Optional. The status of the job.
-        /// </summary>
-        public string Status
-        {
-            get { return this._status; }
-            set { this._status = value; }
-        }
-        
-        private string _statusDetails;
-        
-        /// <summary>
-        /// Optional. The status details of the job.
-        /// </summary>
-        public string StatusDetails
-        {
-            get { return this._statusDetails; }
-            set { this._statusDetails = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>

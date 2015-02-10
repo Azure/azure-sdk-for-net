@@ -103,6 +103,19 @@ namespace Microsoft.Azure.Management.Sql
             get { return this._databases; }
         }
         
+        private IDataMaskingOperations _dataMasking;
+        
+        /// <summary>
+        /// Represents all the operations for operating on Azure SQL Database
+        /// data masking. Contains operations to: Create, Retrieve, Update,
+        /// and Delete data masking rules, as well as Create, Retreive and
+        /// Update data masking policy.
+        /// </summary>
+        public virtual IDataMaskingOperations DataMasking
+        {
+            get { return this._dataMasking; }
+        }
+        
         private IFirewallRuleOperations _firewallRules;
         
         /// <summary>
@@ -146,6 +159,7 @@ namespace Microsoft.Azure.Management.Sql
             : base()
         {
             this._databases = new DatabaseOperations(this);
+            this._dataMasking = new DataMaskingOperations(this);
             this._firewallRules = new FirewallRuleOperations(this);
             this._databaseSecurity = new SecurityOperations(this);
             this._servers = new ServerOperations(this);
@@ -215,6 +229,7 @@ namespace Microsoft.Azure.Management.Sql
             : base(httpClient)
         {
             this._databases = new DatabaseOperations(this);
+            this._dataMasking = new DataMaskingOperations(this);
             this._firewallRules = new FirewallRuleOperations(this);
             this._databaseSecurity = new SecurityOperations(this);
             this._servers = new ServerOperations(this);

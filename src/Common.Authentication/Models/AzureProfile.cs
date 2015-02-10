@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Common.Authentication.Models
         /// <summary>
         /// Gets current Azure context 
         /// </summary>
-        public AzureContext CurrentContext 
+        public AzureContext Context 
         { 
             get
             {
@@ -174,7 +174,7 @@ namespace Microsoft.Azure.Common.Authentication.Models
         {
             if (string.IsNullOrEmpty(path))
             {
-                throw new ArgumentNullException("path");
+                return;
             }
             
             // Removing predefined environments
@@ -183,10 +183,9 @@ namespace Microsoft.Azure.Common.Authentication.Models
                 Environments.Remove(env);
             }
 
-            JsonProfileSerializer jsonSerializer = new JsonProfileSerializer();
             try
             {
-                string contents = jsonSerializer.Serialize(this);
+                string contents = ToString();
                 string diskContents = string.Empty;
                 if (AzureSession.DataStore.FileExists(path))
                 {
@@ -206,6 +205,12 @@ namespace Microsoft.Azure.Common.Authentication.Models
                     Environments[env.Name] = env;
                 }
             }
+        }
+
+        public override string ToString()
+        {
+            JsonProfileSerializer jsonSerializer = new JsonProfileSerializer();
+            return jsonSerializer.Serialize(this);
         }
     }
 }

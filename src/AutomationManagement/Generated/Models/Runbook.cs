@@ -20,195 +20,25 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
-using Microsoft.Azure.Management.Automation.Models;
+using Microsoft.WindowsAzure.Management.Automation.Models;
 
-namespace Microsoft.Azure.Management.Automation.Models
+namespace Microsoft.WindowsAzure.Management.Automation.Models
 {
     /// <summary>
     /// Definition of the runbook type.
     /// </summary>
-    public partial class Runbook
+    public partial class Runbook : ResourceBase
     {
-        private string _accountId;
+        private RunbookProperties _properties;
         
         /// <summary>
-        /// Optional. The account ID of the runbook.
+        /// Optional. Gets or sets the runbook properties.
         /// </summary>
-        public string AccountId
+        public RunbookProperties Properties
         {
-            get { return this._accountId; }
-            set { this._accountId = value; }
-        }
-        
-        private DateTime _creationTime;
-        
-        /// <summary>
-        /// Optional. The creation time of the runbook.
-        /// </summary>
-        public DateTime CreationTime
-        {
-            get { return this._creationTime; }
-            set { this._creationTime = value; }
-        }
-        
-        private string _description;
-        
-        /// <summary>
-        /// Optional. The description of the runbook.
-        /// </summary>
-        public string Description
-        {
-            get { return this._description; }
-            set { this._description = value; }
-        }
-        
-        private string _draftRunbookVersionId;
-        
-        /// <summary>
-        /// Optional. The runbook version ID of the draft runbook.
-        /// </summary>
-        public string DraftRunbookVersionId
-        {
-            get { return this._draftRunbookVersionId; }
-            set { this._draftRunbookVersionId = value; }
-        }
-        
-        private string _id;
-        
-        /// <summary>
-        /// Optional. The runbook ID.
-        /// </summary>
-        public string Id
-        {
-            get { return this._id; }
-            set { this._id = value; }
-        }
-        
-        private bool _isApiOnly;
-        
-        /// <summary>
-        /// Optional. True or false, to indicate whether the runbook is api
-        /// only or not.
-        /// </summary>
-        public bool IsApiOnly
-        {
-            get { return this._isApiOnly; }
-            set { this._isApiOnly = value; }
-        }
-        
-        private bool _isGlobal;
-        
-        /// <summary>
-        /// Optional. True or false, to indicate whether the runbook is global
-        /// or not.
-        /// </summary>
-        public bool IsGlobal
-        {
-            get { return this._isGlobal; }
-            set { this._isGlobal = value; }
-        }
-        
-        private string _lastModifiedBy;
-        
-        /// <summary>
-        /// Optional. The identifier of the user who most recently modified the
-        /// runbook.
-        /// </summary>
-        public string LastModifiedBy
-        {
-            get { return this._lastModifiedBy; }
-            set { this._lastModifiedBy = value; }
-        }
-        
-        private DateTime _lastModifiedTime;
-        
-        /// <summary>
-        /// Optional. The last modified time of the runbook.
-        /// </summary>
-        public DateTime LastModifiedTime
-        {
-            get { return this._lastModifiedTime; }
-            set { this._lastModifiedTime = value; }
-        }
-        
-        private bool _logDebug;
-        
-        /// <summary>
-        /// Optional. True or false, to indicate whether to log debug or not.
-        /// </summary>
-        public bool LogDebug
-        {
-            get { return this._logDebug; }
-            set { this._logDebug = value; }
-        }
-        
-        private bool _logProgress;
-        
-        /// <summary>
-        /// Optional. True or false, to indicate whether to log progress or not.
-        /// </summary>
-        public bool LogProgress
-        {
-            get { return this._logProgress; }
-            set { this._logProgress = value; }
-        }
-        
-        private bool _logVerbose;
-        
-        /// <summary>
-        /// Optional. True or false, to indicate whether to log verbose or not.
-        /// </summary>
-        public bool LogVerbose
-        {
-            get { return this._logVerbose; }
-            set { this._logVerbose = value; }
-        }
-        
-        private string _name;
-        
-        /// <summary>
-        /// Optional. The name of the runbook.
-        /// </summary>
-        public string Name
-        {
-            get { return this._name; }
-            set { this._name = value; }
-        }
-        
-        private string _publishedRunbookVersionId;
-        
-        /// <summary>
-        /// Optional. The runbook version ID of the published runbook.
-        /// </summary>
-        public string PublishedRunbookVersionId
-        {
-            get { return this._publishedRunbookVersionId; }
-            set { this._publishedRunbookVersionId = value; }
-        }
-        
-        private IList<Schedule> _schedules;
-        
-        /// <summary>
-        /// Optional. A list of schedules.
-        /// </summary>
-        public IList<Schedule> Schedules
-        {
-            get { return this._schedules; }
-            set { this._schedules = value; }
-        }
-        
-        private string _tags;
-        
-        /// <summary>
-        /// Optional. The tags of the runbook.
-        /// </summary>
-        public string Tags
-        {
-            get { return this._tags; }
-            set { this._tags = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>
@@ -216,7 +46,6 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         public Runbook()
         {
-            this.Schedules = new LazyList<Schedule>();
         }
     }
 }

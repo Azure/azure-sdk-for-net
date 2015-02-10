@@ -21,10 +21,13 @@
 
 using System;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.Azure;
-using Microsoft.Azure.Management.Automation;
+using Microsoft.WindowsAzure.Management.Automation;
+using Microsoft.WindowsAzure.Management.Automation.Models;
 
-namespace Microsoft.Azure.Management.Automation
+namespace Microsoft.WindowsAzure.Management.Automation
 {
     public partial interface IAutomationManagementClient : IDisposable
     {
@@ -71,19 +74,82 @@ namespace Microsoft.Azure.Management.Automation
         }
         
         /// <summary>
-        /// Definition of cloud service for the automation extension.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
+        /// Gets or sets the resource namespace.
+        /// </summary>
+        string ResourceNamespace
+        {
+            get; set; 
+        }
+        
+        /// <summary>
+        /// Service operation for automation activities.  (see
+        /// http://aka.ms/azureautomationsdk/activityoperations for more
+        /// information)
+        /// </summary>
+        IActivityOperations Activities
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Service operation for automation accounts.  (see
+        /// http://aka.ms/azureautomationsdk/automationaccountoperations for
         /// more information)
         /// </summary>
+        IAutomationAccountOperations AutomationAccounts
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Service operation for automation certificates.  (see
+        /// http://aka.ms/azureautomationsdk/certificateoperations for more
+        /// information)
+        /// </summary>
+        ICertificateOperations Certificates
+        {
+            get; 
+        }
+        
         ICloudServiceOperations CloudServices
         {
             get; 
         }
         
         /// <summary>
+        /// Service operation for automation connections.  (see
+        /// http://aka.ms/azureautomationsdk/connectionoperations for more
+        /// information)
+        /// </summary>
+        IConnectionOperations Connections
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Service operation for automation connectiontypes.  (see
+        /// http://aka.ms/azureautomationsdk/connectiontypeoperations for more
+        /// information)
+        /// </summary>
+        IConnectionTypeOperations ConnectionTypes
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Service operation for automation credentials.  (see
+        /// http://aka.ms/azureautomationsdk/credentialoperations for more
+        /// information)
+        /// </summary>
+        ICredentialOperations PsCredentials
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Service operation for automation jobs.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
-        /// more information)
+        /// http://aka.ms/azureautomationsdk/joboperations for more
+        /// information)
         /// </summary>
         IJobOperations Jobs
         {
@@ -91,19 +157,49 @@ namespace Microsoft.Azure.Management.Automation
         }
         
         /// <summary>
-        /// Service operation for automation stream items.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
-        /// more information)
+        /// Service operation for automation job schedules.  (see
+        /// http://aka.ms/azureautomationsdk/jobscheduleoperations for more
+        /// information)
         /// </summary>
-        IJobStreamOperation JobStreams
+        IJobScheduleOperations JobSchedules
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Service operation for automation job streams.  (see
+        /// http://aka.ms/azureautomationsdk/jobstreamoperations for more
+        /// information)
+        /// </summary>
+        IJobStreamOperations JobStreams
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Service operation for automation modules.  (see
+        /// http://aka.ms/azureautomationsdk/moduleoperations for more
+        /// information)
+        /// </summary>
+        IModuleOperations Modules
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Service operation for automation runbook draft.  (see
+        /// http://aka.ms/azureautomationsdk/runbookdraftoperations for more
+        /// information)
+        /// </summary>
+        IRunbookDraftOperations RunbookDraft
         {
             get; 
         }
         
         /// <summary>
         /// Service operation for automation runbooks.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
-        /// more information)
+        /// http://aka.ms/azureautomationsdk/runbookoperations for more
+        /// information)
         /// </summary>
         IRunbookOperations Runbooks
         {
@@ -111,33 +207,78 @@ namespace Microsoft.Azure.Management.Automation
         }
         
         /// <summary>
-        /// Service operation for automation runbook parameters.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
-        /// more information)
-        /// </summary>
-        IRunbookParameterOperations RunbookParameters
-        {
-            get; 
-        }
-        
-        /// <summary>
-        /// Service operation for automation runbook versions.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
-        /// more information)
-        /// </summary>
-        IRunbookVersionOperations RunbookVersions
-        {
-            get; 
-        }
-        
-        /// <summary>
         /// Service operation for automation schedules.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
-        /// more information)
+        /// http://aka.ms/azureautomationsdk/scheduleoperations for more
+        /// information)
         /// </summary>
         IScheduleOperations Schedules
         {
             get; 
         }
+        
+        /// <summary>
+        /// Service operation for automation test jobs.  (see
+        /// http://aka.ms/azureautomationsdk/testjoboperations for more
+        /// information)
+        /// </summary>
+        ITestJobOperations TestJobs
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Service operation for automation variables.  (see
+        /// http://aka.ms/azureautomationsdk/variableoperations for more
+        /// information)
+        /// </summary>
+        IVariableOperations Variables
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operationStatusLink'>
+        /// Location value returned by the Begin operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        Task<LongRunningOperationResultResponse> GetOperationResultStatusAsync(string operationStatusLink, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Get Operation Status operation returns the status of
+        /// thespecified operation. After calling an asynchronous operation,
+        /// you can call Get Operation Status to determine whether the
+        /// operation has succeeded, failed, or is still in progress.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460783.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='requestId'>
+        /// The request ID for the request you wish to track. The request ID is
+        /// returned in the x-ms-request-id response header for every request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        Task<LongRunningOperationStatusResponse> GetOperationStatusAsync(string requestId, CancellationToken cancellationToken);
     }
 }
