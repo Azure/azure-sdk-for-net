@@ -86,7 +86,7 @@
   -->
   <Import Project="tools\Microsoft.WindowsAzure.Build.msbuild" />
   <UsingTask AssemblyFile="tools\Microsoft.WindowsAzure.Build.Tasks.dll" TaskName="ValidateStrongNameSignatureTask" />
-  <!--<UsingTask AssemblyFile="tools\Microsoft.WindowsAzure.Build.Tasks.dll" TaskName="RegexReplacementTask" />-->
+  <UsingTask AssemblyFile="tools\Microsoft.WindowsAzure.Build.Tasks.dll" TaskName="RegexReplacementTask" />
 
   <!--
   Build tasks (on-premise only)
@@ -572,14 +572,14 @@
     <ItemGroup>
       <AssemblyInfoFilesToUpdate Include="$(ProductSourceFolder)\*\Properties\AssemblyInfo.cs" />
     </ItemGroup>
-    <!--<RegexReplacementTask Files="@(AssemblyInfoFilesToUpdate)"
+    <RegexReplacementTask Files="@(AssemblyInfoFilesToUpdate)"
                           Find="AssemblyFileVersion\(&quot;(?&lt;semver&gt;\d{1,3}\.\d{1,3}\.\d{1,3}).(?&lt;revision&gt;)\d{1,3}&quot;\)"
                           Replace="AssemblyFileVersion(&quot;${semver}.$(GeneratedBuildDate)&quot;)"
-                          LogReplacement="true" /><!
+                          LogReplacement="true" /><!--
                           CONSIDER:
                           A future nice-to-have might be to burn the associated
                           NuGet semver for each assembly along with the build
                           information, but this would require refactoring the
-                          build item groups. -->
+                          build item groups.-->
   </Target>
 </Project>
