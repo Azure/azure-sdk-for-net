@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Hadoop.Avro", "src\HDInsight\Microsoft.Hadoop.Avro\Microsoft.Hadoop.Avro.csproj", "{EAB38A14-211F-4361-A06E-3EC1E07ABE33}"
 EndProject
@@ -40,6 +40,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureLogTool", "src\HDInsight\Tools\AzureStorageLogAnalysis\AzureLogTool.csproj", "{1A818046-55B5-4D6E-9506-A527B7A9A3DB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D2DC56D8-C964-4950-8EA0-53BD26190A10}"
+	ProjectSection(SolutionItems) = preProject
+		src\HDInsight\SharedAssemblyInfo.cs = src\HDInsight\SharedAssemblyInfo.cs
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{14E8819C-AAD3-4111-A469-FC3D424040A7}"
 	ProjectSection(SolutionItems) = preProject
@@ -199,6 +202,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{EAB38A14-211F-4361-A06E-3EC1E07ABE33} = {D2DC56D8-C964-4950-8EA0-53BD26190A10}
 		{1ED444F4-A5ED-43B7-87E1-4BBE111511C9} = {D2DC56D8-C964-4950-8EA0-53BD26190A10}
 		{FFD3590E-FEFA-4057-902A-F6F3677B0BAE} = {D2DC56D8-C964-4950-8EA0-53BD26190A10}
 		{7C2E800C-09E5-484A-BB08-6C17578E7E45} = {D2DC56D8-C964-4950-8EA0-53BD26190A10}
@@ -216,6 +220,5 @@ Global
 		{2222745D-7800-4D1C-8F60-77F9FE3EC956} = {D2DC56D8-C964-4950-8EA0-53BD26190A10}
 		{FA6EC96E-2A3C-40ED-877B-E35D0F9B765E} = {D2DC56D8-C964-4950-8EA0-53BD26190A10}
 		{1A818046-55B5-4D6E-9506-A527B7A9A3DB} = {D2DC56D8-C964-4950-8EA0-53BD26190A10}
-		{EAB38A14-211F-4361-A06E-3EC1E07ABE33} = {D2DC56D8-C964-4950-8EA0-53BD26190A10}
 	EndGlobalSection
 EndGlobal
