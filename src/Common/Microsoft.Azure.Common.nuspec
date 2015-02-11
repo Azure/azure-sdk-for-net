@@ -39,7 +39,7 @@ Supported Portable Library Platforms:
     </references>
     <dependencies>
       <dependency id="Microsoft.Azure.Common.Dependencies" version="__VERSION_Microsoft.Azure.Common.Dependencies__" />
-      <dependency id="Hyak.Common" version="1.0.1" />
+      <dependency id="Hyak.Common" version="1.0.2" />
     </dependencies>
   </metadata>
   <files>
