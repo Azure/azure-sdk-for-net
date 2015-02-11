@@ -16,6 +16,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Data
         private const string ConfigurationsKeyName = "configurations";
         private const string DefaultFileSystemPropertyKeyName = "fs.defaultFS";
         private const string StorageAccountKeyPropertyKeyNamePrefix = "fs.azure.account.key.";
+        private const string DefaultStorageAccountSuffix = "blob.core.windows.net";
 
         public const string CoreConfigurationKeyName = "core-site";
         public const string HdfsConfigurationKeyName = "hdfs-site";
@@ -79,6 +80,11 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Data
                 throw new ArgumentException("storageAccountKey");
             }
 
+            if (!storageAccountName.Contains("."))
+            {
+                storageAccountName = string.Format("{0}.{1}", storageAccountName, DefaultStorageAccountSuffix);
+            }
+
             JObject coreSite = GetOrCreateConfigurationObject(CoreConfigurationKeyName);
 
             coreSite.Add(new JProperty(DefaultFileSystemPropertyKeyName, String.Format("wasb://{0}@{1}", containerName, storageAccountName)));
@@ -95,6 +101,11 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Data
             if (String.IsNullOrEmpty(storageAccountKey))
             {
                 throw new ArgumentException("storageAccountKey");
+            }
+
+            if (!storageAccountName.Contains("."))
+            {
+                storageAccountName = string.Format("{0}.{1}", storageAccountName, DefaultStorageAccountSuffix);
             }
 
             JObject coreSite = GetOrCreateConfigurationObject(CoreConfigurationKeyName);
