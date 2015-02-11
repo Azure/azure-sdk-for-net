@@ -23,6 +23,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="Entries.cs" />
     <Compile Include="ProcDetails.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

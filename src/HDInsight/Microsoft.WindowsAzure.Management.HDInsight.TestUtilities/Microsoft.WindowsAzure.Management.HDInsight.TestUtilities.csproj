@@ -48,6 +48,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="ApplianceTestsBase.cs" />
     <Compile Include="Assert2.cs" />
     <Compile Include="AzureTestCredentials.cs" />

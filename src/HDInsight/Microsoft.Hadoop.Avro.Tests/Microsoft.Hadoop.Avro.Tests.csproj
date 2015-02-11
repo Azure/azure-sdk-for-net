@@ -70,6 +70,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="AvroContainerTests.cs" />
     <Compile Include="AvroSerializerTests.cs" />
     <Compile Include="AvroToolsTests\AvroToolsTests.cs" />

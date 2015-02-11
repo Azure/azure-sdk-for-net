@@ -16,6 +16,9 @@
   </PropertyGroup>
   <Import Project="..\..\..\..\..\tools\Library.Settings.targets" />
   <ItemGroup>
+    <Compile Include="..\..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="Analysis\PerSecondAggregate.cs" />
     <Compile Include="Azure\AzureStructs.cs" />
     <Compile Include="Downloader\LogDownloader.cs" />

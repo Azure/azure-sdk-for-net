@@ -22,6 +22,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="ApplicationHistoryAndLogs\HDInsightApplicationHistoryClient.cs" />
     <Compile Include="ApplicationHistoryAndLogs\IHDInsightApplicationHistoryAsyncClient.cs" />
     <Compile Include="ApplicationHistoryAndLogs\IHDInsightApplicationHistoryClient.cs" />
