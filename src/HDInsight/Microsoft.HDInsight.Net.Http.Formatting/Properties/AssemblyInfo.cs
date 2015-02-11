@@ -8,14 +8,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Microsoft.HDInsight.Net.Http.Formatting")]
-[assembly: AssemblyDescription("")]
-[assembly: AssemblyVersion("1.4.5.0")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Microsoft.HDInsight.Net.Http.Formatting")]
-[assembly: AssemblyCopyright("Copyright (c) Microsoft Corporation")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // The following GUID is for the ID of the typelib if this project is exposed to COM

@@ -23,14 +23,7 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 
 [assembly: AssemblyTitle("UnitTests")]
-[assembly: AssemblyDescription("")]
-[assembly: AssemblyVersion("1.4.5.0")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("UnitTests")]
-[assembly: AssemblyCopyright("Copyright (c) Microsoft Corporation")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
 [assembly: Guid("747ac1a1-4a4d-48c8-be98-f12820e22610")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 

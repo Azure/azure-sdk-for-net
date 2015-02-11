@@ -22,14 +22,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Microsoft.WindowsAzure.Management.HDInsight.Framework.Internal")]
-[assembly: AssemblyDescription("")]
-[assembly: AssemblyVersion("1.4.5.0")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Microsoft.WindowsAzure.Management.HDInsight.Framework.Internal")]
-[assembly: AssemblyCopyright("Copyright (c) Microsoft Corporation")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
 
 [assembly: ComVisible(false)]
 [assembly: CLSCompliant(false)]

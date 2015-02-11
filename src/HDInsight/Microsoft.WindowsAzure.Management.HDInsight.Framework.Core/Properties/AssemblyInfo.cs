@@ -22,14 +22,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Microsoft.WindowsAzure.Management.HDInsight.Framework.Core")]
-[assembly: AssemblyDescription("")]
-[assembly: AssemblyVersion("1.4.5.0")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Microsoft.WindowsAzure.Management.HDInsight.Framework.Core")]
-[assembly: AssemblyCopyright("Copyright (c) Microsoft Corporation")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 

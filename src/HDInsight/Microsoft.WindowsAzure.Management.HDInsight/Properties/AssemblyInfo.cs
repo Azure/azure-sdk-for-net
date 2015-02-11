@@ -23,14 +23,7 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 
 [assembly: AssemblyTitle("Microsoft.Hadoop.WebClient")]
-[assembly: AssemblyDescription("")]
-[assembly: AssemblyVersion("1.4.5.0")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Microsoft.Hadoop.WebClient")]
-[assembly: AssemblyCopyright("Copyright (c) Microsoft 2012")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
 [assembly: Guid("018f9996-42cc-4b94-8206-3353f1689318")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
