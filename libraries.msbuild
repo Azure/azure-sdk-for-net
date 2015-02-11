@@ -86,7 +86,7 @@
   -->
   <Import Project="tools\Microsoft.WindowsAzure.Build.msbuild" />
   <UsingTask AssemblyFile="tools\Microsoft.WindowsAzure.Build.Tasks.dll" TaskName="ValidateStrongNameSignatureTask" />
-  <UsingTask AssemblyFile="tools\Microsoft.WindowsAzure.Build.Tasks.dll" TaskName="RegexReplacementTask" />
+  <!--<UsingTask AssemblyFile="tools\Microsoft.WindowsAzure.Build.Tasks.dll" TaskName="RegexReplacementTask" />-->
 
   <!--
   Build tasks (on-premise only)
