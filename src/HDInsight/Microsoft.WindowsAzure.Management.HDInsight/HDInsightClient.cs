@@ -265,6 +265,18 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         /// <inheritdoc />
         public async Task<ClusterDetails> CreateClusterAsync(ClusterCreateParametersV2 clusterCreateParameters)
         {
+            if (clusterCreateParameters.OSType == OSType.Linux)
+            {
+                return await this.CreateIaasClusterAsync(clusterCreateParameters);
+            }
+            else
+            {
+                return await this.CreatePaasClusterAsync(clusterCreateParameters);
+            }
+        }
+
+        private async Task<ClusterDetails> CreatePaasClusterAsync(ClusterCreateParametersV2 clusterCreateParameters)
+        {
             if (clusterCreateParameters == null)
             {
                 throw new ArgumentNullException("clusterCreateParameters");
@@ -645,23 +657,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
 
         /// <inheritdoc />
         public ClusterDetails CreateCluster(ClusterCreateParameters cluster, TimeSpan timeout)
-        {
-            return this.CreateClusterAsync(new ClusterCreateParametersV2(cluster)).WaitForResult(timeout);
-        }
-
-        public ClusterDetails CreateCluster(ClusterCreateParametersV2 cluster)
-        {
-            if (cluster.OSType == OSType.Linux)
-            {
-                return this.CreateIaasClusterAsync(cluster).WaitForResult();
-            }
-            else
-            {
-                return this.CreateClusterAsync(cluster).WaitForResult();
-            }
-        }
-
-        public ClusterDetails CreateCluster(ClusterCreateParametersV2 cluster, TimeSpan timeout)
         {
             return this.CreateClusterAsync(new ClusterCreateParametersV2(cluster)).WaitForResult(timeout);
         }
