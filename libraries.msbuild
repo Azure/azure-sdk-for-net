@@ -18,6 +18,10 @@
     <ManagementLibrariesProjects Include="$(ProductSourceFolder)\$(MamlProjectName)\*.csproj" Condition="$(MamlProjectName) != ''" />
   </ItemGroup>
 
+  <PropertyGroup>
+    <SDKNuGetPackageVersion>1.4.5</SDKNuGetPackageVersion>
+  </PropertyGroup>
+
   <!-- Developer-specific properties -->
   <Import Project="developer\$(USERNAME)\build.props" Condition="Exists('developer\$(USERNAME)\build.props')" />
 
