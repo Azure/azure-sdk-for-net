@@ -30,6 +30,17 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
     /// </summary>
     public partial class RecoveryPlan : ServiceResourceBase
     {
+        private string _replicationProvider;
+        
+        /// <summary>
+        /// Required. Replication provider.
+        /// </summary>
+        public string ReplicationProvider
+        {
+            get { return this._replicationProvider; }
+            set { this._replicationProvider = value; }
+        }
+        
         private string _serverId;
         
         /// <summary>

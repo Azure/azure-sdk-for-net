@@ -42,6 +42,9 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
         /// <param name='protectionEntityId'>
         /// Protection entity ID.
         /// </param>
+        /// <param name='parameters'>
+        /// Commit failover request.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Request header parameters.
         /// </param>
@@ -51,7 +54,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
         /// <returns>
         /// The response model for the Job details object.
         /// </returns>
-        Task<JobResponse> CommitFailoverAsync(string protectionContainerId, string protectionEntityId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<JobResponse> CommitFailoverAsync(string protectionContainerId, string protectionEntityId, CommitFailoverRequest parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
         /// Disable Protection for the given protection enity.
@@ -82,6 +85,9 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
         /// <param name='protectionEntityId'>
         /// Protection entity ID.
         /// </param>
+        /// <param name='input'>
+        /// Protection entity ID.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Request header parameters.
         /// </param>
@@ -91,7 +97,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
         /// <returns>
         /// The response model for the Job details object.
         /// </returns>
-        Task<JobResponse> EnableProtectionAsync(string protectionContainerId, string protectionEntityId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        Task<JobResponse> EnableProtectionAsync(string protectionContainerId, string protectionEntityId, EnableProtectionInput input, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
         /// Get the protection entity object by Id.
@@ -175,6 +181,26 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
         /// The response model for the Job details object.
         /// </returns>
         Task<JobResponse> ReprotectAsync(string protectionContainerId, string protectionEntityId, ReprotectRequest parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Synchronise Owner Information for the given protection entity.
+        /// </summary>
+        /// <param name='protectionContainerId'>
+        /// Parent Protection Container ID.
+        /// </param>
+        /// <param name='protectionEntityId'>
+        /// Protection entity ID.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response model for the Job details object.
+        /// </returns>
+        Task<JobResponse> SyncOwnerInformationAsync(string protectionContainerId, string protectionEntityId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
         /// Test failover of a protection entity.

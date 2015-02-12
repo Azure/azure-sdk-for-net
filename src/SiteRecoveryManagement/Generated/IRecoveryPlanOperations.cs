@@ -137,6 +137,9 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
         /// <param name='recoveryPlanId'>
         /// RecoveryPlan ID.
         /// </param>
+        /// <param name='parameters'>
+        /// RpPlanned Failover Request.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Request header parameters.
         /// </param>
