@@ -23,6 +23,7 @@
     </references>
     <dependencies>
       <dependency id="Microsoft.Hadoop.Client" />
+      <dependency id="BouncyCastle" version="1.7.0" />
     </dependencies>
   </metadata>
   <files>
