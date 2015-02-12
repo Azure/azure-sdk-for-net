@@ -42,7 +42,12 @@ namespace Microsoft.Azure.Common.Authentication.Models
             /// <summary>
             /// Comma separated list of tenants on this account.
             /// </summary>
-            Tenants
+            Tenants,
+
+            /// <summary>
+            /// Access token.
+            /// </summary>
+            AccessToken
         }
     }
 }
