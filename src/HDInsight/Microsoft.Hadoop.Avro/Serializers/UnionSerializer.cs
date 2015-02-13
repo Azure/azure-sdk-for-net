@@ -12,6 +12,9 @@
 // 
 // See the Apache Version 2.0 License for specific language governing
 // permissions and limitations under the License.
+
+using System.Reflection;
+
 namespace Microsoft.Hadoop.Avro.Serializers
 {
     using System;
@@ -23,6 +26,7 @@ namespace Microsoft.Hadoop.Avro.Serializers
     using System.Collections;
     using System.Collections.Generic;
     using System.Runtime.Serialization;
+    using System.Web.UI.WebControls;
     using Microsoft.Hadoop.Avro.Schema;
 
     /// <summary>
@@ -134,7 +138,8 @@ namespace Microsoft.Hadoop.Avro.Serializers
 
         private Expression BuildUnionSerializer(Expression encoder, Expression value, IList<IndexedSchema> schemas)
         {
-            Expression elseBranch = Expression.Throw(Expression.Constant(new SerializationException(string.Format(CultureInfo.InvariantCulture, "Object type does match any item schema of the union."))));
+            Expression<Func<object, Exception>> messageFunc = objectType => new SerializationException(string.Format("Object type {0} does not match any item schema of the union: {1}", objectType == null ? null : objectType.GetType(), string.Join(",", schemas.Select(s => s.Schema.RuntimeType))));
+            Expression elseBranch = Expression.Throw(Expression.Invoke(messageFunc, value));
             ConditionalExpression conditions = null;
             for (int i = schemas.Count - 1; i >= 0; i--)
             {

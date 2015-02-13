@@ -12,6 +12,9 @@
 // 
 // See the Apache Version 2.0 License for specific language governing
 // permissions and limitations under the License.
+
+using System.Collections.ObjectModel;
+
 namespace Microsoft.Hadoop.Avro.Tests
 {
     using System;
@@ -64,6 +67,11 @@ namespace Microsoft.Hadoop.Avro.Tests
         public static IListClass CreateWithArray()
         {
             return new IListClass { Field1 = new[] { Guid.NewGuid(), Guid.NewGuid() }, Field2 = new List<int> { 12 } };
+        }
+
+        public static IListClass CreateWithCollection()
+        {
+            return new IListClass { Field1 = new Collection<Guid>() { Guid.NewGuid(), Guid.NewGuid() }, Field2 = new Collection<int>() { 12 } };
         }
 
         [ProtoMember(1)]
