@@ -117,6 +117,7 @@
     <Compile Include="TestClasses\TestClassesCollections.cs" />
     <Compile Include="TestClasses\TestClassesForKnownTypes.cs" />
     <Compile Include="TestClasses\TestClassesForSurrogates.cs" />
+    <Compile Include="TypeExtensionsTest.cs" />
     <Compile Include="Utilities.cs" />
     <Compile Include="PerformanceTests.cs" />
     <Compile Include="SequentialContainerTests.cs" />

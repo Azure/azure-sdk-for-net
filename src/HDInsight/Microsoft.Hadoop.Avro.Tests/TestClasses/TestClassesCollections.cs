@@ -58,12 +58,21 @@ namespace Microsoft.Hadoop.Avro.Tests
     {
         public static IListClass Create()
         {
-            return new IListClass { Field1 = new List<Guid> { Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid() } };
+            return new IListClass { Field1 = new List<Guid> { Guid.NewGuid() }, Field2 = new List<int> { 117 } };
+        }
+
+        public static IListClass CreateWithArray()
+        {
+            return new IListClass { Field1 = new[] { Guid.NewGuid(), Guid.NewGuid() }, Field2 = new List<int> { 12 } };
         }
 
         [ProtoMember(1)]
         [DataMember]
         public IList<Guid> Field1 { get; set; }
+
+        [ProtoMember(1)]
+        [DataMember]
+        public IList<int> Field2 { get; set; }
 
         public bool Equals(IListClass other)
         {

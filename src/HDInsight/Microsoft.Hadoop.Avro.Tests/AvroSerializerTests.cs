@@ -240,8 +240,16 @@ namespace Microsoft.Hadoop.Avro.Tests
         [TestCategory("CheckIn")]
         public void Serializer_SerializeIList()
         {
-            var knownTypes = new[] { typeof(List<Guid>) };
+            var knownTypes = new[] { typeof(List<Guid>), typeof(List<int>) };
             RoundTripSerializationWithCheck(IListClass.Create(), new AvroSerializerSettings { KnownTypes = knownTypes });
+        }
+
+        [TestMethod]
+        [TestCategory("CheckIn")]
+        public void Serializer_SerializeIListWithArray()
+        {
+            var knownTypes = new[] { typeof(Guid[]), typeof(List<int>) };
+            RoundTripSerializationWithCheck(IListClass.CreateWithArray(), new AvroSerializerSettings { KnownTypes = knownTypes });
         }
 
         [TestMethod]
