@@ -1902,6 +1902,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 stateElement.Value = resourceExtensionReferencesItem.State;
                                 resourceExtensionReferenceElement.Add(stateElement);
                             }
+                            
+                            if (resourceExtensionReferencesItem.ForceUpdate != null)
+                            {
+                                XElement forceUpdateElement = new XElement(XName.Get("ForceUpdate", "http://schemas.microsoft.com/windowsazure"));
+                                forceUpdateElement.Value = resourceExtensionReferencesItem.ForceUpdate.ToString().ToLower();
+                                resourceExtensionReferenceElement.Add(forceUpdateElement);
+                            }
                         }
                         persistentVMRoleElement.Add(resourceExtensionReferencesSequenceElement);
                     }
@@ -2987,6 +2994,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                         XElement stateElement = new XElement(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
                                         stateElement.Value = resourceExtensionReferencesItem.State;
                                         resourceExtensionReferenceElement.Add(stateElement);
+                                    }
+                                    
+                                    if (resourceExtensionReferencesItem.ForceUpdate != null)
+                                    {
+                                        XElement forceUpdateElement = new XElement(XName.Get("ForceUpdate", "http://schemas.microsoft.com/windowsazure"));
+                                        forceUpdateElement.Value = resourceExtensionReferencesItem.ForceUpdate.ToString().ToLower();
+                                        resourceExtensionReferenceElement.Add(forceUpdateElement);
                                     }
                                 }
                                 roleElement.Add(resourceExtensionReferencesSequenceElement);
@@ -5178,6 +5192,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement stateElement = new XElement(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
                                 stateElement.Value = resourceExtensionReferencesItem.State;
                                 resourceExtensionReferenceElement.Add(stateElement);
+                            }
+                            
+                            if (resourceExtensionReferencesItem.ForceUpdate != null)
+                            {
+                                XElement forceUpdateElement = new XElement(XName.Get("ForceUpdate", "http://schemas.microsoft.com/windowsazure"));
+                                forceUpdateElement.Value = resourceExtensionReferencesItem.ForceUpdate.ToString().ToLower();
+                                resourceExtensionReferenceElement.Add(forceUpdateElement);
                             }
                         }
                         persistentVMRoleElement.Add(resourceExtensionReferencesSequenceElement);

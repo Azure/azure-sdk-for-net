@@ -467,6 +467,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     extensionImageElement.Add(companyNameElement);
                 }
                 
+                if (parameters.Regions != null)
+                {
+                    XElement regionsElement = new XElement(XName.Get("Regions", "http://schemas.microsoft.com/windowsazure"));
+                    regionsElement.Value = parameters.Regions;
+                    extensionImageElement.Add(regionsElement);
+                }
+                
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
@@ -1095,6 +1102,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     XElement companyNameElement = new XElement(XName.Get("CompanyName", "http://schemas.microsoft.com/windowsazure"));
                     companyNameElement.Value = parameters.CompanyName;
                     extensionImageElement.Add(companyNameElement);
+                }
+                
+                if (parameters.Regions != null)
+                {
+                    XElement regionsElement = new XElement(XName.Get("Regions", "http://schemas.microsoft.com/windowsazure"));
+                    regionsElement.Value = parameters.Regions;
+                    extensionImageElement.Add(regionsElement);
                 }
                 
                 requestContent = requestDoc.ToString();

@@ -22,9 +22,9 @@
 using System;
 using System.Linq;
 using Microsoft.Azure;
-using Microsoft.Azure.Management.Automation.Models;
+using Microsoft.WindowsAzure.Management.Automation.Models;
 
-namespace Microsoft.Azure.Management.Automation.Models
+namespace Microsoft.WindowsAzure.Management.Automation.Models
 {
     /// <summary>
     /// The response model for the get job operation.
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         private Job _job;
         
         /// <summary>
-        /// Optional. A job.
+        /// Optional. Gets or sets a job.
         /// </summary>
         public Job Job
         {

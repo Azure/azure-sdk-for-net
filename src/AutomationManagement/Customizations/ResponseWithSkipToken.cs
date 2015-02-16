@@ -15,9 +15,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Azure.Management.Automation.Models;
+using Microsoft.WindowsAzure.Management.Automation.Models;
 
-namespace Microsoft.Azure.Management.Automation
+namespace Microsoft.WindowsAzure.Management.Automation
 {
     /// <summary>
     /// The response with skip token.
