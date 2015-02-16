@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <SDKNuGetPackageVersion>1.4.6</SDKNuGetPackageVersion>
+    <SDKNuGetPackageVersion>1.4.7</SDKNuGetPackageVersion>
     <SDKNuGetPackageVersion Condition="'$(NuGetSuffix)' == 'Nightly'">-Nightly</SDKNuGetPackageVersion>
     <SDKNuGetPackageVersion Condition="'$(NuGetSuffix)' == 'Dev'">-Dev</SDKNuGetPackageVersion>
   </PropertyGroup>
