@@ -137,7 +137,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + "/streams/";
             url = url + Uri.EscapeDataString(jobStreamId);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-12-08");
+            queryParameters.Add("api-version=2015-01-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -383,7 +383,7 @@ namespace Microsoft.Azure.Management.Automation
             {
                 queryParameters.Add("$filter=" + string.Join(" and ", odataFilter));
             }
-            queryParameters.Add("api-version=2014-12-08");
+            queryParameters.Add("api-version=2015-01-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -859,7 +859,7 @@ namespace Microsoft.Azure.Management.Automation
             {
                 queryParameters.Add("$filter=" + string.Join(" and ", odataFilter));
             }
-            queryParameters.Add("api-version=2014-12-08");
+            queryParameters.Add("api-version=2015-01-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);

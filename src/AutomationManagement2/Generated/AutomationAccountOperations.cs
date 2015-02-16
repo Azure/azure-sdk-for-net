@@ -80,17 +80,9 @@ namespace Microsoft.Azure.Management.Automation
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response body contains the status of the specified asynchronous
-        /// operation, indicating whether it has succeeded, is inprogress, or
-        /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
-        /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
-        /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// The response model for the create account operation.
         /// </returns>
-        public async Task<LongRunningOperationStatusResponse> BeginCreateAsync(string resourceGroupName, AutomationAccountCreateParameters parameters, CancellationToken cancellationToken)
+        public async Task<AutomationAccountCreateResponse> CreateAsync(string resourceGroupName, AutomationAccountCreateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -100,14 +92,6 @@ namespace Microsoft.Azure.Management.Automation
             if (parameters == null)
             {
                 throw new ArgumentNullException("parameters");
-            }
-            if (parameters.Name == null)
-            {
-                throw new ArgumentNullException("parameters.Name");
-            }
-            if (parameters.Name.Length > 100)
-            {
-                throw new ArgumentOutOfRangeException("parameters.Name");
             }
             
             // Tracing
@@ -119,7 +103,7 @@ namespace Microsoft.Azure.Management.Automation
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("parameters", parameters);
-                TracingAdapter.Enter(invocationId, this, "BeginCreateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "CreateAsync", tracingParameters);
             }
             
             // Construct URL
@@ -137,7 +121,10 @@ namespace Microsoft.Azure.Management.Automation
                 url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             }
             url = url + "/AutomationAccount/";
-            url = url + Uri.EscapeDataString(parameters.Name);
+            if (parameters.Name != null)
+            {
+                url = url + Uri.EscapeDataString(parameters.Name);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -173,9 +160,6 @@ namespace Microsoft.Azure.Management.Automation
                 XElement resourceElement = new XElement(XName.Get("Resource", "http://schemas.microsoft.com/windowsazure"));
                 requestDoc.Add(resourceElement);
                 
-                XElement nameElement = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                resourceElement.Add(nameElement);
-                
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
@@ -195,7 +179,7 @@ namespace Microsoft.Azure.Management.Automation
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.Accepted)
+                    if (statusCode != HttpStatusCode.Created)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -207,9 +191,9 @@ namespace Microsoft.Azure.Management.Automation
                     }
                     
                     // Create Result
-                    LongRunningOperationStatusResponse result = null;
+                    AutomationAccountCreateResponse result = null;
                     // Deserialize Response
-                    result = new LongRunningOperationStatusResponse();
+                    result = new AutomationAccountCreateResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -254,17 +238,10 @@ namespace Microsoft.Azure.Management.Automation
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response body contains the status of the specified asynchronous
-        /// operation, indicating whether it has succeeded, is inprogress, or
-        /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
-        /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
-        /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        public async Task<LongRunningOperationStatusResponse> BeginDeleteAsync(string resourceGroupName, string automationAccountName, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> DeleteAsync(string resourceGroupName, string automationAccountName, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -285,7 +262,7 @@ namespace Microsoft.Azure.Management.Automation
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("automationAccountName", automationAccountName);
-                TracingAdapter.Enter(invocationId, this, "BeginDeleteAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "DeleteAsync", tracingParameters);
             }
             
             // Construct URL
@@ -347,7 +324,7 @@ namespace Microsoft.Azure.Management.Automation
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.Accepted)
+                    if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -359,9 +336,9 @@ namespace Microsoft.Azure.Management.Automation
                     }
                     
                     // Create Result
-                    LongRunningOperationStatusResponse result = null;
+                    AzureOperationResponse result = null;
                     // Deserialize Response
-                    result = new LongRunningOperationStatusResponse();
+                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -406,19 +383,25 @@ namespace Microsoft.Azure.Management.Automation
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response body contains the status of the specified asynchronous
-        /// operation, indicating whether it has succeeded, is inprogress, or
-        /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
-        /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
-        /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// The response model for the create account operation.
         /// </returns>
-        public async Task<LongRunningOperationStatusResponse> CreateAsync(string resourceGroupName, AutomationAccountCreateParameters parameters, CancellationToken cancellationToken)
+        public async Task<AutomationAccountUpdateResponse> UpdateAsync(string resourceGroupName, AutomationAccountUpdateParameters parameters, CancellationToken cancellationToken)
         {
-            AutomationManagementClient client = this.Client;
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            if (parameters.Properties == null)
+            {
+                throw new ArgumentNullException("parameters.Properties");
+            }
+            
+            // Tracing
             bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
@@ -427,164 +410,124 @@ namespace Microsoft.Azure.Management.Automation
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("parameters", parameters);
-                TracingAdapter.Enter(invocationId, this, "CreateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "UpdateAsync", tracingParameters);
             }
             
-            cancellationToken.ThrowIfCancellationRequested();
-            LongRunningOperationStatusResponse response = await client.AutomationAccounts.BeginCreateAsync(resourceGroupName, parameters, cancellationToken).ConfigureAwait(false);
-            if (response.Status == OperationStatus.Succeeded)
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
             {
-                return response;
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
-            cancellationToken.ThrowIfCancellationRequested();
-            LongRunningOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
-            int delayInSeconds = 10;
-            if (client.LongRunningOperationInitialTimeout >= 0)
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            if (this.Client.ResourceNamespace != null)
             {
-                delayInSeconds = client.LongRunningOperationInitialTimeout;
+                url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             }
-            while ((result.Status != OperationStatus.InProgress) == false)
+            url = url + "/AutomationAccount/";
+            if (parameters.Name != null)
             {
+                url = url + Uri.EscapeDataString(parameters.Name);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = new HttpMethod("PATCH");
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2013-06-01");
+                
+                // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
-                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
-                cancellationToken.ThrowIfCancellationRequested();
-                result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
-                delayInSeconds = 5;
-                if (client.LongRunningOperationRetryTimeout >= 0)
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                XDocument requestDoc = new XDocument();
+                
+                XElement resourceElement = new XElement(XName.Get("Resource", "http://schemas.microsoft.com/windowsazure"));
+                requestDoc.Add(resourceElement);
+                
+                requestContent = requestDoc.ToString();
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
                 {
-                    delayInSeconds = client.LongRunningOperationRetryTimeout;
-                }
-            }
-            
-            if (shouldTrace)
-            {
-                TracingAdapter.Exit(invocationId, result);
-            }
-            
-            if (result.Status != OperationStatus.Succeeded)
-            {
-                if (result.Error != null)
-                {
-                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                    ex.Error = new CloudError();
-                    ex.Error.Code = result.Error.Code;
-                    ex.Error.Message = result.Error.Message;
                     if (shouldTrace)
                     {
-                        TracingAdapter.Error(invocationId, ex);
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
                     }
-                    throw ex;
-                }
-                else
-                {
-                    CloudException ex = new CloudException("");
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                     if (shouldTrace)
                     {
-                        TracingAdapter.Error(invocationId, ex);
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
-                    throw ex;
-                }
-            }
-            
-            return result;
-        }
-        
-        /// <summary>
-        /// Create an automation account.  (see
-        /// http://aka.ms/azureautomationsdk/automationaccountoperations for
-        /// more information)
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group
-        /// </param>
-        /// <param name='automationAccountName'>
-        /// Required. Automation account name.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The response body contains the status of the specified asynchronous
-        /// operation, indicating whether it has succeeded, is inprogress, or
-        /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
-        /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
-        /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
-        /// </returns>
-        public async Task<LongRunningOperationStatusResponse> DeleteAsync(string resourceGroupName, string automationAccountName, CancellationToken cancellationToken)
-        {
-            AutomationManagementClient client = this.Client;
-            bool shouldTrace = TracingAdapter.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = TracingAdapter.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("automationAccountName", automationAccountName);
-                TracingAdapter.Enter(invocationId, this, "DeleteAsync", tracingParameters);
-            }
-            
-            cancellationToken.ThrowIfCancellationRequested();
-            LongRunningOperationStatusResponse response = await client.AutomationAccounts.BeginDeleteAsync(resourceGroupName, automationAccountName, cancellationToken).ConfigureAwait(false);
-            if (response.Status == OperationStatus.Succeeded)
-            {
-                return response;
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            LongRunningOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
-            int delayInSeconds = 10;
-            if (client.LongRunningOperationInitialTimeout >= 0)
-            {
-                delayInSeconds = client.LongRunningOperationInitialTimeout;
-            }
-            while ((result.Status != OperationStatus.InProgress) == false)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
-                cancellationToken.ThrowIfCancellationRequested();
-                result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
-                delayInSeconds = 5;
-                if (client.LongRunningOperationRetryTimeout >= 0)
-                {
-                    delayInSeconds = client.LongRunningOperationRetryTimeout;
-                }
-            }
-            
-            if (shouldTrace)
-            {
-                TracingAdapter.Exit(invocationId, result);
-            }
-            
-            if (result.Status != OperationStatus.Succeeded)
-            {
-                if (result.Error != null)
-                {
-                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                    ex.Error = new CloudError();
-                    ex.Error.Code = result.Error.Code;
-                    ex.Error.Message = result.Error.Message;
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    AutomationAccountUpdateResponse result = null;
+                    // Deserialize Response
+                    result = new AutomationAccountUpdateResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
                     if (shouldTrace)
                     {
-                        TracingAdapter.Error(invocationId, ex);
+                        TracingAdapter.Exit(invocationId, result);
                     }
-                    throw ex;
+                    return result;
                 }
-                else
+                finally
                 {
-                    CloudException ex = new CloudException("");
-                    if (shouldTrace)
+                    if (httpResponse != null)
                     {
-                        TracingAdapter.Error(invocationId, ex);
+                        httpResponse.Dispose();
                     }
-                    throw ex;
                 }
             }
-            
-            return result;
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
         }
     }
 }

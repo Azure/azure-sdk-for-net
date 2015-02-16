@@ -23,6 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Automation.Models;
 
 namespace Microsoft.Azure.Management.Automation
@@ -49,17 +50,9 @@ namespace Microsoft.Azure.Management.Automation
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response body contains the status of the specified asynchronous
-        /// operation, indicating whether it has succeeded, is inprogress, or
-        /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
-        /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
-        /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// The response model for the create account operation.
         /// </returns>
-        Task<LongRunningOperationStatusResponse> BeginCreateAsync(string resourceGroupName, AutomationAccountCreateParameters parameters, CancellationToken cancellationToken);
+        Task<AutomationAccountCreateResponse> CreateAsync(string resourceGroupName, AutomationAccountCreateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Create an automation account.  (see
@@ -76,17 +69,10 @@ namespace Microsoft.Azure.Management.Automation
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response body contains the status of the specified asynchronous
-        /// operation, indicating whether it has succeeded, is inprogress, or
-        /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
-        /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
-        /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        Task<LongRunningOperationStatusResponse> BeginDeleteAsync(string resourceGroupName, string automationAccountName, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> DeleteAsync(string resourceGroupName, string automationAccountName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Create an automation account.  (see
@@ -103,43 +89,8 @@ namespace Microsoft.Azure.Management.Automation
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response body contains the status of the specified asynchronous
-        /// operation, indicating whether it has succeeded, is inprogress, or
-        /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
-        /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
-        /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// The response model for the create account operation.
         /// </returns>
-        Task<LongRunningOperationStatusResponse> CreateAsync(string resourceGroupName, AutomationAccountCreateParameters parameters, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Create an automation account.  (see
-        /// http://aka.ms/azureautomationsdk/automationaccountoperations for
-        /// more information)
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group
-        /// </param>
-        /// <param name='automationAccountName'>
-        /// Automation account name.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The response body contains the status of the specified asynchronous
-        /// operation, indicating whether it has succeeded, is inprogress, or
-        /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
-        /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
-        /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
-        /// </returns>
-        Task<LongRunningOperationStatusResponse> DeleteAsync(string resourceGroupName, string automationAccountName, CancellationToken cancellationToken);
+        Task<AutomationAccountUpdateResponse> UpdateAsync(string resourceGroupName, AutomationAccountUpdateParameters parameters, CancellationToken cancellationToken);
     }
 }

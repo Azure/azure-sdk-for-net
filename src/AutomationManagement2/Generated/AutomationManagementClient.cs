@@ -302,7 +302,7 @@ namespace Microsoft.Azure.Management.Automation
             this._schedules = new ScheduleOperations(this);
             this._testJobs = new TestJobOperations(this);
             this._variables = new VariableOperations(this);
-            this._resourceNamespace = "automation";
+            this._resourceNamespace = "Microsoft.Automation";
             this._apiVersion = "2013-06-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
@@ -383,7 +383,7 @@ namespace Microsoft.Azure.Management.Automation
             this._schedules = new ScheduleOperations(this);
             this._testJobs = new TestJobOperations(this);
             this._variables = new VariableOperations(this);
-            this._resourceNamespace = "automation";
+            this._resourceNamespace = "Microsoft.Automation";
             this._apiVersion = "2013-06-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;

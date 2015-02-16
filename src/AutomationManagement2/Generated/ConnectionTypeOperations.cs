@@ -148,7 +148,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + "/connectionTypes/";
             url = url + Uri.EscapeDataString(parameters.Name);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-12-08");
+            queryParameters.Add("api-version=2015-01-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -435,7 +435,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + "/connectionTypes/";
             url = url + Uri.EscapeDataString(connectionTypeName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-12-08");
+            queryParameters.Add("api-version=2015-01-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -596,7 +596,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + "/connectionTypes/";
             url = url + Uri.EscapeDataString(connectionTypeName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-12-08");
+            queryParameters.Add("api-version=2015-01-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -833,7 +833,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + Uri.EscapeDataString(automationAccount);
             url = url + "/connectionTypes";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-12-08");
+            queryParameters.Add("api-version=2015-01-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);

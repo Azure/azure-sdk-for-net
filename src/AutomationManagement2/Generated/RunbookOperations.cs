@@ -136,7 +136,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + Uri.EscapeDataString(runbookName);
             url = url + "/content";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-12-08");
+            queryParameters.Add("api-version=2015-01-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -315,12 +315,14 @@ namespace Microsoft.Azure.Management.Automation
             {
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
-            url = url + "/cloudservices/OaaSCS/resources/";
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
             if (this.Client.ResourceNamespace != null)
             {
                 url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             }
-            url = url + "/~/automationAccounts/";
+            url = url + "/automationAccounts/";
             url = url + Uri.EscapeDataString(automationAccount);
             url = url + "/runbooks/";
             if (parameters.Name != null)
@@ -328,7 +330,7 @@ namespace Microsoft.Azure.Management.Automation
                 url = url + Uri.EscapeDataString(parameters.Name);
             }
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-12-08");
+            queryParameters.Add("api-version=2015-01-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -573,12 +575,14 @@ namespace Microsoft.Azure.Management.Automation
             {
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
-            url = url + "/cloudservices/OaaSCS/resources/";
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
             if (this.Client.ResourceNamespace != null)
             {
                 url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             }
-            url = url + "/~/automationAccounts/";
+            url = url + "/automationAccounts/";
             url = url + Uri.EscapeDataString(automationAccount);
             url = url + "/runbooks/";
             if (parameters.Name != null)
@@ -586,7 +590,7 @@ namespace Microsoft.Azure.Management.Automation
                 url = url + Uri.EscapeDataString(parameters.Name);
             }
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-12-08");
+            queryParameters.Add("api-version=2015-01-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -860,7 +864,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + "/runbooks/";
             url = url + Uri.EscapeDataString(runbookName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-12-08");
+            queryParameters.Add("api-version=2015-01-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1021,7 +1025,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + "/runbooks/";
             url = url + Uri.EscapeDataString(runbookName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-12-08");
+            queryParameters.Add("api-version=2015-01-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1491,7 +1495,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + Uri.EscapeDataString(automationAccount);
             url = url + "/runbooks";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-12-08");
+            queryParameters.Add("api-version=2015-01-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2448,7 +2452,7 @@ namespace Microsoft.Azure.Management.Automation
                 url = url + Uri.EscapeDataString(parameters.Name);
             }
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-12-08");
+            queryParameters.Add("api-version=2015-01-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);

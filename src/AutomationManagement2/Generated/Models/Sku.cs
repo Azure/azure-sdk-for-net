@@ -21,28 +21,51 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.Automation.Models;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
-    public partial class AutomationAccountCreateParameters : ResourceCreateParameterBase
+    /// <summary>
+    /// The account sku.
+    /// </summary>
+    public partial class Sku
     {
-        private AutomationAccountCreateProperties _properties;
+        private int _capacity;
         
         /// <summary>
-        /// Optional. Gets or sets account create properties.
+        /// Optional. Gets or sets the sku capcity.
         /// </summary>
-        public AutomationAccountCreateProperties Properties
+        public int Capacity
         {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._capacity; }
+            set { this._capacity = value; }
+        }
+        
+        private string _family;
+        
+        /// <summary>
+        /// Optional. Gets or sets the sku family.
+        /// </summary>
+        public string Family
+        {
+            get { return this._family; }
+            set { this._family = value; }
+        }
+        
+        private string _name;
+        
+        /// <summary>
+        /// Optional. Gets or sets the sku name of the account.
+        /// </summary>
+        public string Name
+        {
+            get { return this._name; }
+            set { this._name = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the AutomationAccountCreateParameters
-        /// class.
+        /// Initializes a new instance of the Sku class.
         /// </summary>
-        public AutomationAccountCreateParameters()
+        public Sku()
         {
         }
     }

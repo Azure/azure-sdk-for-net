@@ -142,7 +142,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + "/jobs/";
             url = url + Guid.NewGuid().ToString();
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-12-08");
+            queryParameters.Add("api-version=2015-01-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -470,7 +470,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + "/Jobs/";
             url = url + Uri.EscapeDataString(jobId.ToString());
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-12-08");
+            queryParameters.Add("api-version=2015-01-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -740,7 +740,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + Uri.EscapeDataString(jobId.ToString());
             url = url + "/output";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-12-08");
+            queryParameters.Add("api-version=2015-01-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -915,7 +915,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + Uri.EscapeDataString(jobId.ToString());
             url = url + "/runbook";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-12-08");
+            queryParameters.Add("api-version=2015-01-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1109,7 +1109,7 @@ namespace Microsoft.Azure.Management.Automation
             {
                 queryParameters.Add("$filter=" + string.Join(" and ", odataFilter));
             }
-            queryParameters.Add("api-version=2014-12-08");
+            queryParameters.Add("api-version=2015-01-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1649,7 +1649,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + Uri.EscapeDataString(jobId.ToString());
             url = url + "/resume";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-12-08");
+            queryParameters.Add("api-version=2015-01-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1808,7 +1808,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + Uri.EscapeDataString(jobId.ToString());
             url = url + "/stop";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-12-08");
+            queryParameters.Add("api-version=2015-01-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1967,7 +1967,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + Uri.EscapeDataString(jobId.ToString());
             url = url + "/suspend";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-12-08");
+            queryParameters.Add("api-version=2015-01-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);

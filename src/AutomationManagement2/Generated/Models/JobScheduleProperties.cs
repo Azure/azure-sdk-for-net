@@ -32,12 +32,12 @@ namespace Microsoft.Azure.Management.Automation.Models
     /// </summary>
     public partial class JobScheduleProperties
     {
-        private string _id;
+        private Guid _id;
         
         /// <summary>
         /// Optional. Gets or sets the id of job schedule.
         /// </summary>
-        public string Id
+        public Guid Id
         {
             get { return this._id; }
             set { this._id = value; }

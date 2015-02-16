@@ -25,24 +25,27 @@ using Microsoft.Azure.Management.Automation.Models;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
-    public partial class AutomationAccountCreateParameters : ResourceCreateParameterBase
+    /// <summary>
+    /// The parameters supplied to the update account properties.
+    /// </summary>
+    public partial class AutomationAccountCreateProperties
     {
-        private AutomationAccountCreateProperties _properties;
+        private Sku _sku;
         
         /// <summary>
-        /// Optional. Gets or sets account create properties.
+        /// Optional. Gets or sets account sku.
         /// </summary>
-        public AutomationAccountCreateProperties Properties
+        public Sku Sku
         {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._sku; }
+            set { this._sku = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the AutomationAccountCreateParameters
+        /// Initializes a new instance of the AutomationAccountCreateProperties
         /// class.
         /// </summary>
-        public AutomationAccountCreateParameters()
+        public AutomationAccountCreateProperties()
         {
         }
     }

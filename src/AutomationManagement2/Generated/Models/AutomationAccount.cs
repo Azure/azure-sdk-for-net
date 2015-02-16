@@ -25,24 +25,26 @@ using Microsoft.Azure.Management.Automation.Models;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
-    public partial class AutomationAccountCreateParameters : ResourceCreateParameterBase
+    /// <summary>
+    /// Definition of the automation account type.
+    /// </summary>
+    public partial class AutomationAccount : ResourceBase
     {
-        private AutomationAccountCreateProperties _properties;
+        private AutomationAccountProperties _properties;
         
         /// <summary>
-        /// Optional. Gets or sets account create properties.
+        /// Optional. Gets or sets the automation account properties.
         /// </summary>
-        public AutomationAccountCreateProperties Properties
+        public AutomationAccountProperties Properties
         {
             get { return this._properties; }
             set { this._properties = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the AutomationAccountCreateParameters
-        /// class.
+        /// Initializes a new instance of the AutomationAccount class.
         /// </summary>
-        public AutomationAccountCreateParameters()
+        public AutomationAccount()
         {
         }
     }

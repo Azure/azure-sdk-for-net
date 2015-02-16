@@ -25,25 +25,39 @@ using Microsoft.Azure.Management.Automation.Models;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
-    public partial class AutomationAccountCreateParameters : ResourceCreateParameterBase
+    public partial class AutomationAccountUpdateParameters : ResourceUpdateParameterBase
     {
-        private AutomationAccountCreateProperties _properties;
+        private AutomationAccountUpdateProperties _properties;
         
         /// <summary>
-        /// Optional. Gets or sets account create properties.
+        /// Required. Gets or sets account update properties.
         /// </summary>
-        public AutomationAccountCreateProperties Properties
+        public AutomationAccountUpdateProperties Properties
         {
             get { return this._properties; }
             set { this._properties = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the AutomationAccountCreateParameters
+        /// Initializes a new instance of the AutomationAccountUpdateParameters
         /// class.
         /// </summary>
-        public AutomationAccountCreateParameters()
+        public AutomationAccountUpdateParameters()
         {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the AutomationAccountUpdateParameters
+        /// class with required arguments.
+        /// </summary>
+        public AutomationAccountUpdateParameters(AutomationAccountUpdateProperties properties)
+            : this()
+        {
+            if (properties == null)
+            {
+                throw new ArgumentNullException("properties");
+            }
+            this.Properties = properties;
         }
     }
 }

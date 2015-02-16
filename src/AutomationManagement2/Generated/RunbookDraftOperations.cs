@@ -144,7 +144,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + Uri.EscapeDataString(parameters.Name);
             url = url + "/draft/publish";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-12-08");
+            queryParameters.Add("api-version=2015-01-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -338,7 +338,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + Uri.EscapeDataString(parameters.Name);
             url = url + "/draft/content";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-12-08");
+            queryParameters.Add("api-version=2015-01-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -514,7 +514,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + Uri.EscapeDataString(runbookName);
             url = url + "/draft/content";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-12-08");
+            queryParameters.Add("api-version=2015-01-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -683,7 +683,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + Uri.EscapeDataString(runbookName);
             url = url + "/draft";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-12-08");
+            queryParameters.Add("api-version=2015-01-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1042,7 +1042,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + Uri.EscapeDataString(runbookName);
             url = url + "/draft/undoEdit";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-12-08");
+            queryParameters.Add("api-version=2015-01-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);

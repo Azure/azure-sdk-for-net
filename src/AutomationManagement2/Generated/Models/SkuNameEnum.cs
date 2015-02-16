@@ -21,29 +21,20 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.Automation.Models;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
-    public partial class AutomationAccountCreateParameters : ResourceCreateParameterBase
+    /// <summary>
+    /// The type of sku.
+    /// </summary>
+    public static partial class SkuNameEnum
     {
-        private AutomationAccountCreateProperties _properties;
+        public const string Free = "Free";
         
-        /// <summary>
-        /// Optional. Gets or sets account create properties.
-        /// </summary>
-        public AutomationAccountCreateProperties Properties
-        {
-            get { return this._properties; }
-            set { this._properties = value; }
-        }
+        public const string Basic = "Basic";
         
-        /// <summary>
-        /// Initializes a new instance of the AutomationAccountCreateParameters
-        /// class.
-        /// </summary>
-        public AutomationAccountCreateParameters()
-        {
-        }
+        public const string Standard = "Standard";
+        
+        public const string Premium = "Premium";
     }
 }

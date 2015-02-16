@@ -23,6 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Automation;
 using Microsoft.Azure.Management.Automation.Models;
 
@@ -46,149 +47,9 @@ namespace Microsoft.Azure.Management.Automation
         /// Required. Parameters supplied to the create automation account.
         /// </param>
         /// <returns>
-        /// The response body contains the status of the specified asynchronous
-        /// operation, indicating whether it has succeeded, is inprogress, or
-        /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
-        /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
-        /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// The response model for the create account operation.
         /// </returns>
-        public static LongRunningOperationStatusResponse BeginCreate(this IAutomationAccountOperations operations, string resourceGroupName, AutomationAccountCreateParameters parameters)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IAutomationAccountOperations)s).BeginCreateAsync(resourceGroupName, parameters);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// Create an automation account.  (see
-        /// http://aka.ms/azureautomationsdk/automationaccountoperations for
-        /// more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IAutomationAccountOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group
-        /// </param>
-        /// <param name='parameters'>
-        /// Required. Parameters supplied to the create automation account.
-        /// </param>
-        /// <returns>
-        /// The response body contains the status of the specified asynchronous
-        /// operation, indicating whether it has succeeded, is inprogress, or
-        /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
-        /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
-        /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
-        /// </returns>
-        public static Task<LongRunningOperationStatusResponse> BeginCreateAsync(this IAutomationAccountOperations operations, string resourceGroupName, AutomationAccountCreateParameters parameters)
-        {
-            return operations.BeginCreateAsync(resourceGroupName, parameters, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// Create an automation account.  (see
-        /// http://aka.ms/azureautomationsdk/automationaccountoperations for
-        /// more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IAutomationAccountOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group
-        /// </param>
-        /// <param name='automationAccountName'>
-        /// Required. Automation account name.
-        /// </param>
-        /// <returns>
-        /// The response body contains the status of the specified asynchronous
-        /// operation, indicating whether it has succeeded, is inprogress, or
-        /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
-        /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
-        /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
-        /// </returns>
-        public static LongRunningOperationStatusResponse BeginDelete(this IAutomationAccountOperations operations, string resourceGroupName, string automationAccountName)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IAutomationAccountOperations)s).BeginDeleteAsync(resourceGroupName, automationAccountName);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// Create an automation account.  (see
-        /// http://aka.ms/azureautomationsdk/automationaccountoperations for
-        /// more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IAutomationAccountOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group
-        /// </param>
-        /// <param name='automationAccountName'>
-        /// Required. Automation account name.
-        /// </param>
-        /// <returns>
-        /// The response body contains the status of the specified asynchronous
-        /// operation, indicating whether it has succeeded, is inprogress, or
-        /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
-        /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
-        /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
-        /// </returns>
-        public static Task<LongRunningOperationStatusResponse> BeginDeleteAsync(this IAutomationAccountOperations operations, string resourceGroupName, string automationAccountName)
-        {
-            return operations.BeginDeleteAsync(resourceGroupName, automationAccountName, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// Create an automation account.  (see
-        /// http://aka.ms/azureautomationsdk/automationaccountoperations for
-        /// more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.Automation.IAutomationAccountOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group
-        /// </param>
-        /// <param name='parameters'>
-        /// Required. Parameters supplied to the create automation account.
-        /// </param>
-        /// <returns>
-        /// The response body contains the status of the specified asynchronous
-        /// operation, indicating whether it has succeeded, is inprogress, or
-        /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
-        /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
-        /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
-        /// </returns>
-        public static LongRunningOperationStatusResponse Create(this IAutomationAccountOperations operations, string resourceGroupName, AutomationAccountCreateParameters parameters)
+        public static AutomationAccountCreateResponse Create(this IAutomationAccountOperations operations, string resourceGroupName, AutomationAccountCreateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -213,17 +74,9 @@ namespace Microsoft.Azure.Management.Automation
         /// Required. Parameters supplied to the create automation account.
         /// </param>
         /// <returns>
-        /// The response body contains the status of the specified asynchronous
-        /// operation, indicating whether it has succeeded, is inprogress, or
-        /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
-        /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
-        /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// The response model for the create account operation.
         /// </returns>
-        public static Task<LongRunningOperationStatusResponse> CreateAsync(this IAutomationAccountOperations operations, string resourceGroupName, AutomationAccountCreateParameters parameters)
+        public static Task<AutomationAccountCreateResponse> CreateAsync(this IAutomationAccountOperations operations, string resourceGroupName, AutomationAccountCreateParameters parameters)
         {
             return operations.CreateAsync(resourceGroupName, parameters, CancellationToken.None);
         }
@@ -244,17 +97,10 @@ namespace Microsoft.Azure.Management.Automation
         /// Required. Automation account name.
         /// </param>
         /// <returns>
-        /// The response body contains the status of the specified asynchronous
-        /// operation, indicating whether it has succeeded, is inprogress, or
-        /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
-        /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
-        /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        public static LongRunningOperationStatusResponse Delete(this IAutomationAccountOperations operations, string resourceGroupName, string automationAccountName)
+        public static AzureOperationResponse Delete(this IAutomationAccountOperations operations, string resourceGroupName, string automationAccountName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -279,19 +125,62 @@ namespace Microsoft.Azure.Management.Automation
         /// Required. Automation account name.
         /// </param>
         /// <returns>
-        /// The response body contains the status of the specified asynchronous
-        /// operation, indicating whether it has succeeded, is inprogress, or
-        /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
-        /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
-        /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        public static Task<LongRunningOperationStatusResponse> DeleteAsync(this IAutomationAccountOperations operations, string resourceGroupName, string automationAccountName)
+        public static Task<AzureOperationResponse> DeleteAsync(this IAutomationAccountOperations operations, string resourceGroupName, string automationAccountName)
         {
             return operations.DeleteAsync(resourceGroupName, automationAccountName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Create an automation account.  (see
+        /// http://aka.ms/azureautomationsdk/automationaccountoperations for
+        /// more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Automation.IAutomationAccountOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the create automation account.
+        /// </param>
+        /// <returns>
+        /// The response model for the create account operation.
+        /// </returns>
+        public static AutomationAccountUpdateResponse Update(this IAutomationAccountOperations operations, string resourceGroupName, AutomationAccountUpdateParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IAutomationAccountOperations)s).UpdateAsync(resourceGroupName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Create an automation account.  (see
+        /// http://aka.ms/azureautomationsdk/automationaccountoperations for
+        /// more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Automation.IAutomationAccountOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the create automation account.
+        /// </param>
+        /// <returns>
+        /// The response model for the create account operation.
+        /// </returns>
+        public static Task<AutomationAccountUpdateResponse> UpdateAsync(this IAutomationAccountOperations operations, string resourceGroupName, AutomationAccountUpdateParameters parameters)
+        {
+            return operations.UpdateAsync(resourceGroupName, parameters, CancellationToken.None);
         }
     }
 }
