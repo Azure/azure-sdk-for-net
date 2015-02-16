@@ -114,7 +114,7 @@ namespace Common.Authentication.Test
             Assert.Throws<ArgumentNullException>(() =>
                 client1.InitializeProfile(null, Guid.NewGuid(), new AzureAccount(), null, "foo"));
             Assert.Throws<ArgumentNullException>(() =>
-                client1.InitializeProfile(AzureEnvironment.PublicEnvironments["AzureCloud"], Guid.NewGuid(), null, null, "foo"));
+                client1.InitializeProfile(AzureEnvironment.PublicEnvironments["AzureCloud"], Guid.NewGuid(), (AzureAccount)null, null, "foo"));
         }
 
         [Fact]
@@ -134,6 +134,26 @@ namespace Common.Authentication.Test
             Assert.Equal("AzureCloud", newProfile.DefaultSubscription.Environment);
             Assert.Equal(new Guid(csmSubscription1.SubscriptionId), newProfile.DefaultSubscription.Id);
             Assert.Equal(newAccount.Id, newProfile.DefaultSubscription.Account);
+            Assert.False(newProfile.DefaultSubscription.Properties.ContainsKey(AzureSubscription.Property.StorageAccount));
+        }
+
+        [Fact]
+        public void NewProfileWithAccessTokenReturnsProfile()
+        {
+            //SetMocks(new[] { rdfeSubscription1, rdfeSubscription2 }.ToList(), new[] { csmSubscription1 }.ToList());
+            MockDataStore dataStore = new MockDataStore();
+            AzureSession.DataStore = dataStore;
+            AzureProfile newProfile = new AzureProfile();
+            ProfileClient client1 = new ProfileClient(newProfile);
+
+            client1.InitializeProfile(AzureEnvironment.PublicEnvironments["AzureCloud"],
+                new Guid(csmSubscription1.SubscriptionId), "accessToken", "accountId", null);
+
+            Assert.Equal("AzureCloud", newProfile.DefaultSubscription.Environment);
+            Assert.Equal(new Guid(csmSubscription1.SubscriptionId), newProfile.DefaultSubscription.Id);
+            Assert.Equal("accountId", newProfile.DefaultSubscription.Account);
+            Assert.Equal(AzureAccount.AccountType.AccessToken, newProfile.Context.Account.Type);
+            Assert.Equal("accessToken", newProfile.Context.Account.Properties[AzureAccount.Property.AccessToken]);
             Assert.False(newProfile.DefaultSubscription.Properties.ContainsKey(AzureSubscription.Property.StorageAccount));
         }
 
