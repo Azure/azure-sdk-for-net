@@ -31,6 +31,6 @@ namespace Microsoft.Azure.Management.Automation.Models
     {
         public const string Script = "Script";
         
-        public const string Workflow = "Workflow";
+        public const string Graph = "Graph";
     }
 }
