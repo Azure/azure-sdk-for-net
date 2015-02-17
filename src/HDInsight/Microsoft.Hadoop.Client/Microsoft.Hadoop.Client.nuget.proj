@@ -7,7 +7,6 @@
     <SdkNuGetPackage Include="Microsoft.Hadoop.Client">
       <Folder>$(MSBuildThisFileDirectory)</Folder>
       <PackageVersion>$(SDKNuGetPackageVersion)</PackageVersion>
-      <Configuration>Nightly</Configuration>
     </SdkNuGetPackage>
   </ItemGroup>
 </Project>
