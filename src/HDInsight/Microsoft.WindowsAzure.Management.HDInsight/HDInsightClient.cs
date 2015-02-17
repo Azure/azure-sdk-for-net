@@ -67,7 +67,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         private ClusterDetails currentDetails;
         private const string DefaultSchemaVersion = "1.0";
         private TimeSpan defaultResizeTimeout = TimeSpan.FromHours(1);
-        
+
         /// <summary>
         /// Gets the connection credential.
         /// </summary>
@@ -200,6 +200,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
                     allClusters = iaasClusters.Concat(allClusters).ToList();
                 }
             }
+
             return allClusters;
         }
 
@@ -251,7 +252,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
                 return null;
             }
         }
-		
+        
         public async Task<ClusterDetails> CreateClusterAsync(ClusterCreateParameters clusterCreateParameters)
         {
             if (clusterCreateParameters == null)
@@ -361,7 +362,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
             {
                 throw new ArgumentNullException("clusterCreateParameters");
             }
-			
+
             // Validate cluster creation parameters
             clusterCreateParameters.ValidateClusterCreateParameters();
             this.LogMessage("Validating Cluster Versions", Severity.Informational, Verbosity.Detailed);
@@ -369,6 +370,35 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
 
             IHDInsightManagementPocoClient client = this.CreateIaasClustersPocoClient(this.capabilities.Value);
 
+            // listen to cluster provisioning events on the POCO client.
+            client.ClusterProvisioning += this.RaiseClusterProvisioningEvent;
+            Exception requestException = null;
+
+            // Creates a cluster and waits for it to complete
+            try
+            {
+                this.LogMessage("Sending Cluster Create Request", Severity.Informational, Verbosity.Detailed);
+                await client.CreateContainer(clusterCreateParameters);
+            }
+            catch (Exception ex)
+            {
+                ex = ex.GetFirstException();
+                var hlex = ex as HttpLayerException;
+                var httpEx = ex as HttpRequestException;
+                var webex = ex as WebException;
+                if (hlex.IsNotNull() || httpEx.IsNotNull() || webex.IsNotNull())
+                {
+                    requestException = ex;
+                    if (hlex.IsNotNull())
+                    {
+                        HandleCreateHttpLayerException(clusterCreateParameters, hlex);
+                    }
+                }
+                else
+                {
+                    throw;
+                }
+            }
             // listen to cluster provisioning events on the POCO client.
             client.ClusterProvisioning += this.RaiseClusterProvisioningEvent;
             Exception requestException = null;
