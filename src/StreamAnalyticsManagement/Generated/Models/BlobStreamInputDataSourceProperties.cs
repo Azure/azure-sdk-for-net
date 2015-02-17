@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _container;
         
         /// <summary>
-        /// Required. Gets or sets the container of the blob.
+        /// Optional. Gets or sets the container of the blob.
         /// </summary>
         public string Container
         {
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _pathPattern;
         
         /// <summary>
-        /// Required. Gets or sets the blob path pattern.
+        /// Optional. Gets or sets the blob path pattern.
         /// </summary>
         public string PathPattern
         {
@@ -117,25 +117,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         public BlobStreamInputDataSourceProperties()
         {
             this.StorageAccounts = new LazyList<StorageAccount>();
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the
-        /// BlobStreamInputDataSourceProperties class with required arguments.
-        /// </summary>
-        public BlobStreamInputDataSourceProperties(string container, string pathPattern)
-            : this()
-        {
-            if (container == null)
-            {
-                throw new ArgumentNullException("container");
-            }
-            if (pathPattern == null)
-            {
-                throw new ArgumentNullException("pathPattern");
-            }
-            this.Container = container;
-            this.PathPattern = pathPattern;
         }
     }
 }

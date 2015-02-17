@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private OutputDataSource _dataSource;
         
         /// <summary>
-        /// Required. Gets or sets the data source configuration of the output.
+        /// Optional. Gets or sets the data source configuration of the output.
         /// </summary>
         public OutputDataSource DataSource
         {
@@ -69,20 +69,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// </summary>
         public OutputProperties()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the OutputProperties class with
-        /// required arguments.
-        /// </summary>
-        public OutputProperties(OutputDataSource dataSource)
-            : this()
-        {
-            if (dataSource == null)
-            {
-                throw new ArgumentNullException("dataSource");
-            }
-            this.DataSource = dataSource;
         }
     }
 }

@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private AvroSerializationProperties _properties;
         
         /// <summary>
-        /// Required. Gets or sets the properties of the AVRO serialization.
+        /// Optional. Gets or sets the properties of the AVRO serialization.
         /// </summary>
         public AvroSerializationProperties Properties
         {
@@ -46,20 +46,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// </summary>
         public AvroSerialization()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the AvroSerialization class with
-        /// required arguments.
-        /// </summary>
-        public AvroSerialization(AvroSerializationProperties properties)
-            : this()
-        {
-            if (properties == null)
-            {
-                throw new ArgumentNullException("properties");
-            }
-            this.Properties = properties;
         }
     }
 }

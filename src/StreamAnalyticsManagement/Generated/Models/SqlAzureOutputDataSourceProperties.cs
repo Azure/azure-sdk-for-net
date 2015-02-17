@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _database;
         
         /// <summary>
-        /// Required. Gets or sets the database name of the Sql Azure.
+        /// Optional. Gets or sets the database name of the Sql Azure.
         /// </summary>
         public string Database
         {
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _password;
         
         /// <summary>
-        /// Required. Gets or sets the password of the Sql Azure.
+        /// Optional. Gets or sets the password of the Sql Azure.
         /// </summary>
         public string Password
         {
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _server;
         
         /// <summary>
-        /// Required. Gets or sets the server of the Sql Azure.
+        /// Optional. Gets or sets the server of the Sql Azure.
         /// </summary>
         public string Server
         {
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _table;
         
         /// <summary>
-        /// Required. Gets or sets the table name of the Sql Azure.
+        /// Optional. Gets or sets the table name of the Sql Azure.
         /// </summary>
         public string Table
         {
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _user;
         
         /// <summary>
-        /// Required. Gets or sets the user name of the Sql Azure.
+        /// Optional. Gets or sets the user name of the Sql Azure.
         /// </summary>
         public string User
         {

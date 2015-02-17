@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private BlobStreamInputDataSourceProperties _properties;
         
         /// <summary>
-        /// Required. Gets or sets the properties of the blob data source as
+        /// Optional. Gets or sets the properties of the blob data source as
         /// stream input.
         /// </summary>
         public BlobStreamInputDataSourceProperties Properties
@@ -47,20 +47,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// </summary>
         public BlobStreamInputDataSource()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the BlobStreamInputDataSource class
-        /// with required arguments.
-        /// </summary>
-        public BlobStreamInputDataSource(BlobStreamInputDataSourceProperties properties)
-            : this()
-        {
-            if (properties == null)
-            {
-                throw new ArgumentNullException("properties");
-            }
-            this.Properties = properties;
         }
     }
 }
