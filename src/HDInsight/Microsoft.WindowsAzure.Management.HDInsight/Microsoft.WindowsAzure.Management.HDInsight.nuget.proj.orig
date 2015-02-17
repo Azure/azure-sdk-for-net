@@ -4,8 +4,11 @@
     <!--
     Microsoft.WindowsAzure.Management.HDInsight
     -->
-    <SdkNuGetPackage Include="Microsoft.HadoopAppliance.Client">
+    <SdkNuGetPackage Include="Microsoft.WindowsAzure.Management.HDInsight">
+<<<<<<< HEAD
+=======
       <PackageVersion>1.4.6</PackageVersion>
+>>>>>>> cb5a902... version to 1.4.6
       <Folder>$(MSBuildThisFileDirectory)</Folder>
       <PackageVersion>$(SDKNuGetPackageVersion)</PackageVersion>
     </SdkNuGetPackage>
