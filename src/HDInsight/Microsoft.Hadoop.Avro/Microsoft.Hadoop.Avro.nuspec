@@ -4,7 +4,7 @@
     <id>Microsoft.Hadoop.Avro</id>
     <title>Microsoft Windows Azure HDInsight Avro Library</title>
     <releaseNotes>Avro serialization operations.</releaseNotes>
-    <version>$version$</version>
+    <version>$version$-Nightly</version>
     <authors>Microsoft</authors>
     <owners>azure-sdk, Microsoft</owners>
     <licenseUrl>http://aka.ms/windowsazureapache2</licenseUrl>
