@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _location;
         
         /// <summary>
-        /// Required. Gets or sets the data center location of the stream
+        /// Optional. Gets or sets the data center location of the stream
         /// analytics job.
         /// </summary>
         public string Location
@@ -110,23 +110,18 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// <summary>
         /// Initializes a new instance of the Job class with required arguments.
         /// </summary>
-        public Job(string name, string location, JobProperties properties)
+        public Job(string name, JobProperties properties)
             : this()
         {
             if (name == null)
             {
                 throw new ArgumentNullException("name");
             }
-            if (location == null)
-            {
-                throw new ArgumentNullException("location");
-            }
             if (properties == null)
             {
                 throw new ArgumentNullException("properties");
             }
             this.Name = name;
-            this.Location = location;
             this.Properties = properties;
         }
     }

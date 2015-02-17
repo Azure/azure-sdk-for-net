@@ -26,51 +26,27 @@ using Microsoft.Azure.Management.StreamAnalytics.Models;
 namespace Microsoft.Azure.Management.StreamAnalytics.Models
 {
     /// <summary>
-    /// The definition of the transformation.
+    /// The Azure Table data source as the output.
     /// </summary>
-    public partial class Transformation
+    public partial class AzureTableOutputDataSource : OutputDataSource
     {
-        private string _name;
+        private AzureTableOutputDataSourceProperties _properties;
         
         /// <summary>
-        /// Required. Gets or sets the name of the transformation.
+        /// Optional. Gets or sets the properties of the Azure Table data
+        /// source as output.
         /// </summary>
-        public string Name
-        {
-            get { return this._name; }
-            set { this._name = value; }
-        }
-        
-        private TransformationProperties _properties;
-        
-        /// <summary>
-        /// Optional. Gets or sets the properties of the transformation.
-        /// </summary>
-        public TransformationProperties Properties
+        public AzureTableOutputDataSourceProperties Properties
         {
             get { return this._properties; }
             set { this._properties = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the Transformation class.
+        /// Initializes a new instance of the AzureTableOutputDataSource class.
         /// </summary>
-        public Transformation()
+        public AzureTableOutputDataSource()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the Transformation class with
-        /// required arguments.
-        /// </summary>
-        public Transformation(string name)
-            : this()
-        {
-            if (name == null)
-            {
-                throw new ArgumentNullException("name");
-            }
-            this.Name = name;
         }
     }
 }

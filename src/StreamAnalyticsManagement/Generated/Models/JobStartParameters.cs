@@ -21,56 +21,43 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.StreamAnalytics.Models;
 
 namespace Microsoft.Azure.Management.StreamAnalytics.Models
 {
     /// <summary>
-    /// The definition of the transformation.
+    /// Parameters for a job start operation.
     /// </summary>
-    public partial class Transformation
+    public partial class JobStartParameters
     {
-        private string _name;
+        private string _outputStartMode;
         
         /// <summary>
-        /// Required. Gets or sets the name of the transformation.
+        /// Optional. Gets or sets the output start mode of the stream
+        /// analytics job.
         /// </summary>
-        public string Name
+        public string OutputStartMode
         {
-            get { return this._name; }
-            set { this._name = value; }
+            get { return this._outputStartMode; }
+            set { this._outputStartMode = value; }
         }
         
-        private TransformationProperties _properties;
+        private System.DateTime? _outputStartTime;
         
         /// <summary>
-        /// Optional. Gets or sets the properties of the transformation.
+        /// Optional. Gets or sets the output start time of the stream
+        /// analytics job.
         /// </summary>
-        public TransformationProperties Properties
+        public System.DateTime? OutputStartTime
         {
-            get { return this._properties; }
-            set { this._properties = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the Transformation class.
-        /// </summary>
-        public Transformation()
-        {
+            get { return this._outputStartTime; }
+            set { this._outputStartTime = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the Transformation class with
-        /// required arguments.
+        /// Initializes a new instance of the JobStartParameters class.
         /// </summary>
-        public Transformation(string name)
-            : this()
+        public JobStartParameters()
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException("name");
-            }
-            this.Name = name;
         }
     }
 }

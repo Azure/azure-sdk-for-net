@@ -128,7 +128,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + Uri.EscapeDataString(inputName);
             url = url + "/test";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-12-01-preview");
+            queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -343,14 +343,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 {
                     throw new ArgumentNullException("parameters.Input.Name");
                 }
-                if (parameters.Input.Properties == null)
-                {
-                    throw new ArgumentNullException("parameters.Input.Properties");
-                }
-                if (parameters.Input.Properties.Serialization == null)
-                {
-                    throw new ArgumentNullException("parameters.Input.Properties.Serialization");
-                }
             }
             
             // Tracing
@@ -383,7 +375,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 url = url + Uri.EscapeDataString(parameters.Input.Name);
             }
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-12-01-preview");
+            queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -427,258 +419,352 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 {
                     inputCreateOrUpdateParametersValue["name"] = parameters.Input.Name;
                     
-                    JObject propertiesValue = new JObject();
-                    inputCreateOrUpdateParametersValue["properties"] = propertiesValue;
-                    if (parameters.Input.Properties is ReferenceInputProperties)
+                    if (parameters.Input.Properties != null)
                     {
-                        propertiesValue["type"] = "Reference";
-                        ReferenceInputProperties derived = ((ReferenceInputProperties)parameters.Input.Properties);
-                        
-                        JObject datasourceValue = new JObject();
-                        propertiesValue["datasource"] = datasourceValue;
-                        if (derived.DataSource is BlobReferenceInputDataSource)
+                        JObject propertiesValue = new JObject();
+                        inputCreateOrUpdateParametersValue["properties"] = propertiesValue;
+                        if (parameters.Input.Properties is ReferenceInputProperties)
                         {
-                            datasourceValue["type"] = "Microsoft.Storage/Blob";
-                            BlobReferenceInputDataSource derived2 = ((BlobReferenceInputDataSource)derived.DataSource);
+                            propertiesValue["type"] = "Reference";
+                            ReferenceInputProperties derived = ((ReferenceInputProperties)parameters.Input.Properties);
                             
-                            JObject propertiesValue2 = new JObject();
-                            datasourceValue["properties"] = propertiesValue2;
-                            
-                            if (derived2.Properties.StorageAccounts != null)
+                            if (derived.DataSource != null)
                             {
-                                if (derived2.Properties.StorageAccounts is ILazyCollection == false || ((ILazyCollection)derived2.Properties.StorageAccounts).IsInitialized)
+                                JObject datasourceValue = new JObject();
+                                propertiesValue["datasource"] = datasourceValue;
+                                if (derived.DataSource is BlobReferenceInputDataSource)
                                 {
-                                    JArray storageAccountsArray = new JArray();
-                                    foreach (StorageAccount storageAccountsItem in derived2.Properties.StorageAccounts)
+                                    datasourceValue["type"] = "Microsoft.Storage/Blob";
+                                    BlobReferenceInputDataSource derived2 = ((BlobReferenceInputDataSource)derived.DataSource);
+                                    
+                                    if (derived2.Properties != null)
                                     {
-                                        JObject storageAccountValue = new JObject();
-                                        storageAccountsArray.Add(storageAccountValue);
+                                        JObject propertiesValue2 = new JObject();
+                                        datasourceValue["properties"] = propertiesValue2;
                                         
-                                        if (storageAccountsItem.AccountName != null)
+                                        if (derived2.Properties.StorageAccounts != null)
                                         {
-                                            storageAccountValue["accountName"] = storageAccountsItem.AccountName;
+                                            if (derived2.Properties.StorageAccounts is ILazyCollection == false || ((ILazyCollection)derived2.Properties.StorageAccounts).IsInitialized)
+                                            {
+                                                JArray storageAccountsArray = new JArray();
+                                                foreach (StorageAccount storageAccountsItem in derived2.Properties.StorageAccounts)
+                                                {
+                                                    JObject storageAccountValue = new JObject();
+                                                    storageAccountsArray.Add(storageAccountValue);
+                                                    
+                                                    if (storageAccountsItem.AccountName != null)
+                                                    {
+                                                        storageAccountValue["accountName"] = storageAccountsItem.AccountName;
+                                                    }
+                                                    
+                                                    if (storageAccountsItem.AccountKey != null)
+                                                    {
+                                                        storageAccountValue["accountKey"] = storageAccountsItem.AccountKey;
+                                                    }
+                                                }
+                                                propertiesValue2["storageAccounts"] = storageAccountsArray;
+                                            }
                                         }
                                         
-                                        if (storageAccountsItem.AccountKey != null)
+                                        if (derived2.Properties.Container != null)
                                         {
-                                            storageAccountValue["accountKey"] = storageAccountsItem.AccountKey;
+                                            propertiesValue2["container"] = derived2.Properties.Container;
+                                        }
+                                        
+                                        if (derived2.Properties.BlobName != null)
+                                        {
+                                            propertiesValue2["blobName"] = derived2.Properties.BlobName;
                                         }
                                     }
-                                    propertiesValue2["storageAccounts"] = storageAccountsArray;
+                                    
+                                    if (derived2.Type != null)
+                                    {
+                                        datasourceValue["type"] = derived2.Type;
+                                    }
                                 }
                             }
                             
-                            propertiesValue2["container"] = derived2.Properties.Container;
-                            
-                            propertiesValue2["blobName"] = derived2.Properties.BlobName;
-                            
-                            if (derived2.Type != null)
+                            if (derived.Etag != null)
                             {
-                                datasourceValue["type"] = derived2.Type;
+                                propertiesValue["etag"] = derived.Etag;
                             }
-                        }
-                        
-                        if (derived.Etag != null)
-                        {
-                            propertiesValue["etag"] = derived.Etag;
-                        }
-                        
-                        if (derived.Type != null)
-                        {
-                            propertiesValue["type"] = derived.Type;
-                        }
-                        
-                        JObject serializationValue = new JObject();
-                        propertiesValue["serialization"] = serializationValue;
-                        if (derived.Serialization is CsvSerialization)
-                        {
-                            serializationValue["type"] = "Csv";
-                            CsvSerialization derived3 = ((CsvSerialization)derived.Serialization);
                             
-                            JObject propertiesValue3 = new JObject();
-                            serializationValue["properties"] = propertiesValue3;
-                            
-                            propertiesValue3["fieldDelimiter"] = derived3.Properties.FieldDelimiter;
-                            
-                            propertiesValue3["encoding"] = derived3.Properties.Encoding;
-                            
-                            if (derived3.Type != null)
+                            if (derived.Type != null)
                             {
-                                serializationValue["type"] = derived3.Type;
+                                propertiesValue["type"] = derived.Type;
                             }
-                        }
-                        if (derived.Serialization is JsonSerialization)
-                        {
-                            serializationValue["type"] = "Json";
-                            JsonSerialization derived4 = ((JsonSerialization)derived.Serialization);
                             
-                            JObject propertiesValue4 = new JObject();
-                            serializationValue["properties"] = propertiesValue4;
-                            
-                            propertiesValue4["encoding"] = derived4.Properties.Encoding;
-                            
-                            if (derived4.Type != null)
+                            if (derived.Serialization != null)
                             {
-                                serializationValue["type"] = derived4.Type;
-                            }
-                        }
-                        if (derived.Serialization is AvroSerialization)
-                        {
-                            serializationValue["type"] = "Avro";
-                            AvroSerialization derived5 = ((AvroSerialization)derived.Serialization);
-                            
-                            serializationValue["properties"] = derived5.Properties.ToString();
-                            
-                            if (derived5.Type != null)
-                            {
-                                serializationValue["type"] = derived5.Type;
-                            }
-                        }
-                    }
-                    if (parameters.Input.Properties is StreamInputProperties)
-                    {
-                        propertiesValue["type"] = "Stream";
-                        StreamInputProperties derived6 = ((StreamInputProperties)parameters.Input.Properties);
-                        
-                        JObject datasourceValue2 = new JObject();
-                        propertiesValue["datasource"] = datasourceValue2;
-                        if (derived6.DataSource is BlobStreamInputDataSource)
-                        {
-                            datasourceValue2["type"] = "Microsoft.Storage/Blob";
-                            BlobStreamInputDataSource derived7 = ((BlobStreamInputDataSource)derived6.DataSource);
-                            
-                            JObject propertiesValue5 = new JObject();
-                            datasourceValue2["properties"] = propertiesValue5;
-                            
-                            if (derived7.Properties.StorageAccounts != null)
-                            {
-                                if (derived7.Properties.StorageAccounts is ILazyCollection == false || ((ILazyCollection)derived7.Properties.StorageAccounts).IsInitialized)
+                                JObject serializationValue = new JObject();
+                                propertiesValue["serialization"] = serializationValue;
+                                if (derived.Serialization is CsvSerialization)
                                 {
-                                    JArray storageAccountsArray2 = new JArray();
-                                    foreach (StorageAccount storageAccountsItem2 in derived7.Properties.StorageAccounts)
+                                    serializationValue["type"] = "Csv";
+                                    CsvSerialization derived3 = ((CsvSerialization)derived.Serialization);
+                                    
+                                    if (derived3.Properties != null)
                                     {
-                                        JObject storageAccountValue2 = new JObject();
-                                        storageAccountsArray2.Add(storageAccountValue2);
+                                        JObject propertiesValue3 = new JObject();
+                                        serializationValue["properties"] = propertiesValue3;
                                         
-                                        if (storageAccountsItem2.AccountName != null)
+                                        if (derived3.Properties.FieldDelimiter != null)
                                         {
-                                            storageAccountValue2["accountName"] = storageAccountsItem2.AccountName;
+                                            propertiesValue3["fieldDelimiter"] = derived3.Properties.FieldDelimiter;
                                         }
                                         
-                                        if (storageAccountsItem2.AccountKey != null)
+                                        if (derived3.Properties.Encoding != null)
                                         {
-                                            storageAccountValue2["accountKey"] = storageAccountsItem2.AccountKey;
+                                            propertiesValue3["encoding"] = derived3.Properties.Encoding;
                                         }
                                     }
-                                    propertiesValue5["storageAccounts"] = storageAccountsArray2;
+                                    
+                                    if (derived3.Type != null)
+                                    {
+                                        serializationValue["type"] = derived3.Type;
+                                    }
+                                }
+                                if (derived.Serialization is JsonSerialization)
+                                {
+                                    serializationValue["type"] = "Json";
+                                    JsonSerialization derived4 = ((JsonSerialization)derived.Serialization);
+                                    
+                                    if (derived4.Properties != null)
+                                    {
+                                        JObject propertiesValue4 = new JObject();
+                                        serializationValue["properties"] = propertiesValue4;
+                                        
+                                        if (derived4.Properties.Encoding != null)
+                                        {
+                                            propertiesValue4["encoding"] = derived4.Properties.Encoding;
+                                        }
+                                    }
+                                    
+                                    if (derived4.Type != null)
+                                    {
+                                        serializationValue["type"] = derived4.Type;
+                                    }
+                                }
+                                if (derived.Serialization is AvroSerialization)
+                                {
+                                    serializationValue["type"] = "Avro";
+                                    AvroSerialization derived5 = ((AvroSerialization)derived.Serialization);
+                                    
+                                    if (derived5.Properties != null)
+                                    {
+                                        serializationValue["properties"] = derived5.Properties.ToString();
+                                    }
+                                    
+                                    if (derived5.Type != null)
+                                    {
+                                        serializationValue["type"] = derived5.Type;
+                                    }
+                                }
+                            }
+                        }
+                        if (parameters.Input.Properties is StreamInputProperties)
+                        {
+                            propertiesValue["type"] = "Stream";
+                            StreamInputProperties derived6 = ((StreamInputProperties)parameters.Input.Properties);
+                            
+                            if (derived6.DataSource != null)
+                            {
+                                JObject datasourceValue2 = new JObject();
+                                propertiesValue["datasource"] = datasourceValue2;
+                                if (derived6.DataSource is BlobStreamInputDataSource)
+                                {
+                                    datasourceValue2["type"] = "Microsoft.Storage/Blob";
+                                    BlobStreamInputDataSource derived7 = ((BlobStreamInputDataSource)derived6.DataSource);
+                                    
+                                    if (derived7.Properties != null)
+                                    {
+                                        JObject propertiesValue5 = new JObject();
+                                        datasourceValue2["properties"] = propertiesValue5;
+                                        
+                                        if (derived7.Properties.StorageAccounts != null)
+                                        {
+                                            if (derived7.Properties.StorageAccounts is ILazyCollection == false || ((ILazyCollection)derived7.Properties.StorageAccounts).IsInitialized)
+                                            {
+                                                JArray storageAccountsArray2 = new JArray();
+                                                foreach (StorageAccount storageAccountsItem2 in derived7.Properties.StorageAccounts)
+                                                {
+                                                    JObject storageAccountValue2 = new JObject();
+                                                    storageAccountsArray2.Add(storageAccountValue2);
+                                                    
+                                                    if (storageAccountsItem2.AccountName != null)
+                                                    {
+                                                        storageAccountValue2["accountName"] = storageAccountsItem2.AccountName;
+                                                    }
+                                                    
+                                                    if (storageAccountsItem2.AccountKey != null)
+                                                    {
+                                                        storageAccountValue2["accountKey"] = storageAccountsItem2.AccountKey;
+                                                    }
+                                                }
+                                                propertiesValue5["storageAccounts"] = storageAccountsArray2;
+                                            }
+                                        }
+                                        
+                                        if (derived7.Properties.Container != null)
+                                        {
+                                            propertiesValue5["container"] = derived7.Properties.Container;
+                                        }
+                                        
+                                        if (derived7.Properties.BlobSerializationBoundary != null)
+                                        {
+                                            propertiesValue5["blobSerializationBoundary"] = derived7.Properties.BlobSerializationBoundary;
+                                        }
+                                        
+                                        if (derived7.Properties.PathPattern != null)
+                                        {
+                                            propertiesValue5["pathPattern"] = derived7.Properties.PathPattern;
+                                        }
+                                        
+                                        if (derived7.Properties.DateFormat != null)
+                                        {
+                                            propertiesValue5["dateFormat"] = derived7.Properties.DateFormat;
+                                        }
+                                        
+                                        if (derived7.Properties.TimeFormat != null)
+                                        {
+                                            propertiesValue5["timeFormat"] = derived7.Properties.TimeFormat;
+                                        }
+                                        
+                                        if (derived7.Properties.SourcePartitionCount != null)
+                                        {
+                                            propertiesValue5["sourcePartitionCount"] = derived7.Properties.SourcePartitionCount.Value;
+                                        }
+                                    }
+                                    
+                                    if (derived7.Type != null)
+                                    {
+                                        datasourceValue2["type"] = derived7.Type;
+                                    }
+                                }
+                                if (derived6.DataSource is EventHubStreamInputDataSource)
+                                {
+                                    datasourceValue2["type"] = "Microsoft.ServiceBus/EventHub";
+                                    EventHubStreamInputDataSource derived8 = ((EventHubStreamInputDataSource)derived6.DataSource);
+                                    
+                                    if (derived8.Properties != null)
+                                    {
+                                        JObject propertiesValue6 = new JObject();
+                                        datasourceValue2["properties"] = propertiesValue6;
+                                        
+                                        if (derived8.Properties.ServiceBusNamespace != null)
+                                        {
+                                            propertiesValue6["serviceBusNamespace"] = derived8.Properties.ServiceBusNamespace;
+                                        }
+                                        
+                                        if (derived8.Properties.SharedAccessPolicyName != null)
+                                        {
+                                            propertiesValue6["sharedAccessPolicyName"] = derived8.Properties.SharedAccessPolicyName;
+                                        }
+                                        
+                                        if (derived8.Properties.SharedAccessPolicyKey != null)
+                                        {
+                                            propertiesValue6["sharedAccessPolicyKey"] = derived8.Properties.SharedAccessPolicyKey;
+                                        }
+                                        
+                                        if (derived8.Properties.EventHubName != null)
+                                        {
+                                            propertiesValue6["eventHubName"] = derived8.Properties.EventHubName;
+                                        }
+                                        
+                                        if (derived8.Properties.SourcePartitionCount != null)
+                                        {
+                                            propertiesValue6["sourcePartitionCount"] = derived8.Properties.SourcePartitionCount.Value;
+                                        }
+                                        
+                                        if (derived8.Properties.ConsumerGroupName != null)
+                                        {
+                                            propertiesValue6["consumerGroupName"] = derived8.Properties.ConsumerGroupName;
+                                        }
+                                    }
+                                    
+                                    if (derived8.Type != null)
+                                    {
+                                        datasourceValue2["type"] = derived8.Type;
+                                    }
                                 }
                             }
                             
-                            propertiesValue5["container"] = derived7.Properties.Container;
-                            
-                            if (derived7.Properties.BlobSerializationBoundary != null)
+                            if (derived6.Etag != null)
                             {
-                                propertiesValue5["blobSerializationBoundary"] = derived7.Properties.BlobSerializationBoundary;
+                                propertiesValue["etag"] = derived6.Etag;
                             }
                             
-                            propertiesValue5["pathPattern"] = derived7.Properties.PathPattern;
-                            
-                            if (derived7.Properties.DateFormat != null)
+                            if (derived6.Type != null)
                             {
-                                propertiesValue5["dateFormat"] = derived7.Properties.DateFormat;
+                                propertiesValue["type"] = derived6.Type;
                             }
                             
-                            if (derived7.Properties.TimeFormat != null)
+                            if (derived6.Serialization != null)
                             {
-                                propertiesValue5["timeFormat"] = derived7.Properties.TimeFormat;
-                            }
-                            
-                            if (derived7.Properties.SourcePartitionCount != null)
-                            {
-                                propertiesValue5["sourcePartitionCount"] = derived7.Properties.SourcePartitionCount.Value;
-                            }
-                            
-                            if (derived7.Type != null)
-                            {
-                                datasourceValue2["type"] = derived7.Type;
-                            }
-                        }
-                        if (derived6.DataSource is EventHubStreamInputDataSource)
-                        {
-                            datasourceValue2["type"] = "Microsoft.ServiceBus/EventHub";
-                            EventHubStreamInputDataSource derived8 = ((EventHubStreamInputDataSource)derived6.DataSource);
-                            
-                            JObject propertiesValue6 = new JObject();
-                            datasourceValue2["properties"] = propertiesValue6;
-                            
-                            propertiesValue6["serviceBusNamespace"] = derived8.Properties.ServiceBusNamespace;
-                            
-                            propertiesValue6["sharedAccessPolicyName"] = derived8.Properties.SharedAccessPolicyName;
-                            
-                            propertiesValue6["sharedAccessPolicyKey"] = derived8.Properties.SharedAccessPolicyKey;
-                            
-                            propertiesValue6["eventHubName"] = derived8.Properties.EventHubName;
-                            
-                            if (derived8.Type != null)
-                            {
-                                datasourceValue2["type"] = derived8.Type;
-                            }
-                        }
-                        
-                        if (derived6.Etag != null)
-                        {
-                            propertiesValue["etag"] = derived6.Etag;
-                        }
-                        
-                        if (derived6.Type != null)
-                        {
-                            propertiesValue["type"] = derived6.Type;
-                        }
-                        
-                        JObject serializationValue2 = new JObject();
-                        propertiesValue["serialization"] = serializationValue2;
-                        if (derived6.Serialization is CsvSerialization)
-                        {
-                            serializationValue2["type"] = "Csv";
-                            CsvSerialization derived9 = ((CsvSerialization)derived6.Serialization);
-                            
-                            JObject propertiesValue7 = new JObject();
-                            serializationValue2["properties"] = propertiesValue7;
-                            
-                            propertiesValue7["fieldDelimiter"] = derived9.Properties.FieldDelimiter;
-                            
-                            propertiesValue7["encoding"] = derived9.Properties.Encoding;
-                            
-                            if (derived9.Type != null)
-                            {
-                                serializationValue2["type"] = derived9.Type;
-                            }
-                        }
-                        if (derived6.Serialization is JsonSerialization)
-                        {
-                            serializationValue2["type"] = "Json";
-                            JsonSerialization derived10 = ((JsonSerialization)derived6.Serialization);
-                            
-                            JObject propertiesValue8 = new JObject();
-                            serializationValue2["properties"] = propertiesValue8;
-                            
-                            propertiesValue8["encoding"] = derived10.Properties.Encoding;
-                            
-                            if (derived10.Type != null)
-                            {
-                                serializationValue2["type"] = derived10.Type;
-                            }
-                        }
-                        if (derived6.Serialization is AvroSerialization)
-                        {
-                            serializationValue2["type"] = "Avro";
-                            AvroSerialization derived11 = ((AvroSerialization)derived6.Serialization);
-                            
-                            serializationValue2["properties"] = derived11.Properties.ToString();
-                            
-                            if (derived11.Type != null)
-                            {
-                                serializationValue2["type"] = derived11.Type;
+                                JObject serializationValue2 = new JObject();
+                                propertiesValue["serialization"] = serializationValue2;
+                                if (derived6.Serialization is CsvSerialization)
+                                {
+                                    serializationValue2["type"] = "Csv";
+                                    CsvSerialization derived9 = ((CsvSerialization)derived6.Serialization);
+                                    
+                                    if (derived9.Properties != null)
+                                    {
+                                        JObject propertiesValue7 = new JObject();
+                                        serializationValue2["properties"] = propertiesValue7;
+                                        
+                                        if (derived9.Properties.FieldDelimiter != null)
+                                        {
+                                            propertiesValue7["fieldDelimiter"] = derived9.Properties.FieldDelimiter;
+                                        }
+                                        
+                                        if (derived9.Properties.Encoding != null)
+                                        {
+                                            propertiesValue7["encoding"] = derived9.Properties.Encoding;
+                                        }
+                                    }
+                                    
+                                    if (derived9.Type != null)
+                                    {
+                                        serializationValue2["type"] = derived9.Type;
+                                    }
+                                }
+                                if (derived6.Serialization is JsonSerialization)
+                                {
+                                    serializationValue2["type"] = "Json";
+                                    JsonSerialization derived10 = ((JsonSerialization)derived6.Serialization);
+                                    
+                                    if (derived10.Properties != null)
+                                    {
+                                        JObject propertiesValue8 = new JObject();
+                                        serializationValue2["properties"] = propertiesValue8;
+                                        
+                                        if (derived10.Properties.Encoding != null)
+                                        {
+                                            propertiesValue8["encoding"] = derived10.Properties.Encoding;
+                                        }
+                                    }
+                                    
+                                    if (derived10.Type != null)
+                                    {
+                                        serializationValue2["type"] = derived10.Type;
+                                    }
+                                }
+                                if (derived6.Serialization is AvroSerialization)
+                                {
+                                    serializationValue2["type"] = "Avro";
+                                    AvroSerialization derived11 = ((AvroSerialization)derived6.Serialization);
+                                    
+                                    if (derived11.Properties != null)
+                                    {
+                                        serializationValue2["properties"] = derived11.Properties.ToString();
+                                    }
+                                    
+                                    if (derived11.Type != null)
+                                    {
+                                        serializationValue2["type"] = derived11.Type;
+                                    }
+                                }
                             }
                         }
                     }
@@ -1040,6 +1126,20 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                     string eventHubNameInstance = ((string)eventHubNameValue);
                                                     propertiesInstance6.EventHubName = eventHubNameInstance;
                                                 }
+                                                
+                                                JToken sourcePartitionCountValue2 = propertiesValue15["sourcePartitionCount"];
+                                                if (sourcePartitionCountValue2 != null && sourcePartitionCountValue2.Type != JTokenType.Null)
+                                                {
+                                                    int sourcePartitionCountInstance2 = ((int)sourcePartitionCountValue2);
+                                                    propertiesInstance6.SourcePartitionCount = sourcePartitionCountInstance2;
+                                                }
+                                                
+                                                JToken consumerGroupNameValue = propertiesValue15["consumerGroupName"];
+                                                if (consumerGroupNameValue != null && consumerGroupNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string consumerGroupNameInstance = ((string)consumerGroupNameValue);
+                                                    propertiesInstance6.ConsumerGroupName = consumerGroupNameInstance;
+                                                }
                                             }
                                             
                                             JToken typeValue7 = datasourceValue4["type"];
@@ -1160,6 +1260,10 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     {
                         result.Date = DateTime.Parse(httpResponse.Headers.GetValues("Date").FirstOrDefault(), CultureInfo.InvariantCulture);
                     }
+                    if (httpResponse.Headers.Contains("ETag"))
+                    {
+                        result.Input.Properties.Etag = httpResponse.Headers.GetValues("ETag").FirstOrDefault();
+                    }
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
@@ -1263,7 +1367,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + "/inputs/";
             url = url + Uri.EscapeDataString(inputName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-12-01-preview");
+            queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1653,6 +1757,20 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                     string eventHubNameInstance = ((string)eventHubNameValue);
                                                     propertiesInstance6.EventHubName = eventHubNameInstance;
                                                 }
+                                                
+                                                JToken sourcePartitionCountValue2 = propertiesValue7["sourcePartitionCount"];
+                                                if (sourcePartitionCountValue2 != null && sourcePartitionCountValue2.Type != JTokenType.Null)
+                                                {
+                                                    int sourcePartitionCountInstance2 = ((int)sourcePartitionCountValue2);
+                                                    propertiesInstance6.SourcePartitionCount = sourcePartitionCountInstance2;
+                                                }
+                                                
+                                                JToken consumerGroupNameValue = propertiesValue7["consumerGroupName"];
+                                                if (consumerGroupNameValue != null && consumerGroupNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string consumerGroupNameInstance = ((string)consumerGroupNameValue);
+                                                    propertiesInstance6.ConsumerGroupName = consumerGroupNameInstance;
+                                                }
                                             }
                                             
                                             JToken typeValue7 = datasourceValue2["type"];
@@ -1773,6 +1891,10 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     {
                         result.Date = DateTime.Parse(httpResponse.Headers.GetValues("Date").FirstOrDefault(), CultureInfo.InvariantCulture);
                     }
+                    if (httpResponse.Headers.Contains("ETag"))
+                    {
+                        result.Input.Properties.Etag = httpResponse.Headers.GetValues("ETag").FirstOrDefault();
+                    }
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
@@ -1862,7 +1984,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + "/inputs/";
             url = url + Uri.EscapeDataString(inputName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-12-01-preview");
+            queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2019,7 +2141,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + "/inputs/";
             url = url + Uri.EscapeDataString(inputName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-12-01-preview");
+            queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2404,6 +2526,20 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                     string eventHubNameInstance = ((string)eventHubNameValue);
                                                     propertiesInstance6.EventHubName = eventHubNameInstance;
                                                 }
+                                                
+                                                JToken sourcePartitionCountValue2 = propertiesValue7["sourcePartitionCount"];
+                                                if (sourcePartitionCountValue2 != null && sourcePartitionCountValue2.Type != JTokenType.Null)
+                                                {
+                                                    int sourcePartitionCountInstance2 = ((int)sourcePartitionCountValue2);
+                                                    propertiesInstance6.SourcePartitionCount = sourcePartitionCountInstance2;
+                                                }
+                                                
+                                                JToken consumerGroupNameValue = propertiesValue7["consumerGroupName"];
+                                                if (consumerGroupNameValue != null && consumerGroupNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string consumerGroupNameInstance = ((string)consumerGroupNameValue);
+                                                    propertiesInstance6.ConsumerGroupName = consumerGroupNameInstance;
+                                                }
                                             }
                                             
                                             JToken typeValue7 = datasourceValue2["type"];
@@ -2524,6 +2660,10 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     {
                         result.Date = DateTime.Parse(httpResponse.Headers.GetValues("Date").FirstOrDefault(), CultureInfo.InvariantCulture);
                     }
+                    if (httpResponse.Headers.Contains("ETag"))
+                    {
+                        result.Input.Properties.Etag = httpResponse.Headers.GetValues("ETag").FirstOrDefault();
+                    }
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
@@ -2604,7 +2744,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + Uri.EscapeDataString(jobName);
             url = url + "/inputs";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-12-01-preview");
+            queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2994,6 +3134,20 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                             string eventHubNameInstance = ((string)eventHubNameValue);
                                                             propertiesInstance6.EventHubName = eventHubNameInstance;
                                                         }
+                                                        
+                                                        JToken sourcePartitionCountValue2 = propertiesValue7["sourcePartitionCount"];
+                                                        if (sourcePartitionCountValue2 != null && sourcePartitionCountValue2.Type != JTokenType.Null)
+                                                        {
+                                                            int sourcePartitionCountInstance2 = ((int)sourcePartitionCountValue2);
+                                                            propertiesInstance6.SourcePartitionCount = sourcePartitionCountInstance2;
+                                                        }
+                                                        
+                                                        JToken consumerGroupNameValue = propertiesValue7["consumerGroupName"];
+                                                        if (consumerGroupNameValue != null && consumerGroupNameValue.Type != JTokenType.Null)
+                                                        {
+                                                            string consumerGroupNameInstance = ((string)consumerGroupNameValue);
+                                                            propertiesInstance6.ConsumerGroupName = consumerGroupNameInstance;
+                                                        }
                                                     }
                                                     
                                                     JToken typeValue7 = datasourceValue2["type"];
@@ -3152,73 +3306,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         }
         
         /// <summary>
-        /// Test the connectivity of an input for a stream analytics job.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Required. The resource group name of the stream analytics job.
-        /// </param>
-        /// <param name='jobName'>
-        /// Required. The name of the stream analytics job.
-        /// </param>
-        /// <param name='inputName'>
-        /// Required. The input name of the stream analytics job.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The test result of the input or output data source.
-        /// </returns>
-        public async Task<DataSourceTestConnectionResponse> TestConnectionAsync(string resourceGroupName, string jobName, string inputName, CancellationToken cancellationToken)
-        {
-            StreamAnalyticsManagementClient client = this.Client;
-            bool shouldTrace = TracingAdapter.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = TracingAdapter.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("jobName", jobName);
-                tracingParameters.Add("inputName", inputName);
-                TracingAdapter.Enter(invocationId, this, "TestConnectionAsync", tracingParameters);
-            }
-            
-            cancellationToken.ThrowIfCancellationRequested();
-            DataSourceTestConnectionResponse response = await client.Inputs.BeginTestConnectionAsync(resourceGroupName, jobName, inputName, cancellationToken).ConfigureAwait(false);
-            if (response.Status == OperationStatus.Succeeded)
-            {
-                return response;
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            DataSourceTestConnectionResponse result = await client.GetTestConnectionStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
-            int delayInSeconds = response.RetryAfter;
-            if (delayInSeconds == 0)
-            {
-                delayInSeconds = 10;
-            }
-            while ((result.Status != OperationStatus.InProgress) == false)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
-                cancellationToken.ThrowIfCancellationRequested();
-                result = await client.GetTestConnectionStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
-                delayInSeconds = result.RetryAfter;
-                if (delayInSeconds == 0)
-                {
-                    delayInSeconds = 10;
-                }
-            }
-            
-            if (shouldTrace)
-            {
-                TracingAdapter.Exit(invocationId, result);
-            }
-            
-            return result;
-        }
-        
-        /// <summary>
         /// Update an input for a stream analytics job.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -3240,7 +3327,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// <returns>
         /// The response of the input patch operation.
         /// </returns>
-        public async Task<InputPatchResponse> UpdateAsync(string resourceGroupName, string jobName, string inputName, InputPatchParameters parameters, CancellationToken cancellationToken)
+        public async Task<InputPatchResponse> PatchAsync(string resourceGroupName, string jobName, string inputName, InputPatchParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -3263,10 +3350,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             {
                 throw new ArgumentNullException("parameters.Properties");
             }
-            if (parameters.Properties.Serialization == null)
-            {
-                throw new ArgumentNullException("parameters.Properties.Serialization");
-            }
             
             // Tracing
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -3279,7 +3362,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 tracingParameters.Add("jobName", jobName);
                 tracingParameters.Add("inputName", inputName);
                 tracingParameters.Add("parameters", parameters);
-                TracingAdapter.Enter(invocationId, this, "UpdateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "PatchAsync", tracingParameters);
             }
             
             // Construct URL
@@ -3296,7 +3379,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + "/inputs/";
             url = url + Uri.EscapeDataString(inputName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-12-01-preview");
+            queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -3343,47 +3426,59 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     propertiesValue["type"] = "Reference";
                     ReferenceInputProperties derived = ((ReferenceInputProperties)parameters.Properties);
                     
-                    JObject datasourceValue = new JObject();
-                    propertiesValue["datasource"] = datasourceValue;
-                    if (derived.DataSource is BlobReferenceInputDataSource)
+                    if (derived.DataSource != null)
                     {
-                        datasourceValue["type"] = "Microsoft.Storage/Blob";
-                        BlobReferenceInputDataSource derived2 = ((BlobReferenceInputDataSource)derived.DataSource);
-                        
-                        JObject propertiesValue2 = new JObject();
-                        datasourceValue["properties"] = propertiesValue2;
-                        
-                        if (derived2.Properties.StorageAccounts != null)
+                        JObject datasourceValue = new JObject();
+                        propertiesValue["datasource"] = datasourceValue;
+                        if (derived.DataSource is BlobReferenceInputDataSource)
                         {
-                            if (derived2.Properties.StorageAccounts is ILazyCollection == false || ((ILazyCollection)derived2.Properties.StorageAccounts).IsInitialized)
+                            datasourceValue["type"] = "Microsoft.Storage/Blob";
+                            BlobReferenceInputDataSource derived2 = ((BlobReferenceInputDataSource)derived.DataSource);
+                            
+                            if (derived2.Properties != null)
                             {
-                                JArray storageAccountsArray = new JArray();
-                                foreach (StorageAccount storageAccountsItem in derived2.Properties.StorageAccounts)
+                                JObject propertiesValue2 = new JObject();
+                                datasourceValue["properties"] = propertiesValue2;
+                                
+                                if (derived2.Properties.StorageAccounts != null)
                                 {
-                                    JObject storageAccountValue = new JObject();
-                                    storageAccountsArray.Add(storageAccountValue);
-                                    
-                                    if (storageAccountsItem.AccountName != null)
+                                    if (derived2.Properties.StorageAccounts is ILazyCollection == false || ((ILazyCollection)derived2.Properties.StorageAccounts).IsInitialized)
                                     {
-                                        storageAccountValue["accountName"] = storageAccountsItem.AccountName;
-                                    }
-                                    
-                                    if (storageAccountsItem.AccountKey != null)
-                                    {
-                                        storageAccountValue["accountKey"] = storageAccountsItem.AccountKey;
+                                        JArray storageAccountsArray = new JArray();
+                                        foreach (StorageAccount storageAccountsItem in derived2.Properties.StorageAccounts)
+                                        {
+                                            JObject storageAccountValue = new JObject();
+                                            storageAccountsArray.Add(storageAccountValue);
+                                            
+                                            if (storageAccountsItem.AccountName != null)
+                                            {
+                                                storageAccountValue["accountName"] = storageAccountsItem.AccountName;
+                                            }
+                                            
+                                            if (storageAccountsItem.AccountKey != null)
+                                            {
+                                                storageAccountValue["accountKey"] = storageAccountsItem.AccountKey;
+                                            }
+                                        }
+                                        propertiesValue2["storageAccounts"] = storageAccountsArray;
                                     }
                                 }
-                                propertiesValue2["storageAccounts"] = storageAccountsArray;
+                                
+                                if (derived2.Properties.Container != null)
+                                {
+                                    propertiesValue2["container"] = derived2.Properties.Container;
+                                }
+                                
+                                if (derived2.Properties.BlobName != null)
+                                {
+                                    propertiesValue2["blobName"] = derived2.Properties.BlobName;
+                                }
                             }
-                        }
-                        
-                        propertiesValue2["container"] = derived2.Properties.Container;
-                        
-                        propertiesValue2["blobName"] = derived2.Properties.BlobName;
-                        
-                        if (derived2.Type != null)
-                        {
-                            datasourceValue["type"] = derived2.Type;
+                            
+                            if (derived2.Type != null)
+                            {
+                                datasourceValue["type"] = derived2.Type;
+                            }
                         }
                     }
                     
@@ -3397,50 +3492,71 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                         propertiesValue["type"] = derived.Type;
                     }
                     
-                    JObject serializationValue = new JObject();
-                    propertiesValue["serialization"] = serializationValue;
-                    if (derived.Serialization is CsvSerialization)
+                    if (derived.Serialization != null)
                     {
-                        serializationValue["type"] = "Csv";
-                        CsvSerialization derived3 = ((CsvSerialization)derived.Serialization);
-                        
-                        JObject propertiesValue3 = new JObject();
-                        serializationValue["properties"] = propertiesValue3;
-                        
-                        propertiesValue3["fieldDelimiter"] = derived3.Properties.FieldDelimiter;
-                        
-                        propertiesValue3["encoding"] = derived3.Properties.Encoding;
-                        
-                        if (derived3.Type != null)
+                        JObject serializationValue = new JObject();
+                        propertiesValue["serialization"] = serializationValue;
+                        if (derived.Serialization is CsvSerialization)
                         {
-                            serializationValue["type"] = derived3.Type;
+                            serializationValue["type"] = "Csv";
+                            CsvSerialization derived3 = ((CsvSerialization)derived.Serialization);
+                            
+                            if (derived3.Properties != null)
+                            {
+                                JObject propertiesValue3 = new JObject();
+                                serializationValue["properties"] = propertiesValue3;
+                                
+                                if (derived3.Properties.FieldDelimiter != null)
+                                {
+                                    propertiesValue3["fieldDelimiter"] = derived3.Properties.FieldDelimiter;
+                                }
+                                
+                                if (derived3.Properties.Encoding != null)
+                                {
+                                    propertiesValue3["encoding"] = derived3.Properties.Encoding;
+                                }
+                            }
+                            
+                            if (derived3.Type != null)
+                            {
+                                serializationValue["type"] = derived3.Type;
+                            }
                         }
-                    }
-                    if (derived.Serialization is JsonSerialization)
-                    {
-                        serializationValue["type"] = "Json";
-                        JsonSerialization derived4 = ((JsonSerialization)derived.Serialization);
-                        
-                        JObject propertiesValue4 = new JObject();
-                        serializationValue["properties"] = propertiesValue4;
-                        
-                        propertiesValue4["encoding"] = derived4.Properties.Encoding;
-                        
-                        if (derived4.Type != null)
+                        if (derived.Serialization is JsonSerialization)
                         {
-                            serializationValue["type"] = derived4.Type;
+                            serializationValue["type"] = "Json";
+                            JsonSerialization derived4 = ((JsonSerialization)derived.Serialization);
+                            
+                            if (derived4.Properties != null)
+                            {
+                                JObject propertiesValue4 = new JObject();
+                                serializationValue["properties"] = propertiesValue4;
+                                
+                                if (derived4.Properties.Encoding != null)
+                                {
+                                    propertiesValue4["encoding"] = derived4.Properties.Encoding;
+                                }
+                            }
+                            
+                            if (derived4.Type != null)
+                            {
+                                serializationValue["type"] = derived4.Type;
+                            }
                         }
-                    }
-                    if (derived.Serialization is AvroSerialization)
-                    {
-                        serializationValue["type"] = "Avro";
-                        AvroSerialization derived5 = ((AvroSerialization)derived.Serialization);
-                        
-                        serializationValue["properties"] = derived5.Properties.ToString();
-                        
-                        if (derived5.Type != null)
+                        if (derived.Serialization is AvroSerialization)
                         {
-                            serializationValue["type"] = derived5.Type;
+                            serializationValue["type"] = "Avro";
+                            AvroSerialization derived5 = ((AvroSerialization)derived.Serialization);
+                            
+                            if (derived5.Properties != null)
+                            {
+                                serializationValue["properties"] = derived5.Properties.ToString();
+                            }
+                            
+                            if (derived5.Type != null)
+                            {
+                                serializationValue["type"] = derived5.Type;
+                            }
                         }
                     }
                 }
@@ -3449,88 +3565,125 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     propertiesValue["type"] = "Stream";
                     StreamInputProperties derived6 = ((StreamInputProperties)parameters.Properties);
                     
-                    JObject datasourceValue2 = new JObject();
-                    propertiesValue["datasource"] = datasourceValue2;
-                    if (derived6.DataSource is BlobStreamInputDataSource)
+                    if (derived6.DataSource != null)
                     {
-                        datasourceValue2["type"] = "Microsoft.Storage/Blob";
-                        BlobStreamInputDataSource derived7 = ((BlobStreamInputDataSource)derived6.DataSource);
-                        
-                        JObject propertiesValue5 = new JObject();
-                        datasourceValue2["properties"] = propertiesValue5;
-                        
-                        if (derived7.Properties.StorageAccounts != null)
+                        JObject datasourceValue2 = new JObject();
+                        propertiesValue["datasource"] = datasourceValue2;
+                        if (derived6.DataSource is BlobStreamInputDataSource)
                         {
-                            if (derived7.Properties.StorageAccounts is ILazyCollection == false || ((ILazyCollection)derived7.Properties.StorageAccounts).IsInitialized)
+                            datasourceValue2["type"] = "Microsoft.Storage/Blob";
+                            BlobStreamInputDataSource derived7 = ((BlobStreamInputDataSource)derived6.DataSource);
+                            
+                            if (derived7.Properties != null)
                             {
-                                JArray storageAccountsArray2 = new JArray();
-                                foreach (StorageAccount storageAccountsItem2 in derived7.Properties.StorageAccounts)
+                                JObject propertiesValue5 = new JObject();
+                                datasourceValue2["properties"] = propertiesValue5;
+                                
+                                if (derived7.Properties.StorageAccounts != null)
                                 {
-                                    JObject storageAccountValue2 = new JObject();
-                                    storageAccountsArray2.Add(storageAccountValue2);
-                                    
-                                    if (storageAccountsItem2.AccountName != null)
+                                    if (derived7.Properties.StorageAccounts is ILazyCollection == false || ((ILazyCollection)derived7.Properties.StorageAccounts).IsInitialized)
                                     {
-                                        storageAccountValue2["accountName"] = storageAccountsItem2.AccountName;
-                                    }
-                                    
-                                    if (storageAccountsItem2.AccountKey != null)
-                                    {
-                                        storageAccountValue2["accountKey"] = storageAccountsItem2.AccountKey;
+                                        JArray storageAccountsArray2 = new JArray();
+                                        foreach (StorageAccount storageAccountsItem2 in derived7.Properties.StorageAccounts)
+                                        {
+                                            JObject storageAccountValue2 = new JObject();
+                                            storageAccountsArray2.Add(storageAccountValue2);
+                                            
+                                            if (storageAccountsItem2.AccountName != null)
+                                            {
+                                                storageAccountValue2["accountName"] = storageAccountsItem2.AccountName;
+                                            }
+                                            
+                                            if (storageAccountsItem2.AccountKey != null)
+                                            {
+                                                storageAccountValue2["accountKey"] = storageAccountsItem2.AccountKey;
+                                            }
+                                        }
+                                        propertiesValue5["storageAccounts"] = storageAccountsArray2;
                                     }
                                 }
-                                propertiesValue5["storageAccounts"] = storageAccountsArray2;
+                                
+                                if (derived7.Properties.Container != null)
+                                {
+                                    propertiesValue5["container"] = derived7.Properties.Container;
+                                }
+                                
+                                if (derived7.Properties.BlobSerializationBoundary != null)
+                                {
+                                    propertiesValue5["blobSerializationBoundary"] = derived7.Properties.BlobSerializationBoundary;
+                                }
+                                
+                                if (derived7.Properties.PathPattern != null)
+                                {
+                                    propertiesValue5["pathPattern"] = derived7.Properties.PathPattern;
+                                }
+                                
+                                if (derived7.Properties.DateFormat != null)
+                                {
+                                    propertiesValue5["dateFormat"] = derived7.Properties.DateFormat;
+                                }
+                                
+                                if (derived7.Properties.TimeFormat != null)
+                                {
+                                    propertiesValue5["timeFormat"] = derived7.Properties.TimeFormat;
+                                }
+                                
+                                if (derived7.Properties.SourcePartitionCount != null)
+                                {
+                                    propertiesValue5["sourcePartitionCount"] = derived7.Properties.SourcePartitionCount.Value;
+                                }
+                            }
+                            
+                            if (derived7.Type != null)
+                            {
+                                datasourceValue2["type"] = derived7.Type;
                             }
                         }
-                        
-                        propertiesValue5["container"] = derived7.Properties.Container;
-                        
-                        if (derived7.Properties.BlobSerializationBoundary != null)
+                        if (derived6.DataSource is EventHubStreamInputDataSource)
                         {
-                            propertiesValue5["blobSerializationBoundary"] = derived7.Properties.BlobSerializationBoundary;
-                        }
-                        
-                        propertiesValue5["pathPattern"] = derived7.Properties.PathPattern;
-                        
-                        if (derived7.Properties.DateFormat != null)
-                        {
-                            propertiesValue5["dateFormat"] = derived7.Properties.DateFormat;
-                        }
-                        
-                        if (derived7.Properties.TimeFormat != null)
-                        {
-                            propertiesValue5["timeFormat"] = derived7.Properties.TimeFormat;
-                        }
-                        
-                        if (derived7.Properties.SourcePartitionCount != null)
-                        {
-                            propertiesValue5["sourcePartitionCount"] = derived7.Properties.SourcePartitionCount.Value;
-                        }
-                        
-                        if (derived7.Type != null)
-                        {
-                            datasourceValue2["type"] = derived7.Type;
-                        }
-                    }
-                    if (derived6.DataSource is EventHubStreamInputDataSource)
-                    {
-                        datasourceValue2["type"] = "Microsoft.ServiceBus/EventHub";
-                        EventHubStreamInputDataSource derived8 = ((EventHubStreamInputDataSource)derived6.DataSource);
-                        
-                        JObject propertiesValue6 = new JObject();
-                        datasourceValue2["properties"] = propertiesValue6;
-                        
-                        propertiesValue6["serviceBusNamespace"] = derived8.Properties.ServiceBusNamespace;
-                        
-                        propertiesValue6["sharedAccessPolicyName"] = derived8.Properties.SharedAccessPolicyName;
-                        
-                        propertiesValue6["sharedAccessPolicyKey"] = derived8.Properties.SharedAccessPolicyKey;
-                        
-                        propertiesValue6["eventHubName"] = derived8.Properties.EventHubName;
-                        
-                        if (derived8.Type != null)
-                        {
-                            datasourceValue2["type"] = derived8.Type;
+                            datasourceValue2["type"] = "Microsoft.ServiceBus/EventHub";
+                            EventHubStreamInputDataSource derived8 = ((EventHubStreamInputDataSource)derived6.DataSource);
+                            
+                            if (derived8.Properties != null)
+                            {
+                                JObject propertiesValue6 = new JObject();
+                                datasourceValue2["properties"] = propertiesValue6;
+                                
+                                if (derived8.Properties.ServiceBusNamespace != null)
+                                {
+                                    propertiesValue6["serviceBusNamespace"] = derived8.Properties.ServiceBusNamespace;
+                                }
+                                
+                                if (derived8.Properties.SharedAccessPolicyName != null)
+                                {
+                                    propertiesValue6["sharedAccessPolicyName"] = derived8.Properties.SharedAccessPolicyName;
+                                }
+                                
+                                if (derived8.Properties.SharedAccessPolicyKey != null)
+                                {
+                                    propertiesValue6["sharedAccessPolicyKey"] = derived8.Properties.SharedAccessPolicyKey;
+                                }
+                                
+                                if (derived8.Properties.EventHubName != null)
+                                {
+                                    propertiesValue6["eventHubName"] = derived8.Properties.EventHubName;
+                                }
+                                
+                                if (derived8.Properties.SourcePartitionCount != null)
+                                {
+                                    propertiesValue6["sourcePartitionCount"] = derived8.Properties.SourcePartitionCount.Value;
+                                }
+                                
+                                if (derived8.Properties.ConsumerGroupName != null)
+                                {
+                                    propertiesValue6["consumerGroupName"] = derived8.Properties.ConsumerGroupName;
+                                }
+                            }
+                            
+                            if (derived8.Type != null)
+                            {
+                                datasourceValue2["type"] = derived8.Type;
+                            }
                         }
                     }
                     
@@ -3544,50 +3697,71 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                         propertiesValue["type"] = derived6.Type;
                     }
                     
-                    JObject serializationValue2 = new JObject();
-                    propertiesValue["serialization"] = serializationValue2;
-                    if (derived6.Serialization is CsvSerialization)
+                    if (derived6.Serialization != null)
                     {
-                        serializationValue2["type"] = "Csv";
-                        CsvSerialization derived9 = ((CsvSerialization)derived6.Serialization);
-                        
-                        JObject propertiesValue7 = new JObject();
-                        serializationValue2["properties"] = propertiesValue7;
-                        
-                        propertiesValue7["fieldDelimiter"] = derived9.Properties.FieldDelimiter;
-                        
-                        propertiesValue7["encoding"] = derived9.Properties.Encoding;
-                        
-                        if (derived9.Type != null)
+                        JObject serializationValue2 = new JObject();
+                        propertiesValue["serialization"] = serializationValue2;
+                        if (derived6.Serialization is CsvSerialization)
                         {
-                            serializationValue2["type"] = derived9.Type;
+                            serializationValue2["type"] = "Csv";
+                            CsvSerialization derived9 = ((CsvSerialization)derived6.Serialization);
+                            
+                            if (derived9.Properties != null)
+                            {
+                                JObject propertiesValue7 = new JObject();
+                                serializationValue2["properties"] = propertiesValue7;
+                                
+                                if (derived9.Properties.FieldDelimiter != null)
+                                {
+                                    propertiesValue7["fieldDelimiter"] = derived9.Properties.FieldDelimiter;
+                                }
+                                
+                                if (derived9.Properties.Encoding != null)
+                                {
+                                    propertiesValue7["encoding"] = derived9.Properties.Encoding;
+                                }
+                            }
+                            
+                            if (derived9.Type != null)
+                            {
+                                serializationValue2["type"] = derived9.Type;
+                            }
                         }
-                    }
-                    if (derived6.Serialization is JsonSerialization)
-                    {
-                        serializationValue2["type"] = "Json";
-                        JsonSerialization derived10 = ((JsonSerialization)derived6.Serialization);
-                        
-                        JObject propertiesValue8 = new JObject();
-                        serializationValue2["properties"] = propertiesValue8;
-                        
-                        propertiesValue8["encoding"] = derived10.Properties.Encoding;
-                        
-                        if (derived10.Type != null)
+                        if (derived6.Serialization is JsonSerialization)
                         {
-                            serializationValue2["type"] = derived10.Type;
+                            serializationValue2["type"] = "Json";
+                            JsonSerialization derived10 = ((JsonSerialization)derived6.Serialization);
+                            
+                            if (derived10.Properties != null)
+                            {
+                                JObject propertiesValue8 = new JObject();
+                                serializationValue2["properties"] = propertiesValue8;
+                                
+                                if (derived10.Properties.Encoding != null)
+                                {
+                                    propertiesValue8["encoding"] = derived10.Properties.Encoding;
+                                }
+                            }
+                            
+                            if (derived10.Type != null)
+                            {
+                                serializationValue2["type"] = derived10.Type;
+                            }
                         }
-                    }
-                    if (derived6.Serialization is AvroSerialization)
-                    {
-                        serializationValue2["type"] = "Avro";
-                        AvroSerialization derived11 = ((AvroSerialization)derived6.Serialization);
-                        
-                        serializationValue2["properties"] = derived11.Properties.ToString();
-                        
-                        if (derived11.Type != null)
+                        if (derived6.Serialization is AvroSerialization)
                         {
-                            serializationValue2["type"] = derived11.Type;
+                            serializationValue2["type"] = "Avro";
+                            AvroSerialization derived11 = ((AvroSerialization)derived6.Serialization);
+                            
+                            if (derived11.Properties != null)
+                            {
+                                serializationValue2["properties"] = derived11.Properties.ToString();
+                            }
+                            
+                            if (derived11.Type != null)
+                            {
+                                serializationValue2["type"] = derived11.Type;
+                            }
                         }
                     }
                 }
@@ -3938,6 +4112,20 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                     string eventHubNameInstance = ((string)eventHubNameValue);
                                                     propertiesInstance6.EventHubName = eventHubNameInstance;
                                                 }
+                                                
+                                                JToken sourcePartitionCountValue2 = propertiesValue15["sourcePartitionCount"];
+                                                if (sourcePartitionCountValue2 != null && sourcePartitionCountValue2.Type != JTokenType.Null)
+                                                {
+                                                    int sourcePartitionCountInstance2 = ((int)sourcePartitionCountValue2);
+                                                    propertiesInstance6.SourcePartitionCount = sourcePartitionCountInstance2;
+                                                }
+                                                
+                                                JToken consumerGroupNameValue = propertiesValue15["consumerGroupName"];
+                                                if (consumerGroupNameValue != null && consumerGroupNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string consumerGroupNameInstance = ((string)consumerGroupNameValue);
+                                                    propertiesInstance6.ConsumerGroupName = consumerGroupNameInstance;
+                                                }
                                             }
                                             
                                             JToken typeValue7 = datasourceValue4["type"];
@@ -4058,6 +4246,10 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     {
                         result.Date = DateTime.Parse(httpResponse.Headers.GetValues("Date").FirstOrDefault(), CultureInfo.InvariantCulture);
                     }
+                    if (httpResponse.Headers.Contains("ETag"))
+                    {
+                        result.Properties.Etag = httpResponse.Headers.GetValues("ETag").FirstOrDefault();
+                    }
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
@@ -4084,6 +4276,73 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     httpRequest.Dispose();
                 }
             }
+        }
+        
+        /// <summary>
+        /// Test the connectivity of an input for a stream analytics job.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The resource group name of the stream analytics job.
+        /// </param>
+        /// <param name='jobName'>
+        /// Required. The name of the stream analytics job.
+        /// </param>
+        /// <param name='inputName'>
+        /// Required. The input name of the stream analytics job.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The test result of the input or output data source.
+        /// </returns>
+        public async Task<DataSourceTestConnectionResponse> TestConnectionAsync(string resourceGroupName, string jobName, string inputName, CancellationToken cancellationToken)
+        {
+            StreamAnalyticsManagementClient client = this.Client;
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("jobName", jobName);
+                tracingParameters.Add("inputName", inputName);
+                TracingAdapter.Enter(invocationId, this, "TestConnectionAsync", tracingParameters);
+            }
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            DataSourceTestConnectionResponse response = await client.Inputs.BeginTestConnectionAsync(resourceGroupName, jobName, inputName, cancellationToken).ConfigureAwait(false);
+            if (response.Status == OperationStatus.Succeeded)
+            {
+                return response;
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            DataSourceTestConnectionResponse result = await client.GetTestConnectionStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = response.RetryAfter;
+            if (delayInSeconds == 0)
+            {
+                delayInSeconds = 10;
+            }
+            while ((result.Status != OperationStatus.InProgress) == false)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.GetTestConnectionStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = result.RetryAfter;
+                if (delayInSeconds == 0)
+                {
+                    delayInSeconds = 10;
+                }
+            }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            return result;
         }
     }
 }

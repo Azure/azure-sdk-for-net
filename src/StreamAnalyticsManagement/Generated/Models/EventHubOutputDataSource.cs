@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private EventHubOutputDataSourceProperties _properties;
         
         /// <summary>
-        /// Required. Gets or sets the properties of the EventHub data source
+        /// Optional. Gets or sets the properties of the EventHub data source
         /// as output.
         /// </summary>
         public EventHubOutputDataSourceProperties Properties
@@ -47,20 +47,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// </summary>
         public EventHubOutputDataSource()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the EventHubOutputDataSource class
-        /// with required arguments.
-        /// </summary>
-        public EventHubOutputDataSource(EventHubOutputDataSourceProperties properties)
-            : this()
-        {
-            if (properties == null)
-            {
-                throw new ArgumentNullException("properties");
-            }
-            this.Properties = properties;
         }
     }
 }
