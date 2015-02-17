@@ -23,7 +23,7 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyTitle("Microsoft.WindowsAzure.Management.HDInsight.Framework.Core")]
 [assembly: AssemblyDescription("")]
-[assembly: AssemblyVersion("1.4.6.0")]
+[assembly: AssemblyVersion("1.5.0.0")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Microsoft.WindowsAzure.Management.HDInsight.Framework.Core")]

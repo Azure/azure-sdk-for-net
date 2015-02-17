@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyTitle("netmapred")]
 [assembly: AssemblyDescription("")]
-[assembly: AssemblyVersion("1.4.6.0")]
+[assembly: AssemblyVersion("1.5.0.0")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("netmapred")]
