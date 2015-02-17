@@ -225,12 +225,12 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
-            url = url + "/services/appgwprodnext/ApplicationGateways/";
+            url = url + "/services/networking/ApplicationGateways/";
             url = url + Uri.EscapeDataString(gatewayName);
             url = url + "/sslcertificates/";
             url = url + Uri.EscapeDataString(certificateName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=1.0");
+            queryParameters.Add("api-version=2014-10-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -415,9 +415,9 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
-            url = url + "/services/appgwprodnext/ApplicationGateways";
+            url = url + "/services/networking/ApplicationGateways";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=1.0");
+            queryParameters.Add("api-version=2014-10-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -627,10 +627,10 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
-            url = url + "/services/appgwprodnext/ApplicationGateways/";
+            url = url + "/services/networking/ApplicationGateways/";
             url = url + Uri.EscapeDataString(gatewayName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=1.0");
+            queryParameters.Add("api-version=2014-10-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -789,12 +789,12 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
-            url = url + "/services/appgwprodnext/ApplicationGateways/";
+            url = url + "/services/networking/ApplicationGateways/";
             url = url + Uri.EscapeDataString(gatewayName);
             url = url + "/sslcertificates/";
             url = url + Uri.EscapeDataString(certificateName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=1.0");
+            queryParameters.Add("api-version=2014-10-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -955,11 +955,11 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
-            url = url + "/services/appgwprodnext/ApplicationGateways/";
+            url = url + "/services/networking/ApplicationGateways/";
             url = url + Uri.EscapeDataString(gatewayName);
             url = url + "/Operations";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=1.0");
+            queryParameters.Add("api-version=2014-10-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1138,11 +1138,11 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
-            url = url + "/services/appgwprodnext/ApplicationGateways/";
+            url = url + "/services/networking/ApplicationGateways/";
             url = url + Uri.EscapeDataString(gatewayName);
             url = url + "/configuration";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=1.0");
+            queryParameters.Add("api-version=2014-10-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1545,10 +1545,10 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
-            url = url + "/services/appgwprodnext/ApplicationGateways/";
+            url = url + "/services/networking/ApplicationGateways/";
             url = url + Uri.EscapeDataString(gatewayName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=1.0");
+            queryParameters.Add("api-version=2014-10-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2121,10 +2121,10 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
-            url = url + "/services/appgwprodnext/ApplicationGateways/";
+            url = url + "/services/networking/ApplicationGateways/";
             url = url + Uri.EscapeDataString(gatewayName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=1.0");
+            queryParameters.Add("api-version=2014-10-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2343,12 +2343,12 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
-            url = url + "/services/appgwprodnext/ApplicationGateways/";
+            url = url + "/services/networking/ApplicationGateways/";
             url = url + Uri.EscapeDataString(gatewayName);
             url = url + "/sslcertificates/";
             url = url + Uri.EscapeDataString(certificateName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=1.0");
+            queryParameters.Add("api-version=2014-10-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2513,11 +2513,11 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
-            url = url + "/services/appgwprodnext/ApplicationGateways/";
+            url = url + "/services/networking/ApplicationGateways/";
             url = url + Uri.EscapeDataString(gatewayName);
             url = url + "/configuration";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=1.0");
+            queryParameters.Add("api-version=2014-10-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2886,7 +2886,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
-            url = url + "/services/appgwprodnext/operation/";
+            url = url + "/services/networking/operation/";
             url = url + Uri.EscapeDataString(requestId);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -3068,9 +3068,9 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
-            url = url + "/services/appgwprodnext/ApplicationGateways";
+            url = url + "/services/networking/ApplicationGateways";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=1.0");
+            queryParameters.Add("api-version=2014-10-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -3286,11 +3286,11 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
-            url = url + "/services/appgwprodnext/ApplicationGateways/";
+            url = url + "/services/networking/ApplicationGateways/";
             url = url + Uri.EscapeDataString(gatewayName);
             url = url + "/sslcertificates";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=1.0");
+            queryParameters.Add("api-version=2014-10-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
