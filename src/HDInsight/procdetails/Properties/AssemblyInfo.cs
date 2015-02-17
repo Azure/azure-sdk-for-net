@@ -22,14 +22,7 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 
 [assembly: AssemblyTitle("procdetails")]
-[assembly: AssemblyDescription("Provides the details it's execution space for diagnostic purposes")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyVersion("1.5.0.0")]
-[assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Microsoft.Hadoop.MapReduce.Test")]
-[assembly: AssemblyCopyright("Copyright (c) Microsoft Corporation")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
 [assembly: Guid("2E0EF5F1-5C42-4E0C-A743-63C3C55E2C02")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 

@@ -15,14 +15,7 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 
 [assembly: AssemblyTitle("Microsoft.Hadoop.Avro")]
-[assembly: AssemblyDescription("")]
-[assembly: AssemblyVersion("1.5.0.0")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Microsoft.Hadoop.Avro")]
-[assembly: AssemblyCopyright("Copyright (c) Microsoft Corporation")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
 [assembly: Guid("109bd5a1-5f33-47b1-83ee-a57269b4da87")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 

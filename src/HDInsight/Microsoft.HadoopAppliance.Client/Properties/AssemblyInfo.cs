@@ -24,14 +24,7 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 
 [assembly: AssemblyTitle("Microsoft.HadoopAppliance.Client")]
-[assembly: AssemblyDescription("")]
-[assembly: AssemblyVersion("1.5.0.0")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Microsoft.HadoopAppliance.Client")]
-[assembly: AssemblyCopyright("Copyright (c) Microsoft 2014")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 
