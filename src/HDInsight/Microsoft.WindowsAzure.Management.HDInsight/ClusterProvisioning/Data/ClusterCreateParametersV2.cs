@@ -338,6 +338,5 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
                 throw new InvalidOperationException(String.Format("Zookeeper node size is not configurable and must not be set for clusters with OS Type {0}.", this.OSType));
             }
         }
-        }
     }
 }

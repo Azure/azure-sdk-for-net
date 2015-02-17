@@ -18,6 +18,9 @@
       <HintPath>..\..\..\packages\BouncyCastle.1.7.0\lib\Net40-Client\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.WindowsAzure.Common">
+      <HintPath>$(SolutionDir)\packages\Microsoft.WindowsAzure.Common.1.3.0\lib\portable-net45+sl50+wp8+wpa81+win\Microsoft.WindowsAzure.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Common">
       <HintPath>$(LibraryNugetPackageFolder)\Microsoft.WindowsAzure.Common.1.3.0\lib\net45\Microsoft.WindowsAzure.Common.dll</HintPath>
     </Reference>
   </ItemGroup>
@@ -60,8 +63,9 @@
     <Compile Include="ClusterProvisioning\Data\Rdfe\UsageMeterCollection.cs" />
     <Compile Include="ClusterProvisioning\Data\Resource.cs" />
     <Compile Include="ClusterProvisioning\PocoClient\AsvValidationHelper.cs" />
-    <Compile Include="ClusterProvisioning\PocoClient\ClustersResource\ClustersPocoClient.cs" />
-    <Compile Include="ClusterProvisioning\PocoClient\ClustersResource\Extensions\WabStorageAccountConfigurationExtensions.cs" />
+    <Compile Include="ClusterProvisioning\PocoClient\IaasClusters\IaasClustersPocoClient.cs" />
+    <Compile Include="ClusterProvisioning\PocoClient\PaasClusters\PaasClustersPocoClient.cs" />
+    <Compile Include="ClusterProvisioning\PocoClient\PaasClusters\Extensions\WabStorageAccountConfigurationExtensions.cs" />
     <Compile Include="ClusterProvisioning\PocoClient\SchemaVersionUtils.cs" />
     <Compile Include="ClusterProvisioning\PocoClient\IaasClusters\IaasClustersPocoClient.cs" />
     <Compile Include="ClusterProvisioning\PocoClient\PaasClusters\PaasClustersPocoClient.cs" />

@@ -58,6 +58,9 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         ///     Default HDInsight version.
         /// </summary>
         internal const string DEFAULTHDINSIGHTVERSION = "default";
+        internal const string ClustersContractCapabilityVersion1 = "CAPABILITY_FEATURE_CLUSTERS_CONTRACT_1_SDK";
+        internal static string ClustersContractCapabilityVersion2 = "CAPABILITY_FEATURE_CLUSTERS_CONTRACT_2_SDK";
+        internal static string IaasClustersCapability = "CAPABILITY_FEATURE_IAAS_DEPLOYMENTS";
         internal const string ClusterAlreadyExistsError = "The condition specified by the ETag is not satisfied.";
 
         private IHDInsightSubscriptionCredentials credentials;
@@ -197,7 +200,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
                     allClusters = iaasClusters.Concat(allClusters).ToList();
                 }
             }
-
             return allClusters;
         }
 
@@ -359,7 +361,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
             {
                 throw new ArgumentNullException("clusterCreateParameters");
             }
-
+			
             // Validate cluster creation parameters
             clusterCreateParameters.ValidateClusterCreateParameters();
             this.LogMessage("Validating Cluster Versions", Severity.Informational, Verbosity.Detailed);

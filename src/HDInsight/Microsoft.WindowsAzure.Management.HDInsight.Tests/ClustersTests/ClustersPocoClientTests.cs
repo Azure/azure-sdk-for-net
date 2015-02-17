@@ -36,6 +36,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClustersTests
         {
             var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
                                                       .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(Capabilities));
+
             Assert.IsNotNull(restClient);
 
             using (var paasClustersPocoClient = new PaasClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient))
