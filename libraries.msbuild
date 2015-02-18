@@ -107,7 +107,7 @@
   Build version parameters
   -->
   <PropertyGroup>
-    <BuildVersionSuffix></BuildVersionSuffix>
+    <BuildVersionSuffix>Nightly</BuildVersionSuffix>
     <AdditionalVersionSuffix></AdditionalVersionSuffix>
   </PropertyGroup>
 
