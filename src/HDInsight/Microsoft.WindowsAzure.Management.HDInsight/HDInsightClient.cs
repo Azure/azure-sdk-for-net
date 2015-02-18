@@ -399,35 +399,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
                     throw;
                 }
             }
-            // listen to cluster provisioning events on the POCO client.
-            client.ClusterProvisioning += this.RaiseClusterProvisioningEvent;
-            Exception requestException = null;
-
-            // Creates a cluster and waits for it to complete
-            try
-            {
-                this.LogMessage("Sending Cluster Create Request", Severity.Informational, Verbosity.Detailed);
-                await client.CreateContainer(clusterCreateParameters);
-            }
-            catch (Exception ex)
-            {
-                ex = ex.GetFirstException();
-                var hlex = ex as HttpLayerException;
-                var httpEx = ex as HttpRequestException;
-                var webex = ex as WebException;
-                if (hlex.IsNotNull() || httpEx.IsNotNull() || webex.IsNotNull())
-                {
-                    requestException = ex;
-                    if (hlex.IsNotNull())
-                    {
-                        HandleCreateHttpLayerException(clusterCreateParameters, hlex);
-                    }
-                }
-                else
-                {
-                    throw;
-                }
-            }
 
             await client.WaitForClusterInConditionOrError(this.HandleClusterWaitNotifyEvent,
                                                           clusterCreateParameters.Name,
