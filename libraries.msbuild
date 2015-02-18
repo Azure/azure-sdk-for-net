@@ -107,7 +107,8 @@
   Build version parameters
   -->
   <PropertyGroup>
-    <BuildVersionSuffix>-Nightly</BuildVersionSuffix>
+    <BuildVersionSuffix></BuildVersionSuffix>
+    <BuildVersionSuffix Condition="$(NuGetSuffix) == 'Nightly'">-Nightly</BuildVersionSuffix>
     <AdditionalVersionSuffix></AdditionalVersionSuffix>
   </PropertyGroup>
 
