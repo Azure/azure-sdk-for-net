@@ -35,5 +35,13 @@ namespace Microsoft.Hadoop.Avro.Tests
             Assert.IsFalse(typeof(int[]).CanBeKnownTypeOf(typeof(IList<IListClass>)));
             Assert.IsFalse(typeof(int[]).CanBeKnownTypeOf(typeof(IList<Guid>)));
         }
+
+        [TestMethod]
+        public void GenericIsAssignableTest()
+        {
+            Assert.IsFalse(typeof(int[]).GenericIsAssignable(typeof(IDictionary<int, Guid>)));
+            Assert.IsFalse(typeof(IList<int>).GenericIsAssignable(typeof(IDictionary<int, Guid>)));
+            Assert.IsFalse(typeof(IDictionary<int, Guid>).GenericIsAssignable(typeof(IList<int>)));
+        }
     }
 }

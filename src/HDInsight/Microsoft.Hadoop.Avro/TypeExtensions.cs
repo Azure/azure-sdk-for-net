@@ -252,7 +252,7 @@ namespace Microsoft.Hadoop.Avro
                                   .TrueForAll(tuple => CanBeKnownTypeOf(tuple.Item1, tuple.Item2))));
         }
 
-        private static bool GenericIsAssignable(this Type type, Type instanceType)
+        internal static bool GenericIsAssignable(this Type type, Type instanceType)
         {
             if (!type.IsGenericType || !instanceType.IsGenericType)
             {
@@ -260,7 +260,9 @@ namespace Microsoft.Hadoop.Avro
             }
 
             var args = type.GetGenericArguments();
-            return args.Any() && type.IsAssignableFrom(instanceType.GetGenericTypeDefinition().MakeGenericType(args));
+            var typeDefinition = instanceType.GetGenericTypeDefinition();
+            var args2 = typeDefinition.GetGenericArguments();
+            return args.Any() && args.Length == args2.Length && type.IsAssignableFrom(typeDefinition.MakeGenericType(args));
         }
 
         public static IEnumerable<Type> GetAllKnownTypes(this Type t)
