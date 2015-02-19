@@ -214,46 +214,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
             return resultId.Data;
         }
 
-        // This method is used by the NonPublic SDK.  Be aware of breaking changes to that project when you alter it.
-        internal static async Task EnableDisableUser(IHDInsightSubscriptionAbstractionContext context,
-                                                     UserChangeRequestUserType requestType,
-                                                     UserChangeRequestOperationType operation,
-                                                     string dnsName,
-                                                     string location,
-                                                     string userName,
-                                                     string password,
-                                                     DateTimeOffset expiration)
-        {
-            var client = ServiceLocator.Instance.Locate<IHDInsightManagementPocoClientFactory>().Create(context.Credentials, context, false);
-            Guid operationId = await EnableDisableUserPocoCall(context, requestType, operation, dnsName, location, userName, password, expiration);
-            await client.WaitForOperationCompleteOrError(dnsName, location, operationId, TimeSpan.FromHours(1), context.CancellationToken);
-        }
-
-        // This method is used by the NonPublic SDK.  Be aware of braking changes to that project when you alter it.
-        private static async Task<Guid> EnableDisableUserPocoCall(IHDInsightSubscriptionAbstractionContext context,
-                                                                  UserChangeRequestUserType requestType,
-                                                                  UserChangeRequestOperationType operation,
-                                                                  string dnsName,
-                                                                  string location,
-                                                                  string userName,
-                                                                  string password,
-                                                                  DateTimeOffset expiration)
-        {
-            var client = ServiceLocator.Instance.Locate<IHDInsightManagementPocoClientFactory>().Create(context.Credentials, context, false);
-            var operationId = await client.EnableDisableProtocol(requestType, operation, dnsName, location, userName, password, expiration);
-            return operationId;
-        }
-
-        // This method is used by the NonPublic SDK.  Be aware of braking changes to that project when you alter it.
-        internal static void RegisterUserChangeRequestHandler(Type credentialsType,
-                                                              UserChangeRequestUserType changeType,
-                                                              Func<IHDInsightSubscriptionAbstractionContext, string, string, Uri> uriBuilder,
-                                                              Func<UserChangeRequestOperationType, string, string, DateTimeOffset, string> payloadConverter)
-        {
-            var manager = ServiceLocator.Instance.Locate<IUserChangeRequestManager>();
-            manager.RegisterUserChangeRequestHandler(credentialsType, changeType, uriBuilder, payloadConverter);
-        }
-
         public async Task<Guid> EnableHttp(string dnsName, string location, string httpUserName, string httpPassword)
         {
             return await this.EnableDisableProtocol(UserChangeRequestUserType.Http,
@@ -274,6 +234,24 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
                                                     string.Empty,
                                                     string.Empty,
                                                     DateTimeOffset.MinValue);
+        }
+
+        public async Task<Guid> EnableRdp(string dnsName, string location, string rdpUserName, string rdpPassword, DateTime expiry)
+        {
+            var client = ServiceLocator.Instance.Locate<IHDInsightManagementPocoClientFactory>()
+                .Create(this.credentials, this.Context, false);
+            var operationId = await client.EnableDisableProtocol(UserChangeRequestUserType.Rdp,
+                UserChangeRequestOperationType.Enable, dnsName, location, rdpUserName, rdpPassword, expiry);
+            return operationId;
+        }
+
+        public async Task<Guid> DisableRdp(string dnsName, string location)
+        {
+            var client = ServiceLocator.Instance.Locate<IHDInsightManagementPocoClientFactory>()
+                .Create(this.credentials, this.Context, false);
+            var operationId =  await client.EnableDisableProtocol(UserChangeRequestUserType.Rdp,
+                UserChangeRequestOperationType.Disable, dnsName, location, string.Empty, string.Empty, DateTime.MinValue);
+            return operationId;
         }
 
         public async Task<bool> IsComplete(string dnsName, string location, Guid operationId)

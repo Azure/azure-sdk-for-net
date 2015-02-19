@@ -128,9 +128,54 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.HadoopClientTests
             }
         }
 
+        [TestMethod]
+        [TestCategory("ApiSec")]
+        [TestCategory(TestRunMode.CheckIn)]
+        public async Task ICanDeleteAndAddRdpUser()
+        {
+            IHDInsightCertificateCredential credentials = IntegrationTestBase.GetValidCredentials();
+            var client = ServiceLocator.Instance.Locate<IHDInsightClientFactory>().Create(new HDInsightCertificateCredential(credentials.SubscriptionId, credentials.Certificate));
+
+            var manager = ServiceLocator.Instance.Locate<IHDInsightManagementPocoClientFactory>();
+            var pocoClient = manager.Create(credentials, GetAbstractionContext(), false);
+            var containers = await pocoClient.ListContainers();
+            ClusterDetails clusterDetails = containers.Last();
+
+            var clusterCreationDetails = GetRandomCluster();
+            clusterDetails = client.CreateCluster(clusterCreationDetails);
+            // now add a user
+            string userName = "hdinsightrdpuser";
+            string password = GetRandomValidPassword();
+            var operationId =
+                await
+                    pocoClient.EnableRdp(clusterDetails.Name, clusterDetails.Location, userName, password,
+                        DateTime.Now.AddDays(6));
+            await WaitforCompletion(pocoClient, clusterDetails.Name, clusterDetails.Location, operationId);
+
+            ClusterDetails cluster = await pocoClient.ListContainer(clusterDetails.Name);
+
+            Assert.IsFalse(String.IsNullOrEmpty(cluster.Name), "Cluster user name is empty, maybe cluster was not created.");
+            Assert.AreEqual(userName, cluster.RdpUserName, "Rdp user name has not been updated");
+
+            operationId = await pocoClient.DisableRdp(clusterDetails.Name, clusterDetails.Location);
+
+            await WaitforCompletion(pocoClient, clusterDetails.Name, clusterDetails.Location, operationId);
+
+            cluster = await pocoClient.ListContainer(clusterDetails.Name);
+            Assert.IsTrue(String.IsNullOrEmpty(cluster.RdpUserName), "rdp user name has not been cleared");
+            
+            if (!string.Equals(clusterDetails.Name, IntegrationTestBase.TestCredentials.WellKnownCluster.DnsName))
+            {
+                client.DeleteCluster(clusterDetails.Name);
+            }
+        }
+
         private static async Task WaitforCompletion(IHDInsightManagementPocoClient pocoClient, string dnsName, string location, Guid operationId)
         {
-            await pocoClient.WaitForOperationCompleteOrError(dnsName, location, operationId, TimeSpan.FromMilliseconds(IHadoopClientExtensions.GetPollingInterval()), CancellationToken.None);
+            await
+                pocoClient.WaitForOperationCompleteOrError(dnsName, location, operationId,
+                    TimeSpan.FromMilliseconds(IHadoopClientExtensions.GetPollingInterval()), TimeSpan.FromMinutes(10),
+                    CancellationToken.None);
         }
 
         [TestMethod]
@@ -283,7 +328,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.HadoopClientTests
         {
             string username = "hdinsightuser";
             string password = GetRandomValidPassword();
-            var payload = PayloadConverter.SerializeConnectivityRequest(UserChangeRequestOperationType.Enable, username, password, DateTimeOffset.MinValue);
+            var payload = PayloadConverter.SerializeHttpConnectivityRequest(UserChangeRequestOperationType.Enable, username, password, DateTimeOffset.MinValue);
 
             var serverConverter = new ClusterProvisioningServerPayloadConverter();
             var request = serverConverter.DeserializeChangeRequest<HttpUserChangeRequest>(payload);
@@ -292,7 +337,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.HadoopClientTests
             Assert.AreEqual(password, request.Password, "Round trip serialize/deserialize enable http does not match password");
             Assert.AreEqual(UserChangeOperationType.Enable, request.Operation, "Round trip serialize/deserialize enable http does not match operation requested");
 
-            payload = PayloadConverter.SerializeConnectivityRequest(UserChangeRequestOperationType.Disable, username, password, DateTimeOffset.MinValue);
+            payload = PayloadConverter.SerializeHttpConnectivityRequest(UserChangeRequestOperationType.Disable, username, password, DateTimeOffset.MinValue);
 
             request = serverConverter.DeserializeChangeRequest<HttpUserChangeRequest>(payload);
 

@@ -533,6 +533,25 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.Scenario
 
         [TestMethod]
         [TestCategory("CheckIn")]
+        public void EnableRdpAccess_ExpiryDateInPast()
+        {
+            IHDInsightCertificateCredential credentials = IntegrationTestBase.GetValidCredentials();
+            var client = HDInsightClient.Connect(new HDInsightCertificateCredential(credentials.SubscriptionId, credentials.Certificate));
+            var expiry = DateTime.Now.Subtract(TimeSpan.FromMilliseconds(1));
+            try
+            {
+                client.EnableRdp("randomDnsName", "randomLocation", "randomRdpUsername", "randomRdpPassword",
+                    DateTime.Now.Subtract(TimeSpan.FromMilliseconds(1)));
+                throw new Exception("EnableRdp should have thrown");
+            }
+            catch (ArgumentOutOfRangeException c)
+            {
+                Assert.IsTrue(c.Message.Equals(string.Format("DateTime expiry needs to be sometime in future. Given expiry: {0}\r\nParameter name: expiry", expiry.ToString())));
+            }
+        }
+
+        [TestMethod]
+        [TestCategory("CheckIn")]
         public void CreateClusterWithNewVMSizes_VersionTooLow()
         {
             var clusterRequest = GetRandomCluster();

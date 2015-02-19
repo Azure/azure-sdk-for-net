@@ -164,5 +164,22 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         /// The location of the cluster.
         /// </param>
         void DisableHttp(string dnsName, string location);
+
+        /// <summary>
+        /// Enables Rdp access on the HDInsight cluster.
+        /// </summary>
+        /// <param name="dnsName">The Dns name of the cluster</param>
+        /// <param name="location">The location of the cluster</param>
+        /// <param name="rdpUserName">Rdp username of the cluster</param>
+        /// <param name="rdpPassword">Rdp password of the cluseter</param>
+        /// <param name="expiry">The UTC time when the Rdp access on the cluster will expire</param>
+        void EnableRdp(string dnsName, string location, string rdpUserName, string rdpPassword, DateTime expiry);
+
+        /// <summary>
+        /// Disables the Rdp access on the HDInsight cluster
+        /// </summary>
+        /// <param name="dnsName">The Dns name of the cluster</param>
+        /// <param name="location">The location of the cluster</param>
+        void DisableRdp(string dnsName, string location);
     }
 }

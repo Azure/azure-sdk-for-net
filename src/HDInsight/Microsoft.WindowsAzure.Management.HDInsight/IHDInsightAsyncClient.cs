@@ -158,5 +158,24 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         /// A task that can be used to wait for the request to complete.
         /// </returns>
         Task DisableHttpAsync(string dnsName, string location);
+
+        /// <summary>
+        /// Enables Rdp access on the HDInsight cluster.
+        /// </summary>
+        /// <param name="dnsName">The Dns name of the cluster</param>
+        /// <param name="location">The location of the cluster</param>
+        /// <param name="rdpUserName">Rdp username of the cluster</param>
+        /// <param name="rdpPassword">Rdp password of the cluseter</param>
+        /// <param name="expiry">The time when the Rdp access on the cluster will expire</param>
+        /// <returns>A task that can be used to wait for the request to complete</returns>>
+        Task EnableRdpAsync(string dnsName, string location, string rdpUserName, string rdpPassword, DateTime expiry);
+
+        /// <summary>
+        /// Disables the Rdp access on the HDInsight cluster
+        /// </summary>
+        /// <param name="dnsName">The Dns name of the cluster</param>
+        /// <param name="location">The location of the cluster</param>
+        /// <returns>A task that can be used to wait for the request to complete</returns>
+        Task DisableRdpAsync(string dnsName, string location);
     }
 }

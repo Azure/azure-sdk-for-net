@@ -17,6 +17,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.RestCl
     using System;
     using System.Globalization;
     using Microsoft.WindowsAzure.Management.HDInsight.Framework.ServiceLocation;
+    using Microsoft.WindowsAzure.Management.HDInsight.Framework.Core.Library;
 
     internal class HDInsightManagementRdfeUriBuilder : IHDInsightManagementRestUriBuilder
     {
@@ -96,6 +97,23 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.RestCl
 
             string relativeUri = string.Format(CultureInfo.InvariantCulture,
                 "/{0}/cloudservices/{1}/resources/{2}/~/containers/{3}/users/http",
+                this.credentials.SubscriptionId,
+                regionCloudServicename,
+                this.credentials.DeploymentNamespace,
+                dnsName);
+
+            return new Uri(this.credentials.Endpoint, new Uri(relativeUri, UriKind.Relative));
+        }
+
+        public Uri GetEnableDisableRdpUri(string dnsName, string location)
+        {
+            dnsName.ArgumentNotNullOrEmpty("dnsName");
+            location.ArgumentNotNullOrEmpty("location");
+            string regionCloudServicename = this.resolver.GetCloudServiceName(
+                    this.credentials.SubscriptionId, this.credentials.DeploymentNamespace, location);
+
+            string relativeUri = string.Format(CultureInfo.InvariantCulture,
+                "/{0}/cloudservices/{1}/resources/{2}/~/containers/{3}/users/rdp",
                 this.credentials.SubscriptionId,
                 regionCloudServicename,
                 this.credentials.DeploymentNamespace,

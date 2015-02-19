@@ -86,5 +86,11 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.RestCl
         {
             return ((Task<PassthroughResponse>)(base.CreateAndInvokeRestRequestForParentMethodAsync<PassthroughResponse>(subscriptionId, cloudServiceName, resourceNamespace, dnsName, operationId, cancellationToken)));
         }
+
+        public Task<PassthroughResponse> EnableDisableRdp(string subscriptionId, string cloudServiceName, string resourceNamespace, string clusterDnsName,
+            string actionType, ClusterRoleCollection roleCollection, CancellationToken cancellationToken)
+        {
+            return ((Task<PassthroughResponse>)(base.CreateAndInvokeRestRequestForParentMethodAsync<PassthroughResponse>(subscriptionId, cloudServiceName, resourceNamespace, clusterDnsName, actionType, roleCollection)));
+        }
     }
 }

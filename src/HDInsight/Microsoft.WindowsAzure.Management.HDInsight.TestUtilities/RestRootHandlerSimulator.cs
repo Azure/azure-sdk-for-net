@@ -18,6 +18,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities
     using Microsoft.WindowsAzure.Management.HDInsight.Contracts;
     using Microsoft.WindowsAzure.Management.HDInsight.Contracts.May2014;
     using Microsoft.WindowsAzure.Management.HDInsight.Contracts.May2014.Components;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     public class RootHandlerSimulatorController : ApiController
     {
@@ -169,16 +170,43 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities
 
         [Route("~/{subscriptionId}/cloudservices/{cloudServiceName}/resources/{resourceNamespace}/~/clusters/{dnsName}/roles")]
         [HttpPost]
-        public async Task<PassthroughResponse> ChangeClusterSize(string subscriptionId, string cloudServiceName, string resourceNamespace, string dnsName)
+        public async Task<PassthroughResponse> UpdateRole(string subscriptionId, string cloudServiceName, string resourceNamespace, string dnsName)
         {
             var requestMessage = this.Request;
-            var actionValue = requestMessage.RequestUri.ParseQueryString()["action"];
             if (requestMessage.Headers.GetValues("SchemaVersion").Any(v => v.Equals("1.0")))
             {
                 throw new NotSupportedException(ClustersTestConstants.NotSupportedBySubscriptionException);
             }
             ClusterRoleCollection roleCollection = await requestMessage.Content.ReadAsAsync<ClusterRoleCollection>();
+            var actionValue = requestMessage.RequestUri.ParseQueryString()["action"];
+            PassthroughResponse response;
+            //If no action is specified then RP defaults to Enable Rdp action.
+            if (string.IsNullOrEmpty(actionValue))
+            {
+                this.EnableRdp(roleCollection, subscriptionId, cloudServiceName, dnsName);
+            }
 
+            switch (actionValue.ToLowerInvariant())
+            {
+                case "resize":
+                    response = this.ResizeCluster(roleCollection, subscriptionId, cloudServiceName, dnsName);
+                    break;
+                case "enablerdp":
+                    response = this.EnableRdp(roleCollection, subscriptionId, cloudServiceName, dnsName);
+                    break;
+                case "disablerdp":
+                    response = this.DisableRdp(roleCollection, subscriptionId, cloudServiceName, dnsName);
+                    break;
+                default:
+                    throw new NotSupportedException(string.Format(ClustersTestConstants.NotSupportedAction,
+                        actionValue));
+            }
+            return response;
+        }
+
+        private PassthroughResponse ResizeCluster(ClusterRoleCollection roleCollection, string subscriptionId,
+            string cloudServiceName, string dnsName)
+        {
             var workerNode = roleCollection.SingleOrDefault(role => role.FriendlyName.Equals("WorkerNodeRole"));
             if (workerNode == null)
             {
@@ -199,6 +227,54 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities
             }
             clusterWorkerRole.InstanceCount = instanceCount;
 
+            return new PassthroughResponse { Data = new Operation { OperationId = Guid.NewGuid().ToString(), Status = OperationStatus.InProgress, } };
+        }
+
+        private PassthroughResponse EnableRdp(ClusterRoleCollection roleCollection, string subscriptionId,
+            string cloudServiceName, string dnsName)
+        {
+            Assert.IsNotNull(roleCollection, "Role collection is null");
+            Assert.IsTrue(roleCollection.Count > 0, "There are no roles in the role collection");
+            var cluster = this.GetCluster(dnsName, cloudServiceName, subscriptionId);
+            if (cluster == null)
+            {
+                throw new ArgumentNullException(string.Format(ClustersTestConstants.ClusterDoesNotExistException, dnsName, subscriptionId));
+            }
+            ClusterRole previousRole = null;
+            foreach (var role in roleCollection)
+            {
+                Assert.IsNotNull(role,"The role is null");
+                Assert.IsTrue(role.RemoteDesktopSettings.IsEnabled);
+                if (previousRole != null)
+                {
+                    Assert.IsTrue(
+                        previousRole.RemoteDesktopSettings.AuthenticationCredential.Username ==
+                        role.RemoteDesktopSettings.AuthenticationCredential.Username,
+                        "rdpUsername between roles doesn't match");
+                    Assert.IsTrue(
+                        previousRole.RemoteDesktopSettings.AuthenticationCredential.Password ==
+                        role.RemoteDesktopSettings.AuthenticationCredential.Password,
+                        "rdpPassword between roles doesn't match");
+                    Assert.IsTrue(previousRole.RemoteDesktopSettings.RemoteAccessExpiry ==
+                                  role.RemoteDesktopSettings.RemoteAccessExpiry,
+                        "RemoteAccessExpory between roles doesn't match");
+                }
+                previousRole = role;
+            }
+
+            cluster.ClusterRoleCollection = roleCollection;
+            return new PassthroughResponse { Data = new Operation { OperationId = Guid.NewGuid().ToString(), Status = OperationStatus.InProgress, } };
+        }
+
+        private PassthroughResponse DisableRdp(ClusterRoleCollection roleCollection, string subscriptionId,
+            string cloudServiceName, string dnsName)
+        {
+            var cluster = this.GetCluster(dnsName, cloudServiceName, subscriptionId);
+            if (cluster == null)
+            {
+                throw new ArgumentNullException(string.Format(ClustersTestConstants.ClusterDoesNotExistException, dnsName, subscriptionId));
+            }
+            cluster.ClusterRoleCollection = roleCollection;
             return new PassthroughResponse { Data = new Operation { OperationId = Guid.NewGuid().ToString(), Status = OperationStatus.InProgress, } };
         }
 

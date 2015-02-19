@@ -80,7 +80,12 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.InversionOfControl
             manager.RegisterType<IRdfeIaasClustersRestClientFactory, RdfeIaasClustersRestClientFactory>();
             
             var changeManager = new UserChangeRequestManager();
-            changeManager.RegisterUserChangeRequestHandler(typeof(HDInsightCertificateCredential), UserChangeRequestUserType.Http, HttpChangeRequestUriBuilder, PayloadConverter.SerializeConnectivityRequest);
+            changeManager.RegisterUserChangeRequestHandler(typeof (HDInsightCertificateCredential),
+                UserChangeRequestUserType.Http, HttpChangeRequestUriBuilder,
+                PayloadConverter.SerializeHttpConnectivityRequest);
+            changeManager.RegisterUserChangeRequestHandler(typeof (HDInsightCertificateCredential),
+                UserChangeRequestUserType.Rdp, RdpChangeRequestUriBuilder,
+                PayloadConverter.SerializeRdpConnectivityRequest);
             manager.RegisterInstance<IUserChangeRequestManager>(changeManager);
             var hadoopManager = locator.Locate<IHadoopClientFactoryManager>();
             hadoopManager.RegisterFactory<JobSubmissionCertificateCredential, IHDInsightHadoopClientFactory, HDInsightHadoopClientFactory>();
@@ -89,8 +94,19 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.InversionOfControl
 
         internal static Uri HttpChangeRequestUriBuilder(IHDInsightSubscriptionAbstractionContext context, string dnsName, string location)
         {
-            var overrideHandlers = ServiceLocator.Instance.Locate<IHDInsightClusterOverrideManager>().GetHandlers(context.Credentials, context, false);
+            var overrideHandlers =
+                ServiceLocator.Instance.Locate<IHDInsightClusterOverrideManager>()
+                    .GetHandlers(context.Credentials, context, false);
             return overrideHandlers.UriBuilder.GetEnableDisableHttpUri(dnsName, location);
+        }
+
+        internal static Uri RdpChangeRequestUriBuilder(IHDInsightSubscriptionAbstractionContext context, string dnsName,
+            string location)
+        {
+            var overrideHandlers =
+                ServiceLocator.Instance.Locate<IHDInsightClusterOverrideManager>()
+                    .GetHandlers(context.Credentials, context, false);
+            return overrideHandlers.UriBuilder.GetEnableDisableRdpUri(dnsName, location);
         }
     }
 }

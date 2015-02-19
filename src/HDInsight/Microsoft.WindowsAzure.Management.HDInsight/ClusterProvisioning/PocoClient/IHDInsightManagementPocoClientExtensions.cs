@@ -388,9 +388,9 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
         /// <returns>
         /// An awaitable task.
         /// </returns>
-        public static async Task WaitForOperationCompleteOrError(this IHDInsightManagementPocoClient client, string dnsName, string location, Guid operation, TimeSpan timeout, CancellationToken cancellationToken)
+        public static async Task WaitForOperationCompleteOrError(this IHDInsightManagementPocoClient client, string dnsName, string location, Guid operation,TimeSpan pollingInterval, TimeSpan timeout, CancellationToken cancellationToken)
         {
-            await client.WaitForCondition(() => client.GetStatus(dnsName, location, operation), s => s.State == UserChangeRequestOperationStatus.Pending ? PollResult.Continue : PollResult.Stop, null, TimeSpan.FromMilliseconds(500), timeout, cancellationToken);
+            await client.WaitForCondition(() => client.GetStatus(dnsName, location, operation), s => s.State == UserChangeRequestOperationStatus.Pending ? PollResult.Continue : PollResult.Stop, null, pollingInterval, timeout, cancellationToken);
         }
     }
 }

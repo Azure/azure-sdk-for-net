@@ -64,6 +64,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         internal const string ClusterAlreadyExistsError = "The condition specified by the ETag is not satisfied.";
 
         private IHDInsightSubscriptionCredentials credentials;
+        private TimeSpan pollingInterval;
         private ClusterDetails currentDetails;
         private const string DefaultSchemaVersion = "1.0";
         private TimeSpan defaultResizeTimeout = TimeSpan.FromHours(1);
@@ -579,7 +580,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
             {
                 await this.AssertClusterVersionSupported(dnsName);
                 var operationId = await client.EnableHttp(dnsName, location, httpUserName, httpPassword);
-                await client.WaitForOperationCompleteOrError(dnsName, location, operationId, TimeSpan.FromHours(1), this.Context.CancellationToken);
+                await client.WaitForOperationCompleteOrError(dnsName, location, operationId, this.PollingInterval, TimeSpan.FromHours(1), this.Context.CancellationToken);
             }
         }
 
@@ -587,6 +588,16 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         public void DisableHttp(string dnsName, string location)
         {
             this.DisableHttpAsync(dnsName, location).WaitForResult();
+        }
+
+        public void EnableRdp(string dnsName, string location, string rdpUserName, string rdpPassword, DateTime expiry)
+        {
+            this.EnableRdpAsync(dnsName, location, rdpUserName, rdpPassword, expiry).WaitForResult();
+        }
+
+        public void DisableRdp(string dnsName, string location)
+        {
+            this.DisableRdpAsync(dnsName, location).WaitForResult();
         }
 
         /// <inheritdoc />
@@ -605,7 +616,42 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
             {
                 await this.AssertClusterVersionSupported(dnsName);
                 var operationId = await client.DisableHttp(dnsName, location);
-                await client.WaitForOperationCompleteOrError(dnsName, location, operationId, TimeSpan.FromHours(1), this.Context.CancellationToken);
+                await client.WaitForOperationCompleteOrError(dnsName, location, operationId, this.PollingInterval, TimeSpan.FromHours(1), this.Context.CancellationToken);
+            }
+        }
+
+        public async Task EnableRdpAsync(string dnsName, string location, string rdpUserName, string rdpPassword, DateTime expiry)
+        {
+            dnsName.ArgumentNotNullOrEmpty("dnsName");
+            location.ArgumentNotNullOrEmpty("location");
+            rdpUserName.ArgumentNotNullOrEmpty("rdpUserName");
+            rdpPassword.ArgumentNotNullOrEmpty("rdpPassword");
+
+            if (expiry <= DateTime.Now)
+            {
+                throw new ArgumentOutOfRangeException("expiry",string.Format("DateTime expiry needs to be sometime in future. Given expiry: {0}",expiry.ToString()));
+            }
+
+            using (var client = this.CreatePocoClientForDnsName(dnsName))
+            {
+                var operationId = await client.EnableRdp(dnsName, location, rdpUserName, rdpPassword, expiry);
+                await
+                    client.WaitForOperationCompleteOrError(dnsName, location, operationId, this.PollingInterval, TimeSpan.FromMinutes(10),
+                        this.Context.CancellationToken);
+            }
+        }
+
+        public async Task DisableRdpAsync(string dnsName, string location)
+        {
+            dnsName.ArgumentNotNullOrEmpty("dnsName");
+            location.ArgumentNotNullOrEmpty("location");
+
+            using (var client = this.CreatePocoClientForDnsName(dnsName))
+            {
+                var operationId = await client.DisableRdp(dnsName, location);
+                await
+                    client.WaitForOperationCompleteOrError(dnsName, location, operationId, this.PollingInterval, TimeSpan.FromMinutes(10),
+                        this.Context.CancellationToken);
             }
         }
 
@@ -720,7 +766,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
                 return await client.ListContainer(dnsName);
             }
 
-            await client.WaitForOperationCompleteOrError(dnsName, location, operationId, timeout, this.Context.CancellationToken);
+            await client.WaitForOperationCompleteOrError(dnsName, location, operationId, this.PollingInterval, timeout, this.Context.CancellationToken);
             await client.WaitForClusterInConditionOrError(this.HandleClusterWaitNotifyEvent,
                                                           dnsName,
                                                           location,

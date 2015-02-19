@@ -352,6 +352,16 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
             throw new NotSupportedException(UnSupportedOperationMessage);
         }
 
+        public Task<Guid> EnableRdp(string dnsName, string location, string rdpUserName, string rdpPassword, DateTime expiry)
+        {
+            throw new NotSupportedException(UnSupportedOperationMessage);
+        }
+
+        public Task<Guid> DisableRdp(string dnsName, string location)
+        {
+            throw new NotSupportedException(UnSupportedOperationMessage);
+        }
+
         /// <inheritdoc />
         public async Task<UserChangeRequestStatus> GetStatus(string dnsName, string location, Guid operationId)
         {

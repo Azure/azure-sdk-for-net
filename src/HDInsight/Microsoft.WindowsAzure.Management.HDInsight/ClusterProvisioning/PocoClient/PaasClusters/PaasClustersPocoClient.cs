@@ -48,6 +48,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
         internal const string ResizeCapabilityEnabled = "ResizeEnabled";
         public const string ClusterConfigActionCapabilitityName = "CAPABILITY_FEATURE_POWERSHELL_SCRIPT_ACTION_SDK";
         private const string ResizeRoleAction = "Resize";
+        private const string EnableRdpAction = "EnableRdp";
 
         /// <inheritdoc />
         public event EventHandler<ClusterProvisioningStatusEventArgs> ClusterProvisioning;
@@ -570,6 +571,119 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
         public Task<Guid> DisableHttp(string dnsName, string location)
         {
             return this.EnableDisableHttp(dnsName, null, null, false);
+        }
+
+        /// <summary>
+        /// Enables Rdp user on the HDInsight cluster.
+        /// </summary>
+        /// <param name="dnsName">The DNS name of the cluster</param>
+        /// <param name="location">The location of the cluster</param>
+        /// <param name="rdpUserName">The username of the rdp user on the cluster</param>
+        /// <param name="rdpPassword">The password of the rdo user on the cluster</param>
+        /// <param name="expiry">The time when the rdp access will expire on the cluster</param>
+        /// <returns>A task that can be used to wait for the request to complete</returns>
+        public async Task<Guid> EnableRdp(string dnsName, string location, string rdpUserName, string rdpPassword, DateTime expiry)
+        {
+            try
+            {
+                var clusterResult = string.IsNullOrEmpty(location) ? await this.GetCluster(dnsName) : await this.GetCluster(dnsName, location);
+                var cloudServiceName = this.GetCloudServiceName(clusterResult.ClusterDetails.Location);
+                var cluster = clusterResult.ResultOfGetClusterCall;
+                var clusterRoleCollection = cluster.ClusterRoleCollection;
+
+                var remoteDesktopSettings = new RemoteDesktopSettings
+                {
+                    AuthenticationCredential = new UsernamePasswordCredential
+                    {
+                        Username = rdpUserName,
+                        Password = rdpPassword,
+                    },
+                    IsEnabled = true,
+                    RemoteAccessExpiry = expiry,
+                };
+
+                foreach (var role in clusterRoleCollection)
+                {
+                    role.RemoteDesktopSettings = remoteDesktopSettings;
+                }
+
+                this.LogMessage("Sending passthrough request to RDFE", Severity.Informational, Verbosity.Detailed);
+
+                var resp = this.SafeGetDataFromPassthroughResponse<Operation>(
+                    await this.rdfeClustersRestClient.EnableDisableRdp(
+                        this.credentials.SubscriptionId.ToString(),
+                        cloudServiceName,
+                        credentials.DeploymentNamespace,
+                        dnsName,
+                        EnableRdpAction,
+                        clusterRoleCollection, this.Context.CancellationToken));
+                var operationId = Guid.Parse(resp.OperationId);
+                if (resp.Status.Equals(OperationStatus.Failed))
+                {
+                    var message = string.Format("EnableRdp operation with operation ID {0} failed with the following response:\n{1}", operationId, resp.ErrorDetails.ErrorMessage);
+                    this.LogMessage(message, Severity.Error, Verbosity.Detailed);
+                    throw new InvalidOperationException(message);
+                }
+                return operationId;
+            }
+            catch (InvalidExpectedStatusCodeException iEx)
+            {
+                this.LogException(iEx);
+                string content = iEx.Response.Content != null ? iEx.Response.Content.ReadAsStringAsync().Result : string.Empty;
+                throw new HttpLayerException(iEx.ReceivedStatusCode, content);
+            }
+        }
+
+        /// <summary>
+        /// Disables the Rdp user on the HDInsight cluster.
+        /// </summary>
+        /// <param name="dnsName">The DNS name of the cluster</param>
+        /// <param name="location">The location of the cluster</param>
+        /// <returns>A task that can be used to wait for the request to complete</returns>
+        public async Task<Guid> DisableRdp(string dnsName, string location)
+        {
+            try
+            {
+                var clusterResult = string.IsNullOrEmpty(location) ? await this.GetCluster(dnsName) : await this.GetCluster(dnsName, location);
+                var cloudServiceName = this.GetCloudServiceName(clusterResult.ClusterDetails.Location);
+                var cluster = clusterResult.ResultOfGetClusterCall;
+                var clusterRoleCollection = cluster.ClusterRoleCollection;
+
+                var remoteDesktopSettings = new RemoteDesktopSettings
+                {
+                    IsEnabled = false,    
+                };
+
+                foreach (var role in clusterRoleCollection)
+                {
+                    role.RemoteDesktopSettings = remoteDesktopSettings;
+                }
+
+                this.LogMessage("Sending passthrough request to RDFE", Severity.Informational, Verbosity.Detailed);
+
+                var resp = this.SafeGetDataFromPassthroughResponse<Operation>(
+                    await this.rdfeClustersRestClient.EnableDisableRdp(
+                    this.credentials.SubscriptionId.ToString(),
+                    cloudServiceName,
+                    credentials.DeploymentNamespace,
+                    dnsName,
+                    EnableRdpAction,
+                    clusterRoleCollection, this.Context.CancellationToken));
+                var operationId = Guid.Parse(resp.OperationId);
+                if (resp.Status.Equals(OperationStatus.Failed))
+                {
+                    var message = string.Format("EnableRdp operation with operation ID {0} failed with the following response:\n{1}", operationId, resp.ErrorDetails.ErrorMessage);
+                    this.LogMessage(message, Severity.Error, Verbosity.Detailed);
+                    throw new InvalidOperationException(message);
+                }
+                return operationId;
+            }
+            catch (InvalidExpectedStatusCodeException iEx)
+            {
+                this.LogException(iEx);
+                string content = iEx.Response.Content != null ? iEx.Response.Content.ReadAsStringAsync().Result : string.Empty;
+                throw new HttpLayerException(iEx.ReceivedStatusCode, content);
+            }
         }
 
         /// <summary>

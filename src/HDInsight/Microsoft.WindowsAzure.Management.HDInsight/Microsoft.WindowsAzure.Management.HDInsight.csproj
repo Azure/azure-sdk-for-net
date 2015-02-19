@@ -15,7 +15,7 @@
   <ItemGroup>
     <Reference Include="BouncyCastle.Crypto, Version=1.7.4137.9688, Culture=neutral, PublicKeyToken=a4292a325f69b123, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\BouncyCastle.1.7.0\lib\Net40-Client\BouncyCastle.Crypto.dll</HintPath>
+      <HintPath>$(SolutionDir)\packages\BouncyCastle.1.7.0\lib\Net40-Client\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.WindowsAzure.Common">
       <HintPath>$(SolutionDir)\packages\Microsoft.WindowsAzure.Common.1.3.0\lib\portable-net45+sl50+wp8+wpa81+win\Microsoft.WindowsAzure.Common.dll</HintPath>
