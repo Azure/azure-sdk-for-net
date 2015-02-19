@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Common.Authentication
         {
             ClientFactory = new ClientFactory();
             AuthenticationFactory = new AuthenticationFactory();
-            DataStore = new DiskDataStore();
+            DataStore = new MemoryDataStore();
             AzureSession.OldProfileFile = "WindowsAzureProfile.xml";
             AzureSession.OldProfileFileBackup = "WindowsAzureProfile.xml.bak";
             AzureSession.ProfileDirectory = Path.Combine(

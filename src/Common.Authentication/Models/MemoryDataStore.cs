@@ -21,9 +21,9 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Microsoft.WindowsAzure.Commands.Common.Test.Mocks
+namespace Microsoft.Azure.Common.Authentication.Models
 {
-    public class MockDataStore : IDataStore
+    public class MemoryDataStore : IDataStore
     {
         private Dictionary<string, string> virtualStore = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
         private Dictionary<string, X509Certificate2> certStore = new Dictionary<string, X509Certificate2>(StringComparer.InvariantCultureIgnoreCase);

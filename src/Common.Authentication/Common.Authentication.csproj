@@ -72,6 +72,7 @@
     <Compile Include="Models\IClientAction.cs" />
     <Compile Include="Models\DiskDataStore.cs" />
     <Compile Include="Models\JsonProfileSerializer.cs" />
+    <Compile Include="Models\MemoryDataStore.cs" />
     <Compile Include="Models\RPRegistrationAction.cs" />
     <Compile Include="Models\XmlProfileSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
