@@ -161,27 +161,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.HadoopClientTests
         }
 
         [TestMethod]
-        public async Task ICannotSubmitARdpConnectivityRequestToAnUnsupportedClusterVersion()
-        {
-            IHDInsightSubscriptionCredentials credentials = IntegrationTestBase.GetValidCredentials();
-            var client = HDInsightClient.Connect(credentials);
-            try
-            {
-                // enable rdp
-                var testCluster = client.GetCluster("VersionLowerThanSupported");
-                string userName = "hdinsightrdpuser";
-                string password = GetRandomValidPassword();
-                await client.EnableRdpAsync(testCluster.Name, testCluster.Location, userName, password, DateTime.UtcNow.AddHours(1));
-                Assert.Fail("Should not be able to enable RDP for unsupported cluster version.");
-            }
-            catch (NotSupportedException clientEx)
-            {
-                Assert.IsTrue(clientEx.Message.Contains("Please upgrade your cluster to the newer version. The compatibility range for these tools is 1.6 - 3.2."));
-                Console.WriteLine(clientEx.Message);
-            }
-        }
-
-        [TestMethod]
         [TestCategory("ApiSec")]
         [TestCategory(TestRunMode.CheckIn)]
         public void ICanSerializeAndDeserializeARdpUserChangeRequest()

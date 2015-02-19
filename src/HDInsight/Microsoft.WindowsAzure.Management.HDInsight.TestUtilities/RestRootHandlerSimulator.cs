@@ -192,16 +192,31 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities
                     response = this.ResizeCluster(roleCollection, subscriptionId, cloudServiceName, dnsName);
                     break;
                 case "enablerdp":
-                    response = this.EnableRdp(roleCollection, subscriptionId, cloudServiceName, dnsName);
-                    break;
-                case "disablerdp":
-                    response = this.DisableRdp(roleCollection, subscriptionId, cloudServiceName, dnsName);
+                    response = this.EnableDisableRdp(roleCollection, subscriptionId, cloudServiceName, dnsName);
                     break;
                 default:
                     throw new NotSupportedException(string.Format(ClustersTestConstants.NotSupportedAction,
                         actionValue));
             }
             return response;
+        }
+
+        private PassthroughResponse EnableDisableRdp(ClusterRoleCollection roleCollection, string subscriptionId,
+            string cloudServiceName, string dnsName)
+        {
+            Assert.IsNotNull(roleCollection);
+            Assert.IsTrue(roleCollection.Count > 0);
+            var firstRole = roleCollection.FirstOrDefault();
+            Assert.IsNotNull(firstRole);
+            Assert.IsNotNull(firstRole.RemoteDesktopSettings);
+            if (firstRole.RemoteDesktopSettings.IsEnabled)
+            {
+                return this.EnableRdp(roleCollection, subscriptionId, cloudServiceName, dnsName);
+            }
+            else
+            {
+                return this.DisableRdp(roleCollection, subscriptionId, cloudServiceName, dnsName);
+            }
         }
 
         private PassthroughResponse ResizeCluster(ClusterRoleCollection roleCollection, string subscriptionId,
@@ -258,6 +273,15 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities
                     Assert.IsTrue(previousRole.RemoteDesktopSettings.RemoteAccessExpiry ==
                                   role.RemoteDesktopSettings.RemoteAccessExpiry,
                         "RemoteAccessExpory between roles doesn't match");
+                }
+                else
+                {
+                    Assert.IsNotNull(role.RemoteDesktopSettings.AuthenticationCredential.Username,
+                        "rdpUsername is null");
+                    Assert.IsNotNull(role.RemoteDesktopSettings.AuthenticationCredential.Password,
+                        "rdpPassword is null");
+                    Assert.IsNotNull(role.RemoteDesktopSettings.RemoteAccessExpiry,
+                        "RemoteAccessExpory is numm");
                 }
                 previousRole = role;
             }
