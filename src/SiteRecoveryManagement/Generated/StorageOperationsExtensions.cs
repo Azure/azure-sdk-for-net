@@ -75,5 +75,45 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
         {
             return operations.ListAsync(serverId, customRequestHeaders, CancellationToken.None);
         }
+        
+        /// <summary>
+        /// Get the list of all storages for the subscription
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.SiteRecovery.IStorageOperations.
+        /// </param>
+        /// <param name='subscriptionId'>
+        /// Optional.
+        /// </param>
+        /// <returns>
+        /// The List Storage Accounts operation response.
+        /// </returns>
+        public static StorageAccountListResponse ListAzureStorages(this IStorageOperations operations, string subscriptionId)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IStorageOperations)s).ListAzureStoragesAsync(subscriptionId);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Get the list of all storages for the subscription
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.SiteRecovery.IStorageOperations.
+        /// </param>
+        /// <param name='subscriptionId'>
+        /// Optional.
+        /// </param>
+        /// <returns>
+        /// The List Storage Accounts operation response.
+        /// </returns>
+        public static Task<StorageAccountListResponse> ListAzureStoragesAsync(this IStorageOperations operations, string subscriptionId)
+        {
+            return operations.ListAzureStoragesAsync(subscriptionId, CancellationToken.None);
+        }
     }
 }

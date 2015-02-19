@@ -28,6 +28,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using Hyak.Common;
+using Hyak.Common.Internals;
 using Microsoft.WindowsAzure.Management.SiteRecovery;
 using Microsoft.WindowsAzure.Management.SiteRecovery.Models;
 
@@ -231,6 +232,159 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                                 {
                                     string idInstance = idElement.Value;
                                     storageInstance.ID = idInstance;
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Get the list of all storages for the subscription
+        /// </summary>
+        /// <param name='subscriptionId'>
+        /// Optional.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List Storage Accounts operation response.
+        /// </returns>
+        public async Task<StorageAccountListResponse> ListAzureStoragesAsync(string subscriptionId, CancellationToken cancellationToken)
+        {
+            // Validate
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("subscriptionId", subscriptionId);
+                TracingAdapter.Enter(invocationId, this, "ListAzureStoragesAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/";
+            if (subscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(subscriptionId);
+            }
+            url = url + "/services/storageservices";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    StorageAccountListResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new StorageAccountListResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement storageServicesSequenceElement = responseDoc.Element(XName.Get("StorageServices", "http://schemas.microsoft.com/windowsazure"));
+                        if (storageServicesSequenceElement != null)
+                        {
+                            foreach (XElement storageServicesElement in storageServicesSequenceElement.Elements(XName.Get("StorageService", "http://schemas.microsoft.com/windowsazure")))
+                            {
+                                StorageAccountListResponse.StorageAccount storageServiceInstance = new StorageAccountListResponse.StorageAccount();
+                                result.StorageAccounts.Add(storageServiceInstance);
+                                
+                                XElement urlElement = storageServicesElement.Element(XName.Get("Url", "http://schemas.microsoft.com/windowsazure"));
+                                if (urlElement != null)
+                                {
+                                    Uri urlInstance = TypeConversion.TryParseUri(urlElement.Value);
+                                    storageServiceInstance.Uri = urlInstance;
+                                }
+                                
+                                XElement serviceNameElement = storageServicesElement.Element(XName.Get("ServiceName", "http://schemas.microsoft.com/windowsazure"));
+                                if (serviceNameElement != null)
+                                {
+                                    string serviceNameInstance = serviceNameElement.Value;
+                                    storageServiceInstance.Name = serviceNameInstance;
                                 }
                             }
                         }

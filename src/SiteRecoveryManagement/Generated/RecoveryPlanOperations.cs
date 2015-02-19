@@ -1549,45 +1549,45 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                         result = new RecoveryPlanResponse();
                         XDocument responseDoc = XDocument.Parse(responseContent);
                         
-                        XElement serviceResourceElement = responseDoc.Element(XName.Get("ServiceResource", "http://schemas.microsoft.com/windowsazure"));
-                        if (serviceResourceElement != null)
+                        XElement recoveryPlanElement = responseDoc.Element(XName.Get("RecoveryPlan", "http://schemas.microsoft.com/windowsazure"));
+                        if (recoveryPlanElement != null)
                         {
-                            RecoveryPlan serviceResourceInstance = new RecoveryPlan();
-                            result.RecoveryPlan = serviceResourceInstance;
+                            RecoveryPlan recoveryPlanInstance = new RecoveryPlan();
+                            result.RecoveryPlan = recoveryPlanInstance;
                             
-                            XElement serverIdElement = serviceResourceElement.Element(XName.Get("ServerId", "http://schemas.microsoft.com/windowsazure"));
+                            XElement serverIdElement = recoveryPlanElement.Element(XName.Get("ServerId", "http://schemas.microsoft.com/windowsazure"));
                             if (serverIdElement != null)
                             {
                                 string serverIdInstance = serverIdElement.Value;
-                                serviceResourceInstance.ServerId = serverIdInstance;
+                                recoveryPlanInstance.ServerId = serverIdInstance;
                             }
                             
-                            XElement targetServerIdElement = serviceResourceElement.Element(XName.Get("TargetServerId", "http://schemas.microsoft.com/windowsazure"));
+                            XElement targetServerIdElement = recoveryPlanElement.Element(XName.Get("TargetServerId", "http://schemas.microsoft.com/windowsazure"));
                             if (targetServerIdElement != null)
                             {
                                 string targetServerIdInstance = targetServerIdElement.Value;
-                                serviceResourceInstance.TargetServerId = targetServerIdInstance;
+                                recoveryPlanInstance.TargetServerId = targetServerIdInstance;
                             }
                             
-                            XElement replicationProviderElement = serviceResourceElement.Element(XName.Get("ReplicationProvider", "http://schemas.microsoft.com/windowsazure"));
+                            XElement replicationProviderElement = recoveryPlanElement.Element(XName.Get("ReplicationProvider", "http://schemas.microsoft.com/windowsazure"));
                             if (replicationProviderElement != null)
                             {
                                 string replicationProviderInstance = replicationProviderElement.Value;
-                                serviceResourceInstance.ReplicationProvider = replicationProviderInstance;
+                                recoveryPlanInstance.ReplicationProvider = replicationProviderInstance;
                             }
                             
-                            XElement nameElement = serviceResourceElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                            XElement nameElement = recoveryPlanElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
                             if (nameElement != null)
                             {
                                 string nameInstance = nameElement.Value;
-                                serviceResourceInstance.Name = nameInstance;
+                                recoveryPlanInstance.Name = nameInstance;
                             }
                             
-                            XElement idElement = serviceResourceElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
+                            XElement idElement = recoveryPlanElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
                             if (idElement != null)
                             {
                                 string idInstance = idElement.Value;
-                                serviceResourceInstance.ID = idInstance;
+                                recoveryPlanInstance.ID = idInstance;
                             }
                         }
                         

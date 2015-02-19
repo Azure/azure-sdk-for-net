@@ -48,5 +48,16 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
         /// The response model for the list storage operation.
         /// </returns>
         Task<StorageListResponse> ListAsync(string serverId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Get the list of all storages for the subscription
+        /// </summary>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List Storage Accounts operation response.
+        /// </returns>
+        Task<StorageAccountListResponse> ListAzureStoragesAsync(string subscriptionId, CancellationToken cancellationToken);
     }
 }
