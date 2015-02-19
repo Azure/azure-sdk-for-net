@@ -61,9 +61,10 @@ namespace Microsoft.Azure.Management.Sql
         /// firewall rule.
         /// </param>
         /// <returns>
-        /// Represents the response to a data masking policy get request.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        public static DataMaskingPolicyGetResponse CreateOrUpdatePolicy(this IDataMaskingOperations operations, string resourceGroupName, string serverName, string databaseName, DataMaskingPolicyCreateOrUpdateParameters parameters)
+        public static AzureOperationResponse CreateOrUpdatePolicy(this IDataMaskingOperations operations, string resourceGroupName, string serverName, string databaseName, DataMaskingPolicyCreateOrUpdateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -96,9 +97,10 @@ namespace Microsoft.Azure.Management.Sql
         /// firewall rule.
         /// </param>
         /// <returns>
-        /// Represents the response to a data masking policy get request.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        public static Task<DataMaskingPolicyGetResponse> CreateOrUpdatePolicyAsync(this IDataMaskingOperations operations, string resourceGroupName, string serverName, string databaseName, DataMaskingPolicyCreateOrUpdateParameters parameters)
+        public static Task<AzureOperationResponse> CreateOrUpdatePolicyAsync(this IDataMaskingOperations operations, string resourceGroupName, string serverName, string databaseName, DataMaskingPolicyCreateOrUpdateParameters parameters)
         {
             return operations.CreateOrUpdatePolicyAsync(resourceGroupName, serverName, databaseName, parameters, CancellationToken.None);
         }
@@ -130,9 +132,10 @@ namespace Microsoft.Azure.Management.Sql
         /// masking rule.
         /// </param>
         /// <returns>
-        /// Represents the response to a data masking rule get request.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        public static DataMaskingRuleGetResponse CreateOrUpdateRule(this IDataMaskingOperations operations, string resourceGroupName, string serverName, string databaseName, string dataMaskingRule, DataMaskingRuleCreateOrUpdateParameters parameters)
+        public static AzureOperationResponse CreateOrUpdateRule(this IDataMaskingOperations operations, string resourceGroupName, string serverName, string databaseName, string dataMaskingRule, DataMaskingRuleCreateOrUpdateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -168,9 +171,10 @@ namespace Microsoft.Azure.Management.Sql
         /// masking rule.
         /// </param>
         /// <returns>
-        /// Represents the response to a data masking rule get request.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        public static Task<DataMaskingRuleGetResponse> CreateOrUpdateRuleAsync(this IDataMaskingOperations operations, string resourceGroupName, string serverName, string databaseName, string dataMaskingRule, DataMaskingRuleCreateOrUpdateParameters parameters)
+        public static Task<AzureOperationResponse> CreateOrUpdateRuleAsync(this IDataMaskingOperations operations, string resourceGroupName, string serverName, string databaseName, string dataMaskingRule, DataMaskingRuleCreateOrUpdateParameters parameters)
         {
             return operations.CreateOrUpdateRuleAsync(resourceGroupName, serverName, databaseName, dataMaskingRule, parameters, CancellationToken.None);
         }

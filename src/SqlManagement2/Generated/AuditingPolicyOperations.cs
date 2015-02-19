@@ -37,19 +37,19 @@ using Newtonsoft.Json.Linq;
 namespace Microsoft.Azure.Management.Sql
 {
     /// <summary>
-    /// Represents all the operations for operating on Azure SQL Database
-    /// Server Firewall Rules.  Contains operations to: Create, Retrieve,
-    /// Update, and Delete firewall rules.
+    /// Represents all the operations to manage Azure SQL Database and Database
+    /// Server Audit policy.  Contains operations to: Create, Retrieve and
+    /// Update audit policy.
     /// </summary>
-    internal partial class FirewallRuleOperations : IServiceOperations<SqlManagementClient>, IFirewallRuleOperations
+    internal partial class AuditingPolicyOperations : IServiceOperations<SqlManagementClient>, IAuditingPolicyOperations
     {
         /// <summary>
-        /// Initializes a new instance of the FirewallRuleOperations class.
+        /// Initializes a new instance of the AuditingPolicyOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal FirewallRuleOperations(SqlManagementClient client)
+        internal AuditingPolicyOperations(SqlManagementClient client)
         {
             this._client = client;
         }
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
-        /// Creates or updates an Azure SQL Database Server Firewall rule.
+        /// Creates or updates an Azure SQL Database auditing policy.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The name of the Resource Group to which the server
@@ -76,20 +76,22 @@ namespace Microsoft.Azure.Management.Sql
         /// Required. The name of the Azure SQL Database Server on which the
         /// database is hosted.
         /// </param>
-        /// <param name='firewallRule'>
-        /// Required. The name of the Azure SQL Database Server Firewall Rule.
+        /// <param name='databaseName'>
+        /// Required. The name of the Azure SQL Database for which the auditing
+        /// policy applies.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The required parameters for createing or updating a
-        /// firewall rule.
+        /// Required. The required parameters for createing or updating a Azure
+        /// SQL Database auditing policy.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Represents the response to a List Firewall Rules request.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        public async Task<FirewallRuleGetResponse> CreateOrUpdateAsync(string resourceGroupName, string serverName, string firewallRule, FirewallRuleCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> CreateOrUpdateDatebasePolicyAsync(string resourceGroupName, string serverName, string databaseName, DatabaseAuditingPolicyCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -100,9 +102,9 @@ namespace Microsoft.Azure.Management.Sql
             {
                 throw new ArgumentNullException("serverName");
             }
-            if (firewallRule == null)
+            if (databaseName == null)
             {
-                throw new ArgumentNullException("firewallRule");
+                throw new ArgumentNullException("databaseName");
             }
             if (parameters == null)
             {
@@ -122,9 +124,9 @@ namespace Microsoft.Azure.Management.Sql
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serverName", serverName);
-                tracingParameters.Add("firewallRule", firewallRule);
+                tracingParameters.Add("databaseName", databaseName);
                 tracingParameters.Add("parameters", parameters);
-                TracingAdapter.Enter(invocationId, this, "CreateOrUpdateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "CreateOrUpdateDatebasePolicyAsync", tracingParameters);
             }
             
             // Construct URL
@@ -140,8 +142,9 @@ namespace Microsoft.Azure.Management.Sql
             url = url + "Microsoft.Sql";
             url = url + "/servers/";
             url = url + Uri.EscapeDataString(serverName);
-            url = url + "/firewallRules/";
-            url = url + Uri.EscapeDataString(firewallRule);
+            url = url + "/databases/";
+            url = url + Uri.EscapeDataString(databaseName);
+            url = url + "/auditingPolicies/Default";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2014-04-01");
             if (queryParameters.Count > 0)
@@ -179,20 +182,55 @@ namespace Microsoft.Azure.Management.Sql
                 string requestContent = null;
                 JToken requestDoc = null;
                 
-                JObject firewallRuleCreateOrUpdateParametersValue = new JObject();
-                requestDoc = firewallRuleCreateOrUpdateParametersValue;
+                JObject databaseAuditingPolicyCreateOrUpdateParametersValue = new JObject();
+                requestDoc = databaseAuditingPolicyCreateOrUpdateParametersValue;
                 
                 JObject propertiesValue = new JObject();
-                firewallRuleCreateOrUpdateParametersValue["properties"] = propertiesValue;
+                databaseAuditingPolicyCreateOrUpdateParametersValue["properties"] = propertiesValue;
                 
-                if (parameters.Properties.StartIpAddress != null)
+                if (parameters.Properties.AuditingState != null)
                 {
-                    propertiesValue["startIpAddress"] = parameters.Properties.StartIpAddress;
+                    propertiesValue["auditingState"] = parameters.Properties.AuditingState;
                 }
                 
-                if (parameters.Properties.EndIpAddress != null)
+                if (parameters.Properties.EventTypesToAudit != null)
                 {
-                    propertiesValue["endIpAddress"] = parameters.Properties.EndIpAddress;
+                    propertiesValue["eventTypesToAudit"] = parameters.Properties.EventTypesToAudit;
+                }
+                
+                if (parameters.Properties.StorageAccountName != null)
+                {
+                    propertiesValue["storageAccountName"] = parameters.Properties.StorageAccountName;
+                }
+                
+                if (parameters.Properties.StorageAccountKey != null)
+                {
+                    propertiesValue["storageAccountKey"] = parameters.Properties.StorageAccountKey;
+                }
+                
+                if (parameters.Properties.StorageAccountSecondaryKey != null)
+                {
+                    propertiesValue["storageAccountSecondaryKey"] = parameters.Properties.StorageAccountSecondaryKey;
+                }
+                
+                if (parameters.Properties.StorageTableEndpoint != null)
+                {
+                    propertiesValue["storageTableEndpoint"] = parameters.Properties.StorageTableEndpoint;
+                }
+                
+                if (parameters.Properties.StorageAccountResourceGroupName != null)
+                {
+                    propertiesValue["storageAccountResourceGroupName"] = parameters.Properties.StorageAccountResourceGroupName;
+                }
+                
+                if (parameters.Properties.StorageAccountSubscriptionId != null)
+                {
+                    propertiesValue["storageAccountSubscriptionId"] = parameters.Properties.StorageAccountSubscriptionId;
+                }
+                
+                if (parameters.Properties.UseServerDefault != null)
+                {
+                    propertiesValue["useServerDefault"] = parameters.Properties.UseServerDefault;
                 }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
@@ -218,240 +256,6 @@ namespace Microsoft.Azure.Management.Sql
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            TracingAdapter.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    FirewallRuleGetResponse result = null;
-                    // Deserialize Response
-                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Created)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new FirewallRuleGetResponse();
-                        JToken responseDoc = null;
-                        if (string.IsNullOrEmpty(responseContent) == false)
-                        {
-                            responseDoc = JToken.Parse(responseContent);
-                        }
-                        
-                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                        {
-                            FirewallRule firewallRuleInstance = new FirewallRule();
-                            result.FirewallRule = firewallRuleInstance;
-                            
-                            JToken nameValue = responseDoc["name"];
-                            if (nameValue != null && nameValue.Type != JTokenType.Null)
-                            {
-                                string nameInstance = ((string)nameValue);
-                                firewallRuleInstance.Name = nameInstance;
-                            }
-                            
-                            JToken propertiesValue2 = responseDoc["properties"];
-                            if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
-                            {
-                                FirewallRuleProperties propertiesInstance = new FirewallRuleProperties();
-                                firewallRuleInstance.Properties = propertiesInstance;
-                                
-                                JToken startIpAddressValue = propertiesValue2["startIpAddress"];
-                                if (startIpAddressValue != null && startIpAddressValue.Type != JTokenType.Null)
-                                {
-                                    string startIpAddressInstance = ((string)startIpAddressValue);
-                                    propertiesInstance.StartIpAddress = startIpAddressInstance;
-                                }
-                                
-                                JToken endIpAddressValue = propertiesValue2["endIpAddress"];
-                                if (endIpAddressValue != null && endIpAddressValue.Type != JTokenType.Null)
-                                {
-                                    string endIpAddressInstance = ((string)endIpAddressValue);
-                                    propertiesInstance.EndIpAddress = endIpAddressInstance;
-                                }
-                            }
-                            
-                            JToken idValue = responseDoc["id"];
-                            if (idValue != null && idValue.Type != JTokenType.Null)
-                            {
-                                string idInstance = ((string)idValue);
-                                firewallRuleInstance.Id = idInstance;
-                            }
-                            
-                            JToken typeValue = responseDoc["type"];
-                            if (typeValue != null && typeValue.Type != JTokenType.Null)
-                            {
-                                string typeInstance = ((string)typeValue);
-                                firewallRuleInstance.Type = typeInstance;
-                            }
-                            
-                            JToken locationValue = responseDoc["location"];
-                            if (locationValue != null && locationValue.Type != JTokenType.Null)
-                            {
-                                string locationInstance = ((string)locationValue);
-                                firewallRuleInstance.Location = locationInstance;
-                            }
-                            
-                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
-                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                            {
-                                foreach (JProperty property in tagsSequenceElement)
-                                {
-                                    string tagsKey = ((string)property.Name);
-                                    string tagsValue = ((string)property.Value);
-                                    firewallRuleInstance.Tags.Add(tagsKey, tagsValue);
-                                }
-                            }
-                        }
-                        
-                    }
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// Deletes an Azure SQL Database Server Firewall rule.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Required. The name of the Resource Group to which the server
-        /// belongs.
-        /// </param>
-        /// <param name='serverName'>
-        /// Required. The name of the Azure SQL Database Server on which the
-        /// database is hosted.
-        /// </param>
-        /// <param name='firewallRule'>
-        /// Required. The name of the Azure SQL Database Server Firewall Rule.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public async Task<AzureOperationResponse> DeleteAsync(string resourceGroupName, string serverName, string firewallRule, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException("resourceGroupName");
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException("serverName");
-            }
-            if (firewallRule == null)
-            {
-                throw new ArgumentNullException("firewallRule");
-            }
-            
-            // Tracing
-            bool shouldTrace = TracingAdapter.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = TracingAdapter.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("serverName", serverName);
-                tracingParameters.Add("firewallRule", firewallRule);
-                TracingAdapter.Enter(invocationId, this, "DeleteAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = "";
-            url = url + "/subscriptions/";
-            if (this.Client.Credentials.SubscriptionId != null)
-            {
-                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
-            }
-            url = url + "/resourceGroups/";
-            url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/";
-            url = url + "Microsoft.Sql";
-            url = url + "/servers/";
-            url = url + Uri.EscapeDataString(serverName);
-            url = url + "/firewallRules/";
-            url = url + Uri.EscapeDataString(firewallRule);
-            List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-04-01");
-            if (queryParameters.Count > 0)
-            {
-                url = url + "?" + string.Join("&", queryParameters);
-            }
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            // Trim '/' character from the end of baseUrl and beginning of url.
-            if (baseUrl[baseUrl.Length - 1] == '/')
-            {
-                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
-            }
-            if (url[0] == '/')
-            {
-                url = url.Substring(1);
-            }
-            url = baseUrl + "/" + url;
-            url = url.Replace(" ", "%20");
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Delete;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.NoContent)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             TracingAdapter.Error(invocationId, ex);
@@ -493,7 +297,7 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
-        /// Returns an Azure SQL Database Server Firewall rule.
+        /// Creates or updates an Azure SQL Database Server auditing policy.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The name of the Resource Group to which the server
@@ -503,16 +307,18 @@ namespace Microsoft.Azure.Management.Sql
         /// Required. The name of the Azure SQL Database Server on which the
         /// database is hosted.
         /// </param>
-        /// <param name='firewallRule'>
-        /// Required. The name of the Azure SQL Database Server Firewall Rule.
+        /// <param name='parameters'>
+        /// Required. The required parameters for createing or updating a Azure
+        /// SQL Database Server auditing policy.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Represents the response to a List Firewall Rules request.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        public async Task<FirewallRuleGetResponse> GetAsync(string resourceGroupName, string serverName, string firewallRule, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> CreateOrUpdateServerPolicyAsync(string resourceGroupName, string serverName, ServerAuditingPolicyCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -523,9 +329,13 @@ namespace Microsoft.Azure.Management.Sql
             {
                 throw new ArgumentNullException("serverName");
             }
-            if (firewallRule == null)
+            if (parameters == null)
             {
-                throw new ArgumentNullException("firewallRule");
+                throw new ArgumentNullException("parameters");
+            }
+            if (parameters.Properties == null)
+            {
+                throw new ArgumentNullException("parameters.Properties");
             }
             
             // Tracing
@@ -537,8 +347,8 @@ namespace Microsoft.Azure.Management.Sql
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serverName", serverName);
-                tracingParameters.Add("firewallRule", firewallRule);
-                TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "CreateOrUpdateServerPolicyAsync", tracingParameters);
             }
             
             // Construct URL
@@ -554,8 +364,219 @@ namespace Microsoft.Azure.Management.Sql
             url = url + "Microsoft.Sql";
             url = url + "/servers/";
             url = url + Uri.EscapeDataString(serverName);
-            url = url + "/firewallRules/";
-            url = url + Uri.EscapeDataString(firewallRule);
+            url = url + "/auditingPolicies/Default";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Put;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                JToken requestDoc = null;
+                
+                JObject serverAuditingPolicyCreateOrUpdateParametersValue = new JObject();
+                requestDoc = serverAuditingPolicyCreateOrUpdateParametersValue;
+                
+                JObject propertiesValue = new JObject();
+                serverAuditingPolicyCreateOrUpdateParametersValue["properties"] = propertiesValue;
+                
+                if (parameters.Properties.AuditingState != null)
+                {
+                    propertiesValue["auditingState"] = parameters.Properties.AuditingState;
+                }
+                
+                if (parameters.Properties.EventTypesToAudit != null)
+                {
+                    propertiesValue["eventTypesToAudit"] = parameters.Properties.EventTypesToAudit;
+                }
+                
+                if (parameters.Properties.StorageAccountName != null)
+                {
+                    propertiesValue["storageAccountName"] = parameters.Properties.StorageAccountName;
+                }
+                
+                if (parameters.Properties.StorageAccountKey != null)
+                {
+                    propertiesValue["storageAccountKey"] = parameters.Properties.StorageAccountKey;
+                }
+                
+                if (parameters.Properties.StorageAccountSecondaryKey != null)
+                {
+                    propertiesValue["storageAccountSecondaryKey"] = parameters.Properties.StorageAccountSecondaryKey;
+                }
+                
+                if (parameters.Properties.StorageTableEndpoint != null)
+                {
+                    propertiesValue["storageTableEndpoint"] = parameters.Properties.StorageTableEndpoint;
+                }
+                
+                if (parameters.Properties.StorageAccountResourceGroupName != null)
+                {
+                    propertiesValue["storageAccountResourceGroupName"] = parameters.Properties.StorageAccountResourceGroupName;
+                }
+                
+                if (parameters.Properties.StorageAccountSubscriptionId != null)
+                {
+                    propertiesValue["storageAccountSubscriptionId"] = parameters.Properties.StorageAccountSubscriptionId;
+                }
+                
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Returns an Azure SQL Database auditing policy.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the server
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Database Server on which the
+        /// database is hosted.
+        /// </param>
+        /// <param name='databaseName'>
+        /// Required. The name of the Azure SQL Database for which the auditing
+        /// policy applies.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a get database auditing policy request.
+        /// </returns>
+        public async Task<DatabaseAuditingPolicyGetResponse> GetDatabasePolicyAsync(string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException("serverName");
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException("databaseName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("serverName", serverName);
+                tracingParameters.Add("databaseName", databaseName);
+                TracingAdapter.Enter(invocationId, this, "GetDatabasePolicyAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.Sql";
+            url = url + "/servers/";
+            url = url + Uri.EscapeDataString(serverName);
+            url = url + "/databases/";
+            url = url + Uri.EscapeDataString(databaseName);
+            url = url + "/auditingPolicies/Default";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2014-04-01");
             if (queryParameters.Count > 0)
@@ -616,13 +637,13 @@ namespace Microsoft.Azure.Management.Sql
                     }
                     
                     // Create Result
-                    FirewallRuleGetResponse result = null;
+                    DatabaseAuditingPolicyGetResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new FirewallRuleGetResponse();
+                        result = new DatabaseAuditingPolicyGetResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -631,34 +652,83 @@ namespace Microsoft.Azure.Management.Sql
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            FirewallRule firewallRuleInstance = new FirewallRule();
-                            result.FirewallRule = firewallRuleInstance;
+                            DatabaseAuditingPolicy auditingPolicyInstance = new DatabaseAuditingPolicy();
+                            result.AuditingPolicy = auditingPolicyInstance;
                             
                             JToken nameValue = responseDoc["name"];
                             if (nameValue != null && nameValue.Type != JTokenType.Null)
                             {
                                 string nameInstance = ((string)nameValue);
-                                firewallRuleInstance.Name = nameInstance;
+                                auditingPolicyInstance.Name = nameInstance;
                             }
                             
                             JToken propertiesValue = responseDoc["properties"];
                             if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                             {
-                                FirewallRuleProperties propertiesInstance = new FirewallRuleProperties();
-                                firewallRuleInstance.Properties = propertiesInstance;
+                                DatabaseAuditingPolicyProperties propertiesInstance = new DatabaseAuditingPolicyProperties();
+                                auditingPolicyInstance.Properties = propertiesInstance;
                                 
-                                JToken startIpAddressValue = propertiesValue["startIpAddress"];
-                                if (startIpAddressValue != null && startIpAddressValue.Type != JTokenType.Null)
+                                JToken auditingStateValue = propertiesValue["auditingState"];
+                                if (auditingStateValue != null && auditingStateValue.Type != JTokenType.Null)
                                 {
-                                    string startIpAddressInstance = ((string)startIpAddressValue);
-                                    propertiesInstance.StartIpAddress = startIpAddressInstance;
+                                    string auditingStateInstance = ((string)auditingStateValue);
+                                    propertiesInstance.AuditingState = auditingStateInstance;
                                 }
                                 
-                                JToken endIpAddressValue = propertiesValue["endIpAddress"];
-                                if (endIpAddressValue != null && endIpAddressValue.Type != JTokenType.Null)
+                                JToken eventTypesToAuditValue = propertiesValue["eventTypesToAudit"];
+                                if (eventTypesToAuditValue != null && eventTypesToAuditValue.Type != JTokenType.Null)
                                 {
-                                    string endIpAddressInstance = ((string)endIpAddressValue);
-                                    propertiesInstance.EndIpAddress = endIpAddressInstance;
+                                    string eventTypesToAuditInstance = ((string)eventTypesToAuditValue);
+                                    propertiesInstance.EventTypesToAudit = eventTypesToAuditInstance;
+                                }
+                                
+                                JToken storageAccountNameValue = propertiesValue["storageAccountName"];
+                                if (storageAccountNameValue != null && storageAccountNameValue.Type != JTokenType.Null)
+                                {
+                                    string storageAccountNameInstance = ((string)storageAccountNameValue);
+                                    propertiesInstance.StorageAccountName = storageAccountNameInstance;
+                                }
+                                
+                                JToken storageAccountKeyValue = propertiesValue["storageAccountKey"];
+                                if (storageAccountKeyValue != null && storageAccountKeyValue.Type != JTokenType.Null)
+                                {
+                                    string storageAccountKeyInstance = ((string)storageAccountKeyValue);
+                                    propertiesInstance.StorageAccountKey = storageAccountKeyInstance;
+                                }
+                                
+                                JToken storageAccountSecondaryKeyValue = propertiesValue["storageAccountSecondaryKey"];
+                                if (storageAccountSecondaryKeyValue != null && storageAccountSecondaryKeyValue.Type != JTokenType.Null)
+                                {
+                                    string storageAccountSecondaryKeyInstance = ((string)storageAccountSecondaryKeyValue);
+                                    propertiesInstance.StorageAccountSecondaryKey = storageAccountSecondaryKeyInstance;
+                                }
+                                
+                                JToken storageTableEndpointValue = propertiesValue["storageTableEndpoint"];
+                                if (storageTableEndpointValue != null && storageTableEndpointValue.Type != JTokenType.Null)
+                                {
+                                    string storageTableEndpointInstance = ((string)storageTableEndpointValue);
+                                    propertiesInstance.StorageTableEndpoint = storageTableEndpointInstance;
+                                }
+                                
+                                JToken storageAccountResourceGroupNameValue = propertiesValue["storageAccountResourceGroupName"];
+                                if (storageAccountResourceGroupNameValue != null && storageAccountResourceGroupNameValue.Type != JTokenType.Null)
+                                {
+                                    string storageAccountResourceGroupNameInstance = ((string)storageAccountResourceGroupNameValue);
+                                    propertiesInstance.StorageAccountResourceGroupName = storageAccountResourceGroupNameInstance;
+                                }
+                                
+                                JToken storageAccountSubscriptionIdValue = propertiesValue["storageAccountSubscriptionId"];
+                                if (storageAccountSubscriptionIdValue != null && storageAccountSubscriptionIdValue.Type != JTokenType.Null)
+                                {
+                                    string storageAccountSubscriptionIdInstance = ((string)storageAccountSubscriptionIdValue);
+                                    propertiesInstance.StorageAccountSubscriptionId = storageAccountSubscriptionIdInstance;
+                                }
+                                
+                                JToken useServerDefaultValue = propertiesValue["useServerDefault"];
+                                if (useServerDefaultValue != null && useServerDefaultValue.Type != JTokenType.Null)
+                                {
+                                    string useServerDefaultInstance = ((string)useServerDefaultValue);
+                                    propertiesInstance.UseServerDefault = useServerDefaultInstance;
                                 }
                             }
                             
@@ -666,21 +736,21 @@ namespace Microsoft.Azure.Management.Sql
                             if (idValue != null && idValue.Type != JTokenType.Null)
                             {
                                 string idInstance = ((string)idValue);
-                                firewallRuleInstance.Id = idInstance;
+                                auditingPolicyInstance.Id = idInstance;
                             }
                             
                             JToken typeValue = responseDoc["type"];
                             if (typeValue != null && typeValue.Type != JTokenType.Null)
                             {
                                 string typeInstance = ((string)typeValue);
-                                firewallRuleInstance.Type = typeInstance;
+                                auditingPolicyInstance.Type = typeInstance;
                             }
                             
                             JToken locationValue = responseDoc["location"];
                             if (locationValue != null && locationValue.Type != JTokenType.Null)
                             {
                                 string locationInstance = ((string)locationValue);
-                                firewallRuleInstance.Location = locationInstance;
+                                auditingPolicyInstance.Location = locationInstance;
                             }
                             
                             JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
@@ -690,7 +760,7 @@ namespace Microsoft.Azure.Management.Sql
                                 {
                                     string tagsKey = ((string)property.Name);
                                     string tagsValue = ((string)property.Value);
-                                    firewallRuleInstance.Tags.Add(tagsKey, tagsValue);
+                                    auditingPolicyInstance.Tags.Add(tagsKey, tagsValue);
                                 }
                             }
                         }
@@ -726,7 +796,7 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
-        /// Returns a list of Azure SQL Database Server Firewall rules.
+        /// Returns an Azure SQL Database server auditing policy.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The name of the Resource Group to which the server
@@ -740,9 +810,9 @@ namespace Microsoft.Azure.Management.Sql
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Represents the response to a List Firewall Rules request.
+        /// Represents the response to a get database auditing policy request.
         /// </returns>
-        public async Task<FirewallRuleListResponse> ListAsync(string resourceGroupName, string serverName, CancellationToken cancellationToken)
+        public async Task<ServerAuditingPolicyGetResponse> GetServerPolicyAsync(string resourceGroupName, string serverName, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -763,7 +833,7 @@ namespace Microsoft.Azure.Management.Sql
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serverName", serverName);
-                TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetServerPolicyAsync", tracingParameters);
             }
             
             // Construct URL
@@ -779,7 +849,7 @@ namespace Microsoft.Azure.Management.Sql
             url = url + "Microsoft.Sql";
             url = url + "/servers/";
             url = url + Uri.EscapeDataString(serverName);
-            url = url + "/firewallRules";
+            url = url + "/auditingPolicies/Default";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2014-04-01");
             if (queryParameters.Count > 0)
@@ -840,13 +910,13 @@ namespace Microsoft.Azure.Management.Sql
                     }
                     
                     // Create Result
-                    FirewallRuleListResponse result = null;
+                    ServerAuditingPolicyGetResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new FirewallRuleListResponse();
+                        result = new ServerAuditingPolicyGetResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -855,73 +925,108 @@ namespace Microsoft.Azure.Management.Sql
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            JToken valueArray = responseDoc["value"];
-                            if (valueArray != null && valueArray.Type != JTokenType.Null)
+                            ServerAuditingPolicy auditingPolicyInstance = new ServerAuditingPolicy();
+                            result.AuditingPolicy = auditingPolicyInstance;
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
                             {
-                                foreach (JToken valueValue in ((JArray)valueArray))
+                                string nameInstance = ((string)nameValue);
+                                auditingPolicyInstance.Name = nameInstance;
+                            }
+                            
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                            {
+                                ServerAuditingPolicyProperties propertiesInstance = new ServerAuditingPolicyProperties();
+                                auditingPolicyInstance.Properties = propertiesInstance;
+                                
+                                JToken auditingStateValue = propertiesValue["auditingState"];
+                                if (auditingStateValue != null && auditingStateValue.Type != JTokenType.Null)
                                 {
-                                    FirewallRule firewallRuleInstance = new FirewallRule();
-                                    result.FirewallRules.Add(firewallRuleInstance);
-                                    
-                                    JToken nameValue = valueValue["name"];
-                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                    {
-                                        string nameInstance = ((string)nameValue);
-                                        firewallRuleInstance.Name = nameInstance;
-                                    }
-                                    
-                                    JToken propertiesValue = valueValue["properties"];
-                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                                    {
-                                        FirewallRuleProperties propertiesInstance = new FirewallRuleProperties();
-                                        firewallRuleInstance.Properties = propertiesInstance;
-                                        
-                                        JToken startIpAddressValue = propertiesValue["startIpAddress"];
-                                        if (startIpAddressValue != null && startIpAddressValue.Type != JTokenType.Null)
-                                        {
-                                            string startIpAddressInstance = ((string)startIpAddressValue);
-                                            propertiesInstance.StartIpAddress = startIpAddressInstance;
-                                        }
-                                        
-                                        JToken endIpAddressValue = propertiesValue["endIpAddress"];
-                                        if (endIpAddressValue != null && endIpAddressValue.Type != JTokenType.Null)
-                                        {
-                                            string endIpAddressInstance = ((string)endIpAddressValue);
-                                            propertiesInstance.EndIpAddress = endIpAddressInstance;
-                                        }
-                                    }
-                                    
-                                    JToken idValue = valueValue["id"];
-                                    if (idValue != null && idValue.Type != JTokenType.Null)
-                                    {
-                                        string idInstance = ((string)idValue);
-                                        firewallRuleInstance.Id = idInstance;
-                                    }
-                                    
-                                    JToken typeValue = valueValue["type"];
-                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
-                                    {
-                                        string typeInstance = ((string)typeValue);
-                                        firewallRuleInstance.Type = typeInstance;
-                                    }
-                                    
-                                    JToken locationValue = valueValue["location"];
-                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
-                                    {
-                                        string locationInstance = ((string)locationValue);
-                                        firewallRuleInstance.Location = locationInstance;
-                                    }
-                                    
-                                    JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
-                                    if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                                    {
-                                        foreach (JProperty property in tagsSequenceElement)
-                                        {
-                                            string tagsKey = ((string)property.Name);
-                                            string tagsValue = ((string)property.Value);
-                                            firewallRuleInstance.Tags.Add(tagsKey, tagsValue);
-                                        }
-                                    }
+                                    string auditingStateInstance = ((string)auditingStateValue);
+                                    propertiesInstance.AuditingState = auditingStateInstance;
+                                }
+                                
+                                JToken eventTypesToAuditValue = propertiesValue["eventTypesToAudit"];
+                                if (eventTypesToAuditValue != null && eventTypesToAuditValue.Type != JTokenType.Null)
+                                {
+                                    string eventTypesToAuditInstance = ((string)eventTypesToAuditValue);
+                                    propertiesInstance.EventTypesToAudit = eventTypesToAuditInstance;
+                                }
+                                
+                                JToken storageAccountNameValue = propertiesValue["storageAccountName"];
+                                if (storageAccountNameValue != null && storageAccountNameValue.Type != JTokenType.Null)
+                                {
+                                    string storageAccountNameInstance = ((string)storageAccountNameValue);
+                                    propertiesInstance.StorageAccountName = storageAccountNameInstance;
+                                }
+                                
+                                JToken storageAccountKeyValue = propertiesValue["storageAccountKey"];
+                                if (storageAccountKeyValue != null && storageAccountKeyValue.Type != JTokenType.Null)
+                                {
+                                    string storageAccountKeyInstance = ((string)storageAccountKeyValue);
+                                    propertiesInstance.StorageAccountKey = storageAccountKeyInstance;
+                                }
+                                
+                                JToken storageAccountSecondaryKeyValue = propertiesValue["storageAccountSecondaryKey"];
+                                if (storageAccountSecondaryKeyValue != null && storageAccountSecondaryKeyValue.Type != JTokenType.Null)
+                                {
+                                    string storageAccountSecondaryKeyInstance = ((string)storageAccountSecondaryKeyValue);
+                                    propertiesInstance.StorageAccountSecondaryKey = storageAccountSecondaryKeyInstance;
+                                }
+                                
+                                JToken storageTableEndpointValue = propertiesValue["storageTableEndpoint"];
+                                if (storageTableEndpointValue != null && storageTableEndpointValue.Type != JTokenType.Null)
+                                {
+                                    string storageTableEndpointInstance = ((string)storageTableEndpointValue);
+                                    propertiesInstance.StorageTableEndpoint = storageTableEndpointInstance;
+                                }
+                                
+                                JToken storageAccountResourceGroupNameValue = propertiesValue["storageAccountResourceGroupName"];
+                                if (storageAccountResourceGroupNameValue != null && storageAccountResourceGroupNameValue.Type != JTokenType.Null)
+                                {
+                                    string storageAccountResourceGroupNameInstance = ((string)storageAccountResourceGroupNameValue);
+                                    propertiesInstance.StorageAccountResourceGroupName = storageAccountResourceGroupNameInstance;
+                                }
+                                
+                                JToken storageAccountSubscriptionIdValue = propertiesValue["storageAccountSubscriptionId"];
+                                if (storageAccountSubscriptionIdValue != null && storageAccountSubscriptionIdValue.Type != JTokenType.Null)
+                                {
+                                    string storageAccountSubscriptionIdInstance = ((string)storageAccountSubscriptionIdValue);
+                                    propertiesInstance.StorageAccountSubscriptionId = storageAccountSubscriptionIdInstance;
+                                }
+                            }
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                auditingPolicyInstance.Id = idInstance;
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                auditingPolicyInstance.Type = typeInstance;
+                            }
+                            
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            {
+                                string locationInstance = ((string)locationValue);
+                                auditingPolicyInstance.Location = locationInstance;
+                            }
+                            
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property in tagsSequenceElement)
+                                {
+                                    string tagsKey = ((string)property.Name);
+                                    string tagsValue = ((string)property.Value);
+                                    auditingPolicyInstance.Tags.Add(tagsKey, tagsValue);
                                 }
                             }
                         }
