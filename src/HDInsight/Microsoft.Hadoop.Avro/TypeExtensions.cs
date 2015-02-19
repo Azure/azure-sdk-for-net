@@ -245,7 +245,7 @@ namespace Microsoft.Hadoop.Avro
                    && (type.IsSubclassOf(baseType) 
                    || type == baseType 
                    || (baseType.IsInterface && baseType.IsAssignableFrom(type))
-                   || (baseType.IsGenericType && baseType.IsInterface && baseType.GenericIsAssignable(baseType)
+                   || (baseType.IsGenericType && baseType.IsInterface && baseType.GenericIsAssignable(type)
                            && type.GetGenericArguments()
                                   .Zip(baseType.GetGenericArguments(), (type1, type2) => new Tuple<Type, Type>(type1, type2))
                                   .ToList()
@@ -320,6 +320,35 @@ namespace Microsoft.Hadoop.Avro
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// According to Avro, name must:
+        ///     start with [A-Za-z_] 
+        ///     subsequently contain only [A-Za-z0-9_] 
+        /// http://avro.apache.org/docs/current/spec.html#schema_record.
+        /// </summary>
+        /// <param name="type">
+        /// The entity type.
+        /// </param>
+        /// <returns>
+        /// The type name that comply with avro spec.
+        /// </returns>
+        internal static string AvroSchemaName(this Type type)
+        {
+            string result = type.Name;
+            if (type.IsGenericType)
+            {
+                result = type.Name + "_" + string.Join("_", type.GetGenericArguments().Select(AvroSchemaName));
+            }
+
+            if (type.IsArray)
+            {
+                Type elementType = type.GetElementType();
+                result = elementType.AvroSchemaName() + "__";
+            }
+
+            return result.Replace("`1", string.Empty).Replace("`2", string.Empty).Replace("`3", string.Empty);
         }
     }
 }
