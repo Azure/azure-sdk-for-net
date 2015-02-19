@@ -62,7 +62,6 @@
     <Compile Include="Mocks\MockAccessTokenProvider.cs" />
     <Compile Include="Mocks\MockCertificateAuthenticationFactory.cs" />
     <Compile Include="Mocks\MockClientFactory.cs" />
-    <Compile Include="Mocks\MockDataStore.cs" />
     <Compile Include="Mocks\MockTokenAuthenticationFactory.cs" />
     <Compile Include="ProfileClientTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
