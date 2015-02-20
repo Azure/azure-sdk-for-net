@@ -296,8 +296,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
                 client = this.CreateClustersPocoClient(this.capabilities.Value);
             }
 
-            // Perform cluster creation parameter validations
-            clusterCreateParameters.ValidateClusterCreateParameters();
             this.LogMessage("Validating Cluster Versions", Severity.Informational, Verbosity.Detailed);
             await this.ValidateClusterVersion(clusterCreateParameters);
 
