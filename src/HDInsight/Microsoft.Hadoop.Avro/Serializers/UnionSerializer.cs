@@ -134,7 +134,8 @@ namespace Microsoft.Hadoop.Avro.Serializers
 
         private Expression BuildUnionSerializer(Expression encoder, Expression value, IList<IndexedSchema> schemas)
         {
-            Expression elseBranch = Expression.Throw(Expression.Constant(new SerializationException(string.Format(CultureInfo.InvariantCulture, "Object type does match any item schema of the union."))));
+            Expression<Func<object, Exception>> messageFunc = objectType => new SerializationException(string.Format("Object type {0} does not match any item schema of the union: {1}", objectType == null ? null : objectType.GetType(), string.Join(",", schemas.Select(s => s.Schema.RuntimeType))));
+            Expression elseBranch = Expression.Throw(Expression.Invoke(messageFunc, value));
             ConditionalExpression conditions = null;
             for (int i = schemas.Count - 1; i >= 0; i--)
             {

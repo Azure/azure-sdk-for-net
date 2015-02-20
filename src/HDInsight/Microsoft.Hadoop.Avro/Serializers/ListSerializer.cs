@@ -102,7 +102,7 @@ namespace Microsoft.Hadoop.Avro.Serializers
                     Expression.Block(
                         Expression.Assign(currentNumberOfElements, Expression.Call(decoder, "DecodeArrayChunk", new Type[] { })),
                         Expression.IfThen(Expression.Equal(currentNumberOfElements, Expression.Constant(0)), Expression.Break(allRead)),
-                        Expression.Assign(Expression.Property(result, "Capacity"), Expression.Add(index, currentNumberOfElements)),
+                        Expression.Assign((type.GetProperty("Capacity") != null) ? Expression.Property(result, "Capacity") : (Expression)counter, Expression.Add(index, currentNumberOfElements)),
                         Expression.Assign(counter, Expression.Constant(0)),
                         Expression.Loop(
                             Expression.Block(
