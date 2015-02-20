@@ -32,13 +32,56 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
         private string _failoverDirection;
         
         /// <summary>
-        /// Required. Failover direction can be PrimaryToRecovery or
-        /// RecoveryToPrimary.
+        /// Optional. Failover direction.
         /// </summary>
         public string FailoverDirection
         {
             get { return this._failoverDirection; }
             set { this._failoverDirection = value; }
+        }
+        
+        private string _networkID;
+        
+        /// <summary>
+        /// Required. Network ID for TestFailover.
+        /// </summary>
+        public string NetworkID
+        {
+            get { return this._networkID; }
+            set { this._networkID = value; }
+        }
+        
+        private string _networkType;
+        
+        /// <summary>
+        /// Required. Network type for TestFailover.
+        /// </summary>
+        public string NetworkType
+        {
+            get { return this._networkType; }
+            set { this._networkType = value; }
+        }
+        
+        private string _replicationProvider;
+        
+        /// <summary>
+        /// Optional. Replication provider name.
+        /// </summary>
+        public string ReplicationProvider
+        {
+            get { return this._replicationProvider; }
+            set { this._replicationProvider = value; }
+        }
+        
+        private string _replicationProviderSettings;
+        
+        /// <summary>
+        /// Optional. Replication provider settings.
+        /// </summary>
+        public string ReplicationProviderSettings
+        {
+            get { return this._replicationProviderSettings; }
+            set { this._replicationProviderSettings = value; }
         }
         
         /// <summary>
@@ -52,14 +95,19 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
         /// Initializes a new instance of the RpTestFailoverRequest class with
         /// required arguments.
         /// </summary>
-        public RpTestFailoverRequest(string failoverDirection)
+        public RpTestFailoverRequest(string networkType, string networkID)
             : this()
         {
-            if (failoverDirection == null)
+            if (networkType == null)
             {
-                throw new ArgumentNullException("failoverDirection");
+                throw new ArgumentNullException("networkType");
             }
-            this.FailoverDirection = failoverDirection;
+            if (networkID == null)
+            {
+                throw new ArgumentNullException("networkID");
+            }
+            this.NetworkType = networkType;
+            this.NetworkID = networkID;
         }
     }
 }

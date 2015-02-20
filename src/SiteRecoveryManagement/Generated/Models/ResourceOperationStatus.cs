@@ -21,6 +21,7 @@
 
 using System;
 using System.Linq;
+using Microsoft.WindowsAzure.Management.RecoveryServices.Models;
 
 namespace Microsoft.WindowsAzure.Management.RecoveryServices.Models
 {
@@ -29,10 +30,21 @@ namespace Microsoft.WindowsAzure.Management.RecoveryServices.Models
     /// </summary>
     public partial class ResourceOperationStatus
     {
+        private ResourceErrorInfo _error;
+        
+        /// <summary>
+        /// Optional. Error for latest opertion on the Resource
+        /// </summary>
+        public ResourceErrorInfo Error
+        {
+            get { return this._error; }
+            set { this._error = value; }
+        }
+        
         private string _result;
         
         /// <summary>
-        /// Optional. Result of latest opertion on the Resource
+        /// Optional. Result of latest operation on the Resource
         /// </summary>
         public string Result
         {
@@ -43,7 +55,7 @@ namespace Microsoft.WindowsAzure.Management.RecoveryServices.Models
         private string _type;
         
         /// <summary>
-        /// Optional. Type of latest opertion on the Resource
+        /// Optional. Type of latest operation on the Resource
         /// </summary>
         public string Type
         {

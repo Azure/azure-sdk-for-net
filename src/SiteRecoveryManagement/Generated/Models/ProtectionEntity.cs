@@ -107,6 +107,17 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
             set { this._protectionContainerId = value; }
         }
         
+        private ProtectionProfile _protectionProfile;
+        
+        /// <summary>
+        /// Optional. Protection Profile
+        /// </summary>
+        public ProtectionProfile ProtectionProfile
+        {
+            get { return this._protectionProfile; }
+            set { this._protectionProfile = value; }
+        }
+        
         private string _protectionStateDescription;
         
         /// <summary>
@@ -142,6 +153,17 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
         {
             get { return this._replicationProvider; }
             set { this._replicationProvider = value; }
+        }
+        
+        private string _replicationProviderSettings;
+        
+        /// <summary>
+        /// Required. The replication provider settings.
+        /// </summary>
+        public string ReplicationProviderSettings
+        {
+            get { return this._replicationProviderSettings; }
+            set { this._replicationProviderSettings = value; }
         }
         
         private string _serverId;
