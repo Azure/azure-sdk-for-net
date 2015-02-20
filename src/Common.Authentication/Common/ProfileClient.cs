@@ -663,7 +663,7 @@ namespace Microsoft.Azure.Common.Authentication
             Profile.Subscriptions.Clear();
             Profile.Save();
 
-            ProtectedFileTokenCache.Instance.Clear();
+            AzureSession.TokenCache.Clear();
         }
 
         public void ClearDefaultSubscription()
