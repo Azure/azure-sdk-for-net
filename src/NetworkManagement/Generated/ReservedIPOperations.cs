@@ -65,6 +65,272 @@ namespace Microsoft.WindowsAzure.Management.Network
         }
         
         /// <summary>
+        /// The Associate Reserved IP operation associates a Reserved IP with a
+        /// service.
+        /// </summary>
+        /// <param name='reservedIpName'>
+        /// Required. The name of the reserved IP.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to associate Reserved IP.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public async Task<OperationStatusResponse> AssociateAsync(string reservedIpName, NetworkReservedIPMobilityParameters parameters, CancellationToken cancellationToken)
+        {
+            NetworkManagementClient client = this.Client;
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("reservedIpName", reservedIpName);
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "AssociateAsync", tracingParameters);
+            }
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            OperationStatusResponse response = await client.ReservedIPs.BeginAssociatingAsync(reservedIpName, parameters, cancellationToken).ConfigureAwait(false);
+            if (response.Status == OperationStatus.Succeeded)
+            {
+                return response;
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 90;
+            if (client.LongRunningOperationInitialTimeout >= 0)
+            {
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
+            }
+            while ((result.Status != OperationStatus.InProgress) == false)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 30;
+                if (client.LongRunningOperationRetryTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
+                }
+            }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            if (result.Status != OperationStatus.Succeeded)
+            {
+                if (result.Error != null)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.Error = new CloudError();
+                    ex.Error.Code = result.Error.Code;
+                    ex.Error.Message = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                else
+                {
+                    CloudException ex = new CloudException("");
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+            }
+            
+            return result;
+        }
+        
+        /// <summary>
+        /// The BeginAssociate begins to associate a Reserved IP with a service.
+        /// </summary>
+        /// <param name='reservedIpName'>
+        /// Required. The name of the reserved IP.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Begin associating Reserved IP.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public async Task<OperationStatusResponse> BeginAssociatingAsync(string reservedIpName, NetworkReservedIPMobilityParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (reservedIpName == null)
+            {
+                throw new ArgumentNullException("reservedIpName");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("reservedIpName", reservedIpName);
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "BeginAssociatingAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/networking/reservedips/";
+            url = url + Uri.EscapeDataString(reservedIpName);
+            url = url + "/operations/associate";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                XDocument requestDoc = new XDocument();
+                
+                XElement reservedIPAssociationElement = new XElement(XName.Get("ReservedIPAssociation", "http://schemas.microsoft.com/windowsazure"));
+                requestDoc.Add(reservedIPAssociationElement);
+                
+                if (parameters.ServiceName != null)
+                {
+                    XElement serviceNameElement = new XElement(XName.Get("ServiceName", "http://schemas.microsoft.com/windowsazure"));
+                    serviceNameElement.Value = parameters.ServiceName;
+                    reservedIPAssociationElement.Add(serviceNameElement);
+                }
+                
+                if (parameters.DeploymentName != null)
+                {
+                    XElement deploymentNameElement = new XElement(XName.Get("DeploymentName", "http://schemas.microsoft.com/windowsazure"));
+                    deploymentNameElement.Value = parameters.DeploymentName;
+                    reservedIPAssociationElement.Add(deploymentNameElement);
+                }
+                
+                requestContent = requestDoc.ToString();
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    OperationStatusResponse result = null;
+                    // Deserialize Response
+                    result = new OperationStatusResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
         /// The Begin Creating Reserved IP operation creates a reserved IP from
         /// your the subscription.
         /// </summary>
@@ -135,7 +401,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -162,13 +428,6 @@ namespace Microsoft.WindowsAzure.Management.Network
                     reservedIPElement.Add(labelElement);
                 }
                 
-                if (parameters.Location != null)
-                {
-                    XElement locationElement = new XElement(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
-                    locationElement.Value = parameters.Location;
-                    reservedIPElement.Add(locationElement);
-                }
-                
                 if (parameters.ServiceName != null)
                 {
                     XElement serviceNameElement = new XElement(XName.Get("ServiceName", "http://schemas.microsoft.com/windowsazure"));
@@ -181,6 +440,13 @@ namespace Microsoft.WindowsAzure.Management.Network
                     XElement deploymentNameElement = new XElement(XName.Get("DeploymentName", "http://schemas.microsoft.com/windowsazure"));
                     deploymentNameElement.Value = parameters.DeploymentName;
                     reservedIPElement.Add(deploymentNameElement);
+                }
+                
+                if (parameters.Location != null)
+                {
+                    XElement locationElement = new XElement(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
+                    locationElement.Value = parameters.Location;
+                    reservedIPElement.Add(locationElement);
                 }
                 
                 requestContent = requestDoc.ToString();
@@ -310,7 +576,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -346,6 +612,177 @@ namespace Microsoft.WindowsAzure.Management.Network
                     AzureOperationResponse result = null;
                     // Deserialize Response
                     result = new AzureOperationResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The BeginDisassociate begins to disassociate a Reserved IP from a
+        /// service.
+        /// </summary>
+        /// <param name='reservedIpName'>
+        /// Required. The name of the reserved IP.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Begin disassociating Reserved
+        /// IP.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public async Task<OperationStatusResponse> BeginDisassociatingAsync(string reservedIpName, NetworkReservedIPMobilityParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (reservedIpName == null)
+            {
+                throw new ArgumentNullException("reservedIpName");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("reservedIpName", reservedIpName);
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "BeginDisassociatingAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/networking/reservedips/";
+            url = url + Uri.EscapeDataString(reservedIpName);
+            url = url + "/operations/disassociate";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                XDocument requestDoc = new XDocument();
+                
+                XElement reservedIPAssociationElement = new XElement(XName.Get("ReservedIPAssociation", "http://schemas.microsoft.com/windowsazure"));
+                requestDoc.Add(reservedIPAssociationElement);
+                
+                if (parameters.ServiceName != null)
+                {
+                    XElement serviceNameElement = new XElement(XName.Get("ServiceName", "http://schemas.microsoft.com/windowsazure"));
+                    serviceNameElement.Value = parameters.ServiceName;
+                    reservedIPAssociationElement.Add(serviceNameElement);
+                }
+                
+                if (parameters.DeploymentName != null)
+                {
+                    XElement deploymentNameElement = new XElement(XName.Get("DeploymentName", "http://schemas.microsoft.com/windowsazure"));
+                    deploymentNameElement.Value = parameters.DeploymentName;
+                    reservedIPAssociationElement.Add(deploymentNameElement);
+                }
+                
+                requestContent = requestDoc.ToString();
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    OperationStatusResponse result = null;
+                    // Deserialize Response
+                    result = new OperationStatusResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -558,6 +995,103 @@ namespace Microsoft.WindowsAzure.Management.Network
         }
         
         /// <summary>
+        /// The Disassociate Reserved IP operation disassociates a Reserved IP
+        /// from a service.
+        /// </summary>
+        /// <param name='reservedIpName'>
+        /// Required. The name of the reserved IP.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to disassociate Reserved IP.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public async Task<OperationStatusResponse> DisassociateAsync(string reservedIpName, NetworkReservedIPMobilityParameters parameters, CancellationToken cancellationToken)
+        {
+            NetworkManagementClient client = this.Client;
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("reservedIpName", reservedIpName);
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "DisassociateAsync", tracingParameters);
+            }
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            OperationStatusResponse response = await client.ReservedIPs.BeginDisassociatingAsync(reservedIpName, parameters, cancellationToken).ConfigureAwait(false);
+            if (response.Status == OperationStatus.Succeeded)
+            {
+                return response;
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 90;
+            if (client.LongRunningOperationInitialTimeout >= 0)
+            {
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
+            }
+            while ((result.Status != OperationStatus.InProgress) == false)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 30;
+                if (client.LongRunningOperationRetryTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
+                }
+            }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            if (result.Status != OperationStatus.Succeeded)
+            {
+                if (result.Error != null)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.Error = new CloudError();
+                    ex.Error.Code = result.Error.Code;
+                    ex.Error.Message = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                else
+                {
+                    CloudException ex = new CloudException("");
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+            }
+            
+            return result;
+        }
+        
+        /// <summary>
         /// The Get Reserved IP operation retrieves the details for the virtual
         /// IP reserved for the subscription.
         /// </summary>
@@ -620,7 +1154,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -813,7 +1347,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
