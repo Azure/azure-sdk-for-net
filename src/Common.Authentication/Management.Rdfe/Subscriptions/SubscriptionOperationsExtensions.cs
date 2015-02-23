@@ -19,17 +19,17 @@
 // Changes to this file may cause incorrect behavior and will be lost if the
 // code is regenerated.
 
-using Microsoft.Azure.Internal.Subscriptions.Rdfe.Models;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure.Subscriptions.Rdfe.Models;
 
-namespace Microsoft.Azure.Internal.Subscriptions.Rdfe
+namespace Microsoft.Azure.Subscriptions.Rdfe
 {
-    internal static partial class SubscriptionOperationsExtensions
+    public static partial class SubscriptionOperationsExtensions
     {
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Internal.Subscriptions.Rdfe.ISubscriptionOperations.
+        /// Microsoft.Azure.Subscriptions.Rdfe.ISubscriptionOperations.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Internal.Subscriptions.Rdfe
         
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Internal.Subscriptions.Rdfe.ISubscriptionOperations.
+        /// Microsoft.Azure.Subscriptions.Rdfe.ISubscriptionOperations.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and

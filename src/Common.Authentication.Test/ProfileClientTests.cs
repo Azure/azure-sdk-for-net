@@ -14,7 +14,7 @@
 
 using Microsoft.Azure.Common.Authentication;
 using Microsoft.Azure.Common.Authentication.Models;
-using Microsoft.Azure.Internal.Subscriptions.Csm.Models;
+using Microsoft.Azure.Subscriptions.Csm.Models;
 using Microsoft.WindowsAzure.Commands.Common.Test.Mocks;
 using System;
 using System.Collections.Generic;
@@ -22,8 +22,8 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using Xunit;
-using CSMSubscription = Microsoft.Azure.Internal.Subscriptions.Csm.Models.Subscription;
-using RDFESubscription = Microsoft.Azure.Internal.Subscriptions.Rdfe.Models.Subscription;
+using CSMSubscription = Microsoft.Azure.Subscriptions.Csm.Models.Subscription;
+using RDFESubscription = Microsoft.Azure.Subscriptions.Rdfe.Models.Subscription;
 
 namespace Common.Authentication.Test
 {
@@ -372,7 +372,7 @@ namespace Common.Authentication.Test
         public void AddAzureAccountWithImpersonatedGuestWithNoSubscriptions()
         {
             SetMocks(new[] { rdfeSubscription1 }.ToList(), 
-                     new List<Microsoft.Azure.Internal.Subscriptions.Csm.Models.Subscription>(),
+                     new List<Microsoft.Azure.Subscriptions.Csm.Models.Subscription>(),
                      new[] { commonTenant, guestTenant }.ToList(),
                     (userAccount, environment, tenant) =>
                 {
@@ -414,7 +414,7 @@ namespace Common.Authentication.Test
         public void AddAzureAccountWithImpersonatedGuestWithSubscriptions()
         {
             SetMocks(new[] { rdfeSubscription1, guestRdfeSubscription }.ToList(), 
-                     new List<Microsoft.Azure.Internal.Subscriptions.Csm.Models.Subscription>(), 
+                     new List<Microsoft.Azure.Subscriptions.Csm.Models.Subscription>(), 
                      new[] { commonTenant, guestTenant }.ToList(),
                     (userAccount, environment, tenant) =>
                 {
@@ -459,7 +459,7 @@ namespace Common.Authentication.Test
         public void AddAzureAccountIsCaseInsensitive()
         {
             SetMocks(new[] { rdfeSubscription1, guestRdfeSubscription }.ToList(), 
-                     new List<Microsoft.Azure.Internal.Subscriptions.Csm.Models.Subscription>(), 
+                     new List<Microsoft.Azure.Subscriptions.Csm.Models.Subscription>(), 
                      new[] { commonTenant, guestTenant }.ToList(),
                      (userAccount, environment, tenant) =>
                 {
@@ -1330,8 +1330,8 @@ namespace Common.Authentication.Test
             Assert.Equal(6, client.Profile.Subscriptions.Count);
         }
 
-        private void SetMocks(List<Microsoft.Azure.Internal.Subscriptions.Rdfe.Models.Subscription> rdfeSubscriptions,
-            List<Microsoft.Azure.Internal.Subscriptions.Csm.Models.Subscription> csmSubscriptions,
+        private void SetMocks(List<Microsoft.Azure.Subscriptions.Rdfe.Models.Subscription> rdfeSubscriptions,
+            List<Microsoft.Azure.Subscriptions.Csm.Models.Subscription> csmSubscriptions,
             List<TenantIdDescription> tenants = null,
             Func<AzureAccount, AzureEnvironment, string, IAccessToken> tokenProvider = null)
         {
@@ -1369,21 +1369,21 @@ namespace Common.Authentication.Test
             {
                 SubscriptionId = "16E3F6FD-A3AA-439A-8FC4-1F5C41D2AD1E",
                 SubscriptionName = "RdfeSub1",
-                SubscriptionStatus = Microsoft.Azure.Internal.Subscriptions.Rdfe.Models.SubscriptionStatus.Active,
+                SubscriptionStatus = Microsoft.Azure.Subscriptions.Rdfe.Models.SubscriptionStatus.Active,
                 ActiveDirectoryTenantId = "Common"
             };
             rdfeSubscription2 = new RDFESubscription
             {
                 SubscriptionId = "26E3F6FD-A3AA-439A-8FC4-1F5C41D2AD1E",
                 SubscriptionName = "RdfeSub2",
-                SubscriptionStatus = Microsoft.Azure.Internal.Subscriptions.Rdfe.Models.SubscriptionStatus.Active,
+                SubscriptionStatus = Microsoft.Azure.Subscriptions.Rdfe.Models.SubscriptionStatus.Active,
                 ActiveDirectoryTenantId = "Common"
             };
             guestRdfeSubscription = new RDFESubscription
             {
                 SubscriptionId = "26E3F6FD-A3AA-439A-8FC4-1F5C41D2AD1C",
                 SubscriptionName = "RdfeSub2",
-                SubscriptionStatus = Microsoft.Azure.Internal.Subscriptions.Rdfe.Models.SubscriptionStatus.Active,
+                SubscriptionStatus = Microsoft.Azure.Subscriptions.Rdfe.Models.SubscriptionStatus.Active,
                 ActiveDirectoryTenantId = "Guest"
             };
             csmSubscription1 = new CSMSubscription

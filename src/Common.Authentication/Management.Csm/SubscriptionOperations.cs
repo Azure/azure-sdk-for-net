@@ -20,7 +20,7 @@
 // code is regenerated.
 
 using Hyak.Common;
-using Microsoft.Azure.Internal.Subscriptions.Csm.Models;
+using Microsoft.Azure.Subscriptions.Csm.Models;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -30,12 +30,12 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.Azure.Internal.Subscriptions.Csm
+namespace Microsoft.Azure.Subscriptions.Csm
 {
     /// <summary>
     /// Operations for managing subscriptions.
     /// </summary>
-    internal partial class SubscriptionOperations : IServiceOperations<SubscriptionClient>, ISubscriptionOperations
+    public partial class SubscriptionOperations : IServiceOperations<SubscriptionClient>, ISubscriptionOperations
     {
         /// <summary>
         /// Initializes a new instance of the SubscriptionOperations class.
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Internal.Subscriptions.Csm
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal SubscriptionOperations(SubscriptionClient client)
+        public SubscriptionOperations(SubscriptionClient client)
         {
             this._client = client;
         }
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Internal.Subscriptions.Csm
         
         /// <summary>
         /// Gets a reference to the
-        /// Microsoft.Azure.Internal.Subscriptions.Csm.SubscriptionClient.
+        /// Microsoft.Azure.Subscriptions.Csm.SubscriptionClient.
         /// </summary>
         public SubscriptionClient Client
         {

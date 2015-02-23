@@ -20,7 +20,7 @@
 // code is regenerated.
 
 using Hyak.Common;
-using Microsoft.Azure.Internal.Management.Csm.Models;
+using Microsoft.Azure.Management.Csm.Models;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -30,12 +30,12 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.Azure.Internal.Management.Csm
+namespace Microsoft.Azure.Management.Csm
 {
     /// <summary>
     /// Operations for managing providers.
     /// </summary>
-    internal partial class ProviderOperations : IServiceOperations<ResourceManagementClient>, IProviderOperations
+    public partial class ProviderOperations : IServiceOperations<ResourceManagementClient>, IProviderOperations
     {
         /// <summary>
         /// Initializes a new instance of the ProviderOperations class.
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Internal.Management.Csm
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal ProviderOperations(ResourceManagementClient client)
+        public ProviderOperations(ResourceManagementClient client)
         {
             this._client = client;
         }
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Internal.Management.Csm
         
         /// <summary>
         /// Gets a reference to the
-        /// Microsoft.Azure.Internal.Management.Csm.ResourceManagementClient.
+        /// Microsoft.Azure.Management.Csm.ResourceManagementClient.
         /// </summary>
         public ResourceManagementClient Client
         {

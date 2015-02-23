@@ -20,7 +20,7 @@
 // code is regenerated.
 
 
-namespace Microsoft.Azure.Internal.Subscriptions.Csm.Models
+namespace Microsoft.Azure.Subscriptions.Csm.Models
 {
     /// <summary>
     /// Subscription information.
