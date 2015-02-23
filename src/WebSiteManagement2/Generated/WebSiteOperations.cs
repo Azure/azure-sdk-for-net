@@ -2628,6 +2628,13 @@ namespace Microsoft.Azure.Management.WebSites
                                     propertiesInstance.ServerFarm = serverFarmInstance;
                                 }
                                 
+                                JToken serverFarmIdValue = propertiesValue["serverFarmId"];
+                                if (serverFarmIdValue != null && serverFarmIdValue.Type != JTokenType.Null)
+                                {
+                                    string serverFarmIdInstance = ((string)serverFarmIdValue);
+                                    propertiesInstance.ServerFarmId = serverFarmIdInstance;
+                                }
+                                
                                 JToken skuValue = propertiesValue["sku"];
                                 if (skuValue != null && skuValue.Type != JTokenType.Null)
                                 {
@@ -6278,6 +6285,13 @@ namespace Microsoft.Azure.Management.WebSites
                                         {
                                             string serverFarmInstance = ((string)serverFarmValue);
                                             propertiesInstance.ServerFarm = serverFarmInstance;
+                                        }
+                                        
+                                        JToken serverFarmIdValue = propertiesValue["serverFarmId"];
+                                        if (serverFarmIdValue != null && serverFarmIdValue.Type != JTokenType.Null)
+                                        {
+                                            string serverFarmIdInstance = ((string)serverFarmIdValue);
+                                            propertiesInstance.ServerFarmId = serverFarmIdInstance;
                                         }
                                         
                                         JToken skuValue = propertiesValue["sku"];
