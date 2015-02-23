@@ -13,9 +13,9 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>$(SolutionDir)packages\Newtonsoft.Json.6.0.4\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Rest.Common">
+    <Reference Include="Microsoft.Rest.ClientRuntime">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(SolutionDir)packages\Microsoft.Rest.Common.0.9.0\lib\net40\Microsoft.Rest.Common.dll</HintPath>
+      <HintPath>$(SolutionDir)packages\Microsoft.Rest.ClientRuntime.0.9.0\lib\net40\Microsoft.Rest.ClientRuntime.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
