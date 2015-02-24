@@ -77,6 +77,16 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
+        /// Represents all the operations to manage Azure SQL Database and
+        /// Database Server Audit policy.  Contains operations to: Create,
+        /// Retrieve and Update audit policy.
+        /// </summary>
+        IAuditingPolicyOperations AuditingPolicy
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Represents all the operations for operating on Azure SQL Databases.
         /// Contains operations to: Create, Retrieve, Update, and Delete
         /// databases, and also includes the ability to get the event logs for
@@ -89,10 +99,31 @@ namespace Microsoft.Azure.Management.Sql
         
         /// <summary>
         /// Represents all the operations for operating on Azure SQL Database
+        /// data masking. Contains operations to: Create, Retrieve, Update,
+        /// and Delete data masking rules, as well as Create, Retreive and
+        /// Update data masking policy.
+        /// </summary>
+        IDataMaskingOperations DataMasking
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Represents all the operations for operating on Azure SQL Database
         /// Server Firewall Rules.  Contains operations to: Create, Retrieve,
         /// Update, and Delete firewall rules.
         /// </summary>
         IFirewallRuleOperations FirewallRules
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Represents all the operations for managing Azure SQL Database
+        /// secure connection.  Contains operations to: Create, Retrieve and
+        /// Update secure connection policy .
+        /// </summary>
+        ISecureConnectionPolicyOperations SecureConnection
         {
             get; 
         }

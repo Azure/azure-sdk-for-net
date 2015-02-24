@@ -466,7 +466,14 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             }
             
             // Construct URL
-            string url = "/" + (this.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Credentials.SubscriptionId)) + "/services/networking/operation/" + Uri.EscapeDataString(operationId);
+            string url = "";
+            url = url + "/";
+            if (this.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Credentials.SubscriptionId);
+            }
+            url = url + "/services/networking/operation/";
+            url = url + Uri.EscapeDataString(operationId);
             string baseUrl = this.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')

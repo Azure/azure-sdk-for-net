@@ -130,8 +130,31 @@ namespace Microsoft.Azure.Management.Resources
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/" + Uri.EscapeDataString(identity.ResourceProviderNamespace) + "/" + identity.ParentResourcePath + "/" + identity.ResourceType + "/" + Uri.EscapeDataString(identity.ResourceName) + "?";
-            url = url + "api-version=" + Uri.EscapeDataString(identity.ResourceProviderApiVersion);
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + Uri.EscapeDataString(identity.ResourceProviderNamespace);
+            url = url + "/";
+            if (identity.ParentResourcePath != null)
+            {
+                url = url + identity.ParentResourcePath;
+            }
+            url = url + "/";
+            url = url + identity.ResourceType;
+            url = url + "/";
+            url = url + Uri.EscapeDataString(identity.ResourceName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=" + Uri.EscapeDataString(identity.ResourceProviderApiVersion));
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -303,8 +326,31 @@ namespace Microsoft.Azure.Management.Resources
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/" + Uri.EscapeDataString(identity.ResourceProviderNamespace) + "/" + identity.ParentResourcePath + "/" + identity.ResourceType + "/" + Uri.EscapeDataString(identity.ResourceName) + "?";
-            url = url + "api-version=" + Uri.EscapeDataString(identity.ResourceProviderApiVersion);
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + Uri.EscapeDataString(identity.ResourceProviderNamespace);
+            url = url + "/";
+            if (identity.ParentResourcePath != null)
+            {
+                url = url + identity.ParentResourcePath;
+            }
+            url = url + "/";
+            url = url + identity.ResourceType;
+            url = url + "/";
+            url = url + Uri.EscapeDataString(identity.ResourceName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=" + Uri.EscapeDataString(identity.ResourceProviderApiVersion));
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -637,8 +683,31 @@ namespace Microsoft.Azure.Management.Resources
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/" + Uri.EscapeDataString(identity.ResourceProviderNamespace) + "/" + identity.ParentResourcePath + "/" + identity.ResourceType + "/" + Uri.EscapeDataString(identity.ResourceName) + "?";
-            url = url + "api-version=" + Uri.EscapeDataString(identity.ResourceProviderApiVersion);
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + Uri.EscapeDataString(identity.ResourceProviderNamespace);
+            url = url + "/";
+            if (identity.ParentResourcePath != null)
+            {
+                url = url + identity.ParentResourcePath;
+            }
+            url = url + "/";
+            url = url + identity.ResourceType;
+            url = url + "/";
+            url = url + Uri.EscapeDataString(identity.ResourceName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=" + Uri.EscapeDataString(identity.ResourceProviderApiVersion));
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -790,8 +859,31 @@ namespace Microsoft.Azure.Management.Resources
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/" + Uri.EscapeDataString(identity.ResourceProviderNamespace) + "/" + identity.ParentResourcePath + "/" + identity.ResourceType + "/" + Uri.EscapeDataString(identity.ResourceName) + "?";
-            url = url + "api-version=" + Uri.EscapeDataString(identity.ResourceProviderApiVersion);
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + Uri.EscapeDataString(identity.ResourceProviderNamespace);
+            url = url + "/";
+            if (identity.ParentResourcePath != null)
+            {
+                url = url + identity.ParentResourcePath;
+            }
+            url = url + "/";
+            url = url + identity.ResourceType;
+            url = url + "/";
+            url = url + Uri.EscapeDataString(identity.ResourceName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=" + Uri.EscapeDataString(identity.ResourceProviderApiVersion));
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1023,49 +1115,45 @@ namespace Microsoft.Azure.Management.Resources
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/";
             if (parameters != null && parameters.ResourceGroupName != null)
             {
                 url = url + "resourceGroups/" + Uri.EscapeDataString(parameters.ResourceGroupName) + "/";
             }
-            url = url + "resources?";
-            bool appendFilter = true;
+            url = url + "resources";
+            List<string> queryParameters = new List<string>();
+            List<string> odataFilter = new List<string>();
             if (parameters != null && parameters.ResourceType != null)
             {
-                appendFilter = false;
-                url = url + "$filter=resourceType eq '" + Uri.EscapeDataString(parameters.ResourceType) + "'";
+                odataFilter.Add("resourceType eq '" + Uri.EscapeDataString(parameters.ResourceType) + "'");
             }
             if (parameters != null && parameters.TagName != null)
             {
-                if (appendFilter == true)
-                {
-                    appendFilter = false;
-                    url = url + "$filter=";
-                }
-                else
-                {
-                    url = url + " and ";
-                }
-                url = url + "tagname eq '" + Uri.EscapeDataString(parameters.TagName) + "'";
+                odataFilter.Add("tagname eq '" + Uri.EscapeDataString(parameters.TagName) + "'");
             }
             if (parameters != null && parameters.TagValue != null)
             {
-                if (appendFilter == true)
-                {
-                    appendFilter = false;
-                    url = url + "$filter=";
-                }
-                else
-                {
-                    url = url + " and ";
-                }
-                url = url + "tagvalue eq '" + Uri.EscapeDataString(parameters.TagValue) + "'";
+                odataFilter.Add("tagvalue eq '" + Uri.EscapeDataString(parameters.TagValue) + "'");
+            }
+            if (odataFilter.Count > 0)
+            {
+                queryParameters.Add("$filter=" + string.Join(" and ", odataFilter));
             }
             if (parameters != null && parameters.Top != null)
             {
-                url = url + "&$top=" + Uri.EscapeDataString(parameters.Top.Value.ToString());
+                queryParameters.Add("$top=" + Uri.EscapeDataString(parameters.Top.Value.ToString()));
             }
-            url = url + "&api-version=2014-04-01-preview";
+            queryParameters.Add("api-version=2014-04-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1315,7 +1403,9 @@ namespace Microsoft.Azure.Management.Resources
             }
             
             // Construct URL
-            string url = nextLink;
+            string url = "";
+            url = url + nextLink;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1491,6 +1581,177 @@ namespace Microsoft.Azure.Management.Resources
                         }
                         
                     }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Move resources within or across subscriptions.
+        /// </summary>
+        /// <param name='sourceResourceGroupName'>
+        /// Required. Source resource group name.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. move resources' parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<AzureOperationResponse> MoveResourcesAsync(string sourceResourceGroupName, ResourcesMoveInfo parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (sourceResourceGroupName == null)
+            {
+                throw new ArgumentNullException("sourceResourceGroupName");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("sourceResourceGroupName", sourceResourceGroupName);
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "MoveResourcesAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(sourceResourceGroupName);
+            url = url + "/moveResources";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                JToken requestDoc = null;
+                
+                JObject resourcesMoveInfoValue = new JObject();
+                requestDoc = resourcesMoveInfoValue;
+                
+                if (parameters.Resources != null)
+                {
+                    if (parameters.Resources is ILazyCollection == false || ((ILazyCollection)parameters.Resources).IsInitialized)
+                    {
+                        JArray resourcesArray = new JArray();
+                        foreach (string resourcesItem in parameters.Resources)
+                        {
+                            resourcesArray.Add(resourcesItem);
+                        }
+                        resourcesMoveInfoValue["resources"] = resourcesArray;
+                    }
+                }
+                
+                if (parameters.TargetResourceGroup != null)
+                {
+                    resourcesMoveInfoValue["targetResourceGroup"] = parameters.TargetResourceGroup;
+                }
+                
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {

@@ -19,14 +19,27 @@ using System.Net.Http;
 
 namespace Microsoft.Azure.Insights
 {
+    /// <summary>
+    /// Customizations for InsightsClient class, including handler implementation and cache for MetricDefinitions
+    /// </summary>
     public partial class InsightsClient
     {
         private MetricDefinitionCache _cache;
 
         internal MetricDefinitionCache Cache
         {
-            get { return _cache ?? (_cache = new MetricDefinitionCache()); }
+            get
+            {
+                return this.IsCacheEnabled
+                    ? _cache ?? (_cache = new MetricDefinitionCache())
+                    : null;
+            }
         }
+
+        /// <summary>
+        /// Gets or sets a flag indicating whether to enable the metric definition cache
+        /// </summary>
+        public bool IsCacheEnabled { get; set; }
 
         /// <summary>
         /// Get an instance of the InsightsClient class that uses the handler while initiating web requests.

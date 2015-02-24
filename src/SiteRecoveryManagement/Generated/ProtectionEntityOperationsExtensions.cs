@@ -43,17 +43,20 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
         /// <param name='protectionEntityId'>
         /// Required. Protection entity ID.
         /// </param>
+        /// <param name='parameters'>
+        /// Required. Commit failover request.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
         /// The response model for the Job details object.
         /// </returns>
-        public static JobResponse CommitFailover(this IProtectionEntityOperations operations, string protectionContainerId, string protectionEntityId, CustomRequestHeaders customRequestHeaders)
+        public static JobResponse CommitFailover(this IProtectionEntityOperations operations, string protectionContainerId, string protectionEntityId, CommitFailoverRequest parameters, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IProtectionEntityOperations)s).CommitFailoverAsync(protectionContainerId, protectionEntityId, customRequestHeaders);
+                return ((IProtectionEntityOperations)s).CommitFailoverAsync(protectionContainerId, protectionEntityId, parameters, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -71,15 +74,18 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
         /// <param name='protectionEntityId'>
         /// Required. Protection entity ID.
         /// </param>
+        /// <param name='parameters'>
+        /// Required. Commit failover request.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
         /// The response model for the Job details object.
         /// </returns>
-        public static Task<JobResponse> CommitFailoverAsync(this IProtectionEntityOperations operations, string protectionContainerId, string protectionEntityId, CustomRequestHeaders customRequestHeaders)
+        public static Task<JobResponse> CommitFailoverAsync(this IProtectionEntityOperations operations, string protectionContainerId, string protectionEntityId, CommitFailoverRequest parameters, CustomRequestHeaders customRequestHeaders)
         {
-            return operations.CommitFailoverAsync(protectionContainerId, protectionEntityId, customRequestHeaders, CancellationToken.None);
+            return operations.CommitFailoverAsync(protectionContainerId, protectionEntityId, parameters, customRequestHeaders, CancellationToken.None);
         }
         
         /// <summary>
@@ -147,17 +153,20 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
         /// <param name='protectionEntityId'>
         /// Required. Protection entity ID.
         /// </param>
+        /// <param name='input'>
+        /// Optional. Protection entity ID.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
         /// The response model for the Job details object.
         /// </returns>
-        public static JobResponse EnableProtection(this IProtectionEntityOperations operations, string protectionContainerId, string protectionEntityId, CustomRequestHeaders customRequestHeaders)
+        public static JobResponse EnableProtection(this IProtectionEntityOperations operations, string protectionContainerId, string protectionEntityId, EnableProtectionInput input, CustomRequestHeaders customRequestHeaders)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IProtectionEntityOperations)s).EnableProtectionAsync(protectionContainerId, protectionEntityId, customRequestHeaders);
+                return ((IProtectionEntityOperations)s).EnableProtectionAsync(protectionContainerId, protectionEntityId, input, customRequestHeaders);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -175,15 +184,18 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
         /// <param name='protectionEntityId'>
         /// Required. Protection entity ID.
         /// </param>
+        /// <param name='input'>
+        /// Optional. Protection entity ID.
+        /// </param>
         /// <param name='customRequestHeaders'>
         /// Optional. Request header parameters.
         /// </param>
         /// <returns>
         /// The response model for the Job details object.
         /// </returns>
-        public static Task<JobResponse> EnableProtectionAsync(this IProtectionEntityOperations operations, string protectionContainerId, string protectionEntityId, CustomRequestHeaders customRequestHeaders)
+        public static Task<JobResponse> EnableProtectionAsync(this IProtectionEntityOperations operations, string protectionContainerId, string protectionEntityId, EnableProtectionInput input, CustomRequestHeaders customRequestHeaders)
         {
-            return operations.EnableProtectionAsync(protectionContainerId, protectionEntityId, customRequestHeaders, CancellationToken.None);
+            return operations.EnableProtectionAsync(protectionContainerId, protectionEntityId, input, customRequestHeaders, CancellationToken.None);
         }
         
         /// <summary>
@@ -398,6 +410,58 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
         public static Task<JobResponse> ReprotectAsync(this IProtectionEntityOperations operations, string protectionContainerId, string protectionEntityId, ReprotectRequest parameters, CustomRequestHeaders customRequestHeaders)
         {
             return operations.ReprotectAsync(protectionContainerId, protectionEntityId, parameters, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Synchronise Owner Information for the given protection entity.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.SiteRecovery.IProtectionEntityOperations.
+        /// </param>
+        /// <param name='protectionContainerId'>
+        /// Required. Parent Protection Container ID.
+        /// </param>
+        /// <param name='protectionEntityId'>
+        /// Required. Protection entity ID.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The response model for the Job details object.
+        /// </returns>
+        public static JobResponse SyncOwnerInformation(this IProtectionEntityOperations operations, string protectionContainerId, string protectionEntityId, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IProtectionEntityOperations)s).SyncOwnerInformationAsync(protectionContainerId, protectionEntityId, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Synchronise Owner Information for the given protection entity.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.SiteRecovery.IProtectionEntityOperations.
+        /// </param>
+        /// <param name='protectionContainerId'>
+        /// Required. Parent Protection Container ID.
+        /// </param>
+        /// <param name='protectionEntityId'>
+        /// Required. Protection entity ID.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// The response model for the Job details object.
+        /// </returns>
+        public static Task<JobResponse> SyncOwnerInformationAsync(this IProtectionEntityOperations operations, string protectionContainerId, string protectionEntityId, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.SyncOwnerInformationAsync(protectionContainerId, protectionEntityId, customRequestHeaders, CancellationToken.None);
         }
         
         /// <summary>

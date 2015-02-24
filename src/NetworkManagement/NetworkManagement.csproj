@@ -4,7 +4,6 @@
   <PropertyGroup>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <WindowsAzureLibraryProfileSet>portable/net45/net40</WindowsAzureLibraryProfileSet>
     <ProjectGuid>{7F032828-B8EC-4716-8BC4-AF2FA703B24B}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -12,151 +11,28 @@
     <AssemblyName>Microsoft.WindowsAzure.Management.Network</AssemblyName>
     <OutputType>Library</OutputType>
     <RestorePackages>true</RestorePackages>
-    <NuGetPackageImportStamp>e7cebd7c</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>bd71385c</NuGetPackageImportStamp>
   </PropertyGroup>
-  <Import Project="..\library.props" />
+  <Import Project="..\..\tools\Library.Settings.targets" />
   <ItemGroup>
-    <Compile Include="Generated\ClientRootCertificateOperations.cs" />
-    <Compile Include="Generated\ClientRootCertificateOperationsExtensions.cs" />
-    <Compile Include="Generated\GatewayOperations.cs" />
-    <Compile Include="Generated\GatewayOperationsExtensions.cs" />
-    <Compile Include="Generated\IClientRootCertificateOperations.cs" />
-    <Compile Include="Generated\IGatewayOperations.cs" />
-    <Compile Include="Generated\INetworkManagementClient.cs" />
-    <Compile Include="Generated\INetworkOperations.cs" />
-    <Compile Include="Generated\INetworkSecurityGroupOperations.cs" />
-    <Compile Include="Generated\IReservedIPOperations.cs" />
-    <Compile Include="Generated\IRouteOperations.cs" />
-    <Compile Include="Generated\IStaticIPOperations.cs" />
-    <Compile Include="Generated\Models\AddRouteTableToSubnetParameters.cs" />
-    <Compile Include="Generated\Models\ClientRootCertificateCreateParameters.cs" />
-    <Compile Include="Generated\Models\ClientRootCertificateGetResponse.cs" />
-    <Compile Include="Generated\Models\ClientRootCertificateListResponse.cs" />
-    <Compile Include="Generated\Models\CreateRouteTableParameters.cs" />
-    <Compile Include="Generated\Models\EncryptionType.cs" />
-    <Compile Include="Generated\Models\GatewayConnectDisconnectOrTestParameters.cs" />
-    <Compile Include="Generated\Models\GatewayConnectionUpdateOperation.cs" />
-    <Compile Include="Generated\Models\GatewayConnectivityState.cs" />
-    <Compile Include="Generated\Models\GatewayCreateParameters.cs" />
-    <Compile Include="Generated\Models\GatewayDefaultSite.cs" />
-    <Compile Include="Generated\Models\GatewayDiagnosticsState.cs" />
-    <Compile Include="Generated\Models\GatewayDiagnosticsStatus.cs" />
-    <Compile Include="Generated\Models\GatewayEvent.cs" />
-    <Compile Include="Generated\Models\GatewayGenerateVpnClientPackageParameters.cs" />
-    <Compile Include="Generated\Models\GatewayGetDeviceConfigurationScriptParameters.cs" />
-    <Compile Include="Generated\Models\GatewayGetDeviceConfigurationScriptResponse.cs" />
-    <Compile Include="Generated\Models\GatewayGetIPsecParametersResponse.cs" />
-    <Compile Include="Generated\Models\GatewayGetOperationStatusResponse.cs" />
-    <Compile Include="Generated\Models\GatewayGetResponse.cs" />
-    <Compile Include="Generated\Models\GatewayGetSharedKeyResponse.cs" />
-    <Compile Include="Generated\Models\GatewayListConnectionsResponse.cs" />
-    <Compile Include="Generated\Models\GatewayListSupportedDevicesResponse.cs" />
-    <Compile Include="Generated\Models\GatewayOperationResponse.cs" />
-    <Compile Include="Generated\Models\GatewayOperationStatus.cs" />
-    <Compile Include="Generated\Models\GatewayProcessorArchitecture.cs" />
-    <Compile Include="Generated\Models\GatewayProfile.cs" />
-    <Compile Include="Generated\Models\GatewayProvisioningEventStates.cs" />
-    <Compile Include="Generated\Models\GatewayResetSharedKeyParameters.cs" />
-    <Compile Include="Generated\Models\GatewaySetDefaultSiteListParameters.cs" />
-    <Compile Include="Generated\Models\GatewaySetIPsecParametersParameters.cs" />
-    <Compile Include="Generated\Models\GatewaySetSharedKeyParameters.cs" />
-    <Compile Include="Generated\Models\GatewaySKU.cs" />
-    <Compile Include="Generated\Models\GatewayType.cs" />
-    <Compile Include="Generated\Models\GetRouteTableForSubnetResponse.cs" />
-    <Compile Include="Generated\Models\GetRouteTableResponse.cs" />
-    <Compile Include="Generated\Models\IPsecParameters.cs" />
-    <Compile Include="Generated\Models\ListRouteTablesResponse.cs" />
-    <Compile Include="Generated\Models\LocalNetworkConnectionType.cs" />
-    <Compile Include="Generated\Models\NetworkGetConfigurationResponse.cs" />
-    <Compile Include="Generated\Models\NetworkListResponse.cs" />
-    <Compile Include="Generated\Models\NetworkReservedIPCreateParameters.cs" />
-    <Compile Include="Generated\Models\NetworkReservedIPGetResponse.cs" />
-    <Compile Include="Generated\Models\NetworkReservedIPListResponse.cs" />
-    <Compile Include="Generated\Models\NetworkSecurityGroup.cs" />
-    <Compile Include="Generated\Models\NetworkSecurityGroupActionType.cs" />
-    <Compile Include="Generated\Models\NetworkSecurityGroupAddToSubnetParameters.cs" />
-    <Compile Include="Generated\Models\NetworkSecurityGroupCreateParameters.cs" />
-    <Compile Include="Generated\Models\NetworkSecurityGroupGetDetailLevelTypes.cs" />
-    <Compile Include="Generated\Models\NetworkSecurityGroupGetForSubnetResponse.cs" />
-    <Compile Include="Generated\Models\NetworkSecurityGroupGetResponse.cs" />
-    <Compile Include="Generated\Models\NetworkSecurityGroupListResponse.cs" />
-    <Compile Include="Generated\Models\NetworkSecurityRule.cs" />
-    <Compile Include="Generated\Models\NetworkSecuritySetRuleParameters.cs" />
-    <Compile Include="Generated\Models\NetworkSetConfigurationParameters.cs" />
-    <Compile Include="Generated\Models\NetworkStaticIPAvailabilityResponse.cs" />
-    <Compile Include="Generated\Models\NextHop.cs" />
-    <Compile Include="Generated\Models\PfsGroup.cs" />
-    <Compile Include="Generated\Models\ReservedIPState.cs" />
-    <Compile Include="Generated\Models\ResetGatewayParameters.cs" />
-    <Compile Include="Generated\Models\ResizeGatewayParameters.cs" />
-    <Compile Include="Generated\Models\Route.cs" />
-    <Compile Include="Generated\Models\RouteState.cs" />
-    <Compile Include="Generated\Models\RouteTable.cs" />
-    <Compile Include="Generated\Models\RouteTableState.cs" />
-    <Compile Include="Generated\Models\RuleType.cs" />
-    <Compile Include="Generated\Models\SetRouteParameters.cs" />
-    <Compile Include="Generated\Models\StartGatewayPublicDiagnosticsParameters.cs" />
-    <Compile Include="Generated\Models\StopGatewayPublicDiagnosticsParameters.cs" />
-    <Compile Include="Generated\Models\UpdateGatewayOperation.cs" />
-    <Compile Include="Generated\Models\UpdateGatewayPublicDiagnosticsOperation.cs" />
-    <Compile Include="Generated\Models\VirtualNetworkState.cs" />
-    <Compile Include="Generated\NetworkManagementClient.cs" />
-    <Compile Include="Generated\NetworkManagementClientExtensions.cs" />
-    <Compile Include="Generated\NetworkOperations.cs" />
-    <Compile Include="Generated\NetworkOperationsExtensions.cs" />
-    <Compile Include="Generated\NetworkSecurityGroupOperations.cs" />
-    <Compile Include="Generated\NetworkSecurityGroupOperationsExtensions.cs" />
-    <Compile Include="Generated\ReservedIPOperations.cs" />
-    <Compile Include="Generated\ReservedIPOperationsExtensions.cs" />
-    <Compile Include="Generated\RouteOperations.cs" />
-    <Compile Include="Generated\RouteOperationsExtensions.cs" />
-    <Compile Include="Generated\StaticIPOperations.cs" />
-    <Compile Include="Generated\StaticIPOperationsExtensions.cs" />
+    <Compile Include="Generated\**\*.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="GenerateCode.props" />
     <None Include="Microsoft.WindowsAzure.Management.Network.nuget.proj" />
     <None Include="Microsoft.WindowsAzure.Management.Network.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="hyak.xml">
-      <SubType>Designer</SubType>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <Reference Include="Hyak.Common">
-      <HintPath>..\..\packages\Hyak.Common.1.0.1\lib\portable-net403+win+wpa81\Hyak.Common.dll</HintPath>
+      <HintPath>..\..\packages\Hyak.Common.1.0.2\lib\portable-net403+win+wpa81\Hyak.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Azure.Common">
-      <HintPath>..\..\packages\Microsoft.Azure.Common.2.0.1\lib\portable-net45+wp8+wpa81+win\Microsoft.Azure.Common.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.Azure.Common.2.0.2\lib\portable-net45+wp8+wpa81+win\Microsoft.Azure.Common.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(WindowsAzureCurrentConfiguration)' == 'portable' " />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(WindowsAzureCurrentConfiguration)' != 'portable' " />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(LibraryFxTarget)' == 'portable' " />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(LibraryFxTarget)' != 'portable' " />
   <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
-  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
-    <Error Condition="!Exists('..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
-    <Error Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
-  </Target>
-  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets') " />
-  <Import Project="$(SolutionDir)\src\library.targets" />
-  <Import Project="GenerateCode.props" />
-  <Import Project="..\..\packages\Hyak.Generator.1.0.5478.27459-prerelease\build\Hyak.Generator.targets" Condition="Exists('..\..\packages\Hyak.Generator.1.0.5478.27459-prerelease\build\Hyak.Generator.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\..\packages\Hyak.Generator.1.0.5478.27459-prerelease\build\Hyak.Generator.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Hyak.Generator.1.0.5478.27459-prerelease\build\Hyak.Generator.targets'))" />
-  </Target>
-  <Target Name="DoSpecGeneration" DependsOnTargets="RestorePackages" BeforeTargets="BeforeBuild">
-    <CallTarget Targets="GenerateCodeFromSpecs" Condition="'$(HydraGeneratorImported)' != ''" />
-    <Error Text="The Hydra code generator package was restored from nuget. Build the project again to do code generation." Condition="Exists('..\..\packages\Hyak.Generator.1.0.5478.27459-prerelease\build\Hyak.Generator.targets') And '$(HydraGeneratorImported)' == ''" />
-    <Warning Text="The Hydra code generation packages are not available. Compilation will be done on existing generated sources." Condition="!Exists('..\..\packages\Hyak.Generator.1.0.5478.27459-prerelease\build\Hyak.Generator.targets')" />
-  </Target>
-  <Target Name="CopyMicrosoftWindowsAzureManagementNetworkSpecification" BeforeTargets="GenerateCodeFromSpecs">
-    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.Network.Specification.2.0.5483.24656-prerelease\tools\Microsoft.WindowsAzure.Management.Network.Specification.dll" DestinationFolder="." />
-  </Target>
 </Project>

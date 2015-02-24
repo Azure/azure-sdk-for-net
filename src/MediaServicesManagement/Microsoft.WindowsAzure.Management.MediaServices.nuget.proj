@@ -5,7 +5,7 @@
     Microsoft.WindowsAzure.Management.MediaServices
     -->
     <SdkNuGetPackage Include="Microsoft.WindowsAzure.Management.MediaServices">
-      <PackageVersion>4.0.0</PackageVersion>
+      <PackageVersion>4.1.0</PackageVersion>
       <Folder>$(MSBuildThisFileDirectory)</Folder>
     </SdkNuGetPackage>
   </ItemGroup>

@@ -23,19 +23,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Hyak.Common;
-using Microsoft.Azure.Management.Automation.Models;
+using Microsoft.WindowsAzure.Management.Automation.Models;
 
-namespace Microsoft.Azure.Management.Automation.Models
+namespace Microsoft.WindowsAzure.Management.Automation.Models
 {
     /// <summary>
-    /// Defines a cloud service-supporting region in which a item is located.
+    /// Definition of a cloud service-supporting region in which a item is
+    /// located.
     /// </summary>
     public partial class CloudService
     {
         private string _description;
         
         /// <summary>
-        /// Optional. The description of the cloud service region.
+        /// Optional. Gets or sets the description of the cloud service region.
         /// </summary>
         public string Description
         {
@@ -46,8 +47,8 @@ namespace Microsoft.Azure.Management.Automation.Models
         private string _geoRegion;
         
         /// <summary>
-        /// Optional. The geographical region in which this cloud service can
-        /// run.
+        /// Optional. Gets or sets the geographical region in which this cloud
+        /// service can run.
         /// </summary>
         public string GeoRegion
         {
@@ -58,7 +59,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         private string _label;
         
         /// <summary>
-        /// Optional. The label of the cloud service region.
+        /// Optional. Gets or sets thelabel of the cloud service region.
         /// </summary>
         public string Label
         {
@@ -69,7 +70,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         private string _name;
         
         /// <summary>
-        /// Optional. The name of the cloud service region.
+        /// Optional. Gets or sets the name of the cloud service.
         /// </summary>
         public string Name
         {
@@ -80,8 +81,8 @@ namespace Microsoft.Azure.Management.Automation.Models
         private IList<AutomationResource> _resources;
         
         /// <summary>
-        /// Optional. A list of existing resources installed into a cloud
-        /// service region.
+        /// Optional. Gets or sets the list of existing resources installed
+        /// into a cloud service region.
         /// </summary>
         public IList<AutomationResource> Resources
         {

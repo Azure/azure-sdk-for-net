@@ -93,8 +93,21 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/providers/Microsoft.StreamAnalytics/locations/" + Uri.EscapeDataString(location) + "/quotas?";
-            url = url + "api-version=2014-12-01-preview";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/providers/Microsoft.StreamAnalytics/locations/";
+            url = url + Uri.EscapeDataString(location);
+            url = url + "/quotas";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-01-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')

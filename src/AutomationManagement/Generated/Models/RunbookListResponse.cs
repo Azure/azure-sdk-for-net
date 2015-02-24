@@ -23,9 +23,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Hyak.Common;
-using Microsoft.Azure.Management.Automation.Models;
+using Microsoft.WindowsAzure.Management.Automation.Models;
 
-namespace Microsoft.Azure.Management.Automation.Models
+namespace Microsoft.WindowsAzure.Management.Automation.Models
 {
     /// <summary>
     /// The response model for the list runbook operation.
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         private IList<Runbook> _runbooks;
         
         /// <summary>
-        /// Optional. A list of runbooks.
+        /// Optional. Gets or sets a list of runbooks.
         /// </summary>
         public IList<Runbook> Runbooks
         {

@@ -10,7 +10,7 @@ Param(
 [Switch]$Patch
 )
 
-$exclusions = @("src", "Common", "Common.Extensions", "Common.NetFramework", "Configuration", "HDInsight")
+$exclusions = @("src", "Common", "Common.Authorization", "Common.NetFramework", "Configuration", "HDInsight")
 
 # Function to update nuspec file
 function IncrementVersion([string]$FolderPath)

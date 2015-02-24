@@ -27,7 +27,6 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
 using Newtonsoft.Json.Linq;
@@ -93,8 +92,20 @@ namespace Microsoft.Azure.Management.Resources
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/providers/" + Uri.EscapeDataString(resourceProviderNamespace) + "?";
-            url = url + "api-version=2014-04-01-preview";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/providers/";
+            url = url + Uri.EscapeDataString(resourceProviderNamespace);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -211,6 +222,26 @@ namespace Microsoft.Azure.Management.Resources
                                             providerResourceTypeInstance.Locations.Add(((string)locationsValue));
                                         }
                                     }
+                                    
+                                    JToken apiVersionsArray = resourceTypesValue["apiVersions"];
+                                    if (apiVersionsArray != null && apiVersionsArray.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken apiVersionsValue in ((JArray)apiVersionsArray))
+                                        {
+                                            providerResourceTypeInstance.ApiVersions.Add(((string)apiVersionsValue));
+                                        }
+                                    }
+                                    
+                                    JToken propertiesSequenceElement = ((JToken)resourceTypesValue["properties"]);
+                                    if (propertiesSequenceElement != null && propertiesSequenceElement.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property in propertiesSequenceElement)
+                                        {
+                                            string propertiesKey = ((string)property.Name);
+                                            string propertiesValue = ((string)property.Value);
+                                            providerResourceTypeInstance.Properties.Add(propertiesKey, propertiesValue);
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -274,12 +305,23 @@ namespace Microsoft.Azure.Management.Resources
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/providers?";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/providers";
+            List<string> queryParameters = new List<string>();
             if (parameters != null && parameters.Top != null)
             {
-                url = url + "$top=" + Uri.EscapeDataString(parameters.Top.Value.ToString());
+                queryParameters.Add("$top=" + Uri.EscapeDataString(parameters.Top.Value.ToString()));
             }
-            url = url + "&api-version=2014-04-01-preview";
+            queryParameters.Add("api-version=2014-04-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -399,6 +441,26 @@ namespace Microsoft.Azure.Management.Resources
                                                 foreach (JToken locationsValue in ((JArray)locationsArray))
                                                 {
                                                     providerResourceTypeInstance.Locations.Add(((string)locationsValue));
+                                                }
+                                            }
+                                            
+                                            JToken apiVersionsArray = resourceTypesValue["apiVersions"];
+                                            if (apiVersionsArray != null && apiVersionsArray.Type != JTokenType.Null)
+                                            {
+                                                foreach (JToken apiVersionsValue in ((JArray)apiVersionsArray))
+                                                {
+                                                    providerResourceTypeInstance.ApiVersions.Add(((string)apiVersionsValue));
+                                                }
+                                            }
+                                            
+                                            JToken propertiesSequenceElement = ((JToken)resourceTypesValue["properties"]);
+                                            if (propertiesSequenceElement != null && propertiesSequenceElement.Type != JTokenType.Null)
+                                            {
+                                                foreach (JProperty property in propertiesSequenceElement)
+                                                {
+                                                    string propertiesKey = ((string)property.Name);
+                                                    string propertiesValue = ((string)property.Value);
+                                                    providerResourceTypeInstance.Properties.Add(propertiesKey, propertiesValue);
                                                 }
                                             }
                                         }
@@ -477,7 +539,9 @@ namespace Microsoft.Azure.Management.Resources
             }
             
             // Construct URL
-            string url = nextLink;
+            string url = "";
+            url = url + nextLink;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -587,6 +651,26 @@ namespace Microsoft.Azure.Management.Resources
                                                     providerResourceTypeInstance.Locations.Add(((string)locationsValue));
                                                 }
                                             }
+                                            
+                                            JToken apiVersionsArray = resourceTypesValue["apiVersions"];
+                                            if (apiVersionsArray != null && apiVersionsArray.Type != JTokenType.Null)
+                                            {
+                                                foreach (JToken apiVersionsValue in ((JArray)apiVersionsArray))
+                                                {
+                                                    providerResourceTypeInstance.ApiVersions.Add(((string)apiVersionsValue));
+                                                }
+                                            }
+                                            
+                                            JToken propertiesSequenceElement = ((JToken)resourceTypesValue["properties"]);
+                                            if (propertiesSequenceElement != null && propertiesSequenceElement.Type != JTokenType.Null)
+                                            {
+                                                foreach (JProperty property in propertiesSequenceElement)
+                                                {
+                                                    string propertiesKey = ((string)property.Name);
+                                                    string propertiesValue = ((string)property.Value);
+                                                    providerResourceTypeInstance.Properties.Add(propertiesKey, propertiesValue);
+                                                }
+                                            }
                                         }
                                     }
                                 }
@@ -640,10 +724,9 @@ namespace Microsoft.Azure.Management.Resources
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Resource provider registration information.
         /// </returns>
-        public async Task<AzureOperationResponse> RegisterAsync(string resourceProviderNamespace, CancellationToken cancellationToken)
+        public async Task<ProviderRegistionResult> RegisterAsync(string resourceProviderNamespace, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceProviderNamespace == null)
@@ -663,8 +746,21 @@ namespace Microsoft.Azure.Management.Resources
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/providers/" + Uri.EscapeDataString(resourceProviderNamespace) + "/register?";
-            url = url + "api-version=2014-04-01-preview";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/providers/";
+            url = url + Uri.EscapeDataString(resourceProviderNamespace);
+            url = url + "/register";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -719,9 +815,93 @@ namespace Microsoft.Azure.Management.Resources
                     }
                     
                     // Create Result
-                    AzureOperationResponse result = null;
+                    ProviderRegistionResult result = null;
                     // Deserialize Response
-                    result = new AzureOperationResponse();
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new ProviderRegistionResult();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            Provider providerInstance = new Provider();
+                            result.Provider = providerInstance;
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                providerInstance.Id = idInstance;
+                            }
+                            
+                            JToken namespaceValue = responseDoc["namespace"];
+                            if (namespaceValue != null && namespaceValue.Type != JTokenType.Null)
+                            {
+                                string namespaceInstance = ((string)namespaceValue);
+                                providerInstance.Namespace = namespaceInstance;
+                            }
+                            
+                            JToken registrationStateValue = responseDoc["registrationState"];
+                            if (registrationStateValue != null && registrationStateValue.Type != JTokenType.Null)
+                            {
+                                string registrationStateInstance = ((string)registrationStateValue);
+                                providerInstance.RegistrationState = registrationStateInstance;
+                            }
+                            
+                            JToken resourceTypesArray = responseDoc["resourceTypes"];
+                            if (resourceTypesArray != null && resourceTypesArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken resourceTypesValue in ((JArray)resourceTypesArray))
+                                {
+                                    ProviderResourceType providerResourceTypeInstance = new ProviderResourceType();
+                                    providerInstance.ResourceTypes.Add(providerResourceTypeInstance);
+                                    
+                                    JToken resourceTypeValue = resourceTypesValue["resourceType"];
+                                    if (resourceTypeValue != null && resourceTypeValue.Type != JTokenType.Null)
+                                    {
+                                        string resourceTypeInstance = ((string)resourceTypeValue);
+                                        providerResourceTypeInstance.Name = resourceTypeInstance;
+                                    }
+                                    
+                                    JToken locationsArray = resourceTypesValue["locations"];
+                                    if (locationsArray != null && locationsArray.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken locationsValue in ((JArray)locationsArray))
+                                        {
+                                            providerResourceTypeInstance.Locations.Add(((string)locationsValue));
+                                        }
+                                    }
+                                    
+                                    JToken apiVersionsArray = resourceTypesValue["apiVersions"];
+                                    if (apiVersionsArray != null && apiVersionsArray.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken apiVersionsValue in ((JArray)apiVersionsArray))
+                                        {
+                                            providerResourceTypeInstance.ApiVersions.Add(((string)apiVersionsValue));
+                                        }
+                                    }
+                                    
+                                    JToken propertiesSequenceElement = ((JToken)resourceTypesValue["properties"]);
+                                    if (propertiesSequenceElement != null && propertiesSequenceElement.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property in propertiesSequenceElement)
+                                        {
+                                            string propertiesKey = ((string)property.Name);
+                                            string propertiesValue = ((string)property.Value);
+                                            providerResourceTypeInstance.Properties.Add(propertiesKey, propertiesValue);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        
+                    }
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -761,10 +941,9 @@ namespace Microsoft.Azure.Management.Resources
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Resource provider registration information.
         /// </returns>
-        public async Task<AzureOperationResponse> UnregisterAsync(string resourceProviderNamespace, CancellationToken cancellationToken)
+        public async Task<ProviderUnregistionResult> UnregisterAsync(string resourceProviderNamespace, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceProviderNamespace == null)
@@ -784,8 +963,21 @@ namespace Microsoft.Azure.Management.Resources
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/providers/" + Uri.EscapeDataString(resourceProviderNamespace) + "/unregister?";
-            url = url + "api-version=2014-04-01-preview";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/providers/";
+            url = url + Uri.EscapeDataString(resourceProviderNamespace);
+            url = url + "/unregister";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -840,9 +1032,93 @@ namespace Microsoft.Azure.Management.Resources
                     }
                     
                     // Create Result
-                    AzureOperationResponse result = null;
+                    ProviderUnregistionResult result = null;
                     // Deserialize Response
-                    result = new AzureOperationResponse();
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new ProviderUnregistionResult();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            Provider providerInstance = new Provider();
+                            result.Provider = providerInstance;
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                providerInstance.Id = idInstance;
+                            }
+                            
+                            JToken namespaceValue = responseDoc["namespace"];
+                            if (namespaceValue != null && namespaceValue.Type != JTokenType.Null)
+                            {
+                                string namespaceInstance = ((string)namespaceValue);
+                                providerInstance.Namespace = namespaceInstance;
+                            }
+                            
+                            JToken registrationStateValue = responseDoc["registrationState"];
+                            if (registrationStateValue != null && registrationStateValue.Type != JTokenType.Null)
+                            {
+                                string registrationStateInstance = ((string)registrationStateValue);
+                                providerInstance.RegistrationState = registrationStateInstance;
+                            }
+                            
+                            JToken resourceTypesArray = responseDoc["resourceTypes"];
+                            if (resourceTypesArray != null && resourceTypesArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken resourceTypesValue in ((JArray)resourceTypesArray))
+                                {
+                                    ProviderResourceType providerResourceTypeInstance = new ProviderResourceType();
+                                    providerInstance.ResourceTypes.Add(providerResourceTypeInstance);
+                                    
+                                    JToken resourceTypeValue = resourceTypesValue["resourceType"];
+                                    if (resourceTypeValue != null && resourceTypeValue.Type != JTokenType.Null)
+                                    {
+                                        string resourceTypeInstance = ((string)resourceTypeValue);
+                                        providerResourceTypeInstance.Name = resourceTypeInstance;
+                                    }
+                                    
+                                    JToken locationsArray = resourceTypesValue["locations"];
+                                    if (locationsArray != null && locationsArray.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken locationsValue in ((JArray)locationsArray))
+                                        {
+                                            providerResourceTypeInstance.Locations.Add(((string)locationsValue));
+                                        }
+                                    }
+                                    
+                                    JToken apiVersionsArray = resourceTypesValue["apiVersions"];
+                                    if (apiVersionsArray != null && apiVersionsArray.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken apiVersionsValue in ((JArray)apiVersionsArray))
+                                        {
+                                            providerResourceTypeInstance.ApiVersions.Add(((string)apiVersionsValue));
+                                        }
+                                    }
+                                    
+                                    JToken propertiesSequenceElement = ((JToken)resourceTypesValue["properties"]);
+                                    if (propertiesSequenceElement != null && propertiesSequenceElement.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property in propertiesSequenceElement)
+                                        {
+                                            string propertiesKey = ((string)property.Name);
+                                            string propertiesValue = ((string)property.Value);
+                                            providerResourceTypeInstance.Properties.Add(propertiesKey, propertiesValue);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        
+                    }
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {

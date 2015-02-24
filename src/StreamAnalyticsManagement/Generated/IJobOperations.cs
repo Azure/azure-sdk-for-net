@@ -58,13 +58,16 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// <param name='jobName'>
         /// The name of the stream analytics job.
         /// </param>
+        /// <param name='parameters'>
+        /// Parameters for a job start operation.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
         /// A standard service response for long running operations.
         /// </returns>
-        Task<LongRunningOperationResponse> BeginStartAsync(string resourceGroupName, string jobName, CancellationToken cancellationToken);
+        Task<LongRunningOperationResponse> BeginStartAsync(string resourceGroupName, string jobName, JobStartParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Stop a stream analytics job. Asynchronous call.
@@ -192,40 +195,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         Task<JobListResponse> ListJobsInSubscriptionAsync(JobListParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Start a stream analytics job.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The resource group name of the stream analytics job.
-        /// </param>
-        /// <param name='jobName'>
-        /// The name of the stream analytics job.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// A standard service response for long running operations.
-        /// </returns>
-        Task<LongRunningOperationResponse> StartAsync(string resourceGroupName, string jobName, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Stop a stream analytics job.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The resource group name of the stream analytics job.
-        /// </param>
-        /// <param name='jobName'>
-        /// The name of the stream analytics job.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// A standard service response for long running operations.
-        /// </returns>
-        Task<LongRunningOperationResponse> StopAsync(string resourceGroupName, string jobName, CancellationToken cancellationToken);
-        
-        /// <summary>
         /// Update a stream analytics job.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -243,6 +212,43 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// <returns>
         /// The response of the patch job operation.
         /// </returns>
-        Task<JobPatchResponse> UpdateAsync(string resourceGroupName, string jobName, JobPatchParameters parameters, CancellationToken cancellationToken);
+        Task<JobPatchResponse> PatchAsync(string resourceGroupName, string jobName, JobPatchParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Start a stream analytics job.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name of the stream analytics job.
+        /// </param>
+        /// <param name='jobName'>
+        /// The name of the stream analytics job.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters for a job start operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        Task<LongRunningOperationResponse> StartAsync(string resourceGroupName, string jobName, JobStartParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Stop a stream analytics job.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name of the stream analytics job.
+        /// </param>
+        /// <param name='jobName'>
+        /// The name of the stream analytics job.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        Task<LongRunningOperationResponse> StopAsync(string resourceGroupName, string jobName, CancellationToken cancellationToken);
     }
 }

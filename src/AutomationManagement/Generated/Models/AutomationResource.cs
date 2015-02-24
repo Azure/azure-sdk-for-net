@@ -21,8 +21,9 @@
 
 using System;
 using System.Linq;
+using Microsoft.WindowsAzure.Management.Automation.Models;
 
-namespace Microsoft.Azure.Management.Automation.Models
+namespace Microsoft.WindowsAzure.Management.Automation.Models
 {
     /// <summary>
     /// An automation resource item.
@@ -32,7 +33,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         private string _eTag;
         
         /// <summary>
-        /// Optional. The ETag for this resource.
+        /// Optional. Gets or sets the ETag for this resource.
         /// </summary>
         public string ETag
         {
@@ -40,10 +41,21 @@ namespace Microsoft.Azure.Management.Automation.Models
             set { this._eTag = value; }
         }
         
+        private SubscriptionIntrinsicSettings _intrinsicSettings;
+        
+        /// <summary>
+        /// Optional. Gets or sets the intrinsic settings of resource.
+        /// </summary>
+        public SubscriptionIntrinsicSettings IntrinsicSettings
+        {
+            get { return this._intrinsicSettings; }
+            set { this._intrinsicSettings = value; }
+        }
+        
         private string _name;
         
         /// <summary>
-        /// Optional. The user-input name of this item.
+        /// Optional. Gets or sets the user-input name of this item.
         /// </summary>
         public string Name
         {
@@ -54,7 +66,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         private string _namespace;
         
         /// <summary>
-        /// Optional. The namespace in which this item resides.
+        /// Optional. Gets or sets the namespace in which this item resides.
         /// </summary>
         public string Namespace
         {
@@ -65,7 +77,8 @@ namespace Microsoft.Azure.Management.Automation.Models
         private string _plan;
         
         /// <summary>
-        /// Optional. The plan for this item as selected by the user.
+        /// Optional. Gets or sets the plan for this item as selected by the
+        /// user.
         /// </summary>
         public string Plan
         {
@@ -76,7 +89,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         private string _schemaVersion;
         
         /// <summary>
-        /// Optional. The schema version for this resource.
+        /// Optional. Gets or sets the schema version for this resource.
         /// </summary>
         public string SchemaVersion
         {
@@ -87,7 +100,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         private string _state;
         
         /// <summary>
-        /// Optional. The state of this resource.
+        /// Optional. Gets or sets the state of this resource.
         /// </summary>
         public string State
         {
@@ -98,7 +111,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         private string _type;
         
         /// <summary>
-        /// Optional. The type of the item.
+        /// Optional. Gets or sets the type of the item.
         /// </summary>
         public string Type
         {

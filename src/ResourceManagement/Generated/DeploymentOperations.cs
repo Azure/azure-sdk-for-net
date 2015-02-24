@@ -115,8 +115,23 @@ namespace Microsoft.Azure.Management.Resources
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/deployments/" + Uri.EscapeDataString(deploymentName) + "/cancel?";
-            url = url + "api-version=2014-04-01-preview";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/deployments/";
+            url = url + Uri.EscapeDataString(deploymentName);
+            url = url + "/cancel";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -274,8 +289,22 @@ namespace Microsoft.Azure.Management.Resources
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/deployments/" + Uri.EscapeDataString(deploymentName) + "?";
-            url = url + "api-version=2014-04-01-preview";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/deployments/";
+            url = url + Uri.EscapeDataString(deploymentName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -498,6 +527,26 @@ namespace Microsoft.Azure.Management.Resources
                                                         providerResourceTypeInstance.Locations.Add(((string)locationsValue));
                                                     }
                                                 }
+                                                
+                                                JToken apiVersionsArray = resourceTypesValue["apiVersions"];
+                                                if (apiVersionsArray != null && apiVersionsArray.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken apiVersionsValue in ((JArray)apiVersionsArray))
+                                                    {
+                                                        providerResourceTypeInstance.ApiVersions.Add(((string)apiVersionsValue));
+                                                    }
+                                                }
+                                                
+                                                JToken propertiesSequenceElement = ((JToken)resourceTypesValue["properties"]);
+                                                if (propertiesSequenceElement != null && propertiesSequenceElement.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JProperty property in propertiesSequenceElement)
+                                                    {
+                                                        string propertiesKey = ((string)property.Name);
+                                                        string propertiesValue3 = ((string)property.Value);
+                                                        providerResourceTypeInstance.Properties.Add(propertiesKey, propertiesValue3);
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -709,8 +758,22 @@ namespace Microsoft.Azure.Management.Resources
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/deployments/" + Uri.EscapeDataString(deploymentName) + "?";
-            url = url + "api-version=2014-04-01-preview";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/deployments/";
+            url = url + Uri.EscapeDataString(deploymentName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -881,6 +944,26 @@ namespace Microsoft.Azure.Management.Resources
                                                     foreach (JToken locationsValue in ((JArray)locationsArray))
                                                     {
                                                         providerResourceTypeInstance.Locations.Add(((string)locationsValue));
+                                                    }
+                                                }
+                                                
+                                                JToken apiVersionsArray = resourceTypesValue["apiVersions"];
+                                                if (apiVersionsArray != null && apiVersionsArray.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken apiVersionsValue in ((JArray)apiVersionsArray))
+                                                    {
+                                                        providerResourceTypeInstance.ApiVersions.Add(((string)apiVersionsValue));
+                                                    }
+                                                }
+                                                
+                                                JToken propertiesSequenceElement = ((JToken)resourceTypesValue["properties"]);
+                                                if (propertiesSequenceElement != null && propertiesSequenceElement.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JProperty property in propertiesSequenceElement)
+                                                    {
+                                                        string propertiesKey = ((string)property.Name);
+                                                        string propertiesValue2 = ((string)property.Value);
+                                                        providerResourceTypeInstance.Properties.Add(propertiesKey, propertiesValue2);
                                                     }
                                                 }
                                             }
@@ -1083,20 +1166,34 @@ namespace Microsoft.Azure.Management.Resources
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/";
             url = url + "resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/";
-            url = url + "deployments/?";
-            bool appendFilter = true;
+            url = url + "deployments/";
+            List<string> queryParameters = new List<string>();
+            List<string> odataFilter = new List<string>();
             if (parameters != null && parameters.ProvisioningState != null)
             {
-                appendFilter = false;
-                url = url + "$filter=" + "provisioningState eq '" + Uri.EscapeDataString(parameters.ProvisioningState) + "'";
+                odataFilter.Add("provisioningState eq '" + Uri.EscapeDataString(parameters.ProvisioningState) + "'");
+            }
+            if (odataFilter.Count > 0)
+            {
+                queryParameters.Add("$filter=" + string.Join(null, odataFilter));
             }
             if (parameters != null && parameters.Top != null)
             {
-                url = url + "&$top=" + Uri.EscapeDataString(parameters.Top.Value.ToString());
+                queryParameters.Add("$top=" + Uri.EscapeDataString(parameters.Top.Value.ToString()));
             }
-            url = url + "&api-version=2014-04-01-preview";
+            queryParameters.Add("api-version=2014-04-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1272,6 +1369,26 @@ namespace Microsoft.Azure.Management.Resources
                                                             foreach (JToken locationsValue in ((JArray)locationsArray))
                                                             {
                                                                 providerResourceTypeInstance.Locations.Add(((string)locationsValue));
+                                                            }
+                                                        }
+                                                        
+                                                        JToken apiVersionsArray = resourceTypesValue["apiVersions"];
+                                                        if (apiVersionsArray != null && apiVersionsArray.Type != JTokenType.Null)
+                                                        {
+                                                            foreach (JToken apiVersionsValue in ((JArray)apiVersionsArray))
+                                                            {
+                                                                providerResourceTypeInstance.ApiVersions.Add(((string)apiVersionsValue));
+                                                            }
+                                                        }
+                                                        
+                                                        JToken propertiesSequenceElement = ((JToken)resourceTypesValue["properties"]);
+                                                        if (propertiesSequenceElement != null && propertiesSequenceElement.Type != JTokenType.Null)
+                                                        {
+                                                            foreach (JProperty property in propertiesSequenceElement)
+                                                            {
+                                                                string propertiesKey = ((string)property.Name);
+                                                                string propertiesValue2 = ((string)property.Value);
+                                                                providerResourceTypeInstance.Properties.Add(propertiesKey, propertiesValue2);
                                                             }
                                                         }
                                                     }
@@ -1478,7 +1595,9 @@ namespace Microsoft.Azure.Management.Resources
             }
             
             // Construct URL
-            string url = nextLink;
+            string url = "";
+            url = url + nextLink;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1642,6 +1761,26 @@ namespace Microsoft.Azure.Management.Resources
                                                             foreach (JToken locationsValue in ((JArray)locationsArray))
                                                             {
                                                                 providerResourceTypeInstance.Locations.Add(((string)locationsValue));
+                                                            }
+                                                        }
+                                                        
+                                                        JToken apiVersionsArray = resourceTypesValue["apiVersions"];
+                                                        if (apiVersionsArray != null && apiVersionsArray.Type != JTokenType.Null)
+                                                        {
+                                                            foreach (JToken apiVersionsValue in ((JArray)apiVersionsArray))
+                                                            {
+                                                                providerResourceTypeInstance.ApiVersions.Add(((string)apiVersionsValue));
+                                                            }
+                                                        }
+                                                        
+                                                        JToken propertiesSequenceElement = ((JToken)resourceTypesValue["properties"]);
+                                                        if (propertiesSequenceElement != null && propertiesSequenceElement.Type != JTokenType.Null)
+                                                        {
+                                                            foreach (JProperty property in propertiesSequenceElement)
+                                                            {
+                                                                string propertiesKey = ((string)property.Name);
+                                                                string propertiesValue2 = ((string)property.Value);
+                                                                providerResourceTypeInstance.Properties.Add(propertiesKey, propertiesValue2);
                                                             }
                                                         }
                                                     }
@@ -1886,8 +2025,23 @@ namespace Microsoft.Azure.Management.Resources
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/deployments/" + Uri.EscapeDataString(deploymentName) + "/validate?";
-            url = url + "&api-version=2014-04-01-preview";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/deployments/";
+            url = url + Uri.EscapeDataString(deploymentName);
+            url = url + "/validate";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -2150,6 +2304,26 @@ namespace Microsoft.Azure.Management.Resources
                                                     foreach (JToken locationsValue in ((JArray)locationsArray))
                                                     {
                                                         providerResourceTypeInstance.Locations.Add(((string)locationsValue));
+                                                    }
+                                                }
+                                                
+                                                JToken apiVersionsArray = resourceTypesValue["apiVersions"];
+                                                if (apiVersionsArray != null && apiVersionsArray.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken apiVersionsValue in ((JArray)apiVersionsArray))
+                                                    {
+                                                        providerResourceTypeInstance.ApiVersions.Add(((string)apiVersionsValue));
+                                                    }
+                                                }
+                                                
+                                                JToken propertiesSequenceElement = ((JToken)resourceTypesValue["properties"]);
+                                                if (propertiesSequenceElement != null && propertiesSequenceElement.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JProperty property in propertiesSequenceElement)
+                                                    {
+                                                        string propertiesKey = ((string)property.Name);
+                                                        string propertiesValue3 = ((string)property.Value);
+                                                        providerResourceTypeInstance.Properties.Add(propertiesKey, propertiesValue3);
                                                     }
                                                 }
                                             }

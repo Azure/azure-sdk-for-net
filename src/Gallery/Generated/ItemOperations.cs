@@ -87,7 +87,12 @@ namespace Microsoft.Azure.Gallery
             }
             
             // Construct URL
-            string url = "/Microsoft.Gallery/galleryitems/" + (itemIdentity == null ? "" : Uri.EscapeDataString(itemIdentity));
+            string url = "";
+            url = url + "/Microsoft.Gallery/galleryitems/";
+            if (itemIdentity != null)
+            {
+                url = url + Uri.EscapeDataString(itemIdentity);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -344,16 +349,25 @@ namespace Microsoft.Azure.Gallery
             }
             
             // Construct URL
-            string url = "/Microsoft.Gallery/galleryitems?";
-            bool appendFilter = true;
+            string url = "";
+            url = url + "/Microsoft.Gallery/galleryitems";
+            List<string> queryParameters = new List<string>();
+            List<string> odataFilter = new List<string>();
             if (parameters != null && parameters.Filter != null)
             {
-                appendFilter = false;
-                url = url + "$filter=" + Uri.EscapeDataString(parameters.Filter);
+                odataFilter.Add(Uri.EscapeDataString(parameters.Filter));
+            }
+            if (odataFilter.Count > 0)
+            {
+                queryParameters.Add("$filter=" + string.Join(null, odataFilter));
             }
             if (parameters != null && parameters.Top != null)
             {
-                url = url + "&$top=" + Uri.EscapeDataString(parameters.Top.Value.ToString());
+                queryParameters.Add("$top=" + Uri.EscapeDataString(parameters.Top.Value.ToString()));
+            }
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
             }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.

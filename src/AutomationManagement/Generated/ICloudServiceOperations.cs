@@ -23,17 +23,116 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.Management.Automation.Models;
+using Microsoft.WindowsAzure.Management.Automation.Models;
 
-namespace Microsoft.Azure.Management.Automation
+namespace Microsoft.WindowsAzure.Management.Automation
 {
-    /// <summary>
-    /// Definition of cloud service for the automation extension.  (see
-    /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
-    /// more information)
-    /// </summary>
     public partial interface ICloudServiceOperations
     {
+        /// <summary>
+        /// Create a cloud service.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Create cloud Service operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        Task<LongRunningOperationStatusResponse> BeginCreateAsync(CloudServiceCreateParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Create a cloud service.
+        /// </summary>
+        /// <param name='clouldServiceName'>
+        /// Cloud service name.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        Task<LongRunningOperationStatusResponse> BeginDeleteAsync(string clouldServiceName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Create a cloud service.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Create cloud service operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        Task<LongRunningOperationStatusResponse> CreateAsync(CloudServiceCreateParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Create a cloud service.
+        /// </summary>
+        /// <param name='clouldServiceName'>
+        /// Cloud service name.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        Task<LongRunningOperationStatusResponse> DeleteAsync(string clouldServiceName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Retrieve a  Cloud services  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='cloudServiceName'>
+        /// Cloud service name.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response model for the get cloud service operation.
+        /// </returns>
+        Task<CloudServiceGetResponse> GetAsync(string cloudServiceName, CancellationToken cancellationToken);
+        
         /// <summary>
         /// Retrieve a list of Cloud services  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXXXX.aspx

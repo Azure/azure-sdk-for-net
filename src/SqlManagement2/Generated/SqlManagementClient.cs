@@ -90,6 +90,18 @@ namespace Microsoft.Azure.Management.Sql
             set { this._longRunningOperationRetryTimeout = value; }
         }
         
+        private IAuditingPolicyOperations _auditingPolicy;
+        
+        /// <summary>
+        /// Represents all the operations to manage Azure SQL Database and
+        /// Database Server Audit policy.  Contains operations to: Create,
+        /// Retrieve and Update audit policy.
+        /// </summary>
+        public virtual IAuditingPolicyOperations AuditingPolicy
+        {
+            get { return this._auditingPolicy; }
+        }
+        
         private IDatabaseOperations _databases;
         
         /// <summary>
@@ -103,6 +115,19 @@ namespace Microsoft.Azure.Management.Sql
             get { return this._databases; }
         }
         
+        private IDataMaskingOperations _dataMasking;
+        
+        /// <summary>
+        /// Represents all the operations for operating on Azure SQL Database
+        /// data masking. Contains operations to: Create, Retrieve, Update,
+        /// and Delete data masking rules, as well as Create, Retreive and
+        /// Update data masking policy.
+        /// </summary>
+        public virtual IDataMaskingOperations DataMasking
+        {
+            get { return this._dataMasking; }
+        }
+        
         private IFirewallRuleOperations _firewallRules;
         
         /// <summary>
@@ -113,6 +138,18 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IFirewallRuleOperations FirewallRules
         {
             get { return this._firewallRules; }
+        }
+        
+        private ISecureConnectionPolicyOperations _secureConnection;
+        
+        /// <summary>
+        /// Represents all the operations for managing Azure SQL Database
+        /// secure connection.  Contains operations to: Create, Retrieve and
+        /// Update secure connection policy .
+        /// </summary>
+        public virtual ISecureConnectionPolicyOperations SecureConnection
+        {
+            get { return this._secureConnection; }
         }
         
         private ISecurityOperations _databaseSecurity;
@@ -145,8 +182,11 @@ namespace Microsoft.Azure.Management.Sql
         public SqlManagementClient()
             : base()
         {
+            this._auditingPolicy = new AuditingPolicyOperations(this);
             this._databases = new DatabaseOperations(this);
+            this._dataMasking = new DataMaskingOperations(this);
             this._firewallRules = new FirewallRuleOperations(this);
+            this._secureConnection = new SecureConnectionPolicyOperations(this);
             this._databaseSecurity = new SecurityOperations(this);
             this._servers = new ServerOperations(this);
             this._apiVersion = "2014-04-01";
@@ -214,8 +254,11 @@ namespace Microsoft.Azure.Management.Sql
         public SqlManagementClient(HttpClient httpClient)
             : base(httpClient)
         {
+            this._auditingPolicy = new AuditingPolicyOperations(this);
             this._databases = new DatabaseOperations(this);
+            this._dataMasking = new DataMaskingOperations(this);
             this._firewallRules = new FirewallRuleOperations(this);
+            this._secureConnection = new SecureConnectionPolicyOperations(this);
             this._databaseSecurity = new SecurityOperations(this);
             this._servers = new ServerOperations(this);
             this._apiVersion = "2014-04-01";
