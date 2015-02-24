@@ -97,7 +97,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/resourceextensions";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/resourceextensions";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -294,6 +300,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 {
                                     DateTime publishedDateInstance = DateTime.Parse(publishedDateElement.Value, CultureInfo.InvariantCulture);
                                     resourceExtensionInstance.PublishedDate = publishedDateInstance;
+                                }
+                                
+                                XElement regionsElement = resourceExtensionsElement.Element(XName.Get("Regions", "http://schemas.microsoft.com/windowsazure"));
+                                if (regionsElement != null)
+                                {
+                                    string regionsInstance = regionsElement.Value;
+                                    resourceExtensionInstance.Regions = regionsInstance;
                                 }
                             }
                         }
@@ -375,7 +388,16 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/resourceextensions/" + Uri.EscapeDataString(publisherName) + "/" + Uri.EscapeDataString(extensionName);
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/resourceextensions/";
+            url = url + Uri.EscapeDataString(publisherName);
+            url = url + "/";
+            url = url + Uri.EscapeDataString(extensionName);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -572,6 +594,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 {
                                     DateTime publishedDateInstance = DateTime.Parse(publishedDateElement.Value, CultureInfo.InvariantCulture);
                                     resourceExtensionInstance.PublishedDate = publishedDateInstance;
+                                }
+                                
+                                XElement regionsElement = resourceExtensionsElement.Element(XName.Get("Regions", "http://schemas.microsoft.com/windowsazure"));
+                                if (regionsElement != null)
+                                {
+                                    string regionsInstance = regionsElement.Value;
+                                    resourceExtensionInstance.Regions = regionsInstance;
                                 }
                             }
                         }

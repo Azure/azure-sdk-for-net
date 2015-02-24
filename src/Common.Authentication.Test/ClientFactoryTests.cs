@@ -67,23 +67,24 @@ namespace Common.Authentication.Test
                 return;
             }
 
-            AzureContext context = new AzureContext()
-            {
-                Account = new AzureAccount()
-                {
-                    Id = userAccount,
-                    Type = AzureAccount.AccountType.User,
-                    Properties = new Dictionary<AzureAccount.Property, string>() { { AzureAccount.Property.Tenants, "common" } }
-                },
-                Subscription = new AzureSubscription()
+            AzureContext context = new AzureContext
+            (
+
+                new AzureSubscription()
                 {
                     Account = userAccount,
                     Environment = "AzureCloud",
                     Id = Guid.Parse(subscriptionId),
                     Properties = new Dictionary<AzureSubscription.Property, string>() { { AzureSubscription.Property.Tenants, "common" } }
+                }, 
+                new AzureAccount()
+                {
+                    Id = userAccount,
+                    Type = AzureAccount.AccountType.User,
+                    Properties = new Dictionary<AzureAccount.Property, string>() { { AzureAccount.Property.Tenants, "common" } }
                 },
-                Environment = AzureEnvironment.PublicEnvironments["AzureCloud"]
-            };
+                AzureEnvironment.PublicEnvironments["AzureCloud"]
+            );
             
             // Add registration action to make sure we register for the used provider (if required)
             // AzureSession.ClientFactory.AddAction(new RPRegistrationAction());

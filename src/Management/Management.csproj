@@ -11,90 +11,27 @@
     <AssemblyName>Microsoft.WindowsAzure.Management</AssemblyName>
     <OutputType>Library</OutputType>
     <RestorePackages>true</RestorePackages>
-    <NuGetPackageImportStamp>bbfedb43</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>51fac8ea</NuGetPackageImportStamp>
   </PropertyGroup>
   <Import Project="..\..\tools\Library.Settings.targets" />
   <ItemGroup>
-    <Compile Include="Generated\AffinityGroupOperations.cs" />
-    <Compile Include="Generated\AffinityGroupOperationsExtensions.cs" />
-    <Compile Include="Generated\IAffinityGroupOperations.cs" />
-    <Compile Include="Generated\ILocationOperations.cs" />
-    <Compile Include="Generated\IManagementCertificateOperations.cs" />
-    <Compile Include="Generated\IManagementClient.cs" />
-    <Compile Include="Generated\IRoleSizeOperations.cs" />
-    <Compile Include="Generated\ISubscriptionOperations.cs" />
-    <Compile Include="Generated\ListSubscriptions\ISubscriptionClient.cs" />
-    <Compile Include="Generated\ListSubscriptions\ISubscriptionOperations.cs" />
-    <Compile Include="Generated\ListSubscriptions\Models\SubscriptionListOperationResponse.cs" />
-    <Compile Include="Generated\ListSubscriptions\Models\SubscriptionStatus.cs" />
-    <Compile Include="Generated\ListSubscriptions\SubscriptionClient.cs" />
-    <Compile Include="Generated\ListSubscriptions\SubscriptionClientExtensions.cs" />
-    <Compile Include="Generated\ListSubscriptions\SubscriptionOperations.cs" />
-    <Compile Include="Generated\ListSubscriptions\SubscriptionOperationsExtensions.cs" />
-    <Compile Include="Generated\LocationOperations.cs" />
-    <Compile Include="Generated\LocationOperationsExtensions.cs" />
-    <Compile Include="Generated\ManagementCertificateOperations.cs" />
-    <Compile Include="Generated\ManagementCertificateOperationsExtensions.cs" />
-    <Compile Include="Generated\ManagementClient.cs" />
-    <Compile Include="Generated\ManagementClientExtensions.cs" />
-    <Compile Include="Generated\Models\AffinityGroupCapabilities.cs" />
-    <Compile Include="Generated\Models\AffinityGroupCreateParameters.cs" />
-    <Compile Include="Generated\Models\AffinityGroupGetResponse.cs" />
-    <Compile Include="Generated\Models\AffinityGroupListResponse.cs" />
-    <Compile Include="Generated\Models\AffinityGroupUpdateParameters.cs" />
-    <Compile Include="Generated\Models\ComputeCapabilities.cs" />
-    <Compile Include="Generated\Models\LocationAvailableServiceNames.cs" />
-    <Compile Include="Generated\Models\LocationNames.cs" />
-    <Compile Include="Generated\Models\LocationsListResponse.cs" />
-    <Compile Include="Generated\Models\ManagementCertificateCreateParameters.cs" />
-    <Compile Include="Generated\Models\ManagementCertificateGetResponse.cs" />
-    <Compile Include="Generated\Models\ManagementCertificateListResponse.cs" />
-    <Compile Include="Generated\Models\RoleSizeListResponse.cs" />
-    <Compile Include="Generated\Models\StorageCapabilities.cs" />
-    <Compile Include="Generated\Models\SubscriptionGetResponse.cs" />
-    <Compile Include="Generated\Models\SubscriptionListOperationsParameters.cs" />
-    <Compile Include="Generated\Models\SubscriptionListOperationsResponse.cs" />
-    <Compile Include="Generated\Models\SubscriptionOperationNames.cs" />
-    <Compile Include="Generated\Models\SubscriptionStatus.cs" />
-    <Compile Include="Generated\RoleSizeOperations.cs" />
-    <Compile Include="Generated\RoleSizeOperationsExtensions.cs" />
-    <Compile Include="Generated\SubscriptionOperations.cs" />
-    <Compile Include="Generated\SubscriptionOperationsExtensions.cs" />
+    <Compile Include="Generated\**\*.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="GenerateCode.props" />
     <None Include="Microsoft.WindowsAzure.Management.nuget.proj" />
     <None Include="Microsoft.WindowsAzure.Management.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="management.hyak.xml" />
-    <Content Include="hyak.xml" />
-    <Content Include="subscriptions.hyak.xml" />
-  </ItemGroup>
-  <ItemGroup>
     <Reference Include="Hyak.Common">
-      <HintPath>..\..\packages\Hyak.Common.1.0.1\lib\portable-net403+win+wpa81\Hyak.Common.dll</HintPath>
+      <HintPath>..\..\packages\Hyak.Common.1.0.2\lib\portable-net403+win+wpa81\Hyak.Common.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Azure.Common">
-      <HintPath>..\..\packages\Microsoft.Azure.Common.2.0.1\lib\portable-net45+wp8+wpa81+win\Microsoft.Azure.Common.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.Azure.Common.2.0.2\lib\portable-net45+wp8+wpa81+win\Microsoft.Azure.Common.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(LibraryFxTarget)' == 'portable' " />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(LibraryFxTarget)' != 'portable' " />
   <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
-  <Import Project="GenerateCode.props" />
-  <Import Project="..\..\packages\Hyak.Generator.1.0.5478.27459-prerelease\build\Hyak.Generator.targets" Condition="Exists('..\..\packages\Hyak.Generator.1.0.5478.27459-prerelease\build\Hyak.Generator.targets')" />
-  <Target Name="DoSpecGeneration"  BeforeTargets="BeforeBuild" Condition="'$(GenerateHydraSpecs)' == 'true'">
-    <CallTarget Targets="GenerateCodeFromSpecs" Condition="'$(HydraGeneratorImported)' != ''" />
-    <Error Text="The Hyak code generator package was restored from nuget. Build the project again to do code generation." Condition="Exists('..\..\packages\Hyak.Generator.1.0.5478.27459-prerelease\build\Hyak.Generator.targets') And '$(HydraGeneratorImported)' == ''" />
-    <Warning Text="The Hyak code generation packages are not available. Compilation will be done on existing generated sources." Condition="!Exists('..\..\packages\Hyak.Generator.1.0.5478.27459-prerelease\build\Hyak.Generator.targets')" />
-  </Target>
-  <Target Name="CopyMicrosoftWindowsAzureManagementSpecification" BeforeTargets="GenerateCodeFromSpecs">
-    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.Specification.1.0.5483.24656-prerelease\tools\Microsoft.WindowsAzure.Management.Specification.dll" DestinationFolder="." />
-  </Target>
-  <Target Name="CopyMicrosoftWindowsAzureSubscriptionsSpecification" BeforeTargets="GenerateCodeFromSpecs">
-    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Subscriptions.Specification.1.0.5483.24656-prerelease\tools\Microsoft.WindowsAzure.Subscriptions.Specification.dll" DestinationFolder="." />
-  </Target>
 </Project>

@@ -89,14 +89,17 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// <param name='jobName'>
         /// Required. The name of the stream analytics job.
         /// </param>
+        /// <param name='parameters'>
+        /// Optional. Parameters for a job start operation.
+        /// </param>
         /// <returns>
         /// A standard service response for long running operations.
         /// </returns>
-        public static LongRunningOperationResponse BeginStart(this IJobOperations operations, string resourceGroupName, string jobName)
+        public static LongRunningOperationResponse BeginStart(this IJobOperations operations, string resourceGroupName, string jobName, JobStartParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IJobOperations)s).BeginStartAsync(resourceGroupName, jobName);
+                return ((IJobOperations)s).BeginStartAsync(resourceGroupName, jobName, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -114,12 +117,15 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// <param name='jobName'>
         /// Required. The name of the stream analytics job.
         /// </param>
+        /// <param name='parameters'>
+        /// Optional. Parameters for a job start operation.
+        /// </param>
         /// <returns>
         /// A standard service response for long running operations.
         /// </returns>
-        public static Task<LongRunningOperationResponse> BeginStartAsync(this IJobOperations operations, string resourceGroupName, string jobName)
+        public static Task<LongRunningOperationResponse> BeginStartAsync(this IJobOperations operations, string resourceGroupName, string jobName, JobStartParameters parameters)
         {
-            return operations.BeginStartAsync(resourceGroupName, jobName, CancellationToken.None);
+            return operations.BeginStartAsync(resourceGroupName, jobName, parameters, CancellationToken.None);
         }
         
         /// <summary>
@@ -461,6 +467,58 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         }
         
         /// <summary>
+        /// Update a stream analytics job.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.StreamAnalytics.IJobOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The resource group name of the stream analytics job.
+        /// </param>
+        /// <param name='jobName'>
+        /// Required. The name of the stream analytics job.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The parameters required to update a stream analytics job.
+        /// </param>
+        /// <returns>
+        /// The response of the patch job operation.
+        /// </returns>
+        public static JobPatchResponse Patch(this IJobOperations operations, string resourceGroupName, string jobName, JobPatchParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IJobOperations)s).PatchAsync(resourceGroupName, jobName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Update a stream analytics job.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.StreamAnalytics.IJobOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The resource group name of the stream analytics job.
+        /// </param>
+        /// <param name='jobName'>
+        /// Required. The name of the stream analytics job.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The parameters required to update a stream analytics job.
+        /// </param>
+        /// <returns>
+        /// The response of the patch job operation.
+        /// </returns>
+        public static Task<JobPatchResponse> PatchAsync(this IJobOperations operations, string resourceGroupName, string jobName, JobPatchParameters parameters)
+        {
+            return operations.PatchAsync(resourceGroupName, jobName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Start a stream analytics job.
         /// </summary>
         /// <param name='operations'>
@@ -473,14 +531,17 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// <param name='jobName'>
         /// Required. The name of the stream analytics job.
         /// </param>
+        /// <param name='parameters'>
+        /// Optional. Parameters for a job start operation.
+        /// </param>
         /// <returns>
         /// A standard service response for long running operations.
         /// </returns>
-        public static LongRunningOperationResponse Start(this IJobOperations operations, string resourceGroupName, string jobName)
+        public static LongRunningOperationResponse Start(this IJobOperations operations, string resourceGroupName, string jobName, JobStartParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IJobOperations)s).StartAsync(resourceGroupName, jobName);
+                return ((IJobOperations)s).StartAsync(resourceGroupName, jobName, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -498,12 +559,15 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// <param name='jobName'>
         /// Required. The name of the stream analytics job.
         /// </param>
+        /// <param name='parameters'>
+        /// Optional. Parameters for a job start operation.
+        /// </param>
         /// <returns>
         /// A standard service response for long running operations.
         /// </returns>
-        public static Task<LongRunningOperationResponse> StartAsync(this IJobOperations operations, string resourceGroupName, string jobName)
+        public static Task<LongRunningOperationResponse> StartAsync(this IJobOperations operations, string resourceGroupName, string jobName, JobStartParameters parameters)
         {
-            return operations.StartAsync(resourceGroupName, jobName, CancellationToken.None);
+            return operations.StartAsync(resourceGroupName, jobName, parameters, CancellationToken.None);
         }
         
         /// <summary>
@@ -550,58 +614,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         public static Task<LongRunningOperationResponse> StopAsync(this IJobOperations operations, string resourceGroupName, string jobName)
         {
             return operations.StopAsync(resourceGroupName, jobName, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// Update a stream analytics job.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.StreamAnalytics.IJobOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. The resource group name of the stream analytics job.
-        /// </param>
-        /// <param name='jobName'>
-        /// Required. The name of the stream analytics job.
-        /// </param>
-        /// <param name='parameters'>
-        /// Required. The parameters required to update a stream analytics job.
-        /// </param>
-        /// <returns>
-        /// The response of the patch job operation.
-        /// </returns>
-        public static JobPatchResponse Update(this IJobOperations operations, string resourceGroupName, string jobName, JobPatchParameters parameters)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IJobOperations)s).UpdateAsync(resourceGroupName, jobName, parameters);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// Update a stream analytics job.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.StreamAnalytics.IJobOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. The resource group name of the stream analytics job.
-        /// </param>
-        /// <param name='jobName'>
-        /// Required. The name of the stream analytics job.
-        /// </param>
-        /// <param name='parameters'>
-        /// Required. The parameters required to update a stream analytics job.
-        /// </param>
-        /// <returns>
-        /// The response of the patch job operation.
-        /// </returns>
-        public static Task<JobPatchResponse> UpdateAsync(this IJobOperations operations, string resourceGroupName, string jobName, JobPatchParameters parameters)
-        {
-            return operations.UpdateAsync(resourceGroupName, jobName, parameters, CancellationToken.None);
         }
     }
 }

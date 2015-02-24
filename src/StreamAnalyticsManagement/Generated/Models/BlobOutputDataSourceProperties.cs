@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _container;
         
         /// <summary>
-        /// Required. Gets or sets the container of the blob.
+        /// Optional. Gets or sets the container of the blob.
         /// </summary>
         public string Container
         {
@@ -73,20 +73,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         public BlobOutputDataSourceProperties()
         {
             this.StorageAccounts = new LazyList<StorageAccount>();
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the BlobOutputDataSourceProperties
-        /// class with required arguments.
-        /// </summary>
-        public BlobOutputDataSourceProperties(string container)
-            : this()
-        {
-            if (container == null)
-            {
-                throw new ArgumentNullException("container");
-            }
-            this.Container = container;
         }
     }
 }

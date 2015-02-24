@@ -94,7 +94,9 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = "/api/deployments/" + Uri.EscapeDataString(deploymentId);
+            string url = "";
+            url = url + "/api/deployments/";
+            url = url + Uri.EscapeDataString(deploymentId);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -371,7 +373,11 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = "/api/deployments/" + Uri.EscapeDataString(deploymentId) + "/log/" + Uri.EscapeDataString(deploymentLogId);
+            string url = "";
+            url = url + "/api/deployments/";
+            url = url + Uri.EscapeDataString(deploymentId);
+            url = url + "/log/";
+            url = url + Uri.EscapeDataString(deploymentLogId);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -538,14 +544,20 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = "/api/deployments/?";
+            string url = "";
+            url = url + "/api/deployments/";
+            List<string> queryParameters = new List<string>();
             if (parameters != null && parameters.Top != null)
             {
-                url = url + "$top=" + Uri.EscapeDataString(parameters.Top);
+                queryParameters.Add("$top=" + Uri.EscapeDataString(parameters.Top));
             }
             if (parameters != null && parameters.OrderBy != null)
             {
-                url = url + "&$orderBy=" + Uri.EscapeDataString(parameters.OrderBy);
+                queryParameters.Add("$orderBy=" + Uri.EscapeDataString(parameters.OrderBy));
+            }
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
             }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -826,14 +838,22 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = "/api/deployments/" + Uri.EscapeDataString(deploymentId) + "/log?";
+            string url = "";
+            url = url + "/api/deployments/";
+            url = url + Uri.EscapeDataString(deploymentId);
+            url = url + "/log";
+            List<string> queryParameters = new List<string>();
             if (parameters != null && parameters.Top != null)
             {
-                url = url + "$top=" + Uri.EscapeDataString(parameters.Top);
+                queryParameters.Add("$top=" + Uri.EscapeDataString(parameters.Top));
             }
             if (parameters != null && parameters.OrderBy != null)
             {
-                url = url + "&$orderBy=" + Uri.EscapeDataString(parameters.OrderBy);
+                queryParameters.Add("$orderBy=" + Uri.EscapeDataString(parameters.OrderBy));
+            }
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
             }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -1013,7 +1033,9 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = "/api/deployments/" + Uri.EscapeDataString(deploymentId);
+            string url = "";
+            url = url + "/api/deployments/";
+            url = url + Uri.EscapeDataString(deploymentId);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')

@@ -27,6 +27,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
@@ -77,11 +78,10 @@ namespace Microsoft.Azure.Management.Batch
         /// <param name='accountName'>
         /// Required. A name for the Batch account which must be unique within
         /// Azure. Batch account names must be between 3 and 24 characters in
-        /// length, must use only numbers and lower-case letters and not start
-        /// with a number. This name is used as part of the DNS name that is
-        /// used to access the batch service in the region in which the
-        /// account is created. For example:
-        /// http://AccountName.batch.core.windows.net/.
+        /// length and must use only numbers and lower-case letters. This name
+        /// is used as part of the DNS name that is used to access the batch
+        /// service in the region in which the account is created. For
+        /// example: http://AccountName.batch.core.windows.net/.
         /// </param>
         /// <param name='parameters'>
         /// Required. Additional parameters for account creation
@@ -99,6 +99,14 @@ namespace Microsoft.Azure.Management.Batch
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
+            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (Regex.IsMatch(resourceGroupName, "^[-\\w\\._]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
             if (accountName == null)
             {
                 throw new ArgumentNullException("accountName");
@@ -107,7 +115,11 @@ namespace Microsoft.Azure.Management.Batch
             {
                 throw new ArgumentOutOfRangeException("accountName");
             }
-            if (accountName.Length > 24)
+            if (accountName != null && accountName.Length > 24)
+            {
+                throw new ArgumentOutOfRangeException("accountName");
+            }
+            if (Regex.IsMatch(accountName, "^[-\\w\\._]+$") == false)
             {
                 throw new ArgumentOutOfRangeException("accountName");
             }
@@ -130,8 +142,26 @@ namespace Microsoft.Azure.Management.Batch
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourceGroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.Batch/batchAccounts/" + Uri.EscapeDataString(accountName) + "?";
-            url = url + "api-version=2014-05-01-privatepreview";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.Batch";
+            url = url + "/";
+            url = url + "batchAccounts";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(accountName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-05-01-privatepreview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -387,9 +417,25 @@ namespace Microsoft.Azure.Management.Batch
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
+            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (Regex.IsMatch(resourceGroupName, "^[-\\w\\._]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
             if (accountName == null)
             {
                 throw new ArgumentNullException("accountName");
+            }
+            if (accountName != null && accountName.Length > 24)
+            {
+                throw new ArgumentOutOfRangeException("accountName");
+            }
+            if (Regex.IsMatch(accountName, "^[-\\w\\._]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("accountName");
             }
             
             // Tracing
@@ -405,8 +451,26 @@ namespace Microsoft.Azure.Management.Batch
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourceGroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.Batch/batchAccounts/" + Uri.EscapeDataString(accountName) + "?";
-            url = url + "api-version=2014-05-01-privatepreview";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.Batch";
+            url = url + "/";
+            url = url + "batchAccounts";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(accountName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-05-01-privatepreview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -520,11 +584,10 @@ namespace Microsoft.Azure.Management.Batch
         /// <param name='accountName'>
         /// Required. A name for the Batch account which must be unique within
         /// Azure. Batch account names must be between 3 and 24 characters in
-        /// length, must use only numbers and lower-case letters and not start
-        /// with a number. This name is used as part of the DNS name that is
-        /// used to access the batch service in the region in which the
-        /// account is created. For example:
-        /// http://AccountName.batch.core.windows.net/.
+        /// length and must use only numbers and lower-case letters. This name
+        /// is used as part of the DNS name that is used to access the batch
+        /// service in the region in which the account is created. For
+        /// example: http://AccountName.batch.core.windows.net/.
         /// </param>
         /// <param name='parameters'>
         /// Required. Additional parameters for account creation
@@ -690,9 +753,25 @@ namespace Microsoft.Azure.Management.Batch
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
+            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (Regex.IsMatch(resourceGroupName, "^[-\\w\\._]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
             if (accountName == null)
             {
                 throw new ArgumentNullException("accountName");
+            }
+            if (accountName != null && accountName.Length > 24)
+            {
+                throw new ArgumentOutOfRangeException("accountName");
+            }
+            if (Regex.IsMatch(accountName, "^[-\\w\\._]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("accountName");
             }
             
             // Tracing
@@ -708,8 +787,26 @@ namespace Microsoft.Azure.Management.Batch
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourceGroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.Batch/batchAccounts/" + Uri.EscapeDataString(accountName) + "?";
-            url = url + "api-version=2014-05-01-privatepreview";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.Batch";
+            url = url + "/";
+            url = url + "batchAccounts";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(accountName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-05-01-privatepreview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -906,13 +1003,27 @@ namespace Microsoft.Azure.Management.Batch
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/";
             if (parameters != null && parameters.ResourceGroupName != null)
             {
                 url = url + "resourceGroups/" + Uri.EscapeDataString(parameters.ResourceGroupName) + "/";
             }
-            url = url + "providers/Microsoft.Batch/batchAccounts?";
-            url = url + "api-version=2014-05-01-privatepreview";
+            url = url + "providers/";
+            url = url + "Microsoft.Batch";
+            url = url + "/";
+            url = url + "batchAccounts";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-05-01-privatepreview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1116,8 +1227,21 @@ namespace Microsoft.Azure.Management.Batch
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/providers/Microsoft.Batch/actions?";
-            url = url + "api-version=2014-05-01-privatepreview";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/providers/";
+            url = url + "Microsoft.Batch";
+            url = url + "/actions";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-05-01-privatepreview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1281,9 +1405,25 @@ namespace Microsoft.Azure.Management.Batch
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
+            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (Regex.IsMatch(resourceGroupName, "^[-\\w\\._]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
             if (accountName == null)
             {
                 throw new ArgumentNullException("accountName");
+            }
+            if (accountName != null && accountName.Length > 24)
+            {
+                throw new ArgumentOutOfRangeException("accountName");
+            }
+            if (Regex.IsMatch(accountName, "^[-\\w\\._]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("accountName");
             }
             
             // Tracing
@@ -1299,8 +1439,27 @@ namespace Microsoft.Azure.Management.Batch
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourceGroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.Batch/batchAccounts/" + Uri.EscapeDataString(accountName) + "/listKeys?";
-            url = url + "api-version=2014-05-01-privatepreview";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.Batch";
+            url = url + "/";
+            url = url + "batchAccounts";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(accountName);
+            url = url + "/listKeys";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-05-01-privatepreview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1450,7 +1609,9 @@ namespace Microsoft.Azure.Management.Batch
             }
             
             // Construct URL
-            string url = nextLink;
+            string url = "";
+            url = url + nextLink;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1643,9 +1804,25 @@ namespace Microsoft.Azure.Management.Batch
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
+            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (Regex.IsMatch(resourceGroupName, "^[-\\w\\._]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
             if (accountName == null)
             {
                 throw new ArgumentNullException("accountName");
+            }
+            if (accountName != null && accountName.Length > 24)
+            {
+                throw new ArgumentOutOfRangeException("accountName");
+            }
+            if (Regex.IsMatch(accountName, "^[-\\w\\._]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("accountName");
             }
             if (parameters == null)
             {
@@ -1666,8 +1843,27 @@ namespace Microsoft.Azure.Management.Batch
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourceGroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.Batch/batchAccounts/" + Uri.EscapeDataString(accountName) + "/regenerateKeys?";
-            url = url + "api-version=2014-05-01-privatepreview";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.Batch";
+            url = url + "/";
+            url = url + "batchAccounts";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(accountName);
+            url = url + "/regenerateKeys";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-05-01-privatepreview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1823,9 +2019,25 @@ namespace Microsoft.Azure.Management.Batch
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
+            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (Regex.IsMatch(resourceGroupName, "^[-\\w\\._]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
             if (accountName == null)
             {
                 throw new ArgumentNullException("accountName");
+            }
+            if (accountName != null && accountName.Length > 24)
+            {
+                throw new ArgumentOutOfRangeException("accountName");
+            }
+            if (Regex.IsMatch(accountName, "^[-\\w\\._]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("accountName");
             }
             if (parameters == null)
             {
@@ -1846,8 +2058,26 @@ namespace Microsoft.Azure.Management.Batch
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourceGroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.Batch/batchAccounts/" + Uri.EscapeDataString(accountName) + "?";
-            url = url + "api-version=2014-05-01-privatepreview";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.Batch";
+            url = url + "/";
+            url = url + "batchAccounts";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(accountName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-05-01-privatepreview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')

@@ -13,7 +13,6 @@
 // ----------------------------------------------------------------------------------
 
 using Hyak.Common;
-using Microsoft.Azure.Common.Authentication;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +24,79 @@ namespace Microsoft.Azure.Common.Authentication.Models
     /// </summary>
     public sealed class AzureProfile
     {
+        /// <summary>
+        /// Gets Azure Accounts
+        /// </summary>
+        public Dictionary<string, AzureAccount> Accounts { get; set; }
+
+        /// <summary>
+        /// Gets Azure Subscriptions
+        /// </summary>
+        public Dictionary<Guid, AzureSubscription> Subscriptions { get; set; }
+
+        /// <summary>
+        /// Gets or sets current Azure Subscription
+        /// </summary>
+        public AzureSubscription DefaultSubscription
+        {
+            get
+            {
+                return Subscriptions.Values.FirstOrDefault(
+                    s => s.Properties.ContainsKey(AzureSubscription.Property.Default));
+            }
+
+            set
+            {
+                if (value == null)
+                {
+                    foreach (var subscription in Subscriptions.Values)
+                    {
+                        subscription.SetProperty(AzureSubscription.Property.Default, null);
+                    }
+                }
+                else if (Subscriptions.ContainsKey(value.Id))
+                {
+                    foreach (var subscription in Subscriptions.Values)
+                    {
+                        subscription.SetProperty(AzureSubscription.Property.Default, null);
+                    }
+
+                    Subscriptions[value.Id].Properties[AzureSubscription.Property.Default] = "True";
+                    value.Properties[AzureSubscription.Property.Default] = "True";
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets Azure Environments
+        /// </summary>
+        public Dictionary<string, AzureEnvironment> Environments { get; set; }
+
+        /// <summary>
+        /// Gets current Azure context 
+        /// </summary>
+        public AzureContext Context 
+        { 
+            get
+            {
+                var context = new AzureContext(null, null, null);
+
+                if (DefaultSubscription != null)
+                {
+                    context = new AzureContext(DefaultSubscription,
+                        Accounts.Values.FirstOrDefault(a => a.Id == DefaultSubscription.Account),
+                        Environments.Values.FirstOrDefault(e => e.Name == DefaultSubscription.Environment)); ;
+                }
+
+                return context;
+            } 
+        }
+
+        /// <summary>
+        /// Gets errors from loading the profile.
+        /// </summary>
+        public List<string> ProfileLoadErrors { get; private set; }
+
         /// <summary>
         /// Location of the profile file. 
         /// </summary>
@@ -39,7 +111,11 @@ namespace Microsoft.Azure.Common.Authentication.Models
             Subscriptions = new Dictionary<Guid, AzureSubscription>();
             Accounts = new Dictionary<string, AzureAccount>(StringComparer.InvariantCultureIgnoreCase);
 
-            LoadDefaultEnvironments();
+            // Adding predefined environments
+            foreach (AzureEnvironment env in AzureEnvironment.PublicEnvironments.Values)
+            {
+                Environments[env.Name] = env;
+            }
         }
 
         /// <summary>
@@ -47,12 +123,9 @@ namespace Microsoft.Azure.Common.Authentication.Models
         /// Any errors generated in the process are stored in ProfileLoadErrors collection.
         /// </summary>
         /// <param name="path">Location of profile file on disk.</param>
-        public AzureProfile(string path)
+        public AzureProfile(string path) : this()
         {
             ProfilePath = path;
-            Environments = new Dictionary<string, AzureEnvironment>(StringComparer.InvariantCultureIgnoreCase);
-            Subscriptions = new Dictionary<Guid, AzureSubscription>();
-            Accounts = new Dictionary<string, AzureAccount>(StringComparer.InvariantCultureIgnoreCase);
             ProfileLoadErrors = new List<string>();
 
             if (!AzureSession.DataStore.DirectoryExists(AzureSession.ProfileDirectory))
@@ -83,17 +156,6 @@ namespace Microsoft.Azure.Common.Authentication.Models
                     }
                 }
             }
-
-            LoadDefaultEnvironments();
-        }
-
-        private void LoadDefaultEnvironments()
-        {
-            // Adding predefined environments
-            foreach (AzureEnvironment env in AzureEnvironment.PublicEnvironments.Values)
-            {
-                Environments[env.Name] = env;
-            }
         }
 
         /// <summary>
@@ -112,81 +174,43 @@ namespace Microsoft.Azure.Common.Authentication.Models
         {
             if (string.IsNullOrEmpty(path))
             {
-                throw new ArgumentNullException("path");
+                return;
             }
-
+            
             // Removing predefined environments
             foreach (string env in AzureEnvironment.PublicEnvironments.Keys)
             {
                 Environments.Remove(env);
             }
 
-            JsonProfileSerializer jsonSerializer = new JsonProfileSerializer();
-
-            string contents = jsonSerializer.Serialize(this);
-            string diskContents = string.Empty;
-            if (AzureSession.DataStore.FileExists(path))
+            try
             {
-                diskContents = AzureSession.DataStore.ReadFileAsText(path);
+                string contents = ToString();
+                string diskContents = string.Empty;
+                if (AzureSession.DataStore.FileExists(path))
+                {
+                    diskContents = AzureSession.DataStore.ReadFileAsText(path);
+                }
+
+                if (diskContents != contents)
+                {
+                    AzureSession.DataStore.WriteFile(path, contents);
+                }
             }
-
-            if (diskContents != contents)
+            finally
             {
-                AzureSession.DataStore.WriteFile(path, contents);
+                // Adding back predefined environments
+                foreach (AzureEnvironment env in AzureEnvironment.PublicEnvironments.Values)
+                {
+                    Environments[env.Name] = env;
+                }
             }
         }
 
-        /// <summary>
-        /// Gets errors from loading the profile.
-        /// </summary>
-        public List<string> ProfileLoadErrors { get; private set; }
-
-        /// <summary>
-        /// Gets Azure Environments
-        /// </summary>
-        public Dictionary<string, AzureEnvironment> Environments { get; set; }
-
-        /// <summary>
-        /// Gets Azure Subscriptions
-        /// </summary>
-        public Dictionary<Guid, AzureSubscription> Subscriptions { get; set; }
-
-        /// <summary>
-        /// Gets Azure Accounts
-        /// </summary>
-        public Dictionary<string, AzureAccount> Accounts { get; set; }
-
-        /// <summary>
-        /// Gets or sets default Azure Subscription
-        /// </summary>
-        public AzureSubscription DefaultSubscription
+        public override string ToString()
         {
-            get
-            {
-                return Subscriptions.Values.FirstOrDefault(
-                    s => s.Properties.ContainsKey(AzureSubscription.Property.Default));
-            }
-
-            set
-            {
-                if (value == null)
-                {
-                    foreach (var subscription in Subscriptions.Values)
-                    {
-                        subscription.SetProperty(AzureSubscription.Property.Default, null);
-                    }
-                }
-                else if (Subscriptions.ContainsKey(value.Id))
-                {
-                    foreach (var subscription in Subscriptions.Values)
-                    {
-                        subscription.SetProperty(AzureSubscription.Property.Default, null);
-                    }
-
-                    Subscriptions[value.Id].Properties[AzureSubscription.Property.Default] = "True";
-                    value.Properties[AzureSubscription.Property.Default] = "True";
-                }
-            }
+            JsonProfileSerializer jsonSerializer = new JsonProfileSerializer();
+            return jsonSerializer.Serialize(this);
         }
     }
 }

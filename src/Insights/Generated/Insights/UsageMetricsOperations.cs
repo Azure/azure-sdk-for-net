@@ -96,11 +96,24 @@ namespace Microsoft.Azure.Insights
             }
             
             // Construct URL
-            string url = "/" + Uri.EscapeDataString(resourceUri) + "/usages?";
-            url = url + "api-version=2014-04-01";
+            string url = "";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(resourceUri);
+            url = url + "/usages";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01");
+            List<string> odataFilter = new List<string>();
             if (filterString != null)
             {
-                url = url + "&$filter=" + Uri.EscapeDataString(filterString);
+                odataFilter.Add(Uri.EscapeDataString(filterString));
+            }
+            if (odataFilter.Count > 0)
+            {
+                queryParameters.Add("$filter=" + string.Join(null, odataFilter));
+            }
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
             }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -314,9 +327,20 @@ namespace Microsoft.Azure.Insights
             }
             
             // Construct URL
-            string url = "/" + Uri.EscapeDataString(resourceUri) + "/usages?";
-            url = url + "api-version=2014-04-01";
-            url = url + "&names=" + Uri.EscapeDataString(string.Join(",", metricNames));
+            string url = "";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(resourceUri);
+            url = url + "/usages";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01");
+            if (metricNames.Count > 0)
+            {
+                queryParameters.Add("names=" + Uri.EscapeDataString(string.Join(",", metricNames)));
+            }
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')

@@ -354,7 +354,9 @@ namespace Microsoft.Azure.Management.Resources
             }
             
             // Construct URL
-            string url = operationStatusLink;
+            string url = "";
+            url = url + operationStatusLink;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

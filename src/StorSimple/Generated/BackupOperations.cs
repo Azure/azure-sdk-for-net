@@ -121,8 +121,30 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/cloudservices/" + Uri.EscapeDataString(this.Client.CloudServiceName) + "/resources/" + Uri.EscapeDataString(this.Client.ResourceNamespace) + "/~/CiSVault/" + Uri.EscapeDataString(this.Client.ResourceName) + "/api/devices/" + Uri.EscapeDataString(deviceId) + "/policies/" + Uri.EscapeDataString(policyId) + "?";
-            url = url + "api-version=2014-01-01.1.0";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/cloudservices/";
+            url = url + Uri.EscapeDataString(this.Client.CloudServiceName);
+            url = url + "/resources/";
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
+            url = url + "/~/";
+            url = url + "CiSVault";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(this.Client.ResourceName);
+            url = url + "/api/devices/";
+            url = url + Uri.EscapeDataString(deviceId);
+            url = url + "/policies/";
+            url = url + Uri.EscapeDataString(policyId);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-01-01.1.0");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -290,8 +312,30 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/cloudservices/" + Uri.EscapeDataString(this.Client.CloudServiceName) + "/resources/" + Uri.EscapeDataString(this.Client.ResourceNamespace) + "/~/CiSVault/" + Uri.EscapeDataString(this.Client.ResourceName) + "/api/devices/" + Uri.EscapeDataString(deviceId) + "/backups/" + Uri.EscapeDataString(backupSetId) + "?";
-            url = url + "api-version=2014-01-01.1.0";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/cloudservices/";
+            url = url + Uri.EscapeDataString(this.Client.CloudServiceName);
+            url = url + "/resources/";
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
+            url = url + "/~/";
+            url = url + "CiSVault";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(this.Client.ResourceName);
+            url = url + "/api/devices/";
+            url = url + Uri.EscapeDataString(deviceId);
+            url = url + "/backups/";
+            url = url + Uri.EscapeDataString(backupSetId);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-01-01.1.0");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -448,8 +492,29 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/cloudservices/" + Uri.EscapeDataString(this.Client.CloudServiceName) + "/resources/" + Uri.EscapeDataString(this.Client.ResourceNamespace) + "/~/CiSVault/" + Uri.EscapeDataString(this.Client.ResourceName) + "/api/devices/" + Uri.EscapeDataString(deviceId) + "/backups?";
-            url = url + "api-version=2014-01-01.1.0";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/cloudservices/";
+            url = url + Uri.EscapeDataString(this.Client.CloudServiceName);
+            url = url + "/resources/";
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
+            url = url + "/~/";
+            url = url + "CiSVault";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(this.Client.ResourceName);
+            url = url + "/api/devices/";
+            url = url + Uri.EscapeDataString(deviceId);
+            url = url + "/backups";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-01-01.1.0");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -829,33 +894,54 @@ namespace Microsoft.WindowsAzure.Management.StorSimple
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/cloudservices/" + Uri.EscapeDataString(this.Client.CloudServiceName) + "/resources/" + Uri.EscapeDataString(this.Client.ResourceNamespace) + "/~/CiSVault/" + Uri.EscapeDataString(this.Client.ResourceName) + "/api/devices/" + Uri.EscapeDataString(deviceId) + "/backups?";
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/cloudservices/";
+            url = url + Uri.EscapeDataString(this.Client.CloudServiceName);
+            url = url + "/resources/";
+            url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
+            url = url + "/~/";
+            url = url + "CiSVault";
+            url = url + "/";
+            url = url + Uri.EscapeDataString(this.Client.ResourceName);
+            url = url + "/api/devices/";
+            url = url + Uri.EscapeDataString(deviceId);
+            url = url + "/backups";
+            List<string> queryParameters = new List<string>();
             if (filterType != null)
             {
-                url = url + "filterType=" + Uri.EscapeDataString(filterType);
+                queryParameters.Add("filterType=" + Uri.EscapeDataString(filterType));
             }
-            url = url + "&isAllSelected=" + Uri.EscapeDataString(isAllSelected);
+            queryParameters.Add("isAllSelected=" + Uri.EscapeDataString(isAllSelected));
             if (filterValue != null)
             {
-                url = url + "&filterValue=" + Uri.EscapeDataString(filterValue);
+                queryParameters.Add("filterValue=" + Uri.EscapeDataString(filterValue));
             }
             if (startTime != null)
             {
-                url = url + "&startTime=" + Uri.EscapeDataString(startTime);
+                queryParameters.Add("startTime=" + Uri.EscapeDataString(startTime));
             }
             if (endTime != null)
             {
-                url = url + "&endTime=" + Uri.EscapeDataString(endTime);
+                queryParameters.Add("endTime=" + Uri.EscapeDataString(endTime));
             }
             if (skip != null)
             {
-                url = url + "&skip=" + Uri.EscapeDataString(skip);
+                queryParameters.Add("skip=" + Uri.EscapeDataString(skip));
             }
             if (top != null)
             {
-                url = url + "&top=" + Uri.EscapeDataString(top);
+                queryParameters.Add("top=" + Uri.EscapeDataString(top));
             }
-            url = url + "&api-version=2014-01-01.1.0";
+            queryParameters.Add("api-version=2014-01-01.1.0");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')

@@ -120,16 +120,30 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/services/monitoring/metricvalues/query?";
-            url = url + "&resourceId=" + Uri.EscapeDataString(resourceId);
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/monitoring/metricvalues/query";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("resourceId=" + Uri.EscapeDataString(resourceId));
             if (metricNamespace != null)
             {
-                url = url + "&namespace=" + Uri.EscapeDataString(metricNamespace);
+                queryParameters.Add("namespace=" + Uri.EscapeDataString(metricNamespace));
             }
-            url = url + "&names=" + Uri.EscapeDataString(string.Join(",", metricNames));
-            url = url + "&timeGrain=" + Uri.EscapeDataString(XmlConvert.ToString(timeGrain));
-            url = url + "&startTime=" + Uri.EscapeDataString(string.Format(CultureInfo.InvariantCulture, "{0:O}", startTime.ToUniversalTime()));
-            url = url + "&endTime=" + Uri.EscapeDataString(string.Format(CultureInfo.InvariantCulture, "{0:O}", endTime.ToUniversalTime()));
+            if (metricNames.Count > 0)
+            {
+                queryParameters.Add("names=" + Uri.EscapeDataString(string.Join(",", metricNames)));
+            }
+            queryParameters.Add("timeGrain=" + Uri.EscapeDataString(XmlConvert.ToString(timeGrain)));
+            queryParameters.Add("startTime=" + Uri.EscapeDataString(string.Format(CultureInfo.InvariantCulture, "{0:O}", startTime.ToUniversalTime())));
+            queryParameters.Add("endTime=" + Uri.EscapeDataString(string.Format(CultureInfo.InvariantCulture, "{0:O}", endTime.ToUniversalTime())));
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')

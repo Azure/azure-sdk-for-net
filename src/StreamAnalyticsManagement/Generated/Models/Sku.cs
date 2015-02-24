@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _name;
         
         /// <summary>
-        /// Required. Gets or sets the name of the Sku of the stream analytics
+        /// Optional. Gets or sets the name of the Sku of the stream analytics
         /// job.
         /// </summary>
         public string Name
@@ -46,19 +46,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// </summary>
         public Sku()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the Sku class with required arguments.
-        /// </summary>
-        public Sku(string name)
-            : this()
-        {
-            if (name == null)
-            {
-                throw new ArgumentNullException("name");
-            }
-            this.Name = name;
         }
     }
 }

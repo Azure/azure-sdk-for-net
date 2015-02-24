@@ -30,19 +30,14 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
     public static partial class JobRunningState
     {
         /// <summary>
-        /// Not Started.
+        /// Created.
         /// </summary>
-        public const string NotStarted = "Not Started";
+        public const string Created = "Created";
         
         /// <summary>
         /// Starting.
         /// </summary>
         public const string Starting = "Starting";
-        
-        /// <summary>
-        /// Running.
-        /// </summary>
-        public const string Running = "Running";
         
         /// <summary>
         /// Stopping.
@@ -63,5 +58,20 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// Failed.
         /// </summary>
         public const string Failed = "Failed";
+        
+        /// <summary>
+        /// Idle.
+        /// </summary>
+        public const string Idle = "Idle";
+        
+        /// <summary>
+        /// Processing.
+        /// </summary>
+        public const string Processing = "Processing";
+        
+        /// <summary>
+        /// Degraded.
+        /// </summary>
+        public const string Degraded = "Degraded";
     }
 }

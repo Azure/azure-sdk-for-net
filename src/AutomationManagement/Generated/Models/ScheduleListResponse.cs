@@ -23,9 +23,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Hyak.Common;
-using Microsoft.Azure.Management.Automation.Models;
+using Microsoft.WindowsAzure.Management.Automation.Models;
 
-namespace Microsoft.Azure.Management.Automation.Models
+namespace Microsoft.WindowsAzure.Management.Automation.Models
 {
     /// <summary>
     /// The response model for the list schedule operation.
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         private IList<Schedule> _schedules;
         
         /// <summary>
-        /// Optional. A list of schedules.
+        /// Optional. Gets or sets a list of schedules.
         /// </summary>
         public IList<Schedule> Schedules
         {

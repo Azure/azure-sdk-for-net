@@ -28,7 +28,8 @@ namespace Microsoft.Azure.Common.Authentication.Models
         {
             Certificate,
             User,
-            ServicePrincipal
+            ServicePrincipal,
+            AccessToken
         }
 
         public enum Property
@@ -41,7 +42,12 @@ namespace Microsoft.Azure.Common.Authentication.Models
             /// <summary>
             /// Comma separated list of tenants on this account.
             /// </summary>
-            Tenants
+            Tenants,
+
+            /// <summary>
+            /// Access token.
+            /// </summary>
+            AccessToken
         }
     }
 }

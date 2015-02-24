@@ -84,8 +84,14 @@ namespace Microsoft.Azure.Subscriptions
             }
             
             // Construct URL
-            string url = "/tenants?";
-            url = url + "api-version=2014-04-01-preview";
+            string url = "";
+            url = url + "/tenants";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')

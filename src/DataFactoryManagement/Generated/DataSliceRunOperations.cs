@@ -126,8 +126,25 @@ namespace Microsoft.Azure.Management.DataFactories
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.DataFactory/datafactories/" + Uri.EscapeDataString(dataFactoryName) + "/runs/" + Uri.EscapeDataString(dataSliceRunId) + "/logInfo?";
-            url = url + "api-version=2015-01-01-preview";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/Microsoft.DataFactory/datafactories/";
+            url = url + Uri.EscapeDataString(dataFactoryName);
+            url = url + "/runs/";
+            url = url + Uri.EscapeDataString(dataSliceRunId);
+            url = url + "/logInfo";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-01-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -314,9 +331,26 @@ namespace Microsoft.Azure.Management.DataFactories
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/resourcegroups/" + Uri.EscapeDataString(resourceGroupName) + "/providers/Microsoft.DataFactory/datafactories/" + Uri.EscapeDataString(dataFactoryName) + "/tables/" + Uri.EscapeDataString(tableName) + "/sliceruns?";
-            url = url + "startTime=" + Uri.EscapeDataString(dataSliceStartTime);
-            url = url + "&api-version=2015-01-01-preview";
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/Microsoft.DataFactory/datafactories/";
+            url = url + Uri.EscapeDataString(dataFactoryName);
+            url = url + "/tables/";
+            url = url + Uri.EscapeDataString(tableName);
+            url = url + "/sliceruns";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("startTime=" + Uri.EscapeDataString(dataSliceStartTime));
+            queryParameters.Add("api-version=2015-01-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -518,11 +552,136 @@ namespace Microsoft.Azure.Management.DataFactories
                                         }
                                     }
                                     
+                                    JToken inputRunRecordReferencesArray = valueValue["inputRunRecordReferences"];
+                                    if (inputRunRecordReferencesArray != null && inputRunRecordReferencesArray.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken inputRunRecordReferencesValue in ((JArray)inputRunRecordReferencesArray))
+                                        {
+                                            RunRecordReference runRecordReferenceInstance = new RunRecordReference();
+                                            dataSliceRunInstance.InputRunRecordReferences.Add(runRecordReferenceInstance);
+                                            
+                                            JToken tableNameValue2 = inputRunRecordReferencesValue["tableName"];
+                                            if (tableNameValue2 != null && tableNameValue2.Type != JTokenType.Null)
+                                            {
+                                                string tableNameInstance2 = ((string)tableNameValue2);
+                                                runRecordReferenceInstance.TableName = tableNameInstance2;
+                                            }
+                                            
+                                            JToken dataSliceStartValue2 = inputRunRecordReferencesValue["dataSliceStart"];
+                                            if (dataSliceStartValue2 != null && dataSliceStartValue2.Type != JTokenType.Null)
+                                            {
+                                                DateTime dataSliceStartInstance2 = ((DateTime)dataSliceStartValue2);
+                                                runRecordReferenceInstance.DataSliceStart = dataSliceStartInstance2;
+                                            }
+                                            
+                                            JToken dataSliceEndValue2 = inputRunRecordReferencesValue["dataSliceEnd"];
+                                            if (dataSliceEndValue2 != null && dataSliceEndValue2.Type != JTokenType.Null)
+                                            {
+                                                DateTime dataSliceEndInstance2 = ((DateTime)dataSliceEndValue2);
+                                                runRecordReferenceInstance.DataSliceEnd = dataSliceEndInstance2;
+                                            }
+                                            
+                                            JToken pipelineNameValue2 = inputRunRecordReferencesValue["pipelineName"];
+                                            if (pipelineNameValue2 != null && pipelineNameValue2.Type != JTokenType.Null)
+                                            {
+                                                string pipelineNameInstance2 = ((string)pipelineNameValue2);
+                                                runRecordReferenceInstance.PipelineName = pipelineNameInstance2;
+                                            }
+                                            
+                                            JToken activityNameValue2 = inputRunRecordReferencesValue["activityName"];
+                                            if (activityNameValue2 != null && activityNameValue2.Type != JTokenType.Null)
+                                            {
+                                                string activityNameInstance2 = ((string)activityNameValue2);
+                                                runRecordReferenceInstance.ActivityName = activityNameInstance2;
+                                            }
+                                            
+                                            JToken dataSliceRunNameValue = inputRunRecordReferencesValue["dataSliceRunName"];
+                                            if (dataSliceRunNameValue != null && dataSliceRunNameValue.Type != JTokenType.Null)
+                                            {
+                                                string dataSliceRunNameInstance = ((string)dataSliceRunNameValue);
+                                                runRecordReferenceInstance.DataSliceRunName = dataSliceRunNameInstance;
+                                            }
+                                            
+                                            JToken dataFactoryNameValue = inputRunRecordReferencesValue["dataFactoryName"];
+                                            if (dataFactoryNameValue != null && dataFactoryNameValue.Type != JTokenType.Null)
+                                            {
+                                                string dataFactoryNameInstance = ((string)dataFactoryNameValue);
+                                                runRecordReferenceInstance.DataFactoryName = dataFactoryNameInstance;
+                                            }
+                                        }
+                                    }
+                                    
+                                    JToken outputRunRecordReferencesArray = valueValue["outputRunRecordReferences"];
+                                    if (outputRunRecordReferencesArray != null && outputRunRecordReferencesArray.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken outputRunRecordReferencesValue in ((JArray)outputRunRecordReferencesArray))
+                                        {
+                                            RunRecordReference runRecordReferenceInstance2 = new RunRecordReference();
+                                            dataSliceRunInstance.OutputRunRecordReferences.Add(runRecordReferenceInstance2);
+                                            
+                                            JToken tableNameValue3 = outputRunRecordReferencesValue["tableName"];
+                                            if (tableNameValue3 != null && tableNameValue3.Type != JTokenType.Null)
+                                            {
+                                                string tableNameInstance3 = ((string)tableNameValue3);
+                                                runRecordReferenceInstance2.TableName = tableNameInstance3;
+                                            }
+                                            
+                                            JToken dataSliceStartValue3 = outputRunRecordReferencesValue["dataSliceStart"];
+                                            if (dataSliceStartValue3 != null && dataSliceStartValue3.Type != JTokenType.Null)
+                                            {
+                                                DateTime dataSliceStartInstance3 = ((DateTime)dataSliceStartValue3);
+                                                runRecordReferenceInstance2.DataSliceStart = dataSliceStartInstance3;
+                                            }
+                                            
+                                            JToken dataSliceEndValue3 = outputRunRecordReferencesValue["dataSliceEnd"];
+                                            if (dataSliceEndValue3 != null && dataSliceEndValue3.Type != JTokenType.Null)
+                                            {
+                                                DateTime dataSliceEndInstance3 = ((DateTime)dataSliceEndValue3);
+                                                runRecordReferenceInstance2.DataSliceEnd = dataSliceEndInstance3;
+                                            }
+                                            
+                                            JToken pipelineNameValue3 = outputRunRecordReferencesValue["pipelineName"];
+                                            if (pipelineNameValue3 != null && pipelineNameValue3.Type != JTokenType.Null)
+                                            {
+                                                string pipelineNameInstance3 = ((string)pipelineNameValue3);
+                                                runRecordReferenceInstance2.PipelineName = pipelineNameInstance3;
+                                            }
+                                            
+                                            JToken activityNameValue3 = outputRunRecordReferencesValue["activityName"];
+                                            if (activityNameValue3 != null && activityNameValue3.Type != JTokenType.Null)
+                                            {
+                                                string activityNameInstance3 = ((string)activityNameValue3);
+                                                runRecordReferenceInstance2.ActivityName = activityNameInstance3;
+                                            }
+                                            
+                                            JToken dataSliceRunNameValue2 = outputRunRecordReferencesValue["dataSliceRunName"];
+                                            if (dataSliceRunNameValue2 != null && dataSliceRunNameValue2.Type != JTokenType.Null)
+                                            {
+                                                string dataSliceRunNameInstance2 = ((string)dataSliceRunNameValue2);
+                                                runRecordReferenceInstance2.DataSliceRunName = dataSliceRunNameInstance2;
+                                            }
+                                            
+                                            JToken dataFactoryNameValue2 = outputRunRecordReferencesValue["dataFactoryName"];
+                                            if (dataFactoryNameValue2 != null && dataFactoryNameValue2.Type != JTokenType.Null)
+                                            {
+                                                string dataFactoryNameInstance2 = ((string)dataFactoryNameValue2);
+                                                runRecordReferenceInstance2.DataFactoryName = dataFactoryNameInstance2;
+                                            }
+                                        }
+                                    }
+                                    
                                     JToken errorMessageValue = valueValue["errorMessage"];
                                     if (errorMessageValue != null && errorMessageValue.Type != JTokenType.Null)
                                     {
                                         string errorMessageInstance = ((string)errorMessageValue);
                                         dataSliceRunInstance.ErrorMessage = errorMessageInstance;
+                                    }
+                                    
+                                    JToken logUriValue = valueValue["logUri"];
+                                    if (logUriValue != null && logUriValue.Type != JTokenType.Null)
+                                    {
+                                        string logUriInstance = ((string)logUriValue);
+                                        dataSliceRunInstance.LogUri = logUriInstance;
                                     }
                                 }
                             }
@@ -597,7 +756,9 @@ namespace Microsoft.Azure.Management.DataFactories
             }
             
             // Construct URL
-            string url = nextLink;
+            string url = "";
+            url = url + nextLink;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -787,11 +948,136 @@ namespace Microsoft.Azure.Management.DataFactories
                                         }
                                     }
                                     
+                                    JToken inputRunRecordReferencesArray = valueValue["inputRunRecordReferences"];
+                                    if (inputRunRecordReferencesArray != null && inputRunRecordReferencesArray.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken inputRunRecordReferencesValue in ((JArray)inputRunRecordReferencesArray))
+                                        {
+                                            RunRecordReference runRecordReferenceInstance = new RunRecordReference();
+                                            dataSliceRunInstance.InputRunRecordReferences.Add(runRecordReferenceInstance);
+                                            
+                                            JToken tableNameValue2 = inputRunRecordReferencesValue["tableName"];
+                                            if (tableNameValue2 != null && tableNameValue2.Type != JTokenType.Null)
+                                            {
+                                                string tableNameInstance2 = ((string)tableNameValue2);
+                                                runRecordReferenceInstance.TableName = tableNameInstance2;
+                                            }
+                                            
+                                            JToken dataSliceStartValue2 = inputRunRecordReferencesValue["dataSliceStart"];
+                                            if (dataSliceStartValue2 != null && dataSliceStartValue2.Type != JTokenType.Null)
+                                            {
+                                                DateTime dataSliceStartInstance2 = ((DateTime)dataSliceStartValue2);
+                                                runRecordReferenceInstance.DataSliceStart = dataSliceStartInstance2;
+                                            }
+                                            
+                                            JToken dataSliceEndValue2 = inputRunRecordReferencesValue["dataSliceEnd"];
+                                            if (dataSliceEndValue2 != null && dataSliceEndValue2.Type != JTokenType.Null)
+                                            {
+                                                DateTime dataSliceEndInstance2 = ((DateTime)dataSliceEndValue2);
+                                                runRecordReferenceInstance.DataSliceEnd = dataSliceEndInstance2;
+                                            }
+                                            
+                                            JToken pipelineNameValue2 = inputRunRecordReferencesValue["pipelineName"];
+                                            if (pipelineNameValue2 != null && pipelineNameValue2.Type != JTokenType.Null)
+                                            {
+                                                string pipelineNameInstance2 = ((string)pipelineNameValue2);
+                                                runRecordReferenceInstance.PipelineName = pipelineNameInstance2;
+                                            }
+                                            
+                                            JToken activityNameValue2 = inputRunRecordReferencesValue["activityName"];
+                                            if (activityNameValue2 != null && activityNameValue2.Type != JTokenType.Null)
+                                            {
+                                                string activityNameInstance2 = ((string)activityNameValue2);
+                                                runRecordReferenceInstance.ActivityName = activityNameInstance2;
+                                            }
+                                            
+                                            JToken dataSliceRunNameValue = inputRunRecordReferencesValue["dataSliceRunName"];
+                                            if (dataSliceRunNameValue != null && dataSliceRunNameValue.Type != JTokenType.Null)
+                                            {
+                                                string dataSliceRunNameInstance = ((string)dataSliceRunNameValue);
+                                                runRecordReferenceInstance.DataSliceRunName = dataSliceRunNameInstance;
+                                            }
+                                            
+                                            JToken dataFactoryNameValue = inputRunRecordReferencesValue["dataFactoryName"];
+                                            if (dataFactoryNameValue != null && dataFactoryNameValue.Type != JTokenType.Null)
+                                            {
+                                                string dataFactoryNameInstance = ((string)dataFactoryNameValue);
+                                                runRecordReferenceInstance.DataFactoryName = dataFactoryNameInstance;
+                                            }
+                                        }
+                                    }
+                                    
+                                    JToken outputRunRecordReferencesArray = valueValue["outputRunRecordReferences"];
+                                    if (outputRunRecordReferencesArray != null && outputRunRecordReferencesArray.Type != JTokenType.Null)
+                                    {
+                                        foreach (JToken outputRunRecordReferencesValue in ((JArray)outputRunRecordReferencesArray))
+                                        {
+                                            RunRecordReference runRecordReferenceInstance2 = new RunRecordReference();
+                                            dataSliceRunInstance.OutputRunRecordReferences.Add(runRecordReferenceInstance2);
+                                            
+                                            JToken tableNameValue3 = outputRunRecordReferencesValue["tableName"];
+                                            if (tableNameValue3 != null && tableNameValue3.Type != JTokenType.Null)
+                                            {
+                                                string tableNameInstance3 = ((string)tableNameValue3);
+                                                runRecordReferenceInstance2.TableName = tableNameInstance3;
+                                            }
+                                            
+                                            JToken dataSliceStartValue3 = outputRunRecordReferencesValue["dataSliceStart"];
+                                            if (dataSliceStartValue3 != null && dataSliceStartValue3.Type != JTokenType.Null)
+                                            {
+                                                DateTime dataSliceStartInstance3 = ((DateTime)dataSliceStartValue3);
+                                                runRecordReferenceInstance2.DataSliceStart = dataSliceStartInstance3;
+                                            }
+                                            
+                                            JToken dataSliceEndValue3 = outputRunRecordReferencesValue["dataSliceEnd"];
+                                            if (dataSliceEndValue3 != null && dataSliceEndValue3.Type != JTokenType.Null)
+                                            {
+                                                DateTime dataSliceEndInstance3 = ((DateTime)dataSliceEndValue3);
+                                                runRecordReferenceInstance2.DataSliceEnd = dataSliceEndInstance3;
+                                            }
+                                            
+                                            JToken pipelineNameValue3 = outputRunRecordReferencesValue["pipelineName"];
+                                            if (pipelineNameValue3 != null && pipelineNameValue3.Type != JTokenType.Null)
+                                            {
+                                                string pipelineNameInstance3 = ((string)pipelineNameValue3);
+                                                runRecordReferenceInstance2.PipelineName = pipelineNameInstance3;
+                                            }
+                                            
+                                            JToken activityNameValue3 = outputRunRecordReferencesValue["activityName"];
+                                            if (activityNameValue3 != null && activityNameValue3.Type != JTokenType.Null)
+                                            {
+                                                string activityNameInstance3 = ((string)activityNameValue3);
+                                                runRecordReferenceInstance2.ActivityName = activityNameInstance3;
+                                            }
+                                            
+                                            JToken dataSliceRunNameValue2 = outputRunRecordReferencesValue["dataSliceRunName"];
+                                            if (dataSliceRunNameValue2 != null && dataSliceRunNameValue2.Type != JTokenType.Null)
+                                            {
+                                                string dataSliceRunNameInstance2 = ((string)dataSliceRunNameValue2);
+                                                runRecordReferenceInstance2.DataSliceRunName = dataSliceRunNameInstance2;
+                                            }
+                                            
+                                            JToken dataFactoryNameValue2 = outputRunRecordReferencesValue["dataFactoryName"];
+                                            if (dataFactoryNameValue2 != null && dataFactoryNameValue2.Type != JTokenType.Null)
+                                            {
+                                                string dataFactoryNameInstance2 = ((string)dataFactoryNameValue2);
+                                                runRecordReferenceInstance2.DataFactoryName = dataFactoryNameInstance2;
+                                            }
+                                        }
+                                    }
+                                    
                                     JToken errorMessageValue = valueValue["errorMessage"];
                                     if (errorMessageValue != null && errorMessageValue.Type != JTokenType.Null)
                                     {
                                         string errorMessageInstance = ((string)errorMessageValue);
                                         dataSliceRunInstance.ErrorMessage = errorMessageInstance;
+                                    }
+                                    
+                                    JToken logUriValue = valueValue["logUri"];
+                                    if (logUriValue != null && logUriValue.Type != JTokenType.Null)
+                                    {
+                                        string logUriInstance = ((string)logUriValue);
+                                        dataSliceRunInstance.LogUri = logUriInstance;
                                     }
                                 }
                             }

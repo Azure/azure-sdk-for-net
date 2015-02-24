@@ -205,7 +205,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             this._reservedIPs = new ReservedIPOperations(this);
             this._routes = new RouteOperations(this);
             this._staticIPs = new StaticIPOperations(this);
-            this._apiVersion = "2014-10-01";
+            this._apiVersion = "2015-02-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -278,7 +278,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             this._reservedIPs = new ReservedIPOperations(this);
             this._routes = new RouteOperations(this);
             this._staticIPs = new StaticIPOperations(this);
-            this._apiVersion = "2014-10-01";
+            this._apiVersion = "2015-02-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -412,7 +412,14 @@ namespace Microsoft.WindowsAzure.Management.Network
             }
             
             // Construct URL
-            string url = "/" + (this.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Credentials.SubscriptionId)) + "/operations/" + Uri.EscapeDataString(requestId);
+            string url = "";
+            url = url + "/";
+            if (this.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Credentials.SubscriptionId);
+            }
+            url = url + "/operations/";
+            url = url + Uri.EscapeDataString(requestId);
             string baseUrl = this.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -435,7 +442,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
+                httpRequest.Headers.Add("x-ms-version", "2015-02-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();

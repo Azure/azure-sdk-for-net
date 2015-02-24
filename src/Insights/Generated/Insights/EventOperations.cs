@@ -98,12 +98,28 @@ namespace Microsoft.Azure.Insights
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/providers/microsoft.insights/eventtypes/management/digestEvents?";
-            url = url + "api-version=2014-04-01";
-            url = url + "&$filter=" + Uri.EscapeDataString(filterString);
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/providers/microsoft.insights/eventtypes/management/digestEvents";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01");
+            List<string> odataFilter = new List<string>();
+            odataFilter.Add(Uri.EscapeDataString(filterString));
+            if (odataFilter.Count > 0)
+            {
+                queryParameters.Add("$filter=" + string.Join(null, odataFilter));
+            }
             if (selectedProperties != null)
             {
-                url = url + "&$select=" + Uri.EscapeDataString(selectedProperties);
+                queryParameters.Add("$select=" + Uri.EscapeDataString(selectedProperties));
+            }
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
             }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -568,7 +584,9 @@ namespace Microsoft.Azure.Insights
             }
             
             // Construct URL
-            string url = nextLink;
+            string url = "";
+            url = url + nextLink;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1030,12 +1048,28 @@ namespace Microsoft.Azure.Insights
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/providers/microsoft.insights/eventtypes/management/values?";
-            url = url + "api-version=2014-04-01";
-            url = url + "&$filter=" + Uri.EscapeDataString(filterString);
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/providers/microsoft.insights/eventtypes/management/values";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-04-01");
+            List<string> odataFilter = new List<string>();
+            odataFilter.Add(Uri.EscapeDataString(filterString));
+            if (odataFilter.Count > 0)
+            {
+                queryParameters.Add("$filter=" + string.Join(null, odataFilter));
+            }
             if (selectedProperties != null)
             {
-                url = url + "&$select=" + Uri.EscapeDataString(selectedProperties);
+                queryParameters.Add("$select=" + Uri.EscapeDataString(selectedProperties));
+            }
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
             }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -1501,7 +1535,9 @@ namespace Microsoft.Azure.Insights
             }
             
             // Construct URL
-            string url = nextLink;
+            string url = "";
+            url = url + nextLink;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1952,9 +1988,25 @@ namespace Microsoft.Azure.Insights
             }
             
             // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId == null ? "" : Uri.EscapeDataString(this.Client.Credentials.SubscriptionId)) + "/providers/microsoft.insights/eventtypes/management/statusSummaryItems?";
-            url = url + "api-version=2014-11-01";
-            url = url + "&$filter=" + Uri.EscapeDataString(filterString);
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/providers/microsoft.insights/eventtypes/management/statusSummaryItems";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2014-11-01");
+            List<string> odataFilter = new List<string>();
+            odataFilter.Add(Uri.EscapeDataString(filterString));
+            if (odataFilter.Count > 0)
+            {
+                queryParameters.Add("$filter=" + string.Join(null, odataFilter));
+            }
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')

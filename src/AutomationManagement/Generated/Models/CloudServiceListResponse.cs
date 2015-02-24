@@ -24,9 +24,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Hyak.Common;
 using Microsoft.Azure;
-using Microsoft.Azure.Management.Automation.Models;
+using Microsoft.WindowsAzure.Management.Automation.Models;
 
-namespace Microsoft.Azure.Management.Automation.Models
+namespace Microsoft.WindowsAzure.Management.Automation.Models
 {
     /// <summary>
     /// The response model for the list cloud service operation.
@@ -36,7 +36,8 @@ namespace Microsoft.Azure.Management.Automation.Models
         private IList<CloudService> _cloudServices;
         
         /// <summary>
-        /// Optional. The list of cloud service locations for this subscription.
+        /// Optional. Gets or sets the list of cloud service locations for this
+        /// subscription.
         /// </summary>
         public IList<CloudService> CloudServices
         {

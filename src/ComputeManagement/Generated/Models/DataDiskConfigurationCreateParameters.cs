@@ -43,17 +43,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._hostCaching = value; }
         }
         
-        private int _logicalSizeInGB;
-        
-        /// <summary>
-        /// Required. Gets or sets the size, in GB, of the data disk.
-        /// </summary>
-        public int LogicalSizeInGB
-        {
-            get { return this._logicalSizeInGB; }
-            set { this._logicalSizeInGB = value; }
-        }
-        
         private int? _logicalUnitNumber;
         
         /// <summary>
@@ -95,7 +84,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// DataDiskConfigurationCreateParameters class with required
         /// arguments.
         /// </summary>
-        public DataDiskConfigurationCreateParameters(Uri mediaLink, int logicalSizeInGB)
+        public DataDiskConfigurationCreateParameters(Uri mediaLink)
             : this()
         {
             if (mediaLink == null)
@@ -103,7 +92,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
                 throw new ArgumentNullException("mediaLink");
             }
             this.MediaLink = mediaLink;
-            this.LogicalSizeInGB = logicalSizeInGB;
         }
     }
 }

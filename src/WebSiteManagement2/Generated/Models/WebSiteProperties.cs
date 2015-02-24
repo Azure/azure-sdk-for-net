@@ -185,6 +185,19 @@ namespace Microsoft.Azure.Management.WebSites.Models
             set { this._serverFarm = value; }
         }
         
+        private string _serverFarmId;
+        
+        /// <summary>
+        /// Optional. The fully qualified name of the serverFarm allowing for
+        /// server farms in different subscriptions and resource groups versus
+        /// the ServerFarm property that is just the farm name.
+        /// </summary>
+        public string ServerFarmId
+        {
+            get { return this._serverFarmId; }
+            set { this._serverFarmId = value; }
+        }
+        
         private SkuOptions _sku;
         
         /// <summary>
