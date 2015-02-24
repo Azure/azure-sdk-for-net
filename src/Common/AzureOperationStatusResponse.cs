@@ -16,92 +16,29 @@ namespace Microsoft.Azure
     /// status code for the failed request, and also includes error
     /// information regarding the failure.
     /// </summary>
-    public class AzureOperationStatusResponse : AzureOperationResponse
+    public class AzureOperationStatusResponse<T> : AzureOperationResponse<T>
     {
-        private AzureOperationStatusResponse.ErrorDetails _error;
-        
         /// <summary>
         /// If the asynchronous operation failed, the response body includes
         /// the HTTP status code for the failed request, and also includes
         /// error information regarding the failure.
         /// </summary>
-        public AzureOperationStatusResponse.ErrorDetails Error
-        {
-            get { return this._error; }
-            set { this._error = value; }
-        }
-        
-        private HttpStatusCode _httpStatusCode;
+        public CloudError Error { get; set; }
         
         /// <summary>
         /// The HTTP status code for the asynchronous request.
         /// </summary>
-        public HttpStatusCode HttpStatusCode
-        {
-            get { return this._httpStatusCode; }
-            set { this._httpStatusCode = value; }
-        }
-        
-        private string _id;
+        public HttpStatusCode HttpStatusCode { get; set; }
         
         /// <summary>
         /// The request ID of the asynchronous request. This value is returned
         /// in the x-ms-request-id response header of the asynchronous request.
         /// </summary>
-        public string Id
-        {
-            get { return this._id; }
-            set { this._id = value; }
-        }
-        
-        private OperationStatus _status;
+        public string Id { get; set; }
         
         /// <summary>
         /// The status of the asynchronous request.
         /// </summary>
-        public OperationStatus Status
-        {
-            get { return this._status; }
-            set { this._status = value; }
-        }
-        
-        /// <summary>
-        /// If the asynchronous operation failed, the response body includes
-        /// the HTTP status code for the failed request, and also includes
-        /// error information regarding the failure.
-        /// </summary>
-        public partial class ErrorDetails
-        {
-            private string _code;
-            
-            /// <summary>
-            /// The management service error code returned if the asynchronous
-            /// request failed.
-            /// </summary>
-            public string Code
-            {
-                get { return this._code; }
-                set { this._code = value; }
-            }
-            
-            private string _message;
-            
-            /// <summary>
-            /// The management service error message returned if the
-            /// asynchronous request failed.
-            /// </summary>
-            public string Message
-            {
-                get { return this._message; }
-                set { this._message = value; }
-            }
-            
-            /// <summary>
-            /// Initializes a new instance of the ErrorDetails class.
-            /// </summary>
-            public ErrorDetails()
-            {
-            }
-        }
+        public OperationStatus Status { get; set; }
     }
 }

@@ -36,7 +36,7 @@ Supported Portable Library Platforms:
     </references>
     <dependencies>
       <dependency id="Microsoft.Azure.Common.Dependencies" version="__VERSION_Microsoft.Azure.Common.Dependencies__" />
-      <dependency id="Microsoft.Rest.Common" version="0.9.0" />
+      <dependency id="Microsoft.Rest.ClientRuntime" version="0.9.1" />
     </dependencies>
   </metadata>
   <files>

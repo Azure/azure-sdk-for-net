@@ -4,6 +4,7 @@
 using Microsoft.Rest;
 using System;
 using System.Net.Http;
+using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure
 {
@@ -35,9 +36,10 @@ namespace Microsoft.Azure
         /// <param name="message">A description of the error.</param>
         /// <param name="errorModel">The model for the error response body.</param>
         /// <param name="innerException">The exception which caused the current exception.</param>
-        public CloudException(string message, CloudError errorModel, Exception innerException = null) : this(message, innerException)
+        public CloudException(string message, CloudError errorModel, Exception innerException = null) : 
+            this(message, innerException)
         {
-            Model = errorModel;
+            Body = errorModel;
         }
 
         /// <summary>
@@ -57,7 +59,7 @@ namespace Microsoft.Azure
             CloudError errorModel = null;
             if (!string.IsNullOrEmpty(responseContent))
             {
-                if (HttpOperationException<CloudError>.TryParseErrorModel(responseContent, out errorModel))
+                if (TryParseErrorModel(responseContent, out errorModel))
                 {
                     if (!string.IsNullOrEmpty(errorModel.Code) && !string.IsNullOrEmpty(errorModel.Message))
                     {
@@ -86,29 +88,74 @@ namespace Microsoft.Azure
             var exception = new CloudException(exceptionMessage, innerException);
             if (request != null)
             {
-                exception.Request = HttpRequestErrorInfo.Create(request, requestContent);
+                exception.Request = request;
             }
 
             if (response != null)
             {
-                exception.Response = HttpResponseErrorInfo.Create(response, responseContent);
+                exception.Response = response;
             }
 
-            exception.Model = errorModel;
+            exception.Body = errorModel;
             return exception;
         }
 
         /// <summary>
-        /// Create a CloudException from a response string.
+        /// Try to parse an error response body as Json or Xml.
         /// </summary>
-        /// <param name="responseContent">The HTTP response content.</param>
-        /// <param name="innerException">Optional inner exception.</param>
-        /// <returns>A CloudException representing the failure.</returns>
-        public static new CloudException Create(
-            string responseContent,
-            Exception innerException = null)
+        /// <param name="responseContent">The response body.</param>
+        /// <param name="errorModel">The model, if parsing is successful.</param>
+        /// <returns>True if the model was successfully parsed, otherwise false</returns>
+        private static bool TryParseErrorModel(string responseContent, out CloudError errorModel)
         {
-            return Create(null, null, null, responseContent, innerException);
+            return TryParseJsonModel(responseContent, out errorModel)
+                || TryParseXmlModel(responseContent, out errorModel);
+        }
+
+        /// <summary>
+        /// Try to parse an error response body as Json.
+        /// </summary>
+        /// <param name="responseContent">The response body.</param>
+        /// <param name="errorModel">The model, if parsing was successful.</param>
+        /// <returns>True if the content was successfully parsed, otherwise false.</returns>
+        private static bool TryParseJsonModel(string responseContent, out CloudError errorModel)
+        {
+            try
+            {
+                var jsonToken = JToken.Parse(responseContent);
+                errorModel = new CloudError();
+                errorModel.DeserializeJson(jsonToken);
+                return true;
+            }
+            catch (Exception)
+            {
+            }
+
+            errorModel = new CloudError();
+            return false;
+        }
+
+        /// <summary>
+        /// Try to parse an error response body as Xml.
+        /// </summary>
+        /// <param name="responseContent">The response body.</param>
+        /// <param name="errorModel">The model, if parsing was successful.</param>
+        /// <returns>True if the content was successfully parsed, otherwise false.</returns>
+        private static bool TryParseXmlModel(string responseContent, out CloudError errorModel)
+        {
+            try
+            {
+                var xmlDocument = System.Xml.Linq.XDocument.Parse(responseContent);
+                errorModel = new CloudError();
+                errorModel.DeserializeXml(xmlDocument);
+                return true;
+            }
+            catch (Exception)
+            {
+            }
+
+            errorModel = new CloudError();
+            return false;
         }
     }
 }

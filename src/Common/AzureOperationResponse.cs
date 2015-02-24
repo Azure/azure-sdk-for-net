@@ -9,7 +9,7 @@ namespace Microsoft.Azure
     /// A standard service response including an HTTP status code and request
     /// ID.
     /// </summary>
-    public class AzureOperationResponse : HttpOperationResponse
+    public class AzureOperationResponse<T> : HttpOperationResponse<T>
     {
         /// <summary>
         /// Gets or sets the value that uniquely identifies a request 

@@ -130,8 +130,8 @@ namespace Microsoft.Azure.Test
             var ex = CloudException.Create(genericMessage, genericMessageString, serverErrorResponse, jsonErrorMessageString);
 
             Assert.Equal("BadRequest: The provided database ‘foo’ has an invalid username.", ex.Message);
-            Assert.Equal("BadRequest", ex.Model.Code);
-            Assert.Equal("The provided database ‘foo’ has an invalid username.", ex.Model.Message);
+            Assert.Equal("BadRequest", ex.Body.Code);
+            Assert.Equal("The provided database ‘foo’ has an invalid username.", ex.Body.Message);
         }
 
         [Fact]
@@ -141,7 +141,7 @@ namespace Microsoft.Azure.Test
                                            jsonErrorMessageStringWithCamelCase);
 
             Assert.Equal("BadRequest: The provided database ‘foo’ has an invalid username.", ex.Message);
-            Assert.Equal("BadRequest", ex.Model.Code);
+            Assert.Equal("BadRequest", ex.Body.Code);
         }
 
         [Fact]
@@ -151,7 +151,7 @@ namespace Microsoft.Azure.Test
                                            jsonErrorMessageWithParent);
 
             Assert.Equal("BadRequest: The provided database ‘foo’ has an invalid username.", ex.Message);
-            Assert.Equal("BadRequest", ex.Model.Code);
+            Assert.Equal("BadRequest", ex.Body.Code);
         }
 
         [Fact]
@@ -160,7 +160,7 @@ namespace Microsoft.Azure.Test
             var ex = CloudException.Create(genericMessageWithoutBody, null, serverErrorResponseWithParent2, jsonErrorMessageWithParent2);
 
             Assert.Equal("ResourceGroupNotFound: Resource group `ResourceGroup_crosoftAwillAofferAmoreAWebAservicemnopqrstuvwxyz1` could not be found.", ex.Message);
-            Assert.Equal("ResourceGroupNotFound", ex.Model.Code);
+            Assert.Equal("ResourceGroupNotFound", ex.Body.Code);
         }
 
         [Fact]
@@ -179,11 +179,11 @@ namespace Microsoft.Azure.Test
                                     ]
                                 }";
 
-            CloudException error = CloudException.Create(message);
+            CloudException error = CloudException.Create(null, null, null, message);
 
             Assert.Equal("BadRequest: The provided database ‘foo’ has an invalid username.", error.Message);
-            Assert.Equal("BadRequest", error.Model.Code);
-            Assert.Equal("The provided database ‘foo’ has an invalid username.", error.Model.Message);
+            Assert.Equal("BadRequest", error.Body.Code);
+            Assert.Equal("The provided database ‘foo’ has an invalid username.", error.Body.Message);
         }
 
         [Fact]
@@ -204,18 +204,18 @@ namespace Microsoft.Azure.Test
                                     }
                                 }";
 
-            var error = CloudException.Create(message);
+            var error = CloudException.Create(null, null, null, message);
 
             Assert.Equal("BadRequest: The provided database ‘foo’ has an invalid username.", error.Message);
-            Assert.Equal("BadRequest", error.Model.Code);
-            Assert.Equal("The provided database ‘foo’ has an invalid username.", error.Model.Message);
+            Assert.Equal("BadRequest", error.Body.Code);
+            Assert.Equal("The provided database ‘foo’ has an invalid username.", error.Body.Message);
         }
 
         [Fact]
         public void ParseJsonErrorSupportsEmptyErrors()
         {
-            Assert.Null(CloudException.Create(null).Model);
-            Assert.Equal("Operation is not valid due to the current state of the object.", CloudException.Create(string.Empty).Message);
+            Assert.Null(CloudException.Create(null, null, null, null).Body);
+            Assert.Equal("Operation is not valid due to the current state of the object.", CloudException.Create(null, null, null, string.Empty).Message);
         }
 
         [Theory]
@@ -224,10 +224,10 @@ namespace Microsoft.Azure.Test
         [InlineData(@"{'error' : {'some message': 'The provided database ‘foo’ has an invalid username.'")]
         public void ParseJsonErrorSupportsIncorrectlyFormattedJsonErrors(string message)
         {
-            var error = CloudException.Create(message);
+            var error = CloudException.Create(null, null, null, message);
 
             Assert.Equal(message, error.Message);
-            Assert.Null(error.Model);
+            Assert.Null(error.Body);
         }
 
         [Fact]
@@ -238,10 +238,10 @@ namespace Microsoft.Azure.Test
                                         <Message>The provided database ‘foo’ has an invalid username.</Message>
                                     </Error>";
 
-            var error = CloudException.Create(message);
+            var error = CloudException.Create(null, null, null, message);
             Assert.Equal("BadRequest: The provided database ‘foo’ has an invalid username.", error.Message);
-            Assert.Equal("BadRequest", error.Model.Code);
-            Assert.Equal("The provided database ‘foo’ has an invalid username.", error.Model.Message);
+            Assert.Equal("BadRequest", error.Body.Code);
+            Assert.Equal("The provided database ‘foo’ has an invalid username.", error.Body.Message);
         }
 
         [Fact]
@@ -252,23 +252,23 @@ namespace Microsoft.Azure.Test
                                         <message>The provided database ‘foo’ has an invalid username.</message>
                                     </error>";
 
-            var error = CloudException.Create(message);
+            var error = CloudException.Create(null, null, null, message);
             Assert.Equal("BadRequest: The provided database ‘foo’ has an invalid username.", error.Message);
-            Assert.Equal("BadRequest", error.Model.Code);
-            Assert.Equal("The provided database ‘foo’ has an invalid username.", error.Model.Message);
+            Assert.Equal("BadRequest", error.Body.Code);
+            Assert.Equal("The provided database ‘foo’ has an invalid username.", error.Body.Message);
         }
 
         [Fact]
         public void ParseXmlErrorSupportsEmptyErrors()
         {
-            Assert.Null(CloudException.Create(null).Model);
-            Assert.Equal("Operation is not valid due to the current state of the object.", 
-                CloudException.Create(null).Message);
-            Assert.Null(CloudException.Create(null).Response);
-            Assert.Null(CloudException.Create(string.Empty).Model);
-            Assert.Equal("Operation is not valid due to the current state of the object.", 
-                CloudException.Create(string.Empty).Message);
-            Assert.Null(CloudException.Create(string.Empty).Response);
+            Assert.Null(CloudException.Create(null, null, null, null).Body);
+            Assert.Equal("Operation is not valid due to the current state of the object.",
+                CloudException.Create(null, null, null, null).Message);
+            Assert.Null(CloudException.Create(null, null, null, null).Response);
+            Assert.Null(CloudException.Create(null, null, null, string.Empty).Body);
+            Assert.Equal("Operation is not valid due to the current state of the object.",
+                CloudException.Create(null, null, null, string.Empty).Message);
+            Assert.Null(CloudException.Create(null, null, null, string.Empty).Response);
         }
 
         [Fact]
@@ -279,8 +279,8 @@ namespace Microsoft.Azure.Test
                                         <Message>The provided database ‘foo’ has an invalid username.</Message>
                                     </SomeError>";
 
-            Assert.Equal("BadRequest: The provided database ‘foo’ has an invalid username.", CloudException.Create(xmlErrorMessageWithBadParent).Message);
-            Assert.Equal("BadRequest", CloudException.Create(xmlErrorMessageWithBadParent).Model.Code);
+            Assert.Equal("BadRequest: The provided database ‘foo’ has an invalid username.", CloudException.Create(null, null, null, xmlErrorMessageWithBadParent).Message);
+            Assert.Equal("BadRequest", CloudException.Create(null, null, null, xmlErrorMessageWithBadParent).Body.Code);
         }
 
         [Theory]
@@ -290,9 +290,9 @@ namespace Microsoft.Azure.Test
         [InlineData(@"<Error><SomeCode>BadRequest</SomeCode><SomeMessage>The provided database ‘foo’ has an invalid username.</SomeMode></Error>}")]
         public void ParseXmlErrorSupportsIncorrectlyFormattedXmlErrors(string message)
         {
-            var error = CloudException.Create(message);
+            var error = CloudException.Create(null, null, null, message);
             Assert.Equal(message, error.Message);
-            Assert.Null(error.Model);
+            Assert.Null(error.Body);
         }
 
         [Fact]
@@ -301,7 +301,7 @@ namespace Microsoft.Azure.Test
             var ex = CloudException.Create(genericMessage, genericMessageString, notFoundResponse, malformedXmlErrorMessageString);
 
             Assert.NotNull(ex);
-            Assert.Null(ex.Model);
+            Assert.Null(ex.Body);
             Assert.Equal(malformedXmlErrorMessageString, ex.Message);
             
         }
@@ -312,7 +312,7 @@ namespace Microsoft.Azure.Test
             var ex = CloudException.Create(genericMessage, genericMessageString, notFoundResponse, malformedJsonErrorMessageString);
 
             Assert.NotNull(ex);
-            Assert.Null(ex.Model);
+            Assert.Null(ex.Body);
             Assert.Equal(malformedJsonErrorMessageString, ex.Message);
             
         }
@@ -323,7 +323,7 @@ namespace Microsoft.Azure.Test
             var ex = CloudException.Create(genericMessage, genericMessageString, notFoundResponse, jsonErrorCodeOnly);
 
             Assert.NotNull(ex);
-            Assert.Null(ex.Model);
+            Assert.Null(ex.Body);
             Assert.Equal(jsonErrorCodeOnly, ex.Message);
             
         }
@@ -334,7 +334,7 @@ namespace Microsoft.Azure.Test
             var ex = CloudException.Create(genericMessage, genericMessageString, notFoundResponse, jsonErrorMessageOnly);
 
             Assert.NotNull(ex);
-            Assert.Null(ex.Model);
+            Assert.Null(ex.Body);
             Assert.Equal(jsonErrorMessageOnly, ex.Message);
             
         }
@@ -345,8 +345,8 @@ namespace Microsoft.Azure.Test
             var ex = CloudException.Create(genericMessage, genericMessageString, notFoundResponse, xmlErrorCodeOnly);
 
             Assert.NotNull(ex);
-            Assert.NotNull(ex.Model);
-            Assert.Equal(ex.Model.Code, ex.Message);
+            Assert.NotNull(ex.Body);
+            Assert.Equal(ex.Body.Code, ex.Message);
             
         }
 
@@ -356,8 +356,8 @@ namespace Microsoft.Azure.Test
             var ex = CloudException.Create(genericMessage, genericMessageString, notFoundResponse, xmlErrorMessageOnly);
 
             Assert.NotNull(ex);
-            Assert.NotNull(ex.Model);
-            Assert.Equal(ex.Model.Message, ex.Message);
+            Assert.NotNull(ex.Body);
+            Assert.Equal(ex.Body.Message, ex.Message);
             
         }
     }
