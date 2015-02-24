@@ -386,6 +386,43 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                                     string serviceNameInstance = serviceNameElement.Value;
                                     storageServiceInstance.Name = serviceNameInstance;
                                 }
+                                
+                                XElement storageServicePropertiesElement = storageServicesElement.Element(XName.Get("StorageServiceProperties", "http://schemas.microsoft.com/windowsazure"));
+                                if (storageServicePropertiesElement != null)
+                                {
+                                    StorageAccountListResponse.StorageAccountProperties storageServicePropertiesInstance = new StorageAccountListResponse.StorageAccountProperties();
+                                    storageServiceInstance.Properties = storageServicePropertiesInstance;
+                                    
+                                    XElement descriptionElement = storageServicePropertiesElement.Element(XName.Get("Description", "http://schemas.microsoft.com/windowsazure"));
+                                    if (descriptionElement != null)
+                                    {
+                                        bool isNil = false;
+                                        XAttribute nilAttribute = descriptionElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
+                                        if (nilAttribute != null)
+                                        {
+                                            isNil = nilAttribute.Value == "true";
+                                        }
+                                        if (isNil == false)
+                                        {
+                                            string descriptionInstance = descriptionElement.Value;
+                                            storageServicePropertiesInstance.Description = descriptionInstance;
+                                        }
+                                    }
+                                    
+                                    XElement affinityGroupElement = storageServicePropertiesElement.Element(XName.Get("AffinityGroup", "http://schemas.microsoft.com/windowsazure"));
+                                    if (affinityGroupElement != null)
+                                    {
+                                        string affinityGroupInstance = affinityGroupElement.Value;
+                                        storageServicePropertiesInstance.AffinityGroup = affinityGroupInstance;
+                                    }
+                                    
+                                    XElement locationElement = storageServicePropertiesElement.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
+                                    if (locationElement != null)
+                                    {
+                                        string locationInstance = locationElement.Value;
+                                        storageServicePropertiesInstance.Location = locationInstance;
+                                    }
+                                }
                             }
                         }
                         
