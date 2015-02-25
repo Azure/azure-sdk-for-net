@@ -13,7 +13,7 @@
     <projectUrl>https://github.com/Azure/azure-sdk-for-net</projectUrl>
     <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
     <copyright>Copyright © Microsoft Corporation</copyright>
-    <tags>Microsoft Azure RemoteApp REST HTTP client windowsazureofficial</tags>
+    <tags>Microsoft "Microsoft Azure" Azure cloud management "service management" REST HTTP client core common azureofficial azureofficial</tags>
     <references>
       <group targetFramework="portable-net45+sl50+wp80+win">
         <reference file="Microsoft.Azure.Management.RemoteApp.dll" />
