@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     /// Parameters supplied to the Upload SSL certificate for an Api Management
     /// service operation.
     /// </summary>
-    public partial class ApiServiceUpdateCertificateParameters
+    public partial class ApiServiceUploadCertificateParameters
     {
         private string _certificatePassword;
         
@@ -53,17 +53,6 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             set { this._encodedCertificate = value; }
         }
         
-        private string _thumbprint;
-        
-        /// <summary>
-        /// Required. Certificate thumbprint.
-        /// </summary>
-        public string Thumbprint
-        {
-            get { return this._thumbprint; }
-            set { this._thumbprint = value; }
-        }
-        
         private HostnameType _type;
         
         /// <summary>
@@ -77,10 +66,31 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         
         /// <summary>
         /// Initializes a new instance of the
-        /// ApiServiceUpdateCertificateParameters class.
+        /// ApiServiceUploadCertificateParameters class.
         /// </summary>
-        public ApiServiceUpdateCertificateParameters()
+        public ApiServiceUploadCertificateParameters()
         {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// ApiServiceUploadCertificateParameters class with required
+        /// arguments.
+        /// </summary>
+        public ApiServiceUploadCertificateParameters(HostnameType type, string encodedCertificate, string certificatePassword)
+            : this()
+        {
+            if (encodedCertificate == null)
+            {
+                throw new ArgumentNullException("encodedCertificate");
+            }
+            if (certificatePassword == null)
+            {
+                throw new ArgumentNullException("certificatePassword");
+            }
+            this.Type = type;
+            this.EncodedCertificate = encodedCertificate;
+            this.CertificatePassword = certificatePassword;
         }
     }
 }

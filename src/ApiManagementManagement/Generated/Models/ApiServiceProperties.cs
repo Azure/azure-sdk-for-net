@@ -170,6 +170,18 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             set { this._targetProvisioningState = value; }
         }
         
+        private VirtualNetworkConfiguration _virtualNetworkConfiguration;
+        
+        /// <summary>
+        /// Optional. Virtual network configuration of the Api Management
+        /// service .
+        /// </summary>
+        public VirtualNetworkConfiguration VirtualNetworkConfiguration
+        {
+            get { return this._virtualNetworkConfiguration; }
+            set { this._virtualNetworkConfiguration = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the ApiServiceProperties class.
         /// </summary>

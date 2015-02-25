@@ -205,7 +205,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         }
         
         /// <summary>
-        /// Begin to manage (CUD) all regions of an Api Management service.To
+        /// Begin to manage (CUD) deployments of an Api Management service.To
         /// determine whether the operation has finished processing the
         /// request, call GetLongRunningOperationStatus.
         /// </summary>
@@ -220,22 +220,22 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Required. The name of the Api Management service.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the ManageScale operation.
+        /// Required. Parameters supplied to the ManageDeployments operation.
         /// </param>
         /// <returns>
         /// A standard service response for long running operations.
         /// </returns>
-        public static LongRunningOperationResponse BeginManagingScale(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceManageScaleParameters parameters)
+        public static LongRunningOperationResponse BeginManagingDeployments(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceManageDeploymentsParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IApiManagementOperations)s).BeginManagingScaleAsync(resourceGroupName, name, parameters);
+                return ((IApiManagementOperations)s).BeginManagingDeploymentsAsync(resourceGroupName, name, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// Begin to manage (CUD) all regions of an Api Management service.To
+        /// Begin to manage (CUD) deployments of an Api Management service.To
         /// determine whether the operation has finished processing the
         /// request, call GetLongRunningOperationStatus.
         /// </summary>
@@ -250,14 +250,14 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Required. The name of the Api Management service.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the ManageScale operation.
+        /// Required. Parameters supplied to the ManageDeployments operation.
         /// </param>
         /// <returns>
         /// A standard service response for long running operations.
         /// </returns>
-        public static Task<LongRunningOperationResponse> BeginManagingScaleAsync(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceManageScaleParameters parameters)
+        public static Task<LongRunningOperationResponse> BeginManagingDeploymentsAsync(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceManageDeploymentsParameters parameters)
         {
-            return operations.BeginManagingScaleAsync(resourceGroupName, name, parameters, CancellationToken.None);
+            return operations.BeginManagingDeploymentsAsync(resourceGroupName, name, parameters, CancellationToken.None);
         }
         
         /// <summary>
@@ -430,62 +430,6 @@ namespace Microsoft.Azure.Management.ApiManagement
         public static Task<LongRunningOperationResponse> BeginUpdatingHostnameAsync(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceUpdateHostnameParameters parameters)
         {
             return operations.BeginUpdatingHostnameAsync(resourceGroupName, name, parameters, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// Begin updating SKU of an Api Management service.To determine
-        /// whether the operation has finished processing the request, call
-        /// GetLongRunningOperationStatus.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.ApiManagement.IApiManagementOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group.
-        /// </param>
-        /// <param name='name'>
-        /// Required. The name of the Api Management service.
-        /// </param>
-        /// <param name='parameters'>
-        /// Required. Parameters supplied to the UpdateSku operation.
-        /// </param>
-        /// <returns>
-        /// A standard service response for long running operations.
-        /// </returns>
-        public static LongRunningOperationResponse BeginUpdatingSku(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceUpdateSkuParameters parameters)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IApiManagementOperations)s).BeginUpdatingSkuAsync(resourceGroupName, name, parameters);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// Begin updating SKU of an Api Management service.To determine
-        /// whether the operation has finished processing the request, call
-        /// GetLongRunningOperationStatus.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.ApiManagement.IApiManagementOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group.
-        /// </param>
-        /// <param name='name'>
-        /// Required. The name of the Api Management service.
-        /// </param>
-        /// <param name='parameters'>
-        /// Required. Parameters supplied to the UpdateSku operation.
-        /// </param>
-        /// <returns>
-        /// A standard service response for long running operations.
-        /// </returns>
-        public static Task<LongRunningOperationResponse> BeginUpdatingSkuAsync(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceUpdateSkuParameters parameters)
-        {
-            return operations.BeginUpdatingSkuAsync(resourceGroupName, name, parameters, CancellationToken.None);
         }
         
         /// <summary>
@@ -925,7 +869,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         }
         
         /// <summary>
-        /// Manage (CUD) all regions of an Api Management service.
+        /// Manage (CUD) deployments of an Api Management service.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -938,23 +882,23 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Required. The name of the Api Management service.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the ManageScale operation.
+        /// Required. Parameters supplied to the ManageDeployments operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static AzureOperationResponse ManageScale(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceManageScaleParameters parameters)
+        public static AzureOperationResponse ManageDeployments(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceManageDeploymentsParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IApiManagementOperations)s).ManageScaleAsync(resourceGroupName, name, parameters);
+                return ((IApiManagementOperations)s).ManageDeploymentsAsync(resourceGroupName, name, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// Manage (CUD) all regions of an Api Management service.
+        /// Manage (CUD) deployments of an Api Management service.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -967,15 +911,15 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Required. The name of the Api Management service.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the ManageScale operation.
+        /// Required. Parameters supplied to the ManageDeployments operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<AzureOperationResponse> ManageScaleAsync(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceManageScaleParameters parameters)
+        public static Task<AzureOperationResponse> ManageDeploymentsAsync(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceManageDeploymentsParameters parameters)
         {
-            return operations.ManageScaleAsync(resourceGroupName, name, parameters, CancellationToken.None);
+            return operations.ManageDeploymentsAsync(resourceGroupName, name, parameters, CancellationToken.None);
         }
         
         /// <summary>
@@ -1091,62 +1035,6 @@ namespace Microsoft.Azure.Management.ApiManagement
         }
         
         /// <summary>
-        /// Upload SSL certificate for an Api Management service.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.ApiManagement.IApiManagementOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group.
-        /// </param>
-        /// <param name='name'>
-        /// Required. The name of the Api Management service.
-        /// </param>
-        /// <param name='parameters'>
-        /// Required. Parameters supplied to the Upload SSL certificate for an
-        /// Api Management service operation.
-        /// </param>
-        /// <returns>
-        /// The response of the Upload SSL certificate for an Api Management
-        /// service operation.
-        /// </returns>
-        public static ApiServiceUpdateCertificateResponse UpdateCertificate(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceUpdateCertificateParameters parameters)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IApiManagementOperations)s).UpdateCertificateAsync(resourceGroupName, name, parameters);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// Upload SSL certificate for an Api Management service.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.ApiManagement.IApiManagementOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group.
-        /// </param>
-        /// <param name='name'>
-        /// Required. The name of the Api Management service.
-        /// </param>
-        /// <param name='parameters'>
-        /// Required. Parameters supplied to the Upload SSL certificate for an
-        /// Api Management service operation.
-        /// </param>
-        /// <returns>
-        /// The response of the Upload SSL certificate for an Api Management
-        /// service operation.
-        /// </returns>
-        public static Task<ApiServiceUpdateCertificateResponse> UpdateCertificateAsync(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceUpdateCertificateParameters parameters)
-        {
-            return operations.UpdateCertificateAsync(resourceGroupName, name, parameters, CancellationToken.None);
-        }
-        
-        /// <summary>
         /// Update hostname of an Api Management service.
         /// </summary>
         /// <param name='operations'>
@@ -1201,7 +1089,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         }
         
         /// <summary>
-        /// Update SKU of an Api Management service.
+        /// Upload SSL certificate for an Api Management service.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -1214,23 +1102,24 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Required. The name of the Api Management service.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the UpdateSku operation.
+        /// Required. Parameters supplied to the Upload SSL certificate for an
+        /// Api Management service operation.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The response of the Upload SSL certificate for an Api Management
+        /// service operation.
         /// </returns>
-        public static AzureOperationResponse UpdateSku(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceUpdateSkuParameters parameters)
+        public static ApiServiceUploadCertificateResponse UploadCertificate(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceUploadCertificateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IApiManagementOperations)s).UpdateSkuAsync(resourceGroupName, name, parameters);
+                return ((IApiManagementOperations)s).UploadCertificateAsync(resourceGroupName, name, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// Update SKU of an Api Management service.
+        /// Upload SSL certificate for an Api Management service.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -1243,15 +1132,16 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Required. The name of the Api Management service.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the UpdateSku operation.
+        /// Required. Parameters supplied to the Upload SSL certificate for an
+        /// Api Management service operation.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The response of the Upload SSL certificate for an Api Management
+        /// service operation.
         /// </returns>
-        public static Task<AzureOperationResponse> UpdateSkuAsync(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceUpdateSkuParameters parameters)
+        public static Task<ApiServiceUploadCertificateResponse> UploadCertificateAsync(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceUploadCertificateParameters parameters)
         {
-            return operations.UpdateSkuAsync(resourceGroupName, name, parameters, CancellationToken.None);
+            return operations.UploadCertificateAsync(resourceGroupName, name, parameters, CancellationToken.None);
         }
     }
 }

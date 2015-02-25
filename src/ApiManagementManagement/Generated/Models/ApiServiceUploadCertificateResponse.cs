@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     /// The response of the Upload SSL certificate for an Api Management
     /// service operation.
     /// </summary>
-    public partial class ApiServiceUpdateCertificateResponse : AzureOperationResponse
+    public partial class ApiServiceUploadCertificateResponse : AzureOperationResponse
     {
         private CertificateInformation _value;
         
@@ -46,9 +46,9 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         
         /// <summary>
         /// Initializes a new instance of the
-        /// ApiServiceUpdateCertificateResponse class.
+        /// ApiServiceUploadCertificateResponse class.
         /// </summary>
-        public ApiServiceUpdateCertificateResponse()
+        public ApiServiceUploadCertificateResponse()
         {
         }
     }

@@ -28,9 +28,9 @@ using Microsoft.Azure.Management.ApiManagement.Models;
 namespace Microsoft.Azure.Management.ApiManagement.Models
 {
     /// <summary>
-    /// Parameters supplied to the ManageScale operation.
+    /// Parameters supplied to the ManageDeployments operation.
     /// </summary>
-    public partial class ApiServiceManageScaleParameters
+    public partial class ApiServiceManageDeploymentsParameters
     {
         private IList<AdditionalRegion> _additionalRegions;
         
@@ -89,19 +89,20 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the ApiServiceManageScaleParameters
-        /// class.
+        /// Initializes a new instance of the
+        /// ApiServiceManageDeploymentsParameters class.
         /// </summary>
-        public ApiServiceManageScaleParameters()
+        public ApiServiceManageDeploymentsParameters()
         {
             this.AdditionalRegions = new LazyList<AdditionalRegion>();
         }
         
         /// <summary>
-        /// Initializes a new instance of the ApiServiceManageScaleParameters
-        /// class with required arguments.
+        /// Initializes a new instance of the
+        /// ApiServiceManageDeploymentsParameters class with required
+        /// arguments.
         /// </summary>
-        public ApiServiceManageScaleParameters(string location, SkuType skuType)
+        public ApiServiceManageDeploymentsParameters(string location, SkuType skuType)
             : this()
         {
             if (location == null)
