@@ -130,6 +130,58 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         }
         
         /// <summary>
+        /// The Update Dedicated Circuit operation updates an existing
+        /// dedicated circuit.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.ExpressRoute.IDedicatedCircuitOperations.
+        /// </param>
+        /// <param name='serviceKey'>
+        /// Required. Service Key of the circuit being updated
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Update Dedicated Circuit
+        /// operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static ExpressRouteOperationResponse BeginUpdate(this IDedicatedCircuitOperations operations, string serviceKey, DedicatedCircuitUpdateParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IDedicatedCircuitOperations)s).BeginUpdateAsync(serviceKey, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Update Dedicated Circuit operation updates an existing
+        /// dedicated circuit.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.ExpressRoute.IDedicatedCircuitOperations.
+        /// </param>
+        /// <param name='serviceKey'>
+        /// Required. Service Key of the circuit being updated
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Update Dedicated Circuit
+        /// operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<ExpressRouteOperationResponse> BeginUpdateAsync(this IDedicatedCircuitOperations operations, string serviceKey, DedicatedCircuitUpdateParameters parameters)
+        {
+            return operations.BeginUpdateAsync(serviceKey, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// The Get Dedicated Circuit operation retrieves the specified
         /// dedicated circuit.
         /// </summary>
@@ -169,6 +221,68 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         public static Task<DedicatedCircuitGetResponse> GetAsync(this IDedicatedCircuitOperations operations, string serviceKey)
         {
             return operations.GetAsync(serviceKey, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The Get Express Route operation status gets information on the
+        /// status of Express Route operations in Windows Azure.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154112.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.ExpressRoute.IDedicatedCircuitOperations.
+        /// </param>
+        /// <param name='operationId'>
+        /// Required. The id  of the operation.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static ExpressRouteOperationStatusResponse GetOperationStatus(this IDedicatedCircuitOperations operations, string operationId)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IDedicatedCircuitOperations)s).GetOperationStatusAsync(operationId);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Get Express Route operation status gets information on the
+        /// status of Express Route operations in Windows Azure.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154112.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.ExpressRoute.IDedicatedCircuitOperations.
+        /// </param>
+        /// <param name='operationId'>
+        /// Required. The id  of the operation.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static Task<ExpressRouteOperationStatusResponse> GetOperationStatusAsync(this IDedicatedCircuitOperations operations, string operationId)
+        {
+            return operations.GetOperationStatusAsync(operationId, CancellationToken.None);
         }
         
         /// <summary>
@@ -219,9 +333,17 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// operation.
         /// </param>
         /// <returns>
-        /// The Get Dedicated Circuit operation response.
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
         /// </returns>
-        public static DedicatedCircuitGetResponse New(this IDedicatedCircuitOperations operations, DedicatedCircuitNewParameters parameters)
+        public static ExpressRouteOperationStatusResponse New(this IDedicatedCircuitOperations operations, DedicatedCircuitNewParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -242,9 +364,17 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// operation.
         /// </param>
         /// <returns>
-        /// The Get Dedicated Circuit operation response.
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
         /// </returns>
-        public static Task<DedicatedCircuitGetResponse> NewAsync(this IDedicatedCircuitOperations operations, DedicatedCircuitNewParameters parameters)
+        public static Task<ExpressRouteOperationStatusResponse> NewAsync(this IDedicatedCircuitOperations operations, DedicatedCircuitNewParameters parameters)
         {
             return operations.NewAsync(parameters, CancellationToken.None);
         }
@@ -307,6 +437,72 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         public static Task<ExpressRouteOperationStatusResponse> RemoveAsync(this IDedicatedCircuitOperations operations, string serviceKey)
         {
             return operations.RemoveAsync(serviceKey, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The Update Dedicated Circuit operation updates an existing
+        /// dedicated circuit.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.ExpressRoute.IDedicatedCircuitOperations.
+        /// </param>
+        /// <param name='serviceKey'>
+        /// Required. Service Key of the circuit being updated
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the update dedicated circuit
+        /// operation.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static ExpressRouteOperationStatusResponse Update(this IDedicatedCircuitOperations operations, string serviceKey, DedicatedCircuitUpdateParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IDedicatedCircuitOperations)s).UpdateAsync(serviceKey, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Update Dedicated Circuit operation updates an existing
+        /// dedicated circuit.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.ExpressRoute.IDedicatedCircuitOperations.
+        /// </param>
+        /// <param name='serviceKey'>
+        /// Required. Service Key of the circuit being updated
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the update dedicated circuit
+        /// operation.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static Task<ExpressRouteOperationStatusResponse> UpdateAsync(this IDedicatedCircuitOperations operations, string serviceKey, DedicatedCircuitUpdateParameters parameters)
+        {
+            return operations.UpdateAsync(serviceKey, parameters, CancellationToken.None);
         }
     }
 }

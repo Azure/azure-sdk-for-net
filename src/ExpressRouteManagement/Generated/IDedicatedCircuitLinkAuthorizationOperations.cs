@@ -66,6 +66,31 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         Task<DedicatedCircuitLinkAuthorizationGetResponse> GetAsync(string serviceKey, string authId, CancellationToken cancellationToken);
         
         /// <summary>
+        /// The Get Express Route operation status gets information on the
+        /// status of Express Route operations in Windows Azure.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154112.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operationId'>
+        /// The id  of the operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        Task<ExpressRouteOperationStatusResponse> GetOperationStatusAsync(string operationId, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Lists the specified link authorization for the specified dedicated
         /// circuit.
         /// </summary>

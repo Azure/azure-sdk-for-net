@@ -25,23 +25,37 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
 {
     /// <summary>
-    /// The access type of the bgp peering.
+    /// The parameters to the Update Dedicated Circuit request.
     /// </summary>
-    public enum BgpPeeringAccessType
+    public partial class DedicatedCircuitUpdateParameters
     {
-        /// <summary>
-        /// The bgp peering is private.
-        /// </summary>
-        Private = 0,
+        private uint _bandwidth;
         
         /// <summary>
-        /// The bgp peering is public.
+        /// Required. Bandwidth requested for the circuit in Mbps.
         /// </summary>
-        Public = 1,
+        public uint Bandwidth
+        {
+            get { return this._bandwidth; }
+            set { this._bandwidth = value; }
+        }
         
         /// <summary>
-        /// The bgp peering is of type Microsoft
+        /// Initializes a new instance of the DedicatedCircuitUpdateParameters
+        /// class.
         /// </summary>
-        Microsoft = 2,
+        public DedicatedCircuitUpdateParameters()
+        {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the DedicatedCircuitUpdateParameters
+        /// class with required arguments.
+        /// </summary>
+        public DedicatedCircuitUpdateParameters(uint bandwidth)
+            : this()
+        {
+            this.Bandwidth = bandwidth;
+        }
     }
 }

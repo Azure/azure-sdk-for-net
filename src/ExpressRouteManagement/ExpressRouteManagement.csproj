@@ -12,6 +12,8 @@
     <OutputType>Library</OutputType>
     <RestorePackages>true</RestorePackages>
     <NuGetPackageImportStamp>56133d78</NuGetPackageImportStamp>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <Import Project="..\..\tools\Library.Settings.targets" />
   <ItemGroup>
