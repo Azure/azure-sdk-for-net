@@ -1098,6 +1098,8 @@ namespace Common.Authentication.Test
 
             Assert.Equal(azureSubscription2.Id, client.Profile.DefaultSubscription.Id);
             Assert.Equal(azureSubscription2.Id, currentProfile.Context.Subscription.Id);
+            Assert.Equal(azureSubscription2.Account, currentProfile.Context.Account.Id);
+            Assert.Equal(azureSubscription2.Environment, currentProfile.Context.Environment.Name);
             Assert.Throws<ArgumentException>(() => client.SetSubscriptionAsDefault("bad", null));
             Assert.Throws<ArgumentException>(() => client.SetSubscriptionAsDefault(null, null));
         }
@@ -1120,6 +1122,9 @@ namespace Common.Authentication.Test
             client.ClearDefaultSubscription();
 
             Assert.Null(client.Profile.DefaultSubscription);
+            Assert.Null(client.Profile.Context.Account);
+            Assert.Null(client.Profile.Context.Environment);
+            Assert.Null(client.Profile.Context.Subscription);
         }
 
         [Fact]

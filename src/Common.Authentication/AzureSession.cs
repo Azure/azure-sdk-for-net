@@ -13,6 +13,8 @@
 // ----------------------------------------------------------------------------------
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using Microsoft.Azure.Common.Authentication.Factories;
 using Microsoft.Azure.Common.Authentication.Models;
@@ -25,7 +27,11 @@ namespace Microsoft.Azure.Common.Authentication
     /// Represents current Azure session.
     /// </summary>
     public static class AzureSession
-    {        
+    {
+        /// <summary>
+        /// field to contain current profile
+        /// </summary>
+        private static AzureProfile _currentProfile = null;
         /// <summary>
         /// Gets or sets Azure client factory.
         /// </summary>
@@ -35,6 +41,26 @@ namespace Microsoft.Azure.Common.Authentication
         /// Gets or sets Azure authentication factory.
         /// </summary>
         public static IAuthenticationFactory AuthenticationFactory { get; set; }
+
+        /// <summary>
+        /// Gets or sets the current azure profile
+        /// </summary>
+        public static AzureProfile CurrentProfile
+        {
+            get
+            {
+                if (_currentProfile == null)
+                {
+                    SetCurrentProfile(InitializeDefaultProfile());
+                }
+
+                return _currentProfile;
+            }
+            set
+            {
+                SetCurrentProfile(value);
+            }
+        }
 
         /// <summary>
         /// Gets or sets data persistence store.
@@ -84,6 +110,48 @@ namespace Microsoft.Azure.Common.Authentication
                 Resources.AzureDirectoryName); ;
             ProfileFile = "AzureProfile.json";
             TokenCacheFile = "TokenCache.dat";
+        }
+
+        public static AzureProfile InitializeDefaultProfile()
+        {
+            if (!string.IsNullOrEmpty(ProfileDirectory) && !string.IsNullOrEmpty(ProfileFile))
+            {
+                try
+                {
+                    return new AzureProfile(Path.Combine(ProfileDirectory, ProfileFile));
+                }
+                catch
+                {
+                   // swallow exceptions in creating the profile from disk
+                }
+            }
+
+            return new AzureProfile();
+        }
+
+        private static void SetCurrentProfile(AzureProfile profile)
+        {
+            var defaultProfilePath = Path.Combine(ProfileDirectory, ProfileFile);
+            if (string.Equals(profile.ProfilePath, defaultProfilePath, StringComparison.OrdinalIgnoreCase))
+            {
+                var tokenCacheFile = Path.Combine(ProfileDirectory, TokenCacheFile);
+                TokenCache = new ProtectedFileTokenCache(tokenCacheFile);
+            }
+            else
+            {
+                TokenCache = new TokenCache();
+            }
+
+            if (!string.IsNullOrWhiteSpace(profile.ProfilePath))
+            {
+                DataStore = new DiskDataStore();
+            }
+            else
+            {
+                DataStore = new MemoryDataStore();
+            }
+
+            _currentProfile = profile;
         }
     }
 }
