@@ -76,13 +76,11 @@ namespace Microsoft.Azure.Test
                                     </error>";
 
         private readonly HttpRequestMessage genericMessage;
-        private readonly HttpRequestMessage genericMessageWithoutBody;
 
         public CloudExceptionTests()
         {
             genericMessage = new HttpRequestMessage(HttpMethod.Get, "http//test/url");
             genericMessage.Content = new StringContent(genericMessageString);
-            genericMessageWithoutBody = new HttpRequestMessage(HttpMethod.Get, "http//test/url");
             notFoundResponse = new HttpResponseMessage(HttpStatusCode.NotFound);
             notFoundResponse.Headers.Add("x-ms-request-id", "content1");
             notFoundResponse.Headers.Add("x-ms-routing-request-id", "content2");
@@ -99,68 +97,39 @@ namespace Microsoft.Azure.Test
         }
 
         [Fact]
-        public void ExceptionIsCreatedFromHeaderlessResponse()
-        {
-            var ex = CloudException.Create(genericMessage, genericMessageString, notFoundResponse, "");
-
-            Assert.Null(notFoundResponse.Content.Headers.ContentType);
-            Assert.NotNull(ex);
-        }
-
-        [Fact]
-        public void ExceptionIsCreatedFromNullResponseString()
-        {
-            var ex = CloudException.Create(genericMessage, genericMessageString, notFoundResponse, null);
-
-            Assert.Null(notFoundResponse.Content.Headers.ContentType);
-            Assert.NotNull(ex);
-        }
-
-        [Fact]
-        public void ExceptionContainsHttpStatusCodeIfBodyIsEmpty()
-        {
-            var ex = CloudException.Create(genericMessage, genericMessageString, notFoundResponse, "");
-
-            Assert.Equal("Not Found", ex.Message);
-        }
-
-        [Fact]
         public void JsonExceptionIsParsedCorrectlyWithLowerCase()
         {
-            var ex = CloudException.Create(genericMessage, genericMessageString, serverErrorResponse, jsonErrorMessageString);
+            var ex = new CloudError(jsonErrorMessageString);
 
-            Assert.Equal("BadRequest: The provided database ‘foo’ has an invalid username.", ex.Message);
-            Assert.Equal("BadRequest", ex.Body.Code);
-            Assert.Equal("The provided database ‘foo’ has an invalid username.", ex.Body.Message);
+            Assert.Equal("BadRequest", ex.Code);
+            Assert.Equal("The provided database ‘foo’ has an invalid username.", ex.Message);
         }
 
         [Fact]
         public void JsonExceptionIsParsedCorrectlyWithCamelCase()
         {
-            var ex = CloudException.Create(genericMessage, genericMessageString, serverErrorResponseWithCamelCase,
-                                           jsonErrorMessageStringWithCamelCase);
+            var ex = new CloudError(jsonErrorMessageStringWithCamelCase);
 
-            Assert.Equal("BadRequest: The provided database ‘foo’ has an invalid username.", ex.Message);
-            Assert.Equal("BadRequest", ex.Body.Code);
+            Assert.Equal("The provided database ‘foo’ has an invalid username.", ex.Message);
+            Assert.Equal("BadRequest", ex.Code);
         }
 
         [Fact]
         public void JsonExceptionIsParsedCorrectlyWithParent()
         {
-            var ex = CloudException.Create(genericMessage, genericMessageString, serverErrorResponseWithParent,
-                                           jsonErrorMessageWithParent);
+            var ex = new CloudError(jsonErrorMessageWithParent);
 
-            Assert.Equal("BadRequest: The provided database ‘foo’ has an invalid username.", ex.Message);
-            Assert.Equal("BadRequest", ex.Body.Code);
+            Assert.Equal("The provided database ‘foo’ has an invalid username.", ex.Message);
+            Assert.Equal("BadRequest", ex.Code);
         }
 
         [Fact]
         public void JsonExceptionIsParsedCorrectlyWithoutMessageBody()
         {
-            var ex = CloudException.Create(genericMessageWithoutBody, null, serverErrorResponseWithParent2, jsonErrorMessageWithParent2);
+            var ex = new CloudError(jsonErrorMessageWithParent2);
 
-            Assert.Equal("ResourceGroupNotFound: Resource group `ResourceGroup_crosoftAwillAofferAmoreAWebAservicemnopqrstuvwxyz1` could not be found.", ex.Message);
-            Assert.Equal("ResourceGroupNotFound", ex.Body.Code);
+            Assert.Equal("Resource group `ResourceGroup_crosoftAwillAofferAmoreAWebAservicemnopqrstuvwxyz1` could not be found.", ex.Message);
+            Assert.Equal("ResourceGroupNotFound", ex.Code);
         }
 
         [Fact]
@@ -179,11 +148,10 @@ namespace Microsoft.Azure.Test
                                     ]
                                 }";
 
-            CloudException error = CloudException.Create(null, null, null, message);
+            var error = new CloudError(message);
 
-            Assert.Equal("BadRequest: The provided database ‘foo’ has an invalid username.", error.Message);
-            Assert.Equal("BadRequest", error.Body.Code);
-            Assert.Equal("The provided database ‘foo’ has an invalid username.", error.Body.Message);
+            Assert.Equal("BadRequest", error.Code);
+            Assert.Equal("The provided database ‘foo’ has an invalid username.", error.Message);
         }
 
         [Fact]
@@ -204,18 +172,10 @@ namespace Microsoft.Azure.Test
                                     }
                                 }";
 
-            var error = CloudException.Create(null, null, null, message);
+            var error = new CloudError(message);
 
-            Assert.Equal("BadRequest: The provided database ‘foo’ has an invalid username.", error.Message);
-            Assert.Equal("BadRequest", error.Body.Code);
-            Assert.Equal("The provided database ‘foo’ has an invalid username.", error.Body.Message);
-        }
-
-        [Fact]
-        public void ParseJsonErrorSupportsEmptyErrors()
-        {
-            Assert.Null(CloudException.Create(null, null, null, null).Body);
-            Assert.Equal("Operation is not valid due to the current state of the object.", CloudException.Create(null, null, null, string.Empty).Message);
+            Assert.Equal("BadRequest", error.Code);
+            Assert.Equal("The provided database ‘foo’ has an invalid username.", error.Message);
         }
 
         [Theory]
@@ -224,10 +184,10 @@ namespace Microsoft.Azure.Test
         [InlineData(@"{'error' : {'some message': 'The provided database ‘foo’ has an invalid username.'")]
         public void ParseJsonErrorSupportsIncorrectlyFormattedJsonErrors(string message)
         {
-            var error = CloudException.Create(null, null, null, message);
+            var error = new CloudError(message);
 
             Assert.Equal(message, error.Message);
-            Assert.Null(error.Body);
+            Assert.Null(error.Code);
         }
 
         [Fact]
@@ -238,10 +198,9 @@ namespace Microsoft.Azure.Test
                                         <Message>The provided database ‘foo’ has an invalid username.</Message>
                                     </Error>";
 
-            var error = CloudException.Create(null, null, null, message);
-            Assert.Equal("BadRequest: The provided database ‘foo’ has an invalid username.", error.Message);
-            Assert.Equal("BadRequest", error.Body.Code);
-            Assert.Equal("The provided database ‘foo’ has an invalid username.", error.Body.Message);
+            var error = new CloudError(message);
+            Assert.Equal("BadRequest", error.Code);
+            Assert.Equal("The provided database ‘foo’ has an invalid username.", error.Message);
         }
 
         [Fact]
@@ -252,23 +211,16 @@ namespace Microsoft.Azure.Test
                                         <message>The provided database ‘foo’ has an invalid username.</message>
                                     </error>";
 
-            var error = CloudException.Create(null, null, null, message);
-            Assert.Equal("BadRequest: The provided database ‘foo’ has an invalid username.", error.Message);
-            Assert.Equal("BadRequest", error.Body.Code);
-            Assert.Equal("The provided database ‘foo’ has an invalid username.", error.Body.Message);
+            var error = new CloudError(message);
+            Assert.Equal("BadRequest", error.Code);
+            Assert.Equal("The provided database ‘foo’ has an invalid username.", error.Message);
         }
 
         [Fact]
         public void ParseXmlErrorSupportsEmptyErrors()
         {
-            Assert.Null(CloudException.Create(null, null, null, null).Body);
-            Assert.Equal("Operation is not valid due to the current state of the object.",
-                CloudException.Create(null, null, null, null).Message);
-            Assert.Null(CloudException.Create(null, null, null, null).Response);
-            Assert.Null(CloudException.Create(null, null, null, string.Empty).Body);
-            Assert.Equal("Operation is not valid due to the current state of the object.",
-                CloudException.Create(null, null, null, string.Empty).Message);
-            Assert.Null(CloudException.Create(null, null, null, string.Empty).Response);
+            Assert.Null(new CloudError(null).Message);
+            Assert.Equal("", new CloudError(string.Empty).Message);
         }
 
         [Fact]
@@ -279,8 +231,10 @@ namespace Microsoft.Azure.Test
                                         <Message>The provided database ‘foo’ has an invalid username.</Message>
                                     </SomeError>";
 
-            Assert.Equal("BadRequest: The provided database ‘foo’ has an invalid username.", CloudException.Create(null, null, null, xmlErrorMessageWithBadParent).Message);
-            Assert.Equal("BadRequest", CloudException.Create(null, null, null, xmlErrorMessageWithBadParent).Body.Code);
+            var error = new CloudError();
+            error.Deserialize(xmlErrorMessageWithBadParent);
+            Assert.Equal("The provided database ‘foo’ has an invalid username.", error.Message);
+            Assert.Equal("BadRequest", error.Code);
         }
 
         [Theory]
@@ -290,29 +244,26 @@ namespace Microsoft.Azure.Test
         [InlineData(@"<Error><SomeCode>BadRequest</SomeCode><SomeMessage>The provided database ‘foo’ has an invalid username.</SomeMode></Error>}")]
         public void ParseXmlErrorSupportsIncorrectlyFormattedXmlErrors(string message)
         {
-            var error = CloudException.Create(null, null, null, message);
+            var error = new CloudError();
+            error.Deserialize(message);
             Assert.Equal(message, error.Message);
-            Assert.Null(error.Body);
         }
 
         [Fact]
         public void MalformedXmlErrorMessageIsParsedCorrectly()
         {
-            var ex = CloudException.Create(genericMessage, genericMessageString, notFoundResponse, malformedXmlErrorMessageString);
-
+            var ex = new CloudError();
+            ex.Deserialize(malformedXmlErrorMessageString);
             Assert.NotNull(ex);
-            Assert.Null(ex.Body);
             Assert.Equal(malformedXmlErrorMessageString, ex.Message);
-            
         }
 
         [Fact]
         public void MalformedJsonErrorMessageIsParsedCorrectly()
         {
-            var ex = CloudException.Create(genericMessage, genericMessageString, notFoundResponse, malformedJsonErrorMessageString);
-
+            var ex = new CloudError();
+            ex.Deserialize(malformedJsonErrorMessageString);
             Assert.NotNull(ex);
-            Assert.Null(ex.Body);
             Assert.Equal(malformedJsonErrorMessageString, ex.Message);
             
         }
@@ -320,45 +271,40 @@ namespace Microsoft.Azure.Test
         [Fact]
         public void CodeOnlyJsonErrorMessageIsParsedCorrectly()
         {
-            var ex = CloudException.Create(genericMessage, genericMessageString, notFoundResponse, jsonErrorCodeOnly);
-
+            var ex = new CloudError();
+            ex.Deserialize(jsonErrorCodeOnly);
             Assert.NotNull(ex);
-            Assert.Null(ex.Body);
-            Assert.Equal(jsonErrorCodeOnly, ex.Message);
+            Assert.Equal("ResourceGroupNotFound", ex.Code);
             
         }
 
         [Fact]
         public void MessageOnlyJsonErrorMessageIsParsedCorrectly()
         {
-            var ex = CloudException.Create(genericMessage, genericMessageString, notFoundResponse, jsonErrorMessageOnly);
-
+            var ex = new CloudError();
+            ex.Deserialize(jsonErrorMessageOnly);
             Assert.NotNull(ex);
-            Assert.Null(ex.Body);
-            Assert.Equal(jsonErrorMessageOnly, ex.Message);
+            Assert.Equal("Resource group `ResourceGroup_crosoftAwillAofferAmoreAWebAservicemnopqrstuvwxyz1` could not be found.", ex.Message);
             
         }
 
         [Fact]
         public void CodeOnlyXmlErrorMessageIsParsedCorrectly()
         {
-            var ex = CloudException.Create(genericMessage, genericMessageString, notFoundResponse, xmlErrorCodeOnly);
-
+            var ex = new CloudError();
+            ex.Deserialize(xmlErrorCodeOnly);
             Assert.NotNull(ex);
-            Assert.NotNull(ex.Body);
-            Assert.Equal(ex.Body.Code, ex.Message);
+            Assert.Equal(ex.Code, ex.Message);
             
         }
 
         [Fact]
         public void MessageOnlyXmlErrorMessageIsParsedCorrectly()
         {
-            var ex = CloudException.Create(genericMessage, genericMessageString, notFoundResponse, xmlErrorMessageOnly);
-
+            var ex = new CloudError();
+            ex.Deserialize(xmlErrorMessageOnly);
             Assert.NotNull(ex);
-            Assert.NotNull(ex.Body);
-            Assert.Equal(ex.Body.Message, ex.Message);
-            
+            Assert.Equal("The provided database ‘foo’ has an invalid username.", ex.Message);
         }
     }
 }

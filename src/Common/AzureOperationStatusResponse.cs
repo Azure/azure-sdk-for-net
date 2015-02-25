@@ -16,7 +16,7 @@ namespace Microsoft.Azure
     /// status code for the failed request, and also includes error
     /// information regarding the failure.
     /// </summary>
-    public class AzureOperationStatusResponse<T> : AzureOperationResponse<T>
+    public class AzureOperationStatusResponse : AzureOperationResponse
     {
         /// <summary>
         /// If the asynchronous operation failed, the response body includes
@@ -24,11 +24,6 @@ namespace Microsoft.Azure
         /// error information regarding the failure.
         /// </summary>
         public CloudError Error { get; set; }
-        
-        /// <summary>
-        /// The HTTP status code for the asynchronous request.
-        /// </summary>
-        public HttpStatusCode HttpStatusCode { get; set; }
         
         /// <summary>
         /// The request ID of the asynchronous request. This value is returned
@@ -40,5 +35,10 @@ namespace Microsoft.Azure
         /// The status of the asynchronous request.
         /// </summary>
         public OperationStatus Status { get; set; }
+
+        /// <summary>
+        /// The HTTP status code for the asynchronous request.
+        /// </summary>
+        public HttpStatusCode HttpStatusCode { get; set; }
     }
 }
