@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{868850B4-1073-41A1-ABA8-A3B465880148}"
 EndProject
@@ -68,6 +68,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StreamAnalyticsManagement", "src\StreamAnalyticsManagement\StreamAnalyticsManagement.csproj", "{43206A5D-D990-4310-BC61-266773178265}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StorSimple", "src\StorSimple\StorSimple.csproj", "{80D5051E-17F6-4353-9CBA-748EE6B10B2B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoteApp", "src\RemoteApp\RemoteApp.csproj", "{29F1C6AD-41C7-428C-8024-88E97033CE1A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -389,6 +391,18 @@ Global
 		{80D5051E-17F6-4353-9CBA-748EE6B10B2B}.Portable-Debug|Any CPU.Build.0 = Portable-Debug|Any CPU
 		{80D5051E-17F6-4353-9CBA-748EE6B10B2B}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
 		{80D5051E-17F6-4353-9CBA-748EE6B10B2B}.Portable-Release|Any CPU.Build.0 = Portable-Release|Any CPU
+		{29F1C6AD-41C7-428C-8024-88E97033CE1A}.Net40-Debug|Any CPU.ActiveCfg = Net40-Debug|Any CPU
+		{29F1C6AD-41C7-428C-8024-88E97033CE1A}.Net40-Debug|Any CPU.Build.0 = Net40-Debug|Any CPU
+		{29F1C6AD-41C7-428C-8024-88E97033CE1A}.Net40-Release|Any CPU.ActiveCfg = Net40-Release|Any CPU
+		{29F1C6AD-41C7-428C-8024-88E97033CE1A}.Net40-Release|Any CPU.Build.0 = Net40-Release|Any CPU
+		{29F1C6AD-41C7-428C-8024-88E97033CE1A}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
+		{29F1C6AD-41C7-428C-8024-88E97033CE1A}.Net45-Debug|Any CPU.Build.0 = Net45-Debug|Any CPU
+		{29F1C6AD-41C7-428C-8024-88E97033CE1A}.Net45-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
+		{29F1C6AD-41C7-428C-8024-88E97033CE1A}.Net45-Release|Any CPU.Build.0 = Net45-Release|Any CPU
+		{29F1C6AD-41C7-428C-8024-88E97033CE1A}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
+		{29F1C6AD-41C7-428C-8024-88E97033CE1A}.Portable-Debug|Any CPU.Build.0 = Portable-Debug|Any CPU
+		{29F1C6AD-41C7-428C-8024-88E97033CE1A}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
+		{29F1C6AD-41C7-428C-8024-88E97033CE1A}.Portable-Release|Any CPU.Build.0 = Portable-Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -420,6 +434,7 @@ Global
 		{5CF6CC47-222C-4510-9123-1F9CC35B6E50} = {868850B4-1073-41A1-ABA8-A3B465880148}
 		{43206A5D-D990-4310-BC61-266773178265} = {868850B4-1073-41A1-ABA8-A3B465880148}
 		{80D5051E-17F6-4353-9CBA-748EE6B10B2B} = {868850B4-1073-41A1-ABA8-A3B465880148}
+		{29F1C6AD-41C7-428C-8024-88E97033CE1A} = {868850B4-1073-41A1-ABA8-A3B465880148}
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = WindowsAzureLibraries.vsmdi

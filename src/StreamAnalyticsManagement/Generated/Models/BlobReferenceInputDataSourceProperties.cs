@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _blobName;
         
         /// <summary>
-        /// Required. Gets or sets the blob name.
+        /// Optional. Gets or sets the blob name.
         /// </summary>
         public string BlobName
         {
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _container;
         
         /// <summary>
-        /// Required. Gets or sets the container of the blob.
+        /// Optional. Gets or sets the container of the blob.
         /// </summary>
         public string Container
         {
@@ -72,26 +72,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         public BlobReferenceInputDataSourceProperties()
         {
             this.StorageAccounts = new LazyList<StorageAccount>();
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the
-        /// BlobReferenceInputDataSourceProperties class with required
-        /// arguments.
-        /// </summary>
-        public BlobReferenceInputDataSourceProperties(string container, string blobName)
-            : this()
-        {
-            if (container == null)
-            {
-                throw new ArgumentNullException("container");
-            }
-            if (blobName == null)
-            {
-                throw new ArgumentNullException("blobName");
-            }
-            this.Container = container;
-            this.BlobName = blobName;
         }
     }
 }

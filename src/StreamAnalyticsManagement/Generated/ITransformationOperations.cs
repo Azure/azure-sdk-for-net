@@ -121,6 +121,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// <returns>
         /// The response of the transformation patch operation.
         /// </returns>
-        Task<TransformationPatchResponse> UpdateAsync(string resourceGroupName, string jobName, string transformationName, TransformationPatchParameters parameters, CancellationToken cancellationToken);
+        Task<TransformationPatchResponse> PatchAsync(string resourceGroupName, string jobName, string transformationName, TransformationPatchParameters parameters, CancellationToken cancellationToken);
     }
 }

@@ -17,6 +17,7 @@ using System.IO;
 using Microsoft.Azure.Common.Authentication.Factories;
 using Microsoft.Azure.Common.Authentication.Models;
 using Microsoft.Azure.Common.Authentication.Properties;
+using Microsoft.IdentityModel.Clients.ActiveDirectory;
 
 namespace Microsoft.Azure.Common.Authentication
 {
@@ -39,6 +40,11 @@ namespace Microsoft.Azure.Common.Authentication
         /// Gets or sets data persistence store.
         /// </summary>
         public static IDataStore DataStore { get; set; }
+
+        /// <summary>
+        /// Gets or sets the token cache store.
+        /// </summary>
+        public static TokenCache TokenCache { get; set; }
 
         /// <summary>
         /// Gets or sets profile directory.
@@ -69,14 +75,15 @@ namespace Microsoft.Azure.Common.Authentication
         {
             ClientFactory = new ClientFactory();
             AuthenticationFactory = new AuthenticationFactory();
-            DataStore = new DiskDataStore();
-            AzureSession.OldProfileFile = "WindowsAzureProfile.xml";
-            AzureSession.OldProfileFileBackup = "WindowsAzureProfile.xml.bak";
-            AzureSession.ProfileDirectory = Path.Combine(
+            DataStore = new MemoryDataStore();
+            TokenCache = new TokenCache();
+            OldProfileFile = "WindowsAzureProfile.xml";
+            OldProfileFileBackup = "WindowsAzureProfile.xml.bak";
+            ProfileDirectory = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
                 Resources.AzureDirectoryName); ;
-            AzureSession.ProfileFile = "AzureProfile.json";
-            AzureSession.TokenCacheFile = "TokenCache.dat";
+            ProfileFile = "AzureProfile.json";
+            TokenCacheFile = "TokenCache.dat";
         }
     }
 }

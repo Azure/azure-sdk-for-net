@@ -208,6 +208,59 @@ namespace Microsoft.Azure.Common.Authentication
         }
 
         /// <summary>
+        /// Initializes AzureProfile using passed in access token.
+        /// </summary>
+        /// <param name="environment">Environment object.</param>
+        /// <param name="subscriptionId">Subscription Id</param>
+        /// <param name="accessToken">AccessToken to use with profile.</param>
+        /// <param name="accountId">AccountId for the new account.</param>
+        /// <param name="storageAccount">Storage account name (optional).</param>
+        /// <returns></returns>
+        public void InitializeProfile(AzureEnvironment environment, Guid subscriptionId, string accessToken,
+            string accountId, string storageAccount)
+        {
+            if (environment == null)
+            {
+                throw new ArgumentNullException("environment");
+            }
+            if (accessToken == null)
+            {
+                throw new ArgumentNullException("accessToken");
+            }
+
+            // Add environment if not public
+            if (!AzureEnvironment.PublicEnvironments.ContainsKey(environment.Name))
+            {
+                AddOrSetEnvironment(environment);
+            }
+
+            // Add account
+            var azureAccount = new AzureAccount
+            {
+                Id = accountId,
+                Type = AzureAccount.AccountType.AccessToken
+            };
+            azureAccount.Properties[AzureAccount.Property.Subscriptions] = subscriptionId.ToString();
+            azureAccount.Properties[AzureAccount.Property.AccessToken] = accessToken;
+            AddOrSetAccount(azureAccount);
+
+            // Add subscription
+            var azureSubscription = new AzureSubscription
+            {
+                Id = subscriptionId,
+                Name = subscriptionId.ToString(),
+                Environment = environment.Name
+            };
+            if (!string.IsNullOrEmpty(storageAccount))
+            {
+                azureSubscription.Properties[AzureSubscription.Property.StorageAccount] = storageAccount;
+            }
+            azureSubscription.Properties[AzureSubscription.Property.Default] = "True";
+            azureSubscription.Account = accountId;
+            AddOrSetSubscription(azureSubscription);
+        }
+
+        /// <summary>
         /// Initializes AzureProfile using passed in account and optional password.
         /// </summary>
         /// <param name="environment">Environment object.</param>
@@ -610,7 +663,7 @@ namespace Microsoft.Azure.Common.Authentication
             Profile.Subscriptions.Clear();
             Profile.Save();
 
-            ProtectedFileTokenCache.Instance.Clear();
+            AzureSession.TokenCache.Clear();
         }
 
         public void ClearDefaultSubscription()

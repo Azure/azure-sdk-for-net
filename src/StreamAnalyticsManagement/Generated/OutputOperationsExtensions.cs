@@ -349,6 +349,66 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         }
         
         /// <summary>
+        /// Update an output for a stream analytics job.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.StreamAnalytics.IOutputOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The resource group name of the stream analytics job.
+        /// </param>
+        /// <param name='jobName'>
+        /// Required. The name of the stream analytics job.
+        /// </param>
+        /// <param name='outputName'>
+        /// Required. The name of the output for the stream analytics job.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The parameters required to create or update an output for
+        /// a stream analytics job.
+        /// </param>
+        /// <returns>
+        /// The response of the output patch operation.
+        /// </returns>
+        public static OutputPatchResponse Patch(this IOutputOperations operations, string resourceGroupName, string jobName, string outputName, OutputPatchParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IOutputOperations)s).PatchAsync(resourceGroupName, jobName, outputName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Update an output for a stream analytics job.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.StreamAnalytics.IOutputOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The resource group name of the stream analytics job.
+        /// </param>
+        /// <param name='jobName'>
+        /// Required. The name of the stream analytics job.
+        /// </param>
+        /// <param name='outputName'>
+        /// Required. The name of the output for the stream analytics job.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The parameters required to create or update an output for
+        /// a stream analytics job.
+        /// </param>
+        /// <returns>
+        /// The response of the output patch operation.
+        /// </returns>
+        public static Task<OutputPatchResponse> PatchAsync(this IOutputOperations operations, string resourceGroupName, string jobName, string outputName, OutputPatchParameters parameters)
+        {
+            return operations.PatchAsync(resourceGroupName, jobName, outputName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Test an output for a stream analytics job.
         /// </summary>
         /// <param name='operations'>
@@ -398,66 +458,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         public static Task<DataSourceTestConnectionResponse> TestConnectionAsync(this IOutputOperations operations, string resourceGroupName, string jobName, string outputName)
         {
             return operations.TestConnectionAsync(resourceGroupName, jobName, outputName, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// Update an output for a stream analytics job.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.StreamAnalytics.IOutputOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. The resource group name of the stream analytics job.
-        /// </param>
-        /// <param name='jobName'>
-        /// Required. The name of the stream analytics job.
-        /// </param>
-        /// <param name='outputName'>
-        /// Required. The name of the output for the stream analytics job.
-        /// </param>
-        /// <param name='parameters'>
-        /// Required. The parameters required to create or update an output for
-        /// a stream analytics job.
-        /// </param>
-        /// <returns>
-        /// The response of the output patch operation.
-        /// </returns>
-        public static OutputPatchResponse Update(this IOutputOperations operations, string resourceGroupName, string jobName, string outputName, OutputPatchParameters parameters)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IOutputOperations)s).UpdateAsync(resourceGroupName, jobName, outputName, parameters);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// Update an output for a stream analytics job.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.StreamAnalytics.IOutputOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. The resource group name of the stream analytics job.
-        /// </param>
-        /// <param name='jobName'>
-        /// Required. The name of the stream analytics job.
-        /// </param>
-        /// <param name='outputName'>
-        /// Required. The name of the output for the stream analytics job.
-        /// </param>
-        /// <param name='parameters'>
-        /// Required. The parameters required to create or update an output for
-        /// a stream analytics job.
-        /// </param>
-        /// <returns>
-        /// The response of the output patch operation.
-        /// </returns>
-        public static Task<OutputPatchResponse> UpdateAsync(this IOutputOperations operations, string resourceGroupName, string jobName, string outputName, OutputPatchParameters parameters)
-        {
-            return operations.UpdateAsync(resourceGroupName, jobName, outputName, parameters, CancellationToken.None);
         }
     }
 }

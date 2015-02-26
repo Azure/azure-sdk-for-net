@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private InputProperties _properties;
         
         /// <summary>
-        /// Required. Gets or sets the properties of the input.
+        /// Optional. Gets or sets the properties of the input.
         /// </summary>
         public InputProperties Properties
         {
@@ -63,19 +63,14 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// Initializes a new instance of the Input class with required
         /// arguments.
         /// </summary>
-        public Input(string name, InputProperties properties)
+        public Input(string name)
             : this()
         {
             if (name == null)
             {
                 throw new ArgumentNullException("name");
             }
-            if (properties == null)
-            {
-                throw new ArgumentNullException("properties");
-            }
             this.Name = name;
-            this.Properties = properties;
         }
     }
 }

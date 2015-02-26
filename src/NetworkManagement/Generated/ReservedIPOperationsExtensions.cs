@@ -38,6 +38,132 @@ namespace Microsoft.WindowsAzure.Management.Network
     public static partial class ReservedIPOperationsExtensions
     {
         /// <summary>
+        /// The Associate Reserved IP operation associates a Reserved IP with a
+        /// service.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IReservedIPOperations.
+        /// </param>
+        /// <param name='reservedIpName'>
+        /// Required. The name of the reserved IP.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to associate Reserved IP.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static OperationStatusResponse Associate(this IReservedIPOperations operations, string reservedIpName, NetworkReservedIPMobilityParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IReservedIPOperations)s).AssociateAsync(reservedIpName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Associate Reserved IP operation associates a Reserved IP with a
+        /// service.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IReservedIPOperations.
+        /// </param>
+        /// <param name='reservedIpName'>
+        /// Required. The name of the reserved IP.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to associate Reserved IP.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static Task<OperationStatusResponse> AssociateAsync(this IReservedIPOperations operations, string reservedIpName, NetworkReservedIPMobilityParameters parameters)
+        {
+            return operations.AssociateAsync(reservedIpName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The BeginAssociate begins to associate a Reserved IP with a service.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IReservedIPOperations.
+        /// </param>
+        /// <param name='reservedIpName'>
+        /// Required. The name of the reserved IP.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Begin associating Reserved IP.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static OperationStatusResponse BeginAssociating(this IReservedIPOperations operations, string reservedIpName, NetworkReservedIPMobilityParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IReservedIPOperations)s).BeginAssociatingAsync(reservedIpName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The BeginAssociate begins to associate a Reserved IP with a service.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IReservedIPOperations.
+        /// </param>
+        /// <param name='reservedIpName'>
+        /// Required. The name of the reserved IP.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Begin associating Reserved IP.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static Task<OperationStatusResponse> BeginAssociatingAsync(this IReservedIPOperations operations, string reservedIpName, NetworkReservedIPMobilityParameters parameters)
+        {
+            return operations.BeginAssociatingAsync(reservedIpName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// The Begin Creating Reserved IP operation creates a reserved IP from
         /// your the subscription.
         /// </summary>
@@ -139,6 +265,72 @@ namespace Microsoft.WindowsAzure.Management.Network
         public static Task<AzureOperationResponse> BeginDeletingAsync(this IReservedIPOperations operations, string ipName)
         {
             return operations.BeginDeletingAsync(ipName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The BeginDisassociate begins to disassociate a Reserved IP from a
+        /// service.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IReservedIPOperations.
+        /// </param>
+        /// <param name='reservedIpName'>
+        /// Required. The name of the reserved IP.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Begin disassociating Reserved
+        /// IP.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static OperationStatusResponse BeginDisassociating(this IReservedIPOperations operations, string reservedIpName, NetworkReservedIPMobilityParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IReservedIPOperations)s).BeginDisassociatingAsync(reservedIpName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The BeginDisassociate begins to disassociate a Reserved IP from a
+        /// service.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IReservedIPOperations.
+        /// </param>
+        /// <param name='reservedIpName'>
+        /// Required. The name of the reserved IP.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Begin disassociating Reserved
+        /// IP.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static Task<OperationStatusResponse> BeginDisassociatingAsync(this IReservedIPOperations operations, string reservedIpName, NetworkReservedIPMobilityParameters parameters)
+        {
+            return operations.BeginDisassociatingAsync(reservedIpName, parameters, CancellationToken.None);
         }
         
         /// <summary>
@@ -255,6 +447,70 @@ namespace Microsoft.WindowsAzure.Management.Network
         public static Task<OperationStatusResponse> DeleteAsync(this IReservedIPOperations operations, string ipName)
         {
             return operations.DeleteAsync(ipName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The Disassociate Reserved IP operation disassociates a Reserved IP
+        /// from a service.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IReservedIPOperations.
+        /// </param>
+        /// <param name='reservedIpName'>
+        /// Required. The name of the reserved IP.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to disassociate Reserved IP.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static OperationStatusResponse Disassociate(this IReservedIPOperations operations, string reservedIpName, NetworkReservedIPMobilityParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IReservedIPOperations)s).DisassociateAsync(reservedIpName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Disassociate Reserved IP operation disassociates a Reserved IP
+        /// from a service.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IReservedIPOperations.
+        /// </param>
+        /// <param name='reservedIpName'>
+        /// Required. The name of the reserved IP.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to disassociate Reserved IP.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static Task<OperationStatusResponse> DisassociateAsync(this IReservedIPOperations operations, string reservedIpName, NetworkReservedIPMobilityParameters parameters)
+        {
+            return operations.DisassociateAsync(reservedIpName, parameters, CancellationToken.None);
         }
         
         /// <summary>

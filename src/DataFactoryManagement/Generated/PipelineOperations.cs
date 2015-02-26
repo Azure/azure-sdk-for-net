@@ -521,6 +521,29 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 sinkValue["sqlWriterTableType"] = derived9.SqlWriterTableType;
                                             }
                                             
+                                            if (derived9.StoredProcedureParameters != null)
+                                            {
+                                                if (derived9.StoredProcedureParameters is ILazyCollection == false || ((ILazyCollection)derived9.StoredProcedureParameters).IsInitialized)
+                                                {
+                                                    JObject storedProcedureParametersDictionary = new JObject();
+                                                    foreach (KeyValuePair<string, StoredProcedureParameter> pair in derived9.StoredProcedureParameters)
+                                                    {
+                                                        string storedProcedureParametersKey = pair.Key;
+                                                        StoredProcedureParameter storedProcedureParametersValue = pair.Value;
+                                                        JObject storedProcedureParameterValue = new JObject();
+                                                        storedProcedureParametersDictionary[storedProcedureParametersKey] = storedProcedureParameterValue;
+                                                        
+                                                        storedProcedureParameterValue["value"] = storedProcedureParametersValue.Value;
+                                                        
+                                                        if (storedProcedureParametersValue.Type != null)
+                                                        {
+                                                            storedProcedureParameterValue["type"] = storedProcedureParametersValue.Type;
+                                                        }
+                                                    }
+                                                    sinkValue["storedProcedureParameters"] = storedProcedureParametersDictionary;
+                                                }
+                                            }
+                                            
                                             sinkValue["writeBatchSize"] = derived9.WriteBatchSize;
                                             
                                             sinkValue["writeBatchTimeout"] = derived9.WriteBatchTimeout.ToString();
@@ -686,10 +709,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 if (derived12.ExtendedProperties is ILazyCollection == false || ((ILazyCollection)derived12.ExtendedProperties).IsInitialized)
                                                 {
                                                     JObject extendedPropertiesDictionary = new JObject();
-                                                    foreach (KeyValuePair<string, string> pair in derived12.ExtendedProperties)
+                                                    foreach (KeyValuePair<string, string> pair2 in derived12.ExtendedProperties)
                                                     {
-                                                        string extendedPropertiesKey = pair.Key;
-                                                        string extendedPropertiesValue = pair.Value;
+                                                        string extendedPropertiesKey = pair2.Key;
+                                                        string extendedPropertiesValue = pair2.Value;
                                                         extendedPropertiesDictionary[extendedPropertiesKey] = extendedPropertiesValue;
                                                     }
                                                     transformationValue2["extendedProperties"] = extendedPropertiesDictionary;
@@ -731,10 +754,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 if (derived13.ExtendedProperties is ILazyCollection == false || ((ILazyCollection)derived13.ExtendedProperties).IsInitialized)
                                                 {
                                                     JObject extendedPropertiesDictionary2 = new JObject();
-                                                    foreach (KeyValuePair<string, string> pair2 in derived13.ExtendedProperties)
+                                                    foreach (KeyValuePair<string, string> pair3 in derived13.ExtendedProperties)
                                                     {
-                                                        string extendedPropertiesKey2 = pair2.Key;
-                                                        string extendedPropertiesValue2 = pair2.Value;
+                                                        string extendedPropertiesKey2 = pair3.Key;
+                                                        string extendedPropertiesValue2 = pair3.Value;
                                                         extendedPropertiesDictionary2[extendedPropertiesKey2] = extendedPropertiesValue2;
                                                     }
                                                     transformationValue2["extendedProperties"] = extendedPropertiesDictionary2;
@@ -995,10 +1018,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                             if (derived16.Transformation.ExtendedProperties is ILazyCollection == false || ((ILazyCollection)derived16.Transformation.ExtendedProperties).IsInitialized)
                                             {
                                                 JObject extendedPropertiesDictionary3 = new JObject();
-                                                foreach (KeyValuePair<string, string> pair3 in derived16.Transformation.ExtendedProperties)
+                                                foreach (KeyValuePair<string, string> pair4 in derived16.Transformation.ExtendedProperties)
                                                 {
-                                                    string extendedPropertiesKey3 = pair3.Key;
-                                                    string extendedPropertiesValue3 = pair3.Value;
+                                                    string extendedPropertiesKey3 = pair4.Key;
+                                                    string extendedPropertiesValue3 = pair4.Value;
                                                     extendedPropertiesDictionary3[extendedPropertiesKey3] = extendedPropertiesValue3;
                                                 }
                                                 transformationValue3["extendedProperties"] = extendedPropertiesDictionary3;
@@ -1116,14 +1139,14 @@ namespace Microsoft.Azure.Management.DataFactories
                                         {
                                             if (derived17.Transformation.StoredProcedureActivityParameters is ILazyCollection == false || ((ILazyCollection)derived17.Transformation.StoredProcedureActivityParameters).IsInitialized)
                                             {
-                                                JObject storedProcedureParametersDictionary = new JObject();
-                                                foreach (KeyValuePair<string, string> pair4 in derived17.Transformation.StoredProcedureActivityParameters)
+                                                JObject storedProcedureParametersDictionary2 = new JObject();
+                                                foreach (KeyValuePair<string, string> pair5 in derived17.Transformation.StoredProcedureActivityParameters)
                                                 {
-                                                    string storedProcedureParametersKey = pair4.Key;
-                                                    string storedProcedureParametersValue = pair4.Value;
-                                                    storedProcedureParametersDictionary[storedProcedureParametersKey] = storedProcedureParametersValue;
+                                                    string storedProcedureParametersKey2 = pair5.Key;
+                                                    string storedProcedureParametersValue2 = pair5.Value;
+                                                    storedProcedureParametersDictionary2[storedProcedureParametersKey2] = storedProcedureParametersValue2;
                                                 }
-                                                transformationValue4["storedProcedureParameters"] = storedProcedureParametersDictionary;
+                                                transformationValue4["storedProcedureParameters"] = storedProcedureParametersDictionary2;
                                             }
                                         }
                                     }
@@ -1821,6 +1844,32 @@ namespace Microsoft.Azure.Management.DataFactories
                                                             sqlSinkInstance.SqlWriterTableType = sqlWriterTableTypeInstance;
                                                         }
                                                         
+                                                        JToken storedProcedureParametersSequenceElement = ((JToken)sinkValue2["storedProcedureParameters"]);
+                                                        if (storedProcedureParametersSequenceElement != null && storedProcedureParametersSequenceElement.Type != JTokenType.Null)
+                                                        {
+                                                            foreach (JProperty property in storedProcedureParametersSequenceElement)
+                                                            {
+                                                                string storedProcedureParametersKey3 = ((string)property.Name);
+                                                                JObject varToken = ((JObject)property.Value);
+                                                                StoredProcedureParameter storedProcedureParameterInstance = new StoredProcedureParameter();
+                                                                sqlSinkInstance.StoredProcedureParameters.Add(storedProcedureParametersKey3, storedProcedureParameterInstance);
+                                                                
+                                                                JToken valueValue = varToken["value"];
+                                                                if (valueValue != null && valueValue.Type != JTokenType.Null)
+                                                                {
+                                                                    string valueInstance = ((string)valueValue);
+                                                                    storedProcedureParameterInstance.Value = valueInstance;
+                                                                }
+                                                                
+                                                                JToken typeValue = varToken["type"];
+                                                                if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                                                {
+                                                                    string typeInstance = ((string)typeValue);
+                                                                    storedProcedureParameterInstance.Type = typeInstance;
+                                                                }
+                                                            }
+                                                        }
+                                                        
                                                         JToken writeBatchSizeValue4 = sinkValue2["writeBatchSize"];
                                                         if (writeBatchSizeValue4 != null && writeBatchSizeValue4.Type != JTokenType.Null)
                                                         {
@@ -2047,10 +2096,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                     JToken extendedPropertiesSequenceElement = ((JToken)transformationValue6["extendedProperties"]);
                                                     if (extendedPropertiesSequenceElement != null && extendedPropertiesSequenceElement.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JProperty property in extendedPropertiesSequenceElement)
+                                                        foreach (JProperty property2 in extendedPropertiesSequenceElement)
                                                         {
-                                                            string extendedPropertiesKey4 = ((string)property.Name);
-                                                            string extendedPropertiesValue4 = ((string)property.Value);
+                                                            string extendedPropertiesKey4 = ((string)property2.Name);
+                                                            string extendedPropertiesValue4 = ((string)property2.Value);
                                                             hiveInstance.ExtendedProperties.Add(extendedPropertiesKey4, extendedPropertiesValue4);
                                                         }
                                                     }
@@ -2093,10 +2142,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                     JToken extendedPropertiesSequenceElement2 = ((JToken)transformationValue6["extendedProperties"]);
                                                     if (extendedPropertiesSequenceElement2 != null && extendedPropertiesSequenceElement2.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JProperty property2 in extendedPropertiesSequenceElement2)
+                                                        foreach (JProperty property3 in extendedPropertiesSequenceElement2)
                                                         {
-                                                            string extendedPropertiesKey5 = ((string)property2.Name);
-                                                            string extendedPropertiesValue5 = ((string)property2.Value);
+                                                            string extendedPropertiesKey5 = ((string)property3.Name);
+                                                            string extendedPropertiesValue5 = ((string)property3.Value);
                                                             pigInstance.ExtendedProperties.Add(extendedPropertiesKey5, extendedPropertiesValue5);
                                                         }
                                                     }
@@ -2423,10 +2472,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 JToken extendedPropertiesSequenceElement3 = ((JToken)transformationValue7["extendedProperties"]);
                                                 if (extendedPropertiesSequenceElement3 != null && extendedPropertiesSequenceElement3.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JProperty property3 in extendedPropertiesSequenceElement3)
+                                                    foreach (JProperty property4 in extendedPropertiesSequenceElement3)
                                                     {
-                                                        string extendedPropertiesKey6 = ((string)property3.Name);
-                                                        string extendedPropertiesValue6 = ((string)property3.Value);
+                                                        string extendedPropertiesKey6 = ((string)property4.Name);
+                                                        string extendedPropertiesValue6 = ((string)property4.Value);
                                                         transformationInstance2.ExtendedProperties.Add(extendedPropertiesKey6, extendedPropertiesValue6);
                                                     }
                                                 }
@@ -2582,14 +2631,14 @@ namespace Microsoft.Azure.Management.DataFactories
                                                     transformationInstance3.StoredProcedureName = storedProcedureNameInstance;
                                                 }
                                                 
-                                                JToken storedProcedureParametersSequenceElement = ((JToken)transformationValue8["storedProcedureParameters"]);
-                                                if (storedProcedureParametersSequenceElement != null && storedProcedureParametersSequenceElement.Type != JTokenType.Null)
+                                                JToken storedProcedureParametersSequenceElement2 = ((JToken)transformationValue8["storedProcedureParameters"]);
+                                                if (storedProcedureParametersSequenceElement2 != null && storedProcedureParametersSequenceElement2.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JProperty property4 in storedProcedureParametersSequenceElement)
+                                                    foreach (JProperty property5 in storedProcedureParametersSequenceElement2)
                                                     {
-                                                        string storedProcedureParametersKey2 = ((string)property4.Name);
-                                                        string storedProcedureParametersValue2 = ((string)property4.Value);
-                                                        transformationInstance3.StoredProcedureActivityParameters.Add(storedProcedureParametersKey2, storedProcedureParametersValue2);
+                                                        string storedProcedureParametersKey4 = ((string)property5.Name);
+                                                        string storedProcedureParametersValue3 = ((string)property5.Value);
+                                                        transformationInstance3.StoredProcedureActivityParameters.Add(storedProcedureParametersKey4, storedProcedureParametersValue3);
                                                     }
                                                 }
                                             }
@@ -3543,6 +3592,32 @@ namespace Microsoft.Azure.Management.DataFactories
                                                             sqlSinkInstance.SqlWriterTableType = sqlWriterTableTypeInstance;
                                                         }
                                                         
+                                                        JToken storedProcedureParametersSequenceElement = ((JToken)sinkValue["storedProcedureParameters"]);
+                                                        if (storedProcedureParametersSequenceElement != null && storedProcedureParametersSequenceElement.Type != JTokenType.Null)
+                                                        {
+                                                            foreach (JProperty property in storedProcedureParametersSequenceElement)
+                                                            {
+                                                                string storedProcedureParametersKey = ((string)property.Name);
+                                                                JObject varToken = ((JObject)property.Value);
+                                                                StoredProcedureParameter storedProcedureParameterInstance = new StoredProcedureParameter();
+                                                                sqlSinkInstance.StoredProcedureParameters.Add(storedProcedureParametersKey, storedProcedureParameterInstance);
+                                                                
+                                                                JToken valueValue = varToken["value"];
+                                                                if (valueValue != null && valueValue.Type != JTokenType.Null)
+                                                                {
+                                                                    string valueInstance = ((string)valueValue);
+                                                                    storedProcedureParameterInstance.Value = valueInstance;
+                                                                }
+                                                                
+                                                                JToken typeValue = varToken["type"];
+                                                                if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                                                {
+                                                                    string typeInstance = ((string)typeValue);
+                                                                    storedProcedureParameterInstance.Type = typeInstance;
+                                                                }
+                                                            }
+                                                        }
+                                                        
                                                         JToken writeBatchSizeValue4 = sinkValue["writeBatchSize"];
                                                         if (writeBatchSizeValue4 != null && writeBatchSizeValue4.Type != JTokenType.Null)
                                                         {
@@ -3769,10 +3844,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                     JToken extendedPropertiesSequenceElement = ((JToken)transformationValue2["extendedProperties"]);
                                                     if (extendedPropertiesSequenceElement != null && extendedPropertiesSequenceElement.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JProperty property in extendedPropertiesSequenceElement)
+                                                        foreach (JProperty property2 in extendedPropertiesSequenceElement)
                                                         {
-                                                            string extendedPropertiesKey = ((string)property.Name);
-                                                            string extendedPropertiesValue = ((string)property.Value);
+                                                            string extendedPropertiesKey = ((string)property2.Name);
+                                                            string extendedPropertiesValue = ((string)property2.Value);
                                                             hiveInstance.ExtendedProperties.Add(extendedPropertiesKey, extendedPropertiesValue);
                                                         }
                                                     }
@@ -3815,10 +3890,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                     JToken extendedPropertiesSequenceElement2 = ((JToken)transformationValue2["extendedProperties"]);
                                                     if (extendedPropertiesSequenceElement2 != null && extendedPropertiesSequenceElement2.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JProperty property2 in extendedPropertiesSequenceElement2)
+                                                        foreach (JProperty property3 in extendedPropertiesSequenceElement2)
                                                         {
-                                                            string extendedPropertiesKey2 = ((string)property2.Name);
-                                                            string extendedPropertiesValue2 = ((string)property2.Value);
+                                                            string extendedPropertiesKey2 = ((string)property3.Name);
+                                                            string extendedPropertiesValue2 = ((string)property3.Value);
                                                             pigInstance.ExtendedProperties.Add(extendedPropertiesKey2, extendedPropertiesValue2);
                                                         }
                                                     }
@@ -4145,10 +4220,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 JToken extendedPropertiesSequenceElement3 = ((JToken)transformationValue3["extendedProperties"]);
                                                 if (extendedPropertiesSequenceElement3 != null && extendedPropertiesSequenceElement3.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JProperty property3 in extendedPropertiesSequenceElement3)
+                                                    foreach (JProperty property4 in extendedPropertiesSequenceElement3)
                                                     {
-                                                        string extendedPropertiesKey3 = ((string)property3.Name);
-                                                        string extendedPropertiesValue3 = ((string)property3.Value);
+                                                        string extendedPropertiesKey3 = ((string)property4.Name);
+                                                        string extendedPropertiesValue3 = ((string)property4.Value);
                                                         transformationInstance2.ExtendedProperties.Add(extendedPropertiesKey3, extendedPropertiesValue3);
                                                     }
                                                 }
@@ -4304,14 +4379,14 @@ namespace Microsoft.Azure.Management.DataFactories
                                                     transformationInstance3.StoredProcedureName = storedProcedureNameInstance;
                                                 }
                                                 
-                                                JToken storedProcedureParametersSequenceElement = ((JToken)transformationValue4["storedProcedureParameters"]);
-                                                if (storedProcedureParametersSequenceElement != null && storedProcedureParametersSequenceElement.Type != JTokenType.Null)
+                                                JToken storedProcedureParametersSequenceElement2 = ((JToken)transformationValue4["storedProcedureParameters"]);
+                                                if (storedProcedureParametersSequenceElement2 != null && storedProcedureParametersSequenceElement2.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JProperty property4 in storedProcedureParametersSequenceElement)
+                                                    foreach (JProperty property5 in storedProcedureParametersSequenceElement2)
                                                     {
-                                                        string storedProcedureParametersKey = ((string)property4.Name);
-                                                        string storedProcedureParametersValue = ((string)property4.Value);
-                                                        transformationInstance3.StoredProcedureActivityParameters.Add(storedProcedureParametersKey, storedProcedureParametersValue);
+                                                        string storedProcedureParametersKey2 = ((string)property5.Name);
+                                                        string storedProcedureParametersValue = ((string)property5.Value);
+                                                        transformationInstance3.StoredProcedureActivityParameters.Add(storedProcedureParametersKey2, storedProcedureParametersValue);
                                                     }
                                                 }
                                             }
@@ -4843,11 +4918,11 @@ namespace Microsoft.Azure.Management.DataFactories
                     {
                         result.Status = OperationStatus.Failed;
                     }
-                    if (statusCode == HttpStatusCode.NoContent)
+                    if (statusCode == HttpStatusCode.OK)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.NoContent)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
@@ -5634,6 +5709,32 @@ namespace Microsoft.Azure.Management.DataFactories
                                                             sqlSinkInstance.SqlWriterTableType = sqlWriterTableTypeInstance;
                                                         }
                                                         
+                                                        JToken storedProcedureParametersSequenceElement = ((JToken)sinkValue["storedProcedureParameters"]);
+                                                        if (storedProcedureParametersSequenceElement != null && storedProcedureParametersSequenceElement.Type != JTokenType.Null)
+                                                        {
+                                                            foreach (JProperty property in storedProcedureParametersSequenceElement)
+                                                            {
+                                                                string storedProcedureParametersKey = ((string)property.Name);
+                                                                JObject varToken = ((JObject)property.Value);
+                                                                StoredProcedureParameter storedProcedureParameterInstance = new StoredProcedureParameter();
+                                                                sqlSinkInstance.StoredProcedureParameters.Add(storedProcedureParametersKey, storedProcedureParameterInstance);
+                                                                
+                                                                JToken valueValue = varToken["value"];
+                                                                if (valueValue != null && valueValue.Type != JTokenType.Null)
+                                                                {
+                                                                    string valueInstance = ((string)valueValue);
+                                                                    storedProcedureParameterInstance.Value = valueInstance;
+                                                                }
+                                                                
+                                                                JToken typeValue = varToken["type"];
+                                                                if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                                                {
+                                                                    string typeInstance = ((string)typeValue);
+                                                                    storedProcedureParameterInstance.Type = typeInstance;
+                                                                }
+                                                            }
+                                                        }
+                                                        
                                                         JToken writeBatchSizeValue4 = sinkValue["writeBatchSize"];
                                                         if (writeBatchSizeValue4 != null && writeBatchSizeValue4.Type != JTokenType.Null)
                                                         {
@@ -5860,10 +5961,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                     JToken extendedPropertiesSequenceElement = ((JToken)transformationValue2["extendedProperties"]);
                                                     if (extendedPropertiesSequenceElement != null && extendedPropertiesSequenceElement.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JProperty property in extendedPropertiesSequenceElement)
+                                                        foreach (JProperty property2 in extendedPropertiesSequenceElement)
                                                         {
-                                                            string extendedPropertiesKey = ((string)property.Name);
-                                                            string extendedPropertiesValue = ((string)property.Value);
+                                                            string extendedPropertiesKey = ((string)property2.Name);
+                                                            string extendedPropertiesValue = ((string)property2.Value);
                                                             hiveInstance.ExtendedProperties.Add(extendedPropertiesKey, extendedPropertiesValue);
                                                         }
                                                     }
@@ -5906,10 +6007,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                     JToken extendedPropertiesSequenceElement2 = ((JToken)transformationValue2["extendedProperties"]);
                                                     if (extendedPropertiesSequenceElement2 != null && extendedPropertiesSequenceElement2.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JProperty property2 in extendedPropertiesSequenceElement2)
+                                                        foreach (JProperty property3 in extendedPropertiesSequenceElement2)
                                                         {
-                                                            string extendedPropertiesKey2 = ((string)property2.Name);
-                                                            string extendedPropertiesValue2 = ((string)property2.Value);
+                                                            string extendedPropertiesKey2 = ((string)property3.Name);
+                                                            string extendedPropertiesValue2 = ((string)property3.Value);
                                                             pigInstance.ExtendedProperties.Add(extendedPropertiesKey2, extendedPropertiesValue2);
                                                         }
                                                     }
@@ -6236,10 +6337,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 JToken extendedPropertiesSequenceElement3 = ((JToken)transformationValue3["extendedProperties"]);
                                                 if (extendedPropertiesSequenceElement3 != null && extendedPropertiesSequenceElement3.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JProperty property3 in extendedPropertiesSequenceElement3)
+                                                    foreach (JProperty property4 in extendedPropertiesSequenceElement3)
                                                     {
-                                                        string extendedPropertiesKey3 = ((string)property3.Name);
-                                                        string extendedPropertiesValue3 = ((string)property3.Value);
+                                                        string extendedPropertiesKey3 = ((string)property4.Name);
+                                                        string extendedPropertiesValue3 = ((string)property4.Value);
                                                         transformationInstance2.ExtendedProperties.Add(extendedPropertiesKey3, extendedPropertiesValue3);
                                                     }
                                                 }
@@ -6395,14 +6496,14 @@ namespace Microsoft.Azure.Management.DataFactories
                                                     transformationInstance3.StoredProcedureName = storedProcedureNameInstance;
                                                 }
                                                 
-                                                JToken storedProcedureParametersSequenceElement = ((JToken)transformationValue4["storedProcedureParameters"]);
-                                                if (storedProcedureParametersSequenceElement != null && storedProcedureParametersSequenceElement.Type != JTokenType.Null)
+                                                JToken storedProcedureParametersSequenceElement2 = ((JToken)transformationValue4["storedProcedureParameters"]);
+                                                if (storedProcedureParametersSequenceElement2 != null && storedProcedureParametersSequenceElement2.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JProperty property4 in storedProcedureParametersSequenceElement)
+                                                    foreach (JProperty property5 in storedProcedureParametersSequenceElement2)
                                                     {
-                                                        string storedProcedureParametersKey = ((string)property4.Name);
-                                                        string storedProcedureParametersValue = ((string)property4.Value);
-                                                        transformationInstance3.StoredProcedureActivityParameters.Add(storedProcedureParametersKey, storedProcedureParametersValue);
+                                                        string storedProcedureParametersKey2 = ((string)property5.Name);
+                                                        string storedProcedureParametersValue = ((string)property5.Value);
+                                                        transformationInstance3.StoredProcedureActivityParameters.Add(storedProcedureParametersKey2, storedProcedureParametersValue);
                                                     }
                                                 }
                                             }
@@ -7269,6 +7370,32 @@ namespace Microsoft.Azure.Management.DataFactories
                                                             sqlSinkInstance.SqlWriterTableType = sqlWriterTableTypeInstance;
                                                         }
                                                         
+                                                        JToken storedProcedureParametersSequenceElement = ((JToken)sinkValue["storedProcedureParameters"]);
+                                                        if (storedProcedureParametersSequenceElement != null && storedProcedureParametersSequenceElement.Type != JTokenType.Null)
+                                                        {
+                                                            foreach (JProperty property in storedProcedureParametersSequenceElement)
+                                                            {
+                                                                string storedProcedureParametersKey = ((string)property.Name);
+                                                                JObject varToken = ((JObject)property.Value);
+                                                                StoredProcedureParameter storedProcedureParameterInstance = new StoredProcedureParameter();
+                                                                sqlSinkInstance.StoredProcedureParameters.Add(storedProcedureParametersKey, storedProcedureParameterInstance);
+                                                                
+                                                                JToken valueValue = varToken["value"];
+                                                                if (valueValue != null && valueValue.Type != JTokenType.Null)
+                                                                {
+                                                                    string valueInstance = ((string)valueValue);
+                                                                    storedProcedureParameterInstance.Value = valueInstance;
+                                                                }
+                                                                
+                                                                JToken typeValue = varToken["type"];
+                                                                if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                                                {
+                                                                    string typeInstance = ((string)typeValue);
+                                                                    storedProcedureParameterInstance.Type = typeInstance;
+                                                                }
+                                                            }
+                                                        }
+                                                        
                                                         JToken writeBatchSizeValue4 = sinkValue["writeBatchSize"];
                                                         if (writeBatchSizeValue4 != null && writeBatchSizeValue4.Type != JTokenType.Null)
                                                         {
@@ -7495,10 +7622,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                     JToken extendedPropertiesSequenceElement = ((JToken)transformationValue2["extendedProperties"]);
                                                     if (extendedPropertiesSequenceElement != null && extendedPropertiesSequenceElement.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JProperty property in extendedPropertiesSequenceElement)
+                                                        foreach (JProperty property2 in extendedPropertiesSequenceElement)
                                                         {
-                                                            string extendedPropertiesKey = ((string)property.Name);
-                                                            string extendedPropertiesValue = ((string)property.Value);
+                                                            string extendedPropertiesKey = ((string)property2.Name);
+                                                            string extendedPropertiesValue = ((string)property2.Value);
                                                             hiveInstance.ExtendedProperties.Add(extendedPropertiesKey, extendedPropertiesValue);
                                                         }
                                                     }
@@ -7541,10 +7668,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                     JToken extendedPropertiesSequenceElement2 = ((JToken)transformationValue2["extendedProperties"]);
                                                     if (extendedPropertiesSequenceElement2 != null && extendedPropertiesSequenceElement2.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JProperty property2 in extendedPropertiesSequenceElement2)
+                                                        foreach (JProperty property3 in extendedPropertiesSequenceElement2)
                                                         {
-                                                            string extendedPropertiesKey2 = ((string)property2.Name);
-                                                            string extendedPropertiesValue2 = ((string)property2.Value);
+                                                            string extendedPropertiesKey2 = ((string)property3.Name);
+                                                            string extendedPropertiesValue2 = ((string)property3.Value);
                                                             pigInstance.ExtendedProperties.Add(extendedPropertiesKey2, extendedPropertiesValue2);
                                                         }
                                                     }
@@ -7871,10 +7998,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 JToken extendedPropertiesSequenceElement3 = ((JToken)transformationValue3["extendedProperties"]);
                                                 if (extendedPropertiesSequenceElement3 != null && extendedPropertiesSequenceElement3.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JProperty property3 in extendedPropertiesSequenceElement3)
+                                                    foreach (JProperty property4 in extendedPropertiesSequenceElement3)
                                                     {
-                                                        string extendedPropertiesKey3 = ((string)property3.Name);
-                                                        string extendedPropertiesValue3 = ((string)property3.Value);
+                                                        string extendedPropertiesKey3 = ((string)property4.Name);
+                                                        string extendedPropertiesValue3 = ((string)property4.Value);
                                                         transformationInstance2.ExtendedProperties.Add(extendedPropertiesKey3, extendedPropertiesValue3);
                                                     }
                                                 }
@@ -8030,14 +8157,14 @@ namespace Microsoft.Azure.Management.DataFactories
                                                     transformationInstance3.StoredProcedureName = storedProcedureNameInstance;
                                                 }
                                                 
-                                                JToken storedProcedureParametersSequenceElement = ((JToken)transformationValue4["storedProcedureParameters"]);
-                                                if (storedProcedureParametersSequenceElement != null && storedProcedureParametersSequenceElement.Type != JTokenType.Null)
+                                                JToken storedProcedureParametersSequenceElement2 = ((JToken)transformationValue4["storedProcedureParameters"]);
+                                                if (storedProcedureParametersSequenceElement2 != null && storedProcedureParametersSequenceElement2.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JProperty property4 in storedProcedureParametersSequenceElement)
+                                                    foreach (JProperty property5 in storedProcedureParametersSequenceElement2)
                                                     {
-                                                        string storedProcedureParametersKey = ((string)property4.Name);
-                                                        string storedProcedureParametersValue = ((string)property4.Value);
-                                                        transformationInstance3.StoredProcedureActivityParameters.Add(storedProcedureParametersKey, storedProcedureParametersValue);
+                                                        string storedProcedureParametersKey2 = ((string)property5.Name);
+                                                        string storedProcedureParametersValue = ((string)property5.Value);
+                                                        transformationInstance3.StoredProcedureActivityParameters.Add(storedProcedureParametersKey2, storedProcedureParametersValue);
                                                     }
                                                 }
                                             }
@@ -8971,6 +9098,32 @@ namespace Microsoft.Azure.Management.DataFactories
                                                                     sqlSinkInstance.SqlWriterTableType = sqlWriterTableTypeInstance;
                                                                 }
                                                                 
+                                                                JToken storedProcedureParametersSequenceElement = ((JToken)sinkValue["storedProcedureParameters"]);
+                                                                if (storedProcedureParametersSequenceElement != null && storedProcedureParametersSequenceElement.Type != JTokenType.Null)
+                                                                {
+                                                                    foreach (JProperty property in storedProcedureParametersSequenceElement)
+                                                                    {
+                                                                        string storedProcedureParametersKey = ((string)property.Name);
+                                                                        JObject varToken = ((JObject)property.Value);
+                                                                        StoredProcedureParameter storedProcedureParameterInstance = new StoredProcedureParameter();
+                                                                        sqlSinkInstance.StoredProcedureParameters.Add(storedProcedureParametersKey, storedProcedureParameterInstance);
+                                                                        
+                                                                        JToken valueValue2 = varToken["value"];
+                                                                        if (valueValue2 != null && valueValue2.Type != JTokenType.Null)
+                                                                        {
+                                                                            string valueInstance = ((string)valueValue2);
+                                                                            storedProcedureParameterInstance.Value = valueInstance;
+                                                                        }
+                                                                        
+                                                                        JToken typeValue = varToken["type"];
+                                                                        if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                                                        {
+                                                                            string typeInstance = ((string)typeValue);
+                                                                            storedProcedureParameterInstance.Type = typeInstance;
+                                                                        }
+                                                                    }
+                                                                }
+                                                                
                                                                 JToken writeBatchSizeValue4 = sinkValue["writeBatchSize"];
                                                                 if (writeBatchSizeValue4 != null && writeBatchSizeValue4.Type != JTokenType.Null)
                                                                 {
@@ -9197,10 +9350,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                             JToken extendedPropertiesSequenceElement = ((JToken)transformationValue2["extendedProperties"]);
                                                             if (extendedPropertiesSequenceElement != null && extendedPropertiesSequenceElement.Type != JTokenType.Null)
                                                             {
-                                                                foreach (JProperty property in extendedPropertiesSequenceElement)
+                                                                foreach (JProperty property2 in extendedPropertiesSequenceElement)
                                                                 {
-                                                                    string extendedPropertiesKey = ((string)property.Name);
-                                                                    string extendedPropertiesValue = ((string)property.Value);
+                                                                    string extendedPropertiesKey = ((string)property2.Name);
+                                                                    string extendedPropertiesValue = ((string)property2.Value);
                                                                     hiveInstance.ExtendedProperties.Add(extendedPropertiesKey, extendedPropertiesValue);
                                                                 }
                                                             }
@@ -9243,10 +9396,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                             JToken extendedPropertiesSequenceElement2 = ((JToken)transformationValue2["extendedProperties"]);
                                                             if (extendedPropertiesSequenceElement2 != null && extendedPropertiesSequenceElement2.Type != JTokenType.Null)
                                                             {
-                                                                foreach (JProperty property2 in extendedPropertiesSequenceElement2)
+                                                                foreach (JProperty property3 in extendedPropertiesSequenceElement2)
                                                                 {
-                                                                    string extendedPropertiesKey2 = ((string)property2.Name);
-                                                                    string extendedPropertiesValue2 = ((string)property2.Value);
+                                                                    string extendedPropertiesKey2 = ((string)property3.Name);
+                                                                    string extendedPropertiesValue2 = ((string)property3.Value);
                                                                     pigInstance.ExtendedProperties.Add(extendedPropertiesKey2, extendedPropertiesValue2);
                                                                 }
                                                             }
@@ -9573,10 +9726,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         JToken extendedPropertiesSequenceElement3 = ((JToken)transformationValue3["extendedProperties"]);
                                                         if (extendedPropertiesSequenceElement3 != null && extendedPropertiesSequenceElement3.Type != JTokenType.Null)
                                                         {
-                                                            foreach (JProperty property3 in extendedPropertiesSequenceElement3)
+                                                            foreach (JProperty property4 in extendedPropertiesSequenceElement3)
                                                             {
-                                                                string extendedPropertiesKey3 = ((string)property3.Name);
-                                                                string extendedPropertiesValue3 = ((string)property3.Value);
+                                                                string extendedPropertiesKey3 = ((string)property4.Name);
+                                                                string extendedPropertiesValue3 = ((string)property4.Value);
                                                                 transformationInstance2.ExtendedProperties.Add(extendedPropertiesKey3, extendedPropertiesValue3);
                                                             }
                                                         }
@@ -9732,14 +9885,14 @@ namespace Microsoft.Azure.Management.DataFactories
                                                             transformationInstance3.StoredProcedureName = storedProcedureNameInstance;
                                                         }
                                                         
-                                                        JToken storedProcedureParametersSequenceElement = ((JToken)transformationValue4["storedProcedureParameters"]);
-                                                        if (storedProcedureParametersSequenceElement != null && storedProcedureParametersSequenceElement.Type != JTokenType.Null)
+                                                        JToken storedProcedureParametersSequenceElement2 = ((JToken)transformationValue4["storedProcedureParameters"]);
+                                                        if (storedProcedureParametersSequenceElement2 != null && storedProcedureParametersSequenceElement2.Type != JTokenType.Null)
                                                         {
-                                                            foreach (JProperty property4 in storedProcedureParametersSequenceElement)
+                                                            foreach (JProperty property5 in storedProcedureParametersSequenceElement2)
                                                             {
-                                                                string storedProcedureParametersKey = ((string)property4.Name);
-                                                                string storedProcedureParametersValue = ((string)property4.Value);
-                                                                transformationInstance3.StoredProcedureActivityParameters.Add(storedProcedureParametersKey, storedProcedureParametersValue);
+                                                                string storedProcedureParametersKey2 = ((string)property5.Name);
+                                                                string storedProcedureParametersValue = ((string)property5.Value);
+                                                                transformationInstance3.StoredProcedureActivityParameters.Add(storedProcedureParametersKey2, storedProcedureParametersValue);
                                                             }
                                                         }
                                                     }
@@ -10623,6 +10776,32 @@ namespace Microsoft.Azure.Management.DataFactories
                                                                     sqlSinkInstance.SqlWriterTableType = sqlWriterTableTypeInstance;
                                                                 }
                                                                 
+                                                                JToken storedProcedureParametersSequenceElement = ((JToken)sinkValue["storedProcedureParameters"]);
+                                                                if (storedProcedureParametersSequenceElement != null && storedProcedureParametersSequenceElement.Type != JTokenType.Null)
+                                                                {
+                                                                    foreach (JProperty property in storedProcedureParametersSequenceElement)
+                                                                    {
+                                                                        string storedProcedureParametersKey = ((string)property.Name);
+                                                                        JObject varToken = ((JObject)property.Value);
+                                                                        StoredProcedureParameter storedProcedureParameterInstance = new StoredProcedureParameter();
+                                                                        sqlSinkInstance.StoredProcedureParameters.Add(storedProcedureParametersKey, storedProcedureParameterInstance);
+                                                                        
+                                                                        JToken valueValue2 = varToken["value"];
+                                                                        if (valueValue2 != null && valueValue2.Type != JTokenType.Null)
+                                                                        {
+                                                                            string valueInstance = ((string)valueValue2);
+                                                                            storedProcedureParameterInstance.Value = valueInstance;
+                                                                        }
+                                                                        
+                                                                        JToken typeValue = varToken["type"];
+                                                                        if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                                                        {
+                                                                            string typeInstance = ((string)typeValue);
+                                                                            storedProcedureParameterInstance.Type = typeInstance;
+                                                                        }
+                                                                    }
+                                                                }
+                                                                
                                                                 JToken writeBatchSizeValue4 = sinkValue["writeBatchSize"];
                                                                 if (writeBatchSizeValue4 != null && writeBatchSizeValue4.Type != JTokenType.Null)
                                                                 {
@@ -10849,10 +11028,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                             JToken extendedPropertiesSequenceElement = ((JToken)transformationValue2["extendedProperties"]);
                                                             if (extendedPropertiesSequenceElement != null && extendedPropertiesSequenceElement.Type != JTokenType.Null)
                                                             {
-                                                                foreach (JProperty property in extendedPropertiesSequenceElement)
+                                                                foreach (JProperty property2 in extendedPropertiesSequenceElement)
                                                                 {
-                                                                    string extendedPropertiesKey = ((string)property.Name);
-                                                                    string extendedPropertiesValue = ((string)property.Value);
+                                                                    string extendedPropertiesKey = ((string)property2.Name);
+                                                                    string extendedPropertiesValue = ((string)property2.Value);
                                                                     hiveInstance.ExtendedProperties.Add(extendedPropertiesKey, extendedPropertiesValue);
                                                                 }
                                                             }
@@ -10895,10 +11074,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                             JToken extendedPropertiesSequenceElement2 = ((JToken)transformationValue2["extendedProperties"]);
                                                             if (extendedPropertiesSequenceElement2 != null && extendedPropertiesSequenceElement2.Type != JTokenType.Null)
                                                             {
-                                                                foreach (JProperty property2 in extendedPropertiesSequenceElement2)
+                                                                foreach (JProperty property3 in extendedPropertiesSequenceElement2)
                                                                 {
-                                                                    string extendedPropertiesKey2 = ((string)property2.Name);
-                                                                    string extendedPropertiesValue2 = ((string)property2.Value);
+                                                                    string extendedPropertiesKey2 = ((string)property3.Name);
+                                                                    string extendedPropertiesValue2 = ((string)property3.Value);
                                                                     pigInstance.ExtendedProperties.Add(extendedPropertiesKey2, extendedPropertiesValue2);
                                                                 }
                                                             }
@@ -11225,10 +11404,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         JToken extendedPropertiesSequenceElement3 = ((JToken)transformationValue3["extendedProperties"]);
                                                         if (extendedPropertiesSequenceElement3 != null && extendedPropertiesSequenceElement3.Type != JTokenType.Null)
                                                         {
-                                                            foreach (JProperty property3 in extendedPropertiesSequenceElement3)
+                                                            foreach (JProperty property4 in extendedPropertiesSequenceElement3)
                                                             {
-                                                                string extendedPropertiesKey3 = ((string)property3.Name);
-                                                                string extendedPropertiesValue3 = ((string)property3.Value);
+                                                                string extendedPropertiesKey3 = ((string)property4.Name);
+                                                                string extendedPropertiesValue3 = ((string)property4.Value);
                                                                 transformationInstance2.ExtendedProperties.Add(extendedPropertiesKey3, extendedPropertiesValue3);
                                                             }
                                                         }
@@ -11384,14 +11563,14 @@ namespace Microsoft.Azure.Management.DataFactories
                                                             transformationInstance3.StoredProcedureName = storedProcedureNameInstance;
                                                         }
                                                         
-                                                        JToken storedProcedureParametersSequenceElement = ((JToken)transformationValue4["storedProcedureParameters"]);
-                                                        if (storedProcedureParametersSequenceElement != null && storedProcedureParametersSequenceElement.Type != JTokenType.Null)
+                                                        JToken storedProcedureParametersSequenceElement2 = ((JToken)transformationValue4["storedProcedureParameters"]);
+                                                        if (storedProcedureParametersSequenceElement2 != null && storedProcedureParametersSequenceElement2.Type != JTokenType.Null)
                                                         {
-                                                            foreach (JProperty property4 in storedProcedureParametersSequenceElement)
+                                                            foreach (JProperty property5 in storedProcedureParametersSequenceElement2)
                                                             {
-                                                                string storedProcedureParametersKey = ((string)property4.Name);
-                                                                string storedProcedureParametersValue = ((string)property4.Value);
-                                                                transformationInstance3.StoredProcedureActivityParameters.Add(storedProcedureParametersKey, storedProcedureParametersValue);
+                                                                string storedProcedureParametersKey2 = ((string)property5.Name);
+                                                                string storedProcedureParametersValue = ((string)property5.Value);
+                                                                transformationInstance3.StoredProcedureActivityParameters.Add(storedProcedureParametersKey2, storedProcedureParametersValue);
                                                             }
                                                         }
                                                     }

@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private JobProperties _properties;
         
         /// <summary>
-        /// Required. Gets or sets the job properties for patch request.
+        /// Optional. Gets or sets the job properties for patch request.
         /// </summary>
         public JobProperties Properties
         {
@@ -60,20 +60,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         public JobPatchRequest()
         {
             this.Tags = new LazyDictionary<string, string>();
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the JobPatchRequest class with
-        /// required arguments.
-        /// </summary>
-        public JobPatchRequest(JobProperties properties)
-            : this()
-        {
-            if (properties == null)
-            {
-                throw new ArgumentNullException("properties");
-            }
-            this.Properties = properties;
         }
     }
 }
