@@ -23,19 +23,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.RemoteApp.Models;
 
 namespace Microsoft.Azure.Management.RemoteApp.Models
 {
     /// <summary>
-    /// List of supported VPN device vendors.
+    /// The VPN device information.
     /// </summary>
-    public partial class VNetVpnDevices
+    public partial class VNetVpnDeviceResult : AzureOperationResponse
     {
         private IList<Vendor> _vendors;
         
         /// <summary>
-        /// Optional. Array of vendors information
+        /// Optional. Array of supported VPN device vendors.
         /// </summary>
         public IList<Vendor> Vendors
         {
@@ -43,21 +44,10 @@ namespace Microsoft.Azure.Management.RemoteApp.Models
             set { this._vendors = value; }
         }
         
-        private string _version;
-        
         /// <summary>
-        /// Optional. The VPN device version
+        /// Initializes a new instance of the VNetVpnDeviceResult class.
         /// </summary>
-        public string Version
-        {
-            get { return this._version; }
-            set { this._version = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the VNetVpnDevices class.
-        /// </summary>
-        public VNetVpnDevices()
+        public VNetVpnDeviceResult()
         {
             this.Vendors = new LazyList<Vendor>();
         }

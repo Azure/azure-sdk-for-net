@@ -20,33 +20,46 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Azure;
+using Hyak.Common;
 using Microsoft.Azure.Management.RemoteApp.Models;
 
 namespace Microsoft.Azure.Management.RemoteApp.Models
 {
     /// <summary>
-    /// List of supported VPN device vendors.
+    /// The VPN platform details.
     /// </summary>
-    public partial class VNetVpnDevicesResult : AzureOperationResponse
+    public partial class Platform
     {
-        private VNetVpnDevices _vpnDevices;
+        private string _name;
         
         /// <summary>
-        /// Optional. VNet supported VPN devices.
+        /// Optional. Name of the platform.
         /// </summary>
-        public VNetVpnDevices VpnDevices
+        public string Name
         {
-            get { return this._vpnDevices; }
-            set { this._vpnDevices = value; }
+            get { return this._name; }
+            set { this._name = value; }
+        }
+        
+        private IList<OsFamily> _osFamilies;
+        
+        /// <summary>
+        /// Optional. Array of operating systems the VPN runs on.
+        /// </summary>
+        public IList<OsFamily> OsFamilies
+        {
+            get { return this._osFamilies; }
+            set { this._osFamilies = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the VNetVpnDevicesResult class.
+        /// Initializes a new instance of the Platform class.
         /// </summary>
-        public VNetVpnDevicesResult()
+        public Platform()
         {
+            this.OsFamilies = new LazyList<OsFamily>();
         }
     }
 }
