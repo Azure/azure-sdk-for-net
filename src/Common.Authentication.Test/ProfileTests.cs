@@ -12,19 +12,13 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
-using System;
-using System.CodeDom;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Azure.Common.Authentication;
 using Microsoft.Azure.Common.Authentication.Models;
-using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Microsoft.WindowsAzure.Commands.Common.Test.Mocks;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.IO;
 using Xunit;
 
 namespace Common.Authentication.Test
@@ -35,9 +29,9 @@ namespace Common.Authentication.Test
         public void ProfileSaveDoesNotSerializeContext()
         {
             var dataStore = new MockDataStore();
-            AzureSession.CurrentProfile = AzureSession.InitializeDefaultProfile();
+            var currentProfile = new AzureProfile(Path.Combine(AzureSession.ProfileDirectory, AzureSession.ProfileFile));
             AzureSession.DataStore = dataStore;
-            var client = new ProfileClient(AzureSession.CurrentProfile);
+            var client = new ProfileClient(currentProfile);
             var tenant = Guid.NewGuid().ToString();
             var environment = new AzureEnvironment
             {
@@ -63,9 +57,9 @@ namespace Common.Authentication.Test
             client.AddOrSetAccount(account);
             client.AddOrSetSubscription(sub);
 
-            AzureSession.CurrentProfile.Save();
+            currentProfile.Save();
 
-            var profileFile = AzureSession.CurrentProfile.ProfilePath;
+            var profileFile = currentProfile.ProfilePath;
             string profileContents = dataStore.ReadFileAsText(profileFile);
             var readProfile = JsonConvert.DeserializeObject<Dictionary<string, object>>(profileContents);
             Assert.False(readProfile.ContainsKey("Context"));
