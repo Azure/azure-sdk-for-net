@@ -12,6 +12,9 @@
 // 
 // See the Apache Version 2.0 License for specific language governing
 // permissions and limitations under the License.
+
+using System.Collections.ObjectModel;
+
 namespace Microsoft.Hadoop.Avro.Tests
 {
     using System;
@@ -240,8 +243,24 @@ namespace Microsoft.Hadoop.Avro.Tests
         [TestCategory("CheckIn")]
         public void Serializer_SerializeIList()
         {
-            var knownTypes = new[] { typeof(List<Guid>) };
+            var knownTypes = new[] { typeof(List<Guid>), typeof(List<int>) };
             RoundTripSerializationWithCheck(IListClass.Create(), new AvroSerializerSettings { KnownTypes = knownTypes });
+        }
+
+        [TestMethod]
+        [TestCategory("CheckIn")]
+        public void Serializer_SerializeIListWithArray()
+        {
+            var knownTypes = new[] { typeof(Guid[]), typeof(List<int>) };
+            RoundTripSerializationWithCheck(IListClass.CreateWithArray(), new AvroSerializerSettings { KnownTypes = knownTypes });
+        }
+
+        [TestMethod]
+        [TestCategory("CheckIn")]
+        public void Serializer_SerializeIListWithCollection()
+        {
+            var knownTypes = new[] { typeof(Collection<Guid>), typeof(Collection<int>) };
+            RoundTripSerializationWithCheck(IListClass.CreateWithCollection(), new AvroSerializerSettings { KnownTypes = knownTypes });
         }
 
         [TestMethod]
