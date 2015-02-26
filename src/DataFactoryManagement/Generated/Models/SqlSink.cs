@@ -20,7 +20,9 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.Azure.Management.DataFactories.Models;
 
 namespace Microsoft.Azure.Management.DataFactories.Models
@@ -52,11 +54,23 @@ namespace Microsoft.Azure.Management.DataFactories.Models
             set { this._sqlWriterTableType = value; }
         }
         
+        private IDictionary<string, StoredProcedureParameter> _storedProcedureParameters;
+        
+        /// <summary>
+        /// Optional. Sql stored procedure parameters.
+        /// </summary>
+        public IDictionary<string, StoredProcedureParameter> StoredProcedureParameters
+        {
+            get { return this._storedProcedureParameters; }
+            set { this._storedProcedureParameters = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the SqlSink class.
         /// </summary>
         public SqlSink()
         {
+            this.StoredProcedureParameters = new LazyDictionary<string, StoredProcedureParameter>();
         }
         
         /// <summary>

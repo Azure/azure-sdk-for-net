@@ -202,16 +202,16 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                             }
                             
                             XElement startTimeElement = jobElement.Element(XName.Get("StartTime", "http://schemas.microsoft.com/windowsazure"));
-                            if (startTimeElement != null)
+                            if (startTimeElement != null && !string.IsNullOrEmpty(startTimeElement.Value))
                             {
-                                string startTimeInstance = startTimeElement.Value;
+                                DateTime startTimeInstance = DateTime.Parse(startTimeElement.Value, CultureInfo.InvariantCulture);
                                 jobInstance.StartTime = startTimeInstance;
                             }
                             
                             XElement endTimeElement = jobElement.Element(XName.Get("EndTime", "http://schemas.microsoft.com/windowsazure"));
-                            if (endTimeElement != null)
+                            if (endTimeElement != null && !string.IsNullOrEmpty(endTimeElement.Value))
                             {
-                                string endTimeInstance = endTimeElement.Value;
+                                DateTime endTimeInstance = DateTime.Parse(endTimeElement.Value, CultureInfo.InvariantCulture);
                                 jobInstance.EndTime = endTimeInstance;
                             }
                             
@@ -668,16 +668,16 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                             }
                             
                             XElement startTimeElement = jobElement.Element(XName.Get("StartTime", "http://schemas.microsoft.com/windowsazure"));
-                            if (startTimeElement != null)
+                            if (startTimeElement != null && !string.IsNullOrEmpty(startTimeElement.Value))
                             {
-                                string startTimeInstance = startTimeElement.Value;
+                                DateTime startTimeInstance = DateTime.Parse(startTimeElement.Value, CultureInfo.InvariantCulture);
                                 jobInstance.StartTime = startTimeInstance;
                             }
                             
                             XElement endTimeElement = jobElement.Element(XName.Get("EndTime", "http://schemas.microsoft.com/windowsazure"));
-                            if (endTimeElement != null)
+                            if (endTimeElement != null && !string.IsNullOrEmpty(endTimeElement.Value))
                             {
-                                string endTimeInstance = endTimeElement.Value;
+                                DateTime endTimeInstance = DateTime.Parse(endTimeElement.Value, CultureInfo.InvariantCulture);
                                 jobInstance.EndTime = endTimeInstance;
                             }
                             
@@ -1116,16 +1116,16 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                             }
                             
                             XElement startTimeElement = jobElement.Element(XName.Get("StartTime", "http://schemas.microsoft.com/windowsazure"));
-                            if (startTimeElement != null)
+                            if (startTimeElement != null && !string.IsNullOrEmpty(startTimeElement.Value))
                             {
-                                string startTimeInstance = startTimeElement.Value;
+                                DateTime startTimeInstance = DateTime.Parse(startTimeElement.Value, CultureInfo.InvariantCulture);
                                 jobInstance.StartTime = startTimeInstance;
                             }
                             
                             XElement endTimeElement = jobElement.Element(XName.Get("EndTime", "http://schemas.microsoft.com/windowsazure"));
-                            if (endTimeElement != null)
+                            if (endTimeElement != null && !string.IsNullOrEmpty(endTimeElement.Value))
                             {
-                                string endTimeInstance = endTimeElement.Value;
+                                DateTime endTimeInstance = DateTime.Parse(endTimeElement.Value, CultureInfo.InvariantCulture);
                                 jobInstance.EndTime = endTimeInstance;
                             }
                             
@@ -2154,16 +2154,16 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                             }
                             
                             XElement startTimeElement = jobElement.Element(XName.Get("StartTime", "http://schemas.microsoft.com/windowsazure"));
-                            if (startTimeElement != null)
+                            if (startTimeElement != null && !string.IsNullOrEmpty(startTimeElement.Value))
                             {
-                                string startTimeInstance = startTimeElement.Value;
+                                DateTime startTimeInstance = DateTime.Parse(startTimeElement.Value, CultureInfo.InvariantCulture);
                                 jobInstance.StartTime = startTimeInstance;
                             }
                             
                             XElement endTimeElement = jobElement.Element(XName.Get("EndTime", "http://schemas.microsoft.com/windowsazure"));
-                            if (endTimeElement != null)
+                            if (endTimeElement != null && !string.IsNullOrEmpty(endTimeElement.Value))
                             {
-                                string endTimeInstance = endTimeElement.Value;
+                                DateTime endTimeInstance = DateTime.Parse(endTimeElement.Value, CultureInfo.InvariantCulture);
                                 jobInstance.EndTime = endTimeInstance;
                             }
                             
@@ -2661,16 +2661,16 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                             }
                             
                             XElement startTimeElement = jobElement.Element(XName.Get("StartTime", "http://schemas.microsoft.com/windowsazure"));
-                            if (startTimeElement != null)
+                            if (startTimeElement != null && !string.IsNullOrEmpty(startTimeElement.Value))
                             {
-                                string startTimeInstance = startTimeElement.Value;
+                                DateTime startTimeInstance = DateTime.Parse(startTimeElement.Value, CultureInfo.InvariantCulture);
                                 jobInstance.StartTime = startTimeInstance;
                             }
                             
                             XElement endTimeElement = jobElement.Element(XName.Get("EndTime", "http://schemas.microsoft.com/windowsazure"));
-                            if (endTimeElement != null)
+                            if (endTimeElement != null && !string.IsNullOrEmpty(endTimeElement.Value))
                             {
-                                string endTimeInstance = endTimeElement.Value;
+                                DateTime endTimeInstance = DateTime.Parse(endTimeElement.Value, CultureInfo.InvariantCulture);
                                 jobInstance.EndTime = endTimeInstance;
                             }
                             
@@ -3153,16 +3153,16 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                             }
                             
                             XElement startTimeElement = jobElement.Element(XName.Get("StartTime", "http://schemas.microsoft.com/windowsazure"));
-                            if (startTimeElement != null)
+                            if (startTimeElement != null && !string.IsNullOrEmpty(startTimeElement.Value))
                             {
-                                string startTimeInstance = startTimeElement.Value;
+                                DateTime startTimeInstance = DateTime.Parse(startTimeElement.Value, CultureInfo.InvariantCulture);
                                 jobInstance.StartTime = startTimeInstance;
                             }
                             
                             XElement endTimeElement = jobElement.Element(XName.Get("EndTime", "http://schemas.microsoft.com/windowsazure"));
-                            if (endTimeElement != null)
+                            if (endTimeElement != null && !string.IsNullOrEmpty(endTimeElement.Value))
                             {
-                                string endTimeInstance = endTimeElement.Value;
+                                DateTime endTimeInstance = DateTime.Parse(endTimeElement.Value, CultureInfo.InvariantCulture);
                                 jobInstance.EndTime = endTimeInstance;
                             }
                             
@@ -3602,16 +3602,16 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                             }
                             
                             XElement startTimeElement = jobElement.Element(XName.Get("StartTime", "http://schemas.microsoft.com/windowsazure"));
-                            if (startTimeElement != null)
+                            if (startTimeElement != null && !string.IsNullOrEmpty(startTimeElement.Value))
                             {
-                                string startTimeInstance = startTimeElement.Value;
+                                DateTime startTimeInstance = DateTime.Parse(startTimeElement.Value, CultureInfo.InvariantCulture);
                                 jobInstance.StartTime = startTimeInstance;
                             }
                             
                             XElement endTimeElement = jobElement.Element(XName.Get("EndTime", "http://schemas.microsoft.com/windowsazure"));
-                            if (endTimeElement != null)
+                            if (endTimeElement != null && !string.IsNullOrEmpty(endTimeElement.Value))
                             {
-                                string endTimeInstance = endTimeElement.Value;
+                                DateTime endTimeInstance = DateTime.Parse(endTimeElement.Value, CultureInfo.InvariantCulture);
                                 jobInstance.EndTime = endTimeInstance;
                             }
                             
@@ -4068,16 +4068,16 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                             }
                             
                             XElement startTimeElement = jobElement.Element(XName.Get("StartTime", "http://schemas.microsoft.com/windowsazure"));
-                            if (startTimeElement != null)
+                            if (startTimeElement != null && !string.IsNullOrEmpty(startTimeElement.Value))
                             {
-                                string startTimeInstance = startTimeElement.Value;
+                                DateTime startTimeInstance = DateTime.Parse(startTimeElement.Value, CultureInfo.InvariantCulture);
                                 jobInstance.StartTime = startTimeInstance;
                             }
                             
                             XElement endTimeElement = jobElement.Element(XName.Get("EndTime", "http://schemas.microsoft.com/windowsazure"));
-                            if (endTimeElement != null)
+                            if (endTimeElement != null && !string.IsNullOrEmpty(endTimeElement.Value))
                             {
-                                string endTimeInstance = endTimeElement.Value;
+                                DateTime endTimeInstance = DateTime.Parse(endTimeElement.Value, CultureInfo.InvariantCulture);
                                 jobInstance.EndTime = endTimeInstance;
                             }
                             

@@ -89,6 +89,17 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
                 set { this._name = value; }
             }
             
+            private StorageAccountListResponse.StorageAccountProperties _properties;
+            
+            /// <summary>
+            /// Optional. Details about the storage account.
+            /// </summary>
+            public StorageAccountListResponse.StorageAccountProperties Properties
+            {
+                get { return this._properties; }
+                set { this._properties = value; }
+            }
+            
             private Uri _uri;
             
             /// <summary>
@@ -106,6 +117,56 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
             /// Initializes a new instance of the StorageAccount class.
             /// </summary>
             public StorageAccount()
+            {
+            }
+        }
+        
+        /// <summary>
+        /// Details about a storage account.
+        /// </summary>
+        public partial class StorageAccountProperties
+        {
+            private string _affinityGroup;
+            
+            /// <summary>
+            /// Optional. The affinity group with which this storage account is
+            /// associated.
+            /// </summary>
+            public string AffinityGroup
+            {
+                get { return this._affinityGroup; }
+                set { this._affinityGroup = value; }
+            }
+            
+            private string _description;
+            
+            /// <summary>
+            /// Optional. The user-supplied description of the storage account.
+            /// </summary>
+            public string Description
+            {
+                get { return this._description; }
+                set { this._description = value; }
+            }
+            
+            private string _location;
+            
+            /// <summary>
+            /// Optional. The geo-location specified when the storage account
+            /// was created. This property is only returned if the storage
+            /// account is not associated with an affinity group.
+            /// </summary>
+            public string Location
+            {
+                get { return this._location; }
+                set { this._location = value; }
+            }
+            
+            /// <summary>
+            /// Initializes a new instance of the StorageAccountProperties
+            /// class.
+            /// </summary>
+            public StorageAccountProperties()
             {
             }
         }
