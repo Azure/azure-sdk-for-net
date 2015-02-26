@@ -1015,7 +1015,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         }
         
         /// <summary>
-        /// Gets a list of supported VPN devices
+        /// Gets details of supported VPN devices
         /// </summary>
         /// <param name='vNetName'>
         /// Required. RemoteApp virtual network name.
@@ -1024,9 +1024,9 @@ namespace Microsoft.Azure.Management.RemoteApp
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// List of supported VPN device vendors.
+        /// The VPN device information.
         /// </returns>
-        public async Task<VNetVpnDevicesResult> GetVpnDevicesAsync(string vNetName, CancellationToken cancellationToken)
+        public async Task<VNetVpnDeviceResult> GetVpnDevicesAsync(string vNetName, CancellationToken cancellationToken)
         {
             // Validate
             if (vNetName == null)
@@ -1122,13 +1122,13 @@ namespace Microsoft.Azure.Management.RemoteApp
                     }
                     
                     // Create Result
-                    VNetVpnDevicesResult result = null;
+                    VNetVpnDeviceResult result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new VNetVpnDevicesResult();
+                        result = new VNetVpnDeviceResult();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -1137,23 +1137,13 @@ namespace Microsoft.Azure.Management.RemoteApp
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            VNetVpnDevices vpnDevicesInstance = new VNetVpnDevices();
-                            result.VpnDevices = vpnDevicesInstance;
-                            
-                            JToken versionValue = responseDoc["version"];
-                            if (versionValue != null && versionValue.Type != JTokenType.Null)
-                            {
-                                string versionInstance = ((string)versionValue);
-                                vpnDevicesInstance.Version = versionInstance;
-                            }
-                            
                             JToken vendorsArray = responseDoc["Vendors"];
                             if (vendorsArray != null && vendorsArray.Type != JTokenType.Null)
                             {
                                 foreach (JToken vendorsValue in ((JArray)vendorsArray))
                                 {
                                     Vendor vendorInstance = new Vendor();
-                                    vpnDevicesInstance.Vendors.Add(vendorInstance);
+                                    result.Vendors.Add(vendorInstance);
                                     
                                     JToken nameValue = vendorsValue["name"];
                                     if (nameValue != null && nameValue.Type != JTokenType.Null)
@@ -1162,28 +1152,28 @@ namespace Microsoft.Azure.Management.RemoteApp
                                         vendorInstance.Name = nameInstance;
                                     }
                                     
-                                    JToken vpnDevicesArray = vendorsValue["VpnDevices"];
-                                    if (vpnDevicesArray != null && vpnDevicesArray.Type != JTokenType.Null)
+                                    JToken platformsArray = vendorsValue["Platforms"];
+                                    if (platformsArray != null && platformsArray.Type != JTokenType.Null)
                                     {
-                                        foreach (JToken vpnDevicesValue in ((JArray)vpnDevicesArray))
+                                        foreach (JToken platformsValue in ((JArray)platformsArray))
                                         {
-                                            VpnDevice vpnDeviceInstance = new VpnDevice();
-                                            vendorInstance.VpnDevices.Add(vpnDeviceInstance);
+                                            Platform platformInstance = new Platform();
+                                            vendorInstance.Platforms.Add(platformInstance);
                                             
-                                            JToken nameValue2 = vpnDevicesValue["name"];
+                                            JToken nameValue2 = platformsValue["name"];
                                             if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
                                             {
                                                 string nameInstance2 = ((string)nameValue2);
-                                                vpnDeviceInstance.Name = nameInstance2;
+                                                platformInstance.Name = nameInstance2;
                                             }
                                             
-                                            JToken osFamiliesArray = vpnDevicesValue["OsFamilies"];
+                                            JToken osFamiliesArray = platformsValue["OsFamilies"];
                                             if (osFamiliesArray != null && osFamiliesArray.Type != JTokenType.Null)
                                             {
                                                 foreach (JToken osFamiliesValue in ((JArray)osFamiliesArray))
                                                 {
                                                     OsFamily osFamilyInstance = new OsFamily();
-                                                    vpnDeviceInstance.OsFamilies.Add(osFamilyInstance);
+                                                    platformInstance.OsFamilies.Add(osFamilyInstance);
                                                     
                                                     JToken nameValue3 = osFamiliesValue["name"];
                                                     if (nameValue3 != null && nameValue3.Type != JTokenType.Null)

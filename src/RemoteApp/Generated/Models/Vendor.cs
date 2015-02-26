@@ -28,14 +28,14 @@ using Microsoft.Azure.Management.RemoteApp.Models;
 namespace Microsoft.Azure.Management.RemoteApp.Models
 {
     /// <summary>
-    /// VPN device Vendors
+    /// VPN vendor details.
     /// </summary>
     public partial class Vendor
     {
         private string _name;
         
         /// <summary>
-        /// Optional. Name of Vendor
+        /// Optional. Name of the vendor.
         /// </summary>
         public string Name
         {
@@ -43,15 +43,15 @@ namespace Microsoft.Azure.Management.RemoteApp.Models
             set { this._name = value; }
         }
         
-        private IList<VpnDevice> _vpnDevices;
+        private IList<Platform> _platforms;
         
         /// <summary>
-        /// Optional. List of supported VPN devices for this vendor.
+        /// Optional. Array of supported platforms of the VPN device.
         /// </summary>
-        public IList<VpnDevice> VpnDevices
+        public IList<Platform> Platforms
         {
-            get { return this._vpnDevices; }
-            set { this._vpnDevices = value; }
+            get { return this._platforms; }
+            set { this._platforms = value; }
         }
         
         /// <summary>
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.RemoteApp.Models
         /// </summary>
         public Vendor()
         {
-            this.VpnDevices = new LazyList<VpnDevice>();
+            this.Platforms = new LazyList<Platform>();
         }
     }
 }

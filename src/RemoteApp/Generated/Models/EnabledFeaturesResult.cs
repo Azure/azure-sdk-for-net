@@ -20,33 +20,35 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.Azure;
-using Microsoft.Azure.Management.RemoteApp.Models;
 
 namespace Microsoft.Azure.Management.RemoteApp.Models
 {
     /// <summary>
-    /// List of supported VPN device vendors.
+    /// Additional features enabled for the account.
     /// </summary>
-    public partial class VNetVpnDevicesResult : AzureOperationResponse
+    public partial class EnabledFeaturesResult : AzureOperationResponse
     {
-        private VNetVpnDevices _vpnDevices;
+        private IList<string> _enabledFeatures;
         
         /// <summary>
-        /// Optional. VNet supported VPN devices.
+        /// Optional. List of additional features enabled for the account.
         /// </summary>
-        public VNetVpnDevices VpnDevices
+        public IList<string> EnabledFeatures
         {
-            get { return this._vpnDevices; }
-            set { this._vpnDevices = value; }
+            get { return this._enabledFeatures; }
+            set { this._enabledFeatures = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the VNetVpnDevicesResult class.
+        /// Initializes a new instance of the EnabledFeaturesResult class.
         /// </summary>
-        public VNetVpnDevicesResult()
+        public EnabledFeaturesResult()
         {
+            this.EnabledFeatures = new LazyList<string>();
         }
     }
 }

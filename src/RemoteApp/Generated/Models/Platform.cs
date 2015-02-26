@@ -28,14 +28,14 @@ using Microsoft.Azure.Management.RemoteApp.Models;
 namespace Microsoft.Azure.Management.RemoteApp.Models
 {
     /// <summary>
-    /// VPN device
+    /// The VPN platform details.
     /// </summary>
-    public partial class VpnDevice
+    public partial class Platform
     {
         private string _name;
         
         /// <summary>
-        /// Optional. Name of VPN device
+        /// Optional. Name of the platform.
         /// </summary>
         public string Name
         {
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.RemoteApp.Models
         private IList<OsFamily> _osFamilies;
         
         /// <summary>
-        /// Optional. List of operating systems the VPN runs on.
+        /// Optional. Array of operating systems the VPN runs on.
         /// </summary>
         public IList<OsFamily> OsFamilies
         {
@@ -55,9 +55,9 @@ namespace Microsoft.Azure.Management.RemoteApp.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the VpnDevice class.
+        /// Initializes a new instance of the Platform class.
         /// </summary>
-        public VpnDevice()
+        public Platform()
         {
             this.OsFamilies = new LazyList<OsFamily>();
         }
