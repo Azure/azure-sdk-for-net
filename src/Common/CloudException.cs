@@ -14,7 +14,14 @@ namespace Microsoft.Azure
     public class CloudException : HttpOperationException<CloudError>
     {
         /// <summary>
-        /// Create a Cloud Exception with the given exception message.
+        /// Initializes a new instance of the CloudException class.
+        /// </summary>
+        public CloudException() : base()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the CloudException class given exception message.
         /// </summary>
         /// <param name="message">A message describing the error.</param>
         public CloudException(string message) : base(message)
@@ -22,7 +29,7 @@ namespace Microsoft.Azure
         }
 
         /// <summary>
-        /// Create a Cloud Exception caused by another exception.
+        /// Initializes a new instance of the CloudException class caused by another exception.
         /// </summary>
         /// <param name="message">A description of the error.</param>
         /// <param name="innerException">The exception which caused the current exception.</param>

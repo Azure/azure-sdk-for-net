@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Common.Test.TransientFaultHandling
         public void ResponseCodeIsConsideredTransient(HttpStatusCode code)
         {
             var strategy = new HttpStatusCodeErrorDetectionStrategy();
-            Assert.True(strategy.IsTransient(new HttpRequestExceptionWithStatus { StatusCode = code }));
+            Assert.True(strategy.IsTransient(new HttpRequestWithStatusException { StatusCode = code }));
         }
 
         [Theory]
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Common.Test.TransientFaultHandling
         public void ResponseCodeIsNotConsideredTransient(HttpStatusCode code)
         {
             var strategy = new HttpStatusCodeErrorDetectionStrategy();
-            Assert.False(strategy.IsTransient(new HttpRequestExceptionWithStatus { StatusCode = code }));
+            Assert.False(strategy.IsTransient(new HttpRequestWithStatusException { StatusCode = code }));
         }
 
         [Fact]

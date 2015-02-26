@@ -200,7 +200,7 @@ namespace Microsoft.Azure
         /// </remarks>
         public override void InitializeServiceClient<T>(ServiceClient<T> client)
         {
-            WebRequestHandler handler = client.GetHttpPipeline().OfType<WebRequestHandler>().FirstOrDefault();
+            WebRequestHandler handler = client.HttpPipelines.OfType<WebRequestHandler>().FirstOrDefault();
             if (handler == null)
             {
                 throw new PlatformNotSupportedException(

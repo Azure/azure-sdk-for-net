@@ -126,12 +126,6 @@ namespace Microsoft.Azure.Common.Test.Fakes
             this.Credentials.InitializeServiceClient(this);
         }
 
-        protected override void InitializeHttpClient(HttpClientHandler httpMessageHandler, params DelegatingHandler[] handlers)
-        {
-            base.InitializeHttpClient(httpMessageHandler, handlers);
-            HttpClient.Timeout = TimeSpan.FromSeconds(300);
-        }
-
         public Uri BaseUri
         {
             get { return _baseUri; }
