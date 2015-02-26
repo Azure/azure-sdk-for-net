@@ -30,6 +30,33 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
     /// </summary>
     public partial class AzureBgpPeering
     {
+        private string _advertisedPublicPrefixes;
+        
+        /// <summary>
+        /// Optional. Specifies the public prefixes that will be advertised by
+        /// the peer over this BGP peering. Specific to Microsoft type of
+        /// peering.
+        /// </summary>
+        public string AdvertisedPublicPrefixes
+        {
+            get { return this._advertisedPublicPrefixes; }
+            set { this._advertisedPublicPrefixes = value; }
+        }
+        
+        private string _advertisedPublicPrefixesState;
+        
+        /// <summary>
+        /// Optional. Specifies whether the Azure network has been configured
+        /// to accept the public prefixes specified as will be advertised by
+        /// the peer over this BGP peering. Specific to Mirosoft type of
+        /// peering.
+        /// </summary>
+        public string AdvertisedPublicPrefixesState
+        {
+            get { return this._advertisedPublicPrefixesState; }
+            set { this._advertisedPublicPrefixesState = value; }
+        }
+        
         private uint _azureAsn;
         
         /// <summary>
