@@ -65,12 +65,12 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
             set { this._displayName = value; }
         }
         
-        private string _endTime;
+        private System.DateTime? _endTime;
         
         /// <summary>
         /// Required. End time stamp.
         /// </summary>
-        public string EndTime
+        public System.DateTime? EndTime
         {
             get { return this._endTime; }
             set { this._endTime = value; }
@@ -87,12 +87,12 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
             set { this._errors = value; }
         }
         
-        private string _startTime;
+        private System.DateTime? _startTime;
         
         /// <summary>
         /// Required. Start time stamp.
         /// </summary>
-        public string StartTime
+        public System.DateTime? StartTime
         {
             get { return this._startTime; }
             set { this._startTime = value; }
