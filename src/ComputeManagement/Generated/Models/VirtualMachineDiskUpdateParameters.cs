@@ -91,6 +91,19 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._operatingSystemType = value; }
         }
         
+        private int? _resizedSizeInGB;
+        
+        /// <summary>
+        /// Optional. Resizes the underlying blob to the indicated size in
+        /// GB.To use the ResizedSizeInGB property, the version header should
+        /// be at least 2014-10-01.
+        /// </summary>
+        public int? ResizedSizeInGB
+        {
+            get { return this._resizedSizeInGB; }
+            set { this._resizedSizeInGB = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the
         /// VirtualMachineDiskUpdateParameters class.
