@@ -20,7 +20,6 @@
 // code is regenerated.
 
 using Hyak.Common;
-using Microsoft.Azure.Internal.Management.Rdfe.Models;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -30,15 +29,16 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Microsoft.Azure.Management.Rdfe.Models;
 
-namespace Microsoft.Azure.Internal.Management.Rdfe
+namespace Microsoft.Azure.Management.Rdfe
 {
     /// <summary>
     /// Operations for listing subscription details.  (see
     /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715315.aspx for
     /// more information)
     /// </summary>
-    internal partial class SubscriptionOperations : IServiceOperations<ManagementClient>, ISubscriptionOperations
+    public partial class SubscriptionOperations : IServiceOperations<ManagementClient>, ISubscriptionOperations
     {
         /// <summary>
         /// Initializes a new instance of the SubscriptionOperations class.
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Internal.Management.Rdfe
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal SubscriptionOperations(ManagementClient client)
+        public SubscriptionOperations(ManagementClient client)
         {
             this._client = client;
         }
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Internal.Management.Rdfe
         
         /// <summary>
         /// Gets a reference to the
-        /// Microsoft.Azure.Internal.Management.Rdfe.ManagementClient.
+        /// Microsoft.Azure.Management.Rdfe.ManagementClient.
         /// </summary>
         public ManagementClient Client
         {

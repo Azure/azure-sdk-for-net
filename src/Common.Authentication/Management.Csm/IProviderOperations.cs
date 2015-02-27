@@ -19,16 +19,16 @@
 // Changes to this file may cause incorrect behavior and will be lost if the
 // code is regenerated.
 
-using Microsoft.Azure.Internal.Management.Csm.Models;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure.Management.Csm.Models;
 
-namespace Microsoft.Azure.Internal.Management.Csm
+namespace Microsoft.Azure.Management.Csm
 {
     /// <summary>
     /// Operations for managing providers.
     /// </summary>
-    internal partial interface IProviderOperations
+    public partial interface IProviderOperations
     {
         /// <summary>
         /// Gets a resource provider.

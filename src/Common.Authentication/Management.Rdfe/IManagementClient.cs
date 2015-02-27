@@ -23,7 +23,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.Azure.Internal.Management.Rdfe
+namespace Microsoft.Azure.Management.Rdfe
 {
     /// <summary>
     /// The Service Management API provides programmatic access to much of the
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Internal.Management.Rdfe
     /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460799.aspx for
     /// more information)
     /// </summary>
-    internal partial interface IManagementClient : IDisposable
+    public partial interface IManagementClient : IDisposable
     {
         /// <summary>
         /// Gets the API version.

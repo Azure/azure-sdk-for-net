@@ -19,13 +19,13 @@
 // Changes to this file may cause incorrect behavior and will be lost if the
 // code is regenerated.
 
-using Microsoft.Azure.Internal.Subscriptions.Rdfe.Models;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure.Subscriptions.Rdfe.Models;
 
-namespace Microsoft.Azure.Internal.Subscriptions.Rdfe
+namespace Microsoft.Azure.Subscriptions.Rdfe
 {
-    internal partial interface ISubscriptionOperations
+    public partial interface ISubscriptionOperations
     {
         /// <param name='cancellationToken'>
         /// Cancellation token.

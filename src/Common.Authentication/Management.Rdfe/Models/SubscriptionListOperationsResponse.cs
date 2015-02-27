@@ -23,7 +23,7 @@ using Hyak.Common;
 using System;
 using System.Collections.Generic;
 
-namespace Microsoft.Azure.Internal.Management.Rdfe.Models
+namespace Microsoft.Azure.Management.Rdfe.Models
 {
     /// <summary>
     /// The List Subscription Operations operation response.

@@ -13,6 +13,8 @@
 // ----------------------------------------------------------------------------------
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using Microsoft.Azure.Common.Authentication.Factories;
 using Microsoft.Azure.Common.Authentication.Models;
@@ -25,7 +27,7 @@ namespace Microsoft.Azure.Common.Authentication
     /// Represents current Azure session.
     /// </summary>
     public static class AzureSession
-    {        
+    {
         /// <summary>
         /// Gets or sets Azure client factory.
         /// </summary>

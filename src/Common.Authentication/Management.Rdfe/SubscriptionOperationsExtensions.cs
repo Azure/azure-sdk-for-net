@@ -19,11 +19,11 @@
 // Changes to this file may cause incorrect behavior and will be lost if the
 // code is regenerated.
 
-using Microsoft.Azure.Internal.Management.Rdfe.Models;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure.Management.Rdfe.Models;
 
-namespace Microsoft.Azure.Internal.Management.Rdfe
+namespace Microsoft.Azure.Management.Rdfe
 {
     /// <summary>
     /// The Service Management API provides programmatic access to much of the
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Internal.Management.Rdfe
     /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460799.aspx for
     /// more information)
     /// </summary>
-    internal static partial class SubscriptionOperationsExtensions
+    public static partial class SubscriptionOperationsExtensions
     {
         /// <summary>
         /// The Get Subscription operation returns account and resource
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Internal.Management.Rdfe
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Internal.Management.Rdfe.ISubscriptionOperations.
+        /// Microsoft.Azure.Management.Rdfe.ISubscriptionOperations.
         /// </param>
         /// <returns>
         /// The Get Subscription operation response.
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Internal.Management.Rdfe
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Internal.Management.Rdfe.ISubscriptionOperations.
+        /// Microsoft.Azure.Management.Rdfe.ISubscriptionOperations.
         /// </param>
         /// <returns>
         /// The Get Subscription operation response.
@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Internal.Management.Rdfe
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Internal.Management.Rdfe.ISubscriptionOperations.
+        /// Microsoft.Azure.Management.Rdfe.ISubscriptionOperations.
         /// </param>
         /// <param name='parameters'>
         /// Required. Parameters supplied to the List Subscription Operations
@@ -111,7 +111,7 @@ namespace Microsoft.Azure.Internal.Management.Rdfe
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Internal.Management.Rdfe.ISubscriptionOperations.
+        /// Microsoft.Azure.Management.Rdfe.ISubscriptionOperations.
         /// </param>
         /// <param name='parameters'>
         /// Required. Parameters supplied to the List Subscription Operations
@@ -130,7 +130,7 @@ namespace Microsoft.Azure.Internal.Management.Rdfe
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Internal.Management.Rdfe.ISubscriptionOperations.
+        /// Microsoft.Azure.Management.Rdfe.ISubscriptionOperations.
         /// </param>
         /// <param name='resourceName'>
         /// Required. Name of the resource to register.
@@ -153,7 +153,7 @@ namespace Microsoft.Azure.Internal.Management.Rdfe
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Internal.Management.Rdfe.ISubscriptionOperations.
+        /// Microsoft.Azure.Management.Rdfe.ISubscriptionOperations.
         /// </param>
         /// <param name='resourceName'>
         /// Required. Name of the resource to register.
@@ -172,7 +172,7 @@ namespace Microsoft.Azure.Internal.Management.Rdfe
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Internal.Management.Rdfe.ISubscriptionOperations.
+        /// Microsoft.Azure.Management.Rdfe.ISubscriptionOperations.
         /// </param>
         /// <param name='resourceName'>
         /// Required. Name of the resource to unregister.
@@ -195,7 +195,7 @@ namespace Microsoft.Azure.Internal.Management.Rdfe
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Internal.Management.Rdfe.ISubscriptionOperations.
+        /// Microsoft.Azure.Management.Rdfe.ISubscriptionOperations.
         /// </param>
         /// <param name='resourceName'>
         /// Required. Name of the resource to unregister.

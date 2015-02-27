@@ -13,8 +13,8 @@
 // ----------------------------------------------------------------------------------
 
 using Hyak.Common;
-using Microsoft.Azure.Internal.Management.Csm;
-using Microsoft.Azure.Internal.Management.Rdfe;
+using Microsoft.Azure.Management.Csm;
+using Microsoft.Azure.Management.Rdfe;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;

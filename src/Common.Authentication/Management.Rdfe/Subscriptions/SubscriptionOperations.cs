@@ -20,7 +20,6 @@
 // code is regenerated.
 
 using Hyak.Common;
-using Microsoft.Azure.Internal.Subscriptions.Rdfe.Models;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -30,10 +29,11 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Microsoft.Azure.Subscriptions.Rdfe.Models;
 
-namespace Microsoft.Azure.Internal.Subscriptions.Rdfe
+namespace Microsoft.Azure.Subscriptions.Rdfe
 {
-    internal partial class SubscriptionOperations : IServiceOperations<SubscriptionClient>, ISubscriptionOperations
+    public partial class SubscriptionOperations : IServiceOperations<SubscriptionClient>, ISubscriptionOperations
     {
         /// <summary>
         /// Initializes a new instance of the SubscriptionOperations class.
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Internal.Subscriptions.Rdfe
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal SubscriptionOperations(SubscriptionClient client)
+        public SubscriptionOperations(SubscriptionClient client)
         {
             this._client = client;
         }
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Internal.Subscriptions.Rdfe
         
         /// <summary>
         /// Gets a reference to the
-        /// Microsoft.Azure.Internal.Subscriptions.Rdfe.SubscriptionClient.
+        /// Microsoft.Azure.Subscriptions.Rdfe.SubscriptionClient.
         /// </summary>
         public SubscriptionClient Client
         {
