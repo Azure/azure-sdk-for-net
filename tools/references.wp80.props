@@ -9,7 +9,7 @@
     </Reference>
     <Reference Include="Microsoft.Rest.ClientRuntime">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(SolutionDir)packages\Microsoft.Rest.ClientRuntime.0.9.1\lib\portable-net403+win+wpa81\Microsoft.Rest.ClientRuntime.dll</HintPath>
+      <HintPath>$(SolutionDir)packages\Microsoft.Rest.ClientRuntime.0.9.2\lib\portable-net403+win+wpa81\Microsoft.Rest.ClientRuntime.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>$(SolutionDir)packages\Newtonsoft.Json.6.0.4\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
