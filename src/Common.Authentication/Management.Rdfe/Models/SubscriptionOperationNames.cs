@@ -20,7 +20,7 @@
 // code is regenerated.
 
 
-namespace Microsoft.Azure.Internal.Management.Rdfe.Models
+namespace Microsoft.Azure.Management.Rdfe.Models
 {
     /// <summary>
     /// The name of a subscription operation.

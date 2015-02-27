@@ -22,7 +22,7 @@
 using Hyak.Common;
 using System.Collections.Generic;
 
-namespace Microsoft.Azure.Internal.Management.Csm.Models
+namespace Microsoft.Azure.Management.Csm.Models
 {
     /// <summary>
     /// Resource type managed by the resource provider.
