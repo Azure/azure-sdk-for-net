@@ -126,3 +126,4 @@ packages
 src/*/readme.txt
 
 build.out
+.nuget/

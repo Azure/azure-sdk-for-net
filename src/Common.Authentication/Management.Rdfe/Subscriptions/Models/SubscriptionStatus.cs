@@ -20,7 +20,7 @@
 // code is regenerated.
 
 
-namespace Microsoft.Azure.Internal.Subscriptions.Rdfe.Models
+namespace Microsoft.Azure.Subscriptions.Rdfe.Models
 {
     /// <summary>
     /// The subscription status.

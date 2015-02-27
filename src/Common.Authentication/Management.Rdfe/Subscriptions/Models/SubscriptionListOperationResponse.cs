@@ -22,7 +22,7 @@
 using Hyak.Common;
 using System.Collections.Generic;
 
-namespace Microsoft.Azure.Internal.Subscriptions.Rdfe.Models
+namespace Microsoft.Azure.Subscriptions.Rdfe.Models
 {
     /// <summary>
     /// A standard service response including an HTTP status code and request

@@ -20,46 +20,43 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
-using Microsoft.Azure.Management.RemoteApp.Models;
 
-namespace Microsoft.Azure.Management.RemoteApp.Models
+namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// List of supported VPN device vendors.
+    /// Stored procedure parameter type.
     /// </summary>
-    public partial class VNetVpnDevices
+    public static partial class StoredProcedureParameterType
     {
-        private IList<Vendor> _vendors;
+        /// <summary>
+        /// String type.
+        /// </summary>
+        public const string String = "String";
         
         /// <summary>
-        /// Optional. Array of vendors information
+        /// Integer type.
         /// </summary>
-        public IList<Vendor> Vendors
-        {
-            get { return this._vendors; }
-            set { this._vendors = value; }
-        }
-        
-        private string _version;
+        public const string Int = "Int";
         
         /// <summary>
-        /// Optional. The VPN device version
+        /// Decimal type.
         /// </summary>
-        public string Version
-        {
-            get { return this._version; }
-            set { this._version = value; }
-        }
+        public const string Decimal = "Decimal";
         
         /// <summary>
-        /// Initializes a new instance of the VNetVpnDevices class.
+        /// Guid type.
         /// </summary>
-        public VNetVpnDevices()
-        {
-            this.Vendors = new LazyList<Vendor>();
-        }
+        public const string Guid = "Guid";
+        
+        /// <summary>
+        /// Boolean type.
+        /// </summary>
+        public const string Boolean = "Boolean";
+        
+        /// <summary>
+        /// Datetime type.
+        /// </summary>
+        public const string Date = "Date";
     }
 }

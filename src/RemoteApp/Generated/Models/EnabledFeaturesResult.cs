@@ -23,43 +23,32 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Hyak.Common;
-using Microsoft.Azure.Management.RemoteApp.Models;
+using Microsoft.Azure;
 
 namespace Microsoft.Azure.Management.RemoteApp.Models
 {
     /// <summary>
-    /// VPN device
+    /// Additional features enabled for the account.
     /// </summary>
-    public partial class VpnDevice
+    public partial class EnabledFeaturesResult : AzureOperationResponse
     {
-        private string _name;
+        private IList<string> _enabledFeatures;
         
         /// <summary>
-        /// Optional. Name of VPN device
+        /// Optional. List of additional features enabled for the account.
         /// </summary>
-        public string Name
+        public IList<string> EnabledFeatures
         {
-            get { return this._name; }
-            set { this._name = value; }
-        }
-        
-        private IList<OsFamily> _osFamilies;
-        
-        /// <summary>
-        /// Optional. List of operating systems the VPN runs on.
-        /// </summary>
-        public IList<OsFamily> OsFamilies
-        {
-            get { return this._osFamilies; }
-            set { this._osFamilies = value; }
+            get { return this._enabledFeatures; }
+            set { this._enabledFeatures = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the VpnDevice class.
+        /// Initializes a new instance of the EnabledFeaturesResult class.
         /// </summary>
-        public VpnDevice()
+        public EnabledFeaturesResult()
         {
-            this.OsFamilies = new LazyList<OsFamily>();
+            this.EnabledFeatures = new LazyList<string>();
         }
     }
 }

@@ -105,6 +105,40 @@ namespace Microsoft.Azure.Management.RemoteApp
         }
         
         /// <summary>
+        /// Gets additional features enabled for the account.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.RemoteApp.IAccountsOperations.
+        /// </param>
+        /// <returns>
+        /// Additional features enabled for the account.
+        /// </returns>
+        public static EnabledFeaturesResult GetEnabledFeatures(this IAccountsOperations operations)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IAccountsOperations)s).GetEnabledFeaturesAsync();
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Gets additional features enabled for the account.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.RemoteApp.IAccountsOperations.
+        /// </param>
+        /// <returns>
+        /// Additional features enabled for the account.
+        /// </returns>
+        public static Task<EnabledFeaturesResult> GetEnabledFeaturesAsync(this IAccountsOperations operations)
+        {
+            return operations.GetEnabledFeaturesAsync(CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Gets the list of available billing plans for the customer.
         /// </summary>
         /// <param name='operations'>
