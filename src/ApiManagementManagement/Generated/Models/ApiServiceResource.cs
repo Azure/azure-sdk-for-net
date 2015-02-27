@@ -87,28 +87,6 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             set { this._properties = value; }
         }
         
-        private string _resourceGroupName;
-        
-        /// <summary>
-        /// Optional. Resource group name of the Api Management service.
-        /// </summary>
-        public string ResourceGroupName
-        {
-            get { return this._resourceGroupName; }
-            set { this._resourceGroupName = value; }
-        }
-        
-        private string _subscriptionId;
-        
-        /// <summary>
-        /// Optional. Subscription id of the Api Management service.
-        /// </summary>
-        public string SubscriptionId
-        {
-            get { return this._subscriptionId; }
-            set { this._subscriptionId = value; }
-        }
-        
         private IDictionary<string, string> _tags;
         
         /// <summary>

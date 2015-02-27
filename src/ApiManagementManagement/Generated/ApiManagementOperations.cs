@@ -739,20 +739,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                                 valueInstance.Type = typeInstance;
                             }
                             
-                            JToken subscriptionIdValue = responseDoc["subscriptionId"];
-                            if (subscriptionIdValue != null && subscriptionIdValue.Type != JTokenType.Null)
-                            {
-                                string subscriptionIdInstance = ((string)subscriptionIdValue);
-                                valueInstance.SubscriptionId = subscriptionIdInstance;
-                            }
-                            
-                            JToken resourceGroupNameValue = responseDoc["resourceGroupName"];
-                            if (resourceGroupNameValue != null && resourceGroupNameValue.Type != JTokenType.Null)
-                            {
-                                string resourceGroupNameInstance = ((string)resourceGroupNameValue);
-                                valueInstance.ResourceGroupName = resourceGroupNameInstance;
-                            }
-                            
                             JToken etagValue = responseDoc["etag"];
                             if (etagValue != null && etagValue.Type != JTokenType.Null)
                             {
@@ -2827,20 +2813,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                                 valueInstance.Type = typeInstance;
                             }
                             
-                            JToken subscriptionIdValue = responseDoc["subscriptionId"];
-                            if (subscriptionIdValue != null && subscriptionIdValue.Type != JTokenType.Null)
-                            {
-                                string subscriptionIdInstance = ((string)subscriptionIdValue);
-                                valueInstance.SubscriptionId = subscriptionIdInstance;
-                            }
-                            
-                            JToken resourceGroupNameValue = responseDoc["resourceGroupName"];
-                            if (resourceGroupNameValue != null && resourceGroupNameValue.Type != JTokenType.Null)
-                            {
-                                string resourceGroupNameInstance = ((string)resourceGroupNameValue);
-                                valueInstance.ResourceGroupName = resourceGroupNameInstance;
-                            }
-                            
                             JToken etagValue = responseDoc["etag"];
                             if (etagValue != null && etagValue.Type != JTokenType.Null)
                             {
@@ -3259,20 +3231,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                             {
                                 string typeInstance = ((string)typeValue);
                                 valueInstance.Type = typeInstance;
-                            }
-                            
-                            JToken subscriptionIdValue = responseDoc["subscriptionId"];
-                            if (subscriptionIdValue != null && subscriptionIdValue.Type != JTokenType.Null)
-                            {
-                                string subscriptionIdInstance = ((string)subscriptionIdValue);
-                                valueInstance.SubscriptionId = subscriptionIdInstance;
-                            }
-                            
-                            JToken resourceGroupNameValue = responseDoc["resourceGroupName"];
-                            if (resourceGroupNameValue != null && resourceGroupNameValue.Type != JTokenType.Null)
-                            {
-                                string resourceGroupNameInstance = ((string)resourceGroupNameValue);
-                                valueInstance.ResourceGroupName = resourceGroupNameInstance;
                             }
                             
                             JToken etagValue = responseDoc["etag"];
@@ -4040,20 +3998,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                                     {
                                         string typeInstance = ((string)typeValue);
                                         apiServiceResourceInstance.Type = typeInstance;
-                                    }
-                                    
-                                    JToken subscriptionIdValue = valueValue["subscriptionId"];
-                                    if (subscriptionIdValue != null && subscriptionIdValue.Type != JTokenType.Null)
-                                    {
-                                        string subscriptionIdInstance = ((string)subscriptionIdValue);
-                                        apiServiceResourceInstance.SubscriptionId = subscriptionIdInstance;
-                                    }
-                                    
-                                    JToken resourceGroupNameValue = valueValue["resourceGroupName"];
-                                    if (resourceGroupNameValue != null && resourceGroupNameValue.Type != JTokenType.Null)
-                                    {
-                                        string resourceGroupNameInstance = ((string)resourceGroupNameValue);
-                                        apiServiceResourceInstance.ResourceGroupName = resourceGroupNameInstance;
                                     }
                                     
                                     JToken etagValue = valueValue["etag"];
