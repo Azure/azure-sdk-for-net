@@ -100,6 +100,35 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._operatingSystem = value; }
         }
         
+        private Uri _remoteSourceImageLink;
+        
+        /// <summary>
+        /// Optional. Uri of the source OS image that will be copied to the
+        /// customer’s storage account of VM creation.If RemoteSourceImageLink
+        /// is specified, then MediaLink must also be specified.If
+        /// RemoteSourceImageLink is specified, thenSourceIamgeName must not
+        /// be specified.
+        /// </summary>
+        public Uri RemoteSourceImageLink
+        {
+            get { return this._remoteSourceImageLink; }
+            set { this._remoteSourceImageLink = value; }
+        }
+        
+        private int? _resizedSizeInGB;
+        
+        /// <summary>
+        /// Optional. When an OS Image or a RemoteSourceImage is used to create
+        /// an OSVirtualHardDisk, this parameter can be used to resize the new
+        /// OSVirtualHardDisk to a larger size. ResizedSizeInGB must be larger
+        /// than the underlying OS Image’s LogicalSizeInGB.
+        /// </summary>
+        public int? ResizedSizeInGB
+        {
+            get { return this._resizedSizeInGB; }
+            set { this._resizedSizeInGB = value; }
+        }
+        
         private string _sourceImageName;
         
         /// <summary>
