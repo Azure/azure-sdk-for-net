@@ -64,7 +64,6 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         internal const string ClusterAlreadyExistsError = "The condition specified by the ETag is not satisfied.";
 
         private IHDInsightSubscriptionCredentials credentials;
-        private TimeSpan pollingInterval;
         private ClusterDetails currentDetails;
         private const string DefaultSchemaVersion = "1.0";
         private TimeSpan defaultResizeTimeout = TimeSpan.FromHours(1);
