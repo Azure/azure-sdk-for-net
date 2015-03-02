@@ -8,7 +8,6 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Microsoft.Azure.Management.StreamAnalytics</RootNamespace>
     <AssemblyName>Microsoft.Azure.Management.StreamAnalytics</AssemblyName>
     <RestorePackages>true</RestorePackages>
