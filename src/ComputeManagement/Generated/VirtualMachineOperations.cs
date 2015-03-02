@@ -2052,11 +2052,25 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         oSVirtualHardDiskElement.Add(osElement);
                     }
                     
+                    if (parameters.OSVirtualHardDisk.RemoteSourceImageLink != null)
+                    {
+                        XElement remoteSourceImageLinkElement = new XElement(XName.Get("RemoteSourceImageLink", "http://schemas.microsoft.com/windowsazure"));
+                        remoteSourceImageLinkElement.Value = parameters.OSVirtualHardDisk.RemoteSourceImageLink.AbsoluteUri;
+                        oSVirtualHardDiskElement.Add(remoteSourceImageLinkElement);
+                    }
+                    
                     if (parameters.OSVirtualHardDisk.IOType != null)
                     {
                         XElement iOTypeElement2 = new XElement(XName.Get("IOType", "http://schemas.microsoft.com/windowsazure"));
                         iOTypeElement2.Value = parameters.OSVirtualHardDisk.IOType;
                         oSVirtualHardDiskElement.Add(iOTypeElement2);
+                    }
+                    
+                    if (parameters.OSVirtualHardDisk.ResizedSizeInGB != null)
+                    {
+                        XElement resizedSizeInGBElement = new XElement(XName.Get("ResizedSizeInGB", "http://schemas.microsoft.com/windowsazure"));
+                        resizedSizeInGBElement.Value = parameters.OSVirtualHardDisk.ResizedSizeInGB.ToString();
+                        oSVirtualHardDiskElement.Add(resizedSizeInGBElement);
                     }
                 }
                 
@@ -2072,6 +2086,12 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     XElement provisionGuestAgentElement = new XElement(XName.Get("ProvisionGuestAgent", "http://schemas.microsoft.com/windowsazure"));
                     provisionGuestAgentElement.Value = parameters.ProvisionGuestAgent.ToString().ToLower();
                     persistentVMRoleElement.Add(provisionGuestAgentElement);
+                }
+                
+                if (parameters.VMImageInput != null)
+                {
+                    XElement vMImageInputElement = new XElement(XName.Get("VMImageInput", "http://schemas.microsoft.com/windowsazure"));
+                    persistentVMRoleElement.Add(vMImageInputElement);
                 }
                 
                 requestContent = requestDoc.ToString();
@@ -3152,11 +3172,25 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 oSVirtualHardDiskElement.Add(osElement);
                             }
                             
+                            if (roleListItem.OSVirtualHardDisk.RemoteSourceImageLink != null)
+                            {
+                                XElement remoteSourceImageLinkElement = new XElement(XName.Get("RemoteSourceImageLink", "http://schemas.microsoft.com/windowsazure"));
+                                remoteSourceImageLinkElement.Value = roleListItem.OSVirtualHardDisk.RemoteSourceImageLink.AbsoluteUri;
+                                oSVirtualHardDiskElement.Add(remoteSourceImageLinkElement);
+                            }
+                            
                             if (roleListItem.OSVirtualHardDisk.IOType != null)
                             {
                                 XElement iOTypeElement2 = new XElement(XName.Get("IOType", "http://schemas.microsoft.com/windowsazure"));
                                 iOTypeElement2.Value = roleListItem.OSVirtualHardDisk.IOType;
                                 oSVirtualHardDiskElement.Add(iOTypeElement2);
+                            }
+                            
+                            if (roleListItem.OSVirtualHardDisk.ResizedSizeInGB != null)
+                            {
+                                XElement resizedSizeInGBElement = new XElement(XName.Get("ResizedSizeInGB", "http://schemas.microsoft.com/windowsazure"));
+                                resizedSizeInGBElement.Value = roleListItem.OSVirtualHardDisk.ResizedSizeInGB.ToString();
+                                oSVirtualHardDiskElement.Add(resizedSizeInGBElement);
                             }
                         }
                         
@@ -3179,6 +3213,53 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             XElement provisionGuestAgentElement = new XElement(XName.Get("ProvisionGuestAgent", "http://schemas.microsoft.com/windowsazure"));
                             provisionGuestAgentElement.Value = roleListItem.ProvisionGuestAgent.ToString().ToLower();
                             roleElement.Add(provisionGuestAgentElement);
+                        }
+                        
+                        if (roleListItem.VMImageInput != null)
+                        {
+                            XElement vMImageInputElement = new XElement(XName.Get("VMImageInput", "http://schemas.microsoft.com/windowsazure"));
+                            roleElement.Add(vMImageInputElement);
+                            
+                            if (roleListItem.VMImageInput.OSDiskConfiguration != null)
+                            {
+                                XElement oSDiskConfigurationElement = new XElement(XName.Get("OSDiskConfiguration", "http://schemas.microsoft.com/windowsazure"));
+                                vMImageInputElement.Add(oSDiskConfigurationElement);
+                                
+                                if (roleListItem.VMImageInput.OSDiskConfiguration.ResizedSizeInGB != null)
+                                {
+                                    XElement resizedSizeInGBElement2 = new XElement(XName.Get("ResizedSizeInGB", "http://schemas.microsoft.com/windowsazure"));
+                                    resizedSizeInGBElement2.Value = roleListItem.VMImageInput.OSDiskConfiguration.ResizedSizeInGB.ToString();
+                                    oSDiskConfigurationElement.Add(resizedSizeInGBElement2);
+                                }
+                            }
+                            
+                            if (roleListItem.VMImageInput.DataDiskConfigurations != null)
+                            {
+                                if (roleListItem.VMImageInput.DataDiskConfigurations is ILazyCollection == false || ((ILazyCollection)roleListItem.VMImageInput.DataDiskConfigurations).IsInitialized)
+                                {
+                                    XElement dataDiskConfigurationsSequenceElement = new XElement(XName.Get("DataDiskConfigurations", "http://schemas.microsoft.com/windowsazure"));
+                                    foreach (DataDiskConfiguration dataDiskConfigurationsItem in roleListItem.VMImageInput.DataDiskConfigurations)
+                                    {
+                                        XElement dataDiskConfigurationElement = new XElement(XName.Get("DataDiskConfiguration", "http://schemas.microsoft.com/windowsazure"));
+                                        dataDiskConfigurationsSequenceElement.Add(dataDiskConfigurationElement);
+                                        
+                                        if (dataDiskConfigurationsItem.DiskName != null)
+                                        {
+                                            XElement nameElement6 = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                            nameElement6.Value = dataDiskConfigurationsItem.DiskName;
+                                            dataDiskConfigurationElement.Add(nameElement6);
+                                        }
+                                        
+                                        if (dataDiskConfigurationsItem.ResizedSizeInGB != null)
+                                        {
+                                            XElement resizedSizeInGBElement3 = new XElement(XName.Get("ResizedSizeInGB", "http://schemas.microsoft.com/windowsazure"));
+                                            resizedSizeInGBElement3.Value = dataDiskConfigurationsItem.ResizedSizeInGB.ToString();
+                                            dataDiskConfigurationElement.Add(resizedSizeInGBElement3);
+                                        }
+                                    }
+                                    vMImageInputElement.Add(dataDiskConfigurationsSequenceElement);
+                                }
+                            }
                         }
                     }
                     deploymentElement.Add(roleListSequenceElement);
@@ -3208,9 +3289,9 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 
                                 if (dnsServersItem.Name != null)
                                 {
-                                    XElement nameElement6 = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                                    nameElement6.Value = dnsServersItem.Name;
-                                    dnsServerElement.Add(nameElement6);
+                                    XElement nameElement7 = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                    nameElement7.Value = dnsServersItem.Name;
+                                    dnsServerElement.Add(nameElement7);
                                 }
                                 
                                 if (dnsServersItem.Address != null)
@@ -3244,9 +3325,9 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             
                             if (loadBalancersItem.Name != null)
                             {
-                                XElement nameElement7 = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                                nameElement7.Value = loadBalancersItem.Name;
-                                loadBalancerElement.Add(nameElement7);
+                                XElement nameElement8 = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                nameElement8.Value = loadBalancersItem.Name;
+                                loadBalancerElement.Add(nameElement8);
                             }
                             
                             if (loadBalancersItem.FrontendIPConfiguration != null)
@@ -5327,11 +5408,25 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     oSVirtualHardDiskElement.Add(osElement);
                 }
                 
+                if (parameters.OSVirtualHardDisk.RemoteSourceImageLink != null)
+                {
+                    XElement remoteSourceImageLinkElement = new XElement(XName.Get("RemoteSourceImageLink", "http://schemas.microsoft.com/windowsazure"));
+                    remoteSourceImageLinkElement.Value = parameters.OSVirtualHardDisk.RemoteSourceImageLink.AbsoluteUri;
+                    oSVirtualHardDiskElement.Add(remoteSourceImageLinkElement);
+                }
+                
                 if (parameters.OSVirtualHardDisk.IOType != null)
                 {
                     XElement iOTypeElement2 = new XElement(XName.Get("IOType", "http://schemas.microsoft.com/windowsazure"));
                     iOTypeElement2.Value = parameters.OSVirtualHardDisk.IOType;
                     oSVirtualHardDiskElement.Add(iOTypeElement2);
+                }
+                
+                if (parameters.OSVirtualHardDisk.ResizedSizeInGB != null)
+                {
+                    XElement resizedSizeInGBElement = new XElement(XName.Get("ResizedSizeInGB", "http://schemas.microsoft.com/windowsazure"));
+                    resizedSizeInGBElement.Value = parameters.OSVirtualHardDisk.ResizedSizeInGB.ToString();
+                    oSVirtualHardDiskElement.Add(resizedSizeInGBElement);
                 }
                 
                 if (parameters.RoleSize != null)
@@ -7096,11 +7191,25 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     oSVirtualHardDiskInstance.OperatingSystem = osInstance;
                                 }
                                 
+                                XElement remoteSourceImageLinkElement = oSVirtualHardDiskElement.Element(XName.Get("RemoteSourceImageLink", "http://schemas.microsoft.com/windowsazure"));
+                                if (remoteSourceImageLinkElement != null)
+                                {
+                                    Uri remoteSourceImageLinkInstance = TypeConversion.TryParseUri(remoteSourceImageLinkElement.Value);
+                                    oSVirtualHardDiskInstance.RemoteSourceImageLink = remoteSourceImageLinkInstance;
+                                }
+                                
                                 XElement iOTypeElement2 = oSVirtualHardDiskElement.Element(XName.Get("IOType", "http://schemas.microsoft.com/windowsazure"));
                                 if (iOTypeElement2 != null)
                                 {
                                     string iOTypeInstance2 = iOTypeElement2.Value;
                                     oSVirtualHardDiskInstance.IOType = iOTypeInstance2;
+                                }
+                                
+                                XElement resizedSizeInGBElement = oSVirtualHardDiskElement.Element(XName.Get("ResizedSizeInGB", "http://schemas.microsoft.com/windowsazure"));
+                                if (resizedSizeInGBElement != null && !string.IsNullOrEmpty(resizedSizeInGBElement.Value))
+                                {
+                                    int resizedSizeInGBInstance = int.Parse(resizedSizeInGBElement.Value, CultureInfo.InvariantCulture);
+                                    oSVirtualHardDiskInstance.ResizedSizeInGB = resizedSizeInGBInstance;
                                 }
                             }
                         }
