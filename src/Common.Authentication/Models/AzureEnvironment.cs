@@ -25,6 +25,8 @@ namespace Microsoft.Azure.Common.Authentication.Models
 
         public string Name { get; set; }
 
+        public bool OnPremise { get; set; }
+
         public Dictionary<Endpoint, string> Endpoints { get; set; }
     }
 }

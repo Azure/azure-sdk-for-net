@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <ProjectGuid>{2C21CBE7-5D68-434A-BB20-463886BE5551}</ProjectGuid>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Microsoft.Azure.Search</RootNamespace>
+    <AssemblyName>Microsoft.Azure.Search</AssemblyName>
+    <OutputType>Library</OutputType>
+    <RestorePackages>true</RestorePackages>
+    <!--<NuGetPackageImportStamp>129d073f</NuGetPackageImportStamp>-->
+  </PropertyGroup>
+  <Import Project="..\..\tools\Library.Settings.targets" />
+  <ItemGroup>
+    <Compile Include="Customizations\Documents\DocumentOperations.ContinueSearch.Customization.cs" />
+    <Compile Include="Customizations\Documents\DocumentOperations.Get.Customization.cs" />
+    <Compile Include="Customizations\Documents\DocumentOperations.Index.Customization.cs" />
+    <Compile Include="Customizations\Documents\DocumentOperations.Search.Customization.cs" />
+    <Compile Include="Customizations\Documents\DocumentOperations.Suggest.Customization.cs" />
+    <Compile Include="Customizations\Documents\DocumentOperationsExtensions.ContinueSearch.Customization.cs" />
+    <Compile Include="Customizations\Documents\DocumentOperationsExtensions.Get.Customization.cs" />
+    <Compile Include="Customizations\Documents\DocumentOperationsExtensions.Index.Customization.cs" />
+    <Compile Include="Customizations\Documents\DocumentOperationsExtensions.Search.Customization.cs" />
+    <Compile Include="Customizations\Documents\DocumentOperationsExtensions.Suggest.Customization.cs" />
+    <Compile Include="Customizations\Documents\IDocumentOperations.ContinueSearch.Customization.cs" />
+    <Compile Include="Customizations\Documents\IDocumentOperations.Get.Customization.cs" />
+    <Compile Include="Customizations\Documents\IDocumentOperations.Index.Customization.cs" />
+    <Compile Include="Customizations\Documents\IDocumentOperations.Search.Customization.cs" />
+    <Compile Include="Customizations\Documents\IDocumentOperations.Suggest.Customization.cs" />
+    <Compile Include="Customizations\Documents\Models\Document.cs" />
+    <Compile Include="Customizations\Documents\Models\DocumentGetResponse.cs" />
+    <Compile Include="Customizations\Documents\Models\DocumentGetResponseOfT.cs" />
+    <Compile Include="Customizations\Documents\Models\DocumentSearchResponse.cs" />
+    <Compile Include="Customizations\Documents\Models\DocumentSearchResponseBase.cs" />
+    <Compile Include="Customizations\Documents\Models\DocumentSearchResponseOfT.cs" />
+    <Compile Include="Customizations\Documents\Models\DocumentSuggestResponse.cs" />
+    <Compile Include="Customizations\Documents\Models\DocumentSuggestResponseBase.cs" />
+    <Compile Include="Customizations\Documents\Models\DocumentSuggestResponseOfT.cs" />
+    <Compile Include="Customizations\Documents\Models\Facet.cs" />
+    <Compile Include="Customizations\Documents\Models\Facets.cs" />
+    <Compile Include="Customizations\Documents\Models\FacetType.cs" />
+    <Compile Include="Customizations\Documents\Models\HitHighlights.cs" />
+    <Compile Include="Customizations\Documents\Models\IndexAction.cs" />
+    <Compile Include="Customizations\Documents\Models\IndexActionOfT.cs" />
+    <Compile Include="Customizations\Documents\Models\IndexBatch.cs" />
+    <Compile Include="Customizations\Documents\Models\IndexBatchOfT.cs" />
+    <Compile Include="Customizations\Documents\Models\IndexResult.cs" />
+    <Compile Include="Customizations\Documents\Models\QueryOption.cs" />
+    <Compile Include="Customizations\Documents\Models\RangeFacet.cs" />
+    <Compile Include="Customizations\Documents\Models\SearchContinuationToken.cs" />
+    <Compile Include="Customizations\Documents\Models\SearchParameters.Customization.cs" />
+    <Compile Include="Customizations\Documents\Models\SearchResult.cs" />
+    <Compile Include="Customizations\Documents\Models\SearchResultOfT.cs" />
+    <Compile Include="Customizations\Documents\Models\SerializePropertyNamesAsCamelCaseAttribute.cs" />
+    <Compile Include="Customizations\Documents\Models\SuggestParameters.Customization.cs" />
+    <Compile Include="Customizations\Documents\Models\SuggestResult.cs" />
+    <Compile Include="Customizations\Documents\Models\SuggestResultOfT.cs" />
+    <Compile Include="Customizations\Documents\Models\ValueFacet.cs" />
+    <Compile Include="Customizations\IndexBatchException.cs" />
+    <Compile Include="Customizations\Indexes\IIndexOperations.Customization.cs" />
+    <Compile Include="Customizations\Indexes\IndexOperations.Customization.cs" />
+    <Compile Include="Customizations\Indexes\IndexOperationsExtensions.Customization.cs" />
+    <Compile Include="Customizations\Indexes\Models\AnalyzerName.cs" />
+    <Compile Include="Customizations\Indexes\Models\DataType.cs" />
+    <Compile Include="Customizations\Indexes\Models\Field.Customization.cs" />
+    <Compile Include="Customizations\Indexes\Models\FreshnessScoringParameters.Customization.cs" />
+    <Compile Include="Customizations\Indexes\Models\IndexListNamesResponse.cs" />
+    <Compile Include="Customizations\SearchCredentials.Customization.cs" />
+    <Compile Include="Customizations\SearchIndexClientExtensions.Customization.cs" />
+    <Compile Include="Customizations\SearchServiceClientExtensions.Customization.cs" />
+    <Compile Include="Customizations\Serialization\DateTimeConverter.cs" />
+    <Compile Include="Customizations\Serialization\DocumentConverter.cs" />
+    <Compile Include="Customizations\Serialization\GeographyPointConverter.cs" />
+    <Compile Include="Customizations\Serialization\IndexActionConverter.cs" />
+    <Compile Include="Customizations\Serialization\InjectingJsonWriter.cs" />
+    <Compile Include="Customizations\Serialization\JsonUtility.cs" />
+    <Compile Include="Customizations\Serialization\SearchResultConverter.cs" />
+    <Compile Include="Customizations\Serialization\SuggestResultConverter.cs" />
+    <Compile Include="Generated\**\*.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- A reference to the entire .NET Framework is automatically included -->
+    <None Include="Microsoft.Azure.Search.nuget.proj" />
+    <None Include="Microsoft.Azure.Search.nuspec" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Hyak.Common">
+      <HintPath>..\..\packages\Hyak.Common.1.0.1\lib\portable-net403+win+wpa81\Hyak.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Azure.Common">
+      <HintPath>..\..\packages\Microsoft.Azure.Common.2.0.1\lib\portable-net45+wp8+wpa81+win\Microsoft.Azure.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Spatial">
+      <HintPath>..\..\packages\Microsoft.Spatial.6.10.0\lib\portable-net40+sl5+wp8+win8+wpa\Microsoft.Spatial.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(LibraryFxTarget)' == 'portable' " />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(LibraryFxTarget)' != 'portable' " />
+  <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
+</Project>
