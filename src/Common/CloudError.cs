@@ -11,7 +11,7 @@ namespace Microsoft.Azure
     /// <summary>
     /// Provides additional information about an http error response
     /// </summary>
-    public class CloudError : IDeserializationModel
+    public class CloudError
     {
         /// <summary>
         /// Initializes a new instance of CloudError.
