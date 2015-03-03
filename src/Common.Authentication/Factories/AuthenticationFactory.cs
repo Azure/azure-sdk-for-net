@@ -95,7 +95,8 @@ namespace Microsoft.Azure.Common.Authentication.Factories
             {
                 AdEndpoint = adEndpoint,
                 ResourceClientUri = environment.Endpoints[resourceId],
-                AdDomain = tenantId
+                AdDomain = tenantId, 
+                ValidateAuthority = !environment.OnPremise
             };
         }
     }

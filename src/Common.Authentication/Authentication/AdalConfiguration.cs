@@ -28,14 +28,7 @@ namespace Microsoft.Azure.Common.Authentication
         // These constants define the default values to use for AD authentication
         // against RDFE
         //
-        private const string PowerShellClientId = "1950a258-227b-4e31-a9cf-717495945fc2";
-        private string adEndpoint = string.Empty;
-
-        // Turn off endpoint validation for known test cluster AD endpoints
-        private static readonly string[] knownTestEndpoints = 
-        {
-            "https://sts.login.windows-int.net/"
-        };
+        private const string PowerShellClientId = "1950a258-227b-4e31-a9cf-717495945fc2";          
 
         public static readonly Uri PowerShellRedirectUri = new Uri("urn:ietf:wg:oauth:2.0:oob");
 
@@ -44,26 +37,24 @@ namespace Microsoft.Azure.Common.Authentication
         // login window. Also adding popup flag to handle overly large login windows.
         public const string EnableEbdMagicCookie = "site_id=501358&display=popup";
 
-        public string AdEndpoint
-        {
-            get { return adEndpoint; }
-            set { adEndpoint = value; }
-        }
+        public string AdEndpoint { get;set; }
 
-        public bool ValidateAuthority
-        {
-            get { return knownTestEndpoints.All(s => string.Compare(s, adEndpoint, StringComparison.OrdinalIgnoreCase) != 0); }
-        }
+        public bool ValidateAuthority { get; set; }
 
         public string AdDomain { get; set; }
+
         public string ClientId { get; set; }
+
         public Uri ClientRedirectUri { get; set; }
+
         public string ResourceClientUri { get; set; }
 
         public AdalConfiguration()
         {
             ClientId = PowerShellClientId;
             ClientRedirectUri = PowerShellRedirectUri;
+            ValidateAuthority = true;
+            AdEndpoint = string.Empty;
         }
     }
 }
