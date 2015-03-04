@@ -23,7 +23,7 @@
     <Compile Include="CertificateCloudCredentials.cs" />
     <Compile Include="Platform\HttpTransportHandlerProvider.cs" />
     <Compile Include="Internals\PlatformConfigurationHelper.cs" />
-    <Compile Include="Properties\AssemblyOtherInfo.cs" />
+    <Compile Include="Properties\AssemblyAdditionalInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
