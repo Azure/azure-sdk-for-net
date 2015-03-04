@@ -187,6 +187,22 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._roleType = value; }
         }
         
+        private VMImageInput _vMImageInput;
+        
+        /// <summary>
+        /// Optional. When a VM Image is used to create a new PersistantVMRole,
+        /// the DiskConfigurations in the VM Image are used to create new
+        /// Disks for the new VM. This parameter can be used to resize the
+        /// newly created Disks to a larger size than the underlying
+        /// DiskConfigurations in the VM Image.This property is only returned
+        /// with a version header of 2014-10-01 or newer.
+        /// </summary>
+        public VMImageInput VMImageInput
+        {
+            get { return this._vMImageInput; }
+            set { this._vMImageInput = value; }
+        }
+        
         private string _vMImageName;
         
         /// <summary>

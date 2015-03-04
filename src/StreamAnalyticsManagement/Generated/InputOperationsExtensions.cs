@@ -351,6 +351,66 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         }
         
         /// <summary>
+        /// Update an input for a stream analytics job.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.StreamAnalytics.IInputOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The resource group name of the stream analytics job.
+        /// </param>
+        /// <param name='jobName'>
+        /// Required. The name of the stream analytics job.
+        /// </param>
+        /// <param name='inputName'>
+        /// Required. The name of the input for the stream analytics job.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The parameters required to update an input for a stream
+        /// analytics job.
+        /// </param>
+        /// <returns>
+        /// The response of the input patch operation.
+        /// </returns>
+        public static InputPatchResponse Patch(this IInputOperations operations, string resourceGroupName, string jobName, string inputName, InputPatchParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IInputOperations)s).PatchAsync(resourceGroupName, jobName, inputName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Update an input for a stream analytics job.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.StreamAnalytics.IInputOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The resource group name of the stream analytics job.
+        /// </param>
+        /// <param name='jobName'>
+        /// Required. The name of the stream analytics job.
+        /// </param>
+        /// <param name='inputName'>
+        /// Required. The name of the input for the stream analytics job.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The parameters required to update an input for a stream
+        /// analytics job.
+        /// </param>
+        /// <returns>
+        /// The response of the input patch operation.
+        /// </returns>
+        public static Task<InputPatchResponse> PatchAsync(this IInputOperations operations, string resourceGroupName, string jobName, string inputName, InputPatchParameters parameters)
+        {
+            return operations.PatchAsync(resourceGroupName, jobName, inputName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Test the connectivity of an input for a stream analytics job.
         /// </summary>
         /// <param name='operations'>
@@ -400,66 +460,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         public static Task<DataSourceTestConnectionResponse> TestConnectionAsync(this IInputOperations operations, string resourceGroupName, string jobName, string inputName)
         {
             return operations.TestConnectionAsync(resourceGroupName, jobName, inputName, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// Update an input for a stream analytics job.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.StreamAnalytics.IInputOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. The resource group name of the stream analytics job.
-        /// </param>
-        /// <param name='jobName'>
-        /// Required. The name of the stream analytics job.
-        /// </param>
-        /// <param name='inputName'>
-        /// Required. The name of the input for the stream analytics job.
-        /// </param>
-        /// <param name='parameters'>
-        /// Required. The parameters required to update an input for a stream
-        /// analytics job.
-        /// </param>
-        /// <returns>
-        /// The response of the input patch operation.
-        /// </returns>
-        public static InputPatchResponse Update(this IInputOperations operations, string resourceGroupName, string jobName, string inputName, InputPatchParameters parameters)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IInputOperations)s).UpdateAsync(resourceGroupName, jobName, inputName, parameters);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// Update an input for a stream analytics job.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.StreamAnalytics.IInputOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. The resource group name of the stream analytics job.
-        /// </param>
-        /// <param name='jobName'>
-        /// Required. The name of the stream analytics job.
-        /// </param>
-        /// <param name='inputName'>
-        /// Required. The name of the input for the stream analytics job.
-        /// </param>
-        /// <param name='parameters'>
-        /// Required. The parameters required to update an input for a stream
-        /// analytics job.
-        /// </param>
-        /// <returns>
-        /// The response of the input patch operation.
-        /// </returns>
-        public static Task<InputPatchResponse> UpdateAsync(this IInputOperations operations, string resourceGroupName, string jobName, string inputName, InputPatchParameters parameters)
-        {
-            return operations.UpdateAsync(resourceGroupName, jobName, inputName, parameters, CancellationToken.None);
         }
     }
 }

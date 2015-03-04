@@ -16,6 +16,7 @@ using Hyak.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
 
 namespace Microsoft.Azure.Common.Authentication.Models
 {
@@ -75,6 +76,7 @@ namespace Microsoft.Azure.Common.Authentication.Models
         /// <summary>
         /// Gets current Azure context 
         /// </summary>
+        [JsonIgnore]
         public AzureContext Context 
         { 
             get

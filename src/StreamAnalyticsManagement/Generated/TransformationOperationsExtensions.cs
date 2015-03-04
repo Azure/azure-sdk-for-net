@@ -226,11 +226,11 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// <returns>
         /// The response of the transformation patch operation.
         /// </returns>
-        public static TransformationPatchResponse Update(this ITransformationOperations operations, string resourceGroupName, string jobName, string transformationName, TransformationPatchParameters parameters)
+        public static TransformationPatchResponse Patch(this ITransformationOperations operations, string resourceGroupName, string jobName, string transformationName, TransformationPatchParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((ITransformationOperations)s).UpdateAsync(resourceGroupName, jobName, transformationName, parameters);
+                return ((ITransformationOperations)s).PatchAsync(resourceGroupName, jobName, transformationName, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -259,9 +259,9 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// <returns>
         /// The response of the transformation patch operation.
         /// </returns>
-        public static Task<TransformationPatchResponse> UpdateAsync(this ITransformationOperations operations, string resourceGroupName, string jobName, string transformationName, TransformationPatchParameters parameters)
+        public static Task<TransformationPatchResponse> PatchAsync(this ITransformationOperations operations, string resourceGroupName, string jobName, string transformationName, TransformationPatchParameters parameters)
         {
-            return operations.UpdateAsync(resourceGroupName, jobName, transformationName, parameters, CancellationToken.None);
+            return operations.PatchAsync(resourceGroupName, jobName, transformationName, parameters, CancellationToken.None);
         }
     }
 }

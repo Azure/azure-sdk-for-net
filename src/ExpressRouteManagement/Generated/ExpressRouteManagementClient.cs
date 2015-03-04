@@ -354,6 +354,10 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             {
                 return BgpPeeringAccessType.Public;
             }
+            if ("microsoft".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return BgpPeeringAccessType.Microsoft;
+            }
             throw new ArgumentOutOfRangeException("value");
         }
         
@@ -375,6 +379,10 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             if (value == BgpPeeringAccessType.Public)
             {
                 return "public";
+            }
+            if (value == BgpPeeringAccessType.Microsoft)
+            {
+                return "microsoft";
             }
             throw new ArgumentOutOfRangeException("value");
         }

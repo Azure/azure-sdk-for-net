@@ -54,15 +54,26 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
             set { this._allowedActions = value; }
         }
         
-        private string _endTimestamp;
+        private string _displayName;
+        
+        /// <summary>
+        /// Required. Localized name.
+        /// </summary>
+        public string DisplayName
+        {
+            get { return this._displayName; }
+            set { this._displayName = value; }
+        }
+        
+        private System.DateTime? _endTime;
         
         /// <summary>
         /// Required. End time stamp.
         /// </summary>
-        public string EndTimestamp
+        public System.DateTime? EndTime
         {
-            get { return this._endTimestamp; }
-            set { this._endTimestamp = value; }
+            get { return this._endTime; }
+            set { this._endTime = value; }
         }
         
         private IList<ErrorDetails> _errors;
@@ -76,15 +87,15 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
             set { this._errors = value; }
         }
         
-        private string _startTimestamp;
+        private System.DateTime? _startTime;
         
         /// <summary>
         /// Required. Start time stamp.
         /// </summary>
-        public string StartTimestamp
+        public System.DateTime? StartTime
         {
-            get { return this._startTimestamp; }
-            set { this._startTimestamp = value; }
+            get { return this._startTime; }
+            set { this._startTime = value; }
         }
         
         private string _state;
@@ -109,6 +120,39 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
         {
             get { return this._stateDescription; }
             set { this._stateDescription = value; }
+        }
+        
+        private string _targetObjectId;
+        
+        /// <summary>
+        /// Required. Affected ObjectId.
+        /// </summary>
+        public string TargetObjectId
+        {
+            get { return this._targetObjectId; }
+            set { this._targetObjectId = value; }
+        }
+        
+        private string _targetObjectName;
+        
+        /// <summary>
+        /// Required. Affected object name.
+        /// </summary>
+        public string TargetObjectName
+        {
+            get { return this._targetObjectName; }
+            set { this._targetObjectName = value; }
+        }
+        
+        private string _targetObjectType;
+        
+        /// <summary>
+        /// Required. Affected ObjectT ype.
+        /// </summary>
+        public string TargetObjectType
+        {
+            get { return this._targetObjectType; }
+            set { this._targetObjectType = value; }
         }
         
         private IList<AsrTask> _tasks;

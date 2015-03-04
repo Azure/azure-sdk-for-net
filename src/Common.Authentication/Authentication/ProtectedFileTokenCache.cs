@@ -29,16 +29,7 @@ namespace Microsoft.Azure.Common.Authentication
 
         private static readonly object fileLock = new object();
 
-        private static readonly Lazy<ProtectedFileTokenCache> instance =
-            new Lazy<ProtectedFileTokenCache>(() => new ProtectedFileTokenCache());
-        
-        public static ProtectedFileTokenCache Instance
-        {
-            get
-            {
-                return instance.Value;
-            }
-        }
+        private static readonly Lazy<ProtectedFileTokenCache> instance = new Lazy<ProtectedFileTokenCache>(() => new ProtectedFileTokenCache());
 
         // Initializes the cache against a local file.
         // If the file is already present, it loads its content in the ADAL cache
@@ -126,6 +117,5 @@ namespace Microsoft.Azure.Common.Authentication
                 }
             }
         }
-
     }
 }

@@ -74,6 +74,31 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         Task<DedicatedCircuitLinkGetResponse> GetAsync(string serviceKey, string vnetName, CancellationToken cancellationToken);
         
         /// <summary>
+        /// The Get Express Route operation status gets information on the
+        /// status of Express Route operations in Windows Azure.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154112.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operationId'>
+        /// The id  of the operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        Task<ExpressRouteOperationStatusResponse> GetOperationStatusAsync(string operationId, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// The List Dedicated Circuit Links operation retrieves a list of
         /// Vnets that are linked to the circuit with the specified service
         /// key.
@@ -94,9 +119,17 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Get Dedicated Circuit Link operation response.
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
         /// </returns>
-        Task<DedicatedCircuitLinkGetResponse> NewAsync(string serviceKey, string vnetName, CancellationToken cancellationToken);
+        Task<ExpressRouteOperationStatusResponse> NewAsync(string serviceKey, string vnetName, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Remove Dedicated Circuit Link operation deletes an existing

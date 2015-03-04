@@ -19,16 +19,16 @@
 // Changes to this file may cause incorrect behavior and will be lost if the
 // code is regenerated.
 
-using Microsoft.Azure.Internal.Subscriptions.Csm.Models;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure.Subscriptions.Csm.Models;
 
-namespace Microsoft.Azure.Internal.Subscriptions.Csm
+namespace Microsoft.Azure.Subscriptions.Csm
 {
     /// <summary>
     /// Operations for managing subscriptions.
     /// </summary>
-    internal partial interface ISubscriptionOperations
+    public partial interface ISubscriptionOperations
     {
         /// <summary>
         /// Gets details about particular subscription.

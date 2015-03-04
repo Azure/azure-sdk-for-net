@@ -23,6 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.RecoveryServices.Models;
 
 namespace Microsoft.WindowsAzure.Management.RecoveryServices
@@ -33,6 +34,49 @@ namespace Microsoft.WindowsAzure.Management.RecoveryServices
     /// </summary>
     public partial interface ICloudServiceOperations
     {
+        /// <summary>
+        /// Creates a Cloud services
+        /// </summary>
+        /// <param name='cloudServiceName'>
+        /// The cloud service name.
+        /// </param>
+        /// <param name='cloudService'>
+        /// Parameters supplied to the Create cloud service operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<AzureOperationResponse> BeginCreatingAsync(string cloudServiceName, CloudServiceCreateArgs cloudService, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Create a cloud service.
+        /// </summary>
+        /// <param name='cloudServiceName'>
+        /// The cloud service name.
+        /// </param>
+        /// <param name='cloudService'>
+        /// Parameters supplied to the Create cloud service operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        Task<RecoveryServicesOperationStatusResponse> CreateAsync(string cloudServiceName, CloudServiceCreateArgs cloudService, CancellationToken cancellationToken);
+        
         /// <summary>
         /// Retrieve a list of Cloud services
         /// </summary>

@@ -69,5 +69,28 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
         /// The response model for the list Vm operation.
         /// </returns>
         Task<VirtualMachineListResponse> ListAsync(string protectionContainerId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Updates VM properties.
+        /// </summary>
+        /// <param name='protectionContainerId'>
+        /// Parent Protection Container ID.
+        /// </param>
+        /// <param name='virtualMachineId'>
+        /// VM ID.
+        /// </param>
+        /// <param name='parameters'>
+        /// Update VM properties input.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response model for the Job details object.
+        /// </returns>
+        Task<JobResponse> UpdateVmPropertiesAsync(string protectionContainerId, string virtualMachineId, UpdateVmPropertiesInput parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
     }
 }

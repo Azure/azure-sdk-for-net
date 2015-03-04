@@ -3,7 +3,7 @@
   <metadata minClientVersion="2.5">
     <id>Microsoft.Azure.Insights</id>
     <title>Microsoft Azure Insights Library</title>
-    <releaseNotes>__BASELINE_RELEASE_NOTES__</releaseNotes>
+    <releaseNotes>Documentation for this NuGet package is available on MSDN at: http://msdn.microsoft.com/en-us/library/azure/dn802153.aspx </releaseNotes>
     <version>$version$</version>
     <authors>Microsoft</authors>
     <owners>azure-sdk, Microsoft</owners>
@@ -11,17 +11,17 @@
     <projectUrl>https://github.com/Azure/azure-sdk-for-net</projectUrl>
     <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <summary>Provides Microsoft Azure Insights Services operations including a unified API to retrieve and configure Insights metrics, alerts, events, usages, and autoscale rules for your Microsoft Azure services using Resource Manager.</summary>
-    <description>Provides Insights access for Microsoft Azure using Resource Manager.</description>
+    <summary>Provides Microsoft Azure Insights operations using Resource Manager.</summary>
+    <description>Provides Microsoft Azure Insights operations using Resource Manager. Insights includes a unified API to retrieve monitoring metrics and operational events for all of the Azure resources that are available in Azure Resource Manager. In addition, you can configure alerting rules on metrics or events, diagnostics settings, and autoscale settings for your Microsoft Azure services.</description>
     <copyright>Copyright © Microsoft Corporation</copyright>
-    <tags>Microsoft Azure Insights REST HTTP client windowsazureofficial</tags>
+    <tags>Microsoft "Microsoft Azure" Azure Insights monitoring "monitoring services" metrics alerts autoscale events operations logs REST HTTP client azureofficial windowsazureofficial "management services" diagnostics telemetry analytics</tags>
     <references>
       <group targetFramework="net40">
         <reference file="Microsoft.Azure.Insights.dll" />
       </group>
     </references>
     <dependencies>
-      <dependency id="Microsoft.Azure.Common" version="[2.0.1,3.0)" />
+      <dependency id="Microsoft.Azure.Common" version="[2.0.3,3.0)" />
       <dependency id="Microsoft.WindowsAzure.Storage" version="4.0.0" />
     </dependencies>
   </metadata>

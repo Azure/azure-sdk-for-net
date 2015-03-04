@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private ReferenceInputDataSource _dataSource;
         
         /// <summary>
-        /// Required. Gets or sets the data source configuration of the input.
+        /// Optional. Gets or sets the data source configuration of the input.
         /// </summary>
         public ReferenceInputDataSource DataSource
         {
@@ -46,25 +46,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// </summary>
         public ReferenceInputProperties()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the ReferenceInputProperties class
-        /// with required arguments.
-        /// </summary>
-        public ReferenceInputProperties(ReferenceInputDataSource dataSource, Serialization serialization)
-            : this()
-        {
-            if (dataSource == null)
-            {
-                throw new ArgumentNullException("dataSource");
-            }
-            if (serialization == null)
-            {
-                throw new ArgumentNullException("serialization");
-            }
-            this.DataSource = dataSource;
-            this.Serialization = serialization;
         }
     }
 }

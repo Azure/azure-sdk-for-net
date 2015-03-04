@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Common.Authentication.Factories
 
             if (context.Account.Type == AzureAccount.AccountType.AccessToken)
             {
-                return new TokenCloudCredentials(context.Subscription.Id.ToString(), context.Account.Id);
+                return new TokenCloudCredentials(context.Subscription.Id.ToString(), context.Account.GetProperty(AzureAccount.Property.AccessToken));
             }
 
             var tenant = context.Subscription.GetPropertyAsArray(AzureSubscription.Property.Tenants)
@@ -95,7 +95,8 @@ namespace Microsoft.Azure.Common.Authentication.Factories
             {
                 AdEndpoint = adEndpoint,
                 ResourceClientUri = environment.Endpoints[resourceId],
-                AdDomain = tenantId
+                AdDomain = tenantId, 
+                ValidateAuthority = !environment.OnPremise
             };
         }
     }

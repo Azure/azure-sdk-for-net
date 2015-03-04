@@ -118,7 +118,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
             url = url + Uri.EscapeDataString(jobId);
             url = url + "/Cancel";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-10-27");
+            queryParameters.Add("api-version=2015-02-10");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -264,7 +264,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
             url = url + "/Jobs/";
             url = url + Uri.EscapeDataString(jobId);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-10-27");
+            queryParameters.Add("api-version=2015-02-10");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -335,76 +335,104 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                         result = new JobResponse();
                         XDocument responseDoc = XDocument.Parse(responseContent);
                         
-                        XElement serviceResourceElement = responseDoc.Element(XName.Get("ServiceResource", "http://schemas.microsoft.com/windowsazure"));
-                        if (serviceResourceElement != null)
+                        XElement jobElement = responseDoc.Element(XName.Get("Job", "http://schemas.microsoft.com/windowsazure"));
+                        if (jobElement != null)
                         {
-                            Job serviceResourceInstance = new Job();
-                            result.Job = serviceResourceInstance;
+                            Job jobInstance = new Job();
+                            result.Job = jobInstance;
                             
-                            XElement activityIdElement = serviceResourceElement.Element(XName.Get("ActivityId", "http://schemas.microsoft.com/windowsazure"));
+                            XElement activityIdElement = jobElement.Element(XName.Get("ActivityId", "http://schemas.microsoft.com/windowsazure"));
                             if (activityIdElement != null)
                             {
                                 string activityIdInstance = activityIdElement.Value;
-                                serviceResourceInstance.ActivityId = activityIdInstance;
+                                jobInstance.ActivityId = activityIdInstance;
                             }
                             
-                            XElement startTimestampElement = serviceResourceElement.Element(XName.Get("StartTimestamp", "http://schemas.microsoft.com/windowsazure"));
-                            if (startTimestampElement != null)
+                            XElement startTimeElement = jobElement.Element(XName.Get("StartTime", "http://schemas.microsoft.com/windowsazure"));
+                            if (startTimeElement != null && !string.IsNullOrEmpty(startTimeElement.Value))
                             {
-                                string startTimestampInstance = startTimestampElement.Value;
-                                serviceResourceInstance.StartTimestamp = startTimestampInstance;
+                                DateTime startTimeInstance = DateTime.Parse(startTimeElement.Value, CultureInfo.InvariantCulture);
+                                jobInstance.StartTime = startTimeInstance;
                             }
                             
-                            XElement endTimestampElement = serviceResourceElement.Element(XName.Get("EndTimestamp", "http://schemas.microsoft.com/windowsazure"));
-                            if (endTimestampElement != null)
+                            XElement endTimeElement = jobElement.Element(XName.Get("EndTime", "http://schemas.microsoft.com/windowsazure"));
+                            if (endTimeElement != null && !string.IsNullOrEmpty(endTimeElement.Value))
                             {
-                                string endTimestampInstance = endTimestampElement.Value;
-                                serviceResourceInstance.EndTimestamp = endTimestampInstance;
+                                DateTime endTimeInstance = DateTime.Parse(endTimeElement.Value, CultureInfo.InvariantCulture);
+                                jobInstance.EndTime = endTimeInstance;
                             }
                             
-                            XElement allowedActionsSequenceElement = serviceResourceElement.Element(XName.Get("AllowedActions", "http://schemas.microsoft.com/windowsazure"));
+                            XElement displayNameElement = jobElement.Element(XName.Get("DisplayName", "http://schemas.microsoft.com/windowsazure"));
+                            if (displayNameElement != null)
+                            {
+                                string displayNameInstance = displayNameElement.Value;
+                                jobInstance.DisplayName = displayNameInstance;
+                            }
+                            
+                            XElement targetObjectIdElement = jobElement.Element(XName.Get("TargetObjectId", "http://schemas.microsoft.com/windowsazure"));
+                            if (targetObjectIdElement != null)
+                            {
+                                string targetObjectIdInstance = targetObjectIdElement.Value;
+                                jobInstance.TargetObjectId = targetObjectIdInstance;
+                            }
+                            
+                            XElement targetObjectTypeElement = jobElement.Element(XName.Get("TargetObjectType", "http://schemas.microsoft.com/windowsazure"));
+                            if (targetObjectTypeElement != null)
+                            {
+                                string targetObjectTypeInstance = targetObjectTypeElement.Value;
+                                jobInstance.TargetObjectType = targetObjectTypeInstance;
+                            }
+                            
+                            XElement targetObjectNameElement = jobElement.Element(XName.Get("TargetObjectName", "http://schemas.microsoft.com/windowsazure"));
+                            if (targetObjectNameElement != null)
+                            {
+                                string targetObjectNameInstance = targetObjectNameElement.Value;
+                                jobInstance.TargetObjectName = targetObjectNameInstance;
+                            }
+                            
+                            XElement allowedActionsSequenceElement = jobElement.Element(XName.Get("AllowedActions", "http://schemas.microsoft.com/windowsazure"));
                             if (allowedActionsSequenceElement != null)
                             {
                                 foreach (XElement allowedActionsElement in allowedActionsSequenceElement.Elements(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/Arrays")))
                                 {
-                                    serviceResourceInstance.AllowedActions.Add(allowedActionsElement.Value);
+                                    jobInstance.AllowedActions.Add(allowedActionsElement.Value);
                                 }
                             }
                             
-                            XElement stateElement = serviceResourceElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                            XElement stateElement = jobElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
                             if (stateElement != null)
                             {
                                 string stateInstance = stateElement.Value;
-                                serviceResourceInstance.State = stateInstance;
+                                jobInstance.State = stateInstance;
                             }
                             
-                            XElement stateDescriptionElement = serviceResourceElement.Element(XName.Get("StateDescription", "http://schemas.microsoft.com/windowsazure"));
+                            XElement stateDescriptionElement = jobElement.Element(XName.Get("StateDescription", "http://schemas.microsoft.com/windowsazure"));
                             if (stateDescriptionElement != null)
                             {
                                 string stateDescriptionInstance = stateDescriptionElement.Value;
-                                serviceResourceInstance.StateDescription = stateDescriptionInstance;
+                                jobInstance.StateDescription = stateDescriptionInstance;
                             }
                             
-                            XElement tasksSequenceElement = serviceResourceElement.Element(XName.Get("Tasks", "http://schemas.microsoft.com/windowsazure"));
+                            XElement tasksSequenceElement = jobElement.Element(XName.Get("Tasks", "http://schemas.microsoft.com/windowsazure"));
                             if (tasksSequenceElement != null)
                             {
                                 foreach (XElement tasksElement in tasksSequenceElement.Elements(XName.Get("Task", "http://schemas.microsoft.com/windowsazure")))
                                 {
                                     AsrTask taskInstance = new AsrTask();
-                                    serviceResourceInstance.Tasks.Add(taskInstance);
+                                    jobInstance.Tasks.Add(taskInstance);
                                     
-                                    XElement startTimeElement = tasksElement.Element(XName.Get("StartTime", "http://schemas.microsoft.com/windowsazure"));
-                                    if (startTimeElement != null)
+                                    XElement startTimeElement2 = tasksElement.Element(XName.Get("StartTime", "http://schemas.microsoft.com/windowsazure"));
+                                    if (startTimeElement2 != null)
                                     {
-                                        DateTime startTimeInstance = DateTime.Parse(startTimeElement.Value, CultureInfo.InvariantCulture);
-                                        taskInstance.StartTime = startTimeInstance;
+                                        DateTime startTimeInstance2 = DateTime.Parse(startTimeElement2.Value, CultureInfo.InvariantCulture);
+                                        taskInstance.StartTime = startTimeInstance2;
                                     }
                                     
-                                    XElement endTimeElement = tasksElement.Element(XName.Get("EndTime", "http://schemas.microsoft.com/windowsazure"));
-                                    if (endTimeElement != null)
+                                    XElement endTimeElement2 = tasksElement.Element(XName.Get("EndTime", "http://schemas.microsoft.com/windowsazure"));
+                                    if (endTimeElement2 != null)
                                     {
-                                        DateTime endTimeInstance = DateTime.Parse(endTimeElement.Value, CultureInfo.InvariantCulture);
-                                        taskInstance.EndTime = endTimeInstance;
+                                        DateTime endTimeInstance2 = DateTime.Parse(endTimeElement2.Value, CultureInfo.InvariantCulture);
+                                        taskInstance.EndTime = endTimeInstance2;
                                     }
                                     
                                     XElement actionsSequenceElement = tasksElement.Element(XName.Get("Actions", "http://schemas.microsoft.com/windowsazure"));
@@ -467,13 +495,13 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                                 }
                             }
                             
-                            XElement errorsSequenceElement = serviceResourceElement.Element(XName.Get("Errors", "http://schemas.microsoft.com/windowsazure"));
+                            XElement errorsSequenceElement = jobElement.Element(XName.Get("Errors", "http://schemas.microsoft.com/windowsazure"));
                             if (errorsSequenceElement != null)
                             {
                                 foreach (XElement errorsElement in errorsSequenceElement.Elements(XName.Get("ErrorDetails", "http://schemas.microsoft.com/windowsazure")))
                                 {
                                     ErrorDetails errorDetailsInstance = new ErrorDetails();
-                                    serviceResourceInstance.Errors.Add(errorDetailsInstance);
+                                    jobInstance.Errors.Add(errorDetailsInstance);
                                     
                                     XElement serviceErrorDetailsElement = errorsElement.Element(XName.Get("ServiceErrorDetails", "http://schemas.microsoft.com/windowsazure"));
                                     if (serviceErrorDetailsElement != null)
@@ -586,18 +614,18 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                                 }
                             }
                             
-                            XElement nameElement2 = serviceResourceElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                            XElement nameElement2 = jobElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
                             if (nameElement2 != null)
                             {
                                 string nameInstance2 = nameElement2.Value;
-                                serviceResourceInstance.Name = nameInstance2;
+                                jobInstance.Name = nameInstance2;
                             }
                             
-                            XElement idElement2 = serviceResourceElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
+                            XElement idElement2 = jobElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
                             if (idElement2 != null)
                             {
                                 string idInstance2 = idElement2.Value;
-                                serviceResourceInstance.ID = idInstance2;
+                                jobInstance.ID = idInstance2;
                             }
                         }
                         
@@ -678,7 +706,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
             url = url + Uri.EscapeDataString(this.Client.ResourceName);
             url = url + "/Jobs";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-10-27");
+            queryParameters.Add("api-version=2015-02-10");
             if (parameters != null && parameters.StartTime != null)
             {
                 queryParameters.Add("StartTime=" + Uri.EscapeDataString(parameters.StartTime));
@@ -690,6 +718,10 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
             if (parameters != null && parameters.State != null)
             {
                 queryParameters.Add("State=" + Uri.EscapeDataString(parameters.State));
+            }
+            if (parameters != null && parameters.ObjectId != null)
+            {
+                queryParameters.Add("ObjectId=" + Uri.EscapeDataString(parameters.ObjectId));
             }
             if (queryParameters.Count > 0)
             {
@@ -761,78 +793,106 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                         result = new JobListResponse();
                         XDocument responseDoc = XDocument.Parse(responseContent);
                         
-                        XElement arrayOfServiceResourceSequenceElement = responseDoc.Element(XName.Get("ArrayOfServiceResource", "http://schemas.microsoft.com/windowsazure"));
-                        if (arrayOfServiceResourceSequenceElement != null)
+                        XElement arrayOfJobSequenceElement = responseDoc.Element(XName.Get("ArrayOfJob", "http://schemas.microsoft.com/windowsazure"));
+                        if (arrayOfJobSequenceElement != null)
                         {
-                            foreach (XElement arrayOfServiceResourceElement in arrayOfServiceResourceSequenceElement.Elements(XName.Get("ServiceResource", "http://schemas.microsoft.com/windowsazure")))
+                            foreach (XElement arrayOfJobElement in arrayOfJobSequenceElement.Elements(XName.Get("Job", "http://schemas.microsoft.com/windowsazure")))
                             {
-                                Job serviceResourceInstance = new Job();
-                                result.Jobs.Add(serviceResourceInstance);
+                                Job jobInstance = new Job();
+                                result.Jobs.Add(jobInstance);
                                 
-                                XElement activityIdElement = arrayOfServiceResourceElement.Element(XName.Get("ActivityId", "http://schemas.microsoft.com/windowsazure"));
+                                XElement activityIdElement = arrayOfJobElement.Element(XName.Get("ActivityId", "http://schemas.microsoft.com/windowsazure"));
                                 if (activityIdElement != null)
                                 {
                                     string activityIdInstance = activityIdElement.Value;
-                                    serviceResourceInstance.ActivityId = activityIdInstance;
+                                    jobInstance.ActivityId = activityIdInstance;
                                 }
                                 
-                                XElement startTimestampElement = arrayOfServiceResourceElement.Element(XName.Get("StartTimestamp", "http://schemas.microsoft.com/windowsazure"));
-                                if (startTimestampElement != null)
+                                XElement startTimeElement = arrayOfJobElement.Element(XName.Get("StartTime", "http://schemas.microsoft.com/windowsazure"));
+                                if (startTimeElement != null && !string.IsNullOrEmpty(startTimeElement.Value))
                                 {
-                                    string startTimestampInstance = startTimestampElement.Value;
-                                    serviceResourceInstance.StartTimestamp = startTimestampInstance;
+                                    DateTime startTimeInstance = DateTime.Parse(startTimeElement.Value, CultureInfo.InvariantCulture);
+                                    jobInstance.StartTime = startTimeInstance;
                                 }
                                 
-                                XElement endTimestampElement = arrayOfServiceResourceElement.Element(XName.Get("EndTimestamp", "http://schemas.microsoft.com/windowsazure"));
-                                if (endTimestampElement != null)
+                                XElement endTimeElement = arrayOfJobElement.Element(XName.Get("EndTime", "http://schemas.microsoft.com/windowsazure"));
+                                if (endTimeElement != null && !string.IsNullOrEmpty(endTimeElement.Value))
                                 {
-                                    string endTimestampInstance = endTimestampElement.Value;
-                                    serviceResourceInstance.EndTimestamp = endTimestampInstance;
+                                    DateTime endTimeInstance = DateTime.Parse(endTimeElement.Value, CultureInfo.InvariantCulture);
+                                    jobInstance.EndTime = endTimeInstance;
                                 }
                                 
-                                XElement allowedActionsSequenceElement = arrayOfServiceResourceElement.Element(XName.Get("AllowedActions", "http://schemas.microsoft.com/windowsazure"));
+                                XElement displayNameElement = arrayOfJobElement.Element(XName.Get("DisplayName", "http://schemas.microsoft.com/windowsazure"));
+                                if (displayNameElement != null)
+                                {
+                                    string displayNameInstance = displayNameElement.Value;
+                                    jobInstance.DisplayName = displayNameInstance;
+                                }
+                                
+                                XElement targetObjectIdElement = arrayOfJobElement.Element(XName.Get("TargetObjectId", "http://schemas.microsoft.com/windowsazure"));
+                                if (targetObjectIdElement != null)
+                                {
+                                    string targetObjectIdInstance = targetObjectIdElement.Value;
+                                    jobInstance.TargetObjectId = targetObjectIdInstance;
+                                }
+                                
+                                XElement targetObjectTypeElement = arrayOfJobElement.Element(XName.Get("TargetObjectType", "http://schemas.microsoft.com/windowsazure"));
+                                if (targetObjectTypeElement != null)
+                                {
+                                    string targetObjectTypeInstance = targetObjectTypeElement.Value;
+                                    jobInstance.TargetObjectType = targetObjectTypeInstance;
+                                }
+                                
+                                XElement targetObjectNameElement = arrayOfJobElement.Element(XName.Get("TargetObjectName", "http://schemas.microsoft.com/windowsazure"));
+                                if (targetObjectNameElement != null)
+                                {
+                                    string targetObjectNameInstance = targetObjectNameElement.Value;
+                                    jobInstance.TargetObjectName = targetObjectNameInstance;
+                                }
+                                
+                                XElement allowedActionsSequenceElement = arrayOfJobElement.Element(XName.Get("AllowedActions", "http://schemas.microsoft.com/windowsazure"));
                                 if (allowedActionsSequenceElement != null)
                                 {
                                     foreach (XElement allowedActionsElement in allowedActionsSequenceElement.Elements(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/Arrays")))
                                     {
-                                        serviceResourceInstance.AllowedActions.Add(allowedActionsElement.Value);
+                                        jobInstance.AllowedActions.Add(allowedActionsElement.Value);
                                     }
                                 }
                                 
-                                XElement stateElement = arrayOfServiceResourceElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                                XElement stateElement = arrayOfJobElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
                                 if (stateElement != null)
                                 {
                                     string stateInstance = stateElement.Value;
-                                    serviceResourceInstance.State = stateInstance;
+                                    jobInstance.State = stateInstance;
                                 }
                                 
-                                XElement stateDescriptionElement = arrayOfServiceResourceElement.Element(XName.Get("StateDescription", "http://schemas.microsoft.com/windowsazure"));
+                                XElement stateDescriptionElement = arrayOfJobElement.Element(XName.Get("StateDescription", "http://schemas.microsoft.com/windowsazure"));
                                 if (stateDescriptionElement != null)
                                 {
                                     string stateDescriptionInstance = stateDescriptionElement.Value;
-                                    serviceResourceInstance.StateDescription = stateDescriptionInstance;
+                                    jobInstance.StateDescription = stateDescriptionInstance;
                                 }
                                 
-                                XElement tasksSequenceElement = arrayOfServiceResourceElement.Element(XName.Get("Tasks", "http://schemas.microsoft.com/windowsazure"));
+                                XElement tasksSequenceElement = arrayOfJobElement.Element(XName.Get("Tasks", "http://schemas.microsoft.com/windowsazure"));
                                 if (tasksSequenceElement != null)
                                 {
                                     foreach (XElement tasksElement in tasksSequenceElement.Elements(XName.Get("Task", "http://schemas.microsoft.com/windowsazure")))
                                     {
                                         AsrTask taskInstance = new AsrTask();
-                                        serviceResourceInstance.Tasks.Add(taskInstance);
+                                        jobInstance.Tasks.Add(taskInstance);
                                         
-                                        XElement startTimeElement = tasksElement.Element(XName.Get("StartTime", "http://schemas.microsoft.com/windowsazure"));
-                                        if (startTimeElement != null)
+                                        XElement startTimeElement2 = tasksElement.Element(XName.Get("StartTime", "http://schemas.microsoft.com/windowsazure"));
+                                        if (startTimeElement2 != null)
                                         {
-                                            DateTime startTimeInstance = DateTime.Parse(startTimeElement.Value, CultureInfo.InvariantCulture);
-                                            taskInstance.StartTime = startTimeInstance;
+                                            DateTime startTimeInstance2 = DateTime.Parse(startTimeElement2.Value, CultureInfo.InvariantCulture);
+                                            taskInstance.StartTime = startTimeInstance2;
                                         }
                                         
-                                        XElement endTimeElement = tasksElement.Element(XName.Get("EndTime", "http://schemas.microsoft.com/windowsazure"));
-                                        if (endTimeElement != null)
+                                        XElement endTimeElement2 = tasksElement.Element(XName.Get("EndTime", "http://schemas.microsoft.com/windowsazure"));
+                                        if (endTimeElement2 != null)
                                         {
-                                            DateTime endTimeInstance = DateTime.Parse(endTimeElement.Value, CultureInfo.InvariantCulture);
-                                            taskInstance.EndTime = endTimeInstance;
+                                            DateTime endTimeInstance2 = DateTime.Parse(endTimeElement2.Value, CultureInfo.InvariantCulture);
+                                            taskInstance.EndTime = endTimeInstance2;
                                         }
                                         
                                         XElement actionsSequenceElement = tasksElement.Element(XName.Get("Actions", "http://schemas.microsoft.com/windowsazure"));
@@ -895,13 +955,13 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                                     }
                                 }
                                 
-                                XElement errorsSequenceElement = arrayOfServiceResourceElement.Element(XName.Get("Errors", "http://schemas.microsoft.com/windowsazure"));
+                                XElement errorsSequenceElement = arrayOfJobElement.Element(XName.Get("Errors", "http://schemas.microsoft.com/windowsazure"));
                                 if (errorsSequenceElement != null)
                                 {
                                     foreach (XElement errorsElement in errorsSequenceElement.Elements(XName.Get("ErrorDetails", "http://schemas.microsoft.com/windowsazure")))
                                     {
                                         ErrorDetails errorDetailsInstance = new ErrorDetails();
-                                        serviceResourceInstance.Errors.Add(errorDetailsInstance);
+                                        jobInstance.Errors.Add(errorDetailsInstance);
                                         
                                         XElement serviceErrorDetailsElement = errorsElement.Element(XName.Get("ServiceErrorDetails", "http://schemas.microsoft.com/windowsazure"));
                                         if (serviceErrorDetailsElement != null)
@@ -1014,18 +1074,18 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                                     }
                                 }
                                 
-                                XElement nameElement2 = arrayOfServiceResourceElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                XElement nameElement2 = arrayOfJobElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
                                 if (nameElement2 != null)
                                 {
                                     string nameInstance2 = nameElement2.Value;
-                                    serviceResourceInstance.Name = nameInstance2;
+                                    jobInstance.Name = nameInstance2;
                                 }
                                 
-                                XElement idElement2 = arrayOfServiceResourceElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
+                                XElement idElement2 = arrayOfJobElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
                                 if (idElement2 != null)
                                 {
                                     string idInstance2 = idElement2.Value;
-                                    serviceResourceInstance.ID = idInstance2;
+                                    jobInstance.ID = idInstance2;
                                 }
                             }
                         }
@@ -1113,7 +1173,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
             url = url + Uri.EscapeDataString(jobId);
             url = url + "/Restart";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-10-27");
+            queryParameters.Add("api-version=2015-02-10");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1185,76 +1245,104 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                         result = new JobResponse();
                         XDocument responseDoc = XDocument.Parse(responseContent);
                         
-                        XElement serviceResourceElement = responseDoc.Element(XName.Get("ServiceResource", "http://schemas.microsoft.com/windowsazure"));
-                        if (serviceResourceElement != null)
+                        XElement jobElement = responseDoc.Element(XName.Get("Job", "http://schemas.microsoft.com/windowsazure"));
+                        if (jobElement != null)
                         {
-                            Job serviceResourceInstance = new Job();
-                            result.Job = serviceResourceInstance;
+                            Job jobInstance = new Job();
+                            result.Job = jobInstance;
                             
-                            XElement activityIdElement = serviceResourceElement.Element(XName.Get("ActivityId", "http://schemas.microsoft.com/windowsazure"));
+                            XElement activityIdElement = jobElement.Element(XName.Get("ActivityId", "http://schemas.microsoft.com/windowsazure"));
                             if (activityIdElement != null)
                             {
                                 string activityIdInstance = activityIdElement.Value;
-                                serviceResourceInstance.ActivityId = activityIdInstance;
+                                jobInstance.ActivityId = activityIdInstance;
                             }
                             
-                            XElement startTimestampElement = serviceResourceElement.Element(XName.Get("StartTimestamp", "http://schemas.microsoft.com/windowsazure"));
-                            if (startTimestampElement != null)
+                            XElement startTimeElement = jobElement.Element(XName.Get("StartTime", "http://schemas.microsoft.com/windowsazure"));
+                            if (startTimeElement != null && !string.IsNullOrEmpty(startTimeElement.Value))
                             {
-                                string startTimestampInstance = startTimestampElement.Value;
-                                serviceResourceInstance.StartTimestamp = startTimestampInstance;
+                                DateTime startTimeInstance = DateTime.Parse(startTimeElement.Value, CultureInfo.InvariantCulture);
+                                jobInstance.StartTime = startTimeInstance;
                             }
                             
-                            XElement endTimestampElement = serviceResourceElement.Element(XName.Get("EndTimestamp", "http://schemas.microsoft.com/windowsazure"));
-                            if (endTimestampElement != null)
+                            XElement endTimeElement = jobElement.Element(XName.Get("EndTime", "http://schemas.microsoft.com/windowsazure"));
+                            if (endTimeElement != null && !string.IsNullOrEmpty(endTimeElement.Value))
                             {
-                                string endTimestampInstance = endTimestampElement.Value;
-                                serviceResourceInstance.EndTimestamp = endTimestampInstance;
+                                DateTime endTimeInstance = DateTime.Parse(endTimeElement.Value, CultureInfo.InvariantCulture);
+                                jobInstance.EndTime = endTimeInstance;
                             }
                             
-                            XElement allowedActionsSequenceElement = serviceResourceElement.Element(XName.Get("AllowedActions", "http://schemas.microsoft.com/windowsazure"));
+                            XElement displayNameElement = jobElement.Element(XName.Get("DisplayName", "http://schemas.microsoft.com/windowsazure"));
+                            if (displayNameElement != null)
+                            {
+                                string displayNameInstance = displayNameElement.Value;
+                                jobInstance.DisplayName = displayNameInstance;
+                            }
+                            
+                            XElement targetObjectIdElement = jobElement.Element(XName.Get("TargetObjectId", "http://schemas.microsoft.com/windowsazure"));
+                            if (targetObjectIdElement != null)
+                            {
+                                string targetObjectIdInstance = targetObjectIdElement.Value;
+                                jobInstance.TargetObjectId = targetObjectIdInstance;
+                            }
+                            
+                            XElement targetObjectTypeElement = jobElement.Element(XName.Get("TargetObjectType", "http://schemas.microsoft.com/windowsazure"));
+                            if (targetObjectTypeElement != null)
+                            {
+                                string targetObjectTypeInstance = targetObjectTypeElement.Value;
+                                jobInstance.TargetObjectType = targetObjectTypeInstance;
+                            }
+                            
+                            XElement targetObjectNameElement = jobElement.Element(XName.Get("TargetObjectName", "http://schemas.microsoft.com/windowsazure"));
+                            if (targetObjectNameElement != null)
+                            {
+                                string targetObjectNameInstance = targetObjectNameElement.Value;
+                                jobInstance.TargetObjectName = targetObjectNameInstance;
+                            }
+                            
+                            XElement allowedActionsSequenceElement = jobElement.Element(XName.Get("AllowedActions", "http://schemas.microsoft.com/windowsazure"));
                             if (allowedActionsSequenceElement != null)
                             {
                                 foreach (XElement allowedActionsElement in allowedActionsSequenceElement.Elements(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/Arrays")))
                                 {
-                                    serviceResourceInstance.AllowedActions.Add(allowedActionsElement.Value);
+                                    jobInstance.AllowedActions.Add(allowedActionsElement.Value);
                                 }
                             }
                             
-                            XElement stateElement = serviceResourceElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                            XElement stateElement = jobElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
                             if (stateElement != null)
                             {
                                 string stateInstance = stateElement.Value;
-                                serviceResourceInstance.State = stateInstance;
+                                jobInstance.State = stateInstance;
                             }
                             
-                            XElement stateDescriptionElement = serviceResourceElement.Element(XName.Get("StateDescription", "http://schemas.microsoft.com/windowsazure"));
+                            XElement stateDescriptionElement = jobElement.Element(XName.Get("StateDescription", "http://schemas.microsoft.com/windowsazure"));
                             if (stateDescriptionElement != null)
                             {
                                 string stateDescriptionInstance = stateDescriptionElement.Value;
-                                serviceResourceInstance.StateDescription = stateDescriptionInstance;
+                                jobInstance.StateDescription = stateDescriptionInstance;
                             }
                             
-                            XElement tasksSequenceElement = serviceResourceElement.Element(XName.Get("Tasks", "http://schemas.microsoft.com/windowsazure"));
+                            XElement tasksSequenceElement = jobElement.Element(XName.Get("Tasks", "http://schemas.microsoft.com/windowsazure"));
                             if (tasksSequenceElement != null)
                             {
                                 foreach (XElement tasksElement in tasksSequenceElement.Elements(XName.Get("Task", "http://schemas.microsoft.com/windowsazure")))
                                 {
                                     AsrTask taskInstance = new AsrTask();
-                                    serviceResourceInstance.Tasks.Add(taskInstance);
+                                    jobInstance.Tasks.Add(taskInstance);
                                     
-                                    XElement startTimeElement = tasksElement.Element(XName.Get("StartTime", "http://schemas.microsoft.com/windowsazure"));
-                                    if (startTimeElement != null)
+                                    XElement startTimeElement2 = tasksElement.Element(XName.Get("StartTime", "http://schemas.microsoft.com/windowsazure"));
+                                    if (startTimeElement2 != null)
                                     {
-                                        DateTime startTimeInstance = DateTime.Parse(startTimeElement.Value, CultureInfo.InvariantCulture);
-                                        taskInstance.StartTime = startTimeInstance;
+                                        DateTime startTimeInstance2 = DateTime.Parse(startTimeElement2.Value, CultureInfo.InvariantCulture);
+                                        taskInstance.StartTime = startTimeInstance2;
                                     }
                                     
-                                    XElement endTimeElement = tasksElement.Element(XName.Get("EndTime", "http://schemas.microsoft.com/windowsazure"));
-                                    if (endTimeElement != null)
+                                    XElement endTimeElement2 = tasksElement.Element(XName.Get("EndTime", "http://schemas.microsoft.com/windowsazure"));
+                                    if (endTimeElement2 != null)
                                     {
-                                        DateTime endTimeInstance = DateTime.Parse(endTimeElement.Value, CultureInfo.InvariantCulture);
-                                        taskInstance.EndTime = endTimeInstance;
+                                        DateTime endTimeInstance2 = DateTime.Parse(endTimeElement2.Value, CultureInfo.InvariantCulture);
+                                        taskInstance.EndTime = endTimeInstance2;
                                     }
                                     
                                     XElement actionsSequenceElement = tasksElement.Element(XName.Get("Actions", "http://schemas.microsoft.com/windowsazure"));
@@ -1317,13 +1405,13 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                                 }
                             }
                             
-                            XElement errorsSequenceElement = serviceResourceElement.Element(XName.Get("Errors", "http://schemas.microsoft.com/windowsazure"));
+                            XElement errorsSequenceElement = jobElement.Element(XName.Get("Errors", "http://schemas.microsoft.com/windowsazure"));
                             if (errorsSequenceElement != null)
                             {
                                 foreach (XElement errorsElement in errorsSequenceElement.Elements(XName.Get("ErrorDetails", "http://schemas.microsoft.com/windowsazure")))
                                 {
                                     ErrorDetails errorDetailsInstance = new ErrorDetails();
-                                    serviceResourceInstance.Errors.Add(errorDetailsInstance);
+                                    jobInstance.Errors.Add(errorDetailsInstance);
                                     
                                     XElement serviceErrorDetailsElement = errorsElement.Element(XName.Get("ServiceErrorDetails", "http://schemas.microsoft.com/windowsazure"));
                                     if (serviceErrorDetailsElement != null)
@@ -1436,18 +1524,18 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                                 }
                             }
                             
-                            XElement nameElement2 = serviceResourceElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                            XElement nameElement2 = jobElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
                             if (nameElement2 != null)
                             {
                                 string nameInstance2 = nameElement2.Value;
-                                serviceResourceInstance.Name = nameInstance2;
+                                jobInstance.Name = nameInstance2;
                             }
                             
-                            XElement idElement2 = serviceResourceElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
+                            XElement idElement2 = jobElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
                             if (idElement2 != null)
                             {
                                 string idInstance2 = idElement2.Value;
-                                serviceResourceInstance.ID = idInstance2;
+                                jobInstance.ID = idInstance2;
                             }
                         }
                         
@@ -1538,7 +1626,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
             url = url + Uri.EscapeDataString(jobId);
             url = url + "/Resume";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-10-27");
+            queryParameters.Add("api-version=2015-02-10");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1631,76 +1719,104 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                         result = new JobResponse();
                         XDocument responseDoc = XDocument.Parse(responseContent);
                         
-                        XElement serviceResourceElement = responseDoc.Element(XName.Get("ServiceResource", "http://schemas.microsoft.com/windowsazure"));
-                        if (serviceResourceElement != null)
+                        XElement jobElement = responseDoc.Element(XName.Get("Job", "http://schemas.microsoft.com/windowsazure"));
+                        if (jobElement != null)
                         {
-                            Job serviceResourceInstance = new Job();
-                            result.Job = serviceResourceInstance;
+                            Job jobInstance = new Job();
+                            result.Job = jobInstance;
                             
-                            XElement activityIdElement = serviceResourceElement.Element(XName.Get("ActivityId", "http://schemas.microsoft.com/windowsazure"));
+                            XElement activityIdElement = jobElement.Element(XName.Get("ActivityId", "http://schemas.microsoft.com/windowsazure"));
                             if (activityIdElement != null)
                             {
                                 string activityIdInstance = activityIdElement.Value;
-                                serviceResourceInstance.ActivityId = activityIdInstance;
+                                jobInstance.ActivityId = activityIdInstance;
                             }
                             
-                            XElement startTimestampElement = serviceResourceElement.Element(XName.Get("StartTimestamp", "http://schemas.microsoft.com/windowsazure"));
-                            if (startTimestampElement != null)
+                            XElement startTimeElement = jobElement.Element(XName.Get("StartTime", "http://schemas.microsoft.com/windowsazure"));
+                            if (startTimeElement != null && !string.IsNullOrEmpty(startTimeElement.Value))
                             {
-                                string startTimestampInstance = startTimestampElement.Value;
-                                serviceResourceInstance.StartTimestamp = startTimestampInstance;
+                                DateTime startTimeInstance = DateTime.Parse(startTimeElement.Value, CultureInfo.InvariantCulture);
+                                jobInstance.StartTime = startTimeInstance;
                             }
                             
-                            XElement endTimestampElement = serviceResourceElement.Element(XName.Get("EndTimestamp", "http://schemas.microsoft.com/windowsazure"));
-                            if (endTimestampElement != null)
+                            XElement endTimeElement = jobElement.Element(XName.Get("EndTime", "http://schemas.microsoft.com/windowsazure"));
+                            if (endTimeElement != null && !string.IsNullOrEmpty(endTimeElement.Value))
                             {
-                                string endTimestampInstance = endTimestampElement.Value;
-                                serviceResourceInstance.EndTimestamp = endTimestampInstance;
+                                DateTime endTimeInstance = DateTime.Parse(endTimeElement.Value, CultureInfo.InvariantCulture);
+                                jobInstance.EndTime = endTimeInstance;
                             }
                             
-                            XElement allowedActionsSequenceElement = serviceResourceElement.Element(XName.Get("AllowedActions", "http://schemas.microsoft.com/windowsazure"));
+                            XElement displayNameElement = jobElement.Element(XName.Get("DisplayName", "http://schemas.microsoft.com/windowsazure"));
+                            if (displayNameElement != null)
+                            {
+                                string displayNameInstance = displayNameElement.Value;
+                                jobInstance.DisplayName = displayNameInstance;
+                            }
+                            
+                            XElement targetObjectIdElement = jobElement.Element(XName.Get("TargetObjectId", "http://schemas.microsoft.com/windowsazure"));
+                            if (targetObjectIdElement != null)
+                            {
+                                string targetObjectIdInstance = targetObjectIdElement.Value;
+                                jobInstance.TargetObjectId = targetObjectIdInstance;
+                            }
+                            
+                            XElement targetObjectTypeElement = jobElement.Element(XName.Get("TargetObjectType", "http://schemas.microsoft.com/windowsazure"));
+                            if (targetObjectTypeElement != null)
+                            {
+                                string targetObjectTypeInstance = targetObjectTypeElement.Value;
+                                jobInstance.TargetObjectType = targetObjectTypeInstance;
+                            }
+                            
+                            XElement targetObjectNameElement = jobElement.Element(XName.Get("TargetObjectName", "http://schemas.microsoft.com/windowsazure"));
+                            if (targetObjectNameElement != null)
+                            {
+                                string targetObjectNameInstance = targetObjectNameElement.Value;
+                                jobInstance.TargetObjectName = targetObjectNameInstance;
+                            }
+                            
+                            XElement allowedActionsSequenceElement = jobElement.Element(XName.Get("AllowedActions", "http://schemas.microsoft.com/windowsazure"));
                             if (allowedActionsSequenceElement != null)
                             {
                                 foreach (XElement allowedActionsElement in allowedActionsSequenceElement.Elements(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/Arrays")))
                                 {
-                                    serviceResourceInstance.AllowedActions.Add(allowedActionsElement.Value);
+                                    jobInstance.AllowedActions.Add(allowedActionsElement.Value);
                                 }
                             }
                             
-                            XElement stateElement = serviceResourceElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                            XElement stateElement = jobElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
                             if (stateElement != null)
                             {
                                 string stateInstance = stateElement.Value;
-                                serviceResourceInstance.State = stateInstance;
+                                jobInstance.State = stateInstance;
                             }
                             
-                            XElement stateDescriptionElement = serviceResourceElement.Element(XName.Get("StateDescription", "http://schemas.microsoft.com/windowsazure"));
+                            XElement stateDescriptionElement = jobElement.Element(XName.Get("StateDescription", "http://schemas.microsoft.com/windowsazure"));
                             if (stateDescriptionElement != null)
                             {
                                 string stateDescriptionInstance = stateDescriptionElement.Value;
-                                serviceResourceInstance.StateDescription = stateDescriptionInstance;
+                                jobInstance.StateDescription = stateDescriptionInstance;
                             }
                             
-                            XElement tasksSequenceElement = serviceResourceElement.Element(XName.Get("Tasks", "http://schemas.microsoft.com/windowsazure"));
+                            XElement tasksSequenceElement = jobElement.Element(XName.Get("Tasks", "http://schemas.microsoft.com/windowsazure"));
                             if (tasksSequenceElement != null)
                             {
                                 foreach (XElement tasksElement in tasksSequenceElement.Elements(XName.Get("Task", "http://schemas.microsoft.com/windowsazure")))
                                 {
                                     AsrTask taskInstance = new AsrTask();
-                                    serviceResourceInstance.Tasks.Add(taskInstance);
+                                    jobInstance.Tasks.Add(taskInstance);
                                     
-                                    XElement startTimeElement = tasksElement.Element(XName.Get("StartTime", "http://schemas.microsoft.com/windowsazure"));
-                                    if (startTimeElement != null)
+                                    XElement startTimeElement2 = tasksElement.Element(XName.Get("StartTime", "http://schemas.microsoft.com/windowsazure"));
+                                    if (startTimeElement2 != null)
                                     {
-                                        DateTime startTimeInstance = DateTime.Parse(startTimeElement.Value, CultureInfo.InvariantCulture);
-                                        taskInstance.StartTime = startTimeInstance;
+                                        DateTime startTimeInstance2 = DateTime.Parse(startTimeElement2.Value, CultureInfo.InvariantCulture);
+                                        taskInstance.StartTime = startTimeInstance2;
                                     }
                                     
-                                    XElement endTimeElement = tasksElement.Element(XName.Get("EndTime", "http://schemas.microsoft.com/windowsazure"));
-                                    if (endTimeElement != null)
+                                    XElement endTimeElement2 = tasksElement.Element(XName.Get("EndTime", "http://schemas.microsoft.com/windowsazure"));
+                                    if (endTimeElement2 != null)
                                     {
-                                        DateTime endTimeInstance = DateTime.Parse(endTimeElement.Value, CultureInfo.InvariantCulture);
-                                        taskInstance.EndTime = endTimeInstance;
+                                        DateTime endTimeInstance2 = DateTime.Parse(endTimeElement2.Value, CultureInfo.InvariantCulture);
+                                        taskInstance.EndTime = endTimeInstance2;
                                     }
                                     
                                     XElement actionsSequenceElement = tasksElement.Element(XName.Get("Actions", "http://schemas.microsoft.com/windowsazure"));
@@ -1763,13 +1879,13 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                                 }
                             }
                             
-                            XElement errorsSequenceElement = serviceResourceElement.Element(XName.Get("Errors", "http://schemas.microsoft.com/windowsazure"));
+                            XElement errorsSequenceElement = jobElement.Element(XName.Get("Errors", "http://schemas.microsoft.com/windowsazure"));
                             if (errorsSequenceElement != null)
                             {
                                 foreach (XElement errorsElement in errorsSequenceElement.Elements(XName.Get("ErrorDetails", "http://schemas.microsoft.com/windowsazure")))
                                 {
                                     ErrorDetails errorDetailsInstance = new ErrorDetails();
-                                    serviceResourceInstance.Errors.Add(errorDetailsInstance);
+                                    jobInstance.Errors.Add(errorDetailsInstance);
                                     
                                     XElement serviceErrorDetailsElement = errorsElement.Element(XName.Get("ServiceErrorDetails", "http://schemas.microsoft.com/windowsazure"));
                                     if (serviceErrorDetailsElement != null)
@@ -1882,18 +1998,18 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                                 }
                             }
                             
-                            XElement nameElement2 = serviceResourceElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                            XElement nameElement2 = jobElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
                             if (nameElement2 != null)
                             {
                                 string nameInstance2 = nameElement2.Value;
-                                serviceResourceInstance.Name = nameInstance2;
+                                jobInstance.Name = nameInstance2;
                             }
                             
-                            XElement idElement2 = serviceResourceElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
+                            XElement idElement2 = jobElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
                             if (idElement2 != null)
                             {
                                 string idInstance2 = idElement2.Value;
-                                serviceResourceInstance.ID = idInstance2;
+                                jobInstance.ID = idInstance2;
                             }
                         }
                         

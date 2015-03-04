@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _query;
         
         /// <summary>
-        /// Required. Gets or sets the query of the transformation.
+        /// Optional. Gets or sets the query of the transformation.
         /// </summary>
         public string Query
         {
@@ -68,20 +68,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// </summary>
         public TransformationProperties()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the TransformationProperties class
-        /// with required arguments.
-        /// </summary>
-        public TransformationProperties(string query)
-            : this()
-        {
-            if (query == null)
-            {
-                throw new ArgumentNullException("query");
-            }
-            this.Query = query;
         }
     }
 }

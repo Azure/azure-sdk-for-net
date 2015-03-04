@@ -104,14 +104,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 {
                     throw new ArgumentNullException("parameters.Transformation.Name");
                 }
-                if (parameters.Transformation.Properties == null)
-                {
-                    throw new ArgumentNullException("parameters.Transformation.Properties");
-                }
-                if (parameters.Transformation.Properties.Query == null)
-                {
-                    throw new ArgumentNullException("parameters.Transformation.Properties.Query");
-                }
             }
             
             // Tracing
@@ -144,7 +136,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 url = url + Uri.EscapeDataString(parameters.Transformation.Name);
             }
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-12-01-preview");
+            queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -188,20 +180,26 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 {
                     transformationCreateOrUpdateParametersValue["name"] = parameters.Transformation.Name;
                     
-                    JObject propertiesValue = new JObject();
-                    transformationCreateOrUpdateParametersValue["properties"] = propertiesValue;
-                    
-                    if (parameters.Transformation.Properties.Etag != null)
+                    if (parameters.Transformation.Properties != null)
                     {
-                        propertiesValue["etag"] = parameters.Transformation.Properties.Etag;
+                        JObject propertiesValue = new JObject();
+                        transformationCreateOrUpdateParametersValue["properties"] = propertiesValue;
+                        
+                        if (parameters.Transformation.Properties.Etag != null)
+                        {
+                            propertiesValue["etag"] = parameters.Transformation.Properties.Etag;
+                        }
+                        
+                        if (parameters.Transformation.Properties.StreamingUnits != null)
+                        {
+                            propertiesValue["streamingUnits"] = parameters.Transformation.Properties.StreamingUnits.Value;
+                        }
+                        
+                        if (parameters.Transformation.Properties.Query != null)
+                        {
+                            propertiesValue["query"] = parameters.Transformation.Properties.Query;
+                        }
                     }
-                    
-                    if (parameters.Transformation.Properties.StreamingUnits != null)
-                    {
-                        propertiesValue["streamingUnits"] = parameters.Transformation.Properties.StreamingUnits.Value;
-                    }
-                    
-                    propertiesValue["query"] = parameters.Transformation.Properties.Query;
                 }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
@@ -294,6 +292,10 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     if (httpResponse.Headers.Contains("Date"))
                     {
                         result.Date = DateTime.Parse(httpResponse.Headers.GetValues("Date").FirstOrDefault(), CultureInfo.InvariantCulture);
+                    }
+                    if (httpResponse.Headers.Contains("ETag"))
+                    {
+                        result.Transformation.Properties.Etag = httpResponse.Headers.GetValues("ETag").FirstOrDefault();
                     }
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -399,7 +401,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + "/transformations/";
             url = url + Uri.EscapeDataString(transformationName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-12-01-preview");
+            queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -524,6 +526,10 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     {
                         result.Date = DateTime.Parse(httpResponse.Headers.GetValues("Date").FirstOrDefault(), CultureInfo.InvariantCulture);
                     }
+                    if (httpResponse.Headers.Contains("ETag"))
+                    {
+                        result.Transformation.Properties.Etag = httpResponse.Headers.GetValues("ETag").FirstOrDefault();
+                    }
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
@@ -614,7 +620,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + "/transformations/";
             url = url + Uri.EscapeDataString(transformationName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-12-01-preview");
+            queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -734,6 +740,10 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     {
                         result.Date = DateTime.Parse(httpResponse.Headers.GetValues("Date").FirstOrDefault(), CultureInfo.InvariantCulture);
                     }
+                    if (httpResponse.Headers.Contains("ETag"))
+                    {
+                        result.Transformation.Properties.Etag = httpResponse.Headers.GetValues("ETag").FirstOrDefault();
+                    }
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
@@ -785,7 +795,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
         /// <returns>
         /// The response of the transformation patch operation.
         /// </returns>
-        public async Task<TransformationPatchResponse> UpdateAsync(string resourceGroupName, string jobName, string transformationName, TransformationPatchParameters parameters, CancellationToken cancellationToken)
+        public async Task<TransformationPatchResponse> PatchAsync(string resourceGroupName, string jobName, string transformationName, TransformationPatchParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -808,10 +818,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             {
                 throw new ArgumentNullException("parameters.Properties");
             }
-            if (parameters.Properties.Query == null)
-            {
-                throw new ArgumentNullException("parameters.Properties.Query");
-            }
             
             // Tracing
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -824,7 +830,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 tracingParameters.Add("jobName", jobName);
                 tracingParameters.Add("transformationName", transformationName);
                 tracingParameters.Add("parameters", parameters);
-                TracingAdapter.Enter(invocationId, this, "UpdateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "PatchAsync", tracingParameters);
             }
             
             // Construct URL
@@ -841,7 +847,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + "/transformations/";
             url = url + Uri.EscapeDataString(transformationName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-12-01-preview");
+            queryParameters.Add("api-version=2015-01-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -894,7 +900,10 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     propertiesValue["streamingUnits"] = parameters.Properties.StreamingUnits.Value;
                 }
                 
-                propertiesValue["query"] = parameters.Properties.Query;
+                if (parameters.Properties.Query != null)
+                {
+                    propertiesValue["query"] = parameters.Properties.Query;
+                }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
@@ -976,6 +985,10 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     if (httpResponse.Headers.Contains("Date"))
                     {
                         result.Date = DateTime.Parse(httpResponse.Headers.GetValues("Date").FirstOrDefault(), CultureInfo.InvariantCulture);
+                    }
+                    if (httpResponse.Headers.Contains("ETag"))
+                    {
+                        result.Properties.Etag = httpResponse.Headers.GetValues("ETag").FirstOrDefault();
                     }
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {

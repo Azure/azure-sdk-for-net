@@ -260,6 +260,68 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         }
         
         /// <summary>
+        /// The Get Express Route operation status gets information on the
+        /// status of Express Route operations in Windows Azure.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154112.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.ExpressRoute.IBorderGatewayProtocolPeeringOperations.
+        /// </param>
+        /// <param name='operationId'>
+        /// Required. The id  of the operation.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static ExpressRouteOperationStatusResponse GetOperationStatus(this IBorderGatewayProtocolPeeringOperations operations, string operationId)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IBorderGatewayProtocolPeeringOperations)s).GetOperationStatusAsync(operationId);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Get Express Route operation status gets information on the
+        /// status of Express Route operations in Windows Azure.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154112.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.ExpressRoute.IBorderGatewayProtocolPeeringOperations.
+        /// </param>
+        /// <param name='operationId'>
+        /// Required. The id  of the operation.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static Task<ExpressRouteOperationStatusResponse> GetOperationStatusAsync(this IBorderGatewayProtocolPeeringOperations operations, string operationId)
+        {
+            return operations.GetOperationStatusAsync(operationId, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// The New Border Gateway Protocol Peering operation creates a new
         /// border gateway protocol peering associated with the dedicated
         /// circuit specified by the service key provided.
@@ -279,9 +341,17 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// Required. Parameters supplied to the New Bgp Peering operation.
         /// </param>
         /// <returns>
-        /// The Get Border Gateway Protocol Peering Operation Response.
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
         /// </returns>
-        public static BorderGatewayProtocolPeeringGetResponse New(this IBorderGatewayProtocolPeeringOperations operations, string serviceKey, BgpPeeringAccessType accessType, BorderGatewayProtocolPeeringNewParameters parameters)
+        public static ExpressRouteOperationStatusResponse New(this IBorderGatewayProtocolPeeringOperations operations, string serviceKey, BgpPeeringAccessType accessType, BorderGatewayProtocolPeeringNewParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -310,9 +380,17 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// Required. Parameters supplied to the New Bgp Peering operation.
         /// </param>
         /// <returns>
-        /// The Get Border Gateway Protocol Peering Operation Response.
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
         /// </returns>
-        public static Task<BorderGatewayProtocolPeeringGetResponse> NewAsync(this IBorderGatewayProtocolPeeringOperations operations, string serviceKey, BgpPeeringAccessType accessType, BorderGatewayProtocolPeeringNewParameters parameters)
+        public static Task<ExpressRouteOperationStatusResponse> NewAsync(this IBorderGatewayProtocolPeeringOperations operations, string serviceKey, BgpPeeringAccessType accessType, BorderGatewayProtocolPeeringNewParameters parameters)
         {
             return operations.NewAsync(serviceKey, accessType, parameters, CancellationToken.None);
         }
@@ -404,9 +482,17 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// Peering operation.
         /// </param>
         /// <returns>
-        /// The Get Border Gateway Protocol Peering Operation Response.
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
         /// </returns>
-        public static BorderGatewayProtocolPeeringGetResponse Update(this IBorderGatewayProtocolPeeringOperations operations, string serviceKey, BgpPeeringAccessType accessType, BorderGatewayProtocolPeeringUpdateParameters parameters)
+        public static ExpressRouteOperationStatusResponse Update(this IBorderGatewayProtocolPeeringOperations operations, string serviceKey, BgpPeeringAccessType accessType, BorderGatewayProtocolPeeringUpdateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -436,9 +522,17 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// Peering operation.
         /// </param>
         /// <returns>
-        /// The Get Border Gateway Protocol Peering Operation Response.
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
         /// </returns>
-        public static Task<BorderGatewayProtocolPeeringGetResponse> UpdateAsync(this IBorderGatewayProtocolPeeringOperations operations, string serviceKey, BgpPeeringAccessType accessType, BorderGatewayProtocolPeeringUpdateParameters parameters)
+        public static Task<ExpressRouteOperationStatusResponse> UpdateAsync(this IBorderGatewayProtocolPeeringOperations operations, string serviceKey, BgpPeeringAccessType accessType, BorderGatewayProtocolPeeringUpdateParameters parameters)
         {
             return operations.UpdateAsync(serviceKey, accessType, parameters, CancellationToken.None);
         }

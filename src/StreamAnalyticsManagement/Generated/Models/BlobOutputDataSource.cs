@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private BlobOutputDataSourceProperties _properties;
         
         /// <summary>
-        /// Required. Gets or sets the properties of the Blob data source as
+        /// Optional. Gets or sets the properties of the Blob data source as
         /// output.
         /// </summary>
         public BlobOutputDataSourceProperties Properties
@@ -47,20 +47,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// </summary>
         public BlobOutputDataSource()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the BlobOutputDataSource class with
-        /// required arguments.
-        /// </summary>
-        public BlobOutputDataSource(BlobOutputDataSourceProperties properties)
-            : this()
-        {
-            if (properties == null)
-            {
-                throw new ArgumentNullException("properties");
-            }
-            this.Properties = properties;
         }
     }
 }

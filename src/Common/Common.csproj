@@ -27,6 +27,9 @@
     <Compile Include="Models\OperationStatus.cs" />
     <Compile Include="Models\OperationStatusResponse.cs" />
     <Compile Include="Handlers\ClientRequestTrackingHandler.cs" />
+    <Compile Include="OData\FilterParameterAttribute.cs" />
+    <Compile Include="OData\FilterString.cs" />
+    <Compile Include="OData\UrlExpressionVisitor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -42,7 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Hyak.Common">
-      <HintPath>..\..\packages\Hyak.Common.1.0.1\lib\portable-net403+win+wpa81\Hyak.Common.dll</HintPath>
+      <HintPath>..\..\packages\Hyak.Common.1.0.2\lib\portable-net403+win+wpa81\Hyak.Common.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(LibraryFxTarget)' == 'portable' " />

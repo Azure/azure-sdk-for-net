@@ -15,7 +15,7 @@
     <copyright>Copyright © Microsoft Corporation</copyright>
     <tags>Microsoft "Microsoft Azure" Azure cloud REST HTTP client core common azureofficial windowsazureofficial</tags>
     <dependencies>
-      <dependency id="Microsoft.Azure.Common" version="2.0.1" />
+      <dependency id="Microsoft.Azure.Common" version="[2.0.3,3.0)" />
       <dependency id="Microsoft.IdentityModel.Clients.ActiveDirectory" version="2.12.111071459" />
     </dependencies>
   </metadata>

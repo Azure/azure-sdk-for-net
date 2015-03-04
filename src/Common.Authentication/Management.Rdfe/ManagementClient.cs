@@ -29,7 +29,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace Microsoft.Azure.Internal.Management.Rdfe
+namespace Microsoft.Azure.Management.Rdfe
 {
     /// <summary>
     /// The Service Management API provides programmatic access to much of the
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Internal.Management.Rdfe
     /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460799.aspx for
     /// more information)
     /// </summary>
-    internal partial class ManagementClient : ServiceClient<ManagementClient>, IManagementClient
+    public partial class ManagementClient : ServiceClient<ManagementClient>, IManagementClient
     {
         private string _apiVersion;
         

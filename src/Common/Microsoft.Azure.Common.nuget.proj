@@ -5,7 +5,7 @@
     Microsoft.Azure.Common
     -->
     <SdkNuGetPackage Include="Microsoft.Azure.Common">
-      <PackageVersion>2.0.1</PackageVersion>
+      <PackageVersion>2.0.3</PackageVersion>
 
       <Folder>$(MSBuildThisFileDirectory)</Folder>
     </SdkNuGetPackage>

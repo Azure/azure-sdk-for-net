@@ -16,8 +16,6 @@
   <Import Project="..\..\tools\Library.Settings.targets" />
   <ItemGroup>
     <Compile Include="Customizations\EventStatusCountSummaryListResponse.Customizations.cs" />
-    <Compile Include="Customizations\FilterParameterAttribute.cs" />
-    <Compile Include="Customizations\FilterString.cs" />
     <Compile Include="Customizations\IMetricOperations.Customization.cs" />
     <Compile Include="Customizations\InsightsClient.Customization.cs" />
     <Compile Include="Customizations\InsightsClient.ListEventsParameter.Customization.cs" />
@@ -46,7 +44,6 @@
     <Compile Include="Generated\Management\Insights\Models\AutomatedExportSettingGetResponse.cs" />
     <Compile Include="Generated\Management\Insights\Models\BackupLocationProfile.cs" />
     <Compile Include="Generated\Management\Insights\Models\Capacity.cs" />
-    <Compile Include="Customizations\UrlExpressionVisitor.cs" />
     <Compile Include="Generated\Insights\Models\Dimension.cs" />
     <Compile Include="Generated\Insights\Models\EventStatusCountSummaryItem.cs" />
     <Compile Include="Generated\Insights\Models\EventStatusCountSummaryItemCollection.cs" />
@@ -228,7 +225,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Hyak.Common">
-      <HintPath>..\..\packages\Hyak.Common.1.0.1\lib\portable-net403+win+wpa81\Hyak.Common.dll</HintPath>
+      <HintPath>..\..\packages\Hyak.Common.1.0.2\lib\portable-net403+win+wpa81\Hyak.Common.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Data.Edm, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Data.Edm.5.6.0\lib\net40\Microsoft.Data.Edm.dll</HintPath>
@@ -240,10 +237,10 @@
       <HintPath>..\..\packages\Microsoft.Data.Services.Client.5.6.0\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Azure.Common">
-      <HintPath>..\..\packages\Microsoft.Azure.Common.2.0.1\lib\$(LibraryFxTarget)\Microsoft.Azure.Common.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.Azure.Common.2.0.3\lib\$(LibraryFxTarget)\Microsoft.Azure.Common.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.WindowsAzure.Common.NetFramework">
-      <HintPath>..\..\packages\Microsoft.Azure.Common.2.0.1\lib\$(LibraryFxTarget)\Microsoft.Azure.Common.NetFramework.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.Azure.Common.2.0.3\lib\$(LibraryFxTarget)\Microsoft.Azure.Common.NetFramework.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.WindowsAzure.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.WindowsAzure.ConfigurationManager.2.0.3\lib\net40\Microsoft.WindowsAzure.Configuration.dll</HintPath>

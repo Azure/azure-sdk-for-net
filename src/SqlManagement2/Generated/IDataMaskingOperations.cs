@@ -57,9 +57,10 @@ namespace Microsoft.Azure.Management.Sql
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Represents the response to a data masking policy get request.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        Task<DataMaskingPolicyGetResponse> CreateOrUpdatePolicyAsync(string resourceGroupName, string serverName, string databaseName, DataMaskingPolicyCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> CreateOrUpdatePolicyAsync(string resourceGroupName, string serverName, string databaseName, DataMaskingPolicyCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Creates or updates an Azure SQL Database Server Firewall rule.
@@ -86,9 +87,10 @@ namespace Microsoft.Azure.Management.Sql
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Represents the response to a data masking rule get request.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        Task<DataMaskingRuleGetResponse> CreateOrUpdateRuleAsync(string resourceGroupName, string serverName, string databaseName, string dataMaskingRule, DataMaskingRuleCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> CreateOrUpdateRuleAsync(string resourceGroupName, string serverName, string databaseName, string dataMaskingRule, DataMaskingRuleCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Deletes an Azure SQL Server data masking rule.

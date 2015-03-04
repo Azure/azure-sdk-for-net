@@ -32,8 +32,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
         private string _failoverDirection;
         
         /// <summary>
-        /// Required. Failover direction can be PrimaryToRecovery or
-        /// RecoveryToPrimary.
+        /// Optional. Failover direction.
         /// </summary>
         public string FailoverDirection
         {
@@ -41,25 +40,33 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
             set { this._failoverDirection = value; }
         }
         
+        private string _replicationProvider;
+        
+        /// <summary>
+        /// Optional. Replication provider name.
+        /// </summary>
+        public string ReplicationProvider
+        {
+            get { return this._replicationProvider; }
+            set { this._replicationProvider = value; }
+        }
+        
+        private string _replicationProviderSettings;
+        
+        /// <summary>
+        /// Optional. Replication provider settings.
+        /// </summary>
+        public string ReplicationProviderSettings
+        {
+            get { return this._replicationProviderSettings; }
+            set { this._replicationProviderSettings = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the RpPlannedFailoverRequest class.
         /// </summary>
         public RpPlannedFailoverRequest()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the RpPlannedFailoverRequest class
-        /// with required arguments.
-        /// </summary>
-        public RpPlannedFailoverRequest(string failoverDirection)
-            : this()
-        {
-            if (failoverDirection == null)
-            {
-                throw new ArgumentNullException("failoverDirection");
-            }
-            this.FailoverDirection = failoverDirection;
         }
     }
 }

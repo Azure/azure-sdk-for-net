@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Insights
 
             // Ensure exactly one '/' at the start
             resourceUri = '/' + resourceUri.TrimStart('/');
-            IEnumerable<MetricDefinition> definitions;
+            IEnumerable<MetricDefinition> definitions = null;
 
             // If no filter string, must request all metric definiitons since we don't know if we have them all
             if (string.IsNullOrWhiteSpace(filterString))
@@ -46,8 +46,11 @@ namespace Microsoft.Azure.Insights
                     .MetricDefinitionCollection.Value;
 
                 // cache definitions
-                this.Client.Cache[resourceUri] = definitions;
-
+                if (this.Client.IsCacheEnabled)
+                {
+                    this.Client.Cache[resourceUri] = definitions;
+                }
+                    
                 // wrap and return definitions
                 result = new MetricDefinitionListResponse()
                 {
@@ -65,7 +68,10 @@ namespace Microsoft.Azure.Insights
 
             // Parse the filter and retrieve cached definitions
             IEnumerable<string> names = MetricDefinitionFilterParser.Parse(filterString);
-            definitions = this.Client.Cache[resourceUri];
+            if (this.Client.IsCacheEnabled)
+            {
+                definitions = this.Client.Cache[resourceUri];
+            }
 
             // Find the names in the filter that don't appear on any of the cached definitions
             IEnumerable<string> missing = definitions == null
@@ -85,7 +91,10 @@ namespace Microsoft.Azure.Insights
                 definitions = (definitions ?? new MetricDefinition[0]).Union(missingDefinitions);
 
                 // Store the new set of definitions
-                this.Client.Cache[resourceUri] = definitions;
+                if (this.Client.IsCacheEnabled)
+                {
+                    this.Client.Cache[resourceUri] = definitions;
+                }
             }
 
             // Filter out the metrics that were cached but not requested and wrap
