@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <SDKNuGetPackageVersion>1.5.2</SDKNuGetPackageVersion>
+    <SDKNuGetPackageVersion>1.5.4</SDKNuGetPackageVersion>
   </PropertyGroup>
 
   <!-- Developer-specific properties -->
