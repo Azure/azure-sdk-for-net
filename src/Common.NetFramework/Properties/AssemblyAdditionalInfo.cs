@@ -20,9 +20,6 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Microsoft Azure Common Library (.NET Framework)")]
 [assembly: AssemblyDescription("Provides .NET Framework-specific extensions to the common Microsoft Azure library.")]
 
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
-
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Azure .NET SDK")]
