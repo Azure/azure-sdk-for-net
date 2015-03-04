@@ -16,7 +16,7 @@
     <copyright>Copyright © Microsoft Corporation</copyright>
     <tags>Microsoft Azure Search REST HTTP client windowsazureofficial</tags>
     <references>
-      <group targetFramework="portable-net45+sl50+wp80+win">
+      <group targetFramework="portable-net45+wp8+wpa81+win">
         <reference file="Microsoft.Azure.Search.dll" />
       </group>
       <group targetFramework="net40">
@@ -30,9 +30,9 @@
   </metadata>
   <files>
     <file src="Search\**\*.cs" target="src" />
-    <file src="..\binaries\portable\Microsoft.Azure.Search.dll" target="lib\portable-net45+sl50+wp80+win" />
-    <file src="..\binaries\portable\Microsoft.Azure.Search.pdb" target="lib\portable-net45+sl50+wp80+win" />
-    <file src="..\binaries\portable\Microsoft.Azure.Search.xml" target="lib\portable-net45+sl50+wp80+win" />
+    <file src="..\binaries\portable\Microsoft.Azure.Search.dll" target="lib\portable-net45+wp8+wpa81+win" />
+    <file src="..\binaries\portable\Microsoft.Azure.Search.pdb" target="lib\portable-net45+wp8+wpa81+win" />
+    <file src="..\binaries\portable\Microsoft.Azure.Search.xml" target="lib\portable-net45+wp8+wpa81+win" />
     <file src="..\binaries\net40\Microsoft.Azure.Search.dll" target="lib\net40" />
     <file src="..\binaries\net40\Microsoft.Azure.Search.pdb" target="lib\net40" />
     <file src="..\binaries\net40\Microsoft.Azure.Search.xml" target="lib\net40" />
