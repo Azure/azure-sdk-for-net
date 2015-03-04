@@ -33,8 +33,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private bool _isAvailable;
         
         /// <summary>
-        /// Optional. True if the name is available and can be used to create
-        /// new Api Management service. Otherwise false.
+        /// Optional. Gets or sets true if the name is available and can be
+        /// used to create new Api Management service. Otherwise false.
         /// </summary>
         public bool IsAvailable
         {
@@ -45,8 +45,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private string _reason;
         
         /// <summary>
-        /// Optional. The reason why the specified name is not available.
-        /// Present only if IsAvailable is false.
+        /// Optional. Gets or sets the reason why the specified name is not
+        /// available. Present only if IsAvailable is false.
         /// </summary>
         public string Reason
         {

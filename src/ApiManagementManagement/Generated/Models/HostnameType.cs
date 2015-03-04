@@ -24,12 +24,24 @@ using System.Linq;
 
 namespace Microsoft.Azure.Management.ApiManagement.Models
 {
+    /// <summary>
+    /// Types of API Managrement hostnames.
+    /// </summary>
     public enum HostnameType
     {
+        /// <summary>
+        /// Proxy hostname type. Is used to update proxy hostname.
+        /// </summary>
         Proxy = 1,
         
+        /// <summary>
+        /// Portal hostname type. Is used to update portal hostname.
+        /// </summary>
         Portal = 2,
         
+        /// <summary>
+        /// Management hostname type. Is used to update management hostname.
+        /// </summary>
         Management = 3,
     }
 }

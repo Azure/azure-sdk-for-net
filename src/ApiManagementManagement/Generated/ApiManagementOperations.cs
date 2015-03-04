@@ -81,10 +81,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The response of the CreateOrUpdate Api Management service long
+        /// running operation.
         /// </returns>
-        public async Task<AzureOperationResponse> BackupAsync(string resourceGroupName, string name, ApiServiceBackupRestoreParameters parameters, CancellationToken cancellationToken)
+        public async Task<ApiServiceLongRunningOperationResponse> BackupAsync(string resourceGroupName, string name, ApiServiceBackupRestoreParameters parameters, CancellationToken cancellationToken)
         {
             ApiManagementClient client = this.Client;
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -100,9 +100,13 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             
             cancellationToken.ThrowIfCancellationRequested();
-            LongRunningOperationResponse response = await client.ApiManagement.BeginBackupAsync(resourceGroupName, name, parameters, cancellationToken).ConfigureAwait(false);
+            ApiServiceLongRunningOperationResponse response = await client.ApiManagement.BeginBackupAsync(resourceGroupName, name, parameters, cancellationToken).ConfigureAwait(false);
+            if (response.Status == OperationStatus.Succeeded)
+            {
+                return response;
+            }
             cancellationToken.ThrowIfCancellationRequested();
-            LongRunningOperationResponse result = await client.ApiManagement.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+            ApiServiceLongRunningOperationResponse result = await client.ApiManagement.GetApiServiceLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
             int delayInSeconds = response.RetryAfter;
             if (delayInSeconds == 0)
             {
@@ -112,12 +116,12 @@ namespace Microsoft.Azure.Management.ApiManagement
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != Microsoft.Azure.OperationStatus.InProgress) == false)
+            while ((result.Status != OperationStatus.InProgress) == false)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
-                result = await client.ApiManagement.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+                result = await client.ApiManagement.GetApiServiceLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
                 delayInSeconds = result.RetryAfter;
                 if (delayInSeconds == 0)
                 {
@@ -155,9 +159,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response for long running operations.
+        /// The response of the CreateOrUpdate Api Management service long
+        /// running operation.
         /// </returns>
-        public async Task<LongRunningOperationResponse> BeginBackupAsync(string resourceGroupName, string name, ApiServiceBackupRestoreParameters parameters, CancellationToken cancellationToken)
+        public async Task<ApiServiceLongRunningOperationResponse> BeginBackupAsync(string resourceGroupName, string name, ApiServiceBackupRestoreParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -295,9 +300,9 @@ namespace Microsoft.Azure.Management.ApiManagement
                     }
                     
                     // Create Result
-                    LongRunningOperationResponse result = null;
+                    ApiServiceLongRunningOperationResponse result = null;
                     // Deserialize Response
-                    result = new LongRunningOperationResponse();
+                    result = new ApiServiceLongRunningOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("Location"))
                     {
@@ -1091,9 +1096,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response for long running operations.
+        /// The response of the CreateOrUpdate Api Management service long
+        /// running operation.
         /// </returns>
-        public async Task<LongRunningOperationResponse> BeginManagingDeploymentsAsync(string resourceGroupName, string name, ApiServiceManageDeploymentsParameters parameters, CancellationToken cancellationToken)
+        public async Task<ApiServiceLongRunningOperationResponse> BeginManagingDeploymentsAsync(string resourceGroupName, string name, ApiServiceManageDeploymentsParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -1295,9 +1301,9 @@ namespace Microsoft.Azure.Management.ApiManagement
                     }
                     
                     // Create Result
-                    LongRunningOperationResponse result = null;
+                    ApiServiceLongRunningOperationResponse result = null;
                     // Deserialize Response
-                    result = new LongRunningOperationResponse();
+                    result = new ApiServiceLongRunningOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("Location"))
                     {
@@ -1362,9 +1368,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response for long running operations.
+        /// The response of the CreateOrUpdate Api Management service long
+        /// running operation.
         /// </returns>
-        public async Task<LongRunningOperationResponse> BeginManagingVirtualNetworksAsync(string resourceGroupName, string name, ApiServiceManageVirtualNetworksParameters parameters, CancellationToken cancellationToken)
+        public async Task<ApiServiceLongRunningOperationResponse> BeginManagingVirtualNetworksAsync(string resourceGroupName, string name, ApiServiceManageVirtualNetworksParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -1504,9 +1511,9 @@ namespace Microsoft.Azure.Management.ApiManagement
                     }
                     
                     // Create Result
-                    LongRunningOperationResponse result = null;
+                    ApiServiceLongRunningOperationResponse result = null;
                     // Deserialize Response
-                    result = new LongRunningOperationResponse();
+                    result = new ApiServiceLongRunningOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("Location"))
                     {
@@ -1571,9 +1578,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response for long running operations.
+        /// The response of the CreateOrUpdate Api Management service long
+        /// running operation.
         /// </returns>
-        public async Task<LongRunningOperationResponse> BeginRestoringAsync(string resourceGroupName, string name, ApiServiceBackupRestoreParameters parameters, CancellationToken cancellationToken)
+        public async Task<ApiServiceLongRunningOperationResponse> BeginRestoringAsync(string resourceGroupName, string name, ApiServiceBackupRestoreParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -1711,9 +1719,9 @@ namespace Microsoft.Azure.Management.ApiManagement
                     }
                     
                     // Create Result
-                    LongRunningOperationResponse result = null;
+                    ApiServiceLongRunningOperationResponse result = null;
                     // Deserialize Response
-                    result = new LongRunningOperationResponse();
+                    result = new ApiServiceLongRunningOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("Location"))
                     {
@@ -1777,9 +1785,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response for long running operations.
+        /// The response of the CreateOrUpdate Api Management service long
+        /// running operation.
         /// </returns>
-        public async Task<LongRunningOperationResponse> BeginUpdatingHostnameAsync(string resourceGroupName, string name, ApiServiceUpdateHostnameParameters parameters, CancellationToken cancellationToken)
+        public async Task<ApiServiceLongRunningOperationResponse> BeginUpdatingHostnameAsync(string resourceGroupName, string name, ApiServiceUpdateHostnameParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -1955,9 +1964,9 @@ namespace Microsoft.Azure.Management.ApiManagement
                     }
                     
                     // Create Result
-                    LongRunningOperationResponse result = null;
+                    ApiServiceLongRunningOperationResponse result = null;
                     // Deserialize Response
-                    result = new LongRunningOperationResponse();
+                    result = new ApiServiceLongRunningOperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("Location"))
                     {
@@ -4315,10 +4324,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The response of the CreateOrUpdate Api Management service long
+        /// running operation.
         /// </returns>
-        public async Task<AzureOperationResponse> ManageDeploymentsAsync(string resourceGroupName, string name, ApiServiceManageDeploymentsParameters parameters, CancellationToken cancellationToken)
+        public async Task<ApiServiceLongRunningOperationResponse> ManageDeploymentsAsync(string resourceGroupName, string name, ApiServiceManageDeploymentsParameters parameters, CancellationToken cancellationToken)
         {
             ApiManagementClient client = this.Client;
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -4334,9 +4343,13 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             
             cancellationToken.ThrowIfCancellationRequested();
-            LongRunningOperationResponse response = await client.ApiManagement.BeginManagingDeploymentsAsync(resourceGroupName, name, parameters, cancellationToken).ConfigureAwait(false);
+            ApiServiceLongRunningOperationResponse response = await client.ApiManagement.BeginManagingDeploymentsAsync(resourceGroupName, name, parameters, cancellationToken).ConfigureAwait(false);
+            if (response.Status == OperationStatus.Succeeded)
+            {
+                return response;
+            }
             cancellationToken.ThrowIfCancellationRequested();
-            LongRunningOperationResponse result = await client.ApiManagement.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+            ApiServiceLongRunningOperationResponse result = await client.ApiManagement.GetApiServiceLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
             int delayInSeconds = response.RetryAfter;
             if (delayInSeconds == 0)
             {
@@ -4346,12 +4359,12 @@ namespace Microsoft.Azure.Management.ApiManagement
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != Microsoft.Azure.OperationStatus.InProgress) == false)
+            while ((result.Status != OperationStatus.InProgress) == false)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
-                result = await client.ApiManagement.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+                result = await client.ApiManagement.GetApiServiceLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
                 delayInSeconds = result.RetryAfter;
                 if (delayInSeconds == 0)
                 {
@@ -4388,10 +4401,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The response of the CreateOrUpdate Api Management service long
+        /// running operation.
         /// </returns>
-        public async Task<AzureOperationResponse> ManageVirtualNetworksAsync(string resourceGroupName, string name, ApiServiceManageVirtualNetworksParameters parameters, CancellationToken cancellationToken)
+        public async Task<ApiServiceLongRunningOperationResponse> ManageVirtualNetworksAsync(string resourceGroupName, string name, ApiServiceManageVirtualNetworksParameters parameters, CancellationToken cancellationToken)
         {
             ApiManagementClient client = this.Client;
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -4407,9 +4420,13 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             
             cancellationToken.ThrowIfCancellationRequested();
-            LongRunningOperationResponse response = await client.ApiManagement.BeginManagingVirtualNetworksAsync(resourceGroupName, name, parameters, cancellationToken).ConfigureAwait(false);
+            ApiServiceLongRunningOperationResponse response = await client.ApiManagement.BeginManagingVirtualNetworksAsync(resourceGroupName, name, parameters, cancellationToken).ConfigureAwait(false);
+            if (response.Status == OperationStatus.Succeeded)
+            {
+                return response;
+            }
             cancellationToken.ThrowIfCancellationRequested();
-            LongRunningOperationResponse result = await client.ApiManagement.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+            ApiServiceLongRunningOperationResponse result = await client.ApiManagement.GetApiServiceLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
             int delayInSeconds = response.RetryAfter;
             if (delayInSeconds == 0)
             {
@@ -4419,12 +4436,12 @@ namespace Microsoft.Azure.Management.ApiManagement
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != Microsoft.Azure.OperationStatus.InProgress) == false)
+            while ((result.Status != OperationStatus.InProgress) == false)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
-                result = await client.ApiManagement.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+                result = await client.ApiManagement.GetApiServiceLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
                 delayInSeconds = result.RetryAfter;
                 if (delayInSeconds == 0)
                 {
@@ -4461,10 +4478,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The response of the CreateOrUpdate Api Management service long
+        /// running operation.
         /// </returns>
-        public async Task<AzureOperationResponse> RestoreAsync(string resourceGroupName, string name, ApiServiceBackupRestoreParameters parameters, CancellationToken cancellationToken)
+        public async Task<ApiServiceLongRunningOperationResponse> RestoreAsync(string resourceGroupName, string name, ApiServiceBackupRestoreParameters parameters, CancellationToken cancellationToken)
         {
             ApiManagementClient client = this.Client;
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -4480,9 +4497,13 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             
             cancellationToken.ThrowIfCancellationRequested();
-            LongRunningOperationResponse response = await client.ApiManagement.BeginRestoringAsync(resourceGroupName, name, parameters, cancellationToken).ConfigureAwait(false);
+            ApiServiceLongRunningOperationResponse response = await client.ApiManagement.BeginRestoringAsync(resourceGroupName, name, parameters, cancellationToken).ConfigureAwait(false);
+            if (response.Status == OperationStatus.Succeeded)
+            {
+                return response;
+            }
             cancellationToken.ThrowIfCancellationRequested();
-            LongRunningOperationResponse result = await client.ApiManagement.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+            ApiServiceLongRunningOperationResponse result = await client.ApiManagement.GetApiServiceLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
             int delayInSeconds = response.RetryAfter;
             if (delayInSeconds == 0)
             {
@@ -4492,12 +4513,12 @@ namespace Microsoft.Azure.Management.ApiManagement
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != Microsoft.Azure.OperationStatus.InProgress) == false)
+            while ((result.Status != OperationStatus.InProgress) == false)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
-                result = await client.ApiManagement.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+                result = await client.ApiManagement.GetApiServiceLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
                 delayInSeconds = result.RetryAfter;
                 if (delayInSeconds == 0)
                 {
@@ -4533,10 +4554,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The response of the CreateOrUpdate Api Management service long
+        /// running operation.
         /// </returns>
-        public async Task<AzureOperationResponse> UpdateHostnameAsync(string resourceGroupName, string name, ApiServiceUpdateHostnameParameters parameters, CancellationToken cancellationToken)
+        public async Task<ApiServiceLongRunningOperationResponse> UpdateHostnameAsync(string resourceGroupName, string name, ApiServiceUpdateHostnameParameters parameters, CancellationToken cancellationToken)
         {
             ApiManagementClient client = this.Client;
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -4552,9 +4573,13 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             
             cancellationToken.ThrowIfCancellationRequested();
-            LongRunningOperationResponse response = await client.ApiManagement.BeginUpdatingHostnameAsync(resourceGroupName, name, parameters, cancellationToken).ConfigureAwait(false);
+            ApiServiceLongRunningOperationResponse response = await client.ApiManagement.BeginUpdatingHostnameAsync(resourceGroupName, name, parameters, cancellationToken).ConfigureAwait(false);
+            if (response.Status == OperationStatus.Succeeded)
+            {
+                return response;
+            }
             cancellationToken.ThrowIfCancellationRequested();
-            LongRunningOperationResponse result = await client.ApiManagement.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+            ApiServiceLongRunningOperationResponse result = await client.ApiManagement.GetApiServiceLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
             int delayInSeconds = response.RetryAfter;
             if (delayInSeconds == 0)
             {
@@ -4564,12 +4589,12 @@ namespace Microsoft.Azure.Management.ApiManagement
             {
                 delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            while ((result.Status != Microsoft.Azure.OperationStatus.InProgress) == false)
+            while ((result.Status != OperationStatus.InProgress) == false)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
-                result = await client.ApiManagement.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+                result = await client.ApiManagement.GetApiServiceLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
                 delayInSeconds = result.RetryAfter;
                 if (delayInSeconds == 0)
                 {

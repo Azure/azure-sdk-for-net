@@ -28,14 +28,14 @@ using Microsoft.Azure.Management.ApiManagement.Models;
 namespace Microsoft.Azure.Management.ApiManagement.Models
 {
     /// <summary>
-    /// Description of an additional ApiService resource Location.
+    /// Description of an additional ApiService resource location.
     /// </summary>
     public partial class AdditionalRegion
     {
         private string _location;
         
         /// <summary>
-        /// Optional. Location name.
+        /// Optional. Gets or sets location name.
         /// </summary>
         public string Location
         {
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private SkuType _skuType;
         
         /// <summary>
-        /// Optional. Sku type of the Location.
+        /// Optional. Gets or sets sku type of the location.
         /// </summary>
         public SkuType SkuType
         {
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private int? _skuUnitCount;
         
         /// <summary>
-        /// Optional. Sku Unit count of the Location.
+        /// Optional. Gets or sets sku Unit count of the location.
         /// </summary>
         public int? SkuUnitCount
         {
@@ -68,7 +68,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private IList<string> _staticIPs;
         
         /// <summary>
-        /// Optional. Static IP addresses of the Location virtual machines.
+        /// Optional. Gets or sets static IP addresses of the location virtual
+        /// machines.
         /// </summary>
         public IList<string> StaticIPs
         {
@@ -79,7 +80,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private VirtualNetworkConfiguration _virtualNetworkConfiguration;
         
         /// <summary>
-        /// Optional. Virtual network configuration for the Location.
+        /// Optional. Gets or sets virtual network configuration for the
+        /// location.
         /// </summary>
         public VirtualNetworkConfiguration VirtualNetworkConfiguration
         {

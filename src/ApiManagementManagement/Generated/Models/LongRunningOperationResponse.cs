@@ -34,7 +34,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private ApiManagementError _error;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets error description of the opertion. Equals to
+        /// null is no errors.
         /// </summary>
         public ApiManagementError Error
         {
@@ -45,7 +46,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private string _operationStatusLink;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets operation status link.
         /// </summary>
         public string OperationStatusLink
         {
@@ -56,7 +57,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private int _retryAfter;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets the number of minutes to retry the operation
+        /// after.
         /// </summary>
         public int RetryAfter
         {
@@ -67,7 +69,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private OperationStatus _status;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets current status of the operation.
         /// </summary>
         public OperationStatus Status
         {

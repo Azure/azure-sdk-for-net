@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private string _location;
         
         /// <summary>
-        /// Required. Api Management service data center location.
+        /// Required. Gets or sets Api Management service data center location.
         /// </summary>
         public string Location
         {
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private ApiServiceProperties _properties;
         
         /// <summary>
-        /// Required. Properties of the Api Management service.
+        /// Required. Gets or sets properties of the Api Management service.
         /// </summary>
         public ApiServiceProperties Properties
         {
@@ -58,9 +58,10 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private IDictionary<string, string> _tags;
         
         /// <summary>
-        /// Optional. Api Management service tags. A maximum of 10 tags can be
-        /// provided for a resource, and each tag must have a key no greater
-        /// than 128 characters (and value no greater than 256 characters)
+        /// Optional. Gets or sets Api Management service tags. A maximum of 10
+        /// tags can be provided for a resource, and each tag must have a key
+        /// no greater than 128 characters (and value no greater than 256
+        /// characters)
         /// </summary>
         public IDictionary<string, string> Tags
         {

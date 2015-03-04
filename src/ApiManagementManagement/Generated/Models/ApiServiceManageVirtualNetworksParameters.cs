@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private IList<VirtualNetworkConfiguration> _virtualNetworkConfigurations;
         
         /// <summary>
-        /// Optional. Virtual network configurations.
+        /// Optional. Gets or sets virtual network configurations.
         /// </summary>
         public IList<VirtualNetworkConfiguration> VirtualNetworkConfigurations
         {

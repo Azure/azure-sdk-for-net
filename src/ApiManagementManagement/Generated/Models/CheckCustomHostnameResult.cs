@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private string _hostname;
         
         /// <summary>
-        /// Optional. The name of the hostname checked.
+        /// Optional. Gets or sets the name of the hostname checked.
         /// </summary>
         public string Hostname
         {
@@ -43,8 +43,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private bool _isMapped;
         
         /// <summary>
-        /// Optional. True if the hostname maps the Api Management service.
-        /// Otherwise - false
+        /// Optional. Gets or sets if the hostname maps the Api Management
+        /// service.
         /// </summary>
         public bool IsMapped
         {

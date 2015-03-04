@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private DateTime _expiry;
         
         /// <summary>
-        /// Required. Expiration date of the certificate.
+        /// Required. Gets or sets expiration date of the certificate.
         /// </summary>
         public DateTime Expiry
         {
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private string _subject;
         
         /// <summary>
-        /// Required. Subject of the certificate.
+        /// Required. Gets or sets subject of the certificate.
         /// </summary>
         public string Subject
         {
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private string _thumbprint;
         
         /// <summary>
-        /// Required. Thumbprint of the certificate.
+        /// Required. Gets or sets thumbprint of the certificate.
         /// </summary>
         public string Thumbprint
         {

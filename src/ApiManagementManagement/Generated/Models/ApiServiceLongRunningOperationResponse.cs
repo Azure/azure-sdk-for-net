@@ -34,8 +34,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private ApiServiceResource _value;
         
         /// <summary>
-        /// Optional. Api Management service resource description after
-        /// affected by the long running operation.
+        /// Optional. Gets or sets Api Management service resource description
+        /// after affected by the long running operation.
         /// </summary>
         public ApiServiceResource Value
         {

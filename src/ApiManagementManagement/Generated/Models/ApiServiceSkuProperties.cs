@@ -33,7 +33,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private int? _capacity;
         
         /// <summary>
-        /// Optional. Capacity of the Sku (number of deployed units of the Sku).
+        /// Optional. Gets or sets capacity of the Sku (number of deployed
+        /// units of the Sku).
         /// </summary>
         public int? Capacity
         {
@@ -44,7 +45,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private SkuType _skuType;
         
         /// <summary>
-        /// Optional. Name of the Sku.
+        /// Optional. Gets or sets name of the Sku.
         /// </summary>
         public SkuType SkuType
         {

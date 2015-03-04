@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private string _certificatePassword;
         
         /// <summary>
-        /// Required. Certificate password.
+        /// Required. Gets or sets certificate password.
         /// </summary>
         public string CertificatePassword
         {
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private string _encodedCertificate;
         
         /// <summary>
-        /// Required. Encoded certificate.
+        /// Required. Gets or sets encoded certificate.
         /// </summary>
         public string EncodedCertificate
         {
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private HostnameType _type;
         
         /// <summary>
-        /// Required. Hostname type.
+        /// Required. Gets or sets hostname type.
         /// </summary>
         public HostnameType Type
         {

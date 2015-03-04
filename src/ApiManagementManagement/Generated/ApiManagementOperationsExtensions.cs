@@ -51,10 +51,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Required. Parameters supplied to the Backup operation.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The response of the CreateOrUpdate Api Management service long
+        /// running operation.
         /// </returns>
-        public static AzureOperationResponse Backup(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceBackupRestoreParameters parameters)
+        public static ApiServiceLongRunningOperationResponse Backup(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceBackupRestoreParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -80,10 +80,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Required. Parameters supplied to the Backup operation.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The response of the CreateOrUpdate Api Management service long
+        /// running operation.
         /// </returns>
-        public static Task<AzureOperationResponse> BackupAsync(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceBackupRestoreParameters parameters)
+        public static Task<ApiServiceLongRunningOperationResponse> BackupAsync(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceBackupRestoreParameters parameters)
         {
             return operations.BackupAsync(resourceGroupName, name, parameters, CancellationToken.None);
         }
@@ -107,9 +107,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Required. Parameters supplied to the BeginBackup operation.
         /// </param>
         /// <returns>
-        /// A standard service response for long running operations.
+        /// The response of the CreateOrUpdate Api Management service long
+        /// running operation.
         /// </returns>
-        public static LongRunningOperationResponse BeginBackup(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceBackupRestoreParameters parameters)
+        public static ApiServiceLongRunningOperationResponse BeginBackup(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceBackupRestoreParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -137,9 +138,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Required. Parameters supplied to the BeginBackup operation.
         /// </param>
         /// <returns>
-        /// A standard service response for long running operations.
+        /// The response of the CreateOrUpdate Api Management service long
+        /// running operation.
         /// </returns>
-        public static Task<LongRunningOperationResponse> BeginBackupAsync(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceBackupRestoreParameters parameters)
+        public static Task<ApiServiceLongRunningOperationResponse> BeginBackupAsync(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceBackupRestoreParameters parameters)
         {
             return operations.BeginBackupAsync(resourceGroupName, name, parameters, CancellationToken.None);
         }
@@ -223,9 +225,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Required. Parameters supplied to the ManageDeployments operation.
         /// </param>
         /// <returns>
-        /// A standard service response for long running operations.
+        /// The response of the CreateOrUpdate Api Management service long
+        /// running operation.
         /// </returns>
-        public static LongRunningOperationResponse BeginManagingDeployments(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceManageDeploymentsParameters parameters)
+        public static ApiServiceLongRunningOperationResponse BeginManagingDeployments(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceManageDeploymentsParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -253,9 +256,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Required. Parameters supplied to the ManageDeployments operation.
         /// </param>
         /// <returns>
-        /// A standard service response for long running operations.
+        /// The response of the CreateOrUpdate Api Management service long
+        /// running operation.
         /// </returns>
-        public static Task<LongRunningOperationResponse> BeginManagingDeploymentsAsync(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceManageDeploymentsParameters parameters)
+        public static Task<ApiServiceLongRunningOperationResponse> BeginManagingDeploymentsAsync(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceManageDeploymentsParameters parameters)
         {
             return operations.BeginManagingDeploymentsAsync(resourceGroupName, name, parameters, CancellationToken.None);
         }
@@ -280,9 +284,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// operation.
         /// </param>
         /// <returns>
-        /// A standard service response for long running operations.
+        /// The response of the CreateOrUpdate Api Management service long
+        /// running operation.
         /// </returns>
-        public static LongRunningOperationResponse BeginManagingVirtualNetworks(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceManageVirtualNetworksParameters parameters)
+        public static ApiServiceLongRunningOperationResponse BeginManagingVirtualNetworks(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceManageVirtualNetworksParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -311,9 +316,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// operation.
         /// </param>
         /// <returns>
-        /// A standard service response for long running operations.
+        /// The response of the CreateOrUpdate Api Management service long
+        /// running operation.
         /// </returns>
-        public static Task<LongRunningOperationResponse> BeginManagingVirtualNetworksAsync(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceManageVirtualNetworksParameters parameters)
+        public static Task<ApiServiceLongRunningOperationResponse> BeginManagingVirtualNetworksAsync(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceManageVirtualNetworksParameters parameters)
         {
             return operations.BeginManagingVirtualNetworksAsync(resourceGroupName, name, parameters, CancellationToken.None);
         }
@@ -338,9 +344,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// from backup operation.
         /// </param>
         /// <returns>
-        /// A standard service response for long running operations.
+        /// The response of the CreateOrUpdate Api Management service long
+        /// running operation.
         /// </returns>
-        public static LongRunningOperationResponse BeginRestoring(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceBackupRestoreParameters parameters)
+        public static ApiServiceLongRunningOperationResponse BeginRestoring(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceBackupRestoreParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -369,9 +376,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// from backup operation.
         /// </param>
         /// <returns>
-        /// A standard service response for long running operations.
+        /// The response of the CreateOrUpdate Api Management service long
+        /// running operation.
         /// </returns>
-        public static Task<LongRunningOperationResponse> BeginRestoringAsync(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceBackupRestoreParameters parameters)
+        public static Task<ApiServiceLongRunningOperationResponse> BeginRestoringAsync(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceBackupRestoreParameters parameters)
         {
             return operations.BeginRestoringAsync(resourceGroupName, name, parameters, CancellationToken.None);
         }
@@ -395,9 +403,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Required. Parameters supplied to the UpdateHostname operation.
         /// </param>
         /// <returns>
-        /// A standard service response for long running operations.
+        /// The response of the CreateOrUpdate Api Management service long
+        /// running operation.
         /// </returns>
-        public static LongRunningOperationResponse BeginUpdatingHostname(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceUpdateHostnameParameters parameters)
+        public static ApiServiceLongRunningOperationResponse BeginUpdatingHostname(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceUpdateHostnameParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -425,9 +434,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Required. Parameters supplied to the UpdateHostname operation.
         /// </param>
         /// <returns>
-        /// A standard service response for long running operations.
+        /// The response of the CreateOrUpdate Api Management service long
+        /// running operation.
         /// </returns>
-        public static Task<LongRunningOperationResponse> BeginUpdatingHostnameAsync(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceUpdateHostnameParameters parameters)
+        public static Task<ApiServiceLongRunningOperationResponse> BeginUpdatingHostnameAsync(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceUpdateHostnameParameters parameters)
         {
             return operations.BeginUpdatingHostnameAsync(resourceGroupName, name, parameters, CancellationToken.None);
         }
@@ -885,10 +895,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Required. Parameters supplied to the ManageDeployments operation.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The response of the CreateOrUpdate Api Management service long
+        /// running operation.
         /// </returns>
-        public static AzureOperationResponse ManageDeployments(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceManageDeploymentsParameters parameters)
+        public static ApiServiceLongRunningOperationResponse ManageDeployments(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceManageDeploymentsParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -914,10 +924,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Required. Parameters supplied to the ManageDeployments operation.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The response of the CreateOrUpdate Api Management service long
+        /// running operation.
         /// </returns>
-        public static Task<AzureOperationResponse> ManageDeploymentsAsync(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceManageDeploymentsParameters parameters)
+        public static Task<ApiServiceLongRunningOperationResponse> ManageDeploymentsAsync(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceManageDeploymentsParameters parameters)
         {
             return operations.ManageDeploymentsAsync(resourceGroupName, name, parameters, CancellationToken.None);
         }
@@ -940,10 +950,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// operation.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The response of the CreateOrUpdate Api Management service long
+        /// running operation.
         /// </returns>
-        public static AzureOperationResponse ManageVirtualNetworks(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceManageVirtualNetworksParameters parameters)
+        public static ApiServiceLongRunningOperationResponse ManageVirtualNetworks(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceManageVirtualNetworksParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -970,10 +980,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// operation.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The response of the CreateOrUpdate Api Management service long
+        /// running operation.
         /// </returns>
-        public static Task<AzureOperationResponse> ManageVirtualNetworksAsync(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceManageVirtualNetworksParameters parameters)
+        public static Task<ApiServiceLongRunningOperationResponse> ManageVirtualNetworksAsync(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceManageVirtualNetworksParameters parameters)
         {
             return operations.ManageVirtualNetworksAsync(resourceGroupName, name, parameters, CancellationToken.None);
         }
@@ -996,10 +1006,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// from backup operation.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The response of the CreateOrUpdate Api Management service long
+        /// running operation.
         /// </returns>
-        public static AzureOperationResponse Restore(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceBackupRestoreParameters parameters)
+        public static ApiServiceLongRunningOperationResponse Restore(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceBackupRestoreParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -1026,10 +1036,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// from backup operation.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The response of the CreateOrUpdate Api Management service long
+        /// running operation.
         /// </returns>
-        public static Task<AzureOperationResponse> RestoreAsync(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceBackupRestoreParameters parameters)
+        public static Task<ApiServiceLongRunningOperationResponse> RestoreAsync(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceBackupRestoreParameters parameters)
         {
             return operations.RestoreAsync(resourceGroupName, name, parameters, CancellationToken.None);
         }
@@ -1051,10 +1061,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Required. Parameters supplied to the UpdateHostname operation.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The response of the CreateOrUpdate Api Management service long
+        /// running operation.
         /// </returns>
-        public static AzureOperationResponse UpdateHostname(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceUpdateHostnameParameters parameters)
+        public static ApiServiceLongRunningOperationResponse UpdateHostname(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceUpdateHostnameParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -1080,10 +1090,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Required. Parameters supplied to the UpdateHostname operation.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The response of the CreateOrUpdate Api Management service long
+        /// running operation.
         /// </returns>
-        public static Task<AzureOperationResponse> UpdateHostnameAsync(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceUpdateHostnameParameters parameters)
+        public static Task<ApiServiceLongRunningOperationResponse> UpdateHostnameAsync(this IApiManagementOperations operations, string resourceGroupName, string name, ApiServiceUpdateHostnameParameters parameters)
         {
             return operations.UpdateHostnameAsync(resourceGroupName, name, parameters, CancellationToken.None);
         }

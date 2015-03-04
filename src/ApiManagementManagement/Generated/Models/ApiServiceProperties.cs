@@ -35,8 +35,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private IList<AdditionalRegion> _additionalRegions;
         
         /// <summary>
-        /// Optional. Additional datacenter locations description of the Api
-        /// Management service.
+        /// Optional. Gets or sets additional datacenter locations description
+        /// of the Api Management service.
         /// </summary>
         public IList<AdditionalRegion> AdditionalRegions
         {
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private string _addresserEmail;
         
         /// <summary>
-        /// Optional. Addresser email.
+        /// Optional. Gets or sets addresser email.
         /// </summary>
         public string AddresserEmail
         {
@@ -58,7 +58,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private DateTime _createdAtUtc;
         
         /// <summary>
-        /// Optional. Creation UTC date of the Api Management service.
+        /// Optional. Gets or sets creation UTC date of the Api Management
+        /// service.
         /// </summary>
         public DateTime CreatedAtUtc
         {
@@ -69,8 +70,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private IList<HostnameConfiguration> _hostnameConfigurations;
         
         /// <summary>
-        /// Optional. Custom hostname configuration of the Api Management
-        /// service.
+        /// Optional. Gets or sets custom hostname configuration of the Api
+        /// Management service.
         /// </summary>
         public IList<HostnameConfiguration> HostnameConfigurations
         {
@@ -81,8 +82,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private string _managementPortalEndpoint;
         
         /// <summary>
-        /// Optional. Management portal endpoint Url of the Api Management
-        /// service.
+        /// Optional. Gets or sets management portal endpoint Url of the Api
+        /// Management service.
         /// </summary>
         public string ManagementPortalEndpoint
         {
@@ -93,7 +94,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private string _provisioningState;
         
         /// <summary>
-        /// Optional. Provisioning state of the Api Management service.
+        /// Optional. Gets or sets provisioning state of the Api Management
+        /// service.
         /// </summary>
         public string ProvisioningState
         {
@@ -104,7 +106,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private string _proxyEndpoint;
         
         /// <summary>
-        /// Optional. Proxy endpoint Url of the Api Management service.
+        /// Optional. Gets or sets proxy endpoint Url of the Api Management
+        /// service.
         /// </summary>
         public string ProxyEndpoint
         {
@@ -115,7 +118,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private string _publisherEmail;
         
         /// <summary>
-        /// Optional. Publisher email.
+        /// Optional. Gets or sets publisher email.
         /// </summary>
         public string PublisherEmail
         {
@@ -126,7 +129,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private string _publisherName;
         
         /// <summary>
-        /// Optional. Publisher name.
+        /// Optional. Gets or sets publisher name.
         /// </summary>
         public string PublisherName
         {
@@ -137,7 +140,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private ApiServiceSkuProperties _skuProperties;
         
         /// <summary>
-        /// Optional. Sku properties of the Api Management service.
+        /// Optional. Gets or sets sku properties of the Api Management service.
         /// </summary>
         public ApiServiceSkuProperties SkuProperties
         {
@@ -148,8 +151,9 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private IList<string> _staticIPs;
         
         /// <summary>
-        /// Optional. Static ip addresses of the Api Management service virtual
-        /// machines. Available only for Standard and Premium Sku.
+        /// Optional. Gets or sets static ip addresses of the Api Management
+        /// service virtual machines. Available only for Standard and Premium
+        /// Sku.
         /// </summary>
         public IList<string> StaticIPs
         {
@@ -160,8 +164,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private string _targetProvisioningState;
         
         /// <summary>
-        /// Optional. Target provisioning state Gets or sets publisher email of
-        /// the Api Management service.The state that is targeted for the Api
+        /// Optional. Gets or sets target provisioning state of the Api
+        /// Management service.The state that is targeted for the Api
         /// Management service by the infrastructure.
         /// </summary>
         public string TargetProvisioningState
@@ -173,8 +177,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private VirtualNetworkConfiguration _virtualNetworkConfiguration;
         
         /// <summary>
-        /// Optional. Virtual network configuration of the Api Management
-        /// service .
+        /// Optional. Gets or sets virtual network configuration of the Api
+        /// Management service .
         /// </summary>
         public VirtualNetworkConfiguration VirtualNetworkConfiguration
         {

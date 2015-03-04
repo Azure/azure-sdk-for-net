@@ -36,8 +36,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private string _nextLink;
         
         /// <summary>
-        /// Optional. Link to the next set of results. Not empty if Value
-        /// contains incomplete list of Api Management services.
+        /// Optional. Gets or sets link to the next set of results. Not empty
+        /// if Value contains incomplete list of Api Management services.
         /// </summary>
         public string NextLink
         {
@@ -48,7 +48,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private IList<ApiServiceResource> _value;
         
         /// <summary>
-        /// Optional. Result of the List Api Management services operation.
+        /// Optional. Gets or sets result of the List Api Management services
+        /// operation.
         /// </summary>
         public IList<ApiServiceResource> Value
         {

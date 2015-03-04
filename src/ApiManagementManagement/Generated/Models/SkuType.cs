@@ -24,12 +24,24 @@ using System.Linq;
 
 namespace Microsoft.Azure.Management.ApiManagement.Models
 {
+    /// <summary>
+    /// Types of API Managrement SKU (Tier).
+    /// </summary>
     public enum SkuType
     {
+        /// <summary>
+        /// Developer tier.
+        /// </summary>
         Developer = 1,
         
+        /// <summary>
+        /// Standard tier.
+        /// </summary>
         Standard = 2,
         
+        /// <summary>
+        /// Premium tier.
+        /// </summary>
         Premium = 3,
     }
 }

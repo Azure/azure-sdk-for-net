@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private IList<HostnameConfiguration> _hostnamesToCreateOrUpdate;
         
         /// <summary>
-        /// Optional. Hostnames to create of update.
+        /// Optional. Gets or sets hostnames to create of update.
         /// </summary>
         public IList<HostnameConfiguration> HostnamesToCreateOrUpdate
         {
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private IList<HostnameType> _hostnamesToDelete;
         
         /// <summary>
-        /// Optional. Hostnames to delete.
+        /// Optional. Gets or sets hostnames to delete.
         /// </summary>
         public IList<HostnameType> HostnamesToDelete
         {

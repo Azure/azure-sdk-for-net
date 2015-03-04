@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private string _name;
         
         /// <summary>
-        /// Required. The name to check for.
+        /// Required. Gets or sets the name to check for.
         /// </summary>
         public string Name
         {

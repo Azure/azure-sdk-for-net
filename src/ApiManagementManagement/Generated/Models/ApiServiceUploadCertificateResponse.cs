@@ -35,8 +35,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private CertificateInformation _value;
         
         /// <summary>
-        /// Optional. The result of the Upload SSL certificate for an Api
-        /// Management service: uploaded certificte information.
+        /// Optional. Gets or sets the result of the Upload SSL certificate for
+        /// an Api Management service: uploaded certificte information.
         /// </summary>
         public CertificateInformation Value
         {

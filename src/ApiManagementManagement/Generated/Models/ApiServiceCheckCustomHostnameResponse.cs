@@ -36,7 +36,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private IList<CheckCustomHostnameResult> _value;
         
         /// <summary>
-        /// Optional. The result set of the CheckCustomHostname operation.
+        /// Optional. Gets or sets the result set of the CheckCustomHostname
+        /// operation.
         /// </summary>
         public IList<CheckCustomHostnameResult> Value
         {

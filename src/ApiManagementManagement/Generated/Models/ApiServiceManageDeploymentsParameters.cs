@@ -35,8 +35,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private IList<AdditionalRegion> _additionalRegions;
         
         /// <summary>
-        /// Optional. Additional data center locations for the Api Management
-        /// service.
+        /// Optional. Gets or sets additional data center locations for the Api
+        /// Management service.
         /// </summary>
         public IList<AdditionalRegion> AdditionalRegions
         {
@@ -47,7 +47,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private string _location;
         
         /// <summary>
-        /// Required. Location of the Api Management service data center.
+        /// Required. Gets or sets location of the Api Management service data
+        /// center.
         /// </summary>
         public string Location
         {
@@ -58,7 +59,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private SkuType _skuType;
         
         /// <summary>
-        /// Required. Sku type of the Api Management service.
+        /// Required. Gets or sets sku type of the Api Management service.
         /// </summary>
         public SkuType SkuType
         {
@@ -69,7 +70,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private int? _skuUnitCount;
         
         /// <summary>
-        /// Optional. Sku Unit count of the Api Management service.
+        /// Optional. Gets or sets sku Unit count of the Api Management service.
         /// </summary>
         public int? SkuUnitCount
         {
@@ -80,7 +81,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private VirtualNetworkConfiguration _virtualNetworkConfiguration;
         
         /// <summary>
-        /// Optional. Virtual network configuration.
+        /// Optional. Gets or sets virtual network configuration.
         /// </summary>
         public VirtualNetworkConfiguration VirtualNetworkConfiguration
         {

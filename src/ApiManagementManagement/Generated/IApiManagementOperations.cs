@@ -49,10 +49,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The response of the CreateOrUpdate Api Management service long
+        /// running operation.
         /// </returns>
-        Task<AzureOperationResponse> BackupAsync(string resourceGroupName, string name, ApiServiceBackupRestoreParameters parameters, CancellationToken cancellationToken);
+        Task<ApiServiceLongRunningOperationResponse> BackupAsync(string resourceGroupName, string name, ApiServiceBackupRestoreParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Begin backup operation of an Api Management service.To determine
@@ -72,9 +72,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response for long running operations.
+        /// The response of the CreateOrUpdate Api Management service long
+        /// running operation.
         /// </returns>
-        Task<LongRunningOperationResponse> BeginBackupAsync(string resourceGroupName, string name, ApiServiceBackupRestoreParameters parameters, CancellationToken cancellationToken);
+        Task<ApiServiceLongRunningOperationResponse> BeginBackupAsync(string resourceGroupName, string name, ApiServiceBackupRestoreParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Begins creating new or updating existing Api Management service.To
@@ -118,9 +119,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response for long running operations.
+        /// The response of the CreateOrUpdate Api Management service long
+        /// running operation.
         /// </returns>
-        Task<LongRunningOperationResponse> BeginManagingDeploymentsAsync(string resourceGroupName, string name, ApiServiceManageDeploymentsParameters parameters, CancellationToken cancellationToken);
+        Task<ApiServiceLongRunningOperationResponse> BeginManagingDeploymentsAsync(string resourceGroupName, string name, ApiServiceManageDeploymentsParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Begin to manage (CUD) VPN configuration of an Api Management
@@ -140,9 +142,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response for long running operations.
+        /// The response of the CreateOrUpdate Api Management service long
+        /// running operation.
         /// </returns>
-        Task<LongRunningOperationResponse> BeginManagingVirtualNetworksAsync(string resourceGroupName, string name, ApiServiceManageVirtualNetworksParameters parameters, CancellationToken cancellationToken);
+        Task<ApiServiceLongRunningOperationResponse> BeginManagingVirtualNetworksAsync(string resourceGroupName, string name, ApiServiceManageVirtualNetworksParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Begin restore from backup operation of an Api Management service.To
@@ -163,9 +166,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response for long running operations.
+        /// The response of the CreateOrUpdate Api Management service long
+        /// running operation.
         /// </returns>
-        Task<LongRunningOperationResponse> BeginRestoringAsync(string resourceGroupName, string name, ApiServiceBackupRestoreParameters parameters, CancellationToken cancellationToken);
+        Task<ApiServiceLongRunningOperationResponse> BeginRestoringAsync(string resourceGroupName, string name, ApiServiceBackupRestoreParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Begin updating hostname of an Api Management service.To determine
@@ -185,9 +189,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response for long running operations.
+        /// The response of the CreateOrUpdate Api Management service long
+        /// running operation.
         /// </returns>
-        Task<LongRunningOperationResponse> BeginUpdatingHostnameAsync(string resourceGroupName, string name, ApiServiceUpdateHostnameParameters parameters, CancellationToken cancellationToken);
+        Task<ApiServiceLongRunningOperationResponse> BeginUpdatingHostnameAsync(string resourceGroupName, string name, ApiServiceUpdateHostnameParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Checks whether the custom host name maps to an Api Management
@@ -367,10 +372,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The response of the CreateOrUpdate Api Management service long
+        /// running operation.
         /// </returns>
-        Task<AzureOperationResponse> ManageDeploymentsAsync(string resourceGroupName, string name, ApiServiceManageDeploymentsParameters parameters, CancellationToken cancellationToken);
+        Task<ApiServiceLongRunningOperationResponse> ManageDeploymentsAsync(string resourceGroupName, string name, ApiServiceManageDeploymentsParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Manage (CUD) VPN configuration of an Api Management service.
@@ -388,10 +393,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The response of the CreateOrUpdate Api Management service long
+        /// running operation.
         /// </returns>
-        Task<AzureOperationResponse> ManageVirtualNetworksAsync(string resourceGroupName, string name, ApiServiceManageVirtualNetworksParameters parameters, CancellationToken cancellationToken);
+        Task<ApiServiceLongRunningOperationResponse> ManageVirtualNetworksAsync(string resourceGroupName, string name, ApiServiceManageVirtualNetworksParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Restore an Api Management service from backup.
@@ -410,10 +415,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The response of the CreateOrUpdate Api Management service long
+        /// running operation.
         /// </returns>
-        Task<AzureOperationResponse> RestoreAsync(string resourceGroupName, string name, ApiServiceBackupRestoreParameters parameters, CancellationToken cancellationToken);
+        Task<ApiServiceLongRunningOperationResponse> RestoreAsync(string resourceGroupName, string name, ApiServiceBackupRestoreParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Update hostname of an Api Management service.
@@ -431,10 +436,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The response of the CreateOrUpdate Api Management service long
+        /// running operation.
         /// </returns>
-        Task<AzureOperationResponse> UpdateHostnameAsync(string resourceGroupName, string name, ApiServiceUpdateHostnameParameters parameters, CancellationToken cancellationToken);
+        Task<ApiServiceLongRunningOperationResponse> UpdateHostnameAsync(string resourceGroupName, string name, ApiServiceUpdateHostnameParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Upload SSL certificate for an Api Management service.

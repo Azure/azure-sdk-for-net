@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private CertificateInformation _certificate;
         
         /// <summary>
-        /// Required. Certificate information.
+        /// Required. Gets or sets certificate information.
         /// </summary>
         public CertificateInformation Certificate
         {
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private string _hostname;
         
         /// <summary>
-        /// Required. Hostname.
+        /// Required. Gets or sets hostname.
         /// </summary>
         public string Hostname
         {
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private HostnameType _type;
         
         /// <summary>
-        /// Required. Hostname type.
+        /// Required. Gets or sets hostname type.
         /// </summary>
         public HostnameType Type
         {

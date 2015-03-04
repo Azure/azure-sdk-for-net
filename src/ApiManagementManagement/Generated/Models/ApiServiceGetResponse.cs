@@ -34,7 +34,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private ApiServiceResource _value;
         
         /// <summary>
-        /// Optional. Result of the Get Api Management service operation.
+        /// Optional. Gets or sets result of the Get Api Management service
+        /// operation.
         /// </summary>
         public ApiServiceResource Value
         {

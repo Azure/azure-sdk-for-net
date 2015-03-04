@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private string _location;
         
         /// <summary>
-        /// Optional. Virtual network location name.
+        /// Optional. Gets or sets virtual network location name.
         /// </summary>
         public string Location
         {
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private string _subnetName;
         
         /// <summary>
-        /// Optional. Subnetwork name.
+        /// Optional. Gets or sets subnetwork name.
         /// </summary>
         public string SubnetName
         {
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private Guid _vnetId;
         
         /// <summary>
-        /// Optional. Virtual network id.
+        /// Optional. Gets or sets virtual network id.
         /// </summary>
         public Guid VnetId
         {

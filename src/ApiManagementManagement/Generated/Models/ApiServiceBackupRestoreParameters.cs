@@ -33,8 +33,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private string _accessKey;
         
         /// <summary>
-        /// Required. Azure Cloud Starage account (used to place/retrieve the
-        /// backup) access key.
+        /// Required. Gets or sets Azure Cloud Starage account (used to
+        /// place/retrieve the backup) access key.
         /// </summary>
         public string AccessKey
         {
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private string _backupName;
         
         /// <summary>
-        /// Required. The name of the backup.
+        /// Required. Gets or sets the name of the backup.
         /// </summary>
         public string BackupName
         {
@@ -56,8 +56,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private string _containerName;
         
         /// <summary>
-        /// Required. Azure Cloud Starage blob container name used to
-        /// place/retrieve the backup.
+        /// Required. Gets or sets Azure Cloud Starage blob container name used
+        /// to place/retrieve the backup.
         /// </summary>
         public string ContainerName
         {
@@ -68,8 +68,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private string _storageAccount;
         
         /// <summary>
-        /// Required. Azure Cloud Starage account (used to place/retrieve the
-        /// backup) name.
+        /// Required. Gets or sets Azure Cloud Starage account (used to
+        /// place/retrieve the backup) name.
         /// </summary>
         public string StorageAccount
         {

@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private string _eTag;
         
         /// <summary>
-        /// Optional. ETag of the resource.
+        /// Optional. Gets or sets ETag of the resource.
         /// </summary>
         public string ETag
         {
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private string _id;
         
         /// <summary>
-        /// Optional. The id of the created Api Management service.
+        /// Optional. Gets or sets the id of the created Api Management service.
         /// </summary>
         public string Id
         {
@@ -57,7 +57,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private string _location;
         
         /// <summary>
-        /// Optional. Datacenter location of the Api Management service.
+        /// Optional. Gets or sets datacenter location of the Api Management
+        /// service.
         /// </summary>
         public string Location
         {
@@ -68,7 +69,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private string _name;
         
         /// <summary>
-        /// Optional. Name of the Api Management service.
+        /// Optional. Gets or sets name of the Api Management service.
         /// </summary>
         public string Name
         {
@@ -79,7 +80,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private ApiServiceProperties _properties;
         
         /// <summary>
-        /// Optional. Properties of the Api Management service.
+        /// Optional. Gets or sets properties of the Api Management service.
         /// </summary>
         public ApiServiceProperties Properties
         {
@@ -90,7 +91,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private IDictionary<string, string> _tags;
         
         /// <summary>
-        /// Optional. Tags of the Api Management service.
+        /// Optional. Gets or sets tags of the Api Management service.
         /// </summary>
         public IDictionary<string, string> Tags
         {
@@ -101,7 +102,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private string _type;
         
         /// <summary>
-        /// Optional. Resource type of the Api Management service.
+        /// Optional. Gets or sets resource type of the Api Management service.
         /// </summary>
         public string Type
         {

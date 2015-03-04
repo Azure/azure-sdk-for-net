@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private IList<HostnameConfiguration> _hostnamesToCheck;
         
         /// <summary>
-        /// Optional. Hostname configuration to check for.
+        /// Optional. Gets or sets hostname configuration to check for.
         /// </summary>
         public IList<HostnameConfiguration> HostnamesToCheck
         {

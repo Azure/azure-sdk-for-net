@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         private string _redirectUrl;
         
         /// <summary>
-        /// Optional. Redirect url containing the SSO token.
+        /// Optional. Gets or sets redirect url containing the SSO token.
         /// </summary>
         public string RedirectUrl
         {
