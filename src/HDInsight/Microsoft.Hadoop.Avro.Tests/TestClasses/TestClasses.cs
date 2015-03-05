@@ -103,9 +103,12 @@ namespace Microsoft.Hadoop.Avro.Tests
         [DataMember]
         public Guid PrimitiveGuid;
 
+        [DataMember]
+        public Guid PrimitiveGuid2;
+
         public static ClassOfGuid Create(bool nullablesAreNulls)
         {
-            return new ClassOfGuid { PrimitiveGuid = Utilities.GetRandom<Guid>(nullablesAreNulls), };
+            return new ClassOfGuid { PrimitiveGuid = Utilities.GetRandom<Guid>(nullablesAreNulls), PrimitiveGuid2 = Utilities.GetRandom<Guid>(nullablesAreNulls) };
         }
 
         public override bool Equals(object obj)
@@ -119,12 +122,12 @@ namespace Microsoft.Hadoop.Avro.Tests
             {
                 return false;
             }
-            return this.PrimitiveGuid == other.PrimitiveGuid;
+            return this.PrimitiveGuid == other.PrimitiveGuid && this.PrimitiveGuid2 == other.PrimitiveGuid2;
         }
 
         public override int GetHashCode()
         {
-            return this.PrimitiveGuid.GetHashCode();
+            return this.PrimitiveGuid.GetHashCode() ^ this.PrimitiveGuid2.GetHashCode();
         }
 
     }

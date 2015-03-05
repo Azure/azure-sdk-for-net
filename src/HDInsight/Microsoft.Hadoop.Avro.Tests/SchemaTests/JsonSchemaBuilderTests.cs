@@ -21,6 +21,7 @@ namespace Microsoft.Hadoop.Avro.Tests
     using System.Runtime.Serialization;
     using Microsoft.Hadoop.Avro.Schema;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using ProtoBuf;
 
     [TestClass]
     public sealed class JsonSchemaTests
@@ -56,6 +57,16 @@ namespace Microsoft.Hadoop.Avro.Tests
 
             Assert.IsTrue(schema is LongSchema);
             CollectionAssert.AreEqual(this.emptyAttributes.ToList(), schema.Attributes.ToList());
+        }
+
+        [TestMethod]
+        [TestCategory("CheckIn")]
+        public void JsonSchemaBuilder_ClassOfGuidWriterSchema()
+        {
+            var settings = new AvroSerializerSettings { Resolver = new AvroDataContractResolver(false) };
+            IAvroSerializer<ClassOfGuid> serializer = AvroSerializer.Create<ClassOfGuid>(settings);
+            string writerSchema = serializer.WriterSchema.ToString();
+             AvroSerializer.CreateDeserializerOnly<ClassOfGuid>(writerSchema, settings);
         }
 
         [TestMethod]

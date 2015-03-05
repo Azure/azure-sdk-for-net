@@ -435,7 +435,10 @@ namespace Microsoft.Hadoop.Avro.Schema
             var result = new FixedSchema(attributes, size, typeof(byte[]), customAttributes);
 
             namedSchemas.Add(result.FullName, result);
+<<<<<<< HEAD
+=======
 
+>>>>>>> 27d1ba6... fix issue #987 where multiple of fixed schema show up on the same record type.
             return result;
         }
 
