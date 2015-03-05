@@ -27,7 +27,7 @@ using Microsoft.Azure.Management.Sql.Models;
 namespace Microsoft.Azure.Management.Sql.Models
 {
     /// <summary>
-    /// Represents the response to a Get Database request.
+    /// Represents the response to a Get Azure Sql Database Server request.
     /// </summary>
     public partial class ServerGetResponse : AzureOperationResponse
     {
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         
         /// <summary>
         /// Optional. Gets or sets the object representing the Azure Sql
-        /// Database server.
+        /// Database Server.
         /// </summary>
         public Server Server
         {
