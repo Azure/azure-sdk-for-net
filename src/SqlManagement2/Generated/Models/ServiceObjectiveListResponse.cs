@@ -29,39 +29,42 @@ using Microsoft.Azure.Management.Sql.Models;
 namespace Microsoft.Azure.Management.Sql.Models
 {
     /// <summary>
-    /// Represents the response to a Get Azure Sql Database Server request.
+    /// Represents the response to a Get Azure Sql Database Service Objectives
+    /// request.
     /// </summary>
-    public partial class ServerListResponse : AzureOperationResponse, IEnumerable<Server>
+    public partial class ServiceObjectiveListResponse : AzureOperationResponse, IEnumerable<ServiceObjective>
     {
-        private IList<Server> _servers;
+        private IList<ServiceObjective> _serviceObjectives;
         
         /// <summary>
-        /// Optional. Gets or sets the list of Azure Sql Database Servers.
+        /// Optional. Gets or sets the list of Azure Sql Database Service
+        /// Objectives.
         /// </summary>
-        public IList<Server> Servers
+        public IList<ServiceObjective> ServiceObjectives
         {
-            get { return this._servers; }
-            set { this._servers = value; }
+            get { return this._serviceObjectives; }
+            set { this._serviceObjectives = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ServerListResponse class.
+        /// Initializes a new instance of the ServiceObjectiveListResponse
+        /// class.
         /// </summary>
-        public ServerListResponse()
+        public ServiceObjectiveListResponse()
         {
-            this.Servers = new LazyList<Server>();
+            this.ServiceObjectives = new LazyList<ServiceObjective>();
         }
         
         /// <summary>
-        /// Gets the sequence of Servers.
+        /// Gets the sequence of ServiceObjectives.
         /// </summary>
-        public IEnumerator<Server> GetEnumerator()
+        public IEnumerator<ServiceObjective> GetEnumerator()
         {
-            return this.Servers.GetEnumerator();
+            return this.ServiceObjectives.GetEnumerator();
         }
         
         /// <summary>
-        /// Gets the sequence of Servers.
+        /// Gets the sequence of ServiceObjectives.
         /// </summary>
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {

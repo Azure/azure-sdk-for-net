@@ -20,52 +20,35 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
 using Microsoft.Azure;
 using Microsoft.Azure.Management.Sql.Models;
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
     /// <summary>
-    /// Represents the response to a Get Azure Sql Database Server request.
+    /// Represents the response to a Get Azure Sql Database Service Objective
+    /// request.
     /// </summary>
-    public partial class ServerListResponse : AzureOperationResponse, IEnumerable<Server>
+    public partial class ServiceObjectiveGetResponse : AzureOperationResponse
     {
-        private IList<Server> _servers;
+        private ServiceObjective _serviceObjective;
         
         /// <summary>
-        /// Optional. Gets or sets the list of Azure Sql Database Servers.
+        /// Optional. Gets or sets the object representing the Azure Sql
+        /// Database Service Objective.
         /// </summary>
-        public IList<Server> Servers
+        public ServiceObjective ServiceObjective
         {
-            get { return this._servers; }
-            set { this._servers = value; }
+            get { return this._serviceObjective; }
+            set { this._serviceObjective = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ServerListResponse class.
+        /// Initializes a new instance of the ServiceObjectiveGetResponse class.
         /// </summary>
-        public ServerListResponse()
+        public ServiceObjectiveGetResponse()
         {
-            this.Servers = new LazyList<Server>();
-        }
-        
-        /// <summary>
-        /// Gets the sequence of Servers.
-        /// </summary>
-        public IEnumerator<Server> GetEnumerator()
-        {
-            return this.Servers.GetEnumerator();
-        }
-        
-        /// <summary>
-        /// Gets the sequence of Servers.
-        /// </summary>
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return this.GetEnumerator();
         }
     }
 }

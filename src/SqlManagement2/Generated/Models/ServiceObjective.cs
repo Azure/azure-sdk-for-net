@@ -20,52 +20,43 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.Sql.Models;
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
     /// <summary>
-    /// Represents the response to a Get Azure Sql Database Server request.
+    /// Represents an Azure SQL Database Service Objective.
     /// </summary>
-    public partial class ServerListResponse : AzureOperationResponse, IEnumerable<Server>
+    public partial class ServiceObjective : ResourceBase
     {
-        private IList<Server> _servers;
+        private string _name;
         
         /// <summary>
-        /// Optional. Gets or sets the list of Azure Sql Database Servers.
+        /// Optional. Gets or sets the name of the resource.
         /// </summary>
-        public IList<Server> Servers
+        public string Name
         {
-            get { return this._servers; }
-            set { this._servers = value; }
+            get { return this._name; }
+            set { this._name = value; }
+        }
+        
+        private ServiceObjectiveProperties _properties;
+        
+        /// <summary>
+        /// Optional. Represents the properties of the resource.
+        /// </summary>
+        public ServiceObjectiveProperties Properties
+        {
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ServerListResponse class.
+        /// Initializes a new instance of the ServiceObjective class.
         /// </summary>
-        public ServerListResponse()
+        public ServiceObjective()
         {
-            this.Servers = new LazyList<Server>();
-        }
-        
-        /// <summary>
-        /// Gets the sequence of Servers.
-        /// </summary>
-        public IEnumerator<Server> GetEnumerator()
-        {
-            return this.Servers.GetEnumerator();
-        }
-        
-        /// <summary>
-        /// Gets the sequence of Servers.
-        /// </summary>
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return this.GetEnumerator();
         }
     }
 }
