@@ -19,6 +19,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities
     using Microsoft.WindowsAzure.Management.HDInsight.Contracts.May2014;
     using Microsoft.WindowsAzure.Management.HDInsight.Contracts.May2014.Components;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning;
 
     public class RootHandlerSimulatorController : ApiController
     {
@@ -147,7 +148,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.TestUtilities
                 Components = clusterCreateParams.Components,
                 ExtensionData = clusterCreateParams.ExtensionData,
                 Location = clusterCreateParams.Location,
-                Version = clusterCreateParams.Version,
+                Version = ClusterVersionUtils.TryGetVersionNumber(clusterCreateParams.Version),
                 VirtualNetworkConfiguration = clusterCreateParams.VirtualNetworkConfiguration
             };
 

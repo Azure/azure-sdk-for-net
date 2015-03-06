@@ -191,7 +191,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClustersTests
         public async Task CanEnableAndDisableRdpUser()
         {
             Capabilities.Add("CAPABILITY_FEATURE_CLUSTERS_CONTRACT_1_SDK");
-            Capabilities.Add("CAPABILITY_FEATURE_CLUSTERS_CONTRACT_3_SDK");
+            Capabilities.Add("CAPABILITY_FEATURE_CLUSTERS_CONTRACT_VERSION_3_SDK");
             var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
                                                       .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(Capabilities));
             var clusterDnsName = "rdpTestCluster";
@@ -335,7 +335,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClustersTests
         public async Task CanCreateSparkCluster()
         {
             Capabilities.Add("CAPABILITY_FEATURE_CLUSTERS_CONTRACT_1_SDK");
-            Capabilities.Add("CAPABILITY_FEATURE_CLUSTERS_CONTRACT_3_SDK");
+            Capabilities.Add("CAPABILITY_FEATURE_CLUSTERS_CONTRACT_VERSION_3_SDK");
             var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
                                                       .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(Capabilities));
             var clustersPocoClient = new PaasClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient);
@@ -358,6 +358,36 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClustersTests
             var containersList = clustersPocoClient.ListContainers().Result;
             Assert.AreEqual(containersList.Count, 1);
             Assert.IsNotNull(containersList.SingleOrDefault(cluster => cluster.Name.Equals("SparkCreationTest")));
+        }
+
+        [TestMethod]
+        [TestCategory("CheckIn")]
+        public async Task CanCreateClusterWithHwxPrivateVersion()
+        {
+            Capabilities.Add("CAPABILITY_FEATURE_CLUSTERS_CONTRACT_1_SDK");
+            Capabilities.Add("CAPABILITY_FEATURE_CLUSTERS_CONTRACT_VERSION_3_SDK");
+            var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
+                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(Capabilities));
+            var clustersPocoClient = new PaasClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient);
+            var clusterCreateParameters = new HDInsight.ClusterCreateParametersV2
+            {
+                Name = "HwxVersionTest",
+                DefaultStorageAccountKey = IntegrationTestBase.TestCredentials.Environments[0].DefaultStorageAccount.Key,
+                DefaultStorageAccountName = IntegrationTestBase.TestCredentials.Environments[0].DefaultStorageAccount.Name,
+                DefaultStorageContainer = "HwxVersionTest",
+                ClusterSizeInNodes = 2,
+                Location = "East US",
+                UserName = "hdinsightuser",
+                Password = "Password1!",
+                Version = "3.2-hwx-trunk",
+                ClusterType = ClusterType.Hadoop,
+            };
+
+            await clustersPocoClient.CreateContainer(clusterCreateParameters);
+
+            var containersList = clustersPocoClient.ListContainers().Result;
+            Assert.AreEqual(containersList.Count, 1);
+            Assert.IsNotNull(containersList.SingleOrDefault(cluster => cluster.Name.Equals("HwxVersionTest")));
         }
 
         [TestMethod]

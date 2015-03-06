@@ -857,9 +857,9 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
             // Validates the version for cluster creation
             if (!string.IsNullOrEmpty(cluster.Version) && !string.Equals(cluster.Version, DEFAULTHDINSIGHTVERSION, StringComparison.OrdinalIgnoreCase))
             {
-                this.AssertSupportedVersion(overrideHandlers.PayloadConverter.ConvertStringToVersion(cluster.Version));
+                this.AssertSupportedVersion(overrideHandlers.PayloadConverter.ConvertStringToVersion(ClusterVersionUtils.TryGetVersionNumber(cluster.Version)));
                 var availableVersions = await overrideHandlers.VersionFinder.ListAvailableVersions();
-                if (availableVersions.All(hdinsightVersion => hdinsightVersion.Version != cluster.Version))
+                if (availableVersions.All(hdinsightVersion => hdinsightVersion.Version != ClusterVersionUtils.TryGetVersionNumber(cluster.Version)))
                 {
                     throw new InvalidOperationException(
                         string.Format(
@@ -869,7 +869,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
                 }
 
                 // Clusters with OSType.Linux only supported from version 3.2 onwards
-                var version = new Version(cluster.Version);
+                var version = new Version(ClusterVersionUtils.TryGetVersionNumber(cluster.Version));
                 if (cluster.OSType == OSType.Linux && version.CompareTo(new Version("3.2")) < 0)
                 {
                     throw new NotSupportedException(string.Format("Clusters with OSType {0} are only supported from version 3.2", cluster.OSType));

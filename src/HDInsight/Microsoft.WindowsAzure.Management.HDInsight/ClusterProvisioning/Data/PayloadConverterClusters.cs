@@ -258,7 +258,7 @@
             }
 
             ClusterCreateParameters ccp = null;
-            if (cluster.Version.Equals("default", StringComparison.OrdinalIgnoreCase) || new Version(cluster.Version).Major >= 3)
+            if (cluster.Version.Equals("default", StringComparison.OrdinalIgnoreCase) || new Version(ClusterVersionUtils.TryGetVersionNumber(cluster.Version)).Major >= 3)
             {
                 switch (cluster.ClusterType)
                 {

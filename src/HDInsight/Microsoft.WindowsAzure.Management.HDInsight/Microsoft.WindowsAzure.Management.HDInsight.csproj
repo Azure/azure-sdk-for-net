@@ -33,6 +33,7 @@
     <Compile Include="ApplicationHistoryAndLogs\IHDInsightApplicationHistoryClient.cs" />
     <Compile Include="ApplicationHistoryAndLogs\IHDInsightApplicationHistorySyncClient.cs" />
     <Compile Include="ClusterNodeType.cs" />
+    <Compile Include="ClusterProvisioning\ClusterVersionUtils.cs" />
     <Compile Include="ClusterProvisioning\Data\ClusterCreateParametersV2.cs" />
     <Compile Include="ClusterProvisioning\Data\ClusterType.cs" />
     <Compile Include="ClusterProvisioning\Data\DocumentTemplates\VersionToDocumentMapper.cs" />
