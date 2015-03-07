@@ -1387,6 +1387,40 @@ namespace Microsoft.Hadoop.Avro.Tests
             RoundTripSerializationWithCheck(expected);
         }
 
+        [TestMethod]
+        [TestCategory("CheckIn")]
+        public void Serializer_SerializeClassWithGenericMemberHavingMultipleMatchingKnownTypes()
+        {
+            // support multiple collections type as known types.
+            var knownTypes = new[] {typeof (List<string>), typeof (string[]), typeof (Collection<string>)};
+            var serializer = AvroSerializer.Create<IEnumerableClass<string>>(new AvroSerializerSettings() {KnownTypes = knownTypes });
+            var deserializer = AvroSerializer.CreateDeserializerOnly<IEnumerableClass<string>>(serializer.WriterSchema.ToString(), new AvroSerializerSettings() { KnownTypes = knownTypes });
+
+            // check for array
+            var expected = IEnumerableClass<string>.Create(new [] { "aaa", "bbb", "ccc" });
+            RoundTripSerializationWithCheck(serializer, deserializer, expected);
+
+            // check for list
+            expected = IEnumerableClass<string>.Create(new List<string> { "aaa", "bbb", "ccc" });
+            RoundTripSerializationWithCheck(serializer, deserializer, expected);
+
+            // check for collection
+            expected = IEnumerableClass<string>.Create(new Collection<string> { "aaa", "bbb", "ccc" });
+            RoundTripSerializationWithCheck(serializer, deserializer, expected);
+        }
+
+        private void RoundTripSerializationWithCheck<TS>(IAvroSerializer<TS> serializer, IAvroSerializer<TS> deserializer, TS serialized)
+        {
+            using (var stream = new MemoryStream())
+            {
+                serializer.Serialize(stream, serialized);
+                stream.Seek(0, SeekOrigin.Begin);
+                var actual = deserializer.Deserialize(stream);
+
+                Assert.AreEqual(serialized, actual);
+            }
+        }
+
         #endregion //AvroUnion tests
     }
 }

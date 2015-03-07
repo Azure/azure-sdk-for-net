@@ -69,7 +69,39 @@ namespace Microsoft.Hadoop.Avro.Schema
         internal override void ToJsonSafe(JsonTextWriter writer, HashSet<NamedSchema> seenSchemas)
         {
             writer.WriteStartArray();
-            this.schemas.ForEach(_ => _.ToJson(writer, seenSchemas));
+
+            // according to avro spec http://avro.apache.org/docs/current/spec.html#Unions
+            // Unions may not contain more than one schema with the same type, except for the named types record, fixed and enum. 
+            // For example, unions containing two array types or two map types are not permitted, but two types with different names are permitted
+            bool containArraySchema = false;
+            bool containMapSchema = false;
+            this.schemas.ForEach(typeSchema =>
+            {
+                // only add ArraySchema at most once based on above Avro spec for union
+                if (typeSchema is ArraySchema)
+                {
+                    if (containArraySchema)
+                    {
+                        return;
+                    }
+
+                    containArraySchema = true;
+                }
+
+                // only add MapSchema at most once based on above Avro spec for union
+                if (typeSchema is MapSchema)
+                {
+                    if (containMapSchema)
+                    {
+                        return;
+                    }
+
+                    containMapSchema = true;
+                }
+
+                typeSchema.ToJson(writer, seenSchemas);
+            });
+            
             writer.WriteEndArray();
         }
 

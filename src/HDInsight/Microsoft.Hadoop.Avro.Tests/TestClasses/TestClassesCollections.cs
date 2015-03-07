@@ -383,4 +383,44 @@ namespace Microsoft.Hadoop.Avro.Tests
             return base.GetHashCode();
         }
     }
+
+    [DataContract]
+    internal class IEnumerableClass<T> : IEquatable<IEnumerableClass<T>>
+    {
+        public static IEnumerableClass<T> Create(IEnumerable<T> enumerable)
+        {
+            return new IEnumerableClass<T> { Property = enumerable };
+        }
+
+        [DataMember]
+        public IEnumerable<T> Property { get; set; }
+
+        public bool Equals(IEnumerableClass<T> other)
+        {
+            if (other == null)
+            {
+                return false;
+            }
+
+            if (this.Property.Count() != other.Property.Count())
+            {
+                return false;
+            }
+
+            return this.Property.Zip(other.Property, (a, b) => new Tuple<T, T>(a, b))
+                .ToList()
+                .TrueForAll(tuple => tuple.Item1.Equals(tuple.Item2));
+        }
+
+        public override bool Equals(object obj)
+        {
+            return this.Equals(obj as IEnumerableClass<T>);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+    }
+
 }
