@@ -49,18 +49,19 @@ namespace Microsoft.Hadoop.Avro.Serializers
             // For example, unions containing two array types or two map types are not permitted, but two types with different names are permitted
             int arraySchemaIndex = -1;
             int mapSchemaIndex = -1;
+            int schemeIndex = 0;
 
             var schemas = new List<IndexedSchema>(this.itemSchemas.Count);
             for (int i = 0; i < this.itemSchemas.Count; i++)
             {
                 var typeSchema = this.itemSchemas[i];
                 // only add ArraySchema at most once based on above Avro spec for union
-                int index = i;
+                int index;
                 if (typeSchema is ArraySchema)
                 {
                     if (arraySchemaIndex == -1)
                     {
-                        arraySchemaIndex = i;
+                        arraySchemaIndex = schemeIndex++;
                     }
 
                     index = arraySchemaIndex;
@@ -70,10 +71,14 @@ namespace Microsoft.Hadoop.Avro.Serializers
                     // only add MapSchema at most once based on above Avro spec for union
                     if (mapSchemaIndex == -1)
                     {
-                        mapSchemaIndex = i;
+                        mapSchemaIndex = schemeIndex++;
                     }
 
                     index = mapSchemaIndex;
+                }
+                else
+                {
+                    index = schemeIndex++; 
                 }
 
                 var indexSchema = new IndexedSchema {Schema = typeSchema, Index = index};
