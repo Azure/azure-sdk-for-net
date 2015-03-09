@@ -8,7 +8,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Contracts.Iaas.Jan2015
     /// Class representing Web(Https) connectivity endpoint
     /// </summary>
     [DataContract(Namespace = Constants.HdInsightManagementNamespace)]
-    public class WebConnectivityEndpoint : ConnectivityEndpoint
+    internal class WebConnectivityEndpoint : ConnectivityEndpoint
     {
         /// <summary>
         /// List of all avaialble connectivity credentials

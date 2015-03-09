@@ -6,7 +6,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Contracts.Iaas.Jan2015
     /// Web endpoint credentials
     /// </summary>
     [DataContract(Namespace = Constants.HdInsightManagementNamespace)]
-    public class WebConnectivityCredential : ConnectivityCredential
+    internal class WebConnectivityCredential : ConnectivityCredential
     {
         /// <summary>
         /// Username 

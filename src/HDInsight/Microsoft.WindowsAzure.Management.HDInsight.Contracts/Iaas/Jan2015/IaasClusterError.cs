@@ -10,7 +10,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Contracts.Iaas.Jan2015
     /// Complext type holding Error information about Stack configurations
     /// </summary>
     [DataContract(Namespace = Constants.HdInsightManagementNamespace)]
-    public class IaasClusterError
+    internal class IaasClusterError
     {
         /// <summary>
         /// A simple code for the failure

@@ -8,7 +8,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Contracts.Iaas.Jan2015
     [DataContract(Namespace = Constants.HdInsightManagementNamespace)]
     [KnownType(typeof(SSHConnectivityEndpoint))]
     [KnownType(typeof(WebConnectivityEndpoint))]
-    public class ConnectivityEndpoint
+    internal class ConnectivityEndpoint
     {
         /// <summary>
         /// Connectivity protocol for the endpoint. Example is Https, SSH, TCP etc

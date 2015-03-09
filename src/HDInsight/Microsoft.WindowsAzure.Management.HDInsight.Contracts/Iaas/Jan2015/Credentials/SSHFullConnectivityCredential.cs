@@ -5,7 +5,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Contracts.Iaas.Jan2015
     /// <summary>
     /// Class representing a SSH credential containing both private and public keys
     /// </summary>
-    public class SSHFullConnectivityCredential : SSHConnectivityCredential
+    internal class SSHFullConnectivityCredential : SSHConnectivityCredential
     {
         /// <summary>
         /// Private key of the SSH credential

@@ -7,7 +7,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Contracts.Iaas.Jan2015
     /// Class representing SSH connectivity endpoint
     /// </summary>
     [DataContract(Namespace = Constants.HdInsightManagementNamespace)]
-    public class SSHConnectivityEndpoint : ConnectivityEndpoint
+    internal class SSHConnectivityEndpoint : ConnectivityEndpoint
     {
         /// <summary>
         /// List of all avaialble connectivity credentials

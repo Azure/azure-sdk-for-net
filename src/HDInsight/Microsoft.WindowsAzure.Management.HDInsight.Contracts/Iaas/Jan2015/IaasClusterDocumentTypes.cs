@@ -9,7 +9,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Contracts.Iaas.Jan2015
     /// <summary>
     /// A convenient helper class listing available document type strings
     /// </summary>
-    public static class IaasClusterDocumentTypes
+    internal static class IaasClusterDocumentTypes
     {
         public const string RemoteAmbariBlueprintDocument = "AmbariBlueprintLink";
         public const string EmbeddedAmbariBlueprintDocument = "AmbariBlueprint";

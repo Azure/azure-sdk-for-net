@@ -8,7 +8,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Contracts.Iaas.Jan2015
     [DataContract(Namespace = Constants.HdInsightManagementNamespace)]
     [KnownType(typeof(SSHConnectivityCredential))]
     [KnownType(typeof(WebConnectivityCredential))]
-    public class ConnectivityCredential
+    internal class ConnectivityCredential
     {
         /// <summary>
         /// Type of connectivity credentials

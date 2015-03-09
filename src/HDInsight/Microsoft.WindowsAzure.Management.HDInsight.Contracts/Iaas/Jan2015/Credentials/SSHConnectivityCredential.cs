@@ -7,7 +7,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Contracts.Iaas.Jan2015
     /// </summary>
     [DataContract(Namespace = Constants.HdInsightManagementNamespace)]
     [KnownType(typeof(SSHFullConnectivityCredential))]
-    public class SSHConnectivityCredential : ConnectivityCredential
+    internal class SSHConnectivityCredential : ConnectivityCredential
     {
         /// <summary>
         /// Public key part for a SSH credential

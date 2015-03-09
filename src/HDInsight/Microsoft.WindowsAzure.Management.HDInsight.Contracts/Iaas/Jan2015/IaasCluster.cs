@@ -11,7 +11,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Contracts.Iaas.Jan2015
     /// Class representing information about a provisioned IaaS deployment in HdInsight
     /// </summary>
     [DataContract(Namespace = Constants.HdInsightManagementNamespace)]
-    public class IaasCluster
+    internal class IaasCluster
     {
         /// <summary>
         /// Azure subscriptionId owning this instance
