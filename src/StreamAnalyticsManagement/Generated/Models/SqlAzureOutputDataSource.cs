@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private SqlAzureOutputDataSourceProperties _properties;
         
         /// <summary>
-        /// Required. Gets or sets the properties of the Sql Azure data source
+        /// Optional. Gets or sets the properties of the Sql Azure data source
         /// as output.
         /// </summary>
         public SqlAzureOutputDataSourceProperties Properties
@@ -47,20 +47,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// </summary>
         public SqlAzureOutputDataSource()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the SqlAzureOutputDataSource class
-        /// with required arguments.
-        /// </summary>
-        public SqlAzureOutputDataSource(SqlAzureOutputDataSourceProperties properties)
-            : this()
-        {
-            if (properties == null)
-            {
-                throw new ArgumentNullException("properties");
-            }
-            this.Properties = properties;
         }
     }
 }

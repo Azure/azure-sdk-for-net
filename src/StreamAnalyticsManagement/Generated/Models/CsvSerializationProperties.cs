@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _encoding;
         
         /// <summary>
-        /// Required. Gets or sets the encoding.
+        /// Optional. Gets or sets the encoding.
         /// </summary>
         public string Encoding
         {
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _fieldDelimiter;
         
         /// <summary>
-        /// Required. Gets or sets the field delimiter.
+        /// Optional. Gets or sets the field delimiter.
         /// </summary>
         public string FieldDelimiter
         {
@@ -56,25 +56,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// </summary>
         public CsvSerializationProperties()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the CsvSerializationProperties class
-        /// with required arguments.
-        /// </summary>
-        public CsvSerializationProperties(string fieldDelimiter, string encoding)
-            : this()
-        {
-            if (fieldDelimiter == null)
-            {
-                throw new ArgumentNullException("fieldDelimiter");
-            }
-            if (encoding == null)
-            {
-                throw new ArgumentNullException("encoding");
-            }
-            this.FieldDelimiter = fieldDelimiter;
-            this.Encoding = encoding;
         }
     }
 }

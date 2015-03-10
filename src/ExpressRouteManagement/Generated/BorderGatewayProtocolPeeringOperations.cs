@@ -188,6 +188,13 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                 XElement createBgpPeeringElement = new XElement(XName.Get("CreateBgpPeering", "http://schemas.microsoft.com/windowsazure"));
                 requestDoc.Add(createBgpPeeringElement);
                 
+                if (parameters.AdvertisedPublicPrefixes != null)
+                {
+                    XElement advertisedPublicPrefixesElement = new XElement(XName.Get("AdvertisedPublicPrefixes", "http://schemas.microsoft.com/windowsazure"));
+                    advertisedPublicPrefixesElement.Value = parameters.AdvertisedPublicPrefixes;
+                    createBgpPeeringElement.Add(advertisedPublicPrefixesElement);
+                }
+                
                 XElement peerAsnElement = new XElement(XName.Get("PeerAsn", "http://schemas.microsoft.com/windowsazure"));
                 peerAsnElement.Value = parameters.PeerAutonomousSystemNumber.ToString();
                 createBgpPeeringElement.Add(peerAsnElement);
@@ -804,6 +811,20 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                             AzureBgpPeering bgpPeeringInstance = new AzureBgpPeering();
                             result.BgpPeering = bgpPeeringInstance;
                             
+                            XElement advertisedPublicPrefixesElement = bgpPeeringElement.Element(XName.Get("AdvertisedPublicPrefixes", "http://schemas.microsoft.com/windowsazure"));
+                            if (advertisedPublicPrefixesElement != null)
+                            {
+                                string advertisedPublicPrefixesInstance = advertisedPublicPrefixesElement.Value;
+                                bgpPeeringInstance.AdvertisedPublicPrefixes = advertisedPublicPrefixesInstance;
+                            }
+                            
+                            XElement advertisedPublicPrefixesStateElement = bgpPeeringElement.Element(XName.Get("AdvertisedPublicPrefixesState", "http://schemas.microsoft.com/windowsazure"));
+                            if (advertisedPublicPrefixesStateElement != null)
+                            {
+                                string advertisedPublicPrefixesStateInstance = advertisedPublicPrefixesStateElement.Value;
+                                bgpPeeringInstance.AdvertisedPublicPrefixesState = advertisedPublicPrefixesStateInstance;
+                            }
+                            
                             XElement azureAsnElement = bgpPeeringElement.Element(XName.Get("AzureAsn", "http://schemas.microsoft.com/windowsazure"));
                             if (azureAsnElement != null)
                             {
@@ -892,60 +913,34 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         }
         
         /// <summary>
-        /// The New Border Gateway Protocol Peering operation creates a new
-        /// border gateway protocol peering associated with the dedicated
-        /// circuit specified by the service key provided.
+        /// The Get Express Route operation status gets information on the
+        /// status of Express Route operations in Windows Azure.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154112.aspx
+        /// for more information)
         /// </summary>
-        /// <param name='serviceKey'>
-        /// Required. The service key representing the relationship between
-        /// Azure and the customer.
-        /// </param>
-        /// <param name='accessType'>
-        /// Required. Whether the peering is private or public.
-        /// </param>
-        /// <param name='parameters'>
-        /// Required. Parameters supplied to the New Bgp Peering operation.
+        /// <param name='operationId'>
+        /// Required. The id  of the operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Get Border Gateway Protocol Peering Operation Response.
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
         /// </returns>
-        public async Task<BorderGatewayProtocolPeeringGetResponse> NewAsync(string serviceKey, BgpPeeringAccessType accessType, BorderGatewayProtocolPeeringNewParameters parameters, CancellationToken cancellationToken)
+        public async Task<ExpressRouteOperationStatusResponse> GetOperationStatusAsync(string operationId, CancellationToken cancellationToken)
         {
             // Validate
-            if (serviceKey == null)
+            if (operationId == null)
             {
-                throw new ArgumentNullException("serviceKey");
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException("parameters");
-            }
-            if (parameters.PrimaryPeerSubnet == null)
-            {
-                throw new ArgumentNullException("parameters.PrimaryPeerSubnet");
-            }
-            if (parameters.PrimaryPeerSubnet.Length > 18)
-            {
-                throw new ArgumentOutOfRangeException("parameters.PrimaryPeerSubnet");
-            }
-            if (parameters.SecondaryPeerSubnet == null)
-            {
-                throw new ArgumentNullException("parameters.SecondaryPeerSubnet");
-            }
-            if (parameters.SecondaryPeerSubnet.Length > 18)
-            {
-                throw new ArgumentOutOfRangeException("parameters.SecondaryPeerSubnet");
-            }
-            if (parameters.SharedKey != null && parameters.SharedKey.Length < 6)
-            {
-                throw new ArgumentOutOfRangeException("parameters.SharedKey");
-            }
-            if (parameters.SharedKey != null && parameters.SharedKey.Length > 24)
-            {
-                throw new ArgumentOutOfRangeException("parameters.SharedKey");
+                throw new ArgumentNullException("operationId");
             }
             
             // Tracing
@@ -955,10 +950,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             {
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("serviceKey", serviceKey);
-                tracingParameters.Add("accessType", accessType);
-                tracingParameters.Add("parameters", parameters);
-                TracingAdapter.Enter(invocationId, this, "NewAsync", tracingParameters);
+                tracingParameters.Add("operationId", operationId);
+                TracingAdapter.Enter(invocationId, this, "GetOperationStatusAsync", tracingParameters);
             }
             
             // Construct URL
@@ -968,16 +961,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             {
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
-            url = url + "/services/networking/dedicatedcircuits/";
-            url = url + Uri.EscapeDataString(serviceKey);
-            url = url + "/bgppeerings/";
-            url = url + Uri.EscapeDataString(ExpressRouteManagementClient.BgpPeeringAccessTypeToString(accessType));
-            List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=1.0");
-            if (queryParameters.Count > 0)
-            {
-                url = url + "?" + string.Join("&", queryParameters);
-            }
+            url = url + "/services/networking/operation/";
+            url = url + Uri.EscapeDataString(operationId);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -996,10 +981,11 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             try
             {
                 httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Post;
+                httpRequest.Method = HttpMethod.Get;
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2011-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1020,7 +1006,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode >= HttpStatusCode.BadRequest)
+                    if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -1032,10 +1018,74 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     }
                     
                     // Create Result
-                    BorderGatewayProtocolPeeringGetResponse result = null;
+                    ExpressRouteOperationStatusResponse result = null;
                     // Deserialize Response
-                    result = new BorderGatewayProtocolPeeringGetResponse();
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new ExpressRouteOperationStatusResponse();
+                        XDocument responseDoc = XDocument.Parse(responseContent);
+                        
+                        XElement gatewayOperationElement = responseDoc.Element(XName.Get("GatewayOperation", "http://schemas.microsoft.com/windowsazure"));
+                        if (gatewayOperationElement != null)
+                        {
+                            XElement idElement = gatewayOperationElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
+                            if (idElement != null)
+                            {
+                                string idInstance = idElement.Value;
+                                result.Id = idInstance;
+                            }
+                            
+                            XElement statusElement = gatewayOperationElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
+                            if (statusElement != null)
+                            {
+                                ExpressRouteOperationStatus statusInstance = ((ExpressRouteOperationStatus)Enum.Parse(typeof(ExpressRouteOperationStatus), statusElement.Value, true));
+                                result.Status = statusInstance;
+                            }
+                            
+                            XElement httpStatusCodeElement = gatewayOperationElement.Element(XName.Get("HttpStatusCode", "http://schemas.microsoft.com/windowsazure"));
+                            if (httpStatusCodeElement != null)
+                            {
+                                HttpStatusCode httpStatusCodeInstance = ((HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), httpStatusCodeElement.Value, true));
+                                result.HttpStatusCode = httpStatusCodeInstance;
+                            }
+                            
+                            XElement dataElement = gatewayOperationElement.Element(XName.Get("Data", "http://schemas.microsoft.com/windowsazure"));
+                            if (dataElement != null)
+                            {
+                                string dataInstance = dataElement.Value;
+                                result.Data = dataInstance;
+                            }
+                            
+                            XElement errorElement = gatewayOperationElement.Element(XName.Get("Error", "http://schemas.microsoft.com/windowsazure"));
+                            if (errorElement != null)
+                            {
+                                ExpressRouteOperationStatusResponse.ErrorDetails errorInstance = new ExpressRouteOperationStatusResponse.ErrorDetails();
+                                result.Error = errorInstance;
+                                
+                                XElement codeElement = errorElement.Element(XName.Get("Code", "http://schemas.microsoft.com/windowsazure"));
+                                if (codeElement != null)
+                                {
+                                    string codeInstance = codeElement.Value;
+                                    errorInstance.Code = codeInstance;
+                                }
+                                
+                                XElement messageElement = errorElement.Element(XName.Get("Message", "http://schemas.microsoft.com/windowsazure"));
+                                if (messageElement != null)
+                                {
+                                    string messageInstance = messageElement.Value;
+                                    errorInstance.Message = messageInstance;
+                                }
+                            }
+                        }
+                        
+                    }
                     result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
                     
                     if (shouldTrace)
                     {
@@ -1058,6 +1108,105 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     httpRequest.Dispose();
                 }
             }
+        }
+        
+        /// <summary>
+        /// The New Border Gateway Protocol Peering operation creates a new
+        /// border gateway protocol peering associated with the dedicated
+        /// circuit specified by the service key provided.
+        /// </summary>
+        /// <param name='serviceKey'>
+        /// Required. The service key representing the relationship between
+        /// Azure and the customer.
+        /// </param>
+        /// <param name='accessType'>
+        /// Required. Whether the peering is private or public.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the New Bgp Peering operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public async Task<ExpressRouteOperationStatusResponse> NewAsync(string serviceKey, BgpPeeringAccessType accessType, BorderGatewayProtocolPeeringNewParameters parameters, CancellationToken cancellationToken)
+        {
+            ExpressRouteManagementClient client = this.Client;
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("serviceKey", serviceKey);
+                tracingParameters.Add("accessType", accessType);
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "NewAsync", tracingParameters);
+            }
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            ExpressRouteOperationResponse response = await client.BorderGatewayProtocolPeerings.BeginNewAsync(serviceKey, accessType, parameters, cancellationToken).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested();
+            ExpressRouteOperationStatusResponse result = await client.BorderGatewayProtocolPeerings.GetOperationStatusAsync(response.OperationId, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 30;
+            if (client.LongRunningOperationInitialTimeout >= 0)
+            {
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
+            }
+            while ((result.Status != ExpressRouteOperationStatus.InProgress) == false)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.BorderGatewayProtocolPeerings.GetOperationStatusAsync(response.OperationId, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 30;
+                if (client.LongRunningOperationRetryTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
+                }
+            }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            if (result.Status != ExpressRouteOperationStatus.Successful)
+            {
+                if (result.Error != null)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.Error = new CloudError();
+                    ex.Error.Code = result.Error.Code;
+                    ex.Error.Message = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                else
+                {
+                    CloudException ex = new CloudException("");
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+            }
+            
+            return result;
         }
         
         /// <summary>
@@ -1087,13 +1236,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// </returns>
         public async Task<ExpressRouteOperationStatusResponse> RemoveAsync(string serviceKey, BgpPeeringAccessType accessType, CancellationToken cancellationToken)
         {
-            // Validate
-            if (serviceKey == null)
-            {
-                throw new ArgumentNullException("serviceKey");
-            }
-            
-            // Tracing
+            ExpressRouteManagementClient client = this.Client;
             bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
@@ -1105,103 +1248,59 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                 TracingAdapter.Enter(invocationId, this, "RemoveAsync", tracingParameters);
             }
             
-            // Construct URL
-            string url = "";
-            url = url + "/";
-            if (this.Client.Credentials.SubscriptionId != null)
+            cancellationToken.ThrowIfCancellationRequested();
+            ExpressRouteOperationResponse response = await client.BorderGatewayProtocolPeerings.BeginRemoveAsync(serviceKey, accessType, cancellationToken).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested();
+            ExpressRouteOperationStatusResponse result = await client.BorderGatewayProtocolPeerings.GetOperationStatusAsync(response.OperationId, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 30;
+            if (client.LongRunningOperationInitialTimeout >= 0)
             {
-                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            url = url + "/services/networking/dedicatedcircuits/";
-            url = url + Uri.EscapeDataString(serviceKey);
-            url = url + "/bgppeerings/";
-            url = url + Uri.EscapeDataString(ExpressRouteManagementClient.BgpPeeringAccessTypeToString(accessType));
-            List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=1.0");
-            if (queryParameters.Count > 0)
+            while ((result.Status != ExpressRouteOperationStatus.InProgress) == false)
             {
-                url = url + "?" + string.Join("&", queryParameters);
-            }
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            // Trim '/' character from the end of baseUrl and beginning of url.
-            if (baseUrl[baseUrl.Length - 1] == '/')
-            {
-                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
-            }
-            if (url[0] == '/')
-            {
-                url = url.Substring(1);
-            }
-            url = baseUrl + "/" + url;
-            url = url.Replace(" ", "%20");
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Delete;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                
-                // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.BorderGatewayProtocolPeerings.GetOperationStatusAsync(response.OperationId, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 30;
+                if (client.LongRunningOperationRetryTimeout >= 0)
                 {
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode >= HttpStatusCode.BadRequest)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            TracingAdapter.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    ExpressRouteOperationStatusResponse result = null;
-                    // Deserialize Response
-                    result = new ExpressRouteOperationStatusResponse();
-                    result.StatusCode = statusCode;
-                    
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
                 }
             }
-            finally
+            
+            if (shouldTrace)
             {
-                if (httpRequest != null)
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            if (result.Status != ExpressRouteOperationStatus.Successful)
+            {
+                if (result.Error != null)
                 {
-                    httpRequest.Dispose();
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.Error = new CloudError();
+                    ex.Error.Code = result.Error.Code;
+                    ex.Error.Message = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                else
+                {
+                    CloudException ex = new CloudException("");
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
                 }
             }
+            
+            return result;
         }
         
         /// <summary>
@@ -1224,37 +1323,19 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Get Border Gateway Protocol Peering Operation Response.
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
         /// </returns>
-        public async Task<BorderGatewayProtocolPeeringGetResponse> UpdateAsync(string serviceKey, BgpPeeringAccessType accessType, BorderGatewayProtocolPeeringUpdateParameters parameters, CancellationToken cancellationToken)
+        public async Task<ExpressRouteOperationStatusResponse> UpdateAsync(string serviceKey, BgpPeeringAccessType accessType, BorderGatewayProtocolPeeringUpdateParameters parameters, CancellationToken cancellationToken)
         {
-            // Validate
-            if (serviceKey == null)
-            {
-                throw new ArgumentNullException("serviceKey");
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException("parameters");
-            }
-            if (parameters.PrimaryPeerSubnet != null && parameters.PrimaryPeerSubnet.Length > 18)
-            {
-                throw new ArgumentOutOfRangeException("parameters.PrimaryPeerSubnet");
-            }
-            if (parameters.SecondaryPeerSubnet != null && parameters.SecondaryPeerSubnet.Length > 18)
-            {
-                throw new ArgumentOutOfRangeException("parameters.SecondaryPeerSubnet");
-            }
-            if (parameters.SharedKey != null && parameters.SharedKey.Length < 6)
-            {
-                throw new ArgumentOutOfRangeException("parameters.SharedKey");
-            }
-            if (parameters.SharedKey != null && parameters.SharedKey.Length > 24)
-            {
-                throw new ArgumentOutOfRangeException("parameters.SharedKey");
-            }
-            
-            // Tracing
+            ExpressRouteManagementClient client = this.Client;
             bool shouldTrace = TracingAdapter.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
@@ -1267,102 +1348,59 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                 TracingAdapter.Enter(invocationId, this, "UpdateAsync", tracingParameters);
             }
             
-            // Construct URL
-            string url = "";
-            url = url + "/";
-            if (this.Client.Credentials.SubscriptionId != null)
+            cancellationToken.ThrowIfCancellationRequested();
+            ExpressRouteOperationResponse response = await client.BorderGatewayProtocolPeerings.BeginUpdateAsync(serviceKey, accessType, parameters, cancellationToken).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested();
+            ExpressRouteOperationStatusResponse result = await client.BorderGatewayProtocolPeerings.GetOperationStatusAsync(response.OperationId, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 30;
+            if (client.LongRunningOperationInitialTimeout >= 0)
             {
-                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
             }
-            url = url + "/services/networking/dedicatedcircuits/";
-            url = url + Uri.EscapeDataString(serviceKey);
-            url = url + "/bgppeering";
-            List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=1.0");
-            if (queryParameters.Count > 0)
+            while ((result.Status != ExpressRouteOperationStatus.InProgress) == false)
             {
-                url = url + "?" + string.Join("&", queryParameters);
-            }
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            // Trim '/' character from the end of baseUrl and beginning of url.
-            if (baseUrl[baseUrl.Length - 1] == '/')
-            {
-                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
-            }
-            if (url[0] == '/')
-            {
-                url = url.Substring(1);
-            }
-            url = baseUrl + "/" + url;
-            url = url.Replace(" ", "%20");
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Put;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                
-                // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.BorderGatewayProtocolPeerings.GetOperationStatusAsync(response.OperationId, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 30;
+                if (client.LongRunningOperationRetryTimeout >= 0)
                 {
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode >= HttpStatusCode.BadRequest)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            TracingAdapter.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    BorderGatewayProtocolPeeringGetResponse result = null;
-                    // Deserialize Response
-                    result = new BorderGatewayProtocolPeeringGetResponse();
-                    result.StatusCode = statusCode;
-                    
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
                 }
             }
-            finally
+            
+            if (shouldTrace)
             {
-                if (httpRequest != null)
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            if (result.Status != ExpressRouteOperationStatus.Successful)
+            {
+                if (result.Error != null)
                 {
-                    httpRequest.Dispose();
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.Error = new CloudError();
+                    ex.Error.Code = result.Error.Code;
+                    ex.Error.Message = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                else
+                {
+                    CloudException ex = new CloudException("");
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
                 }
             }
+            
+            return result;
         }
     }
 }

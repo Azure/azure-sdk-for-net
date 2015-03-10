@@ -22,7 +22,7 @@
 using Hyak.Common;
 using System.Collections.Generic;
 
-namespace Microsoft.Azure.Internal.Subscriptions.Csm.Models
+namespace Microsoft.Azure.Subscriptions.Csm.Models
 {
     /// <summary>
     /// Subscription list operation response.

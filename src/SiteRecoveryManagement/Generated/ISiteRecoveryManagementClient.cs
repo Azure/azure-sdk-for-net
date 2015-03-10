@@ -89,6 +89,23 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
         }
         
         /// <summary>
+        /// Definition of network mapping operations for the Site Recovery
+        /// extension.
+        /// </summary>
+        INetworkMappingOperations NetworkMappings
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Definition of network operations for the Site Recovery extension.
+        /// </summary>
+        INetworkOperations Networks
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Definition of Protection Container operations for the Site Recovery
         /// extension.
         /// </summary>
@@ -107,6 +124,15 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
         }
         
         /// <summary>
+        /// Definition of Protection Profile operations for the Site Recovery
+        /// extension.
+        /// </summary>
+        IProtectionProfileOperations ProtectionProfile
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Definition of recoveryplan operations for the Site Recovery
         /// extension.
         /// </summary>
@@ -119,6 +145,40 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
         /// Definition of server operations for the Site Recovery extension.
         /// </summary>
         IServerOperations Servers
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Definition of Site operations for the Site Recovery extension.
+        /// </summary>
+        ISiteOperations Sites
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Definition of storage mapping operations for the Site Recovery
+        /// extension.
+        /// </summary>
+        IStorageMappingOperations StorageMappings
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Definition of storage operations for the Site Recovery extension.
+        /// </summary>
+        IStorageOperations Storages
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Definition of vault extended info operations for the Site Recovery
+        /// extension.
+        /// </summary>
+        IVaultExtendedInfoOperations VaultExtendedInfo
         {
             get; 
         }

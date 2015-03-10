@@ -25,6 +25,7 @@ using System.Net.Http;
 using Hyak.Common;
 using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.SiteRecovery;
+using Microsoft.WindowsAzure.Management.SiteRecovery.Models;
 
 namespace Microsoft.WindowsAzure.Management.SiteRecovery
 {
@@ -110,6 +111,27 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
             get { return this._jobs; }
         }
         
+        private INetworkMappingOperations _networkMappings;
+        
+        /// <summary>
+        /// Definition of network mapping operations for the Site Recovery
+        /// extension.
+        /// </summary>
+        public virtual INetworkMappingOperations NetworkMappings
+        {
+            get { return this._networkMappings; }
+        }
+        
+        private INetworkOperations _networks;
+        
+        /// <summary>
+        /// Definition of network operations for the Site Recovery extension.
+        /// </summary>
+        public virtual INetworkOperations Networks
+        {
+            get { return this._networks; }
+        }
+        
         private IProtectionContainerOperations _protectionContainer;
         
         /// <summary>
@@ -132,6 +154,17 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
             get { return this._protectionEntity; }
         }
         
+        private IProtectionProfileOperations _protectionProfile;
+        
+        /// <summary>
+        /// Definition of Protection Profile operations for the Site Recovery
+        /// extension.
+        /// </summary>
+        public virtual IProtectionProfileOperations ProtectionProfile
+        {
+            get { return this._protectionProfile; }
+        }
+        
         private IRecoveryPlanOperations _recoveryPlan;
         
         /// <summary>
@@ -151,6 +184,48 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
         public virtual IServerOperations Servers
         {
             get { return this._servers; }
+        }
+        
+        private ISiteOperations _sites;
+        
+        /// <summary>
+        /// Definition of Site operations for the Site Recovery extension.
+        /// </summary>
+        public virtual ISiteOperations Sites
+        {
+            get { return this._sites; }
+        }
+        
+        private IStorageMappingOperations _storageMappings;
+        
+        /// <summary>
+        /// Definition of storage mapping operations for the Site Recovery
+        /// extension.
+        /// </summary>
+        public virtual IStorageMappingOperations StorageMappings
+        {
+            get { return this._storageMappings; }
+        }
+        
+        private IStorageOperations _storages;
+        
+        /// <summary>
+        /// Definition of storage operations for the Site Recovery extension.
+        /// </summary>
+        public virtual IStorageOperations Storages
+        {
+            get { return this._storages; }
+        }
+        
+        private IVaultExtendedInfoOperations _vaultExtendedInfo;
+        
+        /// <summary>
+        /// Definition of vault extended info operations for the Site Recovery
+        /// extension.
+        /// </summary>
+        public virtual IVaultExtendedInfoOperations VaultExtendedInfo
+        {
+            get { return this._vaultExtendedInfo; }
         }
         
         private IVirtualMachineGroupOperations _vmGroup;
@@ -183,10 +258,17 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
             : base()
         {
             this._jobs = new JobOperations(this);
+            this._networkMappings = new NetworkMappingOperations(this);
+            this._networks = new NetworkOperations(this);
             this._protectionContainer = new ProtectionContainerOperations(this);
             this._protectionEntity = new ProtectionEntityOperations(this);
+            this._protectionProfile = new ProtectionProfileOperations(this);
             this._recoveryPlan = new RecoveryPlanOperations(this);
             this._servers = new ServerOperations(this);
+            this._sites = new SiteOperations(this);
+            this._storageMappings = new StorageMappingOperations(this);
+            this._storages = new StorageOperations(this);
+            this._vaultExtendedInfo = new VaultExtendedInfoOperations(this);
             this._vmGroup = new VirtualMachineGroupOperations(this);
             this._vm = new VirtualMachineOperations(this);
             this._apiVersion = "2013-03-01";
@@ -290,10 +372,17 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
             : base(httpClient)
         {
             this._jobs = new JobOperations(this);
+            this._networkMappings = new NetworkMappingOperations(this);
+            this._networks = new NetworkOperations(this);
             this._protectionContainer = new ProtectionContainerOperations(this);
             this._protectionEntity = new ProtectionEntityOperations(this);
+            this._protectionProfile = new ProtectionProfileOperations(this);
             this._recoveryPlan = new RecoveryPlanOperations(this);
             this._servers = new ServerOperations(this);
+            this._sites = new SiteOperations(this);
+            this._storageMappings = new StorageMappingOperations(this);
+            this._storages = new StorageOperations(this);
+            this._vaultExtendedInfo = new VaultExtendedInfoOperations(this);
             this._vmGroup = new VirtualMachineGroupOperations(this);
             this._vm = new VirtualMachineOperations(this);
             this._apiVersion = "2013-03-01";
@@ -417,6 +506,50 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                 
                 clonedClient.Credentials.InitializeServiceClient(clonedClient);
             }
+        }
+        
+        /// <summary>
+        /// Parse enum values for type LocalNetworkConnectionType.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to parse.
+        /// </param>
+        /// <returns>
+        /// The enum value.
+        /// </returns>
+        internal static LocalNetworkConnectionType ParseLocalNetworkConnectionType(string value)
+        {
+            if ("IPsec".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return LocalNetworkConnectionType.IPSecurity;
+            }
+            if ("Dedicated".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return LocalNetworkConnectionType.Dedicated;
+            }
+            throw new ArgumentOutOfRangeException("value");
+        }
+        
+        /// <summary>
+        /// Convert an enum of type LocalNetworkConnectionType to a string.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to convert to a string.
+        /// </param>
+        /// <returns>
+        /// The enum value as a string.
+        /// </returns>
+        internal static string LocalNetworkConnectionTypeToString(LocalNetworkConnectionType value)
+        {
+            if (value == LocalNetworkConnectionType.IPSecurity)
+            {
+                return "IPsec";
+            }
+            if (value == LocalNetworkConnectionType.Dedicated)
+            {
+                return "Dedicated";
+            }
+            throw new ArgumentOutOfRangeException("value");
         }
     }
 }

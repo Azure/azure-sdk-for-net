@@ -38,5 +38,10 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         /// The bgp peering is public.
         /// </summary>
         Public = 1,
+        
+        /// <summary>
+        /// The bgp peering is of type Microsoft
+        /// </summary>
+        Microsoft = 2,
     }
 }

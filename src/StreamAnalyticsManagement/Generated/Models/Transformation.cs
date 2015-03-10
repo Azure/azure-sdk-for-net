@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private TransformationProperties _properties;
         
         /// <summary>
-        /// Required. Gets or sets the properties of the transformation.
+        /// Optional. Gets or sets the properties of the transformation.
         /// </summary>
         public TransformationProperties Properties
         {
@@ -63,19 +63,14 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// Initializes a new instance of the Transformation class with
         /// required arguments.
         /// </summary>
-        public Transformation(string name, TransformationProperties properties)
+        public Transformation(string name)
             : this()
         {
             if (name == null)
             {
                 throw new ArgumentNullException("name");
             }
-            if (properties == null)
-            {
-                throw new ArgumentNullException("properties");
-            }
             this.Name = name;
-            this.Properties = properties;
         }
     }
 }

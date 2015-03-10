@@ -29,6 +29,18 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
     /// </summary>
     public partial class BorderGatewayProtocolPeeringNewParameters
     {
+        private string _advertisedPublicPrefixes;
+        
+        /// <summary>
+        /// Optional. Specifies the public prefixes that will be advertised by
+        /// the customer over this BGP Peering
+        /// </summary>
+        public string AdvertisedPublicPrefixes
+        {
+            get { return this._advertisedPublicPrefixes; }
+            set { this._advertisedPublicPrefixes = value; }
+        }
+        
         private uint _peerAutonomousSystemNumber;
         
         /// <summary>

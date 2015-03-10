@@ -19,20 +19,20 @@
 // Changes to this file may cause incorrect behavior and will be lost if the
 // code is regenerated.
 
-using Microsoft.Azure.Internal.Management.Csm.Models;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure.Management.Csm.Models;
 
-namespace Microsoft.Azure.Internal.Management.Csm
+namespace Microsoft.Azure.Management.Csm
 {
-    internal static partial class ProviderOperationsExtensions
+    public static partial class ProviderOperationsExtensions
     {
         /// <summary>
         /// Gets a resource provider.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Internal.Management.Csm.IProviderOperations.
+        /// Microsoft.Azure.Management.Csm.IProviderOperations.
         /// </param>
         /// <param name='resourceProviderNamespace'>
         /// Required. Namespace of the resource provider.
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Internal.Management.Csm
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Internal.Management.Csm.IProviderOperations.
+        /// Microsoft.Azure.Management.Csm.IProviderOperations.
         /// </param>
         /// <param name='resourceProviderNamespace'>
         /// Required. Namespace of the resource provider.
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Internal.Management.Csm
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Internal.Management.Csm.IProviderOperations.
+        /// Microsoft.Azure.Management.Csm.IProviderOperations.
         /// </param>
         /// <param name='parameters'>
         /// Optional. Query parameters. If null is passed returns all
@@ -95,7 +95,7 @@ namespace Microsoft.Azure.Internal.Management.Csm
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Internal.Management.Csm.IProviderOperations.
+        /// Microsoft.Azure.Management.Csm.IProviderOperations.
         /// </param>
         /// <param name='parameters'>
         /// Optional. Query parameters. If null is passed returns all
@@ -114,7 +114,7 @@ namespace Microsoft.Azure.Internal.Management.Csm
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Internal.Management.Csm.IProviderOperations.
+        /// Microsoft.Azure.Management.Csm.IProviderOperations.
         /// </param>
         /// <param name='nextLink'>
         /// Required. NextLink from the previous successful call to List
@@ -137,7 +137,7 @@ namespace Microsoft.Azure.Internal.Management.Csm
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Internal.Management.Csm.IProviderOperations.
+        /// Microsoft.Azure.Management.Csm.IProviderOperations.
         /// </param>
         /// <param name='nextLink'>
         /// Required. NextLink from the previous successful call to List
@@ -156,7 +156,7 @@ namespace Microsoft.Azure.Internal.Management.Csm
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Internal.Management.Csm.IProviderOperations.
+        /// Microsoft.Azure.Management.Csm.IProviderOperations.
         /// </param>
         /// <param name='resourceProviderNamespace'>
         /// Required. Namespace of the resource provider.
@@ -179,7 +179,7 @@ namespace Microsoft.Azure.Internal.Management.Csm
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Internal.Management.Csm.IProviderOperations.
+        /// Microsoft.Azure.Management.Csm.IProviderOperations.
         /// </param>
         /// <param name='resourceProviderNamespace'>
         /// Required. Namespace of the resource provider.
@@ -198,7 +198,7 @@ namespace Microsoft.Azure.Internal.Management.Csm
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Internal.Management.Csm.IProviderOperations.
+        /// Microsoft.Azure.Management.Csm.IProviderOperations.
         /// </param>
         /// <param name='resourceProviderNamespace'>
         /// Required. Namespace of the resource provider.
@@ -221,7 +221,7 @@ namespace Microsoft.Azure.Internal.Management.Csm
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Internal.Management.Csm.IProviderOperations.
+        /// Microsoft.Azure.Management.Csm.IProviderOperations.
         /// </param>
         /// <param name='resourceProviderNamespace'>
         /// Required. Namespace of the resource provider.

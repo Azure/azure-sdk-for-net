@@ -1,5 +1,7 @@
 // 
+
 // Copyright (c) Microsoft and contributors.  All rights reserved.
+
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -77,6 +79,16 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
+        /// Represents all the operations to manage Azure SQL Database and
+        /// Database Server Audit policy.  Contains operations to: Create,
+        /// Retrieve and Update audit policy.
+        /// </summary>
+        IAuditingPolicyOperations AuditingPolicy
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Represents all the operations for operating on Azure SQL Databases.
         /// Contains operations to: Create, Retrieve, Update, and Delete
         /// databases, and also includes the ability to get the event logs for
@@ -109,6 +121,16 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
+        /// Represents all the operations for managing Azure SQL Database
+        /// secure connection.  Contains operations to: Create, Retrieve and
+        /// Update secure connection policy .
+        /// </summary>
+        ISecureConnectionPolicyOperations SecureConnection
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Represents all the operations for operating on Azure SQL Database
         /// security policy.  Contains operations to: Retrieve and Update
         /// security policy
@@ -124,6 +146,16 @@ namespace Microsoft.Azure.Management.Sql
         /// Delete servers.
         /// </summary>
         IServerOperations Servers
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Represents all the operations for operating on Azure SQL Database
+        /// Service Objectives.   Contains operations to: Retrieve service
+        /// objectives.
+        /// </summary>
+        IServiceObjectiveOperations ServiceObjectives
         {
             get; 
         }

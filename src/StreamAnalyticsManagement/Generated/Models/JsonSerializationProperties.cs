@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _encoding;
         
         /// <summary>
-        /// Required. Gets or sets the encoding.
+        /// Optional. Gets or sets the encoding.
         /// </summary>
         public string Encoding
         {
@@ -45,20 +45,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         /// </summary>
         public JsonSerializationProperties()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the JsonSerializationProperties class
-        /// with required arguments.
-        /// </summary>
-        public JsonSerializationProperties(string encoding)
-            : this()
-        {
-            if (encoding == null)
-            {
-                throw new ArgumentNullException("encoding");
-            }
-            this.Encoding = encoding;
         }
     }
 }

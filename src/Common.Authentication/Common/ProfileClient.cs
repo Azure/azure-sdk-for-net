@@ -16,8 +16,8 @@ using Hyak.Common;
 using Microsoft.Azure.Common.Authentication.Factories;
 using Microsoft.Azure.Common.Authentication.Models;
 using Microsoft.Azure.Common.Authentication.Properties;
-using Microsoft.Azure.Internal.Subscriptions.Csm;
-using Microsoft.Azure.Internal.Subscriptions.Rdfe;
+using Microsoft.Azure.Subscriptions.Csm;
+using Microsoft.Azure.Subscriptions.Rdfe;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -25,8 +25,8 @@ using System.IO;
 using System.Linq;
 using System.Security;
 using System.Security.Cryptography.X509Certificates;
-using CSMSubscriptionClient = Microsoft.Azure.Internal.Subscriptions.Csm.SubscriptionClient;
-using RDFESubscriptionClient = Microsoft.Azure.Internal.Subscriptions.Rdfe.SubscriptionClient;
+using CSMSubscriptionClient = Microsoft.Azure.Subscriptions.Csm.SubscriptionClient;
+using RDFESubscriptionClient = Microsoft.Azure.Subscriptions.Rdfe.SubscriptionClient;
 
 namespace Microsoft.Azure.Common.Authentication
 {
@@ -663,7 +663,7 @@ namespace Microsoft.Azure.Common.Authentication
             Profile.Subscriptions.Clear();
             Profile.Save();
 
-            ProtectedFileTokenCache.Instance.Clear();
+            AzureSession.TokenCache.Clear();
         }
 
         public void ClearDefaultSubscription()

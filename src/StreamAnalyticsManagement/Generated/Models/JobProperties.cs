@@ -54,13 +54,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
             set { this._etag = value; }
         }
         
-        private int _eventsOutOfOrderMaxDelayInSeconds;
+        private int? _eventsOutOfOrderMaxDelayInSeconds;
         
         /// <summary>
-        /// Required. Gets or sets the max delay time of the out of order
+        /// Optional. Gets or sets the max delay time of the out of order
         /// policy of the stream analytics job. It is in Milliseconds
         /// </summary>
-        public int EventsOutOfOrderMaxDelayInSeconds
+        public int? EventsOutOfOrderMaxDelayInSeconds
         {
             get { return this._eventsOutOfOrderMaxDelayInSeconds; }
             set { this._eventsOutOfOrderMaxDelayInSeconds = value; }
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _eventsOutOfOrderPolicy;
         
         /// <summary>
-        /// Required. Gets or sets the out of order policy of the stream
+        /// Optional. Gets or sets the out of order policy of the stream
         /// analytics job.
         /// </summary>
         public string EventsOutOfOrderPolicy
@@ -111,6 +111,18 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
             set { this._jobState = value; }
         }
         
+        private System.DateTime? _lastOutputEventTime;
+        
+        /// <summary>
+        /// Optional. Gets the last output event time of the stream analytics
+        /// job.
+        /// </summary>
+        public System.DateTime? LastOutputEventTime
+        {
+            get { return this._lastOutputEventTime; }
+            set { this._lastOutputEventTime = value; }
+        }
+        
         private IList<Output> _outputs;
         
         /// <summary>
@@ -125,7 +137,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private string _outputStartMode;
         
         /// <summary>
-        /// Required. Gets or sets the output start mode of the stream
+        /// Optional. Gets or sets the output start mode of the stream
         /// analytics job.
         /// </summary>
         public string OutputStartMode
@@ -160,7 +172,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         private Sku _sku;
         
         /// <summary>
-        /// Required. Gets or sets the Sku of the stream analytics job.
+        /// Optional. Gets or sets the Sku of the stream analytics job.
         /// </summary>
         public Sku Sku
         {
