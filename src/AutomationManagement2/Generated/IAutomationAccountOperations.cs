@@ -75,6 +75,57 @@ namespace Microsoft.Azure.Management.Automation
         Task<AzureOperationResponse> DeleteAsync(string resourceGroupName, string automationAccountName, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Retrieve the account by account name.  (see
+        /// http://aka.ms/azureautomationsdk/automationaccountoperations for
+        /// more information)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group
+        /// </param>
+        /// <param name='automationAccount'>
+        /// The automation account name.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response model for the get account operation.
+        /// </returns>
+        Task<AutomationAccountGetResponse> GetAsync(string resourceGroupName, string automationAccount, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Retrieve a list of accounts.  (see
+        /// http://aka.ms/azureautomationsdk/automationaccountoperations for
+        /// more information)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response model for the list account operation.
+        /// </returns>
+        Task<AutomationAccountListResponse> ListAsync(string resourceGroupName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Retrieve next list of accounts.  (see
+        /// http://aka.ms/azureautomationsdk/automationaccountoperations for
+        /// more information)
+        /// </summary>
+        /// <param name='nextLink'>
+        /// The link to retrieve next set of items.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response model for the list account operation.
+        /// </returns>
+        Task<AutomationAccountListResponse> ListNextAsync(string nextLink, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Create an automation account.  (see
         /// http://aka.ms/azureautomationsdk/automationaccountoperations for
         /// more information)

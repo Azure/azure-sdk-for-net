@@ -136,6 +136,144 @@ namespace Microsoft.Azure.Management.Automation
         }
         
         /// <summary>
+        /// Retrieve the account by account name.  (see
+        /// http://aka.ms/azureautomationsdk/automationaccountoperations for
+        /// more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Automation.IAutomationAccountOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <param name='automationAccount'>
+        /// Required. The automation account name.
+        /// </param>
+        /// <returns>
+        /// The response model for the get account operation.
+        /// </returns>
+        public static AutomationAccountGetResponse Get(this IAutomationAccountOperations operations, string resourceGroupName, string automationAccount)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IAutomationAccountOperations)s).GetAsync(resourceGroupName, automationAccount);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Retrieve the account by account name.  (see
+        /// http://aka.ms/azureautomationsdk/automationaccountoperations for
+        /// more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Automation.IAutomationAccountOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <param name='automationAccount'>
+        /// Required. The automation account name.
+        /// </param>
+        /// <returns>
+        /// The response model for the get account operation.
+        /// </returns>
+        public static Task<AutomationAccountGetResponse> GetAsync(this IAutomationAccountOperations operations, string resourceGroupName, string automationAccount)
+        {
+            return operations.GetAsync(resourceGroupName, automationAccount, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Retrieve a list of accounts.  (see
+        /// http://aka.ms/azureautomationsdk/automationaccountoperations for
+        /// more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Automation.IAutomationAccountOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <returns>
+        /// The response model for the list account operation.
+        /// </returns>
+        public static AutomationAccountListResponse List(this IAutomationAccountOperations operations, string resourceGroupName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IAutomationAccountOperations)s).ListAsync(resourceGroupName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Retrieve a list of accounts.  (see
+        /// http://aka.ms/azureautomationsdk/automationaccountoperations for
+        /// more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Automation.IAutomationAccountOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <returns>
+        /// The response model for the list account operation.
+        /// </returns>
+        public static Task<AutomationAccountListResponse> ListAsync(this IAutomationAccountOperations operations, string resourceGroupName)
+        {
+            return operations.ListAsync(resourceGroupName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Retrieve next list of accounts.  (see
+        /// http://aka.ms/azureautomationsdk/automationaccountoperations for
+        /// more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Automation.IAutomationAccountOperations.
+        /// </param>
+        /// <param name='nextLink'>
+        /// Required. The link to retrieve next set of items.
+        /// </param>
+        /// <returns>
+        /// The response model for the list account operation.
+        /// </returns>
+        public static AutomationAccountListResponse ListNext(this IAutomationAccountOperations operations, string nextLink)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IAutomationAccountOperations)s).ListNextAsync(nextLink);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Retrieve next list of accounts.  (see
+        /// http://aka.ms/azureautomationsdk/automationaccountoperations for
+        /// more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Automation.IAutomationAccountOperations.
+        /// </param>
+        /// <param name='nextLink'>
+        /// Required. The link to retrieve next set of items.
+        /// </param>
+        /// <returns>
+        /// The response model for the list account operation.
+        /// </returns>
+        public static Task<AutomationAccountListResponse> ListNextAsync(this IAutomationAccountOperations operations, string nextLink)
+        {
+            return operations.ListNextAsync(nextLink, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Create an automation account.  (see
         /// http://aka.ms/azureautomationsdk/automationaccountoperations for
         /// more information)

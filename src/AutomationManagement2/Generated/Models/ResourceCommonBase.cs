@@ -20,29 +20,16 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
-    public partial class ResourceUpdateParameterBase
+    public partial class ResourceCommonBase
     {
-        private string _location;
-        
-        /// <summary>
-        /// Optional. Gets or sets the location of the resource.
-        /// </summary>
-        public string Location
-        {
-            get { return this._location; }
-            set { this._location = value; }
-        }
-        
         private string _name;
         
         /// <summary>
-        /// Optional. Gets or sets the name of the resource.
+        /// Optional. Gets or sets the last modified by.
         /// </summary>
         public string Name
         {
@@ -50,23 +37,11 @@ namespace Microsoft.Azure.Management.Automation.Models
             set { this._name = value; }
         }
         
-        private IDictionary<string, string> _tags;
-        
         /// <summary>
-        /// Optional. Gets or sets the tags attached to the resource.
+        /// Initializes a new instance of the ResourceCommonBase class.
         /// </summary>
-        public IDictionary<string, string> Tags
+        public ResourceCommonBase()
         {
-            get { return this._tags; }
-            set { this._tags = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the ResourceUpdateParameterBase class.
-        /// </summary>
-        public ResourceUpdateParameterBase()
-        {
-            this.Tags = new LazyDictionary<string, string>();
         }
     }
 }

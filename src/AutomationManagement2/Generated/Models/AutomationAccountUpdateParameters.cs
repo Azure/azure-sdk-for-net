@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Automation.Models
     /// <summary>
     /// The parameters supplied to the update automation account operation.
     /// </summary>
-    public partial class AutomationAccountUpdateParameters : ResourceUpdateParameterBase
+    public partial class AutomationAccountUpdateParameters : ResourceCreateOrUpdateParameterBase
     {
         private AutomationAccountUpdateProperties _properties;
         

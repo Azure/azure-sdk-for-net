@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Automation.Models
     /// <summary>
     /// The parameters supplied to the update runbook operation.
     /// </summary>
-    public partial class RunbookUpdateParameters : ResourceUpdateParameterBase
+    public partial class RunbookUpdateParameters : ResourceCreateOrUpdateParameterBase
     {
         private RunbookUpdateProperties _properties;
         

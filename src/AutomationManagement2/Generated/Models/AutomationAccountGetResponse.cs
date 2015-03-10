@@ -21,45 +21,33 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Automation.Models;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The parameters supplied to the update module operation.
+    /// The response model for the get account operation.
     /// </summary>
-    public partial class ModuleUpdateParameters : ResourceCreateOrUpdateParameterBase
+    public partial class AutomationAccountGetResponse : AzureOperationResponse
     {
-        private ModuleUpdateProperties _properties;
+        private AutomationAccount _automationAccount;
         
         /// <summary>
-        /// Required. Gets or sets the module update properties.
+        /// Optional. Gets or sets a account.
         /// </summary>
-        public ModuleUpdateProperties Properties
+        public AutomationAccount AutomationAccount
         {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._automationAccount; }
+            set { this._automationAccount = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ModuleUpdateParameters class.
+        /// Initializes a new instance of the AutomationAccountGetResponse
+        /// class.
         /// </summary>
-        public ModuleUpdateParameters()
+        public AutomationAccountGetResponse()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the ModuleUpdateParameters class with
-        /// required arguments.
-        /// </summary>
-        public ModuleUpdateParameters(ModuleUpdateProperties properties)
-            : this()
-        {
-            if (properties == null)
-            {
-                throw new ArgumentNullException("properties");
-            }
-            this.Properties = properties;
         }
     }
 }
