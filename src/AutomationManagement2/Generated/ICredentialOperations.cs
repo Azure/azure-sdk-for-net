@@ -47,15 +47,16 @@ namespace Microsoft.Azure.Management.Automation
         /// The automation account name.
         /// </param>
         /// <param name='parameters'>
-        /// The parameters supplied to the create credential operation.
+        /// The parameters supplied to the create or update credential
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response model for the create credential operation.
+        /// The response model for the create or update credential operation.
         /// </returns>
-        Task<CredentialCreateResponse> CreateAsync(string resourceGroupName, string automationAccount, CredentialCreateParameters parameters, CancellationToken cancellationToken);
+        Task<CredentialCreateOrUpdateResponse> CreateOrUpdateAsync(string resourceGroupName, string automationAccount, CredentialCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Delete the credential.  (see

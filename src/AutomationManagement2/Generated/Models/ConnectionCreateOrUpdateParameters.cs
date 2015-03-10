@@ -26,14 +26,14 @@ using Microsoft.Azure.Management.Automation.Models;
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The parameters supplied to the create connection type operation.
+    /// The parameters supplied to the create or update connection operation.
     /// </summary>
-    public partial class ConnectionTypeCreateParameters
+    public partial class ConnectionCreateOrUpdateParameters
     {
         private string _name;
         
         /// <summary>
-        /// Required. Gets or sets the name of the connection type.
+        /// Required. Gets or sets the name of the connection.
         /// </summary>
         public string Name
         {
@@ -41,30 +41,30 @@ namespace Microsoft.Azure.Management.Automation.Models
             set { this._name = value; }
         }
         
-        private ConnectionTypeCreateProperties _properties;
+        private ConnectionCreateOrUpdateProperties _properties;
         
         /// <summary>
-        /// Required. Gets or sets the value of the connection type.
+        /// Required. Gets or sets the properties of the connection.
         /// </summary>
-        public ConnectionTypeCreateProperties Properties
+        public ConnectionCreateOrUpdateProperties Properties
         {
             get { return this._properties; }
             set { this._properties = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ConnectionTypeCreateParameters
-        /// class.
+        /// Initializes a new instance of the
+        /// ConnectionCreateOrUpdateParameters class.
         /// </summary>
-        public ConnectionTypeCreateParameters()
+        public ConnectionCreateOrUpdateParameters()
         {
         }
         
         /// <summary>
-        /// Initializes a new instance of the ConnectionTypeCreateParameters
-        /// class with required arguments.
+        /// Initializes a new instance of the
+        /// ConnectionCreateOrUpdateParameters class with required arguments.
         /// </summary>
-        public ConnectionTypeCreateParameters(string name, ConnectionTypeCreateProperties properties)
+        public ConnectionCreateOrUpdateParameters(string name, ConnectionCreateOrUpdateProperties properties)
             : this()
         {
             if (name == null)

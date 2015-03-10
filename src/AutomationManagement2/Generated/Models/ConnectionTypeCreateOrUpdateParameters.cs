@@ -26,14 +26,15 @@ using Microsoft.Azure.Management.Automation.Models;
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The parameters supplied to the create credential operation.
+    /// The parameters supplied to the create or update connection type
+    /// operation.
     /// </summary>
-    public partial class CredentialCreateParameters
+    public partial class ConnectionTypeCreateOrUpdateParameters
     {
         private string _name;
         
         /// <summary>
-        /// Required. Gets or sets the name of the credential.
+        /// Required. Gets or sets the name of the connection type.
         /// </summary>
         public string Name
         {
@@ -41,29 +42,31 @@ namespace Microsoft.Azure.Management.Automation.Models
             set { this._name = value; }
         }
         
-        private CredentialCreateProperties _properties;
+        private ConnectionTypeCreateOrUpdateProperties _properties;
         
         /// <summary>
-        /// Required. Gets or sets the properties of the credential.
+        /// Required. Gets or sets the value of the connection type.
         /// </summary>
-        public CredentialCreateProperties Properties
+        public ConnectionTypeCreateOrUpdateProperties Properties
         {
             get { return this._properties; }
             set { this._properties = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the CredentialCreateParameters class.
+        /// Initializes a new instance of the
+        /// ConnectionTypeCreateOrUpdateParameters class.
         /// </summary>
-        public CredentialCreateParameters()
+        public ConnectionTypeCreateOrUpdateParameters()
         {
         }
         
         /// <summary>
-        /// Initializes a new instance of the CredentialCreateParameters class
-        /// with required arguments.
+        /// Initializes a new instance of the
+        /// ConnectionTypeCreateOrUpdateParameters class with required
+        /// arguments.
         /// </summary>
-        public CredentialCreateParameters(string name, CredentialCreateProperties properties)
+        public ConnectionTypeCreateOrUpdateParameters(string name, ConnectionTypeCreateOrUpdateProperties properties)
             : this()
         {
             if (name == null)

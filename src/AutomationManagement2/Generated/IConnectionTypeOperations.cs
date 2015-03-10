@@ -47,15 +47,17 @@ namespace Microsoft.Azure.Management.Automation
         /// The automation account name.
         /// </param>
         /// <param name='parameters'>
-        /// The parameters supplied to the create connectiontype operation.
+        /// The parameters supplied to the create or update connectiontype
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response model for the create connection type operation.
+        /// The response model for the create or update connection type
+        /// operation.
         /// </returns>
-        Task<ConnectionTypeCreateResponse> CreateAsync(string resourceGroupName, string automationAccount, ConnectionTypeCreateParameters parameters, CancellationToken cancellationToken);
+        Task<ConnectionTypeCreateOrUpdateResponse> CreateOrUpdateAsync(string resourceGroupName, string automationAccount, ConnectionTypeCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Delete the connectiontype.  (see

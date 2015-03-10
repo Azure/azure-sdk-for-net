@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Automation.Models
     /// <summary>
     /// The properties of the create connection type.
     /// </summary>
-    public partial class ConnectionTypeCreateProperties
+    public partial class ConnectionTypeCreateOrUpdateProperties
     {
         private IDictionary<string, FieldDefinition> _fieldDefinitions;
         
@@ -56,19 +56,20 @@ namespace Microsoft.Azure.Management.Automation.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the ConnectionTypeCreateProperties
-        /// class.
+        /// Initializes a new instance of the
+        /// ConnectionTypeCreateOrUpdateProperties class.
         /// </summary>
-        public ConnectionTypeCreateProperties()
+        public ConnectionTypeCreateOrUpdateProperties()
         {
             this.FieldDefinitions = new LazyDictionary<string, FieldDefinition>();
         }
         
         /// <summary>
-        /// Initializes a new instance of the ConnectionTypeCreateProperties
-        /// class with required arguments.
+        /// Initializes a new instance of the
+        /// ConnectionTypeCreateOrUpdateProperties class with required
+        /// arguments.
         /// </summary>
-        public ConnectionTypeCreateProperties(IDictionary<string, FieldDefinition> fieldDefinitions)
+        public ConnectionTypeCreateOrUpdateProperties(IDictionary<string, FieldDefinition> fieldDefinitions)
             : this()
         {
             if (fieldDefinitions == null)

@@ -27,25 +27,26 @@ using Microsoft.Azure.Management.Automation.Models;
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The response model for the create module operation.
+    /// The response model for the create or update connection type operation.
     /// </summary>
-    public partial class ModuleCreateResponse : AzureOperationResponse
+    public partial class ConnectionTypeCreateOrUpdateResponse : AzureOperationResponse
     {
-        private Module _module;
+        private ConnectionType _connectionType;
         
         /// <summary>
-        /// Optional. Gets or sets a module.
+        /// Optional. Gets or sets a conneciton type.
         /// </summary>
-        public Module Module
+        public ConnectionType ConnectionType
         {
-            get { return this._module; }
-            set { this._module = value; }
+            get { return this._connectionType; }
+            set { this._connectionType = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ModuleCreateResponse class.
+        /// Initializes a new instance of the
+        /// ConnectionTypeCreateOrUpdateResponse class.
         /// </summary>
-        public ModuleCreateResponse()
+        public ConnectionTypeCreateOrUpdateResponse()
         {
         }
     }

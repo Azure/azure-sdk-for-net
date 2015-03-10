@@ -47,16 +47,16 @@ namespace Microsoft.Azure.Management.Automation
         /// Required. The automation account name.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The create parameters for module.
+        /// Required. The create or update parameters for module.
         /// </param>
         /// <returns>
-        /// The response model for the create module operation.
+        /// The response model for the create or update module operation.
         /// </returns>
-        public static ModuleCreateResponse Create(this IModuleOperations operations, string resourceGroupName, string automationAccount, ModuleCreateParameters parameters)
+        public static ModuleCreateOrUpdateResponse CreateOrUpdate(this IModuleOperations operations, string resourceGroupName, string automationAccount, ModuleCreateOrUpdateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IModuleOperations)s).CreateAsync(resourceGroupName, automationAccount, parameters);
+                return ((IModuleOperations)s).CreateOrUpdateAsync(resourceGroupName, automationAccount, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -77,14 +77,14 @@ namespace Microsoft.Azure.Management.Automation
         /// Required. The automation account name.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The create parameters for module.
+        /// Required. The create or update parameters for module.
         /// </param>
         /// <returns>
-        /// The response model for the create module operation.
+        /// The response model for the create or update module operation.
         /// </returns>
-        public static Task<ModuleCreateResponse> CreateAsync(this IModuleOperations operations, string resourceGroupName, string automationAccount, ModuleCreateParameters parameters)
+        public static Task<ModuleCreateOrUpdateResponse> CreateOrUpdateAsync(this IModuleOperations operations, string resourceGroupName, string automationAccount, ModuleCreateOrUpdateParameters parameters)
         {
-            return operations.CreateAsync(resourceGroupName, automationAccount, parameters, CancellationToken.None);
+            return operations.CreateOrUpdateAsync(resourceGroupName, automationAccount, parameters, CancellationToken.None);
         }
         
         /// <summary>

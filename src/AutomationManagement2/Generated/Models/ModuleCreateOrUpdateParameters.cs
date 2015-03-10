@@ -26,27 +26,41 @@ using Microsoft.Azure.Management.Automation.Models;
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The parameters supplied to the update account properties.
+    /// The parameters supplied to the create or update module operation.
     /// </summary>
-    public partial class AutomationAccountCreateProperties
+    public partial class ModuleCreateOrUpdateParameters : ResourceCreateOrUpdateParameterBase
     {
-        private Sku _sku;
+        private ModuleCreateOrUpdateProperties _properties;
         
         /// <summary>
-        /// Optional. Gets or sets account sku.
+        /// Required. Gets or sets the module create properties.
         /// </summary>
-        public Sku Sku
+        public ModuleCreateOrUpdateProperties Properties
         {
-            get { return this._sku; }
-            set { this._sku = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the AutomationAccountCreateProperties
+        /// Initializes a new instance of the ModuleCreateOrUpdateParameters
         /// class.
         /// </summary>
-        public AutomationAccountCreateProperties()
+        public ModuleCreateOrUpdateParameters()
         {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the ModuleCreateOrUpdateParameters
+        /// class with required arguments.
+        /// </summary>
+        public ModuleCreateOrUpdateParameters(ModuleCreateOrUpdateProperties properties)
+            : this()
+        {
+            if (properties == null)
+            {
+                throw new ArgumentNullException("properties");
+            }
+            this.Properties = properties;
         }
     }
 }

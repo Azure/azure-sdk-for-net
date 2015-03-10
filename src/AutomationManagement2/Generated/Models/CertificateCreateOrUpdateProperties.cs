@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.Automation.Models
     /// <summary>
     /// The properties of the create certificate operation.
     /// </summary>
-    public partial class CertificateCreateProperties
+    public partial class CertificateCreateOrUpdateProperties
     {
         private string _base64Value;
         
@@ -74,17 +74,18 @@ namespace Microsoft.Azure.Management.Automation.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the CertificateCreateProperties class.
+        /// Initializes a new instance of the
+        /// CertificateCreateOrUpdateProperties class.
         /// </summary>
-        public CertificateCreateProperties()
+        public CertificateCreateOrUpdateProperties()
         {
         }
         
         /// <summary>
-        /// Initializes a new instance of the CertificateCreateProperties class
-        /// with required arguments.
+        /// Initializes a new instance of the
+        /// CertificateCreateOrUpdateProperties class with required arguments.
         /// </summary>
-        public CertificateCreateProperties(string base64Value)
+        public CertificateCreateOrUpdateProperties(string base64Value)
             : this()
         {
             if (base64Value == null)

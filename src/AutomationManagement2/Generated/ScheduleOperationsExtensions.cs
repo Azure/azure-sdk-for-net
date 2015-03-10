@@ -47,16 +47,17 @@ namespace Microsoft.Azure.Management.Automation
         /// Required. The automation account name.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The parameters supplied to the create schedule operation.
+        /// Required. The parameters supplied to the create or update schedule
+        /// operation.
         /// </param>
         /// <returns>
-        /// The response model for the create schedule operation.
+        /// The response model for the create or update schedule operation.
         /// </returns>
-        public static ScheduleCreateResponse Create(this IScheduleOperations operations, string resourceGroupName, string automationAccount, ScheduleCreateParameters parameters)
+        public static ScheduleCreateOrUpdateResponse CreateOrUpdate(this IScheduleOperations operations, string resourceGroupName, string automationAccount, ScheduleCreateOrUpdateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IScheduleOperations)s).CreateAsync(resourceGroupName, automationAccount, parameters);
+                return ((IScheduleOperations)s).CreateOrUpdateAsync(resourceGroupName, automationAccount, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -77,14 +78,15 @@ namespace Microsoft.Azure.Management.Automation
         /// Required. The automation account name.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The parameters supplied to the create schedule operation.
+        /// Required. The parameters supplied to the create or update schedule
+        /// operation.
         /// </param>
         /// <returns>
-        /// The response model for the create schedule operation.
+        /// The response model for the create or update schedule operation.
         /// </returns>
-        public static Task<ScheduleCreateResponse> CreateAsync(this IScheduleOperations operations, string resourceGroupName, string automationAccount, ScheduleCreateParameters parameters)
+        public static Task<ScheduleCreateOrUpdateResponse> CreateOrUpdateAsync(this IScheduleOperations operations, string resourceGroupName, string automationAccount, ScheduleCreateOrUpdateParameters parameters)
         {
-            return operations.CreateAsync(resourceGroupName, automationAccount, parameters, CancellationToken.None);
+            return operations.CreateOrUpdateAsync(resourceGroupName, automationAccount, parameters, CancellationToken.None);
         }
         
         /// <summary>

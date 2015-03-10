@@ -21,32 +21,46 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.Automation.Models;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The response model for the create credential operation.
+    /// The parameters supplied to the create or update runbook operation.
     /// </summary>
-    public partial class CredentialCreateResponse : AzureOperationResponse
+    public partial class RunbookCreateOrUpdateParameters : ResourceCreateOrUpdateParameterBase
     {
-        private Credential _credential;
+        private RunbookCreateOrUpdateProperties _properties;
         
         /// <summary>
-        /// Optional. Gets or sets a credential.
+        /// Required. Gets or sets runbook create or update properties.
         /// </summary>
-        public Credential Credential
+        public RunbookCreateOrUpdateProperties Properties
         {
-            get { return this._credential; }
-            set { this._credential = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the CredentialCreateResponse class.
+        /// Initializes a new instance of the RunbookCreateOrUpdateParameters
+        /// class.
         /// </summary>
-        public CredentialCreateResponse()
+        public RunbookCreateOrUpdateParameters()
         {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the RunbookCreateOrUpdateParameters
+        /// class with required arguments.
+        /// </summary>
+        public RunbookCreateOrUpdateParameters(RunbookCreateOrUpdateProperties properties)
+            : this()
+        {
+            if (properties == null)
+            {
+                throw new ArgumentNullException("properties");
+            }
+            this.Properties = properties;
         }
     }
 }

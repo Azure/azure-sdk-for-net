@@ -47,15 +47,16 @@ namespace Microsoft.Azure.Management.Automation
         /// The automation account name.
         /// </param>
         /// <param name='parameters'>
-        /// The parameters supplied to the create certificate operation.
+        /// The parameters supplied to the create or update certificate
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response model for the create certificate operation.
+        /// The response model for the create or update certificate operation.
         /// </returns>
-        Task<CertificateCreateResponse> CreateAsync(string resourceGroupName, string automationAccount, CertificateCreateParameters parameters, CancellationToken cancellationToken);
+        Task<CertificateCreateOrUpdateResponse> CreateOrUpdateAsync(string resourceGroupName, string automationAccount, CertificateCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Delete the certificate.  (see

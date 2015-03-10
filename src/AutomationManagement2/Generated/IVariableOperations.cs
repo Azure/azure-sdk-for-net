@@ -47,15 +47,15 @@ namespace Microsoft.Azure.Management.Automation
         /// The automation account name.
         /// </param>
         /// <param name='parameters'>
-        /// The parameters supplied to the create variable operation.
+        /// The parameters supplied to the create or update variable operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response model for the create variable operation.
+        /// The response model for the create or update variable operation.
         /// </returns>
-        Task<VariableCreateResponse> CreateAsync(string resourceGroupName, string automationAccount, VariableCreateParameters parameters, CancellationToken cancellationToken);
+        Task<VariableCreateOrUpdateResponse> CreateOrUpdateAsync(string resourceGroupName, string automationAccount, VariableCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Delete the variable.  (see

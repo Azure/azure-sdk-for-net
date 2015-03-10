@@ -25,9 +25,9 @@ using System.Linq;
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The parameters supplied to the create schedule operation.
+    /// The parameters supplied to the create or update schedule operation.
     /// </summary>
-    public partial class ScheduleCreateProperties
+    public partial class ScheduleCreateOrUpdateProperties
     {
         private string _description;
         
@@ -85,17 +85,18 @@ namespace Microsoft.Azure.Management.Automation.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the ScheduleCreateProperties class.
+        /// Initializes a new instance of the ScheduleCreateOrUpdateProperties
+        /// class.
         /// </summary>
-        public ScheduleCreateProperties()
+        public ScheduleCreateOrUpdateProperties()
         {
         }
         
         /// <summary>
-        /// Initializes a new instance of the ScheduleCreateProperties class
-        /// with required arguments.
+        /// Initializes a new instance of the ScheduleCreateOrUpdateProperties
+        /// class with required arguments.
         /// </summary>
-        public ScheduleCreateProperties(DateTimeOffset startTime, string frequency)
+        public ScheduleCreateOrUpdateProperties(DateTimeOffset startTime, string frequency)
             : this()
         {
             if (frequency == null)

@@ -47,17 +47,17 @@ namespace Microsoft.Azure.Management.Automation
         /// Required. The automation account name.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The parameters supplied to the create connection
-        /// operation.
+        /// Required. The parameters supplied to the create or update
+        /// connection operation.
         /// </param>
         /// <returns>
-        /// The response model for the create connection operation.
+        /// The response model for the create or update connection operation.
         /// </returns>
-        public static ConnectionCreateResponse Create(this IConnectionOperations operations, string resourceGroupName, string automationAccount, ConnectionCreateParameters parameters)
+        public static ConnectionCreateOrUpdateResponse CreateOrUpdate(this IConnectionOperations operations, string resourceGroupName, string automationAccount, ConnectionCreateOrUpdateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IConnectionOperations)s).CreateAsync(resourceGroupName, automationAccount, parameters);
+                return ((IConnectionOperations)s).CreateOrUpdateAsync(resourceGroupName, automationAccount, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -78,15 +78,15 @@ namespace Microsoft.Azure.Management.Automation
         /// Required. The automation account name.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The parameters supplied to the create connection
-        /// operation.
+        /// Required. The parameters supplied to the create or update
+        /// connection operation.
         /// </param>
         /// <returns>
-        /// The response model for the create connection operation.
+        /// The response model for the create or update connection operation.
         /// </returns>
-        public static Task<ConnectionCreateResponse> CreateAsync(this IConnectionOperations operations, string resourceGroupName, string automationAccount, ConnectionCreateParameters parameters)
+        public static Task<ConnectionCreateOrUpdateResponse> CreateOrUpdateAsync(this IConnectionOperations operations, string resourceGroupName, string automationAccount, ConnectionCreateOrUpdateParameters parameters)
         {
-            return operations.CreateAsync(resourceGroupName, automationAccount, parameters, CancellationToken.None);
+            return operations.CreateOrUpdateAsync(resourceGroupName, automationAccount, parameters, CancellationToken.None);
         }
         
         /// <summary>

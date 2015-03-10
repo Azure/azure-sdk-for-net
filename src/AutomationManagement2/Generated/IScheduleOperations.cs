@@ -47,15 +47,15 @@ namespace Microsoft.Azure.Management.Automation
         /// The automation account name.
         /// </param>
         /// <param name='parameters'>
-        /// The parameters supplied to the create schedule operation.
+        /// The parameters supplied to the create or update schedule operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response model for the create schedule operation.
+        /// The response model for the create or update schedule operation.
         /// </returns>
-        Task<ScheduleCreateResponse> CreateAsync(string resourceGroupName, string automationAccount, ScheduleCreateParameters parameters, CancellationToken cancellationToken);
+        Task<ScheduleCreateOrUpdateResponse> CreateOrUpdateAsync(string resourceGroupName, string automationAccount, ScheduleCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Delete the schedule identified by schedule name.  (see

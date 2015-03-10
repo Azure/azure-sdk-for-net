@@ -20,53 +20,47 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
+using Microsoft.Azure.Management.Automation.Models;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
-    public partial class ResourceCreateParameterBase
+    /// <summary>
+    /// The parameters supplied to the create or update module properties.
+    /// </summary>
+    public partial class ModuleCreateOrUpdateProperties
     {
-        private string _location;
+        private ContentLink _contentLink;
         
         /// <summary>
-        /// Optional. Gets or sets the location of the resource.
+        /// Required. Gets or sets the module content link.
         /// </summary>
-        public string Location
+        public ContentLink ContentLink
         {
-            get { return this._location; }
-            set { this._location = value; }
-        }
-        
-        private string _name;
-        
-        /// <summary>
-        /// Optional. Gets or sets the name of the resource.
-        /// </summary>
-        public string Name
-        {
-            get { return this._name; }
-            set { this._name = value; }
-        }
-        
-        private IDictionary<string, string> _tags;
-        
-        /// <summary>
-        /// Optional. Gets or sets the tags attached to the resource.
-        /// </summary>
-        public IDictionary<string, string> Tags
-        {
-            get { return this._tags; }
-            set { this._tags = value; }
+            get { return this._contentLink; }
+            set { this._contentLink = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ResourceCreateParameterBase class.
+        /// Initializes a new instance of the ModuleCreateOrUpdateProperties
+        /// class.
         /// </summary>
-        public ResourceCreateParameterBase()
+        public ModuleCreateOrUpdateProperties()
         {
-            this.Tags = new LazyDictionary<string, string>();
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the ModuleCreateOrUpdateProperties
+        /// class with required arguments.
+        /// </summary>
+        public ModuleCreateOrUpdateProperties(ContentLink contentLink)
+            : this()
+        {
+            if (contentLink == null)
+            {
+                throw new ArgumentNullException("contentLink");
+            }
+            this.ContentLink = contentLink;
         }
     }
 }

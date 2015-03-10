@@ -21,46 +21,33 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Automation.Models;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The parameters supplied to the create runbook operation.
+    /// The response model for the create or update module operation.
     /// </summary>
-    public partial class RunbookCreateDraftParameters : ResourceCreateParameterBase
+    public partial class ModuleCreateOrUpdateResponse : AzureOperationResponse
     {
-        private RunbookCreateDraftProperties _properties;
+        private Module _module;
         
         /// <summary>
-        /// Required. Gets or sets runbook draft create properties.
+        /// Optional. Gets or sets a module.
         /// </summary>
-        public RunbookCreateDraftProperties Properties
+        public Module Module
         {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._module; }
+            set { this._module = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the RunbookCreateDraftParameters
+        /// Initializes a new instance of the ModuleCreateOrUpdateResponse
         /// class.
         /// </summary>
-        public RunbookCreateDraftParameters()
+        public ModuleCreateOrUpdateResponse()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the RunbookCreateDraftParameters
-        /// class with required arguments.
-        /// </summary>
-        public RunbookCreateDraftParameters(RunbookCreateDraftProperties properties)
-            : this()
-        {
-            if (properties == null)
-            {
-                throw new ArgumentNullException("properties");
-            }
-            this.Properties = properties;
         }
     }
 }

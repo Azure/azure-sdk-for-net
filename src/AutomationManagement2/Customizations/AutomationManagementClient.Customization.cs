@@ -21,7 +21,7 @@ using Hyak.Common;
 using Microsoft.Azure.Management.Automation;
 using Microsoft.Azure.Management.Automation.Models;
 
-namespace Microsoft.WindowsAzure.Management.Automation
+namespace Microsoft.Azure.Management.Automation
 {
     public partial class AutomationManagementClient
     {
@@ -37,27 +37,6 @@ namespace Microsoft.WindowsAzure.Management.Automation
             }
             while (!string.IsNullOrEmpty(skipToken));
             return models;
-        }
-    }
-
-    public static class AutomationManagementExtensions
-    {
-        public static void CreateAutomationAccount(this IAutomationManagementClient client, string automationAccountName, string location)
-        {
-            if (automationAccountName == null)
-            {
-                throw new ArgumentNullException("automationAccountName");
-            }
-
-            if (location == null)
-            {
-                throw new ArgumentNullException("location");
-            }
-        }
-
-        public static void DeleteAutomationAccount(this IAutomationManagementClient client, string automationAccountName)
-        {
-
         }
     }
 }

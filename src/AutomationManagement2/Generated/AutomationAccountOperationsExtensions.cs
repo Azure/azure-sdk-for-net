@@ -44,16 +44,17 @@ namespace Microsoft.Azure.Management.Automation
         /// Required. The name of the resource group
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the create automation account.
+        /// Required. Parameters supplied to the create or update automation
+        /// account.
         /// </param>
         /// <returns>
-        /// The response model for the create account operation.
+        /// The response model for the create or update account operation.
         /// </returns>
-        public static AutomationAccountCreateResponse Create(this IAutomationAccountOperations operations, string resourceGroupName, AutomationAccountCreateParameters parameters)
+        public static AutomationAccountCreateOrUpdateResponse CreateOrUpdate(this IAutomationAccountOperations operations, string resourceGroupName, AutomationAccountCreateOrUpdateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IAutomationAccountOperations)s).CreateAsync(resourceGroupName, parameters);
+                return ((IAutomationAccountOperations)s).CreateOrUpdateAsync(resourceGroupName, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -71,14 +72,15 @@ namespace Microsoft.Azure.Management.Automation
         /// Required. The name of the resource group
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the create automation account.
+        /// Required. Parameters supplied to the create or update automation
+        /// account.
         /// </param>
         /// <returns>
-        /// The response model for the create account operation.
+        /// The response model for the create or update account operation.
         /// </returns>
-        public static Task<AutomationAccountCreateResponse> CreateAsync(this IAutomationAccountOperations operations, string resourceGroupName, AutomationAccountCreateParameters parameters)
+        public static Task<AutomationAccountCreateOrUpdateResponse> CreateOrUpdateAsync(this IAutomationAccountOperations operations, string resourceGroupName, AutomationAccountCreateOrUpdateParameters parameters)
         {
-            return operations.CreateAsync(resourceGroupName, parameters, CancellationToken.None);
+            return operations.CreateOrUpdateAsync(resourceGroupName, parameters, CancellationToken.None);
         }
         
         /// <summary>

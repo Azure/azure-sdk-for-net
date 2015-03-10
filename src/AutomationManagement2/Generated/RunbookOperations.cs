@@ -164,7 +164,7 @@ namespace Microsoft.Azure.Management.Automation
                 
                 // Set Headers
                 httpRequest.Headers.Add("Accept", "application/json");
-                httpRequest.Headers.Add("x-ms-version", "2013-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -248,7 +248,7 @@ namespace Microsoft.Azure.Management.Automation
         /// Required. The automation account name.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The create parameters for runbook.
+        /// Required. The create or update parameters for runbook.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -256,7 +256,7 @@ namespace Microsoft.Azure.Management.Automation
         /// <returns>
         /// The response model for the runbook create response.
         /// </returns>
-        public async Task<RunbookCreateResponse> CreateAsync(string resourceGroupName, string automationAccount, RunbookCreateParameters parameters, CancellationToken cancellationToken)
+        public async Task<RunbookCreateOrUpdateResponse> CreateOrUpdateAsync(string resourceGroupName, string automationAccount, RunbookCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -305,12 +305,12 @@ namespace Microsoft.Azure.Management.Automation
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("automationAccount", automationAccount);
                 tracingParameters.Add("parameters", parameters);
-                TracingAdapter.Enter(invocationId, this, "CreateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "CreateOrUpdateAsync", tracingParameters);
             }
             
             // Construct URL
             string url = "";
-            url = url + "/";
+            url = url + "/subscriptions/";
             if (this.Client.Credentials.SubscriptionId != null)
             {
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
@@ -358,7 +358,7 @@ namespace Microsoft.Azure.Management.Automation
                 
                 // Set Headers
                 httpRequest.Headers.Add("Accept", "application/json");
-                httpRequest.Headers.Add("x-ms-version", "2013-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -368,11 +368,11 @@ namespace Microsoft.Azure.Management.Automation
                 string requestContent = null;
                 JToken requestDoc = null;
                 
-                JObject runbookCreateParametersValue = new JObject();
-                requestDoc = runbookCreateParametersValue;
+                JObject runbookCreateOrUpdateParametersValue = new JObject();
+                requestDoc = runbookCreateOrUpdateParametersValue;
                 
                 JObject propertiesValue = new JObject();
-                runbookCreateParametersValue["properties"] = propertiesValue;
+                runbookCreateOrUpdateParametersValue["properties"] = propertiesValue;
                 
                 propertiesValue["logVerbose"] = parameters.Properties.LogVerbose;
                 
@@ -410,12 +410,12 @@ namespace Microsoft.Azure.Management.Automation
                 
                 if (parameters.Name != null)
                 {
-                    runbookCreateParametersValue["name"] = parameters.Name;
+                    runbookCreateOrUpdateParametersValue["name"] = parameters.Name;
                 }
                 
                 if (parameters.Location != null)
                 {
-                    runbookCreateParametersValue["location"] = parameters.Location;
+                    runbookCreateOrUpdateParametersValue["location"] = parameters.Location;
                 }
                 
                 if (parameters.Tags != null)
@@ -427,7 +427,7 @@ namespace Microsoft.Azure.Management.Automation
                         string tagsValue = pair.Value;
                         tagsDictionary[tagsKey] = tagsValue;
                     }
-                    runbookCreateParametersValue["tags"] = tagsDictionary;
+                    runbookCreateOrUpdateParametersValue["tags"] = tagsDictionary;
                 }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
@@ -449,7 +449,7 @@ namespace Microsoft.Azure.Management.Automation
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.Created)
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -461,9 +461,9 @@ namespace Microsoft.Azure.Management.Automation
                     }
                     
                     // Create Result
-                    RunbookCreateResponse result = null;
+                    RunbookCreateOrUpdateResponse result = null;
                     // Deserialize Response
-                    result = new RunbookCreateResponse();
+                    result = new RunbookCreateOrUpdateResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -505,7 +505,7 @@ namespace Microsoft.Azure.Management.Automation
         /// Required. The automation account name.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The create parameters for runbook.
+        /// Required. The create or update parameters for runbook.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -513,7 +513,7 @@ namespace Microsoft.Azure.Management.Automation
         /// <returns>
         /// The response model for the runbook create response.
         /// </returns>
-        public async Task<RunbookCreateResponse> CreateWithDraftAsync(string resourceGroupName, string automationAccount, RunbookCreateDraftParameters parameters, CancellationToken cancellationToken)
+        public async Task<RunbookCreateOrUpdateResponse> CreateOrUpdateWithDraftAsync(string resourceGroupName, string automationAccount, RunbookCreateOrUpdateDraftParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -565,12 +565,12 @@ namespace Microsoft.Azure.Management.Automation
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("automationAccount", automationAccount);
                 tracingParameters.Add("parameters", parameters);
-                TracingAdapter.Enter(invocationId, this, "CreateWithDraftAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "CreateOrUpdateWithDraftAsync", tracingParameters);
             }
             
             // Construct URL
             string url = "";
-            url = url + "/";
+            url = url + "/subscriptions/";
             if (this.Client.Credentials.SubscriptionId != null)
             {
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
@@ -618,7 +618,7 @@ namespace Microsoft.Azure.Management.Automation
                 
                 // Set Headers
                 httpRequest.Headers.Add("Accept", "application/json");
-                httpRequest.Headers.Add("x-ms-version", "2013-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -628,11 +628,11 @@ namespace Microsoft.Azure.Management.Automation
                 string requestContent = null;
                 JToken requestDoc = null;
                 
-                JObject runbookCreateDraftParametersValue = new JObject();
-                requestDoc = runbookCreateDraftParametersValue;
+                JObject runbookCreateOrUpdateDraftParametersValue = new JObject();
+                requestDoc = runbookCreateOrUpdateDraftParametersValue;
                 
                 JObject propertiesValue = new JObject();
-                runbookCreateDraftParametersValue["properties"] = propertiesValue;
+                runbookCreateOrUpdateDraftParametersValue["properties"] = propertiesValue;
                 
                 propertiesValue["logVerbose"] = parameters.Properties.LogVerbose;
                 
@@ -712,12 +712,12 @@ namespace Microsoft.Azure.Management.Automation
                 
                 if (parameters.Name != null)
                 {
-                    runbookCreateDraftParametersValue["name"] = parameters.Name;
+                    runbookCreateOrUpdateDraftParametersValue["name"] = parameters.Name;
                 }
                 
                 if (parameters.Location != null)
                 {
-                    runbookCreateDraftParametersValue["location"] = parameters.Location;
+                    runbookCreateOrUpdateDraftParametersValue["location"] = parameters.Location;
                 }
                 
                 if (parameters.Tags != null)
@@ -729,7 +729,7 @@ namespace Microsoft.Azure.Management.Automation
                         string tagsValue = pair2.Value;
                         tagsDictionary[tagsKey] = tagsValue;
                     }
-                    runbookCreateDraftParametersValue["tags"] = tagsDictionary;
+                    runbookCreateOrUpdateDraftParametersValue["tags"] = tagsDictionary;
                 }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
@@ -751,7 +751,7 @@ namespace Microsoft.Azure.Management.Automation
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.Created)
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -763,9 +763,9 @@ namespace Microsoft.Azure.Management.Automation
                     }
                     
                     // Create Result
-                    RunbookCreateResponse result = null;
+                    RunbookCreateOrUpdateResponse result = null;
                     // Deserialize Response
-                    result = new RunbookCreateResponse();
+                    result = new RunbookCreateOrUpdateResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -892,7 +892,7 @@ namespace Microsoft.Azure.Management.Automation
                 
                 // Set Headers
                 httpRequest.Headers.Add("Accept", "application/json");
-                httpRequest.Headers.Add("x-ms-version", "2013-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1053,7 +1053,7 @@ namespace Microsoft.Azure.Management.Automation
                 
                 // Set Headers
                 httpRequest.Headers.Add("Accept", "application/json");
-                httpRequest.Headers.Add("x-ms-version", "2013-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1524,7 +1524,7 @@ namespace Microsoft.Azure.Management.Automation
                 // Set Headers
                 httpRequest.Headers.Add("Accept", "application/json");
                 httpRequest.Headers.Add("ocp-referer", url);
-                httpRequest.Headers.Add("x-ms-version", "2013-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1977,7 +1977,7 @@ namespace Microsoft.Azure.Management.Automation
                 // Set Headers
                 httpRequest.Headers.Add("Accept", "application/json");
                 httpRequest.Headers.Add("ocp-referer", url);
-                httpRequest.Headers.Add("x-ms-version", "2013-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2480,7 +2480,7 @@ namespace Microsoft.Azure.Management.Automation
                 
                 // Set Headers
                 httpRequest.Headers.Add("Accept", "application/json");
-                httpRequest.Headers.Add("x-ms-version", "2013-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();

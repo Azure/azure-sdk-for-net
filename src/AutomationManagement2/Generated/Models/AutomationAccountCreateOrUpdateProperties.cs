@@ -21,32 +21,31 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.Automation.Models;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The response model for the create account operation.
+    /// The parameters supplied to the update account properties.
     /// </summary>
-    public partial class AutomationAccountCreateResponse : AzureOperationResponse
+    public partial class AutomationAccountCreateOrUpdateProperties
     {
-        private AutomationAccount _automationAccount;
+        private Sku _sku;
         
         /// <summary>
-        /// Optional. Gets or sets a account.
+        /// Optional. Gets or sets account sku.
         /// </summary>
-        public AutomationAccount AutomationAccount
+        public Sku Sku
         {
-            get { return this._automationAccount; }
-            set { this._automationAccount = value; }
+            get { return this._sku; }
+            set { this._sku = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the AutomationAccountCreateResponse
-        /// class.
+        /// Initializes a new instance of the
+        /// AutomationAccountCreateOrUpdateProperties class.
         /// </summary>
-        public AutomationAccountCreateResponse()
+        public AutomationAccountCreateOrUpdateProperties()
         {
         }
     }

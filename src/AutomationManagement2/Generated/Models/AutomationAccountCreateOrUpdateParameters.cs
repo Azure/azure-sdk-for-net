@@ -21,30 +21,32 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
+using Microsoft.Azure.Management.Automation.Models;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The response model for the runbook create response.
+    /// The parameters supplied to the create or update automation account
+    /// operation.
     /// </summary>
-    public partial class RunbookCreateResponse : AzureOperationResponse
+    public partial class AutomationAccountCreateOrUpdateParameters : ResourceCreateOrUpdateParameterBase
     {
-        private Uri _runbookUri;
+        private AutomationAccountCreateOrUpdateProperties _properties;
         
         /// <summary>
-        /// Optional. Gets or sets the runbook uri.
+        /// Optional. Gets or sets account create or update properties.
         /// </summary>
-        public Uri RunbookUri
+        public AutomationAccountCreateOrUpdateProperties Properties
         {
-            get { return this._runbookUri; }
-            set { this._runbookUri = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the RunbookCreateResponse class.
+        /// Initializes a new instance of the
+        /// AutomationAccountCreateOrUpdateParameters class.
         /// </summary>
-        public RunbookCreateResponse()
+        public AutomationAccountCreateOrUpdateParameters()
         {
         }
     }

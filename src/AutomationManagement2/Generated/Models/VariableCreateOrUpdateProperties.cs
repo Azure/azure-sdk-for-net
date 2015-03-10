@@ -25,14 +25,14 @@ using System.Linq;
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The properties of the create cerdential operation.
+    /// The properties of the create variable operation.
     /// </summary>
-    public partial class CredentialCreateProperties
+    public partial class VariableCreateOrUpdateProperties
     {
         private string _description;
         
         /// <summary>
-        /// Optional. Gets or sets the description of the credential.
+        /// Optional. Gets or sets the description of the variable.
         /// </summary>
         public string Description
         {
@@ -40,52 +40,34 @@ namespace Microsoft.Azure.Management.Automation.Models
             set { this._description = value; }
         }
         
-        private string _password;
+        private bool _isEncrypted;
         
         /// <summary>
-        /// Required. Gets or sets the password of the credential.
+        /// Optional. Gets or sets the encrypted flag of the variable.
         /// </summary>
-        public string Password
+        public bool IsEncrypted
         {
-            get { return this._password; }
-            set { this._password = value; }
+            get { return this._isEncrypted; }
+            set { this._isEncrypted = value; }
         }
         
-        private string _userName;
+        private string _value;
         
         /// <summary>
-        /// Required. Gets or sets the user name of the credential.
+        /// Optional. Gets or sets the value of the variable.
         /// </summary>
-        public string UserName
+        public string Value
         {
-            get { return this._userName; }
-            set { this._userName = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the CredentialCreateProperties class.
-        /// </summary>
-        public CredentialCreateProperties()
-        {
+            get { return this._value; }
+            set { this._value = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the CredentialCreateProperties class
-        /// with required arguments.
+        /// Initializes a new instance of the VariableCreateOrUpdateProperties
+        /// class.
         /// </summary>
-        public CredentialCreateProperties(string userName, string password)
-            : this()
+        public VariableCreateOrUpdateProperties()
         {
-            if (userName == null)
-            {
-                throw new ArgumentNullException("userName");
-            }
-            if (password == null)
-            {
-                throw new ArgumentNullException("password");
-            }
-            this.UserName = userName;
-            this.Password = password;
         }
     }
 }

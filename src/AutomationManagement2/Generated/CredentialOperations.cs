@@ -78,16 +78,16 @@ namespace Microsoft.Azure.Management.Automation
         /// Required. The automation account name.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The parameters supplied to the create credential
-        /// operation.
+        /// Required. The parameters supplied to the create or update
+        /// credential operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response model for the create credential operation.
+        /// The response model for the create or update credential operation.
         /// </returns>
-        public async Task<CredentialCreateResponse> CreateAsync(string resourceGroupName, string automationAccount, CredentialCreateParameters parameters, CancellationToken cancellationToken)
+        public async Task<CredentialCreateOrUpdateResponse> CreateOrUpdateAsync(string resourceGroupName, string automationAccount, CredentialCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -129,7 +129,7 @@ namespace Microsoft.Azure.Management.Automation
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("automationAccount", automationAccount);
                 tracingParameters.Add("parameters", parameters);
-                TracingAdapter.Enter(invocationId, this, "CreateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "CreateOrUpdateAsync", tracingParameters);
             }
             
             // Construct URL
@@ -179,7 +179,7 @@ namespace Microsoft.Azure.Management.Automation
                 
                 // Set Headers
                 httpRequest.Headers.Add("Accept", "application/json");
-                httpRequest.Headers.Add("x-ms-version", "2013-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -189,13 +189,13 @@ namespace Microsoft.Azure.Management.Automation
                 string requestContent = null;
                 JToken requestDoc = null;
                 
-                JObject credentialCreateParametersValue = new JObject();
-                requestDoc = credentialCreateParametersValue;
+                JObject credentialCreateOrUpdateParametersValue = new JObject();
+                requestDoc = credentialCreateOrUpdateParametersValue;
                 
-                credentialCreateParametersValue["name"] = parameters.Name;
+                credentialCreateOrUpdateParametersValue["name"] = parameters.Name;
                 
                 JObject propertiesValue = new JObject();
-                credentialCreateParametersValue["properties"] = propertiesValue;
+                credentialCreateOrUpdateParametersValue["properties"] = propertiesValue;
                 
                 propertiesValue["userName"] = parameters.Properties.UserName;
                 
@@ -225,7 +225,7 @@ namespace Microsoft.Azure.Management.Automation
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.Created)
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -237,13 +237,13 @@ namespace Microsoft.Azure.Management.Automation
                     }
                     
                     // Create Result
-                    CredentialCreateResponse result = null;
+                    CredentialCreateOrUpdateResponse result = null;
                     // Deserialize Response
-                    if (statusCode == HttpStatusCode.Created)
+                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Created)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new CredentialCreateResponse();
+                        result = new CredentialCreateOrUpdateResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -425,7 +425,7 @@ namespace Microsoft.Azure.Management.Automation
                 
                 // Set Headers
                 httpRequest.Headers.Add("Accept", "application/json");
-                httpRequest.Headers.Add("x-ms-version", "2013-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -586,7 +586,7 @@ namespace Microsoft.Azure.Management.Automation
                 
                 // Set Headers
                 httpRequest.Headers.Add("Accept", "application/json");
-                httpRequest.Headers.Add("x-ms-version", "2013-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -798,7 +798,7 @@ namespace Microsoft.Azure.Management.Automation
                 // Set Headers
                 httpRequest.Headers.Add("Accept", "application/json");
                 httpRequest.Headers.Add("ocp-referer", url);
-                httpRequest.Headers.Add("x-ms-version", "2013-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -992,7 +992,7 @@ namespace Microsoft.Azure.Management.Automation
                 // Set Headers
                 httpRequest.Headers.Add("Accept", "application/json");
                 httpRequest.Headers.Add("ocp-referer", url);
-                httpRequest.Headers.Add("x-ms-version", "2013-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1239,7 +1239,7 @@ namespace Microsoft.Azure.Management.Automation
                 
                 // Set Headers
                 httpRequest.Headers.Add("Accept", "application/json");
-                httpRequest.Headers.Add("x-ms-version", "2013-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();

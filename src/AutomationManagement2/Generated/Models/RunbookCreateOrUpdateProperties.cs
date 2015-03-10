@@ -26,9 +26,9 @@ using Microsoft.Azure.Management.Automation.Models;
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The parameters supplied to the create runbook properties.
+    /// The parameters supplied to the create or update runbook properties.
     /// </summary>
-    public partial class RunbookCreateProperties
+    public partial class RunbookCreateOrUpdateProperties
     {
         private string _description;
         
@@ -86,17 +86,18 @@ namespace Microsoft.Azure.Management.Automation.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the RunbookCreateProperties class.
+        /// Initializes a new instance of the RunbookCreateOrUpdateProperties
+        /// class.
         /// </summary>
-        public RunbookCreateProperties()
+        public RunbookCreateOrUpdateProperties()
         {
         }
         
         /// <summary>
-        /// Initializes a new instance of the RunbookCreateProperties class
-        /// with required arguments.
+        /// Initializes a new instance of the RunbookCreateOrUpdateProperties
+        /// class with required arguments.
         /// </summary>
-        public RunbookCreateProperties(string runbookType, ContentLink publishContentLink)
+        public RunbookCreateOrUpdateProperties(string runbookType, ContentLink publishContentLink)
             : this()
         {
             if (runbookType == null)

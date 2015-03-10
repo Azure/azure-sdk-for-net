@@ -26,33 +26,34 @@ using Microsoft.Azure.Management.Automation.Models;
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The parameters supplied to the create runbook operation.
+    /// The parameters supplied to the create or update runbook operation.
     /// </summary>
-    public partial class RunbookCreateParameters : ResourceCreateParameterBase
+    public partial class RunbookCreateOrUpdateDraftParameters : ResourceCreateOrUpdateParameterBase
     {
-        private RunbookCreateProperties _properties;
+        private RunbookCreateOrUpdateDraftProperties _properties;
         
         /// <summary>
-        /// Required. Gets or sets runbook create properties.
+        /// Required. Gets or sets runbook draft create or update properties.
         /// </summary>
-        public RunbookCreateProperties Properties
+        public RunbookCreateOrUpdateDraftProperties Properties
         {
             get { return this._properties; }
             set { this._properties = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the RunbookCreateParameters class.
+        /// Initializes a new instance of the
+        /// RunbookCreateOrUpdateDraftParameters class.
         /// </summary>
-        public RunbookCreateParameters()
+        public RunbookCreateOrUpdateDraftParameters()
         {
         }
         
         /// <summary>
-        /// Initializes a new instance of the RunbookCreateParameters class
-        /// with required arguments.
+        /// Initializes a new instance of the
+        /// RunbookCreateOrUpdateDraftParameters class with required arguments.
         /// </summary>
-        public RunbookCreateParameters(RunbookCreateProperties properties)
+        public RunbookCreateOrUpdateDraftParameters(RunbookCreateOrUpdateDraftProperties properties)
             : this()
         {
             if (properties == null)

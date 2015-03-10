@@ -28,11 +28,11 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 using Hyak.Common;
 using Microsoft.Azure;
 using Microsoft.Azure.Management.Automation;
 using Microsoft.Azure.Management.Automation.Models;
+using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.Management.Automation
 {
@@ -74,15 +74,16 @@ namespace Microsoft.Azure.Management.Automation
         /// Required. The name of the resource group
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the create automation account.
+        /// Required. Parameters supplied to the create or update automation
+        /// account.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response model for the create account operation.
+        /// The response model for the create or update account operation.
         /// </returns>
-        public async Task<AutomationAccountCreateResponse> CreateAsync(string resourceGroupName, AutomationAccountCreateParameters parameters, CancellationToken cancellationToken)
+        public async Task<AutomationAccountCreateOrUpdateResponse> CreateOrUpdateAsync(string resourceGroupName, AutomationAccountCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -103,7 +104,7 @@ namespace Microsoft.Azure.Management.Automation
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("parameters", parameters);
-                TracingAdapter.Enter(invocationId, this, "CreateAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "CreateOrUpdateAsync", tracingParameters);
             }
             
             // Construct URL
@@ -120,10 +121,16 @@ namespace Microsoft.Azure.Management.Automation
             {
                 url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             }
-            url = url + "/AutomationAccount/";
+            url = url + "/automationAccounts/";
             if (parameters.Name != null)
             {
                 url = url + Uri.EscapeDataString(parameters.Name);
+            }
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-01-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
             }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -147,7 +154,7 @@ namespace Microsoft.Azure.Management.Automation
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -155,14 +162,60 @@ namespace Microsoft.Azure.Management.Automation
                 
                 // Serialize Request
                 string requestContent = null;
-                XDocument requestDoc = new XDocument();
+                JToken requestDoc = null;
                 
-                XElement resourceElement = new XElement(XName.Get("Resource", "http://schemas.microsoft.com/windowsazure"));
-                requestDoc.Add(resourceElement);
+                JObject automationAccountCreateOrUpdateParametersValue = new JObject();
+                requestDoc = automationAccountCreateOrUpdateParametersValue;
                 
-                requestContent = requestDoc.ToString();
+                if (parameters.Properties != null)
+                {
+                    JObject propertiesValue = new JObject();
+                    automationAccountCreateOrUpdateParametersValue["properties"] = propertiesValue;
+                    
+                    if (parameters.Properties.Sku != null)
+                    {
+                        JObject skuValue = new JObject();
+                        propertiesValue["sku"] = skuValue;
+                        
+                        if (parameters.Properties.Sku.Name != null)
+                        {
+                            skuValue["name"] = parameters.Properties.Sku.Name;
+                        }
+                        
+                        if (parameters.Properties.Sku.Family != null)
+                        {
+                            skuValue["family"] = parameters.Properties.Sku.Family;
+                        }
+                        
+                        skuValue["capacity"] = parameters.Properties.Sku.Capacity;
+                    }
+                }
+                
+                if (parameters.Name != null)
+                {
+                    automationAccountCreateOrUpdateParametersValue["name"] = parameters.Name;
+                }
+                
+                if (parameters.Location != null)
+                {
+                    automationAccountCreateOrUpdateParametersValue["location"] = parameters.Location;
+                }
+                
+                if (parameters.Tags != null)
+                {
+                    JObject tagsDictionary = new JObject();
+                    foreach (KeyValuePair<string, string> pair in parameters.Tags)
+                    {
+                        string tagsKey = pair.Key;
+                        string tagsValue = pair.Value;
+                        tagsDictionary[tagsKey] = tagsValue;
+                    }
+                    automationAccountCreateOrUpdateParametersValue["tags"] = tagsDictionary;
+                }
+                
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -179,7 +232,7 @@ namespace Microsoft.Azure.Management.Automation
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.Created)
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -191,9 +244,114 @@ namespace Microsoft.Azure.Management.Automation
                     }
                     
                     // Create Result
-                    AutomationAccountCreateResponse result = null;
+                    AutomationAccountCreateOrUpdateResponse result = null;
                     // Deserialize Response
-                    result = new AutomationAccountCreateResponse();
+                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Created)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new AutomationAccountCreateOrUpdateResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            AutomationAccount automationAccountInstance = new AutomationAccount();
+                            result.AutomationAccount = automationAccountInstance;
+                            
+                            JToken propertiesValue2 = responseDoc["properties"];
+                            if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                            {
+                                AutomationAccountProperties propertiesInstance = new AutomationAccountProperties();
+                                automationAccountInstance.Properties = propertiesInstance;
+                                
+                                JToken skuValue2 = propertiesValue2["sku"];
+                                if (skuValue2 != null && skuValue2.Type != JTokenType.Null)
+                                {
+                                    Sku skuInstance = new Sku();
+                                    propertiesInstance.Sku = skuInstance;
+                                    
+                                    JToken nameValue = skuValue2["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance = ((string)nameValue);
+                                        skuInstance.Name = nameInstance;
+                                    }
+                                    
+                                    JToken familyValue = skuValue2["family"];
+                                    if (familyValue != null && familyValue.Type != JTokenType.Null)
+                                    {
+                                        string familyInstance = ((string)familyValue);
+                                        skuInstance.Family = familyInstance;
+                                    }
+                                    
+                                    JToken capacityValue = skuValue2["capacity"];
+                                    if (capacityValue != null && capacityValue.Type != JTokenType.Null)
+                                    {
+                                        int capacityInstance = ((int)capacityValue);
+                                        skuInstance.Capacity = capacityInstance;
+                                    }
+                                }
+                                
+                                JToken creationTimeValue = propertiesValue2["creationTime"];
+                                if (creationTimeValue != null && creationTimeValue.Type != JTokenType.Null)
+                                {
+                                    DateTimeOffset creationTimeInstance = ((DateTimeOffset)creationTimeValue);
+                                    propertiesInstance.CreationTime = creationTimeInstance;
+                                }
+                                
+                                JToken lastModifiedTimeValue = propertiesValue2["lastModifiedTime"];
+                                if (lastModifiedTimeValue != null && lastModifiedTimeValue.Type != JTokenType.Null)
+                                {
+                                    DateTimeOffset lastModifiedTimeInstance = ((DateTimeOffset)lastModifiedTimeValue);
+                                    propertiesInstance.LastModifiedTime = lastModifiedTimeInstance;
+                                }
+                            }
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                automationAccountInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue2 = responseDoc["name"];
+                            if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                            {
+                                string nameInstance2 = ((string)nameValue2);
+                                automationAccountInstance.Name = nameInstance2;
+                            }
+                            
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            {
+                                string locationInstance = ((string)locationValue);
+                                automationAccountInstance.Location = locationInstance;
+                            }
+                            
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property in tagsSequenceElement)
+                                {
+                                    string tagsKey2 = ((string)property.Name);
+                                    string tagsValue2 = ((string)property.Value);
+                                    automationAccountInstance.Tags.Add(tagsKey2, tagsValue2);
+                                }
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                automationAccountInstance.Type = typeInstance;
+                            }
+                        }
+                        
+                    }
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -279,8 +437,14 @@ namespace Microsoft.Azure.Management.Automation
             {
                 url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             }
-            url = url + "/AutomationAccount/";
+            url = url + "/automationAccounts/";
             url = url + Uri.EscapeDataString(automationAccountName);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-01-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -303,7 +467,7 @@ namespace Microsoft.Azure.Management.Automation
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -427,10 +591,16 @@ namespace Microsoft.Azure.Management.Automation
             {
                 url = url + Uri.EscapeDataString(this.Client.ResourceNamespace);
             }
-            url = url + "/AutomationAccount/";
+            url = url + "/automationAccounts/";
             if (parameters.Name != null)
             {
                 url = url + Uri.EscapeDataString(parameters.Name);
+            }
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-01-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
             }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -454,7 +624,7 @@ namespace Microsoft.Azure.Management.Automation
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -462,14 +632,57 @@ namespace Microsoft.Azure.Management.Automation
                 
                 // Serialize Request
                 string requestContent = null;
-                XDocument requestDoc = new XDocument();
+                JToken requestDoc = null;
                 
-                XElement resourceElement = new XElement(XName.Get("Resource", "http://schemas.microsoft.com/windowsazure"));
-                requestDoc.Add(resourceElement);
+                JObject automationAccountUpdateParametersValue = new JObject();
+                requestDoc = automationAccountUpdateParametersValue;
                 
-                requestContent = requestDoc.ToString();
+                JObject propertiesValue = new JObject();
+                automationAccountUpdateParametersValue["properties"] = propertiesValue;
+                
+                if (parameters.Properties.Sku != null)
+                {
+                    JObject skuValue = new JObject();
+                    propertiesValue["sku"] = skuValue;
+                    
+                    if (parameters.Properties.Sku.Name != null)
+                    {
+                        skuValue["name"] = parameters.Properties.Sku.Name;
+                    }
+                    
+                    if (parameters.Properties.Sku.Family != null)
+                    {
+                        skuValue["family"] = parameters.Properties.Sku.Family;
+                    }
+                    
+                    skuValue["capacity"] = parameters.Properties.Sku.Capacity;
+                }
+                
+                if (parameters.Name != null)
+                {
+                    automationAccountUpdateParametersValue["name"] = parameters.Name;
+                }
+                
+                if (parameters.Location != null)
+                {
+                    automationAccountUpdateParametersValue["location"] = parameters.Location;
+                }
+                
+                if (parameters.Tags != null)
+                {
+                    JObject tagsDictionary = new JObject();
+                    foreach (KeyValuePair<string, string> pair in parameters.Tags)
+                    {
+                        string tagsKey = pair.Key;
+                        string tagsValue = pair.Value;
+                        tagsDictionary[tagsKey] = tagsValue;
+                    }
+                    automationAccountUpdateParametersValue["tags"] = tagsDictionary;
+                }
+                
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -500,7 +713,112 @@ namespace Microsoft.Azure.Management.Automation
                     // Create Result
                     AutomationAccountUpdateResponse result = null;
                     // Deserialize Response
-                    result = new AutomationAccountUpdateResponse();
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new AutomationAccountUpdateResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            AutomationAccount automationAccountInstance = new AutomationAccount();
+                            result.AutomationAccount = automationAccountInstance;
+                            
+                            JToken propertiesValue2 = responseDoc["properties"];
+                            if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                            {
+                                AutomationAccountProperties propertiesInstance = new AutomationAccountProperties();
+                                automationAccountInstance.Properties = propertiesInstance;
+                                
+                                JToken skuValue2 = propertiesValue2["sku"];
+                                if (skuValue2 != null && skuValue2.Type != JTokenType.Null)
+                                {
+                                    Sku skuInstance = new Sku();
+                                    propertiesInstance.Sku = skuInstance;
+                                    
+                                    JToken nameValue = skuValue2["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance = ((string)nameValue);
+                                        skuInstance.Name = nameInstance;
+                                    }
+                                    
+                                    JToken familyValue = skuValue2["family"];
+                                    if (familyValue != null && familyValue.Type != JTokenType.Null)
+                                    {
+                                        string familyInstance = ((string)familyValue);
+                                        skuInstance.Family = familyInstance;
+                                    }
+                                    
+                                    JToken capacityValue = skuValue2["capacity"];
+                                    if (capacityValue != null && capacityValue.Type != JTokenType.Null)
+                                    {
+                                        int capacityInstance = ((int)capacityValue);
+                                        skuInstance.Capacity = capacityInstance;
+                                    }
+                                }
+                                
+                                JToken creationTimeValue = propertiesValue2["creationTime"];
+                                if (creationTimeValue != null && creationTimeValue.Type != JTokenType.Null)
+                                {
+                                    DateTimeOffset creationTimeInstance = ((DateTimeOffset)creationTimeValue);
+                                    propertiesInstance.CreationTime = creationTimeInstance;
+                                }
+                                
+                                JToken lastModifiedTimeValue = propertiesValue2["lastModifiedTime"];
+                                if (lastModifiedTimeValue != null && lastModifiedTimeValue.Type != JTokenType.Null)
+                                {
+                                    DateTimeOffset lastModifiedTimeInstance = ((DateTimeOffset)lastModifiedTimeValue);
+                                    propertiesInstance.LastModifiedTime = lastModifiedTimeInstance;
+                                }
+                            }
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                automationAccountInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue2 = responseDoc["name"];
+                            if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                            {
+                                string nameInstance2 = ((string)nameValue2);
+                                automationAccountInstance.Name = nameInstance2;
+                            }
+                            
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            {
+                                string locationInstance = ((string)locationValue);
+                                automationAccountInstance.Location = locationInstance;
+                            }
+                            
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property in tagsSequenceElement)
+                                {
+                                    string tagsKey2 = ((string)property.Name);
+                                    string tagsValue2 = ((string)property.Value);
+                                    automationAccountInstance.Tags.Add(tagsKey2, tagsValue2);
+                                }
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                automationAccountInstance.Type = typeInstance;
+                            }
+                        }
+                        
+                    }
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {

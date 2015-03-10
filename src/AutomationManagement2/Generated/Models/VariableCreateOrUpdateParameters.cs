@@ -26,39 +26,56 @@ using Microsoft.Azure.Management.Automation.Models;
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The parameters supplied to the create module operation.
+    /// The parameters supplied to the create or update variable operation.
     /// </summary>
-    public partial class ModuleCreateParameters : ResourceCreateParameterBase
+    public partial class VariableCreateOrUpdateParameters
     {
-        private ModuleCreateProperties _properties;
+        private string _name;
         
         /// <summary>
-        /// Required. Gets or sets the module create properties.
+        /// Required. Gets or sets the name of the variable.
         /// </summary>
-        public ModuleCreateProperties Properties
+        public string Name
+        {
+            get { return this._name; }
+            set { this._name = value; }
+        }
+        
+        private VariableCreateOrUpdateProperties _properties;
+        
+        /// <summary>
+        /// Required. Gets or sets the properties of the variable.
+        /// </summary>
+        public VariableCreateOrUpdateProperties Properties
         {
             get { return this._properties; }
             set { this._properties = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ModuleCreateParameters class.
+        /// Initializes a new instance of the VariableCreateOrUpdateParameters
+        /// class.
         /// </summary>
-        public ModuleCreateParameters()
+        public VariableCreateOrUpdateParameters()
         {
         }
         
         /// <summary>
-        /// Initializes a new instance of the ModuleCreateParameters class with
-        /// required arguments.
+        /// Initializes a new instance of the VariableCreateOrUpdateParameters
+        /// class with required arguments.
         /// </summary>
-        public ModuleCreateParameters(ModuleCreateProperties properties)
+        public VariableCreateOrUpdateParameters(string name, VariableCreateOrUpdateProperties properties)
             : this()
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException("name");
+            }
             if (properties == null)
             {
                 throw new ArgumentNullException("properties");
             }
+            this.Name = name;
             this.Properties = properties;
         }
     }

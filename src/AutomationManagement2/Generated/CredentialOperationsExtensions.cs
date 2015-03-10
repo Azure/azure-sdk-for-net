@@ -47,17 +47,17 @@ namespace Microsoft.Azure.Management.Automation
         /// Required. The automation account name.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The parameters supplied to the create credential
-        /// operation.
+        /// Required. The parameters supplied to the create or update
+        /// credential operation.
         /// </param>
         /// <returns>
-        /// The response model for the create credential operation.
+        /// The response model for the create or update credential operation.
         /// </returns>
-        public static CredentialCreateResponse Create(this ICredentialOperations operations, string resourceGroupName, string automationAccount, CredentialCreateParameters parameters)
+        public static CredentialCreateOrUpdateResponse CreateOrUpdate(this ICredentialOperations operations, string resourceGroupName, string automationAccount, CredentialCreateOrUpdateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((ICredentialOperations)s).CreateAsync(resourceGroupName, automationAccount, parameters);
+                return ((ICredentialOperations)s).CreateOrUpdateAsync(resourceGroupName, automationAccount, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -78,15 +78,15 @@ namespace Microsoft.Azure.Management.Automation
         /// Required. The automation account name.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The parameters supplied to the create credential
-        /// operation.
+        /// Required. The parameters supplied to the create or update
+        /// credential operation.
         /// </param>
         /// <returns>
-        /// The response model for the create credential operation.
+        /// The response model for the create or update credential operation.
         /// </returns>
-        public static Task<CredentialCreateResponse> CreateAsync(this ICredentialOperations operations, string resourceGroupName, string automationAccount, CredentialCreateParameters parameters)
+        public static Task<CredentialCreateOrUpdateResponse> CreateOrUpdateAsync(this ICredentialOperations operations, string resourceGroupName, string automationAccount, CredentialCreateOrUpdateParameters parameters)
         {
-            return operations.CreateAsync(resourceGroupName, automationAccount, parameters, CancellationToken.None);
+            return operations.CreateOrUpdateAsync(resourceGroupName, automationAccount, parameters, CancellationToken.None);
         }
         
         /// <summary>

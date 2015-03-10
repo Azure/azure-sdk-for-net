@@ -25,6 +25,9 @@ using Microsoft.Azure.Management.Automation.Models;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
+    /// <summary>
+    /// The parameters supplied to the update automation account operation.
+    /// </summary>
     public partial class AutomationAccountUpdateParameters : ResourceUpdateParameterBase
     {
         private AutomationAccountUpdateProperties _properties;

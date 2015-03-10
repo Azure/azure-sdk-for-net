@@ -27,25 +27,26 @@ using Microsoft.Azure.Management.Automation.Models;
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The response model for the create connection operation.
+    /// The response model for the create or update variable operation.
     /// </summary>
-    public partial class ConnectionCreateResponse : AzureOperationResponse
+    public partial class VariableCreateOrUpdateResponse : AzureOperationResponse
     {
-        private Connection _connection;
+        private Variable _variable;
         
         /// <summary>
-        /// Optional. Gets or sets a connection.
+        /// Optional. Gets or sets a variable.
         /// </summary>
-        public Connection Connection
+        public Variable Variable
         {
-            get { return this._connection; }
-            set { this._connection = value; }
+            get { return this._variable; }
+            set { this._variable = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ConnectionCreateResponse class.
+        /// Initializes a new instance of the VariableCreateOrUpdateResponse
+        /// class.
         /// </summary>
-        public ConnectionCreateResponse()
+        public VariableCreateOrUpdateResponse()
         {
         }
     }

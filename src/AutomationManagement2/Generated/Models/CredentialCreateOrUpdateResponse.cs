@@ -21,28 +21,32 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Automation.Models;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
-    public partial class AutomationAccountCreateParameters : ResourceCreateParameterBase
+    /// <summary>
+    /// The response model for the create or update credential operation.
+    /// </summary>
+    public partial class CredentialCreateOrUpdateResponse : AzureOperationResponse
     {
-        private AutomationAccountCreateProperties _properties;
+        private Credential _credential;
         
         /// <summary>
-        /// Optional. Gets or sets account create properties.
+        /// Optional. Gets or sets a credential.
         /// </summary>
-        public AutomationAccountCreateProperties Properties
+        public Credential Credential
         {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._credential; }
+            set { this._credential = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the AutomationAccountCreateParameters
+        /// Initializes a new instance of the CredentialCreateOrUpdateResponse
         /// class.
         /// </summary>
-        public AutomationAccountCreateParameters()
+        public CredentialCreateOrUpdateResponse()
         {
         }
     }

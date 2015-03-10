@@ -103,16 +103,16 @@ namespace Microsoft.Azure.Management.Automation
         /// Required. The automation account name.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The create parameters for runbook.
+        /// Required. The create or update parameters for runbook.
         /// </param>
         /// <returns>
         /// The response model for the runbook create response.
         /// </returns>
-        public static RunbookCreateResponse Create(this IRunbookOperations operations, string resourceGroupName, string automationAccount, RunbookCreateParameters parameters)
+        public static RunbookCreateOrUpdateResponse CreateOrUpdate(this IRunbookOperations operations, string resourceGroupName, string automationAccount, RunbookCreateOrUpdateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IRunbookOperations)s).CreateAsync(resourceGroupName, automationAccount, parameters);
+                return ((IRunbookOperations)s).CreateOrUpdateAsync(resourceGroupName, automationAccount, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -133,14 +133,14 @@ namespace Microsoft.Azure.Management.Automation
         /// Required. The automation account name.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The create parameters for runbook.
+        /// Required. The create or update parameters for runbook.
         /// </param>
         /// <returns>
         /// The response model for the runbook create response.
         /// </returns>
-        public static Task<RunbookCreateResponse> CreateAsync(this IRunbookOperations operations, string resourceGroupName, string automationAccount, RunbookCreateParameters parameters)
+        public static Task<RunbookCreateOrUpdateResponse> CreateOrUpdateAsync(this IRunbookOperations operations, string resourceGroupName, string automationAccount, RunbookCreateOrUpdateParameters parameters)
         {
-            return operations.CreateAsync(resourceGroupName, automationAccount, parameters, CancellationToken.None);
+            return operations.CreateOrUpdateAsync(resourceGroupName, automationAccount, parameters, CancellationToken.None);
         }
         
         /// <summary>
@@ -159,16 +159,16 @@ namespace Microsoft.Azure.Management.Automation
         /// Required. The automation account name.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The create parameters for runbook.
+        /// Required. The create or update parameters for runbook.
         /// </param>
         /// <returns>
         /// The response model for the runbook create response.
         /// </returns>
-        public static RunbookCreateResponse CreateWithDraft(this IRunbookOperations operations, string resourceGroupName, string automationAccount, RunbookCreateDraftParameters parameters)
+        public static RunbookCreateOrUpdateResponse CreateOrUpdateWithDraft(this IRunbookOperations operations, string resourceGroupName, string automationAccount, RunbookCreateOrUpdateDraftParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IRunbookOperations)s).CreateWithDraftAsync(resourceGroupName, automationAccount, parameters);
+                return ((IRunbookOperations)s).CreateOrUpdateWithDraftAsync(resourceGroupName, automationAccount, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -189,14 +189,14 @@ namespace Microsoft.Azure.Management.Automation
         /// Required. The automation account name.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The create parameters for runbook.
+        /// Required. The create or update parameters for runbook.
         /// </param>
         /// <returns>
         /// The response model for the runbook create response.
         /// </returns>
-        public static Task<RunbookCreateResponse> CreateWithDraftAsync(this IRunbookOperations operations, string resourceGroupName, string automationAccount, RunbookCreateDraftParameters parameters)
+        public static Task<RunbookCreateOrUpdateResponse> CreateOrUpdateWithDraftAsync(this IRunbookOperations operations, string resourceGroupName, string automationAccount, RunbookCreateOrUpdateDraftParameters parameters)
         {
-            return operations.CreateWithDraftAsync(resourceGroupName, automationAccount, parameters, CancellationToken.None);
+            return operations.CreateOrUpdateWithDraftAsync(resourceGroupName, automationAccount, parameters, CancellationToken.None);
         }
         
         /// <summary>

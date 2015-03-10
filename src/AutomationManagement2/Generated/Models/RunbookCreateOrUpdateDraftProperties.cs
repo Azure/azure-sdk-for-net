@@ -26,9 +26,10 @@ using Microsoft.Azure.Management.Automation.Models;
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The parameters supplied to the create dratft runbook properties.
+    /// The parameters supplied to the create or update dratft runbook
+    /// properties.
     /// </summary>
-    public partial class RunbookCreateDraftProperties
+    public partial class RunbookCreateOrUpdateDraftProperties
     {
         private string _description;
         
@@ -86,18 +87,18 @@ namespace Microsoft.Azure.Management.Automation.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the RunbookCreateDraftProperties
-        /// class.
+        /// Initializes a new instance of the
+        /// RunbookCreateOrUpdateDraftProperties class.
         /// </summary>
-        public RunbookCreateDraftProperties()
+        public RunbookCreateOrUpdateDraftProperties()
         {
         }
         
         /// <summary>
-        /// Initializes a new instance of the RunbookCreateDraftProperties
-        /// class with required arguments.
+        /// Initializes a new instance of the
+        /// RunbookCreateOrUpdateDraftProperties class with required arguments.
         /// </summary>
-        public RunbookCreateDraftProperties(string runbookType, RunbookDraft draft)
+        public RunbookCreateOrUpdateDraftProperties(string runbookType, RunbookDraft draft)
             : this()
         {
             if (runbookType == null)

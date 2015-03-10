@@ -22,30 +22,30 @@
 using System;
 using System.Linq;
 using Microsoft.Azure;
-using Microsoft.Azure.Management.Automation.Models;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The response model for the create schedule operation.
+    /// The response model for the runbook create response.
     /// </summary>
-    public partial class ScheduleCreateResponse : AzureOperationResponse
+    public partial class RunbookCreateOrUpdateResponse : AzureOperationResponse
     {
-        private Schedule _schedule;
+        private Uri _runbookUri;
         
         /// <summary>
-        /// Optional. Gets or sets a schedule.
+        /// Optional. Gets or sets the runbook uri.
         /// </summary>
-        public Schedule Schedule
+        public Uri RunbookUri
         {
-            get { return this._schedule; }
-            set { this._schedule = value; }
+            get { return this._runbookUri; }
+            set { this._runbookUri = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ScheduleCreateResponse class.
+        /// Initializes a new instance of the RunbookCreateOrUpdateResponse
+        /// class.
         /// </summary>
-        public ScheduleCreateResponse()
+        public RunbookCreateOrUpdateResponse()
         {
         }
     }

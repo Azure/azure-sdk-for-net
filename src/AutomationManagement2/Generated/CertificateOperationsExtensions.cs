@@ -47,17 +47,17 @@ namespace Microsoft.Azure.Management.Automation
         /// Required. The automation account name.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The parameters supplied to the create certificate
-        /// operation.
+        /// Required. The parameters supplied to the create or update
+        /// certificate operation.
         /// </param>
         /// <returns>
-        /// The response model for the create certificate operation.
+        /// The response model for the create or update certificate operation.
         /// </returns>
-        public static CertificateCreateResponse Create(this ICertificateOperations operations, string resourceGroupName, string automationAccount, CertificateCreateParameters parameters)
+        public static CertificateCreateOrUpdateResponse CreateOrUpdate(this ICertificateOperations operations, string resourceGroupName, string automationAccount, CertificateCreateOrUpdateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((ICertificateOperations)s).CreateAsync(resourceGroupName, automationAccount, parameters);
+                return ((ICertificateOperations)s).CreateOrUpdateAsync(resourceGroupName, automationAccount, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -78,15 +78,15 @@ namespace Microsoft.Azure.Management.Automation
         /// Required. The automation account name.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The parameters supplied to the create certificate
-        /// operation.
+        /// Required. The parameters supplied to the create or update
+        /// certificate operation.
         /// </param>
         /// <returns>
-        /// The response model for the create certificate operation.
+        /// The response model for the create or update certificate operation.
         /// </returns>
-        public static Task<CertificateCreateResponse> CreateAsync(this ICertificateOperations operations, string resourceGroupName, string automationAccount, CertificateCreateParameters parameters)
+        public static Task<CertificateCreateOrUpdateResponse> CreateOrUpdateAsync(this ICertificateOperations operations, string resourceGroupName, string automationAccount, CertificateCreateOrUpdateParameters parameters)
         {
-            return operations.CreateAsync(resourceGroupName, automationAccount, parameters, CancellationToken.None);
+            return operations.CreateOrUpdateAsync(resourceGroupName, automationAccount, parameters, CancellationToken.None);
         }
         
         /// <summary>

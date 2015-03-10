@@ -44,15 +44,15 @@ namespace Microsoft.Azure.Management.Automation
         /// The name of the resource group
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the create automation account.
+        /// Parameters supplied to the create or update automation account.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response model for the create account operation.
+        /// The response model for the create or update account operation.
         /// </returns>
-        Task<AutomationAccountCreateResponse> CreateAsync(string resourceGroupName, AutomationAccountCreateParameters parameters, CancellationToken cancellationToken);
+        Task<AutomationAccountCreateOrUpdateResponse> CreateOrUpdateAsync(string resourceGroupName, AutomationAccountCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Create an automation account.  (see

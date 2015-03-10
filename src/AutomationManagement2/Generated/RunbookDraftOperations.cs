@@ -173,7 +173,7 @@ namespace Microsoft.Azure.Management.Automation
                 // Set Headers
                 httpRequest.Headers.Add("Accept", "application/json");
                 httpRequest.Headers.Add("ocp-referer", url);
-                httpRequest.Headers.Add("x-ms-version", "2013-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -367,7 +367,7 @@ namespace Microsoft.Azure.Management.Automation
                 // Set Headers
                 httpRequest.Headers.Add("Accept", "application/json");
                 httpRequest.Headers.Add("ocp-referer", url);
-                httpRequest.Headers.Add("x-ms-version", "2013-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -542,7 +542,7 @@ namespace Microsoft.Azure.Management.Automation
                 
                 // Set Headers
                 httpRequest.Headers.Add("Accept", "application/json");
-                httpRequest.Headers.Add("x-ms-version", "2013-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -711,7 +711,7 @@ namespace Microsoft.Azure.Management.Automation
                 
                 // Set Headers
                 httpRequest.Headers.Add("Accept", "application/json");
-                httpRequest.Headers.Add("x-ms-version", "2013-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1070,7 +1070,7 @@ namespace Microsoft.Azure.Management.Automation
                 
                 // Set Headers
                 httpRequest.Headers.Add("Accept", "application/json");
-                httpRequest.Headers.Add("x-ms-version", "2013-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();

@@ -21,45 +21,33 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Automation.Models;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The parameters supplied to the create module properties.
+    /// The response model for the create or update account operation.
     /// </summary>
-    public partial class ModuleCreateProperties
+    public partial class AutomationAccountCreateOrUpdateResponse : AzureOperationResponse
     {
-        private ContentLink _contentLink;
+        private AutomationAccount _automationAccount;
         
         /// <summary>
-        /// Required. Gets or sets the module content link.
+        /// Optional. Gets or sets a account.
         /// </summary>
-        public ContentLink ContentLink
+        public AutomationAccount AutomationAccount
         {
-            get { return this._contentLink; }
-            set { this._contentLink = value; }
+            get { return this._automationAccount; }
+            set { this._automationAccount = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ModuleCreateProperties class.
+        /// Initializes a new instance of the
+        /// AutomationAccountCreateOrUpdateResponse class.
         /// </summary>
-        public ModuleCreateProperties()
+        public AutomationAccountCreateOrUpdateResponse()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the ModuleCreateProperties class with
-        /// required arguments.
-        /// </summary>
-        public ModuleCreateProperties(ContentLink contentLink)
-            : this()
-        {
-            if (contentLink == null)
-            {
-                throw new ArgumentNullException("contentLink");
-            }
-            this.ContentLink = contentLink;
         }
     }
 }

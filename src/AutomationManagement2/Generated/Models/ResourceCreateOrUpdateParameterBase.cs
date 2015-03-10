@@ -20,53 +20,54 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
-    /// <summary>
-    /// The properties of the create variable operation.
-    /// </summary>
-    public partial class VariableCreateProperties
+    public partial class ResourceCreateOrUpdateParameterBase
     {
-        private string _description;
+        private string _location;
         
         /// <summary>
-        /// Optional. Gets or sets the description of the variable.
+        /// Optional. Gets or sets the location of the resource.
         /// </summary>
-        public string Description
+        public string Location
         {
-            get { return this._description; }
-            set { this._description = value; }
+            get { return this._location; }
+            set { this._location = value; }
         }
         
-        private bool _isEncrypted;
+        private string _name;
         
         /// <summary>
-        /// Optional. Gets or sets the encrypted flag of the variable.
+        /// Optional. Gets or sets the name of the resource.
         /// </summary>
-        public bool IsEncrypted
+        public string Name
         {
-            get { return this._isEncrypted; }
-            set { this._isEncrypted = value; }
+            get { return this._name; }
+            set { this._name = value; }
         }
         
-        private string _value;
+        private IDictionary<string, string> _tags;
         
         /// <summary>
-        /// Optional. Gets or sets the value of the variable.
+        /// Optional. Gets or sets the tags attached to the resource.
         /// </summary>
-        public string Value
+        public IDictionary<string, string> Tags
         {
-            get { return this._value; }
-            set { this._value = value; }
+            get { return this._tags; }
+            set { this._tags = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the VariableCreateProperties class.
+        /// Initializes a new instance of the
+        /// ResourceCreateOrUpdateParameterBase class.
         /// </summary>
-        public VariableCreateProperties()
+        public ResourceCreateOrUpdateParameterBase()
         {
+            this.Tags = new LazyDictionary<string, string>();
         }
     }
 }

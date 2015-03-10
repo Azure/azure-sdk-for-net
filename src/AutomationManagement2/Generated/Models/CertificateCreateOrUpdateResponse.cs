@@ -27,9 +27,9 @@ using Microsoft.Azure.Management.Automation.Models;
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The response model for the create certificate operation.
+    /// The response model for the create or update certificate operation.
     /// </summary>
-    public partial class CertificateCreateResponse : AzureOperationResponse
+    public partial class CertificateCreateOrUpdateResponse : AzureOperationResponse
     {
         private Certificate _certificate;
         
@@ -43,9 +43,10 @@ namespace Microsoft.Azure.Management.Automation.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the CertificateCreateResponse class.
+        /// Initializes a new instance of the CertificateCreateOrUpdateResponse
+        /// class.
         /// </summary>
-        public CertificateCreateResponse()
+        public CertificateCreateOrUpdateResponse()
         {
         }
     }

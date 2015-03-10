@@ -46,15 +46,15 @@ namespace Microsoft.Azure.Management.Automation
         /// The automation account name.
         /// </param>
         /// <param name='parameters'>
-        /// The create parameters for module.
+        /// The create or update parameters for module.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response model for the create module operation.
+        /// The response model for the create or update module operation.
         /// </returns>
-        Task<ModuleCreateResponse> CreateAsync(string resourceGroupName, string automationAccount, ModuleCreateParameters parameters, CancellationToken cancellationToken);
+        Task<ModuleCreateOrUpdateResponse> CreateOrUpdateAsync(string resourceGroupName, string automationAccount, ModuleCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Delete the module by name.  (see

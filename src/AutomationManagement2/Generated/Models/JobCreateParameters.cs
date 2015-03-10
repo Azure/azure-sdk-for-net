@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Automation.Models
     /// <summary>
     /// The parameters supplied to the create job operation.
     /// </summary>
-    public partial class JobCreateParameters : ResourceCreateParameterBase
+    public partial class JobCreateParameters : ResourceCreateOrUpdateParameterBase
     {
         private JobCreateProperties _properties;
         

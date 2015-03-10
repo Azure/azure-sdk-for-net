@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.Automation
         /// The automation account name.
         /// </param>
         /// <param name='parameters'>
-        /// The create parameters for runbook.
+        /// The create or update parameters for runbook.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.Automation
         /// <returns>
         /// The response model for the runbook create response.
         /// </returns>
-        Task<RunbookCreateResponse> CreateAsync(string resourceGroupName, string automationAccount, RunbookCreateParameters parameters, CancellationToken cancellationToken);
+        Task<RunbookCreateOrUpdateResponse> CreateOrUpdateAsync(string resourceGroupName, string automationAccount, RunbookCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Create the runbook identified by runbook name.  (see
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.Automation
         /// The automation account name.
         /// </param>
         /// <param name='parameters'>
-        /// The create parameters for runbook.
+        /// The create or update parameters for runbook.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Management.Automation
         /// <returns>
         /// The response model for the runbook create response.
         /// </returns>
-        Task<RunbookCreateResponse> CreateWithDraftAsync(string resourceGroupName, string automationAccount, RunbookCreateDraftParameters parameters, CancellationToken cancellationToken);
+        Task<RunbookCreateOrUpdateResponse> CreateOrUpdateWithDraftAsync(string resourceGroupName, string automationAccount, RunbookCreateOrUpdateDraftParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Delete the runbook by name.  (see

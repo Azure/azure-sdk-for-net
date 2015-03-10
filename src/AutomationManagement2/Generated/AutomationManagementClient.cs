@@ -303,7 +303,7 @@ namespace Microsoft.Azure.Management.Automation
             this._testJobs = new TestJobOperations(this);
             this._variables = new VariableOperations(this);
             this._resourceNamespace = "Microsoft.Automation";
-            this._apiVersion = "2013-06-01";
+            this._apiVersion = "2014-06-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -354,7 +354,7 @@ namespace Microsoft.Azure.Management.Automation
                 throw new ArgumentNullException("credentials");
             }
             this._credentials = credentials;
-            this._baseUri = new Uri("https://management.core.windows.net");
+            this._baseUri = new Uri("https://management.azure.com");
             
             this.Credentials.InitializeServiceClient(this);
         }
@@ -384,7 +384,7 @@ namespace Microsoft.Azure.Management.Automation
             this._testJobs = new TestJobOperations(this);
             this._variables = new VariableOperations(this);
             this._resourceNamespace = "Microsoft.Automation";
-            this._apiVersion = "2013-06-01";
+            this._apiVersion = "2014-06-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -441,7 +441,7 @@ namespace Microsoft.Azure.Management.Automation
                 throw new ArgumentNullException("credentials");
             }
             this._credentials = credentials;
-            this._baseUri = new Uri("https://management.core.windows.net");
+            this._baseUri = new Uri("https://management.azure.com");
             
             this.Credentials.InitializeServiceClient(this);
         }
@@ -520,7 +520,7 @@ namespace Microsoft.Azure.Management.Automation
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -569,11 +569,11 @@ namespace Microsoft.Azure.Management.Automation
                     {
                         result.Status = OperationStatus.Failed;
                     }
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.Created)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
-                    if (statusCode == HttpStatusCode.Created)
+                    if (statusCode == HttpStatusCode.OK)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
@@ -682,7 +682,7 @@ namespace Microsoft.Azure.Management.Automation
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();

@@ -27,25 +27,26 @@ using Microsoft.Azure.Management.Automation.Models;
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The response model for the create variable operation.
+    /// The response model for the create or update schedule operation.
     /// </summary>
-    public partial class VariableCreateResponse : AzureOperationResponse
+    public partial class ScheduleCreateOrUpdateResponse : AzureOperationResponse
     {
-        private Variable _variable;
+        private Schedule _schedule;
         
         /// <summary>
-        /// Optional. Gets or sets a variable.
+        /// Optional. Gets or sets a schedule.
         /// </summary>
-        public Variable Variable
+        public Schedule Schedule
         {
-            get { return this._variable; }
-            set { this._variable = value; }
+            get { return this._schedule; }
+            set { this._schedule = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the VariableCreateResponse class.
+        /// Initializes a new instance of the ScheduleCreateOrUpdateResponse
+        /// class.
         /// </summary>
-        public VariableCreateResponse()
+        public ScheduleCreateOrUpdateResponse()
         {
         }
     }

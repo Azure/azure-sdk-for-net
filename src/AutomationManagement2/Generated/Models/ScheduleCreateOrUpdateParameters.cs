@@ -26,14 +26,14 @@ using Microsoft.Azure.Management.Automation.Models;
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The parameters supplied to the create or replace certificate operation.
+    /// The parameters supplied to the create or update schedule operation.
     /// </summary>
-    public partial class CertificateCreateParameters
+    public partial class ScheduleCreateOrUpdateParameters
     {
         private string _name;
         
         /// <summary>
-        /// Required. Gets or sets the name of the certificate.
+        /// Required. Gets or sets the name of the schedule.
         /// </summary>
         public string Name
         {
@@ -41,29 +41,30 @@ namespace Microsoft.Azure.Management.Automation.Models
             set { this._name = value; }
         }
         
-        private CertificateCreateProperties _properties;
+        private ScheduleCreateOrUpdateProperties _properties;
         
         /// <summary>
-        /// Required. Gets or sets the properties of the certificate.
+        /// Required. Gets or sets the list of schedule properties.
         /// </summary>
-        public CertificateCreateProperties Properties
+        public ScheduleCreateOrUpdateProperties Properties
         {
             get { return this._properties; }
             set { this._properties = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the CertificateCreateParameters class.
+        /// Initializes a new instance of the ScheduleCreateOrUpdateParameters
+        /// class.
         /// </summary>
-        public CertificateCreateParameters()
+        public ScheduleCreateOrUpdateParameters()
         {
         }
         
         /// <summary>
-        /// Initializes a new instance of the CertificateCreateParameters class
-        /// with required arguments.
+        /// Initializes a new instance of the ScheduleCreateOrUpdateParameters
+        /// class with required arguments.
         /// </summary>
-        public CertificateCreateParameters(string name, CertificateCreateProperties properties)
+        public ScheduleCreateOrUpdateParameters(string name, ScheduleCreateOrUpdateProperties properties)
             : this()
         {
             if (name == null)
