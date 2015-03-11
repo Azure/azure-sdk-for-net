@@ -1,6 +1,8 @@
 ﻿namespace Microsoft.Hadoop.Avro.Tests.TestClasses
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Runtime.Serialization;
 
     [DataContract]
@@ -48,7 +50,7 @@
             return this.IntClassOfIntNullFieldClassOfInt.Equals(other.IntClassOfIntNullFieldClassOfInt)
                    && this.IntStringNullFieldInt.Equals(other.IntStringNullFieldInt)
                    && this.IntStringNullFieldString.Equals(other.IntStringNullFieldString) 
-                   && other.IntStringNullFieldNull == other.IntStringNullFieldNull;
+                   && this.IntStringNullFieldNull == other.IntStringNullFieldNull;
         }
 
         public override int GetHashCode()
@@ -104,6 +106,93 @@
         public override bool Equals(object obj)
         {
             return this.Equals(obj as ClassWithKnownTypesAndAvroUnion);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+    }
+
+    [DataContract]
+    internal class ClassOfUnionWith2ArrayAndMap : IEquatable<ClassOfUnionWith2ArrayAndMap>
+    {
+        public static ClassOfUnionWith2ArrayAndMap Create()
+        {
+            return new ClassOfUnionWith2ArrayAndMap
+            {
+                IntClassOfIntNullFieldClassOfIntArray = new [] { ClassOfInt.Create(false) },
+                IntClassOfIntNullFieldClassOfIntMap = new Dictionary<string, ClassOfInt>()
+                {
+                    {"TestKey", ClassOfInt.Create(false)}
+                },
+                IntStringNullFieldInt = new [] { Utilities.GetRandom<int>(false) },
+                IntStringNullFieldString = new [] { Utilities.GetRandom<string>(false) },
+                IntStringNullFieldNull = null
+            };
+        }
+
+        [DataMember]
+        [AvroUnion(typeof(int[]), typeof(ClassOfInt[]), typeof(AvroNull))]
+        public object IntClassOfIntNullFieldClassOfIntArray;
+
+        [DataMember]
+        [AvroUnion(typeof(Dictionary<string, int>), typeof(Dictionary<string, ClassOfInt>), typeof(AvroNull))]
+        public object IntClassOfIntNullFieldClassOfIntMap;
+
+        [DataMember]
+        [AvroUnion(typeof(int[]), typeof(string[]), typeof(AvroNull))]
+        public object IntStringNullFieldInt { get; set; }
+
+        [DataMember]
+        [AvroUnion(typeof(int[]), typeof(string[]), typeof(AvroNull))]
+        public object IntStringNullFieldNull { get; set; }
+
+        [DataMember]
+        [AvroUnion(typeof(int[]), typeof(string[]), typeof(AvroNull))]
+        public object IntStringNullFieldString { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            return this.Equals(obj as ClassOfUnionWith2ArrayAndMap);
+        }
+
+        public bool Equals(ClassOfUnionWith2ArrayAndMap other)
+        {
+            if (other == null)
+            {
+                return false;
+            }
+
+            return CollectionEquals<ClassOfInt>(this.IntClassOfIntNullFieldClassOfIntArray, other.IntClassOfIntNullFieldClassOfIntArray)
+                   && DictionaryEquals<string, ClassOfInt>(this.IntClassOfIntNullFieldClassOfIntMap, other.IntClassOfIntNullFieldClassOfIntMap)
+                   && CollectionEquals<int>(this.IntStringNullFieldInt, other.IntStringNullFieldInt)
+                   && CollectionEquals<string>(this.IntStringNullFieldString, other.IntStringNullFieldString)
+                   && this.IntStringNullFieldNull == other.IntStringNullFieldNull;
+        }
+
+        private bool DictionaryEquals<TKey, TValue>(object object1, object object2)
+        {
+            var map1 = object1 as IDictionary<TKey, TValue>;
+            var map2 = object2 as IDictionary<TKey, TValue>;
+            if (map1 != null && map2 != null && map1.Count == map2.Count)
+            {
+                return map1.SequenceEqual(map2);
+            }
+
+            return false;
+        }
+
+        public bool CollectionEquals<T>(object object1, object object2)
+        {
+            var array1 = object1 as T[];
+            var array2 = object2 as T[];
+            if (array1 != null && array2 != null && array1.Length == array2.Length)
+            {
+                return array1.SequenceEqual(array2);
+            }
+
+            return false;
         }
 
         public override int GetHashCode()

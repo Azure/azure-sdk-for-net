@@ -47,40 +47,13 @@ namespace Microsoft.Hadoop.Avro.Serializers
             // according to avro spec http://avro.apache.org/docs/current/spec.html#Unions
             // Unions may not contain more than one schema with the same type, except for the named types record, fixed and enum. 
             // For example, unions containing two array types or two map types are not permitted, but two types with different names are permitted
-            int arraySchemaIndex = -1;
-            int mapSchemaIndex = -1;
-            int schemeIndex = 0;
+            int schemaIndex = 0;
 
             var schemas = new List<IndexedSchema>(this.itemSchemas.Count);
-            for (int i = 0; i < this.itemSchemas.Count; i++)
+            foreach (var typeSchema in this.itemSchemas)
             {
-                var typeSchema = this.itemSchemas[i];
-                // only add ArraySchema at most once based on above Avro spec for union
-                int index;
-                if (typeSchema is ArraySchema)
-                {
-                    if (arraySchemaIndex == -1)
-                    {
-                        arraySchemaIndex = schemeIndex++;
-                    }
-
-                    index = arraySchemaIndex;
-                }
-                else if (typeSchema is MapSchema)
-                {
-                    // only add MapSchema at most once based on above Avro spec for union
-                    if (mapSchemaIndex == -1)
-                    {
-                        mapSchemaIndex = schemeIndex++;
-                    }
-
-                    index = mapSchemaIndex;
-                }
-                else
-                {
-                    index = schemeIndex++; 
-                }
-
+                var existingSchema = schemas.SingleOrDefault(s => UnionSchema.IsSameTypeAs(s.Schema, typeSchema));
+                var index = existingSchema != null ? existingSchema.Index : schemaIndex++;
                 var indexSchema = new IndexedSchema {Schema = typeSchema, Index = index};
                 schemas.Add(indexSchema);
             }
@@ -328,7 +301,7 @@ namespace Microsoft.Hadoop.Avro.Serializers
                         string.Format(
                             CultureInfo.InvariantCulture,
                             "Element type of array schema does not match the object type. Expected: '{0}', actual: '{1}.",
-                            arraySchema.ItemSchema.RuntimeType,
+                            arraySchema.RuntimeType,
                             elementType));
                 }
             }

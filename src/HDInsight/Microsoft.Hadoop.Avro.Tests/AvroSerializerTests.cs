@@ -1389,6 +1389,32 @@ namespace Microsoft.Hadoop.Avro.Tests
 
         [TestMethod]
         [TestCategory("CheckIn")]
+        public void Serializer_SerializeClassOfUnion()
+        {
+            // support multiple collections type as known types.
+            var serializer = AvroSerializer.Create<ClassOfUnion>();
+            var deserializer = AvroSerializer.CreateDeserializerOnly<ClassOfUnion>(serializer.WriterSchema.ToString(), new AvroSerializerSettings());
+
+            // check for ClassOfUnion
+            var expected = ClassOfUnion.Create();
+            RoundTripSerializationWithCheck(serializer, deserializer, expected);
+        }
+
+        [TestMethod]
+        [TestCategory("CheckIn")]
+        public void Serializer_SerializeClassWith2ArrayMapKnownTypes()
+        {
+            // support multiple collections type as known types.
+            var serializer = AvroSerializer.Create<ClassOfUnionWith2ArrayAndMap>();
+            var deserializer = AvroSerializer.CreateDeserializerOnly<ClassOfUnionWith2ArrayAndMap>(serializer.WriterSchema.ToString(), new AvroSerializerSettings());
+
+            // check for ClassOfUnionWith2ArrayAndMap
+            var expected = ClassOfUnionWith2ArrayAndMap.Create();
+            RoundTripSerializationWithCheck(serializer, deserializer, expected);
+        }
+
+        [TestMethod]
+        [TestCategory("CheckIn")]
         public void Serializer_SerializeClassWithGenericMemberHavingMultipleMatchingKnownTypes()
         {
             // support multiple collections type as known types.
