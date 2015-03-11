@@ -65,13 +65,13 @@ namespace Microsoft.Azure.Management.RemoteApp.Models
             set { this._numberOfLinkedCollections = value; }
         }
         
-        private bool _officeType;
+        private OfficeType _officeType;
         
         /// <summary>
         /// Optional. For platform template images, the type of Office which is
         /// included in the image.
         /// </summary>
-        public bool OfficeType
+        public OfficeType OfficeType
         {
             get { return this._officeType; }
             set { this._officeType = value; }
