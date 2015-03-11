@@ -69,6 +69,21 @@ namespace Microsoft.WindowsAzure.Management.HDInsight
         public string Password { get; set; }
 
         /// <summary>
+        /// Gets or sets the username for RDP access to the cluster.
+        /// </summary>
+        public string RdpUsername { get; set; }
+
+        /// <summary>
+        /// Gets or sets the password for RDP access to the cluster.
+        /// </summary>
+        public string RdpPassword { get; set; }
+
+        /// <summary>
+        /// Gets or sets the expirt DateTime for RDP access on the cluster.
+        /// </summary>
+        public DateTime? RdpAccessExpiry { get; set; }
+
+        /// <summary>
         /// Gets or sets the number of workernodes for the cluster.
         /// </summary>
         public int ClusterSizeInNodes { get; set; }

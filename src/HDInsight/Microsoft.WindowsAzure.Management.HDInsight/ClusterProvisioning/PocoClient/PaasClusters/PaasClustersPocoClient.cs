@@ -273,6 +273,37 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.PocoCl
                     UriEndpointValidator.ValidateAndResolveConfigActionEndpointUris(clusterCreateParameters);
                 }
 
+                //Validate Rdp settings in case any of the RdpUsername or RdpPassword or RdpAccessExpiry is specified.
+                if (!string.IsNullOrEmpty(clusterCreateParameters.RdpUsername) ||
+                    !string.IsNullOrEmpty(clusterCreateParameters.RdpPassword) ||
+                    clusterCreateParameters.RdpAccessExpiry.IsNotNull())
+                {
+                    if(string.IsNullOrEmpty(clusterCreateParameters.RdpUsername))
+                    {
+                        throw new ArgumentException(
+                            "clusterCreateParameters.RdpUsername cannot be null or empty in case either RdpPassword or RdpAccessExpiry is specified",
+                            "clusterCreateParameters");
+                    }
+                    if (string.IsNullOrEmpty(clusterCreateParameters.RdpPassword))
+                    {
+                        throw new ArgumentException(
+                            "clusterCreateParameters.RdpPassword cannot be null or empty in case either RdpUsername or RdpAccessExpiry is specified",
+                            "clusterCreateParameters");
+                    }
+                    if (clusterCreateParameters.RdpAccessExpiry.IsNull())
+                    {
+                        throw new ArgumentException(
+                            "clusterCreateParameters.RdpAccessExpiry cannot be null or empty in case either RdpUsername or RdpPassword is specified",
+                            "clusterCreateParameters");
+                    }
+                    if (clusterCreateParameters.RdpAccessExpiry < DateTime.UtcNow)
+                    {
+                        throw new ArgumentException(
+                            "clusterCreateParameters.RdpAccessExpiry should be a time in future.",
+                            "clusterCreateParameters");
+                    }
+                }
+
                 //Validate if new vm sizes are used and if the schema is on.
                 if (CreateHasNewVMSizesSpecified(clusterCreateParameters) &&
                     !HasCorrectSchemaVersionForNewVMSizes(this.capabilities))

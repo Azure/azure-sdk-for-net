@@ -12,6 +12,7 @@
 // 
 // See the Apache Version 2.0 License for specific language governing
 // permissions and limitations under the License.
+
 namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Data
 {
     using System;
@@ -69,23 +70,41 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Data
             }
 
             var cluster = new ClusterCreateParameters { DnsName = inputs.Name, Version = inputs.Version };
+            var remoteDesktopSettings = (string.IsNullOrEmpty(inputs.RdpUsername))
+                ? new RemoteDesktopSettings()
+                {
+                    IsEnabled = false
+                }
+                : new RemoteDesktopSettings()
+                {
+                    IsEnabled = true,
+                    AuthenticationCredential = new UsernamePasswordCredential()
+                    {
+                        Username = inputs.RdpUsername,
+                        Password = inputs.RdpPassword
+                    },
+                    RemoteAccessExpiry = (DateTime) inputs.RdpAccessExpiry
+                };
             var headnodeRole = new ClusterRole
             {
                 FriendlyName = "HeadNodeRole",
                 InstanceCount = 2,
                 VMSizeAsString = inputs.HeadNodeSize,
+                RemoteDesktopSettings = remoteDesktopSettings
             };
             var workernodeRole = new ClusterRole
             {
                 InstanceCount = inputs.ClusterSizeInNodes,
                 FriendlyName = "WorkerNodeRole",
-                VMSizeAsString = inputs.DataNodeSize
+                VMSizeAsString = inputs.DataNodeSize,
+                RemoteDesktopSettings = remoteDesktopSettings
             };
             var zookeeperRole = new ClusterRole
             {
                 InstanceCount = 3,
                 FriendlyName = "ZKRole",
                 VMSizeAsString = VmSize.Small.ToString(),
+                RemoteDesktopSettings = remoteDesktopSettings
             };
 
             cluster.ClusterRoleCollection.Add(headnodeRole);
@@ -150,28 +169,47 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.ClusterProvisioning.Data
                 throw new ArgumentNullException("inputs");
             }
 
+            var remoteDesktopSettings = (string.IsNullOrEmpty(inputs.RdpUsername))
+                ? new RemoteDesktopSettings()
+                {
+                    IsEnabled = false
+                }
+                : new RemoteDesktopSettings()
+                {
+                    IsEnabled = true,
+                    AuthenticationCredential = new UsernamePasswordCredential()
+                    {
+                        Username = inputs.RdpUsername,
+                        Password = inputs.RdpPassword
+                    },
+                    RemoteAccessExpiry = (DateTime)inputs.RdpAccessExpiry
+                };
+
             var cluster = new ClusterCreateParameters
             {
                 DnsName = inputs.Name,
-                Version = inputs.Version
+                Version = inputs.Version,
             };
             var headnodeRole = new ClusterRole
             {
                 FriendlyName = "HeadNodeRole",
                 InstanceCount = 2,
                 VMSizeAsString = inputs.HeadNodeSize,
+                RemoteDesktopSettings = remoteDesktopSettings
             };
             var workernodeRole = new ClusterRole
             {
                 InstanceCount = inputs.ClusterSizeInNodes,
                 FriendlyName = "WorkerNodeRole",
                 VMSizeAsString = inputs.DataNodeSize,
+                RemoteDesktopSettings = remoteDesktopSettings
             };
             var zookeeperRole = new ClusterRole
             {
                 InstanceCount = 3,
                 FriendlyName = "ZKRole",
                 VMSizeAsString = inputs.ZookeeperNodeSize ?? VmSize.Small.ToString(),
+                RemoteDesktopSettings = remoteDesktopSettings
             };
             cluster.ClusterRoleCollection.Add(headnodeRole);
             cluster.ClusterRoleCollection.Add(workernodeRole);

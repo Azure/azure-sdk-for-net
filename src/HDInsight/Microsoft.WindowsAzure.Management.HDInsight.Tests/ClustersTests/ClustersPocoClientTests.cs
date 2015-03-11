@@ -220,6 +220,119 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ClustersTests
             await clustersPocoClient.DisableRdp(clusterDnsName, cluster.Location);
             cluster = clustersPocoClient.ListContainer(clusterDnsName).Result;
             Assert.IsNull(cluster.RdpUserName);
+            await clustersPocoClient.DeleteContainer(cluster.Name, cluster.Location);
+        }
+
+        [TestMethod]
+        [TestCategory("CheckIn")]
+        public async Task CanCreateRdpUserDuringClusterCreate()
+        {
+            Capabilities.Add("CAPABILITY_FEATURE_CLUSTERS_CONTRACT_1_SDK");
+            Capabilities.Add("CAPABILITY_FEATURE_CLUSTERS_CONTRACT_VERSION_3_SDK");
+            var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
+                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(Capabilities));
+            var clusterDnsName = "rdpTestCluster";
+            var clustersPocoClient = new PaasClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient);
+            var clusterCreateParameters = new HDInsight.ClusterCreateParametersV2
+            {
+                Name = clusterDnsName,
+                DefaultStorageAccountKey = IntegrationTestBase.TestCredentials.Environments[0].DefaultStorageAccount.Key,
+                DefaultStorageAccountName = IntegrationTestBase.TestCredentials.Environments[0].DefaultStorageAccount.Name,
+                DefaultStorageContainer = "EnableDisableRdpTest",
+                ClusterSizeInNodes = 2,
+                Location = "East US",
+                UserName = "hdinsightuser",
+                Password = "Password1!",
+                Version = "3.1",
+                ClusterType = ClusterType.Hadoop,
+                RdpUsername = "testRdpUser",
+                RdpPassword = "Had00p!123",
+                RdpAccessExpiry = DateTime.Now.AddDays(6)
+            };
+            await clustersPocoClient.CreateContainer(clusterCreateParameters);
+            var cluster = clustersPocoClient.ListContainer(clusterDnsName).Result;
+            var rdpUsername = "testRdpUser";
+            var actualRdpUserName = cluster.RdpUserName;
+            Assert.AreEqual(rdpUsername, actualRdpUserName);
+            await clustersPocoClient.DisableRdp(clusterDnsName, cluster.Location);
+            cluster = clustersPocoClient.ListContainer(clusterDnsName).Result;
+            Assert.IsNull(cluster.RdpUserName);
+            await clustersPocoClient.DeleteContainer(cluster.Name, cluster.Location);
+        }
+
+        [TestMethod]
+        [TestCategory("CheckIn")]
+        public async Task CanCannotClusterCreateWithInvalidRdpCredentials()
+        {
+            var restClient = ServiceLocator.Instance.Locate<IRdfeClustersResourceRestClientFactory>()
+                                                      .Create(this.DefaultHandler, this.HdInsightCertCred, this.Context, false, SchemaVersionUtils.GetSchemaVersion(Capabilities));
+            var clusterDnsName = "rdpTestCluster";
+            var clustersPocoClient = new PaasClustersPocoClient(this.HdInsightCertCred, false, this.Context, Capabilities, restClient);
+            var clusterCreateParameters = new HDInsight.ClusterCreateParametersV2
+            {
+                Name = clusterDnsName,
+                DefaultStorageAccountKey = IntegrationTestBase.TestCredentials.Environments[0].DefaultStorageAccount.Key,
+                DefaultStorageAccountName = IntegrationTestBase.TestCredentials.Environments[0].DefaultStorageAccount.Name,
+                DefaultStorageContainer = "EnableDisableRdpTest",
+                ClusterSizeInNodes = 2,
+                Location = "East US",
+                UserName = "hdinsightuser",
+                Password = "Password1!",
+                Version = "3.1",
+                ClusterType = ClusterType.Hadoop,
+                RdpUsername = "",
+                RdpPassword = "Had00p!123",
+                RdpAccessExpiry = DateTime.Now.AddDays(6)
+            };
+            try
+            {
+                await clustersPocoClient.CreateContainer(clusterCreateParameters);
+                throw new Exception("CreateContainer should have thrown an ArgumentException");
+            }
+            catch (ArgumentException exp)
+            {
+                Assert.AreEqual(exp.Message,
+                    @"clusterCreateParameters.RdpUsername cannot be null or empty in case either RdpPassword or RdpAccessExpiry is specified
+Parameter name: clusterCreateParameters");
+            }
+            clusterCreateParameters.RdpUsername = "rdpuser";
+            clusterCreateParameters.RdpPassword = "";
+            try
+            {
+                await clustersPocoClient.CreateContainer(clusterCreateParameters);
+                throw new Exception("CreateContainer should have thrown an ArgumentException");
+            }
+            catch (ArgumentException exp)
+            {
+                Assert.AreEqual(exp.Message,
+                    @"clusterCreateParameters.RdpPassword cannot be null or empty in case either RdpUsername or RdpAccessExpiry is specified
+Parameter name: clusterCreateParameters");
+            }
+            clusterCreateParameters.RdpPassword = "Had00p!123";
+            clusterCreateParameters.RdpAccessExpiry = null;
+            try
+            {
+                await clustersPocoClient.CreateContainer(clusterCreateParameters);
+                throw new Exception("CreateContainer should have thrown an ArgumentException");
+            }
+            catch (ArgumentException exp)
+            {
+                Assert.AreEqual(exp.Message,
+                    @"clusterCreateParameters.RdpAccessExpiry cannot be null or empty in case either RdpUsername or RdpPassword is specified
+Parameter name: clusterCreateParameters");
+            }
+            clusterCreateParameters.RdpAccessExpiry = DateTime.MinValue;
+            try
+            {
+                await clustersPocoClient.CreateContainer(clusterCreateParameters);
+                throw new Exception("CreateContainer should have thrown an ArgumentException");
+            }
+            catch (ArgumentException exp)
+            {
+                Assert.AreEqual(exp.Message,
+                    @"clusterCreateParameters.RdpAccessExpiry should be a time in future.
+Parameter name: clusterCreateParameters");
+            }
         }
 
         [TestMethod]
