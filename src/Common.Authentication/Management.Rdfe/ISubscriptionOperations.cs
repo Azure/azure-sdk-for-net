@@ -19,18 +19,18 @@
 // Changes to this file may cause incorrect behavior and will be lost if the
 // code is regenerated.
 
-using Microsoft.Azure.Internal.Management.Rdfe.Models;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure.Management.Rdfe.Models;
 
-namespace Microsoft.Azure.Internal.Management.Rdfe
+namespace Microsoft.Azure.Management.Rdfe
 {
     /// <summary>
     /// Operations for listing subscription details.  (see
     /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715315.aspx for
     /// more information)
     /// </summary>
-    internal partial interface ISubscriptionOperations
+    public partial interface ISubscriptionOperations
     {
         /// <summary>
         /// The Get Subscription operation returns account and resource

@@ -176,6 +176,18 @@ namespace Microsoft.Azure.Management.Sql
             get { return this._servers; }
         }
         
+        private IServiceObjectiveOperations _serviceObjectives;
+        
+        /// <summary>
+        /// Represents all the operations for operating on Azure SQL Database
+        /// Service Objectives.   Contains operations to: Retrieve service
+        /// objectives.
+        /// </summary>
+        public virtual IServiceObjectiveOperations ServiceObjectives
+        {
+            get { return this._serviceObjectives; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the SqlManagementClient class.
         /// </summary>
@@ -189,6 +201,7 @@ namespace Microsoft.Azure.Management.Sql
             this._secureConnection = new SecureConnectionPolicyOperations(this);
             this._databaseSecurity = new SecurityOperations(this);
             this._servers = new ServerOperations(this);
+            this._serviceObjectives = new ServiceObjectiveOperations(this);
             this._apiVersion = "2014-04-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
@@ -261,6 +274,7 @@ namespace Microsoft.Azure.Management.Sql
             this._secureConnection = new SecureConnectionPolicyOperations(this);
             this._databaseSecurity = new SecurityOperations(this);
             this._servers = new ServerOperations(this);
+            this._serviceObjectives = new ServiceObjectiveOperations(this);
             this._apiVersion = "2014-04-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;

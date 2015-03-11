@@ -23,9 +23,9 @@ using Hyak.Common;
 using System;
 using System.Net.Http;
 
-namespace Microsoft.Azure.Internal.Subscriptions.Rdfe
+namespace Microsoft.Azure.Subscriptions.Rdfe
 {
-    internal partial class SubscriptionClient : ServiceClient<SubscriptionClient>, ISubscriptionClient
+    public partial class SubscriptionClient : ServiceClient<SubscriptionClient>, ISubscriptionClient
     {
         private string _apiVersion;
         

@@ -1,4 +1,4 @@
-﻿//
+//
 // Copyright (c) Microsoft.  All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,19 +17,16 @@ using System.Reflection;
 using System.Resources;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Microsoft Azure Common Library (.NET Framework)")]
-[assembly: AssemblyDescription("Provides .NET Framework-specific extensions to the common Microsoft Azure library.")]
+[assembly: AssemblyTitle("Microsoft Azure Search Library")]
+[assembly: AssemblyDescription("Makes it easy to develop a .NET application that uses Azure Search.")]
 
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("0.9.0.0")]
+[assembly: AssemblyFileVersion("0.9.6.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("Azure .NET SDK")]
-[assembly: AssemblyCopyright("Copyright © Microsoft Corporation")]
+[assembly: AssemblyProduct("Microsoft Azure .NET SDK")]
+[assembly: AssemblyCopyright("Copyright (c) Microsoft Corporation")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: NeutralResourcesLanguage("en")]
-
-[assembly: ComVisible(false)]
-[assembly: Guid("a99b718b-01c2-42ad-a721-7f5c66cb9a91")]

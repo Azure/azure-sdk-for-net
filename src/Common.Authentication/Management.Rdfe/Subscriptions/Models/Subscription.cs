@@ -21,7 +21,7 @@
 
 using System;
 
-namespace Microsoft.Azure.Internal.Subscriptions.Rdfe.Models
+namespace Microsoft.Azure.Subscriptions.Rdfe.Models
 {
     public partial class Subscription
     {

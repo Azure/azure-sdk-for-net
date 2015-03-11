@@ -112,6 +112,27 @@ namespace Microsoft.WindowsAzure.Management.Compute
         Task<AzureOperationResponse> BeginDeletingDataDiskAsync(string serviceName, string deploymentName, string roleName, int logicalUnitNumber, bool deleteFromStorage, CancellationToken cancellationToken);
         
         /// <summary>
+        /// The Add Disk operation adds a disk to the user image repository.
+        /// The disk can be an operating system disk or a data disk.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157178.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='name'>
+        /// The name of the disk being updated.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Update Virtual Machine Disk operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<AzureOperationResponse> BeginUpdatingDiskAsync(string name, VirtualMachineDiskUpdateParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// The Create Data Disk operation adds a data disk to a virtual
         /// machine. There are three ways to create the data disk using the
         /// Add Data Disk operation. Option 1 - Attach an empty data disk to
@@ -347,5 +368,33 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A virtual machine disk associated with your subscription.
         /// </returns>
         Task<VirtualMachineDiskUpdateResponse> UpdateDiskAsync(string name, VirtualMachineDiskUpdateParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Add Disk operation adds a disk to the user image repository.
+        /// The disk can be an operating system disk or a data disk.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157178.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='name'>
+        /// The name of the disk being updated.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Update Virtual Machine Disk operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        Task<OperationStatusResponse> UpdateDiskSizeAsync(string name, VirtualMachineDiskUpdateParameters parameters, CancellationToken cancellationToken);
     }
 }

@@ -79,7 +79,14 @@ namespace Microsoft.Azure.Common.Authentication.Factories
                 profileClient.GetAccount(subscription.Account),
                 profileClient.GetEnvironmentOrDefault(subscription.Environment));
 
-            return CreateClient<TClient>(context, endpoint);
+            TClient client = CreateClient<TClient>(context, endpoint);
+
+            foreach (IClientAction action in actions.Values)
+            {
+                action.Apply<TClient>(client, profile, endpoint);
+            }
+
+            return client;
         }
 
         public virtual TClient CreateCustomClient<TClient>(params object[] parameters) where TClient : ServiceClient<TClient>

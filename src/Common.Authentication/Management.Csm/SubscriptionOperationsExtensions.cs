@@ -19,20 +19,20 @@
 // Changes to this file may cause incorrect behavior and will be lost if the
 // code is regenerated.
 
-using Microsoft.Azure.Internal.Subscriptions.Csm.Models;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure.Subscriptions.Csm.Models;
 
-namespace Microsoft.Azure.Internal.Subscriptions.Csm
+namespace Microsoft.Azure.Subscriptions.Csm
 {
-    internal static partial class SubscriptionOperationsExtensions
+    public static partial class SubscriptionOperationsExtensions
     {
         /// <summary>
         /// Gets details about particular subscription.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Internal.Subscriptions.Csm.ISubscriptionOperations.
+        /// Microsoft.Azure.Subscriptions.Csm.ISubscriptionOperations.
         /// </param>
         /// <param name='subscriptionId'>
         /// Required. Id of the subscription.
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Internal.Subscriptions.Csm
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Internal.Subscriptions.Csm.ISubscriptionOperations.
+        /// Microsoft.Azure.Subscriptions.Csm.ISubscriptionOperations.
         /// </param>
         /// <param name='subscriptionId'>
         /// Required. Id of the subscription.
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Internal.Subscriptions.Csm
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Internal.Subscriptions.Csm.ISubscriptionOperations.
+        /// Microsoft.Azure.Subscriptions.Csm.ISubscriptionOperations.
         /// </param>
         /// <returns>
         /// Subscription list operation response.
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Internal.Subscriptions.Csm
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Internal.Subscriptions.Csm.ISubscriptionOperations.
+        /// Microsoft.Azure.Subscriptions.Csm.ISubscriptionOperations.
         /// </param>
         /// <returns>
         /// Subscription list operation response.

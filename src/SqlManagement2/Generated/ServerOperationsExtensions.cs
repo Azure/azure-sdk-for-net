@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.Sql
         /// database.
         /// </param>
         /// <returns>
-        /// Represents the response to a Get Database request.
+        /// Represents the response to a Get Azure Sql Database Server request.
         /// </returns>
         public static ServerGetResponse CreateOrUpdate(this IServerOperations operations, string resourceGroupName, string serverName, ServerCreateOrUpdateParameters parameters)
         {
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.Sql
         /// database.
         /// </param>
         /// <returns>
-        /// Represents the response to a Get Database request.
+        /// Represents the response to a Get Azure Sql Database Server request.
         /// </returns>
         public static Task<ServerGetResponse> CreateOrUpdateAsync(this IServerOperations operations, string resourceGroupName, string serverName, ServerCreateOrUpdateParameters parameters)
         {
@@ -155,7 +155,7 @@ namespace Microsoft.Azure.Management.Sql
         /// Required. The name of the server to retrieve.
         /// </param>
         /// <returns>
-        /// Represents the response to a Get Database request.
+        /// Represents the response to a Get Azure Sql Database Server request.
         /// </returns>
         public static ServerGetResponse Get(this IServerOperations operations, string resourceGroupName, string serverName)
         {
@@ -180,7 +180,7 @@ namespace Microsoft.Azure.Management.Sql
         /// Required. The name of the server to retrieve.
         /// </param>
         /// <returns>
-        /// Represents the response to a Get Database request.
+        /// Represents the response to a Get Azure Sql Database Server request.
         /// </returns>
         public static Task<ServerGetResponse> GetAsync(this IServerOperations operations, string resourceGroupName, string serverName)
         {
@@ -198,7 +198,7 @@ namespace Microsoft.Azure.Management.Sql
         /// belongs.
         /// </param>
         /// <returns>
-        /// Represents the response to a Get Database request.
+        /// Represents the response to a Get Azure Sql Database Server request.
         /// </returns>
         public static ServerListResponse List(this IServerOperations operations, string resourceGroupName)
         {
@@ -220,7 +220,7 @@ namespace Microsoft.Azure.Management.Sql
         /// belongs.
         /// </param>
         /// <returns>
-        /// Represents the response to a Get Database request.
+        /// Represents the response to a Get Azure Sql Database Server request.
         /// </returns>
         public static Task<ServerListResponse> ListAsync(this IServerOperations operations, string resourceGroupName)
         {
