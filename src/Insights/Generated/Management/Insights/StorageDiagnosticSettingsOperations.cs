@@ -98,16 +98,8 @@ namespace Microsoft.Azure.Management.Insights
             }
             
             // Construct URL
-            string url = "";
-            url = url + "/";
-            url = url + Uri.EscapeDataString(resourceUri);
-            url = url + "/diagnosticSettings/storage";
-            List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-04-01");
-            if (queryParameters.Count > 0)
-            {
-                url = url + "?" + string.Join("&", queryParameters);
-            }
+            string url = "/" + Uri.EscapeDataString(resourceUri) + "/diagnosticSettings/storage?";
+            url = url + "api-version=2014-04-01";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -345,16 +337,8 @@ namespace Microsoft.Azure.Management.Insights
             }
             
             // Construct URL
-            string url = "";
-            url = url + "/";
-            url = url + Uri.EscapeDataString(resourceUri);
-            url = url + "/diagnosticSettings/storage";
-            List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-04-01");
-            if (queryParameters.Count > 0)
-            {
-                url = url + "?" + string.Join("&", queryParameters);
-            }
+            string url = "/" + Uri.EscapeDataString(resourceUri) + "/diagnosticSettings/storage?";
+            url = url + "api-version=2014-04-01";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')

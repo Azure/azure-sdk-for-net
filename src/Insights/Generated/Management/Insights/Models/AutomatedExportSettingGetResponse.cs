@@ -56,17 +56,6 @@ namespace Microsoft.Azure.Management.Insights.Models
             set { this._location = value; }
         }
         
-        private string _name;
-        
-        /// <summary>
-        /// Optional. The name of the setting.
-        /// </summary>
-        public string Name
-        {
-            get { return this._name; }
-            set { this._name = value; }
-        }
-        
         private AutomatedExportSetting _properties;
         
         /// <summary>
