@@ -321,6 +321,13 @@ namespace Microsoft.Azure.Management.Automation
                                     }
                                 }
                                 
+                                JToken lastModifiedByValue = propertiesValue2["lastModifiedBy"];
+                                if (lastModifiedByValue != null && lastModifiedByValue.Type != JTokenType.Null)
+                                {
+                                    string lastModifiedByInstance = ((string)lastModifiedByValue);
+                                    propertiesInstance.LastModifiedBy = lastModifiedByInstance;
+                                }
+                                
                                 JToken creationTimeValue = propertiesValue2["creationTime"];
                                 if (creationTimeValue != null && creationTimeValue.Type != JTokenType.Null)
                                 {
@@ -333,6 +340,13 @@ namespace Microsoft.Azure.Management.Automation
                                 {
                                     DateTimeOffset lastModifiedTimeInstance = ((DateTimeOffset)lastModifiedTimeValue);
                                     propertiesInstance.LastModifiedTime = lastModifiedTimeInstance;
+                                }
+                                
+                                JToken descriptionValue = propertiesValue2["description"];
+                                if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
+                                {
+                                    string descriptionInstance = ((string)descriptionValue);
+                                    propertiesInstance.Description = descriptionInstance;
                                 }
                             }
                         }
@@ -729,6 +743,13 @@ namespace Microsoft.Azure.Management.Automation
                                     }
                                 }
                                 
+                                JToken lastModifiedByValue = propertiesValue["lastModifiedBy"];
+                                if (lastModifiedByValue != null && lastModifiedByValue.Type != JTokenType.Null)
+                                {
+                                    string lastModifiedByInstance = ((string)lastModifiedByValue);
+                                    propertiesInstance.LastModifiedBy = lastModifiedByInstance;
+                                }
+                                
                                 JToken creationTimeValue = propertiesValue["creationTime"];
                                 if (creationTimeValue != null && creationTimeValue.Type != JTokenType.Null)
                                 {
@@ -741,6 +762,13 @@ namespace Microsoft.Azure.Management.Automation
                                 {
                                     DateTimeOffset lastModifiedTimeInstance = ((DateTimeOffset)lastModifiedTimeValue);
                                     propertiesInstance.LastModifiedTime = lastModifiedTimeInstance;
+                                }
+                                
+                                JToken descriptionValue = propertiesValue["description"];
+                                if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
+                                {
+                                    string descriptionInstance = ((string)descriptionValue);
+                                    propertiesInstance.Description = descriptionInstance;
                                 }
                             }
                         }
@@ -972,6 +1000,13 @@ namespace Microsoft.Azure.Management.Automation
                                             }
                                         }
                                         
+                                        JToken lastModifiedByValue = propertiesValue["lastModifiedBy"];
+                                        if (lastModifiedByValue != null && lastModifiedByValue.Type != JTokenType.Null)
+                                        {
+                                            string lastModifiedByInstance = ((string)lastModifiedByValue);
+                                            propertiesInstance.LastModifiedBy = lastModifiedByInstance;
+                                        }
+                                        
                                         JToken creationTimeValue = propertiesValue["creationTime"];
                                         if (creationTimeValue != null && creationTimeValue.Type != JTokenType.Null)
                                         {
@@ -984,6 +1019,13 @@ namespace Microsoft.Azure.Management.Automation
                                         {
                                             DateTimeOffset lastModifiedTimeInstance = ((DateTimeOffset)lastModifiedTimeValue);
                                             propertiesInstance.LastModifiedTime = lastModifiedTimeInstance;
+                                        }
+                                        
+                                        JToken descriptionValue = propertiesValue["description"];
+                                        if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
+                                        {
+                                            string descriptionInstance = ((string)descriptionValue);
+                                            propertiesInstance.Description = descriptionInstance;
                                         }
                                     }
                                 }
@@ -1192,6 +1234,13 @@ namespace Microsoft.Azure.Management.Automation
                                             }
                                         }
                                         
+                                        JToken lastModifiedByValue = propertiesValue["lastModifiedBy"];
+                                        if (lastModifiedByValue != null && lastModifiedByValue.Type != JTokenType.Null)
+                                        {
+                                            string lastModifiedByInstance = ((string)lastModifiedByValue);
+                                            propertiesInstance.LastModifiedBy = lastModifiedByInstance;
+                                        }
+                                        
                                         JToken creationTimeValue = propertiesValue["creationTime"];
                                         if (creationTimeValue != null && creationTimeValue.Type != JTokenType.Null)
                                         {
@@ -1204,6 +1253,13 @@ namespace Microsoft.Azure.Management.Automation
                                         {
                                             DateTimeOffset lastModifiedTimeInstance = ((DateTimeOffset)lastModifiedTimeValue);
                                             propertiesInstance.LastModifiedTime = lastModifiedTimeInstance;
+                                        }
+                                        
+                                        JToken descriptionValue = propertiesValue["description"];
+                                        if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
+                                        {
+                                            string descriptionInstance = ((string)descriptionValue);
+                                            propertiesInstance.Description = descriptionInstance;
                                         }
                                     }
                                 }

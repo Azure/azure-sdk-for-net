@@ -30,19 +30,8 @@ namespace Microsoft.Azure.Management.Automation.Models
     /// <summary>
     /// Properties of the connection type.
     /// </summary>
-    public partial class ConnectionTypeProperties
+    public partial class ConnectionTypeProperties : ResourceCommonPropertiesBase
     {
-        private DateTimeOffset _creationTime;
-        
-        /// <summary>
-        /// Optional. Gets or sets the creation time of the connection type.
-        /// </summary>
-        public DateTimeOffset CreationTime
-        {
-            get { return this._creationTime; }
-            set { this._creationTime = value; }
-        }
-        
         private IDictionary<string, FieldDefinition> _fieldDefinitions;
         
         /// <summary>
@@ -64,18 +53,6 @@ namespace Microsoft.Azure.Management.Automation.Models
         {
             get { return this._isGlobal; }
             set { this._isGlobal = value; }
-        }
-        
-        private DateTimeOffset _lastModifiedTime;
-        
-        /// <summary>
-        /// Optional. Gets or sets the last modified time of the connection
-        /// type.
-        /// </summary>
-        public DateTimeOffset LastModifiedTime
-        {
-            get { return this._lastModifiedTime; }
-            set { this._lastModifiedTime = value; }
         }
         
         /// <summary>

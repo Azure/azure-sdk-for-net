@@ -21,36 +21,15 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.Automation.Models;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
     /// Properties of the certificate.
     /// </summary>
-    public partial class CertificateProperties
+    public partial class CertificateProperties : ResourceCommonPropertiesBase
     {
-        private DateTimeOffset _creationTime;
-        
-        /// <summary>
-        /// Optional. Gets or sets the creation time of the certificate.
-        /// </summary>
-        public DateTimeOffset CreationTime
-        {
-            get { return this._creationTime; }
-            set { this._creationTime = value; }
-        }
-        
-        private string _description;
-        
-        /// <summary>
-        /// Optional. Gets or sets the description of the certificate.
-        /// </summary>
-        public string Description
-        {
-            get { return this._description; }
-            set { this._description = value; }
-        }
-        
         private DateTimeOffset _expiryTime;
         
         /// <summary>
@@ -71,17 +50,6 @@ namespace Microsoft.Azure.Management.Automation.Models
         {
             get { return this._isExportable; }
             set { this._isExportable = value; }
-        }
-        
-        private DateTimeOffset _lastModifiedTime;
-        
-        /// <summary>
-        /// Optional. Gets or sets the last modified time of the certificate.
-        /// </summary>
-        public DateTimeOffset LastModifiedTime
-        {
-            get { return this._lastModifiedTime; }
-            set { this._lastModifiedTime = value; }
         }
         
         private string _thumbprint;

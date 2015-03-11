@@ -30,30 +30,8 @@ namespace Microsoft.Azure.Management.Automation.Models
     /// <summary>
     /// Definition of the runbook property type.
     /// </summary>
-    public partial class RunbookProperties
+    public partial class RunbookProperties : ResourceCommonPropertiesBase
     {
-        private DateTimeOffset _creationTime;
-        
-        /// <summary>
-        /// Optional. Gets or sets the creation time of the runbook.
-        /// </summary>
-        public DateTimeOffset CreationTime
-        {
-            get { return this._creationTime; }
-            set { this._creationTime = value; }
-        }
-        
-        private string _description;
-        
-        /// <summary>
-        /// Optional. Gets or sets the description of the runbook.
-        /// </summary>
-        public string Description
-        {
-            get { return this._description; }
-            set { this._description = value; }
-        }
-        
         private RunbookDraft _draft;
         
         /// <summary>
@@ -74,17 +52,6 @@ namespace Microsoft.Azure.Management.Automation.Models
         {
             get { return this._jobCount; }
             set { this._jobCount = value; }
-        }
-        
-        private DateTimeOffset _lastModifiedTime;
-        
-        /// <summary>
-        /// Optional. Gets or sets the last modified time of the runbook.
-        /// </summary>
-        public DateTimeOffset LastModifiedTime
-        {
-            get { return this._lastModifiedTime; }
-            set { this._lastModifiedTime = value; }
         }
         
         private bool _logProgress;

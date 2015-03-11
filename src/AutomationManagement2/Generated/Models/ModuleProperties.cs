@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Automation.Models
     /// <summary>
     /// Definition of the module property type.
     /// </summary>
-    public partial class ModuleProperties
+    public partial class ModuleProperties : ResourceCommonPropertiesBase
     {
         private int _activityCount;
         
@@ -52,17 +52,6 @@ namespace Microsoft.Azure.Management.Automation.Models
             set { this._contentLink = value; }
         }
         
-        private DateTimeOffset _creationTime;
-        
-        /// <summary>
-        /// Optional. Gets or sets the creation time of the module.
-        /// </summary>
-        public DateTimeOffset CreationTime
-        {
-            get { return this._creationTime; }
-            set { this._creationTime = value; }
-        }
-        
         private bool _isGlobal;
         
         /// <summary>
@@ -72,17 +61,6 @@ namespace Microsoft.Azure.Management.Automation.Models
         {
             get { return this._isGlobal; }
             set { this._isGlobal = value; }
-        }
-        
-        private DateTimeOffset _lastModifiedTime;
-        
-        /// <summary>
-        /// Optional. Gets or sets the last modified time of the module.
-        /// </summary>
-        public DateTimeOffset LastModifiedTime
-        {
-            get { return this._lastModifiedTime; }
-            set { this._lastModifiedTime = value; }
         }
         
         private ModuleProvisioningState _provisioningState;

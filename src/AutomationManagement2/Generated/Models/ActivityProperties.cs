@@ -30,19 +30,8 @@ namespace Microsoft.Azure.Management.Automation.Models
     /// <summary>
     /// Properties of the activity.
     /// </summary>
-    public partial class ActivityProperties
+    public partial class ActivityProperties : ResourceCommonPropertiesBase
     {
-        private DateTimeOffset _creationTime;
-        
-        /// <summary>
-        /// Optional. Gets or sets the creation time of the activity.
-        /// </summary>
-        public DateTimeOffset CreationTime
-        {
-            get { return this._creationTime; }
-            set { this._creationTime = value; }
-        }
-        
         private string _definition;
         
         /// <summary>
@@ -52,28 +41,6 @@ namespace Microsoft.Azure.Management.Automation.Models
         {
             get { return this._definition; }
             set { this._definition = value; }
-        }
-        
-        private string _description;
-        
-        /// <summary>
-        /// Optional. Gets or sets the description of the activity.
-        /// </summary>
-        public string Description
-        {
-            get { return this._description; }
-            set { this._description = value; }
-        }
-        
-        private DateTimeOffset _lastModifiedTime;
-        
-        /// <summary>
-        /// Optional. Gets or sets the last modified time of the activity.
-        /// </summary>
-        public DateTimeOffset LastModifiedTime
-        {
-            get { return this._lastModifiedTime; }
-            set { this._lastModifiedTime = value; }
         }
         
         private IList<ActivityOutputType> _outputTypes;

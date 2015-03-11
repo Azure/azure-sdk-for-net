@@ -23,11 +23,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Hyak.Common;
-using Microsoft.Azure.Management.Automation.Models;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
-    public partial class ResourceBase : ResourceCommonBase
+    public partial class ResourceBase
     {
         private string _id;
         

@@ -21,36 +21,15 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.Automation.Models;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
     /// Definition of the varible properties
     /// </summary>
-    public partial class VariableProperties
+    public partial class VariableProperties : ResourceCommonPropertiesBase
     {
-        private DateTimeOffset _creationTime;
-        
-        /// <summary>
-        /// Optional. Gets or sets the creation time of the variable.
-        /// </summary>
-        public DateTimeOffset CreationTime
-        {
-            get { return this._creationTime; }
-            set { this._creationTime = value; }
-        }
-        
-        private string _description;
-        
-        /// <summary>
-        /// Optional. Gets or sets the description of the variable.
-        /// </summary>
-        public string Description
-        {
-            get { return this._description; }
-            set { this._description = value; }
-        }
-        
         private bool _isEncrypted;
         
         /// <summary>
@@ -60,17 +39,6 @@ namespace Microsoft.Azure.Management.Automation.Models
         {
             get { return this._isEncrypted; }
             set { this._isEncrypted = value; }
-        }
-        
-        private DateTimeOffset _lastModifiedTime;
-        
-        /// <summary>
-        /// Optional. Gets or sets the last modified time of the variable.
-        /// </summary>
-        public DateTimeOffset LastModifiedTime
-        {
-            get { return this._lastModifiedTime; }
-            set { this._lastModifiedTime = value; }
         }
         
         private string _value;

@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Automation.Models
     /// <summary>
     /// Definition of the connection properties.
     /// </summary>
-    public partial class ConnectionProperties
+    public partial class ConnectionProperties : ResourceCommonPropertiesBase
     {
         private ConnectionTypeAssociationProperty _connectionType;
         
@@ -43,28 +43,6 @@ namespace Microsoft.Azure.Management.Automation.Models
             set { this._connectionType = value; }
         }
         
-        private DateTimeOffset _creationTime;
-        
-        /// <summary>
-        /// Optional. Gets or sets the creation time of the connection.
-        /// </summary>
-        public DateTimeOffset CreationTime
-        {
-            get { return this._creationTime; }
-            set { this._creationTime = value; }
-        }
-        
-        private string _description;
-        
-        /// <summary>
-        /// Optional. Gets or sets the description of the connection.
-        /// </summary>
-        public string Description
-        {
-            get { return this._description; }
-            set { this._description = value; }
-        }
-        
         private IDictionary<string, string> _fieldDefinitionValues;
         
         /// <summary>
@@ -75,17 +53,6 @@ namespace Microsoft.Azure.Management.Automation.Models
         {
             get { return this._fieldDefinitionValues; }
             set { this._fieldDefinitionValues = value; }
-        }
-        
-        private DateTimeOffset _lastModifiedTime;
-        
-        /// <summary>
-        /// Optional. Gets or sets the last modified time of the connection.
-        /// </summary>
-        public DateTimeOffset LastModifiedTime
-        {
-            get { return this._lastModifiedTime; }
-            set { this._lastModifiedTime = value; }
         }
         
         /// <summary>

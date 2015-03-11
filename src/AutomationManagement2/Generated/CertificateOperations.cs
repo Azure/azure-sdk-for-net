@@ -269,13 +269,6 @@ namespace Microsoft.Azure.Management.Automation
                                 CertificateProperties propertiesInstance = new CertificateProperties();
                                 certificateInstance.Properties = propertiesInstance;
                                 
-                                JToken descriptionValue = propertiesValue2["description"];
-                                if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
-                                {
-                                    string descriptionInstance = ((string)descriptionValue);
-                                    propertiesInstance.Description = descriptionInstance;
-                                }
-                                
                                 JToken thumbprintValue = propertiesValue2["thumbprint"];
                                 if (thumbprintValue != null && thumbprintValue.Type != JTokenType.Null)
                                 {
@@ -288,6 +281,20 @@ namespace Microsoft.Azure.Management.Automation
                                 {
                                     DateTimeOffset expiryTimeInstance = ((DateTimeOffset)expiryTimeValue);
                                     propertiesInstance.ExpiryTime = expiryTimeInstance;
+                                }
+                                
+                                JToken isExportableValue = propertiesValue2["isExportable"];
+                                if (isExportableValue != null && isExportableValue.Type != JTokenType.Null)
+                                {
+                                    bool isExportableInstance = ((bool)isExportableValue);
+                                    propertiesInstance.IsExportable = isExportableInstance;
+                                }
+                                
+                                JToken lastModifiedByValue = propertiesValue2["lastModifiedBy"];
+                                if (lastModifiedByValue != null && lastModifiedByValue.Type != JTokenType.Null)
+                                {
+                                    string lastModifiedByInstance = ((string)lastModifiedByValue);
+                                    propertiesInstance.LastModifiedBy = lastModifiedByInstance;
                                 }
                                 
                                 JToken creationTimeValue = propertiesValue2["creationTime"];
@@ -304,11 +311,11 @@ namespace Microsoft.Azure.Management.Automation
                                     propertiesInstance.LastModifiedTime = lastModifiedTimeInstance;
                                 }
                                 
-                                JToken isExportableValue = propertiesValue2["isExportable"];
-                                if (isExportableValue != null && isExportableValue.Type != JTokenType.Null)
+                                JToken descriptionValue = propertiesValue2["description"];
+                                if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
                                 {
-                                    bool isExportableInstance = ((bool)isExportableValue);
-                                    propertiesInstance.IsExportable = isExportableInstance;
+                                    string descriptionInstance = ((string)descriptionValue);
+                                    propertiesInstance.Description = descriptionInstance;
                                 }
                             }
                         }
@@ -665,13 +672,6 @@ namespace Microsoft.Azure.Management.Automation
                                 CertificateProperties propertiesInstance = new CertificateProperties();
                                 certificateInstance.Properties = propertiesInstance;
                                 
-                                JToken descriptionValue = propertiesValue["description"];
-                                if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
-                                {
-                                    string descriptionInstance = ((string)descriptionValue);
-                                    propertiesInstance.Description = descriptionInstance;
-                                }
-                                
                                 JToken thumbprintValue = propertiesValue["thumbprint"];
                                 if (thumbprintValue != null && thumbprintValue.Type != JTokenType.Null)
                                 {
@@ -684,6 +684,20 @@ namespace Microsoft.Azure.Management.Automation
                                 {
                                     DateTimeOffset expiryTimeInstance = ((DateTimeOffset)expiryTimeValue);
                                     propertiesInstance.ExpiryTime = expiryTimeInstance;
+                                }
+                                
+                                JToken isExportableValue = propertiesValue["isExportable"];
+                                if (isExportableValue != null && isExportableValue.Type != JTokenType.Null)
+                                {
+                                    bool isExportableInstance = ((bool)isExportableValue);
+                                    propertiesInstance.IsExportable = isExportableInstance;
+                                }
+                                
+                                JToken lastModifiedByValue = propertiesValue["lastModifiedBy"];
+                                if (lastModifiedByValue != null && lastModifiedByValue.Type != JTokenType.Null)
+                                {
+                                    string lastModifiedByInstance = ((string)lastModifiedByValue);
+                                    propertiesInstance.LastModifiedBy = lastModifiedByInstance;
                                 }
                                 
                                 JToken creationTimeValue = propertiesValue["creationTime"];
@@ -700,11 +714,11 @@ namespace Microsoft.Azure.Management.Automation
                                     propertiesInstance.LastModifiedTime = lastModifiedTimeInstance;
                                 }
                                 
-                                JToken isExportableValue = propertiesValue["isExportable"];
-                                if (isExportableValue != null && isExportableValue.Type != JTokenType.Null)
+                                JToken descriptionValue = propertiesValue["description"];
+                                if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
                                 {
-                                    bool isExportableInstance = ((bool)isExportableValue);
-                                    propertiesInstance.IsExportable = isExportableInstance;
+                                    string descriptionInstance = ((string)descriptionValue);
+                                    propertiesInstance.Description = descriptionInstance;
                                 }
                             }
                         }
@@ -896,13 +910,6 @@ namespace Microsoft.Azure.Management.Automation
                                         CertificateProperties propertiesInstance = new CertificateProperties();
                                         certificateInstance.Properties = propertiesInstance;
                                         
-                                        JToken descriptionValue = propertiesValue["description"];
-                                        if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
-                                        {
-                                            string descriptionInstance = ((string)descriptionValue);
-                                            propertiesInstance.Description = descriptionInstance;
-                                        }
-                                        
                                         JToken thumbprintValue = propertiesValue["thumbprint"];
                                         if (thumbprintValue != null && thumbprintValue.Type != JTokenType.Null)
                                         {
@@ -915,6 +922,20 @@ namespace Microsoft.Azure.Management.Automation
                                         {
                                             DateTimeOffset expiryTimeInstance = ((DateTimeOffset)expiryTimeValue);
                                             propertiesInstance.ExpiryTime = expiryTimeInstance;
+                                        }
+                                        
+                                        JToken isExportableValue = propertiesValue["isExportable"];
+                                        if (isExportableValue != null && isExportableValue.Type != JTokenType.Null)
+                                        {
+                                            bool isExportableInstance = ((bool)isExportableValue);
+                                            propertiesInstance.IsExportable = isExportableInstance;
+                                        }
+                                        
+                                        JToken lastModifiedByValue = propertiesValue["lastModifiedBy"];
+                                        if (lastModifiedByValue != null && lastModifiedByValue.Type != JTokenType.Null)
+                                        {
+                                            string lastModifiedByInstance = ((string)lastModifiedByValue);
+                                            propertiesInstance.LastModifiedBy = lastModifiedByInstance;
                                         }
                                         
                                         JToken creationTimeValue = propertiesValue["creationTime"];
@@ -931,11 +952,11 @@ namespace Microsoft.Azure.Management.Automation
                                             propertiesInstance.LastModifiedTime = lastModifiedTimeInstance;
                                         }
                                         
-                                        JToken isExportableValue = propertiesValue["isExportable"];
-                                        if (isExportableValue != null && isExportableValue.Type != JTokenType.Null)
+                                        JToken descriptionValue = propertiesValue["description"];
+                                        if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
                                         {
-                                            bool isExportableInstance = ((bool)isExportableValue);
-                                            propertiesInstance.IsExportable = isExportableInstance;
+                                            string descriptionInstance = ((string)descriptionValue);
+                                            propertiesInstance.Description = descriptionInstance;
                                         }
                                     }
                                 }
@@ -1104,13 +1125,6 @@ namespace Microsoft.Azure.Management.Automation
                                         CertificateProperties propertiesInstance = new CertificateProperties();
                                         certificateInstance.Properties = propertiesInstance;
                                         
-                                        JToken descriptionValue = propertiesValue["description"];
-                                        if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
-                                        {
-                                            string descriptionInstance = ((string)descriptionValue);
-                                            propertiesInstance.Description = descriptionInstance;
-                                        }
-                                        
                                         JToken thumbprintValue = propertiesValue["thumbprint"];
                                         if (thumbprintValue != null && thumbprintValue.Type != JTokenType.Null)
                                         {
@@ -1123,6 +1137,20 @@ namespace Microsoft.Azure.Management.Automation
                                         {
                                             DateTimeOffset expiryTimeInstance = ((DateTimeOffset)expiryTimeValue);
                                             propertiesInstance.ExpiryTime = expiryTimeInstance;
+                                        }
+                                        
+                                        JToken isExportableValue = propertiesValue["isExportable"];
+                                        if (isExportableValue != null && isExportableValue.Type != JTokenType.Null)
+                                        {
+                                            bool isExportableInstance = ((bool)isExportableValue);
+                                            propertiesInstance.IsExportable = isExportableInstance;
+                                        }
+                                        
+                                        JToken lastModifiedByValue = propertiesValue["lastModifiedBy"];
+                                        if (lastModifiedByValue != null && lastModifiedByValue.Type != JTokenType.Null)
+                                        {
+                                            string lastModifiedByInstance = ((string)lastModifiedByValue);
+                                            propertiesInstance.LastModifiedBy = lastModifiedByInstance;
                                         }
                                         
                                         JToken creationTimeValue = propertiesValue["creationTime"];
@@ -1139,11 +1167,11 @@ namespace Microsoft.Azure.Management.Automation
                                             propertiesInstance.LastModifiedTime = lastModifiedTimeInstance;
                                         }
                                         
-                                        JToken isExportableValue = propertiesValue["isExportable"];
-                                        if (isExportableValue != null && isExportableValue.Type != JTokenType.Null)
+                                        JToken descriptionValue = propertiesValue["description"];
+                                        if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
                                         {
-                                            bool isExportableInstance = ((bool)isExportableValue);
-                                            propertiesInstance.IsExportable = isExportableInstance;
+                                            string descriptionInstance = ((string)descriptionValue);
+                                            propertiesInstance.Description = descriptionInstance;
                                         }
                                     }
                                 }

@@ -28,30 +28,8 @@ namespace Microsoft.Azure.Management.Automation.Models
     /// <summary>
     /// Definition of the account property.
     /// </summary>
-    public partial class AutomationAccountProperties
+    public partial class AutomationAccountProperties : ResourceCommonPropertiesBase
     {
-        private DateTimeOffset _creationTime;
-        
-        /// <summary>
-        /// Optional. Gets or sets the creation time of the runbook.
-        /// </summary>
-        public DateTimeOffset CreationTime
-        {
-            get { return this._creationTime; }
-            set { this._creationTime = value; }
-        }
-        
-        private DateTimeOffset _lastModifiedTime;
-        
-        /// <summary>
-        /// Optional. Gets or sets the last modified time of the runbook.
-        /// </summary>
-        public DateTimeOffset LastModifiedTime
-        {
-            get { return this._lastModifiedTime; }
-            set { this._lastModifiedTime = value; }
-        }
-        
         private Sku _sku;
         
         /// <summary>
