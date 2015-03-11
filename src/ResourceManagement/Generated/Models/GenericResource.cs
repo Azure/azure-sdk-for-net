@@ -20,35 +20,20 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
+using Microsoft.Azure.Management.Resources.Models;
 
 namespace Microsoft.Azure.Management.Resources.Models
 {
     /// <summary>
-    /// Resource group information.
+    /// Resource information.
     /// </summary>
-    public partial class ResourceGroup
+    public partial class GenericResource : ResourceBase
     {
-        private string _location;
-        
-        /// <summary>
-        /// Required. Gets or sets the location of the resource group. It
-        /// cannot be changed after the resource group has been created. Has
-        /// to be one of the supported Azure Locations, such as West US, East
-        /// US, West Europe, East Asia, etc.
-        /// </summary>
-        public string Location
-        {
-            get { return this._location; }
-            set { this._location = value; }
-        }
-        
         private string _properties;
         
         /// <summary>
-        /// Optional. Gets or sets the resource group properties.
+        /// Optional. Gets or sets the resource properties.
         /// </summary>
         public string Properties
         {
@@ -59,7 +44,7 @@ namespace Microsoft.Azure.Management.Resources.Models
         private string _provisioningState;
         
         /// <summary>
-        /// Optional. Gets or sets resource group provisioning state.
+        /// Optional. Gets or sets resource provisioning state.
         /// </summary>
         public string ProvisioningState
         {
@@ -67,30 +52,18 @@ namespace Microsoft.Azure.Management.Resources.Models
             set { this._provisioningState = value; }
         }
         
-        private IDictionary<string, string> _tags;
-        
         /// <summary>
-        /// Optional. Gets or sets the tags attached to the resource group.
+        /// Initializes a new instance of the GenericResource class.
         /// </summary>
-        public IDictionary<string, string> Tags
+        public GenericResource()
         {
-            get { return this._tags; }
-            set { this._tags = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ResourceGroup class.
+        /// Initializes a new instance of the GenericResource class with
+        /// required arguments.
         /// </summary>
-        public ResourceGroup()
-        {
-            this.Tags = new LazyDictionary<string, string>();
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the ResourceGroup class with required
-        /// arguments.
-        /// </summary>
-        public ResourceGroup(string location)
+        public GenericResource(string location)
             : this()
         {
             if (location == null)

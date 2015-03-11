@@ -44,12 +44,12 @@ namespace Microsoft.Azure.Management.Resources.Models
             set { this._nextLink = value; }
         }
         
-        private IList<ResourceGroup> _resourceGroups;
+        private IList<ResourceGroupExtended> _resourceGroups;
         
         /// <summary>
         /// Optional. Gets or sets the list of resource groups.
         /// </summary>
-        public IList<ResourceGroup> ResourceGroups
+        public IList<ResourceGroupExtended> ResourceGroups
         {
             get { return this._resourceGroups; }
             set { this._resourceGroups = value; }
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         public ResourceGroupListResult()
         {
-            this.ResourceGroups = new LazyList<ResourceGroup>();
+            this.ResourceGroups = new LazyList<ResourceGroupExtended>();
         }
         
         /// <summary>

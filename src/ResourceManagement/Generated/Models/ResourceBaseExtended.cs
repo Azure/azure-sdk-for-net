@@ -20,61 +20,68 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.Resources.Models;
 
 namespace Microsoft.Azure.Management.Resources.Models
 {
     /// <summary>
-    /// List of resource groups.
+    /// Resource information with extended details.
     /// </summary>
-    public partial class ResourceListResult : AzureOperationResponse
+    public partial class ResourceBaseExtended : ResourceBase
     {
-        private string _nextLink;
+        private string _id;
         
         /// <summary>
-        /// Required. Gets or sets the URL to get the next set of results.
+        /// Optional. Gets or sets the ID of the resource.
         /// </summary>
-        public string NextLink
+        public string Id
         {
-            get { return this._nextLink; }
-            set { this._nextLink = value; }
+            get { return this._id; }
+            set { this._id = value; }
         }
         
-        private IList<GenericResourceExtended> _resources;
+        private string _name;
         
         /// <summary>
-        /// Optional. Gets or sets the list of resource groups.
+        /// Optional. Gets or sets the name of the resource.
         /// </summary>
-        public IList<GenericResourceExtended> Resources
+        public string Name
         {
-            get { return this._resources; }
-            set { this._resources = value; }
+            get { return this._name; }
+            set { this._name = value; }
+        }
+        
+        private string _type;
+        
+        /// <summary>
+        /// Optional. Gets or sets the type of the resource.
+        /// </summary>
+        public string Type
+        {
+            get { return this._type; }
+            set { this._type = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ResourceListResult class.
+        /// Initializes a new instance of the ResourceBaseExtended class.
         /// </summary>
-        public ResourceListResult()
+        public ResourceBaseExtended()
         {
-            this.Resources = new LazyList<GenericResourceExtended>();
         }
         
         /// <summary>
-        /// Initializes a new instance of the ResourceListResult class with
+        /// Initializes a new instance of the ResourceBaseExtended class with
         /// required arguments.
         /// </summary>
-        public ResourceListResult(string nextLink)
+        public ResourceBaseExtended(string location)
             : this()
         {
-            if (nextLink == null)
+            if (location == null)
             {
-                throw new ArgumentNullException("nextLink");
+                throw new ArgumentNullException("location");
             }
-            this.NextLink = nextLink;
+            this.Location = location;
         }
     }
 }
