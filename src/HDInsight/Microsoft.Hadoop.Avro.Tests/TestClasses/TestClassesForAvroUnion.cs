@@ -200,4 +200,73 @@
             return base.GetHashCode();
         }
     }
+
+    [DataContract]
+    internal class ClassOfUnionWith2SameArrayAndMap : IEquatable<ClassOfUnionWith2SameArrayAndMap>
+    {
+        public static ClassOfUnionWith2SameArrayAndMap Create()
+        {
+            return new ClassOfUnionWith2SameArrayAndMap
+            {
+                IntArray = new[] { Utilities.GetRandom<int>(false) },
+                IntMap = new Dictionary<string, int>()
+                {
+                    {"TestKey", Utilities.GetRandom<int>(false)}
+                },
+            };
+        }
+
+        [DataMember]
+        [AvroUnion(typeof(int[]), typeof(int[]), typeof(AvroNull))]
+        public object IntArray;
+
+        [DataMember]
+        [AvroUnion(typeof(Dictionary<string, int>), typeof(Dictionary<string, int>), typeof(AvroNull))]
+        public object IntMap;
+
+        public override bool Equals(object obj)
+        {
+            return this.Equals(obj as ClassOfUnionWith2SameArrayAndMap);
+        }
+
+        public bool Equals(ClassOfUnionWith2SameArrayAndMap other)
+        {
+            if (other == null)
+            {
+                return false;
+            }
+
+            return CollectionEquals<int>(this.IntArray, other.IntArray)
+                   && DictionaryEquals<string, int>(this.IntMap, other.IntMap);
+        }
+
+        private bool DictionaryEquals<TKey, TValue>(object object1, object object2)
+        {
+            var map1 = object1 as IDictionary<TKey, TValue>;
+            var map2 = object2 as IDictionary<TKey, TValue>;
+            if (map1 != null && map2 != null && map1.Count == map2.Count)
+            {
+                return map1.SequenceEqual(map2);
+            }
+
+            return false;
+        }
+
+        public bool CollectionEquals<T>(object object1, object object2)
+        {
+            var array1 = object1 as T[];
+            var array2 = object2 as T[];
+            if (array1 != null && array2 != null && array1.Length == array2.Length)
+            {
+                return array1.SequenceEqual(array2);
+            }
+
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+    }
 }

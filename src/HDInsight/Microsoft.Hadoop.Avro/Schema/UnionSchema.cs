@@ -44,6 +44,7 @@ namespace Microsoft.Hadoop.Avro.Schema
             {
                 throw new ArgumentNullException("schemas");
             }
+
             this.schemas = schemas;
         }
 
@@ -104,9 +105,9 @@ namespace Microsoft.Hadoop.Avro.Schema
         //  Unions may not contain more than one schema with the same type, except for the named types record, fixed and enum. 
         //  For example, unions containing two array types or two map types are not permitted, but two types with different names are permitted                            
         /// </summary>
-        /// <param name="existingSchema">the list of schemas that's already processed.</param>
+        /// <param name="existingSchema">the schema that's already processed.</param>
         /// <param name="typeSchema">the schema to check whether it's duplicate according to avro union spec.</param>
-        /// <returns>the same type of schema in the existing schema, or null if that's not found</returns>
+        /// <returns>true if existingSchema is same type as typeSchema according to avro spec on union</returns>
         internal static bool IsSameTypeAs(TypeSchema existingSchema, TypeSchema typeSchema)
         {
             // only add ArraySchema at most once based on above Avro spec for union
@@ -116,15 +117,15 @@ namespace Microsoft.Hadoop.Avro.Schema
             {
                 // find previous array schema index with the same ItemSchema
                 return existingSchema is ArraySchema 
-                    && ((ArraySchema) existingSchema).ItemSchema == arraySchema.ItemSchema;
+                    && IsSameTypeAs(((ArraySchema) existingSchema).ItemSchema, arraySchema.ItemSchema);
             }
             
             if (mapSchema != null)
             {
                 // find previous map schema index with the same ItemSchema
                 return existingSchema is MapSchema
-                    && ((MapSchema) existingSchema).KeySchema == mapSchema.KeySchema
-                    && ((MapSchema) existingSchema).ValueSchema == mapSchema.ValueSchema;
+                    && IsSameTypeAs(((MapSchema) existingSchema).KeySchema, mapSchema.KeySchema)
+                    && IsSameTypeAs(((MapSchema) existingSchema).ValueSchema, mapSchema.ValueSchema);
             }
 
             return existingSchema.Type == typeSchema.Type;

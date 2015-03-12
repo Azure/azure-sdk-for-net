@@ -52,7 +52,8 @@ namespace Microsoft.Hadoop.Avro.Serializers
             var schemas = new List<IndexedSchema>(this.itemSchemas.Count);
             foreach (var typeSchema in this.itemSchemas)
             {
-                var existingSchema = schemas.SingleOrDefault(s => UnionSchema.IsSameTypeAs(s.Schema, typeSchema));
+                // use FirstOrDefault rather than SingleOrDefault because we need to add all schema to the list.
+                var existingSchema = schemas.FirstOrDefault(s => UnionSchema.IsSameTypeAs(s.Schema, typeSchema));
                 var index = existingSchema != null ? existingSchema.Index : schemaIndex++;
                 var indexSchema = new IndexedSchema {Schema = typeSchema, Index = index};
                 schemas.Add(indexSchema);
