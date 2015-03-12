@@ -31,12 +31,12 @@ namespace Microsoft.Azure.Management.Resources.Models
     /// </summary>
     public partial class ResourceGroupGetResult : AzureOperationResponse
     {
-        private ResourceGroup _resourceGroup;
+        private ResourceGroupExtended _resourceGroup;
         
         /// <summary>
         /// Optional. Gets or sets the resource group.
         /// </summary>
-        public ResourceGroup ResourceGroup
+        public ResourceGroupExtended ResourceGroup
         {
             get { return this._resourceGroup; }
             set { this._resourceGroup = value; }
