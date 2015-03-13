@@ -1479,6 +1479,18 @@ namespace Microsoft.Hadoop.Avro.Tests
             Assert.IsFalse(UnionSchema.IsSameTypeAs(stringArray, stringMap));
         }
 
+        [TestMethod]
+        [TestCategory("CheckIn")]
+        public void Serializer_ClassOfObjectDictionary()
+        {
+            var serializer = AvroSerializer.Create<ClassOfObjectDictionary>();
+            var deserializer = AvroSerializer.CreateDeserializerOnly<ClassOfObjectDictionary>(serializer.WriterSchema.ToString(), new AvroSerializerSettings());
+
+            // check for ClassOfUnionWith2ArrayAndMap
+            var expected = ClassOfObjectDictionary.Create(false);
+            RoundTripSerializationWithCheck(serializer, deserializer, expected);
+        }
+
         private void RoundTripSerializationWithCheck<TS>(IAvroSerializer<TS> serializer, IAvroSerializer<TS> deserializer, TS serialized)
         {
             using (var stream = new MemoryStream())

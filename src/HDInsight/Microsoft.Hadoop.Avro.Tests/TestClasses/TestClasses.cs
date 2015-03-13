@@ -1189,6 +1189,45 @@ namespace Microsoft.Hadoop.Avro.Tests
     }
 
     [DataContract]
+    [KnownType(typeof(int))]
+    [KnownType(typeof(string))]
+    public class ClassOfObjectDictionary : IEquatable<ClassOfObjectDictionary>
+    {
+        [DataMember]
+        [AvroUnion(typeof(int), typeof(string))]
+        internal Dictionary<string, object> PatchSet;
+
+        public override bool Equals(object obj)
+        {
+            return this.Equals(obj as ClassOfObjectDictionary);
+        }
+
+        public bool Equals(ClassOfObjectDictionary other)
+        {
+            if (other == null)
+            {
+                return false;
+            }
+
+            return (this.PatchSet == null && other.PatchSet == null) ||
+                (this.PatchSet != null && this.PatchSet.SequenceEqual(other.PatchSet));
+        }
+
+        public override int GetHashCode()
+        {
+            return this.PatchSet.GetHashCode();
+        }
+
+        public static ClassOfObjectDictionary Create(bool nullablesAreNulls)
+        {
+            return new ClassOfObjectDictionary
+            {
+                PatchSet = Utilities.GetRandom<Dictionary<string, object>>(nullablesAreNulls),
+            };
+        }
+    }
+
+    [DataContract]
     internal class ClassWithNullableIntField
     {
         [DataMember]
