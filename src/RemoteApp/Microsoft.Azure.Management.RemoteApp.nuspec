@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0"?>
 <package>
   <metadata>
     <id>Microsoft.Azure.Management.RemoteApp</id>
@@ -8,7 +8,7 @@
     <owners>azure-sdk, Microsoft</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Spec DLL for Microsoft Azure RemoteApp Management</description>
-    <releaseNotes>__BASELINE_RELEASE_NOTES__</releaseNotes>
+    <releaseNotes>Initial release.</releaseNotes>
     <licenseUrl>http://aka.ms/windowsazureapache2</licenseUrl>
     <projectUrl>https://github.com/Azure/azure-sdk-for-net</projectUrl>
     <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
