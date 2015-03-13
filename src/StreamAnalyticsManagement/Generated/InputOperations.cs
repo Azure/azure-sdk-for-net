@@ -128,7 +128,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + Uri.EscapeDataString(inputName);
             url = url + "/test";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-03-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -267,11 +267,11 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-                    if (statusCode == HttpStatusCode.NotFound)
+                    if (statusCode == HttpStatusCode.BadRequest)
                     {
                         result.Status = OperationStatus.Failed;
                     }
-                    if (statusCode == HttpStatusCode.BadRequest)
+                    if (statusCode == HttpStatusCode.NotFound)
                     {
                         result.Status = OperationStatus.Failed;
                     }
@@ -375,7 +375,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 url = url + Uri.EscapeDataString(parameters.Input.Name);
             }
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-03-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -669,11 +669,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                         if (derived8.Properties.EventHubName != null)
                                         {
                                             propertiesValue6["eventHubName"] = derived8.Properties.EventHubName;
-                                        }
-                                        
-                                        if (derived8.Properties.SourcePartitionCount != null)
-                                        {
-                                            propertiesValue6["sourcePartitionCount"] = derived8.Properties.SourcePartitionCount.Value;
                                         }
                                         
                                         if (derived8.Properties.ConsumerGroupName != null)
@@ -1127,13 +1122,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                     propertiesInstance6.EventHubName = eventHubNameInstance;
                                                 }
                                                 
-                                                JToken sourcePartitionCountValue2 = propertiesValue15["sourcePartitionCount"];
-                                                if (sourcePartitionCountValue2 != null && sourcePartitionCountValue2.Type != JTokenType.Null)
-                                                {
-                                                    int sourcePartitionCountInstance2 = ((int)sourcePartitionCountValue2);
-                                                    propertiesInstance6.SourcePartitionCount = sourcePartitionCountInstance2;
-                                                }
-                                                
                                                 JToken consumerGroupNameValue = propertiesValue15["consumerGroupName"];
                                                 if (consumerGroupNameValue != null && consumerGroupNameValue.Type != JTokenType.Null)
                                                 {
@@ -1367,7 +1355,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + "/inputs/";
             url = url + Uri.EscapeDataString(inputName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-03-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1758,13 +1746,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                     propertiesInstance6.EventHubName = eventHubNameInstance;
                                                 }
                                                 
-                                                JToken sourcePartitionCountValue2 = propertiesValue7["sourcePartitionCount"];
-                                                if (sourcePartitionCountValue2 != null && sourcePartitionCountValue2.Type != JTokenType.Null)
-                                                {
-                                                    int sourcePartitionCountInstance2 = ((int)sourcePartitionCountValue2);
-                                                    propertiesInstance6.SourcePartitionCount = sourcePartitionCountInstance2;
-                                                }
-                                                
                                                 JToken consumerGroupNameValue = propertiesValue7["consumerGroupName"];
                                                 if (consumerGroupNameValue != null && consumerGroupNameValue.Type != JTokenType.Null)
                                                 {
@@ -1984,7 +1965,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + "/inputs/";
             url = url + Uri.EscapeDataString(inputName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-03-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2141,7 +2122,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + "/inputs/";
             url = url + Uri.EscapeDataString(inputName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-03-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2527,13 +2508,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                     propertiesInstance6.EventHubName = eventHubNameInstance;
                                                 }
                                                 
-                                                JToken sourcePartitionCountValue2 = propertiesValue7["sourcePartitionCount"];
-                                                if (sourcePartitionCountValue2 != null && sourcePartitionCountValue2.Type != JTokenType.Null)
-                                                {
-                                                    int sourcePartitionCountInstance2 = ((int)sourcePartitionCountValue2);
-                                                    propertiesInstance6.SourcePartitionCount = sourcePartitionCountInstance2;
-                                                }
-                                                
                                                 JToken consumerGroupNameValue = propertiesValue7["consumerGroupName"];
                                                 if (consumerGroupNameValue != null && consumerGroupNameValue.Type != JTokenType.Null)
                                                 {
@@ -2744,7 +2718,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + Uri.EscapeDataString(jobName);
             url = url + "/inputs";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-03-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -3135,13 +3109,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                             propertiesInstance6.EventHubName = eventHubNameInstance;
                                                         }
                                                         
-                                                        JToken sourcePartitionCountValue2 = propertiesValue7["sourcePartitionCount"];
-                                                        if (sourcePartitionCountValue2 != null && sourcePartitionCountValue2.Type != JTokenType.Null)
-                                                        {
-                                                            int sourcePartitionCountInstance2 = ((int)sourcePartitionCountValue2);
-                                                            propertiesInstance6.SourcePartitionCount = sourcePartitionCountInstance2;
-                                                        }
-                                                        
                                                         JToken consumerGroupNameValue = propertiesValue7["consumerGroupName"];
                                                         if (consumerGroupNameValue != null && consumerGroupNameValue.Type != JTokenType.Null)
                                                         {
@@ -3379,7 +3346,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + "/inputs/";
             url = url + Uri.EscapeDataString(inputName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-03-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -3667,11 +3634,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                 if (derived8.Properties.EventHubName != null)
                                 {
                                     propertiesValue6["eventHubName"] = derived8.Properties.EventHubName;
-                                }
-                                
-                                if (derived8.Properties.SourcePartitionCount != null)
-                                {
-                                    propertiesValue6["sourcePartitionCount"] = derived8.Properties.SourcePartitionCount.Value;
                                 }
                                 
                                 if (derived8.Properties.ConsumerGroupName != null)
@@ -4111,13 +4073,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                 {
                                                     string eventHubNameInstance = ((string)eventHubNameValue);
                                                     propertiesInstance6.EventHubName = eventHubNameInstance;
-                                                }
-                                                
-                                                JToken sourcePartitionCountValue2 = propertiesValue15["sourcePartitionCount"];
-                                                if (sourcePartitionCountValue2 != null && sourcePartitionCountValue2.Type != JTokenType.Null)
-                                                {
-                                                    int sourcePartitionCountInstance2 = ((int)sourcePartitionCountValue2);
-                                                    propertiesInstance6.SourcePartitionCount = sourcePartitionCountInstance2;
                                                 }
                                                 
                                                 JToken consumerGroupNameValue = propertiesValue15["consumerGroupName"];

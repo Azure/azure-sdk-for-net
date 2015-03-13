@@ -87,20 +87,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
             set { this._sharedAccessPolicyName = value; }
         }
         
-        private int? _sourcePartitionCount;
-        
-        /// <summary>
-        /// Optional. Gets or sets the EventHub partition count. Must match the
-        /// specified EventHub’s partition count. This property is used when
-        /// the user has “partition by” in their query and helps determine the
-        /// necessary parallelism needed to run the query.
-        /// </summary>
-        public int? SourcePartitionCount
-        {
-            get { return this._sourcePartitionCount; }
-            set { this._sourcePartitionCount = value; }
-        }
-        
         /// <summary>
         /// Initializes a new instance of the
         /// EventHubStreamInputDataSourceProperties class.
