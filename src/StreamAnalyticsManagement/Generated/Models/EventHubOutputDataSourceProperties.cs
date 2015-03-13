@@ -40,6 +40,17 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
             set { this._eventHubName = value; }
         }
         
+        private string _partitionKey;
+        
+        /// <summary>
+        /// Optional. Gets or sets the column name to partition by.
+        /// </summary>
+        public string PartitionKey
+        {
+            get { return this._partitionKey; }
+            set { this._partitionKey = value; }
+        }
+        
         private string _serviceBusNamespace;
         
         /// <summary>

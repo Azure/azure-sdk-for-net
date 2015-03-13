@@ -116,7 +116,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + "/providers/Microsoft.StreamAnalytics/streamingjobs/";
             url = url + Uri.EscapeDataString(jobName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-03-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -196,11 +196,11 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     {
                         result.Status = OperationStatus.Failed;
                     }
-                    if (statusCode == HttpStatusCode.Conflict)
+                    if (statusCode == HttpStatusCode.PreconditionFailed)
                     {
                         result.Status = OperationStatus.Failed;
                     }
-                    if (statusCode == HttpStatusCode.PreconditionFailed)
+                    if (statusCode == HttpStatusCode.Conflict)
                     {
                         result.Status = OperationStatus.Failed;
                     }
@@ -292,7 +292,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + Uri.EscapeDataString(jobName);
             url = url + "/start";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-03-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -392,15 +392,15 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-                    if (statusCode == HttpStatusCode.Conflict)
-                    {
-                        result.Status = OperationStatus.Failed;
-                    }
                     if (statusCode == HttpStatusCode.NotFound)
                     {
                         result.Status = OperationStatus.Failed;
                     }
                     if (statusCode == HttpStatusCode.PreconditionFailed)
+                    {
+                        result.Status = OperationStatus.Failed;
+                    }
+                    if (statusCode == HttpStatusCode.Conflict)
                     {
                         result.Status = OperationStatus.Failed;
                     }
@@ -484,7 +484,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + Uri.EscapeDataString(jobName);
             url = url + "/stop";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-03-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -560,11 +560,11 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-                    if (statusCode == HttpStatusCode.NotFound)
+                    if (statusCode == HttpStatusCode.PreconditionFailed)
                     {
                         result.Status = OperationStatus.Failed;
                     }
-                    if (statusCode == HttpStatusCode.PreconditionFailed)
+                    if (statusCode == HttpStatusCode.NotFound)
                     {
                         result.Status = OperationStatus.Failed;
                     }
@@ -691,7 +691,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + "/providers/Microsoft.StreamAnalytics/streamingjobs/";
             url = url + Uri.EscapeDataString(parameters.Job.Name);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-03-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -791,6 +791,16 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 if (parameters.Job.Properties.EventsOutOfOrderMaxDelayInSeconds != null)
                 {
                     propertiesValue["eventsOutOfOrderMaxDelayInSeconds"] = parameters.Job.Properties.EventsOutOfOrderMaxDelayInSeconds.Value;
+                }
+                
+                if (parameters.Job.Properties.EventsLateArrivalMaxDelayInSeconds != null)
+                {
+                    propertiesValue["eventsLateArrivalMaxDelayInSeconds"] = parameters.Job.Properties.EventsLateArrivalMaxDelayInSeconds.Value;
+                }
+                
+                if (parameters.Job.Properties.DataLocale != null)
+                {
+                    propertiesValue["dataLocale"] = parameters.Job.Properties.DataLocale;
                 }
                 
                 if (parameters.Job.Properties.OutputStartMode != null)
@@ -1097,11 +1107,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                     propertiesValue7["eventHubName"] = derived8.Properties.EventHubName;
                                                 }
                                                 
-                                                if (derived8.Properties.SourcePartitionCount != null)
-                                                {
-                                                    propertiesValue7["sourcePartitionCount"] = derived8.Properties.SourcePartitionCount.Value;
-                                                }
-                                                
                                                 if (derived8.Properties.ConsumerGroupName != null)
                                                 {
                                                     propertiesValue7["consumerGroupName"] = derived8.Properties.ConsumerGroupName;
@@ -1392,6 +1397,11 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                             {
                                                 propertiesValue14["eventHubName"] = derived14.Properties.EventHubName;
                                             }
+                                            
+                                            if (derived14.Properties.PartitionKey != null)
+                                            {
+                                                propertiesValue14["partitionKey"] = derived14.Properties.PartitionKey;
+                                            }
                                         }
                                         
                                         if (derived14.Type != null)
@@ -1635,6 +1645,20 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                 {
                                     int eventsOutOfOrderMaxDelayInSecondsInstance = ((int)eventsOutOfOrderMaxDelayInSecondsValue);
                                     propertiesInstance.EventsOutOfOrderMaxDelayInSeconds = eventsOutOfOrderMaxDelayInSecondsInstance;
+                                }
+                                
+                                JToken eventsLateArrivalMaxDelayInSecondsValue = propertiesValue18["eventsLateArrivalMaxDelayInSeconds"];
+                                if (eventsLateArrivalMaxDelayInSecondsValue != null && eventsLateArrivalMaxDelayInSecondsValue.Type != JTokenType.Null)
+                                {
+                                    int eventsLateArrivalMaxDelayInSecondsInstance = ((int)eventsLateArrivalMaxDelayInSecondsValue);
+                                    propertiesInstance.EventsLateArrivalMaxDelayInSeconds = eventsLateArrivalMaxDelayInSecondsInstance;
+                                }
+                                
+                                JToken dataLocaleValue = propertiesValue18["dataLocale"];
+                                if (dataLocaleValue != null && dataLocaleValue.Type != JTokenType.Null)
+                                {
+                                    string dataLocaleInstance = ((string)dataLocaleValue);
+                                    propertiesInstance.DataLocale = dataLocaleInstance;
                                 }
                                 
                                 JToken outputStartModeValue = propertiesValue18["outputStartMode"];
@@ -2009,13 +2033,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                                 propertiesInstance7.EventHubName = eventHubNameInstance;
                                                             }
                                                             
-                                                            JToken sourcePartitionCountValue2 = propertiesValue25["sourcePartitionCount"];
-                                                            if (sourcePartitionCountValue2 != null && sourcePartitionCountValue2.Type != JTokenType.Null)
-                                                            {
-                                                                int sourcePartitionCountInstance2 = ((int)sourcePartitionCountValue2);
-                                                                propertiesInstance7.SourcePartitionCount = sourcePartitionCountInstance2;
-                                                            }
-                                                            
                                                             JToken consumerGroupNameValue = propertiesValue25["consumerGroupName"];
                                                             if (consumerGroupNameValue != null && consumerGroupNameValue.Type != JTokenType.Null)
                                                             {
@@ -2375,6 +2392,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                             string eventHubNameInstance2 = ((string)eventHubNameValue2);
                                                             propertiesInstance15.EventHubName = eventHubNameInstance2;
                                                         }
+                                                        
+                                                        JToken partitionKeyValue2 = propertiesValue33["partitionKey"];
+                                                        if (partitionKeyValue2 != null && partitionKeyValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string partitionKeyInstance2 = ((string)partitionKeyValue2);
+                                                            propertiesInstance15.PartitionKey = partitionKeyInstance2;
+                                                        }
                                                     }
                                                     
                                                     JToken typeValue15 = datasourceValue6["type"];
@@ -2633,7 +2657,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + "/providers/Microsoft.StreamAnalytics/streamingjobs/";
             url = url + Uri.EscapeDataString(jobName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-03-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2788,6 +2812,20 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                 {
                                     int eventsOutOfOrderMaxDelayInSecondsInstance = ((int)eventsOutOfOrderMaxDelayInSecondsValue);
                                     propertiesInstance.EventsOutOfOrderMaxDelayInSeconds = eventsOutOfOrderMaxDelayInSecondsInstance;
+                                }
+                                
+                                JToken eventsLateArrivalMaxDelayInSecondsValue = propertiesValue["eventsLateArrivalMaxDelayInSeconds"];
+                                if (eventsLateArrivalMaxDelayInSecondsValue != null && eventsLateArrivalMaxDelayInSecondsValue.Type != JTokenType.Null)
+                                {
+                                    int eventsLateArrivalMaxDelayInSecondsInstance = ((int)eventsLateArrivalMaxDelayInSecondsValue);
+                                    propertiesInstance.EventsLateArrivalMaxDelayInSeconds = eventsLateArrivalMaxDelayInSecondsInstance;
+                                }
+                                
+                                JToken dataLocaleValue = propertiesValue["dataLocale"];
+                                if (dataLocaleValue != null && dataLocaleValue.Type != JTokenType.Null)
+                                {
+                                    string dataLocaleInstance = ((string)dataLocaleValue);
+                                    propertiesInstance.DataLocale = dataLocaleInstance;
                                 }
                                 
                                 JToken outputStartModeValue = propertiesValue["outputStartMode"];
@@ -3162,13 +3200,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                                 propertiesInstance7.EventHubName = eventHubNameInstance;
                                                             }
                                                             
-                                                            JToken sourcePartitionCountValue2 = propertiesValue8["sourcePartitionCount"];
-                                                            if (sourcePartitionCountValue2 != null && sourcePartitionCountValue2.Type != JTokenType.Null)
-                                                            {
-                                                                int sourcePartitionCountInstance2 = ((int)sourcePartitionCountValue2);
-                                                                propertiesInstance7.SourcePartitionCount = sourcePartitionCountInstance2;
-                                                            }
-                                                            
                                                             JToken consumerGroupNameValue = propertiesValue8["consumerGroupName"];
                                                             if (consumerGroupNameValue != null && consumerGroupNameValue.Type != JTokenType.Null)
                                                             {
@@ -3527,6 +3558,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                         {
                                                             string eventHubNameInstance2 = ((string)eventHubNameValue2);
                                                             propertiesInstance15.EventHubName = eventHubNameInstance2;
+                                                        }
+                                                        
+                                                        JToken partitionKeyValue2 = propertiesValue16["partitionKey"];
+                                                        if (partitionKeyValue2 != null && partitionKeyValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string partitionKeyInstance2 = ((string)partitionKeyValue2);
+                                                            propertiesInstance15.PartitionKey = partitionKeyInstance2;
                                                         }
                                                     }
                                                     
@@ -3848,7 +3886,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + Uri.EscapeDataString(jobName);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("$expand=" + Uri.EscapeDataString(parameters.PropertiesToExpand));
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-03-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -3997,6 +4035,20 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                 {
                                     int eventsOutOfOrderMaxDelayInSecondsInstance = ((int)eventsOutOfOrderMaxDelayInSecondsValue);
                                     propertiesInstance.EventsOutOfOrderMaxDelayInSeconds = eventsOutOfOrderMaxDelayInSecondsInstance;
+                                }
+                                
+                                JToken eventsLateArrivalMaxDelayInSecondsValue = propertiesValue["eventsLateArrivalMaxDelayInSeconds"];
+                                if (eventsLateArrivalMaxDelayInSecondsValue != null && eventsLateArrivalMaxDelayInSecondsValue.Type != JTokenType.Null)
+                                {
+                                    int eventsLateArrivalMaxDelayInSecondsInstance = ((int)eventsLateArrivalMaxDelayInSecondsValue);
+                                    propertiesInstance.EventsLateArrivalMaxDelayInSeconds = eventsLateArrivalMaxDelayInSecondsInstance;
+                                }
+                                
+                                JToken dataLocaleValue = propertiesValue["dataLocale"];
+                                if (dataLocaleValue != null && dataLocaleValue.Type != JTokenType.Null)
+                                {
+                                    string dataLocaleInstance = ((string)dataLocaleValue);
+                                    propertiesInstance.DataLocale = dataLocaleInstance;
                                 }
                                 
                                 JToken outputStartModeValue = propertiesValue["outputStartMode"];
@@ -4371,13 +4423,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                                 propertiesInstance7.EventHubName = eventHubNameInstance;
                                                             }
                                                             
-                                                            JToken sourcePartitionCountValue2 = propertiesValue8["sourcePartitionCount"];
-                                                            if (sourcePartitionCountValue2 != null && sourcePartitionCountValue2.Type != JTokenType.Null)
-                                                            {
-                                                                int sourcePartitionCountInstance2 = ((int)sourcePartitionCountValue2);
-                                                                propertiesInstance7.SourcePartitionCount = sourcePartitionCountInstance2;
-                                                            }
-                                                            
                                                             JToken consumerGroupNameValue = propertiesValue8["consumerGroupName"];
                                                             if (consumerGroupNameValue != null && consumerGroupNameValue.Type != JTokenType.Null)
                                                             {
@@ -4737,6 +4782,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                             string eventHubNameInstance2 = ((string)eventHubNameValue2);
                                                             propertiesInstance15.EventHubName = eventHubNameInstance2;
                                                         }
+                                                        
+                                                        JToken partitionKeyValue2 = propertiesValue16["partitionKey"];
+                                                        if (partitionKeyValue2 != null && partitionKeyValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string partitionKeyInstance2 = ((string)partitionKeyValue2);
+                                                            propertiesInstance15.PartitionKey = partitionKeyInstance2;
+                                                        }
                                                     }
                                                     
                                                     JToken typeValue15 = datasourceValue3["type"];
@@ -4986,7 +5038,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + "/providers/Microsoft.StreamAnalytics/streamingjobs";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("$expand=" + Uri.EscapeDataString(parameters.PropertiesToExpand));
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-03-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -5140,6 +5192,20 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                         {
                                             int eventsOutOfOrderMaxDelayInSecondsInstance = ((int)eventsOutOfOrderMaxDelayInSecondsValue);
                                             propertiesInstance.EventsOutOfOrderMaxDelayInSeconds = eventsOutOfOrderMaxDelayInSecondsInstance;
+                                        }
+                                        
+                                        JToken eventsLateArrivalMaxDelayInSecondsValue = propertiesValue["eventsLateArrivalMaxDelayInSeconds"];
+                                        if (eventsLateArrivalMaxDelayInSecondsValue != null && eventsLateArrivalMaxDelayInSecondsValue.Type != JTokenType.Null)
+                                        {
+                                            int eventsLateArrivalMaxDelayInSecondsInstance = ((int)eventsLateArrivalMaxDelayInSecondsValue);
+                                            propertiesInstance.EventsLateArrivalMaxDelayInSeconds = eventsLateArrivalMaxDelayInSecondsInstance;
+                                        }
+                                        
+                                        JToken dataLocaleValue = propertiesValue["dataLocale"];
+                                        if (dataLocaleValue != null && dataLocaleValue.Type != JTokenType.Null)
+                                        {
+                                            string dataLocaleInstance = ((string)dataLocaleValue);
+                                            propertiesInstance.DataLocale = dataLocaleInstance;
                                         }
                                         
                                         JToken outputStartModeValue = propertiesValue["outputStartMode"];
@@ -5514,13 +5580,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                                         propertiesInstance7.EventHubName = eventHubNameInstance;
                                                                     }
                                                                     
-                                                                    JToken sourcePartitionCountValue2 = propertiesValue8["sourcePartitionCount"];
-                                                                    if (sourcePartitionCountValue2 != null && sourcePartitionCountValue2.Type != JTokenType.Null)
-                                                                    {
-                                                                        int sourcePartitionCountInstance2 = ((int)sourcePartitionCountValue2);
-                                                                        propertiesInstance7.SourcePartitionCount = sourcePartitionCountInstance2;
-                                                                    }
-                                                                    
                                                                     JToken consumerGroupNameValue = propertiesValue8["consumerGroupName"];
                                                                     if (consumerGroupNameValue != null && consumerGroupNameValue.Type != JTokenType.Null)
                                                                     {
@@ -5879,6 +5938,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                                 {
                                                                     string eventHubNameInstance2 = ((string)eventHubNameValue2);
                                                                     propertiesInstance15.EventHubName = eventHubNameInstance2;
+                                                                }
+                                                                
+                                                                JToken partitionKeyValue2 = propertiesValue16["partitionKey"];
+                                                                if (partitionKeyValue2 != null && partitionKeyValue2.Type != JTokenType.Null)
+                                                                {
+                                                                    string partitionKeyInstance2 = ((string)partitionKeyValue2);
+                                                                    propertiesInstance15.PartitionKey = partitionKeyInstance2;
                                                                 }
                                                             }
                                                             
@@ -6124,7 +6190,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + "/providers/Microsoft.StreamAnalytics/streamingjobs";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("$expand=" + Uri.EscapeDataString(parameters.PropertiesToExpand));
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-03-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -6278,6 +6344,20 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                         {
                                             int eventsOutOfOrderMaxDelayInSecondsInstance = ((int)eventsOutOfOrderMaxDelayInSecondsValue);
                                             propertiesInstance.EventsOutOfOrderMaxDelayInSeconds = eventsOutOfOrderMaxDelayInSecondsInstance;
+                                        }
+                                        
+                                        JToken eventsLateArrivalMaxDelayInSecondsValue = propertiesValue["eventsLateArrivalMaxDelayInSeconds"];
+                                        if (eventsLateArrivalMaxDelayInSecondsValue != null && eventsLateArrivalMaxDelayInSecondsValue.Type != JTokenType.Null)
+                                        {
+                                            int eventsLateArrivalMaxDelayInSecondsInstance = ((int)eventsLateArrivalMaxDelayInSecondsValue);
+                                            propertiesInstance.EventsLateArrivalMaxDelayInSeconds = eventsLateArrivalMaxDelayInSecondsInstance;
+                                        }
+                                        
+                                        JToken dataLocaleValue = propertiesValue["dataLocale"];
+                                        if (dataLocaleValue != null && dataLocaleValue.Type != JTokenType.Null)
+                                        {
+                                            string dataLocaleInstance = ((string)dataLocaleValue);
+                                            propertiesInstance.DataLocale = dataLocaleInstance;
                                         }
                                         
                                         JToken outputStartModeValue = propertiesValue["outputStartMode"];
@@ -6652,13 +6732,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                                         propertiesInstance7.EventHubName = eventHubNameInstance;
                                                                     }
                                                                     
-                                                                    JToken sourcePartitionCountValue2 = propertiesValue8["sourcePartitionCount"];
-                                                                    if (sourcePartitionCountValue2 != null && sourcePartitionCountValue2.Type != JTokenType.Null)
-                                                                    {
-                                                                        int sourcePartitionCountInstance2 = ((int)sourcePartitionCountValue2);
-                                                                        propertiesInstance7.SourcePartitionCount = sourcePartitionCountInstance2;
-                                                                    }
-                                                                    
                                                                     JToken consumerGroupNameValue = propertiesValue8["consumerGroupName"];
                                                                     if (consumerGroupNameValue != null && consumerGroupNameValue.Type != JTokenType.Null)
                                                                     {
@@ -7017,6 +7090,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                                 {
                                                                     string eventHubNameInstance2 = ((string)eventHubNameValue2);
                                                                     propertiesInstance15.EventHubName = eventHubNameInstance2;
+                                                                }
+                                                                
+                                                                JToken partitionKeyValue2 = propertiesValue16["partitionKey"];
+                                                                if (partitionKeyValue2 != null && partitionKeyValue2.Type != JTokenType.Null)
+                                                                {
+                                                                    string partitionKeyInstance2 = ((string)partitionKeyValue2);
+                                                                    propertiesInstance15.PartitionKey = partitionKeyInstance2;
                                                                 }
                                                             }
                                                             
@@ -7309,7 +7389,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
             url = url + "/providers/Microsoft.StreamAnalytics/streamingjobs/";
             url = url + Uri.EscapeDataString(jobName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-01-01-preview");
+            queryParameters.Add("api-version=2015-03-01-preview");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -7394,6 +7474,16 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     if (parameters.JobPatchRequest.Properties.EventsOutOfOrderMaxDelayInSeconds != null)
                     {
                         propertiesValue["eventsOutOfOrderMaxDelayInSeconds"] = parameters.JobPatchRequest.Properties.EventsOutOfOrderMaxDelayInSeconds.Value;
+                    }
+                    
+                    if (parameters.JobPatchRequest.Properties.EventsLateArrivalMaxDelayInSeconds != null)
+                    {
+                        propertiesValue["eventsLateArrivalMaxDelayInSeconds"] = parameters.JobPatchRequest.Properties.EventsLateArrivalMaxDelayInSeconds.Value;
+                    }
+                    
+                    if (parameters.JobPatchRequest.Properties.DataLocale != null)
+                    {
+                        propertiesValue["dataLocale"] = parameters.JobPatchRequest.Properties.DataLocale;
                     }
                     
                     if (parameters.JobPatchRequest.Properties.OutputStartMode != null)
@@ -7700,11 +7790,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                         propertiesValue7["eventHubName"] = derived8.Properties.EventHubName;
                                                     }
                                                     
-                                                    if (derived8.Properties.SourcePartitionCount != null)
-                                                    {
-                                                        propertiesValue7["sourcePartitionCount"] = derived8.Properties.SourcePartitionCount.Value;
-                                                    }
-                                                    
                                                     if (derived8.Properties.ConsumerGroupName != null)
                                                     {
                                                         propertiesValue7["consumerGroupName"] = derived8.Properties.ConsumerGroupName;
@@ -7995,6 +8080,11 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                 {
                                                     propertiesValue14["eventHubName"] = derived14.Properties.EventHubName;
                                                 }
+                                                
+                                                if (derived14.Properties.PartitionKey != null)
+                                                {
+                                                    propertiesValue14["partitionKey"] = derived14.Properties.PartitionKey;
+                                                }
                                             }
                                             
                                             if (derived14.Type != null)
@@ -8239,6 +8329,20 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                 {
                                     int eventsOutOfOrderMaxDelayInSecondsInstance = ((int)eventsOutOfOrderMaxDelayInSecondsValue);
                                     propertiesInstance.EventsOutOfOrderMaxDelayInSeconds = eventsOutOfOrderMaxDelayInSecondsInstance;
+                                }
+                                
+                                JToken eventsLateArrivalMaxDelayInSecondsValue = propertiesValue18["eventsLateArrivalMaxDelayInSeconds"];
+                                if (eventsLateArrivalMaxDelayInSecondsValue != null && eventsLateArrivalMaxDelayInSecondsValue.Type != JTokenType.Null)
+                                {
+                                    int eventsLateArrivalMaxDelayInSecondsInstance = ((int)eventsLateArrivalMaxDelayInSecondsValue);
+                                    propertiesInstance.EventsLateArrivalMaxDelayInSeconds = eventsLateArrivalMaxDelayInSecondsInstance;
+                                }
+                                
+                                JToken dataLocaleValue = propertiesValue18["dataLocale"];
+                                if (dataLocaleValue != null && dataLocaleValue.Type != JTokenType.Null)
+                                {
+                                    string dataLocaleInstance = ((string)dataLocaleValue);
+                                    propertiesInstance.DataLocale = dataLocaleInstance;
                                 }
                                 
                                 JToken outputStartModeValue = propertiesValue18["outputStartMode"];
@@ -8613,13 +8717,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                                 propertiesInstance7.EventHubName = eventHubNameInstance;
                                                             }
                                                             
-                                                            JToken sourcePartitionCountValue2 = propertiesValue25["sourcePartitionCount"];
-                                                            if (sourcePartitionCountValue2 != null && sourcePartitionCountValue2.Type != JTokenType.Null)
-                                                            {
-                                                                int sourcePartitionCountInstance2 = ((int)sourcePartitionCountValue2);
-                                                                propertiesInstance7.SourcePartitionCount = sourcePartitionCountInstance2;
-                                                            }
-                                                            
                                                             JToken consumerGroupNameValue = propertiesValue25["consumerGroupName"];
                                                             if (consumerGroupNameValue != null && consumerGroupNameValue.Type != JTokenType.Null)
                                                             {
@@ -8978,6 +9075,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                                         {
                                                             string eventHubNameInstance2 = ((string)eventHubNameValue2);
                                                             propertiesInstance15.EventHubName = eventHubNameInstance2;
+                                                        }
+                                                        
+                                                        JToken partitionKeyValue2 = propertiesValue33["partitionKey"];
+                                                        if (partitionKeyValue2 != null && partitionKeyValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string partitionKeyInstance2 = ((string)partitionKeyValue2);
+                                                            propertiesInstance15.PartitionKey = partitionKeyInstance2;
                                                         }
                                                     }
                                                     
