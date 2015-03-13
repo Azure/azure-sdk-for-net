@@ -1479,6 +1479,22 @@ namespace Microsoft.Hadoop.Avro.Tests
             Assert.IsFalse(UnionSchema.IsSameTypeAs(stringArray, stringMap));
         }
 
+<<<<<<< HEAD
+        [TestMethod]
+        [TestCategory("CheckIn")]
+        public void Serializer_ClassOfObjectDictionary()
+        {
+            var resolver = new AvroCustomContractResolver();
+            var settings = new AvroSerializerSettings() {Resolver = resolver};
+            var serializer = AvroSerializer.Create<ClassOfObjectDictionary>(settings);
+            var deserializer = AvroSerializer.CreateDeserializerOnly<ClassOfObjectDictionary>(serializer.WriterSchema.ToString(), settings);
+
+            var expected = ClassOfObjectDictionary.Create();
+            RoundTripSerializationWithCheck(serializer, deserializer, expected);
+        }
+
+=======
+>>>>>>> d2199c6... Merge pull request #69 from chuanboz/Issue989CollectionSupport
         private void RoundTripSerializationWithCheck<TS>(IAvroSerializer<TS> serializer, IAvroSerializer<TS> deserializer, TS serialized)
         {
             using (var stream = new MemoryStream())
