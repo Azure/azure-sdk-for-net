@@ -1191,7 +1191,10 @@ namespace Microsoft.Hadoop.Avro.Tests
     [DataContract]
     [KnownType(typeof(int))]
     [KnownType(typeof(string))]
+    [KnownType(typeof(Guid))]
     [KnownType(typeof(ClassOfInt))]
+    [KnownType(typeof(List<ClassOfInt>))]
+    [KnownType(typeof(Dictionary<string, ClassOfInt>))]
     public class ClassOfObjectDictionary : IEquatable<ClassOfObjectDictionary>
     {
         [DataMember]
@@ -1209,8 +1212,7 @@ namespace Microsoft.Hadoop.Avro.Tests
                 return false;
             }
 
-            return (this.PatchSet == null && other.PatchSet == null) ||
-                (this.PatchSet != null && this.PatchSet.SequenceEqual(other.PatchSet));
+            return Utilities.GeneratedTypesEquality(this, other);
         }
 
         public override int GetHashCode()
@@ -1220,14 +1222,21 @@ namespace Microsoft.Hadoop.Avro.Tests
 
         public static ClassOfObjectDictionary Create()
         {
-            var data = NestedClass.Create(false);
+            var list = new List<ClassOfInt>();
+            list.Add(ClassOfInt.Create(false));
+            var dictionary = new Dictionary<string, ClassOfInt>();
+            dictionary.Add("TestKey", ClassOfInt.Create(false));
+
             return new ClassOfObjectDictionary
             {
                 PatchSet = new Dictionary<string, object>()
                 {
-                     {"Name", "OData"},
-                     {"Age", 15},
-                     {"ClassOfIntReference", data.ClassOfIntReference}
+                     { "Name", "OData" },
+                     { "Age", 15 },
+                     { "Key", new Guid() },
+                     { "ClassOfIntReference", ClassOfInt.Create(false) },
+                     { "ClassOfIntReferenceArray", list },
+                     { "ClassOfIntReferenceMap", dictionary }
                 },
             };
         }
