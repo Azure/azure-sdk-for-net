@@ -120,7 +120,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         Task<VNetConfigScriptResult> GetVpnDeviceConfigScriptAsync(string vNetName, string vendor, string vpnDevice, string osFamily, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Gets a list of supported VPN devices
+        /// Gets details of supported VPN devices
         /// </summary>
         /// <param name='vNetName'>
         /// RemoteApp virtual network name.
@@ -129,9 +129,9 @@ namespace Microsoft.Azure.Management.RemoteApp
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// List of supported VPN device vendors.
+        /// The VPN device information.
         /// </returns>
-        Task<VNetVpnDevicesResult> GetVpnDevicesAsync(string vNetName, CancellationToken cancellationToken);
+        Task<VNetVpnDeviceResult> GetVpnDevicesAsync(string vNetName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Gets a list of virtual network configurations.

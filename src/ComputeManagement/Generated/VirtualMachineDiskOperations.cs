@@ -477,6 +477,201 @@ namespace Microsoft.WindowsAzure.Management.Compute
         }
         
         /// <summary>
+        /// The Add Disk operation adds a disk to the user image repository.
+        /// The disk can be an operating system disk or a data disk.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157178.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='name'>
+        /// Required. The name of the disk being updated.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Update Virtual Machine Disk
+        /// operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<AzureOperationResponse> BeginUpdatingDiskAsync(string name, VirtualMachineDiskUpdateParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (name == null)
+            {
+                throw new ArgumentNullException("name");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            if (parameters.Label == null)
+            {
+                throw new ArgumentNullException("parameters.Label");
+            }
+            if (parameters.Name == null)
+            {
+                throw new ArgumentNullException("parameters.Name");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "BeginUpdatingDiskAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/services/disks/";
+            url = url + Uri.EscapeDataString(name);
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Put;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                XDocument requestDoc = new XDocument();
+                
+                XElement diskElement = new XElement(XName.Get("Disk", "http://schemas.microsoft.com/windowsazure"));
+                requestDoc.Add(diskElement);
+                
+                if (parameters.HasOperatingSystem != null)
+                {
+                    XElement hasOperatingSystemElement = new XElement(XName.Get("HasOperatingSystem", "http://schemas.microsoft.com/windowsazure"));
+                    hasOperatingSystemElement.Value = parameters.HasOperatingSystem.ToString().ToLower();
+                    diskElement.Add(hasOperatingSystemElement);
+                }
+                
+                if (parameters.OperatingSystemType != null)
+                {
+                    XElement osElement = new XElement(XName.Get("OS", "http://schemas.microsoft.com/windowsazure"));
+                    osElement.Value = parameters.OperatingSystemType;
+                    diskElement.Add(osElement);
+                }
+                
+                XElement labelElement = new XElement(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
+                labelElement.Value = parameters.Label;
+                diskElement.Add(labelElement);
+                
+                if (parameters.MediaLinkUri != null)
+                {
+                    XElement mediaLinkElement = new XElement(XName.Get("MediaLink", "http://schemas.microsoft.com/windowsazure"));
+                    mediaLinkElement.Value = parameters.MediaLinkUri.AbsoluteUri;
+                    diskElement.Add(mediaLinkElement);
+                }
+                
+                XElement nameElement = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                nameElement.Value = parameters.Name;
+                diskElement.Add(nameElement);
+                
+                if (parameters.ResizedSizeInGB != null)
+                {
+                    XElement resizedSizeInGBElement = new XElement(XName.Get("ResizedSizeInGB", "http://schemas.microsoft.com/windowsazure"));
+                    resizedSizeInGBElement.Value = parameters.ResizedSizeInGB.ToString();
+                    diskElement.Add(resizedSizeInGBElement);
+                }
+                
+                requestContent = requestDoc.ToString();
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    AzureOperationResponse result = null;
+                    // Deserialize Response
+                    result = new AzureOperationResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
         /// The Create Data Disk operation adds a data disk to a virtual
         /// machine. There are three ways to create the data disk using the
         /// Add Data Disk operation. Option 1 - Attach an empty data disk to
@@ -2178,6 +2373,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 nameElement.Value = parameters.Name;
                 diskElement.Add(nameElement);
                 
+                if (parameters.ResizedSizeInGB != null)
+                {
+                    XElement resizedSizeInGBElement = new XElement(XName.Get("ResizedSizeInGB", "http://schemas.microsoft.com/windowsazure"));
+                    resizedSizeInGBElement.Value = parameters.ResizedSizeInGB.ToString();
+                    diskElement.Add(resizedSizeInGBElement);
+                }
+                
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
@@ -2313,6 +2515,102 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     httpRequest.Dispose();
                 }
             }
+        }
+        
+        /// <summary>
+        /// The Add Disk operation adds a disk to the user image repository.
+        /// The disk can be an operating system disk or a data disk.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157178.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='name'>
+        /// Required. The name of the disk being updated.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Update Virtual Machine Disk
+        /// operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        public async Task<OperationStatusResponse> UpdateDiskSizeAsync(string name, VirtualMachineDiskUpdateParameters parameters, CancellationToken cancellationToken)
+        {
+            ComputeManagementClient client = this.Client;
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "UpdateDiskSizeAsync", tracingParameters);
+            }
+            
+            cancellationToken.ThrowIfCancellationRequested();
+            AzureOperationResponse response = await client.VirtualMachineDisks.BeginUpdatingDiskAsync(name, parameters, cancellationToken).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested();
+            OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 30;
+            if (client.LongRunningOperationInitialTimeout >= 0)
+            {
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
+            }
+            while ((result.Status != OperationStatus.InProgress) == false)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 30;
+                if (client.LongRunningOperationRetryTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
+                }
+            }
+            
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+            
+            if (result.Status != OperationStatus.Succeeded)
+            {
+                if (result.Error != null)
+                {
+                    CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                    ex.Error = new CloudError();
+                    ex.Error.Code = result.Error.Code;
+                    ex.Error.Message = result.Error.Message;
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+                else
+                {
+                    CloudException ex = new CloudException("");
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Error(invocationId, ex);
+                    }
+                    throw ex;
+                }
+            }
+            
+            return result;
         }
     }
 }

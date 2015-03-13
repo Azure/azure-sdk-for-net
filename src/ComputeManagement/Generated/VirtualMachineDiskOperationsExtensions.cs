@@ -214,6 +214,62 @@ namespace Microsoft.WindowsAzure.Management.Compute
         }
         
         /// <summary>
+        /// The Add Disk operation adds a disk to the user image repository.
+        /// The disk can be an operating system disk or a data disk.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157178.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineDiskOperations.
+        /// </param>
+        /// <param name='name'>
+        /// Required. The name of the disk being updated.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Update Virtual Machine Disk
+        /// operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static AzureOperationResponse BeginUpdatingDisk(this IVirtualMachineDiskOperations operations, string name, VirtualMachineDiskUpdateParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IVirtualMachineDiskOperations)s).BeginUpdatingDiskAsync(name, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Add Disk operation adds a disk to the user image repository.
+        /// The disk can be an operating system disk or a data disk.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157178.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineDiskOperations.
+        /// </param>
+        /// <param name='name'>
+        /// Required. The name of the disk being updated.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Update Virtual Machine Disk
+        /// operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<AzureOperationResponse> BeginUpdatingDiskAsync(this IVirtualMachineDiskOperations operations, string name, VirtualMachineDiskUpdateParameters parameters)
+        {
+            return operations.BeginUpdatingDiskAsync(name, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// The Create Data Disk operation adds a data disk to a virtual
         /// machine. There are three ways to create the data disk using the
         /// Add Data Disk operation. Option 1 - Attach an empty data disk to
@@ -797,6 +853,76 @@ namespace Microsoft.WindowsAzure.Management.Compute
         public static Task<VirtualMachineDiskUpdateResponse> UpdateDiskAsync(this IVirtualMachineDiskOperations operations, string name, VirtualMachineDiskUpdateParameters parameters)
         {
             return operations.UpdateDiskAsync(name, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The Add Disk operation adds a disk to the user image repository.
+        /// The disk can be an operating system disk or a data disk.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157178.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineDiskOperations.
+        /// </param>
+        /// <param name='name'>
+        /// Required. The name of the disk being updated.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Update Virtual Machine Disk
+        /// operation.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        public static OperationStatusResponse UpdateDiskSize(this IVirtualMachineDiskOperations operations, string name, VirtualMachineDiskUpdateParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IVirtualMachineDiskOperations)s).UpdateDiskSizeAsync(name, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Add Disk operation adds a disk to the user image repository.
+        /// The disk can be an operating system disk or a data disk.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157178.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineDiskOperations.
+        /// </param>
+        /// <param name='name'>
+        /// Required. The name of the disk being updated.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Update Virtual Machine Disk
+        /// operation.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        public static Task<OperationStatusResponse> UpdateDiskSizeAsync(this IVirtualMachineDiskOperations operations, string name, VirtualMachineDiskUpdateParameters parameters)
+        {
+            return operations.UpdateDiskSizeAsync(name, parameters, CancellationToken.None);
         }
     }
 }

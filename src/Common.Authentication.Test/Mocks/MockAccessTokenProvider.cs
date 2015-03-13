@@ -21,6 +21,8 @@ namespace Microsoft.WindowsAzure.Commands.Test.Utilities.Common
 {
     public class MockAccessTokenProvider : ITokenProvider
     {
+        public AdalConfiguration AdalConfiguration { get; set; }
+
         private readonly IAccessToken accessToken;
 
         public MockAccessTokenProvider(string token)
@@ -39,6 +41,7 @@ namespace Microsoft.WindowsAzure.Commands.Test.Utilities.Common
         public IAccessToken GetAccessToken(AdalConfiguration config, ShowDialog promptBehavior, string userId, SecureString password,
             AzureAccount.AccountType credentialType)
         {
+            AdalConfiguration = config;
             return this.accessToken;
         }
     }

@@ -57,6 +57,17 @@ namespace Microsoft.Azure.Management.RemoteApp
         Task<GetAccountResult> GetAsync(CancellationToken cancellationToken);
         
         /// <summary>
+        /// Gets additional features enabled for the account.
+        /// </summary>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Additional features enabled for the account.
+        /// </returns>
+        Task<EnabledFeaturesResult> GetEnabledFeaturesAsync(CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Gets the list of available billing plans for the customer.
         /// </summary>
         /// <param name='cancellationToken'>

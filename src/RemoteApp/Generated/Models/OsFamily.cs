@@ -25,14 +25,14 @@ using System.Linq;
 namespace Microsoft.Azure.Management.RemoteApp.Models
 {
     /// <summary>
-    /// Operating System the VPN device runs on.
+    /// VPN device operating system details.
     /// </summary>
     public partial class OsFamily
     {
         private string _name;
         
         /// <summary>
-        /// Optional. Version of operating system the VPN device runs on.
+        /// Optional. Name of the VPN device operating system.
         /// </summary>
         public string Name
         {

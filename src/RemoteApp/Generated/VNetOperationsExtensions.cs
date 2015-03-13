@@ -268,7 +268,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         }
         
         /// <summary>
-        /// Gets a list of supported VPN devices
+        /// Gets details of supported VPN devices
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -278,9 +278,9 @@ namespace Microsoft.Azure.Management.RemoteApp
         /// Required. RemoteApp virtual network name.
         /// </param>
         /// <returns>
-        /// List of supported VPN device vendors.
+        /// The VPN device information.
         /// </returns>
-        public static VNetVpnDevicesResult GetVpnDevices(this IVNetOperations operations, string vNetName)
+        public static VNetVpnDeviceResult GetVpnDevices(this IVNetOperations operations, string vNetName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -290,7 +290,7 @@ namespace Microsoft.Azure.Management.RemoteApp
         }
         
         /// <summary>
-        /// Gets a list of supported VPN devices
+        /// Gets details of supported VPN devices
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -300,9 +300,9 @@ namespace Microsoft.Azure.Management.RemoteApp
         /// Required. RemoteApp virtual network name.
         /// </param>
         /// <returns>
-        /// List of supported VPN device vendors.
+        /// The VPN device information.
         /// </returns>
-        public static Task<VNetVpnDevicesResult> GetVpnDevicesAsync(this IVNetOperations operations, string vNetName)
+        public static Task<VNetVpnDeviceResult> GetVpnDevicesAsync(this IVNetOperations operations, string vNetName)
         {
             return operations.GetVpnDevicesAsync(vNetName, CancellationToken.None);
         }

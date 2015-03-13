@@ -1,5 +1,7 @@
 // 
+
 // Copyright (c) Microsoft and contributors.  All rights reserved.
+
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -144,6 +146,16 @@ namespace Microsoft.Azure.Management.Sql
         /// Delete servers.
         /// </summary>
         IServerOperations Servers
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Represents all the operations for operating on Azure SQL Database
+        /// Service Objectives.   Contains operations to: Retrieve service
+        /// objectives.
+        /// </summary>
+        IServiceObjectiveOperations ServiceObjectives
         {
             get; 
         }

@@ -19,19 +19,19 @@
 // Changes to this file may cause incorrect behavior and will be lost if the
 // code is regenerated.
 
-using Microsoft.Azure.Internal.Subscriptions.Csm.Models;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure.Subscriptions.Csm.Models;
 
-namespace Microsoft.Azure.Internal.Subscriptions.Csm
+namespace Microsoft.Azure.Subscriptions.Csm
 {
-    internal static partial class TenantOperationsExtensions
+    public static partial class TenantOperationsExtensions
     {
         /// <summary>
         /// Gets a list of the tenantIds.
         /// </summary>
         /// <param name='operations'>
-        /// Reference to the Microsoft.Azure.Internal.Subscriptions.Csm.ITenantOperations.
+        /// Reference to the Microsoft.Azure.Subscriptions.Csm.ITenantOperations.
         /// </param>
         /// <returns>
         /// Tenant Ids information.
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Internal.Subscriptions.Csm
         /// Gets a list of the tenantIds.
         /// </summary>
         /// <param name='operations'>
-        /// Reference to the Microsoft.Azure.Internal.Subscriptions.Csm.ITenantOperations.
+        /// Reference to the Microsoft.Azure.Subscriptions.Csm.ITenantOperations.
         /// </param>
         /// <returns>
         /// Tenant Ids information.

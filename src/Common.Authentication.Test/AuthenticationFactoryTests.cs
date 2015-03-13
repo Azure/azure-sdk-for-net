@@ -58,7 +58,51 @@ namespace Common.Authentication.Test
 
             Assert.True(credential is AccessTokenCredential);
             Assert.Equal(subscriptionId, new Guid(((AccessTokenCredential)credential).SubscriptionId));
+        }
 
+        [Fact]
+        public void VerifyValidateAuthorityFalseForOnPremise()
+        {
+            var authFactory = new AuthenticationFactory
+            {
+                TokenProvider = new MockAccessTokenProvider("testtoken", "testuser")
+            };
+
+            var subscriptionId = Guid.NewGuid();
+            var context = new AzureContext
+            (
+                new AzureSubscription
+                {
+                    Id = subscriptionId,
+                    Properties = new Dictionary<AzureSubscription.Property, string>
+                    {
+                        { AzureSubscription.Property.Tenants, "123"}
+                    }
+                },
+                new AzureAccount
+                {
+                    Id = "testuser",
+                    Type = AzureAccount.AccountType.User,
+                    Properties = new Dictionary<AzureAccount.Property, string>
+                    {
+                        { AzureAccount.Property.Tenants, "123" }
+                    }
+                },
+                new AzureEnvironment
+                {
+                    Name = "Katal",
+                    OnPremise = true,
+                    Endpoints = new Dictionary<AzureEnvironment.Endpoint, string>
+                    {
+                        { AzureEnvironment.Endpoint.ActiveDirectory, "http://ad.com" },
+                        { AzureEnvironment.Endpoint.ActiveDirectoryServiceEndpointResourceId, "http://adresource.com" }
+                    }
+                }
+            );
+
+            var credential = authFactory.Authenticate(context.Account, context.Environment, "common", null, ShowDialog.Always);
+           
+            Assert.False(((MockAccessTokenProvider)authFactory.TokenProvider).AdalConfiguration.ValidateAuthority);            
         }
     }
 }

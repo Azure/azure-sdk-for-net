@@ -61,6 +61,25 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         Task<ExpressRouteOperationResponse> BeginRemoveAsync(string serviceKey, CancellationToken cancellationToken);
         
         /// <summary>
+        /// The Update Dedicated Circuit operation updates an existing
+        /// dedicated circuit.
+        /// </summary>
+        /// <param name='serviceKey'>
+        /// Service Key of the circuit being updated
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Update Dedicated Circuit operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<ExpressRouteOperationResponse> BeginUpdateAsync(string serviceKey, DedicatedCircuitUpdateParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// The Get Dedicated Circuit operation retrieves the specified
         /// dedicated circuit.
         /// </summary>
@@ -74,6 +93,31 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// The Get Dedicated Circuit operation response.
         /// </returns>
         Task<DedicatedCircuitGetResponse> GetAsync(string serviceKey, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Get Express Route operation status gets information on the
+        /// status of Express Route operations in Windows Azure.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154112.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operationId'>
+        /// The id  of the operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        Task<ExpressRouteOperationStatusResponse> GetOperationStatusAsync(string operationId, CancellationToken cancellationToken);
         
         /// <summary>
         /// The List Dedicated Circuit operation retrieves a list of dedicated
@@ -97,9 +141,17 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Get Dedicated Circuit operation response.
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
         /// </returns>
-        Task<DedicatedCircuitGetResponse> NewAsync(DedicatedCircuitNewParameters parameters, CancellationToken cancellationToken);
+        Task<ExpressRouteOperationStatusResponse> NewAsync(DedicatedCircuitNewParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Remove Dedicated Circuit operation deletes an existing
@@ -123,5 +175,31 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// information regarding the failure.
         /// </returns>
         Task<ExpressRouteOperationStatusResponse> RemoveAsync(string serviceKey, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Update Dedicated Circuit operation updates an existing
+        /// dedicated circuit.
+        /// </summary>
+        /// <param name='serviceKey'>
+        /// Service Key of the circuit being updated
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the update dedicated circuit operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        Task<ExpressRouteOperationStatusResponse> UpdateAsync(string serviceKey, DedicatedCircuitUpdateParameters parameters, CancellationToken cancellationToken);
     }
 }

@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Common.Authentication
         static class NativeMethods
         {
             [DllImport("kernel32.dll")]
-            internal static extern IntPtr GetConsoleWindow();
+            public static extern IntPtr GetConsoleWindow();
         }
     }
 }

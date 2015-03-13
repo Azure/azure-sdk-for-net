@@ -188,6 +188,68 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         }
         
         /// <summary>
+        /// The Get Express Route operation status gets information on the
+        /// status of Express Route operations in Windows Azure.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154112.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.ExpressRoute.IDedicatedCircuitLinkOperations.
+        /// </param>
+        /// <param name='operationId'>
+        /// Required. The id  of the operation.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static ExpressRouteOperationStatusResponse GetOperationStatus(this IDedicatedCircuitLinkOperations operations, string operationId)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IDedicatedCircuitLinkOperations)s).GetOperationStatusAsync(operationId);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Get Express Route operation status gets information on the
+        /// status of Express Route operations in Windows Azure.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154112.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.ExpressRoute.IDedicatedCircuitLinkOperations.
+        /// </param>
+        /// <param name='operationId'>
+        /// Required. The id  of the operation.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static Task<ExpressRouteOperationStatusResponse> GetOperationStatusAsync(this IDedicatedCircuitLinkOperations operations, string operationId)
+        {
+            return operations.GetOperationStatusAsync(operationId, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// The List Dedicated Circuit Links operation retrieves a list of
         /// Vnets that are linked to the circuit with the specified service
         /// key.
@@ -246,9 +308,17 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// Required.
         /// </param>
         /// <returns>
-        /// The Get Dedicated Circuit Link operation response.
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
         /// </returns>
-        public static DedicatedCircuitLinkGetResponse New(this IDedicatedCircuitLinkOperations operations, string serviceKey, string vnetName)
+        public static ExpressRouteOperationStatusResponse New(this IDedicatedCircuitLinkOperations operations, string serviceKey, string vnetName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -272,9 +342,17 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// Required.
         /// </param>
         /// <returns>
-        /// The Get Dedicated Circuit Link operation response.
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself.  If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request.  If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
         /// </returns>
-        public static Task<DedicatedCircuitLinkGetResponse> NewAsync(this IDedicatedCircuitLinkOperations operations, string serviceKey, string vnetName)
+        public static Task<ExpressRouteOperationStatusResponse> NewAsync(this IDedicatedCircuitLinkOperations operations, string serviceKey, string vnetName)
         {
             return operations.NewAsync(serviceKey, vnetName, CancellationToken.None);
         }

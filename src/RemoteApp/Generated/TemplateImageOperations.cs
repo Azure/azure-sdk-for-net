@@ -599,7 +599,7 @@ namespace Microsoft.Azure.Management.RemoteApp
                             JToken officeTypeValue = responseDoc["OfficeType"];
                             if (officeTypeValue != null && officeTypeValue.Type != JTokenType.Null)
                             {
-                                bool officeTypeInstance = ((bool)officeTypeValue);
+                                OfficeType officeTypeInstance = ((OfficeType)(((int)officeTypeValue)));
                                 templateImageInstance.OfficeType = officeTypeInstance;
                             }
                         }
@@ -1013,7 +1013,7 @@ namespace Microsoft.Azure.Management.RemoteApp
                                     JToken officeTypeValue = remoteAppTemplateImageListValue["OfficeType"];
                                     if (officeTypeValue != null && officeTypeValue.Type != JTokenType.Null)
                                     {
-                                        bool officeTypeInstance = ((bool)officeTypeValue);
+                                        OfficeType officeTypeInstance = ((OfficeType)(((int)officeTypeValue)));
                                         templateImageInstance.OfficeType = officeTypeInstance;
                                     }
                                 }
@@ -1142,16 +1142,15 @@ namespace Microsoft.Azure.Management.RemoteApp
                 string requestContent = null;
                 JToken requestDoc = null;
                 
-                if (imageDetails.Id != null)
-                {
-                    requestDoc = new JObject();
-                    requestDoc["Id"] = imageDetails.Id;
-                }
-                
                 requestDoc = new JObject();
                 requestDoc["Name"] = imageDetails.Name;
                 
                 requestDoc["Region"] = imageDetails.Region;
+                
+                if (imageDetails.Id != null)
+                {
+                    requestDoc["Id"] = imageDetails.Id;
+                }
                 
                 requestDoc["SizeInGB"] = imageDetails.SizeInGB;
                 
@@ -1319,7 +1318,7 @@ namespace Microsoft.Azure.Management.RemoteApp
                             JToken officeTypeValue = responseDoc["OfficeType"];
                             if (officeTypeValue != null && officeTypeValue.Type != JTokenType.Null)
                             {
-                                bool officeTypeInstance = ((bool)officeTypeValue);
+                                OfficeType officeTypeInstance = ((OfficeType)(((int)officeTypeValue)));
                                 templateImageInstance.OfficeType = officeTypeInstance;
                             }
                         }
