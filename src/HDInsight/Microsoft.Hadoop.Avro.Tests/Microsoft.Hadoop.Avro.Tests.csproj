@@ -97,6 +97,7 @@
     <Compile Include="SchemaTests\SchemaDefaultValuesTests.cs" />
     <Compile Include="SchemaTests\SchemaEvolutionTests.cs" />
     <Compile Include="SchemaTests\SchemaTests.cs" />
+    <Compile Include="TestClasses\AvroCustomContractResolver.cs" />
     <Compile Include="TestClasses\TestClassesForAvroUnion.cs" />
     <Compile Include="TestClasses\TestClassesForIntegrationWithHive.cs" />
     <Compile Include="TestClasses\TestClassesForSchemaMatching.cs" />

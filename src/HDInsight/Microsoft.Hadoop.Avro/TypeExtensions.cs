@@ -242,6 +242,7 @@ namespace Microsoft.Hadoop.Avro
         public static bool CanBeKnownTypeOf(this Type type, Type baseType)
         {
             return !type.IsAbstract
+                   && ! type.IsUnsupported()
                    && (type.IsSubclassOf(baseType) 
                    || type == baseType 
                    || (baseType.IsInterface && baseType.IsAssignableFrom(type))

@@ -1191,10 +1191,10 @@ namespace Microsoft.Hadoop.Avro.Tests
     [DataContract]
     [KnownType(typeof(int))]
     [KnownType(typeof(string))]
+    [KnownType(typeof(ClassOfInt))]
     public class ClassOfObjectDictionary : IEquatable<ClassOfObjectDictionary>
     {
         [DataMember]
-        [AvroUnion(typeof(int), typeof(string))]
         internal Dictionary<string, object> PatchSet;
 
         public override bool Equals(object obj)
@@ -1218,11 +1218,17 @@ namespace Microsoft.Hadoop.Avro.Tests
             return this.PatchSet.GetHashCode();
         }
 
-        public static ClassOfObjectDictionary Create(bool nullablesAreNulls)
+        public static ClassOfObjectDictionary Create()
         {
+            var data = NestedClass.Create(false);
             return new ClassOfObjectDictionary
             {
-                PatchSet = Utilities.GetRandom<Dictionary<string, object>>(nullablesAreNulls),
+                PatchSet = new Dictionary<string, object>()
+                {
+                     {"Name", "OData"},
+                     {"Age", 15},
+                     {"ClassOfIntReference", data.ClassOfIntReference}
+                },
             };
         }
     }

@@ -1483,11 +1483,12 @@ namespace Microsoft.Hadoop.Avro.Tests
         [TestCategory("CheckIn")]
         public void Serializer_ClassOfObjectDictionary()
         {
-            var serializer = AvroSerializer.Create<ClassOfObjectDictionary>();
-            var deserializer = AvroSerializer.CreateDeserializerOnly<ClassOfObjectDictionary>(serializer.WriterSchema.ToString(), new AvroSerializerSettings());
+            var resolver = new AvroCustomContractResolver();
+            var settings = new AvroSerializerSettings() {Resolver = resolver};
+            var serializer = AvroSerializer.Create<ClassOfObjectDictionary>(settings);
+            var deserializer = AvroSerializer.CreateDeserializerOnly<ClassOfObjectDictionary>(serializer.WriterSchema.ToString(), settings);
 
-            // check for ClassOfUnionWith2ArrayAndMap
-            var expected = ClassOfObjectDictionary.Create(false);
+            var expected = ClassOfObjectDictionary.Create();
             RoundTripSerializationWithCheck(serializer, deserializer, expected);
         }
 
