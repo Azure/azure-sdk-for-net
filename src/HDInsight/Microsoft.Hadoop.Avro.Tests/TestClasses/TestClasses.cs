@@ -16,6 +16,7 @@ namespace Microsoft.Hadoop.Avro.Tests
 {
     using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Linq.Expressions;
@@ -1194,6 +1195,8 @@ namespace Microsoft.Hadoop.Avro.Tests
     [KnownType(typeof(Guid))]
     [KnownType(typeof(ClassOfInt))]
     [KnownType(typeof(List<ClassOfInt>))]
+    [KnownType(typeof(Collection<ClassOfInt>))]
+    [KnownType(typeof(IList<ClassOfInt>))]
     [KnownType(typeof(Dictionary<string, ClassOfInt>))]
     public class ClassOfObjectDictionary : IEquatable<ClassOfObjectDictionary>
     {
