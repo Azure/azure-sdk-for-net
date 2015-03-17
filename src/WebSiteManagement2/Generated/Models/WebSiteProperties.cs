@@ -22,8 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.Azure.Management.WebSites.Models;
-using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
@@ -183,6 +183,30 @@ namespace Microsoft.Azure.Management.WebSites.Models
         {
             get { return this._serverFarm; }
             set { this._serverFarm = value; }
+        }
+        
+        private string _serverFarmId;
+        
+        /// <summary>
+        /// Optional. The fully qualified name of the serverFarm allowing for
+        /// server farms in different subscriptions and resource groups versus
+        /// the ServerFarm property that is just the farm name.
+        /// </summary>
+        public string ServerFarmId
+        {
+            get { return this._serverFarmId; }
+            set { this._serverFarmId = value; }
+        }
+        
+        private WebSiteConfiguration _siteConfig;
+        
+        /// <summary>
+        /// Optional. Contains site configuration
+        /// </summary>
+        public WebSiteConfiguration SiteConfig
+        {
+            get { return this._siteConfig; }
+            set { this._siteConfig = value; }
         }
         
         private SkuOptions _sku;

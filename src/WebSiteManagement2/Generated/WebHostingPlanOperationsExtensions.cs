@@ -23,9 +23,9 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.WebSites;
 using Microsoft.Azure.Management.WebSites.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.WebSites
 {
@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Delete(this IWebHostingPlanOperations operations, string resourceGroupName, string webHostingPlanName)
+        public static AzureOperationResponse Delete(this IWebHostingPlanOperations operations, string resourceGroupName, string webHostingPlanName)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -137,7 +137,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> DeleteAsync(this IWebHostingPlanOperations operations, string resourceGroupName, string webHostingPlanName)
+        public static Task<AzureOperationResponse> DeleteAsync(this IWebHostingPlanOperations operations, string resourceGroupName, string webHostingPlanName)
         {
             return operations.DeleteAsync(resourceGroupName, webHostingPlanName, CancellationToken.None);
         }

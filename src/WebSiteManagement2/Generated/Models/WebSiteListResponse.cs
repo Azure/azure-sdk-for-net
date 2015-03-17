@@ -22,16 +22,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.WebSites.Models;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
     /// <summary>
     /// The List Web Sites operation response.
     /// </summary>
-    public partial class WebSiteListResponse : OperationResponse, IEnumerable<WebSite>
+    public partial class WebSiteListResponse : AzureOperationResponse, IEnumerable<WebSite>
     {
         private IList<WebSite> _webSites;
         
