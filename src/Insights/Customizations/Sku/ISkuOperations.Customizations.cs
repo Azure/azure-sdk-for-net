@@ -35,6 +35,9 @@ namespace Microsoft.Azure.Management.Insights
         /// <param name='resourceId'>
         /// The resource id.
         /// </param>
+        /// <param name='apiVersion'>
+        /// The resource provider api version.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -42,11 +45,14 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<SkuListResponse> ListAvailableSkusAsync(string resourceId, CancellationToken cancellationToken);
+        Task<SkuListResponse> ListAvailableSkusAsync(string resourceId, string apiVersion, CancellationToken cancellationToken);
 
         /// <param name='resourceId'>
         /// The resource id.
         /// </param>
+        /// <param name='apiVersion'>
+        /// The resource provider api version.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -54,19 +60,16 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<SkuGetResponse> GetCurrentSkuAsync(string resourceId, CancellationToken cancellationToken);
+        Task<SkuGetResponse> GetCurrentSkuAsync(string resourceId, string apiVersion, CancellationToken cancellationToken);
 
         /// <param name='resourceId'>
         /// The resource id.
         /// </param>
-        /// <param name='skuName'>
-        /// The sku name.
+        /// <param name='parameters'>
+        /// The update parameters.
         /// </param>
-        /// <param name='skuTier'>
-        /// The sku tier.
-        /// </param>
-        /// <param name='skuCapacity'>
-        /// The sku capacity.
+        /// <param name='apiVersion'>
+        /// The resource provider api version.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -75,6 +78,6 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<SkuUpdateResponse> UpdateCurrentSkuAsync(string resourceId, string skuName, string skuTier, int skuCapacity, CancellationToken cancellationToken);
+        Task<SkuUpdateResponse> UpdateCurrentSkuAsync(string resourceId, SkuUpdateParameters parameters, string apiVersion, CancellationToken cancellationToken);
     }
 }

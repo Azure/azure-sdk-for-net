@@ -65,6 +65,9 @@ namespace Microsoft.Azure.Management.Insights
         /// <param name='resourceId'>
         /// Required. The resource id.
         /// </param>
+        /// <param name='apiVersion'>
+        /// Required. The resource provider api version.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -72,12 +75,16 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<AntaresSkuGetResponse> GetAntaresCurrentSkuInternalAsync(string resourceId, CancellationToken cancellationToken)
+        public async Task<AntaresSkuGetResponse> GetAntaresCurrentSkuInternalAsync(string resourceId, string apiVersion, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceId == null)
             {
                 throw new ArgumentNullException("resourceId");
+            }
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException("apiVersion");
             }
 
             // Tracing
@@ -88,12 +95,13 @@ namespace Microsoft.Azure.Management.Insights
                 invocationId = TracingAdapter.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceId", resourceId);
+                tracingParameters.Add("apiVersion", apiVersion);
                 TracingAdapter.Enter(invocationId, this, "GetAntaresCurrentSkuInternalAsync", tracingParameters);
             }
 
             // Construct URL
             string url = "/" + Uri.EscapeDataString(resourceId) + "?";
-            url = url + "api-version=2014-04-01";
+            url = url + "api-version=" + Uri.EscapeDataString(apiVersion);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -224,10 +232,10 @@ namespace Microsoft.Azure.Management.Insights
         }
 
         /// <param name='resourceId'>
-        /// Required.
+        /// Required. The resource id.
         /// </param>
-        /// <param name='parameters'>
-        /// Required.
+        /// <param name='apiVersion'>
+        /// Required. The resource provider api version.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -236,7 +244,393 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<SkuUpdateResponse> UpdateAntaresCurrentSkuInternalAsync(string resourceId, AntaresSkuUpdateRequest parameters, CancellationToken cancellationToken)
+        public async Task<SkuGetResponse> GetCurrentSkuInternalAsync(string resourceId, string apiVersion, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceId == null)
+            {
+                throw new ArgumentNullException("resourceId");
+            }
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException("apiVersion");
+            }
+
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceId", resourceId);
+                tracingParameters.Add("apiVersion", apiVersion);
+                TracingAdapter.Enter(invocationId, this, "GetCurrentSkuInternalAsync", tracingParameters);
+            }
+
+            // Construct URL
+            string url = "/" + Uri.EscapeDataString(resourceId) + "?";
+            url = url + "api-version=" + Uri.EscapeDataString(apiVersion);
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+
+                // Set Headers
+                httpRequest.Headers.Add("Accept", "application/json");
+
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+
+                    // Create Result
+                    SkuGetResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new SkuGetResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                            {
+                                SkuGetProperties propertiesInstance = new SkuGetProperties();
+                                result.Properties = propertiesInstance;
+
+                                JToken skuValue = propertiesValue["sku"];
+                                if (skuValue != null && skuValue.Type != JTokenType.Null)
+                                {
+                                    Sku skuInstance = new Sku();
+                                    propertiesInstance.Sku = skuInstance;
+
+                                    JToken nameValue = skuValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance = ((string)nameValue);
+                                        skuInstance.Name = nameInstance;
+                                    }
+
+                                    JToken tierValue = skuValue["tier"];
+                                    if (tierValue != null && tierValue.Type != JTokenType.Null)
+                                    {
+                                        string tierInstance = ((string)tierValue);
+                                        skuInstance.Tier = tierInstance;
+                                    }
+
+                                    JToken capacityValue = skuValue["capacity"];
+                                    if (capacityValue != null && capacityValue.Type != JTokenType.Null)
+                                    {
+                                        int capacityInstance = ((int)capacityValue);
+                                        skuInstance.Capacity = capacityInstance;
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+
+        /// <param name='resourceId'>
+        /// Required. The resource id.
+        /// </param>
+        /// <param name='apiVersion'>
+        /// Required. The resource provider api version.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<SkuListResponse> ListAvailableSkusInternalAsync(string resourceId, string apiVersion, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceId == null)
+            {
+                throw new ArgumentNullException("resourceId");
+            }
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException("apiVersion");
+            }
+
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceId", resourceId);
+                tracingParameters.Add("apiVersion", apiVersion);
+                TracingAdapter.Enter(invocationId, this, "ListAvailableSkusInternalAsync", tracingParameters);
+            }
+
+            // Construct URL
+            string url = "/" + Uri.EscapeDataString(resourceId) + "/skus?";
+            url = url + "api-version=" + Uri.EscapeDataString(apiVersion);
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+
+                // Set Headers
+                httpRequest.Headers.Add("Accept", "application/json");
+
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+
+                    // Create Result
+                    SkuListResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new SkuListResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken valueArray = responseDoc["value"];
+                            if (valueArray != null && valueArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken valueValue in ((JArray)valueArray))
+                                {
+                                    AvailableSkuResource availableSkuResourceInstance = new AvailableSkuResource();
+                                    result.Value.Add(availableSkuResourceInstance);
+
+                                    JToken propertiesValue = valueValue["properties"];
+                                    if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                                    {
+                                        AvailableSku propertiesInstance = new AvailableSku();
+                                        availableSkuResourceInstance.Properties = propertiesInstance;
+
+                                        JToken nameValue = propertiesValue["name"];
+                                        if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                        {
+                                            string nameInstance = ((string)nameValue);
+                                            propertiesInstance.Name = nameInstance;
+                                        }
+
+                                        JToken tierValue = propertiesValue["tier"];
+                                        if (tierValue != null && tierValue.Type != JTokenType.Null)
+                                        {
+                                            string tierInstance = ((string)tierValue);
+                                            propertiesInstance.Tier = tierInstance;
+                                        }
+
+                                        JToken capacityValue = propertiesValue["capacity"];
+                                        if (capacityValue != null && capacityValue.Type != JTokenType.Null)
+                                        {
+                                            Capacity capacityInstance = new Capacity();
+                                            propertiesInstance.Capacity = capacityInstance;
+
+                                            JToken minimumValue = capacityValue["minimum"];
+                                            if (minimumValue != null && minimumValue.Type != JTokenType.Null)
+                                            {
+                                                int minimumInstance = ((int)minimumValue);
+                                                capacityInstance.Minimum = minimumInstance;
+                                            }
+
+                                            JToken maximumValue = capacityValue["maximum"];
+                                            if (maximumValue != null && maximumValue.Type != JTokenType.Null)
+                                            {
+                                                int maximumInstance = ((int)maximumValue);
+                                                capacityInstance.Maximum = maximumInstance;
+                                            }
+
+                                            JToken defaultValue = capacityValue["default"];
+                                            if (defaultValue != null && defaultValue.Type != JTokenType.Null)
+                                            {
+                                                int defaultInstance = ((int)defaultValue);
+                                                capacityInstance.Default = defaultInstance;
+                                            }
+
+                                            JToken scaleTypeValue = capacityValue["scaleType"];
+                                            if (scaleTypeValue != null && scaleTypeValue.Type != JTokenType.Null)
+                                            {
+                                                SupportedScaleType scaleTypeInstance = ((SupportedScaleType)Enum.Parse(typeof(SupportedScaleType), ((string)scaleTypeValue), true));
+                                                capacityInstance.ScaleType = scaleTypeInstance;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+
+        /// <param name='resourceId'>
+        /// Required.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required.
+        /// </param>
+        /// <param name='apiVersion'>
+        /// Required. The resource provider api version.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<SkuUpdateResponse> UpdateAntaresCurrentSkuInternalAsync(string resourceId, AntaresSkuUpdateRequest parameters, string apiVersion, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceId == null)
@@ -246,6 +640,10 @@ namespace Microsoft.Azure.Management.Insights
             if (parameters == null)
             {
                 throw new ArgumentNullException("parameters");
+            }
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException("apiVersion");
             }
 
             // Tracing
@@ -257,12 +655,13 @@ namespace Microsoft.Azure.Management.Insights
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceId", resourceId);
                 tracingParameters.Add("parameters", parameters);
+                tracingParameters.Add("apiVersion", apiVersion);
                 TracingAdapter.Enter(invocationId, this, "UpdateAntaresCurrentSkuInternalAsync", tracingParameters);
             }
 
             // Construct URL
             string url = "/" + Uri.EscapeDataString(resourceId) + "?";
-            url = url + "api-version=2014-04-01";
+            url = url + "api-version=" + Uri.EscapeDataString(apiVersion);
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -307,6 +706,186 @@ namespace Microsoft.Azure.Management.Insights
                 propertiesValue["workerSize"] = parameters.WorkerSize;
 
                 propertiesValue["numberOfWorkers"] = parameters.NumberOfWorkers;
+
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
+
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+
+                    // Create Result
+                    SkuUpdateResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new SkuUpdateResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                        }
+
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+
+        /// <param name='resourceId'>
+        /// Required.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required.
+        /// </param>
+        /// <param name='apiVersion'>
+        /// Required. The resource provider api version.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<SkuUpdateResponse> UpdateCurrentSkuInternalAsync(string resourceId, SkuUpdateParameters parameters, string apiVersion, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceId == null)
+            {
+                throw new ArgumentNullException("resourceId");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException("apiVersion");
+            }
+
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceId", resourceId);
+                tracingParameters.Add("parameters", parameters);
+                tracingParameters.Add("apiVersion", apiVersion);
+                TracingAdapter.Enter(invocationId, this, "UpdateCurrentSkuInternalAsync", tracingParameters);
+            }
+
+            // Construct URL
+            string url = "/" + Uri.EscapeDataString(resourceId) + "?";
+            url = url + "api-version=" + Uri.EscapeDataString(apiVersion);
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = new HttpMethod("PATCH");
+                httpRequest.RequestUri = new Uri(url);
+
+                // Set Headers
+                httpRequest.Headers.Add("Accept", "application/json");
+
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+
+                // Serialize Request
+                string requestContent = null;
+                JToken requestDoc = null;
+
+                JObject propertiesValue = new JObject();
+                requestDoc = new JObject();
+                requestDoc["properties"] = propertiesValue;
+
+                if (parameters.Sku != null)
+                {
+                    JObject skuValue = new JObject();
+                    propertiesValue["sku"] = skuValue;
+
+                    if (parameters.Sku.Name != null)
+                    {
+                        skuValue["name"] = parameters.Sku.Name;
+                    }
+
+                    if (parameters.Sku.Tier != null)
+                    {
+                        skuValue["tier"] = parameters.Sku.Tier;
+                    }
+
+                    skuValue["capacity"] = parameters.Sku.Capacity;
+                }
 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);

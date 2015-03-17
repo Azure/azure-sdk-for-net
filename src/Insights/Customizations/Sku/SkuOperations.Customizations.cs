@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Insights
         {
             // currently only server farm is supported
             new UriTemplate("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.web/serverFarms/{serverFarmName}", true)
-        }; 
+        };
 
         /// <param name='resourceId'>
         /// Required. The resource id.
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<SkuListResponse> ListAvailableSkusAsync(string resourceId, CancellationToken cancellationToken)
+        public async Task<SkuListResponse> ListAvailableSkusAsync(string resourceId, string apiVersion, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceId == null)
@@ -69,21 +69,114 @@ namespace Microsoft.Azure.Management.Insights
                 throw new ArgumentNullException("resourceId");
             }
 
-            // Confirm resourceId is supported
-            if (!IsSupportedResourceType(resourceId))
+            if (!IsCustomizedResourceType(resourceId))
             {
-                throw new NotSupportedException(string.Format(CultureInfo.InvariantCulture, "Manual scaling not currently supported for resourceId {0}", resourceId));
+                return await this.ListAvailableSkusInternalAsync(resourceId, apiVersion, cancellationToken);
+            }
+            else
+            {
+                // Antares does not currently support the new contract and has no API to get all valid SKUs so these are hardcoded for now.
+                return ListAntaresSkus();
+            }
+        }
+
+        /// <param name='resourceId'>
+        /// Required. The resource id.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<SkuGetResponse> GetCurrentSkuAsync(string resourceId, string apiVersion, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceId == null)
+            {
+                throw new ArgumentNullException("resourceId");
             }
 
-            // Antares does not currently support the new contract and has no API to get all valid SKUs so these are hardcoded for now.
-            SkuListResponse response = new SkuListResponse
+            if (!IsCustomizedResourceType(resourceId))
+            {
+                return await this.GetCurrentSkuInternalAsync(resourceId, apiVersion, cancellationToken);
+            }
+            else
+            {
+                AntaresSkuGetResponse response = await this.GetAntaresCurrentSkuInternalAsync(resourceId, apiVersion, cancellationToken);
+
+                return new SkuGetResponse
+                {
+                    Properties = new SkuGetProperties
+                    {
+                        Sku = new Sku
+                        {
+                            Name = SkuOperations.GetSkuName(response.Properties.CurrentWorkerSize, response.Properties.Sku),
+                            Tier = response.Properties.Sku,
+                            Capacity = response.Properties.CurrentNumberOfWorkers
+                        }
+                    }
+                };
+            }
+        }
+
+        public Task<SkuUpdateResponse> UpdateCurrentSkuAsync(string resourceId, SkuUpdateParameters parameters, string apiVersion, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceId == null)
+            {
+                throw new ArgumentNullException("resourceId");
+            }
+
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+
+            if (parameters.Sku == null)
+            {
+                throw new ArgumentNullException("Sku");
+            }
+
+            if (parameters.Sku.Name == null)
+            {
+                throw new ArgumentNullException("Sku.Name");
+            }
+
+            if (parameters.Sku.Tier == null)
+            {
+                throw new ArgumentNullException("Sku.Tier");
+            }
+
+            // Confirm resourceId is supported
+            if (!IsCustomizedResourceType(resourceId))
+            {
+                return this.UpdateCurrentSkuInternalAsync(resourceId, parameters, apiVersion, cancellationToken);
+            }
+
+            AntaresSkuUpdateRequest antaresUpdateParameters = new AntaresSkuUpdateRequest
+            {
+                WorkerSize = SkuOperations.GetWorkerSize(parameters.Sku.Name),
+                Sku = parameters.Sku.Tier,
+                NumberOfWorkers = parameters.Sku.Capacity
+            };
+
+            return this.UpdateAntaresCurrentSkuInternalAsync(resourceId, antaresUpdateParameters, apiVersion, cancellationToken);
+        }
+
+        #region Customized resources
+
+        private static SkuListResponse ListAntaresSkus()
+        {
+            return new SkuListResponse
             {
                 StatusCode = HttpStatusCode.OK,
-                Skus = new SkuCollection
+                Value = new List<AvailableSkuResource>
                 {
-                    Value = new List<Sku>
+                    new AvailableSkuResource 
                     {
-                        new Sku
+                        Properties =  new AvailableSku
                         {
                             Name = "S1",
                             Tier = "Standard",
@@ -94,8 +187,12 @@ namespace Microsoft.Azure.Management.Insights
                                 Default = 1,
                                 ScaleType = SupportedScaleType.Automatic
                             }
+                        
+                            },
                         },
-                        new Sku
+                    new AvailableSkuResource 
+                    {
+                        Properties = new AvailableSku
                         {
                             Name = "S2",
                             Tier = "Standard",
@@ -107,7 +204,10 @@ namespace Microsoft.Azure.Management.Insights
                                 ScaleType = SupportedScaleType.Automatic
                             }
                         },
-                        new Sku
+                    },
+                    new AvailableSkuResource 
+                    {
+                        Properties = new AvailableSku
                         {
                             Name = "S3",
                             Tier = "Standard",
@@ -119,7 +219,10 @@ namespace Microsoft.Azure.Management.Insights
                                 ScaleType = SupportedScaleType.Automatic
                             }
                         },
-                        new Sku
+                    },
+                    new AvailableSkuResource 
+                    {
+                        Properties = new AvailableSku
                         {
                             Name = "B1",
                             Tier = "Basic",
@@ -131,7 +234,10 @@ namespace Microsoft.Azure.Management.Insights
                                 ScaleType = SupportedScaleType.Manual
                             }
                         },
-                        new Sku
+                    },
+                    new AvailableSkuResource 
+                    {
+                        Properties = new AvailableSku
                         {
                             Name = "B2",
                             Tier = "Basic",
@@ -143,7 +249,10 @@ namespace Microsoft.Azure.Management.Insights
                                 ScaleType = SupportedScaleType.Manual
                             }
                         },
-                        new Sku
+                    },
+                    new AvailableSkuResource
+                    {
+                        Properties = new AvailableSku
                         {
                             Name = "B3",
                             Tier = "Basic",
@@ -155,7 +264,10 @@ namespace Microsoft.Azure.Management.Insights
                                 ScaleType = SupportedScaleType.Manual
                             }
                         },
-                        new Sku
+                    },
+                    new AvailableSkuResource 
+                    {
+                        Properties = new AvailableSku
                         {
                             Name = "D1",
                             Tier = "Shared",
@@ -164,7 +276,9 @@ namespace Microsoft.Azure.Management.Insights
                                 ScaleType = SupportedScaleType.None
                             }
                         },
-                        new Sku
+                    },
+                    new AvailableSkuResource {
+                        Properties = new AvailableSku
                         {
                             Name = "F1",
                             Tier = "Free",
@@ -176,91 +290,10 @@ namespace Microsoft.Azure.Management.Insights
                     }
                 }
             };
-
-            return response;
-        }
-
-        /// <param name='resourceId'>
-        /// Required. The resource id.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public async Task<SkuGetResponse> GetCurrentSkuAsync(string resourceId, CancellationToken cancellationToken)
-        {
-            // Confirm resourceId is supported
-            if (!IsSupportedResourceType(resourceId))
-            {
-                throw new NotSupportedException(string.Format(CultureInfo.InvariantCulture, "Manual scaling not currently supported for resourceId {0}", resourceId));
-            }
-
-            AntaresSkuGetResponse response = await this.GetAntaresCurrentSkuInternalAsync(resourceId, cancellationToken);
-
-            return new SkuGetResponse
-            {
-                Name = SkuOperations.GetSkuName(response.Properties.CurrentWorkerSize, response.Properties.Sku),
-                Tier = response.Properties.Sku,
-                Capacity = response.Properties.CurrentNumberOfWorkers
-            };
-        }
-
-        /// <param name='resourceId'>
-        /// The resource id.
-        /// </param>
-        /// <param name='skuName'>
-        /// The sku name.
-        /// </param>
-        /// <param name='skuTier'>
-        /// The sku tier.
-        /// </param>
-        /// <param name='skuCapacity'>
-        /// The sku capacity.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public Task<SkuUpdateResponse> UpdateCurrentSkuAsync(string resourceId, string skuName, string skuTier, int skuCapacity, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException("resourceId");
-            }
-            if (skuName == null)
-            {
-                throw new ArgumentNullException("skuName");
-            }
-            if (skuTier == null)
-            {
-                throw new ArgumentNullException("skuTier");
-            }
-
-            // Confirm resourceId is supported
-            if (!IsSupportedResourceType(resourceId))
-            {
-                throw new NotSupportedException(string.Format(CultureInfo.InvariantCulture, "Manual scaling not currently supported for resourceId {0}", resourceId));
-            }
-
-            AntaresSkuUpdateRequest parameters = new AntaresSkuUpdateRequest
-            {
-                WorkerSize = SkuOperations.GetWorkerSize(skuName),
-                Sku = skuTier,
-                NumberOfWorkers = skuCapacity
-            };
-
-            return this.UpdateAntaresCurrentSkuInternalAsync(resourceId, parameters, cancellationToken);
         }
 
         // Verify resourceId is of a supported type
-        private static bool IsSupportedResourceType(string resourceId)
+        private static bool IsCustomizedResourceType(string resourceId)
         {
             // resource is supported if it matches any of the currently supported templates
             return SupportedUriTemplates.Any(template => template.Match(BaseUri, new Uri(BaseUri, resourceId)) != null);
@@ -328,5 +361,7 @@ namespace Microsoft.Azure.Management.Insights
                     throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "No SKU for tier {0} and worker size {1}", tier, workerSize));
             }
         }
+
+        #endregion
     }
 }

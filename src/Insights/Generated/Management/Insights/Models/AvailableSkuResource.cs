@@ -20,35 +20,32 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
 using Microsoft.Azure.Management.Insights.Models;
 
 namespace Microsoft.Azure.Management.Insights.Models
 {
     /// <summary>
-    /// Represents a collection of SKUs.
+    /// Represents a sku.
     /// </summary>
-    public partial class SkuCollection
+    public partial class AvailableSkuResource
     {
-        private IList<Sku> _value;
-        
+        private AvailableSku _properties;
+
         /// <summary>
-        /// Optional. The values for the sku.
+        /// Optional. The sku.
         /// </summary>
-        public IList<Sku> Value
+        public AvailableSku Properties
         {
-            get { return this._value; }
-            set { this._value = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
-        
+
         /// <summary>
-        /// Initializes a new instance of the SkuCollection class.
+        /// Initializes a new instance of the AvailableSkuResource class.
         /// </summary>
-        public SkuCollection()
+        public AvailableSkuResource()
         {
-            this.Value = new LazyList<Sku>();
         }
     }
 }

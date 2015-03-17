@@ -44,6 +44,8 @@
     <Compile Include="Generated\Management\Insights\Models\AutomatedExportSetting.cs" />
     <Compile Include="Generated\Management\Insights\Models\AutomatedExportSettingCreateOrUpdateParameters.cs" />
     <Compile Include="Generated\Management\Insights\Models\AutomatedExportSettingGetResponse.cs" />
+    <Compile Include="Generated\Management\Insights\Models\AvailableSku.cs" />
+    <Compile Include="Generated\Management\Insights\Models\AvailableSkuResource.cs" />
     <Compile Include="Generated\Management\Insights\Models\BackupLocationProfile.cs" />
     <Compile Include="Generated\Management\Insights\Models\Capacity.cs" />
     <Compile Include="Customizations\UrlExpressionVisitor.cs" />
@@ -55,9 +57,11 @@
     <Compile Include="Generated\Management\Insights\Models\DatabaseConsistencyOption.cs" />
     <Compile Include="Generated\Management\Insights\Models\DatabaseServerCredential.cs" />
     <Compile Include="Generated\Management\Insights\Models\Sku.cs" />
-    <Compile Include="Generated\Management\Insights\Models\SkuCollection.cs" />
+    <Compile Include="Generated\Management\Insights\Models\SkuGetProperties.cs" />
     <Compile Include="Generated\Management\Insights\Models\SkuGetResponse.cs" />
     <Compile Include="Generated\Insights\Models\StatusCount.cs" />
+    <Compile Include="Generated\Management\Insights\Models\SkuListResponse.cs" />
+    <Compile Include="Generated\Management\Insights\Models\SkuUpdateParameters.cs" />
     <Compile Include="Generated\Management\Insights\Models\SupportedScaleType.cs" />
     <Compile Include="Generated\Insights\Models\UsageMetricCollectionDeprecated.cs" />
     <Compile Include="Generated\Insights\Models\UsageMetricDeprecated.cs" />
@@ -81,7 +85,6 @@
     <Compile Include="Generated\Management\Insights\Models\ManagementEventRuleCondition.cs" />
     <Compile Include="Generated\Management\Insights\Models\RuleManagementEventClaimsDataSource.cs" />
     <Compile Include="Generated\Management\Insights\Models\RuleManagementEventDataSource.cs" />
-    <Compile Include="Generated\Management\Insights\Models\SkuListResponse.cs" />
     <Compile Include="Generated\Management\Insights\Models\StorageConfiguration.cs" />
     <Compile Include="Generated\Management\Insights\Models\StorageConfigurationGetResponse.cs" />
     <Compile Include="Generated\Management\Insights\Models\StorageDiagnosticSettings.cs" />

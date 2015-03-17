@@ -20,53 +20,54 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
-using Microsoft.Azure;
 using Microsoft.Azure.Management.Insights.Models;
 
 namespace Microsoft.Azure.Management.Insights.Models
 {
     /// <summary>
-    /// A standard service response including an HTTP status code and request
-    /// ID.
+    /// Represents a sku.
     /// </summary>
-    public partial class SkuListResponse : AzureOperationResponse, IEnumerable<AvailableSkuResource>
+    public partial class AvailableSku
     {
-        private IList<AvailableSkuResource> _value;
-        
+        private Capacity _capacity;
+
         /// <summary>
-        /// Optional. The values for the sku.
+        /// Optional. The capacity of the sku.
         /// </summary>
-        public IList<AvailableSkuResource> Value
+        public Capacity Capacity
         {
-            get { return this._value; }
-            set { this._value = value; }
+            get { return this._capacity; }
+            set { this._capacity = value; }
         }
-        
+
+        private string _name;
+
         /// <summary>
-        /// Initializes a new instance of the SkuListResponse class.
+        /// Optional. The name of the sku.
         /// </summary>
-        public SkuListResponse()
+        public string Name
         {
-            this.Value = new LazyList<AvailableSkuResource>();
+            get { return this._name; }
+            set { this._name = value; }
         }
-        
+
+        private string _tier;
+
         /// <summary>
-        /// Gets the sequence of Value.
+        /// Optional. The tier of the sku.
         /// </summary>
-        public IEnumerator<AvailableSkuResource> GetEnumerator()
+        public string Tier
         {
-            return this.Value.GetEnumerator();
+            get { return this._tier; }
+            set { this._tier = value; }
         }
-        
+
         /// <summary>
-        /// Gets the sequence of Value.
+        /// Initializes a new instance of the AvailableSku class.
         /// </summary>
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        public AvailableSku()
         {
-            return this.GetEnumerator();
         }
     }
 }
