@@ -20,21 +20,10 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
-using Microsoft.Azure.Management.Insights;
 using Microsoft.Azure.Management.Insights.Models;
-using Microsoft.WindowsAzure;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.Management.Insights
 {
@@ -43,14 +32,6 @@ namespace Microsoft.Azure.Management.Insights
     /// </summary>
     internal partial class SkuOperations : IServiceOperations<InsightsManagementClient>, ISkuOperations
     {
-        // Uri templates for currently supported types
-        private static readonly Uri BaseUri = new Uri("http://localhost.com");
-        private static readonly List<UriTemplate> SupportedUriTemplates = new List<UriTemplate>()
-        {
-            // currently only server farm is supported
-            new UriTemplate("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.web/serverFarms/{serverFarmName}", true)
-        };
-
         /// <param name='resourceId'>
         /// Required. The resource id.
         /// </param>
@@ -69,14 +50,14 @@ namespace Microsoft.Azure.Management.Insights
                 throw new ArgumentNullException("resourceId");
             }
 
-            if (!IsCustomizedResourceType(resourceId))
+            if (AntaresSkuOperations.IsAntaresResourceType(resourceId))
             {
-                return await this.ListAvailableSkusInternalAsync(resourceId, apiVersion, cancellationToken);
+                // Antares does not currently support the new contract and has no API to get all valid SKUs so these are hardcoded for now.
+                return AntaresSkuOperations.ListAntaresSkus();
             }
             else
             {
-                // Antares does not currently support the new contract and has no API to get all valid SKUs so these are hardcoded for now.
-                return ListAntaresSkus();
+                return await this.ListAvailableSkusInternalAsync(resourceId, apiVersion, cancellationToken);
             }
         }
 
@@ -90,7 +71,7 @@ namespace Microsoft.Azure.Management.Insights
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<SkuGetResponse> GetCurrentSkuAsync(string resourceId, string apiVersion, CancellationToken cancellationToken)
+        public Task<SkuGetResponse> GetCurrentSkuAsync(string resourceId, string apiVersion, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceId == null)
@@ -98,26 +79,13 @@ namespace Microsoft.Azure.Management.Insights
                 throw new ArgumentNullException("resourceId");
             }
 
-            if (!IsCustomizedResourceType(resourceId))
+            if (AntaresSkuOperations.IsAntaresResourceType(resourceId))
             {
-                return await this.GetCurrentSkuInternalAsync(resourceId, apiVersion, cancellationToken);
+                return AntaresSkuOperations.GetAntaresCurrentSku(this, resourceId, apiVersion, cancellationToken);
             }
             else
             {
-                AntaresSkuGetResponse response = await this.GetAntaresCurrentSkuInternalAsync(resourceId, apiVersion, cancellationToken);
-
-                return new SkuGetResponse
-                {
-                    Properties = new SkuGetProperties
-                    {
-                        Sku = new Sku
-                        {
-                            Name = SkuOperations.GetSkuName(response.Properties.CurrentWorkerSize, response.Properties.Sku),
-                            Tier = response.Properties.Sku,
-                            Capacity = response.Properties.CurrentNumberOfWorkers
-                        }
-                    }
-                };
+                return this.GetCurrentSkuInternalAsync(resourceId, apiVersion, cancellationToken);
             }
         }
 
@@ -150,218 +118,14 @@ namespace Microsoft.Azure.Management.Insights
             }
 
             // Confirm resourceId is supported
-            if (!IsCustomizedResourceType(resourceId))
+            if (AntaresSkuOperations.IsAntaresResourceType(resourceId))
+            {
+                return AntaresSkuOperations.UpdateAntaresCurrentSkuAsync(this, resourceId, parameters, apiVersion, cancellationToken);
+            }
+            else
             {
                 return this.UpdateCurrentSkuInternalAsync(resourceId, parameters, apiVersion, cancellationToken);
             }
-
-            AntaresSkuUpdateRequest antaresUpdateParameters = new AntaresSkuUpdateRequest
-            {
-                WorkerSize = SkuOperations.GetWorkerSize(parameters.Sku.Name),
-                Sku = parameters.Sku.Tier,
-                NumberOfWorkers = parameters.Sku.Capacity
-            };
-
-            return this.UpdateAntaresCurrentSkuInternalAsync(resourceId, antaresUpdateParameters, apiVersion, cancellationToken);
         }
-
-        #region Customized resources
-
-        private static SkuListResponse ListAntaresSkus()
-        {
-            return new SkuListResponse
-            {
-                StatusCode = HttpStatusCode.OK,
-                Value = new List<AvailableSkuResource>
-                {
-                    new AvailableSkuResource 
-                    {
-                        Properties =  new AvailableSku
-                        {
-                            Name = "S1",
-                            Tier = "Standard",
-                            Capacity = new Capacity()
-                            {
-                                Minimum = 1,
-                                Maximum = 10,
-                                Default = 1,
-                                ScaleType = SupportedScaleType.Automatic
-                            }
-                        
-                            },
-                        },
-                    new AvailableSkuResource 
-                    {
-                        Properties = new AvailableSku
-                        {
-                            Name = "S2",
-                            Tier = "Standard",
-                            Capacity = new Capacity()
-                            {
-                                Minimum = 1,
-                                Maximum = 10,
-                                Default = 1,
-                                ScaleType = SupportedScaleType.Automatic
-                            }
-                        },
-                    },
-                    new AvailableSkuResource 
-                    {
-                        Properties = new AvailableSku
-                        {
-                            Name = "S3",
-                            Tier = "Standard",
-                            Capacity = new Capacity()
-                            {
-                                Minimum = 1,
-                                Maximum = 10,
-                                Default = 1,
-                                ScaleType = SupportedScaleType.Automatic
-                            }
-                        },
-                    },
-                    new AvailableSkuResource 
-                    {
-                        Properties = new AvailableSku
-                        {
-                            Name = "B1",
-                            Tier = "Basic",
-                            Capacity = new Capacity()
-                            {
-                                Minimum = 1,
-                                Maximum = 3,
-                                Default = 1,
-                                ScaleType = SupportedScaleType.Manual
-                            }
-                        },
-                    },
-                    new AvailableSkuResource 
-                    {
-                        Properties = new AvailableSku
-                        {
-                            Name = "B2",
-                            Tier = "Basic",
-                            Capacity = new Capacity()
-                            {
-                                Minimum = 1,
-                                Maximum = 3,
-                                Default = 1,
-                                ScaleType = SupportedScaleType.Manual
-                            }
-                        },
-                    },
-                    new AvailableSkuResource
-                    {
-                        Properties = new AvailableSku
-                        {
-                            Name = "B3",
-                            Tier = "Basic",
-                            Capacity = new Capacity()
-                            {
-                                Minimum = 1,
-                                Maximum = 3,
-                                Default = 1,
-                                ScaleType = SupportedScaleType.Manual
-                            }
-                        },
-                    },
-                    new AvailableSkuResource 
-                    {
-                        Properties = new AvailableSku
-                        {
-                            Name = "D1",
-                            Tier = "Shared",
-                            Capacity = new Capacity()
-                            {
-                                ScaleType = SupportedScaleType.None
-                            }
-                        },
-                    },
-                    new AvailableSkuResource {
-                        Properties = new AvailableSku
-                        {
-                            Name = "F1",
-                            Tier = "Free",
-                            Capacity = new Capacity()
-                            {
-                                ScaleType = SupportedScaleType.None
-                            }
-                        },
-                    }
-                }
-            };
-        }
-
-        // Verify resourceId is of a supported type
-        private static bool IsCustomizedResourceType(string resourceId)
-        {
-            // resource is supported if it matches any of the currently supported templates
-            return SupportedUriTemplates.Any(template => template.Match(BaseUri, new Uri(BaseUri, resourceId)) != null);
-        }
-
-        private static int GetWorkerSize(string skuName)
-        {
-            switch (skuName)
-            {
-                case "S1":
-                case "B1":
-                case "D1":
-                case "F1":
-                    return 0;
-                case "S2":
-                case "B2":
-                    return 1;
-                case "S3":
-                case "B3":
-                    return 2;
-                default:
-                    throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Invalid SKU Name: {0}", skuName));
-            }
-        }
-
-        private static string GetSkuName(int workerSize, string tier)
-        {
-            switch (workerSize)
-            {
-                case 0:
-                    switch (tier)
-                    {
-                        case "Standard":
-                            return "S1";
-                        case "Basic":
-                            return "B1";
-                        case "Shared":
-                            return "D1";
-                        case "Free":
-                            return "F1";
-                        default:
-                            throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "No SKU for tier {0} and worker size {1}", tier, workerSize));
-                    }
-                case 1:
-                    switch (tier)
-                    {
-                        case "Standard":
-                            return "S2";
-                        case "Basic":
-                            return "B2";
-                        default:
-                            throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "No SKU for tier {0} and worker size {1}", tier, workerSize));
-                    }
-                case 2:
-                    switch (tier)
-                    {
-                        case "Standard":
-                            return "S3";
-                        case "Basic":
-                            return "B3";
-                        default:
-                            throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "No SKU for tier {0} and worker size {1}", tier, workerSize));
-                    }
-                default:
-                    throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "No SKU for tier {0} and worker size {1}", tier, workerSize));
-            }
-        }
-
-        #endregion
     }
 }

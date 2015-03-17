@@ -36,6 +36,7 @@
     <Compile Include="Customizations\Shoebox\ShoeboxHelper.cs" />
     <Compile Include="Customizations\Shoebox\SizeBoundedCache.cs" />
     <Compile Include="Customizations\Shoebox\TableOperationContextLogger.cs" />
+    <Compile Include="Customizations\Sku\SkuOperations.Antares.Customizations.cs" />
     <Compile Include="Customizations\Sku\ISkuOperations.Customizations.cs" />
     <Compile Include="Customizations\Sku\SkuOperations.Customizations.cs" />
     <Compile Include="Generated\Management\Insights\AutomatedExportOperations.cs" />
