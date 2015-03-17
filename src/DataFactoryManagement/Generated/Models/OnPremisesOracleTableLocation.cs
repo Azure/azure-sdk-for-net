@@ -21,32 +21,46 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
+using Microsoft.Azure.Management.DataFactories.Models;
 
 namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// The Get encryption certificate operation response.
+    /// The on-premises Oracle database.
     /// </summary>
-    public partial class EncryptionCertificateGetResponse : AzureOperationResponse
+    public partial class OnPremisesOracleTableLocation : TableLocation
     {
-        private byte[] _certificateBytes;
+        private string _tableName;
         
         /// <summary>
-        /// Optional. The certificate to use for encryption.
+        /// Optional. The table name of the on-premises Oracle database.
         /// </summary>
-        public byte[] CertificateBytes
+        public string TableName
         {
-            get { return this._certificateBytes; }
-            set { this._certificateBytes = value; }
+            get { return this._tableName; }
+            set { this._tableName = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the EncryptionCertificateGetResponse
+        /// Initializes a new instance of the OnPremisesOracleTableLocation
         /// class.
         /// </summary>
-        public EncryptionCertificateGetResponse()
+        public OnPremisesOracleTableLocation()
         {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the OnPremisesOracleTableLocation
+        /// class with required arguments.
+        /// </summary>
+        public OnPremisesOracleTableLocation(string linkedServiceName)
+            : this()
+        {
+            if (linkedServiceName == null)
+            {
+                throw new ArgumentNullException("linkedServiceName");
+            }
+            this.LinkedServiceName = linkedServiceName;
         }
     }
 }
