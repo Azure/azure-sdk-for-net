@@ -355,6 +355,11 @@ namespace Microsoft.Azure.Management.DataFactories
                                     formatValue["nullValue"] = derived3.NullValue;
                                 }
                                 
+                                if (derived3.EncodingName != null)
+                                {
+                                    formatValue["encodingName"] = derived3.EncodingName;
+                                }
+                                
                                 if (derived3.Serializer != null)
                                 {
                                     formatValue["serializer"] = derived3.Serializer;
@@ -504,6 +509,11 @@ namespace Microsoft.Azure.Management.DataFactories
                                     formatValue2["nullValue"] = derived10.NullValue;
                                 }
                                 
+                                if (derived10.EncodingName != null)
+                                {
+                                    formatValue2["encodingName"] = derived10.EncodingName;
+                                }
+                                
                                 if (derived10.Serializer != null)
                                 {
                                     formatValue2["serializer"] = derived10.Serializer;
@@ -538,17 +548,29 @@ namespace Microsoft.Azure.Management.DataFactories
                         
                         locationValue["linkedServiceName"] = derived8.LinkedServiceName;
                     }
+                    if (parameters.Table.Properties.Location is OnPremisesOracleTableLocation)
+                    {
+                        locationValue["type"] = "OnPremisesOracleTableLocation";
+                        OnPremisesOracleTableLocation derived12 = ((OnPremisesOracleTableLocation)parameters.Table.Properties.Location);
+                        
+                        if (derived12.TableName != null)
+                        {
+                            locationValue["tableName"] = derived12.TableName;
+                        }
+                        
+                        locationValue["linkedServiceName"] = derived12.LinkedServiceName;
+                    }
                     if (parameters.Table.Properties.Location is CustomLocation)
                     {
                         locationValue["type"] = "CustomLocation";
-                        CustomLocation derived12 = ((CustomLocation)parameters.Table.Properties.Location);
+                        CustomLocation derived13 = ((CustomLocation)parameters.Table.Properties.Location);
                         
-                        if (derived12.ExtendedProperties != null)
+                        if (derived13.ExtendedProperties != null)
                         {
-                            if (derived12.ExtendedProperties is ILazyCollection == false || ((ILazyCollection)derived12.ExtendedProperties).IsInitialized)
+                            if (derived13.ExtendedProperties is ILazyCollection == false || ((ILazyCollection)derived13.ExtendedProperties).IsInitialized)
                             {
                                 JObject extendedPropertiesDictionary = new JObject();
-                                foreach (KeyValuePair<string, string> pair in derived12.ExtendedProperties)
+                                foreach (KeyValuePair<string, string> pair in derived13.ExtendedProperties)
                                 {
                                     string extendedPropertiesKey = pair.Key;
                                     string extendedPropertiesValue = pair.Value;
@@ -558,7 +580,7 @@ namespace Microsoft.Azure.Management.DataFactories
                             }
                         }
                         
-                        locationValue["linkedServiceName"] = derived12.LinkedServiceName;
+                        locationValue["linkedServiceName"] = derived13.LinkedServiceName;
                     }
                     
                     JObject availabilityValue = new JObject();
@@ -627,6 +649,11 @@ namespace Microsoft.Azure.Management.DataFactories
                             if (parameters.Table.Properties.Policy.Validation.MinimumSizeMB != null)
                             {
                                 validationValue["minimumSizeMB"] = parameters.Table.Properties.Policy.Validation.MinimumSizeMB.Value;
+                            }
+                            
+                            if (parameters.Table.Properties.Policy.Validation.ValidationPriorityOrder != null)
+                            {
+                                validationValue["validationPriorityOrder"] = parameters.Table.Properties.Policy.Validation.ValidationPriorityOrder;
                             }
                         }
                         
@@ -877,6 +904,13 @@ namespace Microsoft.Azure.Management.DataFactories
                                                     textFormatInstance.NullValue = nullValueInstance;
                                                 }
                                                 
+                                                JToken encodingNameValue = formatValue4["encodingName"];
+                                                if (encodingNameValue != null && encodingNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string encodingNameInstance = ((string)encodingNameValue);
+                                                    textFormatInstance.EncodingName = encodingNameInstance;
+                                                }
+                                                
                                                 JToken serializerValue = formatValue4["serializer"];
                                                 if (serializerValue != null && serializerValue.Type != JTokenType.Null)
                                                 {
@@ -1074,6 +1108,13 @@ namespace Microsoft.Azure.Management.DataFactories
                                                     textFormatInstance2.NullValue = nullValueInstance2;
                                                 }
                                                 
+                                                JToken encodingNameValue2 = formatValue6["encodingName"];
+                                                if (encodingNameValue2 != null && encodingNameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string encodingNameInstance2 = ((string)encodingNameValue2);
+                                                    textFormatInstance2.EncodingName = encodingNameInstance2;
+                                                }
+                                                
                                                 JToken serializerValue3 = formatValue6["serializer"];
                                                 if (serializerValue3 != null && serializerValue3.Type != JTokenType.Null)
                                                 {
@@ -1125,6 +1166,25 @@ namespace Microsoft.Azure.Management.DataFactories
                                         }
                                         propertiesInstance.Location = onPremisesFileSystemLocationInstance;
                                     }
+                                    if (typeName == "OnPremisesOracleTableLocation")
+                                    {
+                                        OnPremisesOracleTableLocation onPremisesOracleTableLocationInstance = new OnPremisesOracleTableLocation();
+                                        
+                                        JToken tableNameValue4 = locationValue2["tableName"];
+                                        if (tableNameValue4 != null && tableNameValue4.Type != JTokenType.Null)
+                                        {
+                                            string tableNameInstance4 = ((string)tableNameValue4);
+                                            onPremisesOracleTableLocationInstance.TableName = tableNameInstance4;
+                                        }
+                                        
+                                        JToken linkedServiceNameValue6 = locationValue2["linkedServiceName"];
+                                        if (linkedServiceNameValue6 != null && linkedServiceNameValue6.Type != JTokenType.Null)
+                                        {
+                                            string linkedServiceNameInstance6 = ((string)linkedServiceNameValue6);
+                                            onPremisesOracleTableLocationInstance.LinkedServiceName = linkedServiceNameInstance6;
+                                        }
+                                        propertiesInstance.Location = onPremisesOracleTableLocationInstance;
+                                    }
                                     if (typeName == "CustomLocation")
                                     {
                                         CustomLocation customLocationInstance = new CustomLocation();
@@ -1140,11 +1200,11 @@ namespace Microsoft.Azure.Management.DataFactories
                                             }
                                         }
                                         
-                                        JToken linkedServiceNameValue6 = locationValue2["linkedServiceName"];
-                                        if (linkedServiceNameValue6 != null && linkedServiceNameValue6.Type != JTokenType.Null)
+                                        JToken linkedServiceNameValue7 = locationValue2["linkedServiceName"];
+                                        if (linkedServiceNameValue7 != null && linkedServiceNameValue7.Type != JTokenType.Null)
                                         {
-                                            string linkedServiceNameInstance6 = ((string)linkedServiceNameValue6);
-                                            customLocationInstance.LinkedServiceName = linkedServiceNameInstance6;
+                                            string linkedServiceNameInstance7 = ((string)linkedServiceNameValue7);
+                                            customLocationInstance.LinkedServiceName = linkedServiceNameInstance7;
                                         }
                                         propertiesInstance.Location = customLocationInstance;
                                     }
@@ -1251,6 +1311,13 @@ namespace Microsoft.Azure.Management.DataFactories
                                         {
                                             double minimumSizeMBInstance = ((double)minimumSizeMBValue);
                                             validationInstance.MinimumSizeMB = minimumSizeMBInstance;
+                                        }
+                                        
+                                        JToken validationPriorityOrderValue = validationValue2["validationPriorityOrder"];
+                                        if (validationPriorityOrderValue != null && validationPriorityOrderValue.Type != JTokenType.Null)
+                                        {
+                                            string validationPriorityOrderInstance = ((string)validationPriorityOrderValue);
+                                            validationInstance.ValidationPriorityOrder = validationPriorityOrderInstance;
                                         }
                                     }
                                     
@@ -1676,6 +1743,13 @@ namespace Microsoft.Azure.Management.DataFactories
                                                     textFormatInstance.NullValue = nullValueInstance;
                                                 }
                                                 
+                                                JToken encodingNameValue = formatValue2["encodingName"];
+                                                if (encodingNameValue != null && encodingNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string encodingNameInstance = ((string)encodingNameValue);
+                                                    textFormatInstance.EncodingName = encodingNameInstance;
+                                                }
+                                                
                                                 JToken serializerValue = formatValue2["serializer"];
                                                 if (serializerValue != null && serializerValue.Type != JTokenType.Null)
                                                 {
@@ -1873,6 +1947,13 @@ namespace Microsoft.Azure.Management.DataFactories
                                                     textFormatInstance2.NullValue = nullValueInstance2;
                                                 }
                                                 
+                                                JToken encodingNameValue2 = formatValue4["encodingName"];
+                                                if (encodingNameValue2 != null && encodingNameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string encodingNameInstance2 = ((string)encodingNameValue2);
+                                                    textFormatInstance2.EncodingName = encodingNameInstance2;
+                                                }
+                                                
                                                 JToken serializerValue3 = formatValue4["serializer"];
                                                 if (serializerValue3 != null && serializerValue3.Type != JTokenType.Null)
                                                 {
@@ -1924,6 +2005,25 @@ namespace Microsoft.Azure.Management.DataFactories
                                         }
                                         propertiesInstance.Location = onPremisesFileSystemLocationInstance;
                                     }
+                                    if (typeName == "OnPremisesOracleTableLocation")
+                                    {
+                                        OnPremisesOracleTableLocation onPremisesOracleTableLocationInstance = new OnPremisesOracleTableLocation();
+                                        
+                                        JToken tableNameValue4 = locationValue["tableName"];
+                                        if (tableNameValue4 != null && tableNameValue4.Type != JTokenType.Null)
+                                        {
+                                            string tableNameInstance4 = ((string)tableNameValue4);
+                                            onPremisesOracleTableLocationInstance.TableName = tableNameInstance4;
+                                        }
+                                        
+                                        JToken linkedServiceNameValue6 = locationValue["linkedServiceName"];
+                                        if (linkedServiceNameValue6 != null && linkedServiceNameValue6.Type != JTokenType.Null)
+                                        {
+                                            string linkedServiceNameInstance6 = ((string)linkedServiceNameValue6);
+                                            onPremisesOracleTableLocationInstance.LinkedServiceName = linkedServiceNameInstance6;
+                                        }
+                                        propertiesInstance.Location = onPremisesOracleTableLocationInstance;
+                                    }
                                     if (typeName == "CustomLocation")
                                     {
                                         CustomLocation customLocationInstance = new CustomLocation();
@@ -1939,11 +2039,11 @@ namespace Microsoft.Azure.Management.DataFactories
                                             }
                                         }
                                         
-                                        JToken linkedServiceNameValue6 = locationValue["linkedServiceName"];
-                                        if (linkedServiceNameValue6 != null && linkedServiceNameValue6.Type != JTokenType.Null)
+                                        JToken linkedServiceNameValue7 = locationValue["linkedServiceName"];
+                                        if (linkedServiceNameValue7 != null && linkedServiceNameValue7.Type != JTokenType.Null)
                                         {
-                                            string linkedServiceNameInstance6 = ((string)linkedServiceNameValue6);
-                                            customLocationInstance.LinkedServiceName = linkedServiceNameInstance6;
+                                            string linkedServiceNameInstance7 = ((string)linkedServiceNameValue7);
+                                            customLocationInstance.LinkedServiceName = linkedServiceNameInstance7;
                                         }
                                         propertiesInstance.Location = customLocationInstance;
                                     }
@@ -2050,6 +2150,13 @@ namespace Microsoft.Azure.Management.DataFactories
                                         {
                                             double minimumSizeMBInstance = ((double)minimumSizeMBValue);
                                             validationInstance.MinimumSizeMB = minimumSizeMBInstance;
+                                        }
+                                        
+                                        JToken validationPriorityOrderValue = validationValue["validationPriorityOrder"];
+                                        if (validationPriorityOrderValue != null && validationPriorityOrderValue.Type != JTokenType.Null)
+                                        {
+                                            string validationPriorityOrderInstance = ((string)validationPriorityOrderValue);
+                                            validationInstance.ValidationPriorityOrder = validationPriorityOrderInstance;
                                         }
                                     }
                                     
@@ -2844,6 +2951,13 @@ namespace Microsoft.Azure.Management.DataFactories
                                                     textFormatInstance.NullValue = nullValueInstance;
                                                 }
                                                 
+                                                JToken encodingNameValue = formatValue2["encodingName"];
+                                                if (encodingNameValue != null && encodingNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string encodingNameInstance = ((string)encodingNameValue);
+                                                    textFormatInstance.EncodingName = encodingNameInstance;
+                                                }
+                                                
                                                 JToken serializerValue = formatValue2["serializer"];
                                                 if (serializerValue != null && serializerValue.Type != JTokenType.Null)
                                                 {
@@ -3041,6 +3155,13 @@ namespace Microsoft.Azure.Management.DataFactories
                                                     textFormatInstance2.NullValue = nullValueInstance2;
                                                 }
                                                 
+                                                JToken encodingNameValue2 = formatValue4["encodingName"];
+                                                if (encodingNameValue2 != null && encodingNameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string encodingNameInstance2 = ((string)encodingNameValue2);
+                                                    textFormatInstance2.EncodingName = encodingNameInstance2;
+                                                }
+                                                
                                                 JToken serializerValue3 = formatValue4["serializer"];
                                                 if (serializerValue3 != null && serializerValue3.Type != JTokenType.Null)
                                                 {
@@ -3092,6 +3213,25 @@ namespace Microsoft.Azure.Management.DataFactories
                                         }
                                         propertiesInstance.Location = onPremisesFileSystemLocationInstance;
                                     }
+                                    if (typeName == "OnPremisesOracleTableLocation")
+                                    {
+                                        OnPremisesOracleTableLocation onPremisesOracleTableLocationInstance = new OnPremisesOracleTableLocation();
+                                        
+                                        JToken tableNameValue4 = locationValue["tableName"];
+                                        if (tableNameValue4 != null && tableNameValue4.Type != JTokenType.Null)
+                                        {
+                                            string tableNameInstance4 = ((string)tableNameValue4);
+                                            onPremisesOracleTableLocationInstance.TableName = tableNameInstance4;
+                                        }
+                                        
+                                        JToken linkedServiceNameValue6 = locationValue["linkedServiceName"];
+                                        if (linkedServiceNameValue6 != null && linkedServiceNameValue6.Type != JTokenType.Null)
+                                        {
+                                            string linkedServiceNameInstance6 = ((string)linkedServiceNameValue6);
+                                            onPremisesOracleTableLocationInstance.LinkedServiceName = linkedServiceNameInstance6;
+                                        }
+                                        propertiesInstance.Location = onPremisesOracleTableLocationInstance;
+                                    }
                                     if (typeName == "CustomLocation")
                                     {
                                         CustomLocation customLocationInstance = new CustomLocation();
@@ -3107,11 +3247,11 @@ namespace Microsoft.Azure.Management.DataFactories
                                             }
                                         }
                                         
-                                        JToken linkedServiceNameValue6 = locationValue["linkedServiceName"];
-                                        if (linkedServiceNameValue6 != null && linkedServiceNameValue6.Type != JTokenType.Null)
+                                        JToken linkedServiceNameValue7 = locationValue["linkedServiceName"];
+                                        if (linkedServiceNameValue7 != null && linkedServiceNameValue7.Type != JTokenType.Null)
                                         {
-                                            string linkedServiceNameInstance6 = ((string)linkedServiceNameValue6);
-                                            customLocationInstance.LinkedServiceName = linkedServiceNameInstance6;
+                                            string linkedServiceNameInstance7 = ((string)linkedServiceNameValue7);
+                                            customLocationInstance.LinkedServiceName = linkedServiceNameInstance7;
                                         }
                                         propertiesInstance.Location = customLocationInstance;
                                     }
@@ -3218,6 +3358,13 @@ namespace Microsoft.Azure.Management.DataFactories
                                         {
                                             double minimumSizeMBInstance = ((double)minimumSizeMBValue);
                                             validationInstance.MinimumSizeMB = minimumSizeMBInstance;
+                                        }
+                                        
+                                        JToken validationPriorityOrderValue = validationValue["validationPriorityOrder"];
+                                        if (validationPriorityOrderValue != null && validationPriorityOrderValue.Type != JTokenType.Null)
+                                        {
+                                            string validationPriorityOrderInstance = ((string)validationPriorityOrderValue);
+                                            validationInstance.ValidationPriorityOrder = validationPriorityOrderInstance;
                                         }
                                     }
                                     
@@ -3555,6 +3702,13 @@ namespace Microsoft.Azure.Management.DataFactories
                                                     textFormatInstance.NullValue = nullValueInstance;
                                                 }
                                                 
+                                                JToken encodingNameValue = formatValue2["encodingName"];
+                                                if (encodingNameValue != null && encodingNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string encodingNameInstance = ((string)encodingNameValue);
+                                                    textFormatInstance.EncodingName = encodingNameInstance;
+                                                }
+                                                
                                                 JToken serializerValue = formatValue2["serializer"];
                                                 if (serializerValue != null && serializerValue.Type != JTokenType.Null)
                                                 {
@@ -3752,6 +3906,13 @@ namespace Microsoft.Azure.Management.DataFactories
                                                     textFormatInstance2.NullValue = nullValueInstance2;
                                                 }
                                                 
+                                                JToken encodingNameValue2 = formatValue4["encodingName"];
+                                                if (encodingNameValue2 != null && encodingNameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string encodingNameInstance2 = ((string)encodingNameValue2);
+                                                    textFormatInstance2.EncodingName = encodingNameInstance2;
+                                                }
+                                                
                                                 JToken serializerValue3 = formatValue4["serializer"];
                                                 if (serializerValue3 != null && serializerValue3.Type != JTokenType.Null)
                                                 {
@@ -3803,6 +3964,25 @@ namespace Microsoft.Azure.Management.DataFactories
                                         }
                                         propertiesInstance.Location = onPremisesFileSystemLocationInstance;
                                     }
+                                    if (typeName == "OnPremisesOracleTableLocation")
+                                    {
+                                        OnPremisesOracleTableLocation onPremisesOracleTableLocationInstance = new OnPremisesOracleTableLocation();
+                                        
+                                        JToken tableNameValue4 = locationValue["tableName"];
+                                        if (tableNameValue4 != null && tableNameValue4.Type != JTokenType.Null)
+                                        {
+                                            string tableNameInstance4 = ((string)tableNameValue4);
+                                            onPremisesOracleTableLocationInstance.TableName = tableNameInstance4;
+                                        }
+                                        
+                                        JToken linkedServiceNameValue6 = locationValue["linkedServiceName"];
+                                        if (linkedServiceNameValue6 != null && linkedServiceNameValue6.Type != JTokenType.Null)
+                                        {
+                                            string linkedServiceNameInstance6 = ((string)linkedServiceNameValue6);
+                                            onPremisesOracleTableLocationInstance.LinkedServiceName = linkedServiceNameInstance6;
+                                        }
+                                        propertiesInstance.Location = onPremisesOracleTableLocationInstance;
+                                    }
                                     if (typeName == "CustomLocation")
                                     {
                                         CustomLocation customLocationInstance = new CustomLocation();
@@ -3818,11 +3998,11 @@ namespace Microsoft.Azure.Management.DataFactories
                                             }
                                         }
                                         
-                                        JToken linkedServiceNameValue6 = locationValue["linkedServiceName"];
-                                        if (linkedServiceNameValue6 != null && linkedServiceNameValue6.Type != JTokenType.Null)
+                                        JToken linkedServiceNameValue7 = locationValue["linkedServiceName"];
+                                        if (linkedServiceNameValue7 != null && linkedServiceNameValue7.Type != JTokenType.Null)
                                         {
-                                            string linkedServiceNameInstance6 = ((string)linkedServiceNameValue6);
-                                            customLocationInstance.LinkedServiceName = linkedServiceNameInstance6;
+                                            string linkedServiceNameInstance7 = ((string)linkedServiceNameValue7);
+                                            customLocationInstance.LinkedServiceName = linkedServiceNameInstance7;
                                         }
                                         propertiesInstance.Location = customLocationInstance;
                                     }
@@ -3929,6 +4109,13 @@ namespace Microsoft.Azure.Management.DataFactories
                                         {
                                             double minimumSizeMBInstance = ((double)minimumSizeMBValue);
                                             validationInstance.MinimumSizeMB = minimumSizeMBInstance;
+                                        }
+                                        
+                                        JToken validationPriorityOrderValue = validationValue["validationPriorityOrder"];
+                                        if (validationPriorityOrderValue != null && validationPriorityOrderValue.Type != JTokenType.Null)
+                                        {
+                                            string validationPriorityOrderInstance = ((string)validationPriorityOrderValue);
+                                            validationInstance.ValidationPriorityOrder = validationPriorityOrderInstance;
                                         }
                                     }
                                     
@@ -4333,6 +4520,13 @@ namespace Microsoft.Azure.Management.DataFactories
                                                             textFormatInstance.NullValue = nullValueInstance;
                                                         }
                                                         
+                                                        JToken encodingNameValue = formatValue2["encodingName"];
+                                                        if (encodingNameValue != null && encodingNameValue.Type != JTokenType.Null)
+                                                        {
+                                                            string encodingNameInstance = ((string)encodingNameValue);
+                                                            textFormatInstance.EncodingName = encodingNameInstance;
+                                                        }
+                                                        
                                                         JToken serializerValue = formatValue2["serializer"];
                                                         if (serializerValue != null && serializerValue.Type != JTokenType.Null)
                                                         {
@@ -4530,6 +4724,13 @@ namespace Microsoft.Azure.Management.DataFactories
                                                             textFormatInstance2.NullValue = nullValueInstance2;
                                                         }
                                                         
+                                                        JToken encodingNameValue2 = formatValue4["encodingName"];
+                                                        if (encodingNameValue2 != null && encodingNameValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string encodingNameInstance2 = ((string)encodingNameValue2);
+                                                            textFormatInstance2.EncodingName = encodingNameInstance2;
+                                                        }
+                                                        
                                                         JToken serializerValue3 = formatValue4["serializer"];
                                                         if (serializerValue3 != null && serializerValue3.Type != JTokenType.Null)
                                                         {
@@ -4581,6 +4782,25 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 }
                                                 propertiesInstance.Location = onPremisesFileSystemLocationInstance;
                                             }
+                                            if (typeName == "OnPremisesOracleTableLocation")
+                                            {
+                                                OnPremisesOracleTableLocation onPremisesOracleTableLocationInstance = new OnPremisesOracleTableLocation();
+                                                
+                                                JToken tableNameValue4 = locationValue["tableName"];
+                                                if (tableNameValue4 != null && tableNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string tableNameInstance4 = ((string)tableNameValue4);
+                                                    onPremisesOracleTableLocationInstance.TableName = tableNameInstance4;
+                                                }
+                                                
+                                                JToken linkedServiceNameValue6 = locationValue["linkedServiceName"];
+                                                if (linkedServiceNameValue6 != null && linkedServiceNameValue6.Type != JTokenType.Null)
+                                                {
+                                                    string linkedServiceNameInstance6 = ((string)linkedServiceNameValue6);
+                                                    onPremisesOracleTableLocationInstance.LinkedServiceName = linkedServiceNameInstance6;
+                                                }
+                                                propertiesInstance.Location = onPremisesOracleTableLocationInstance;
+                                            }
                                             if (typeName == "CustomLocation")
                                             {
                                                 CustomLocation customLocationInstance = new CustomLocation();
@@ -4596,11 +4816,11 @@ namespace Microsoft.Azure.Management.DataFactories
                                                     }
                                                 }
                                                 
-                                                JToken linkedServiceNameValue6 = locationValue["linkedServiceName"];
-                                                if (linkedServiceNameValue6 != null && linkedServiceNameValue6.Type != JTokenType.Null)
+                                                JToken linkedServiceNameValue7 = locationValue["linkedServiceName"];
+                                                if (linkedServiceNameValue7 != null && linkedServiceNameValue7.Type != JTokenType.Null)
                                                 {
-                                                    string linkedServiceNameInstance6 = ((string)linkedServiceNameValue6);
-                                                    customLocationInstance.LinkedServiceName = linkedServiceNameInstance6;
+                                                    string linkedServiceNameInstance7 = ((string)linkedServiceNameValue7);
+                                                    customLocationInstance.LinkedServiceName = linkedServiceNameInstance7;
                                                 }
                                                 propertiesInstance.Location = customLocationInstance;
                                             }
@@ -4707,6 +4927,13 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 {
                                                     double minimumSizeMBInstance = ((double)minimumSizeMBValue);
                                                     validationInstance.MinimumSizeMB = minimumSizeMBInstance;
+                                                }
+                                                
+                                                JToken validationPriorityOrderValue = validationValue["validationPriorityOrder"];
+                                                if (validationPriorityOrderValue != null && validationPriorityOrderValue.Type != JTokenType.Null)
+                                                {
+                                                    string validationPriorityOrderInstance = ((string)validationPriorityOrderValue);
+                                                    validationInstance.ValidationPriorityOrder = validationPriorityOrderInstance;
                                                 }
                                             }
                                             
@@ -5061,6 +5288,13 @@ namespace Microsoft.Azure.Management.DataFactories
                                                             textFormatInstance.NullValue = nullValueInstance;
                                                         }
                                                         
+                                                        JToken encodingNameValue = formatValue2["encodingName"];
+                                                        if (encodingNameValue != null && encodingNameValue.Type != JTokenType.Null)
+                                                        {
+                                                            string encodingNameInstance = ((string)encodingNameValue);
+                                                            textFormatInstance.EncodingName = encodingNameInstance;
+                                                        }
+                                                        
                                                         JToken serializerValue = formatValue2["serializer"];
                                                         if (serializerValue != null && serializerValue.Type != JTokenType.Null)
                                                         {
@@ -5258,6 +5492,13 @@ namespace Microsoft.Azure.Management.DataFactories
                                                             textFormatInstance2.NullValue = nullValueInstance2;
                                                         }
                                                         
+                                                        JToken encodingNameValue2 = formatValue4["encodingName"];
+                                                        if (encodingNameValue2 != null && encodingNameValue2.Type != JTokenType.Null)
+                                                        {
+                                                            string encodingNameInstance2 = ((string)encodingNameValue2);
+                                                            textFormatInstance2.EncodingName = encodingNameInstance2;
+                                                        }
+                                                        
                                                         JToken serializerValue3 = formatValue4["serializer"];
                                                         if (serializerValue3 != null && serializerValue3.Type != JTokenType.Null)
                                                         {
@@ -5309,6 +5550,25 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 }
                                                 propertiesInstance.Location = onPremisesFileSystemLocationInstance;
                                             }
+                                            if (typeName == "OnPremisesOracleTableLocation")
+                                            {
+                                                OnPremisesOracleTableLocation onPremisesOracleTableLocationInstance = new OnPremisesOracleTableLocation();
+                                                
+                                                JToken tableNameValue4 = locationValue["tableName"];
+                                                if (tableNameValue4 != null && tableNameValue4.Type != JTokenType.Null)
+                                                {
+                                                    string tableNameInstance4 = ((string)tableNameValue4);
+                                                    onPremisesOracleTableLocationInstance.TableName = tableNameInstance4;
+                                                }
+                                                
+                                                JToken linkedServiceNameValue6 = locationValue["linkedServiceName"];
+                                                if (linkedServiceNameValue6 != null && linkedServiceNameValue6.Type != JTokenType.Null)
+                                                {
+                                                    string linkedServiceNameInstance6 = ((string)linkedServiceNameValue6);
+                                                    onPremisesOracleTableLocationInstance.LinkedServiceName = linkedServiceNameInstance6;
+                                                }
+                                                propertiesInstance.Location = onPremisesOracleTableLocationInstance;
+                                            }
                                             if (typeName == "CustomLocation")
                                             {
                                                 CustomLocation customLocationInstance = new CustomLocation();
@@ -5324,11 +5584,11 @@ namespace Microsoft.Azure.Management.DataFactories
                                                     }
                                                 }
                                                 
-                                                JToken linkedServiceNameValue6 = locationValue["linkedServiceName"];
-                                                if (linkedServiceNameValue6 != null && linkedServiceNameValue6.Type != JTokenType.Null)
+                                                JToken linkedServiceNameValue7 = locationValue["linkedServiceName"];
+                                                if (linkedServiceNameValue7 != null && linkedServiceNameValue7.Type != JTokenType.Null)
                                                 {
-                                                    string linkedServiceNameInstance6 = ((string)linkedServiceNameValue6);
-                                                    customLocationInstance.LinkedServiceName = linkedServiceNameInstance6;
+                                                    string linkedServiceNameInstance7 = ((string)linkedServiceNameValue7);
+                                                    customLocationInstance.LinkedServiceName = linkedServiceNameInstance7;
                                                 }
                                                 propertiesInstance.Location = customLocationInstance;
                                             }
@@ -5435,6 +5695,13 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 {
                                                     double minimumSizeMBInstance = ((double)minimumSizeMBValue);
                                                     validationInstance.MinimumSizeMB = minimumSizeMBInstance;
+                                                }
+                                                
+                                                JToken validationPriorityOrderValue = validationValue["validationPriorityOrder"];
+                                                if (validationPriorityOrderValue != null && validationPriorityOrderValue.Type != JTokenType.Null)
+                                                {
+                                                    string validationPriorityOrderInstance = ((string)validationPriorityOrderValue);
+                                                    validationInstance.ValidationPriorityOrder = validationPriorityOrderInstance;
                                                 }
                                             }
                                             

@@ -21,32 +21,42 @@
 
 using System;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.Azure.Management.DataFactories.Models;
 
-namespace Microsoft.Azure.Management.DataFactories
+namespace Microsoft.Azure.Management.DataFactories.Models
 {
     /// <summary>
-    /// Operations for getting the encryption certificate.
+    /// A copy activity Oracle source.
     /// </summary>
-    public partial interface IEncryptionCertificateOperations
+    public partial class OracleSource : CopySource
     {
+        private string _oracleReaderQuery;
+        
         /// <summary>
-        /// Gets the certificate to use for encryption.
+        /// Optional. Oracle reader query.
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The resource group name of the data factory.
-        /// </param>
-        /// <param name='dataFactoryName'>
-        /// A unique data factory instance name.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The Get encryption certificate operation response.
-        /// </returns>
-        Task<EncryptionCertificateGetResponse> GetAsync(string resourceGroupName, string dataFactoryName, CancellationToken cancellationToken);
+        public string OracleReaderQuery
+        {
+            get { return this._oracleReaderQuery; }
+            set { this._oracleReaderQuery = value; }
+        }
+        
+        private TimeSpan _queryTimeout;
+        
+        /// <summary>
+        /// Optional. Query timeout
+        /// </summary>
+        public TimeSpan QueryTimeout
+        {
+            get { return this._queryTimeout; }
+            set { this._queryTimeout = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the OracleSource class.
+        /// </summary>
+        public OracleSource()
+        {
+        }
     }
 }
