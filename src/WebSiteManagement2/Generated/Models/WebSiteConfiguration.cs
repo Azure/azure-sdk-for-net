@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
     /// <summary>
     /// The Get Web Site Configuration operation response.
     /// </summary>
-    public partial class WebSiteGetConfigurationResponse
+    public partial class WebSiteConfiguration
     {
         private IDictionary<string, string> _appSettings;
         
@@ -107,13 +107,13 @@ namespace Microsoft.Azure.Management.WebSites.Models
             set { this._documentRoot = value; }
         }
         
-        private IList<WebSiteGetConfigurationResponse.HandlerMapping> _handlerMappings;
+        private IList<WebSiteConfiguration.HandlerMapping> _handlerMappings;
         
         /// <summary>
         /// Optional. Specifies custom executable programs for handling
         /// requests for specific file name extensions.
         /// </summary>
-        public IList<WebSiteGetConfigurationResponse.HandlerMapping> HandlerMappings
+        public IList<WebSiteConfiguration.HandlerMapping> HandlerMappings
         {
             get { return this._handlerMappings; }
             set { this._handlerMappings = value; }
@@ -330,15 +330,14 @@ namespace Microsoft.Azure.Management.WebSites.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the WebSiteGetConfigurationResponse
-        /// class.
+        /// Initializes a new instance of the WebSiteConfiguration class.
         /// </summary>
-        public WebSiteGetConfigurationResponse()
+        public WebSiteConfiguration()
         {
             this.AppSettings = new LazyDictionary<string, string>();
             this.ConnectionStrings = new LazyList<ConnectionStringInfo>();
             this.DefaultDocuments = new LazyList<string>();
-            this.HandlerMappings = new LazyList<WebSiteGetConfigurationResponse.HandlerMapping>();
+            this.HandlerMappings = new LazyList<WebSiteConfiguration.HandlerMapping>();
             this.Metadata = new LazyDictionary<string, string>();
         }
         
